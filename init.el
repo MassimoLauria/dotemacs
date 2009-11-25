@@ -1,12 +1,11 @@
 
-(defvar *emacs-load-start* (current-time))
-
-;;;  TODO  Robustness against missing packages in .emacs (del.i.cio.us)
-
+;;; Load emacs code and personal data. -------------------------------------------------------------------------
+(defvar massimo-elisp-path '("~/config/emacs" "~/config/emacs/3rdparties"))
+(setq load-path (append load-path massimo-elisp-path))  
+(load-file "~/personal/emacs-data.el")
+;; ------------------------------------------------------------------------------------------------------------
 
 ;;{{{ *** Basic editor customization ***
-(setq load-path (append load-path (list "~/config/emacs" "~/config/3rdparties")))
-(load-file "~/personal/emacs-data.el")
 (set-default-font "Monospace-10")
 (add-to-list 'default-frame-alist '(font . "Monospace-10"))
 (setq inhibit-startup-message t)
@@ -144,8 +143,7 @@
 ;;}}}
 
 
-
-;;{{{ *** Advanced editing customization
+;;{{{ *** Advanced editing customization ***
 ;;
 ;; Text mode by default, with auto-fill
 (setq default-major-mode 'text-mode)
@@ -183,6 +181,12 @@
 ;; Folding
 (load "folding" 'nomessage 'noerror)
 (folding-mode-add-find-file-hook)
+;;}}}
+
+
+;;{{{ *** ELPA Managing: Emacs Lisp Package Archive ***
+(require 'package)
+(package-initialize)
 ;;}}}
 
 
@@ -450,13 +454,6 @@ Otherwise, analyses point position and answers."
 (setq custom-file "~/config/emacs/custom.el")
 (load custom-file 'noerror)
 ;;}}}
-
-
-;; End of my .emacs (trying to figure out how slow it is
-(message "My .emacs loaded in %ds" (destructuring-bind (hi lo ms) (current-time)
-                             (- (+ hi lo) (+ (first *emacs-load-start*) (second
-                             *emacs-load-start*)))))
-
 
 
 ;; Local Variables:
