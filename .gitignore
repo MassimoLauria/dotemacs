@@ -1,3 +1,7 @@
 
 # Do not put 3rd part packages under version control
 3rdparties/*
+
+
+# Exception
+!3rdparties/README

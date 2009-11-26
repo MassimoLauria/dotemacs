@@ -1,0 +1,6 @@
+
+This directory contains 3rd party packages I use in my configuration and I had to install manually (i.e. with
+no help of ELPA).
+
+* External packages are not under revision control, unless I had to do some changes.
+
