@@ -184,9 +184,29 @@
 ;;}}}
 
 
+;;{{{ *** REQUIRE-MAYBE, WHEN-AVAILABLE, ROOT-FILE-OPEN **
+(defmacro require-maybe (feature &optional file)
+  "*Try to require FEATURE, but don't signal an error if `require' fails."
+  `(require ,feature ,file 'noerror)) 
+
+(defmacro when-available (func foo)
+  "*Do something if FUNCTION is available."
+  `(when (fboundp ,func) ,foo)) 
+
+(defun root-file-reopen () 
+  "Reopen this file with root privileges."
+  (interactive)
+  (let ((file (buffer-file-name)))
+    (set-buffer (find-file (concat "/sudo::" file)))
+    (rename-buffer (concat "sudo::" (buffer-name)))
+    )
+  )
+;;}}}
+
+
 ;;{{{ *** ELPA Managing: Emacs Lisp Package Archive ***
-(require 'package)
-(package-initialize)
+(when (require-maybe 'package)
+  (package-initialize))
 ;;}}}
 
 
@@ -355,7 +375,7 @@ Otherwise, analyses point position and answers."
 ;;{{{ *** Mail: Wanderlust+BBDB, IM: Twitter ***
 ;; autoload configuration
 ;; (Not required if you have installed Wanderlust as XEmacs package)
-(require 'elscreen-wl)
+(require-maybe 'elscreen-wl)
 (setq 
  wl-init-file    "~/config/mail/wl"
  wl-folders-file "~/config/mail/folders"
@@ -436,18 +456,6 @@ Otherwise, analyses point position and answers."
                      (read-kbd-macro (concat (cdr m) (cdr k))))))))
 ;;}}}
 
-
-
-;;{{{ *** Root editing command ***
-(defun root-file-reopen () 
-  "Reopen this file with root privileges."
-  (interactive)
-  (let ((file (buffer-file-name)))
-    (set-buffer (find-file (concat "/sudo::" file)))
-    (rename-buffer (concat "sudo::" (buffer-name)))
-    )
-  )
-;;}}}
 
 
 ;;{{{ *** Custom Safe variables ***
