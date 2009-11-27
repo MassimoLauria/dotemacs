@@ -1,13 +1,14 @@
-
 ;;;
 ;;; Imath and Imaxima configuration.
 ;;;
-
+(provide 'init-imath)
+(provide 'init-imaxima)
+;;;------------------------------------------------------------------
 
 (setq imaxima-elisp-path "/usr/local/share/maxima/5.19.2/emacs")
 
-(provide 'init-imath)
-(provide 'init-imaxima)
+;;;-------------------------------------------------------------------
+
 
 (require 'cl)
 (pushnew  imaxima-elisp-path load-path)
@@ -18,3 +19,9 @@
 (autoload 'maxima "maxima" "Frontend for maxima" t)
 ;; Make the line effective if you want to use maxima mode with imaxima.
 (setq imaxima-use-maxima-mode-flag t)
+
+
+;; Local Variables:
+;; mode: emacs-lisp 
+;; folded-file: t
+;; End: 

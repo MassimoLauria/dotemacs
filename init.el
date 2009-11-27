@@ -1,29 +1,30 @@
 
 ;;; Load emacs code and personal data. -------------------------------------------------------------------------
-(defvar massimo-elisp-path '("~/config/emacs" "~/config/emacs/3rdparties"))
-(setq load-path (append load-path massimo-elisp-path))  
+(defvar massimo-elisp-paths '("~/config/emacs" "~/config/emacs/3rdparties"))
+(setq load-path (append load-path massimo-elisp-paths))  
 (load-file "~/personal/emacs-data.el")
-;; ------------------------------------------------------------------------------------------------------------
 
-;;{{{ *** Basic editor customization ***
-(set-default-font "Monospace-10")
-(add-to-list 'default-frame-alist '(font . "Monospace-10"))
-(setq inhibit-startup-message t)
-(setq initial-scratch-message nil)
-(blink-cursor-mode nil)
-(setq search-highlight t)
-(setq query-replace-highlight t)
-(setq visible-bell nil)
-(line-number-mode 1)
-(setq x-stretch-cursor t)
-(column-number-mode 1)
-(show-paren-mode 1)
-(scroll-bar-mode nil)
-(tool-bar-mode nil)
-(menu-bar-mode nil)
-(defalias 'yes-or-no-p 'y-or-n-p) ; y/n instead of yes/no
-(setq confirm-kill-emacs 'y-or-n-p)
+;;; Module(s) initialization -----------------------------------------------------------------------------------
 
+; Editor customization 
+(require 'init-functions)    ;; Utility functions for configuration
+(require 'init-preferences)  ;; Basic editor preferences
+(require 'init-backup)       ;; Autosaves and backups behaviour
+
+; Math packages
+(require 'init-latex)        ;; AucTeX
+(require 'init-imaxima)      ;; Imaxima and Imath
+;(require 'init-sage)        ;; Sagemath 
+
+; Applications
+(require 'init-mail-wl)      ;; Wanderlust MUA + bbdb
+
+
+
+
+
+
+;;; Things below here are still a little mess---------------------------------------------------------------------
 ;; Xterm setting
 (when (or (string= (getenv "TERM") "xterm")) (xterm-mouse-mode))
 
@@ -31,29 +32,6 @@
 (setq auto-mode-alist (cons '("bashrc" . sh-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("zshrc" . sh-mode) auto-mode-alist))
 
-
-;; Unified autosave and Backup dir
-(defvar autosave-dir
- (concat "/tmp/emacs_autosaves/" (user-login-name) "/"))
-(make-directory autosave-dir t)
-(defun auto-save-file-name-p (filename)
-  (string-match "^#.*#$" (file-name-nondirectory filename)))
-(defun make-auto-save-file-name ()
-  (concat autosave-dir
-   (if buffer-file-name
-      (concat "#" (file-name-nondirectory buffer-file-name) "#")
-    (expand-file-name
-     (concat "#%" (buffer-name) "#")))))
-(defvar backup-dir (concat "/tmp/emacs_backups/" (user-login-name) "/"))
-(setq backup-directory-alist (list (cons "." backup-dir)))
-;; No backups and autosaves for tramp files
-(add-to-list 'backup-directory-alist
-                (cons tramp-file-name-regexp nil))
-(setq tramp-auto-save-directory nil)
-
-;;  Tab expansion
-(setq-default indent-tabs-mode nil) ;; Expand tabs as spaces
-(setq default-tab-width 4)
 
 ;;}}}
 
@@ -184,26 +162,6 @@
 ;;}}}
 
 
-;;{{{ *** REQUIRE-MAYBE, WHEN-AVAILABLE, ROOT-FILE-OPEN **
-(defmacro require-maybe (feature &optional file)
-  "*Try to require FEATURE, but don't signal an error if `require' fails."
-  `(require ,feature ,file 'noerror)) 
-
-(defmacro when-available (func foo)
-  "*Do something if FUNCTION is available."
-  `(when (fboundp ,func) ,foo)) 
-
-(defun root-file-reopen () 
-  "Reopen this file with root privileges."
-  (interactive)
-  (let ((file (buffer-file-name)))
-    (set-buffer (find-file (concat "/sudo::" file)))
-    (rename-buffer (concat "sudo::" (buffer-name)))
-    )
-  )
-;;}}}
-
-
 ;;{{{ *** ELPA Managing: Emacs Lisp Package Archive ***
 (when (require-maybe 'package)
   (package-initialize))
@@ -312,7 +270,6 @@ Otherwise, analyses point position and answers."
 ;;}}}    
 
 
-
 ;;{{{ *** Color Schemes (ZenBurn or tty-dark) ***
 ;;
 (require 'color-theme)
@@ -333,138 +290,8 @@ Otherwise, analyses point position and answers."
 
 
 
-;;{{{ *** LaTex support (AucTeX) ***
-;;
-
-;; AucTex system
-(load "auctex.el" nil t t)
-(load "preview-latex.el" nil t t)
-
-	
-;; Multifile support, completition, style, reverse search support 
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
-(setq-default TeX-master nil)
-(setq TeX-source-specials-mode t)
-(setq TeX-source-specials-view-start-server t)
-(setq reftex-plug-into-AUCTeX t)
-
-;; XDvi launch customization
-(add-hook 'LaTeX-mode-hook (lambda ()
-                             (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
-                             ))
-(add-hook 'LaTeX-mode-hook (lambda ()
-                             (add-to-list 'TeX-output-view-style 
-                                          '("^dvi$" "." 
-                                            "%(o?)xdvi -watchfile 1 %dS %d"))
-                             ))
-
-
-;; Auto fill for LaTex
-(add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
-
-;; TeX asks for Flyspell and American dictionary.
-(add-hook 'LaTeX-mode-hook (lambda () (flyspell-mode 1)))
-(add-hook 'TeX-language-en-hook
-	  (lambda () (ispell-change-dictionary "american")))
-(add-hook 'TeX-language-it-hook
-	  (lambda () (ispell-change-dictionary "italian")))
-;;}}}
-
-
-;;{{{ *** Mail: Wanderlust+BBDB, IM: Twitter ***
-;; autoload configuration
-;; (Not required if you have installed Wanderlust as XEmacs package)
-(require-maybe 'elscreen-wl)
-(setq 
- wl-init-file    "~/config/mail/wl"
- wl-folders-file "~/config/mail/folders"
- wl-address-file "~/config/mail/addresses"
- bbdb-file       "~/personal/contacts.bbdb"
- diary-file      "~/personal/diary"
-)
-
-
-
-(setq wl-message-id-domaim "gmail.com")
-(autoload 'wl "wl" "Wanderlust" t)
-(autoload 'wl-other-frame "wl" "Wanderlust on new frame." t)
-(autoload 'wl-draft "wl-draft" "Write draft with Wanderlust." t)
-
-
-;; Use wl-draft to compose messages.
-(autoload 'wl-user-agent-compose "wl-draft" nil t)
-(if (boundp 'mail-user-agent)
-    (setq mail-user-agent 'wl-user-agent))
-(if (fboundp 'define-mail-user-agent)
-    (define-mail-user-agent
-      'wl-user-agent
-      'wl-user-agent-compose
-      'wl-draft-send
-      'wl-draft-kill
-      'mail-send-hook))
-
-
-(require 'bbdb)
-(bbdb-initialize)
-(setq bbdb-north-american-phone-numbers-p nil)
-
-
-;;(require 'twit)
-;;(setq twit-user "PinguinoRosso")
-;;}}}
-
-
-;;{{{ *** IDE facilities with ECB ***
-;;(load-file "~/config/emacs/cedet/common/cedet.el")
-;;(semantic-load-enable-excessive-code-helpers)
-;;;; gcc setup
-;;(require 'semantic-gcc)
-;;;; smart complitions
-;;(require 'semantic-ia)
-;;(setq semantic-load-turn-useful-things-on t)
-;;setq global-semantic-show-tag-boundaries-mode t)
-;;setq global-semantic-show-parser-state-mode t)
-;;setq semanticdb-default-save-directory "/tmp")
-;;(setq semanticdb-global-mode t)
-;;}}}
-
-
-;;{{{ *** Imaxima and Imath support.
-(require 'cl)
-(pushnew "/usr/local/share/maxima/5.19.2/emacs" load-path)
-(autoload 'imaxima "imaxima" "Frontend of Maxima CAS" t)
-(autoload 'imath "imath" "Interactive Math mode" t)
-(autoload 'imath-mode "imath" "Interactive Math mode" t)
-(autoload 'imaxima "imaxima" "Frontend for maxima with Image support" t)
-(autoload 'maxima "maxima" "Frontend for maxima" t)
-;; Make the line effective if you want to use maxima mode with imaxima.
-;(setq imaxima-use-maxima-mode-flag t)
-;;}}}
-
-
-;;{{{ *** FIXME CUA mode for console *** 
-;; Make shifted direction keys work on the Linux console
- (when (member (getenv "TERM") '("linux"))
-   (dolist (prefix '("\eO" "\eO1;" "\e[1;"))
-     (dolist (m '(("2" . "S-") ("3" . "M-") ("4" . "S-M-") ("5" . "C-")
-                  ("6" . "S-C-") ("7" . "C-M-") ("8" . "S-C-M-")))
-       (dolist (k '(("A" . "<up>") ("B" . "<down>") ("C" . "<right>")
-                    ("D" . "<left>") ("H" . "<home>") ("F" . "<end>")))
-         (define-key function-key-map
-                     (concat prefix (car m) (car k))
-                     (read-kbd-macro (concat (cdr m) (cdr k))))))))
-;;}}}
-
-
-
-;;{{{ *** Custom Safe variables ***
+;;; Customization variables (in a separate file)----------------------------------------------------------------
 (setq custom-file "~/config/emacs/custom.el")
 (load custom-file 'noerror)
-;;}}}
 
 
-;; Local Variables:
-;; mode: emacs-lisp 
-;; folded-file: t
-;; End: 
