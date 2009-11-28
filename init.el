@@ -52,6 +52,16 @@
 ;;  M-Tab for correct w.r.t. spellcheck (on Flyspell)
 ;;
 
+;; Moving in text
+(global-set-key [C-left] 'backward-word) 
+(global-set-key [C-right] 'forward-word)
+(global-set-key [M-left] 'backward-sentence) 
+(global-set-key [M-right] 'forward-sentence)
+(global-set-key [C-up] 'backward-paragraph) 
+(global-set-key [C-down] 'forward-paragraph)
+(global-set-key [M-up] 'backward-paragraph) 
+(global-set-key [M-down] 'forward-paragraph)
+
 
 ;; Management of ElScreens (M-S)
 (global-set-key "\C-t" 'elscreen-create)
@@ -75,8 +85,8 @@
 (global-set-key [M-C-next] 'scroll-other-window)
 
 ;; Next/Prev error for Quickfix
-(global-set-key [M-up] 'previous-error) ; Does not work with LaTeX!
-(global-set-key [M-down] 'next-error)
+(global-set-key [M-prior] 'previous-error) ; Does not work with LaTeX!
+(global-set-key [M-next] 'next-error)
 
 ;; Spellcheck
 (global-set-key [f2] 'ispell-word)
