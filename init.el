@@ -75,14 +75,21 @@
 (global-set-key [M-S-up] 'previous-buffer) 
 (global-set-key [M-S-down] 'next-buffer)
 
-;; Moving between windows
-(global-set-key [M-C-right] 'windmove-right) ;; Windows
+;; Managing windows [M-C]
+; Moving
+(global-set-key [M-C-right] 'windmove-right)
 (global-set-key [M-C-left] 'windmove-left)
 (global-set-key [M-C-up] 'windmove-up)
 (global-set-key [M-C-down] 'windmove-down)
-;; Scrolling other window
+; Scrolling "other window"
 (global-set-key [M-C-prior] 'scroll-other-window-down)
 (global-set-key [M-C-next] 'scroll-other-window)
+; Create and destroy windows
+(global-set-key [M-C--] 'split-window-vertically)
+(global-set-key [M-C-.] 'split-window-horizontally)
+(global-set-key [M-C-backspace] 'delete-window)
+(global-set-key [M-C-return] 'delete-other-windows)
+
 
 ;; Next/Prev error for Quickfix
 (global-set-key [M-prior] 'previous-error) ; Does not work with LaTeX!
