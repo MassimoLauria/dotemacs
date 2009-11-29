@@ -18,11 +18,11 @@
 ;; If you want sage-view to typeset all your output and have plot()
 ;; commands inline, uncomment the following line and configure sage-view:
 (require 'sage-view "sage-view")
-(add-hook 'sage-startup-hook 'sage-view)
+(add-hook 'sage-startup-after-prompt-hook 'sage-view)
 ;; You can use commands like
-;; (add-hook 'sage-startup-hook 'sage-view
+;; (add-hook 'sage-startup-after-prompt-hook 'sage-view
 ;; 'sage-view-disable-inline-output 'sage-view-disable-inline-plots)
-;; to have some combination of features.  In future, the customize interface
+;; to have xsome combination of features.  In future, the customize interface
 ;; will make this simpler... hint, hint!
 
 
