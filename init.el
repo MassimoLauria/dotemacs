@@ -156,6 +156,13 @@
      ;;(flyspell-mode 1)  ; annoying spell checking 
 ))
 
+;; Make buffer names unique
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward
+      uniquify-separator ":"
+)
+
+
 ;; Save histories across sessions. Not buffers
 (savehist-mode 1)
 
