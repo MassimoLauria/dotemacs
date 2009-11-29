@@ -14,10 +14,11 @@
 ; Math packages
 (require 'init-latex)        ;; AucTeX
 (require 'init-imaxima)      ;; Imaxima and Imath
-;(require 'init-sage)        ;; Sagemath 
+(require 'init-sage)        ;; Sagemath 
 
 ; Applications
 (require 'init-mail-wl)      ;; Wanderlust MUA + bbdb
+(require 'init-org-mode)     ;; The famous ORG-Mode! Yaiii!!
 
 
 
@@ -37,6 +38,11 @@
 
 
 ;;{{{ *** Key binding rules ***
+;;
+;; FIXME Two of them do not work at all!
+;; FIXME Some of them do not work in xterm
+;; FIXME Many of them do not work in console
+;;
 ;;
 ;;  One modifier for  intra-buffer operations (i.e. selection)
 ;;  Two modifiers for inter-buffer operations (i.e. navigation)
@@ -75,7 +81,7 @@
 (global-set-key [M-S-up] 'previous-buffer) 
 (global-set-key [M-S-down] 'next-buffer)
 
-;; Managing windows [M-C]
+;; Managing windows [C-M]
 ; Moving
 (global-set-key [M-C-right] 'windmove-right)
 (global-set-key [M-C-left] 'windmove-left)
@@ -85,8 +91,8 @@
 (global-set-key [M-C-prior] 'scroll-other-window-down)
 (global-set-key [M-C-next] 'scroll-other-window)
 ; Create and destroy windows
-(global-set-key [M-C--] 'split-window-vertically)
-(global-set-key [M-C-.] 'split-window-horizontally)
+;; (global-set-key [M-C--] 'split-window-vertically)   --- BROKEN
+;; (global-set-key [M-C-.] 'split-window-horizontally) --- BROKEN
 (global-set-key [M-C-backspace] 'delete-window)
 (global-set-key [M-C-return] 'delete-other-windows)
 
@@ -100,7 +106,7 @@
 (global-set-key [S-f2] 'ispell-buffer) 
 
 ;; Folding on/off (M-Space)
-(global-set-key "\240" 'folding-toggle-show-hide) 
+(global-set-key [M-space] 'folding-toggle-show-hide) 
 
 ;; Tab is actually a "Smart tab"
 (global-set-key [(tab)] 'smart-tab)
