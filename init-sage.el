@@ -4,14 +4,16 @@
 (provide 'init-sage)
 ;;;------------------------------------------------------------------
 
-(setq sage-elisp-path "/usr/local/lib/sage-4.1.1/data/emacs")
+(setq sage-basedir "/usr/local/lib/sage-4.2.1/")
+(setq sage-version "4.2.1")
+(setq sage-elisp-path (concat sage-basedir "data/emacs"))
 
 
 ;;;-------------------------------------------------------------------
 
 (add-to-list 'load-path (expand-file-name sage-elisp-path))
 (require 'sage "sage")
-(setq sage-command "/usr/local/lib/sage-4.1.1/sage")
+(setq sage-command (concat sage-basedir "sage"))
 
 ;; If you want sage-view to typeset all your output and have plot()
 ;; commands inline, uncomment the following line and configure sage-view:
@@ -22,7 +24,6 @@
 ;; 'sage-view-disable-inline-output 'sage-view-disable-inline-plots)
 ;; to have some combination of features.  In future, the customize interface
 ;; will make this simpler... hint, hint!
-;;}}}
 
 
 ;; Local Variables:
