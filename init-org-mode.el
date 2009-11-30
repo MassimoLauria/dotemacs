@@ -4,20 +4,23 @@
 (provide 'init-org-mode)
 ;;;------------------------------------------------------------------
 
+(setq org-directory "~/personal/organizer/")
+(setq org-default-notes-file (concat org-directory "notes.org"))
+(setq org-agenda-files (list "~/personal/organizer/"))
+
+
 ;;;-------------------------------------------------------------------
 
-
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
+(define-key global-map "\C-cr" 'org-remember)
 
-(setq org-agenda-files (list "~/personal/organizer/remember.org"
-							 "~/personal/organizer/research.org" 
-                             "~/personal/organizer/diary.org"
-                             "~/personal/organizer/scrapbook.org"))
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
 (setq org-log-done t)
 (setq org-CUA-compatible t)
+
+(org-remember-insinuate)
 
 (add-hook 'org-mode-hook
           	  (lambda ()
