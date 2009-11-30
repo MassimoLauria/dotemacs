@@ -23,6 +23,11 @@
 
 (org-remember-insinuate)
 
+(setq org-remember-templates
+      '(("Journal" ?j "* %U %?\n\n  %i\n  %a" "journal.org" "X")
+        ("Idea" ?i "* %^{Title}\n  %i\n  %a" "notes.org" "New Ideas")))
+
+
 (add-hook 'org-mode-hook
           	  (lambda ()
           	    (org-set-local 'yas/trigger-key [tab])
