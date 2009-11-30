@@ -1,3 +1,4 @@
+(provide 'init)
 
 ;;; Load emacs code and personal data. -------------------------------------------------------------------------
 (defvar massimo-elisp-paths '("~/config/emacs" "~/config/emacs/3rdparties"))
@@ -19,9 +20,6 @@
 ; Applications
 (require 'init-mail-wl)      ;; Wanderlust MUA + bbdb
 (require 'init-org-mode)     ;; The famous ORG-Mode! Yaiii!!
-
-
-
 
 
 
@@ -253,9 +251,10 @@ document.")
   "turn this on if you want to use hippie-expand completion.")
 
 (setq hippie-expand-try-functions-list '(
+                                         yas/hippie-try-expand
                                          try-expand-dabbrev 
                                          try-complete-file-name-partially 
-                                          try-expand-dabbrev-all-buffers 
+                                         try-expand-dabbrev-all-buffers 
                                          try-expand-dabbrev-from-kill 
                                          try-complete-file-name
                                          ;;try-expand-all-abbrevs
@@ -264,6 +263,7 @@ document.")
                                          try-complete-lisp-symbol-partially 
                                          try-complete-lisp-symbol)
       )
+
 
 
 (defun smart-tab (prefix)

@@ -2,6 +2,8 @@
 # Do not put 3rd part packages under version control
 3rdparties/*
 
+#Ignore backup files
+*~
 
 # Exception
 !3rdparties/README
