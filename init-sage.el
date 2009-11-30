@@ -12,12 +12,12 @@
 ;;;-------------------------------------------------------------------
 
 (add-to-list 'load-path (expand-file-name sage-elisp-path))
-(require 'sage "sage")
+(require-maybe 'sage "sage")
 (setq sage-command (concat sage-basedir "sage"))
 
 ;; If you want sage-view to typeset all your output and have plot()
 ;; commands inline, uncomment the following line and configure sage-view:
-(require 'sage-view "sage-view")
+(require-maybe 'sage-view "sage-view")
 (add-hook 'sage-startup-after-prompt-hook 'sage-view)
 ;; You can use commands like 
 ;; (add-hook 'sage-startup-after-prompt-hook 'sage-view
