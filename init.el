@@ -7,6 +7,93 @@
 
 ;;; Module(s) initialization -----------------------------------------------------------------------------------
 
+;;{{{ *** Key binding rules ***
+;;
+;; FIXME Two of them do not work at all!
+;; FIXME Some of them do not work in xterm
+;; FIXME Many of them do not work in console
+;;
+;;
+;;  One modifier for  intra-buffer operations (i.e. selection)
+;;  Two modifiers for inter-buffer operations (i.e. navigation)
+;;  Function keys for buffer processing (compile,check,...)
+;;
+;;  M-C-<arrow> for moving between windows 
+;;  M-S-<arrow> for moving between buffers/screens
+;;  CUA-selection on (C-<SPC) mark, C-<RET> rect.,C-z C-x C-c C-v)
+;;  F2   for local  spell check  
+;;  S-F2 for global spell check             
+;;  M-Space for folding
+;;  Tab for indent/complete
+;;  M-Tab for correct w.r.t. spellcheck (on Flyspell)
+;;
+
+
+;; Moving in text
+(global-set-key [C-left] 'backward-word) 
+(global-set-key [C-right] 'forward-word)
+(global-set-key [M-left] 'backward-sentence) 
+(global-set-key [M-right] 'forward-sentence)
+(global-set-key [C-up] 'backward-paragraph) 
+(global-set-key [C-down] 'forward-paragraph)
+(global-set-key [M-up] 'backward-paragraph) 
+(global-set-key [M-down] 'forward-paragraph)
+
+
+;; Management of ElScreens (M-S)
+(global-set-key "\C-t" 'elscreen-create)
+(global-set-key "\C-w" 'elscreen-kill)
+(global-set-key "\C-b" 'elscreen-toggle-display-tab)
+;; Moving between Elscreens
+(global-set-key [M-S-right] 'elscreen-next) 
+(global-set-key [M-S-left] 'elscreen-previous)
+(global-set-key [C-tab] 'elscreen-toggle)
+;; Moving between buffers (M-S)
+(global-set-key [M-S-up] 'previous-buffer) 
+(global-set-key [M-S-down] 'next-buffer)
+
+;; Managing windows [C-M]
+; Moving
+(global-set-key [M-C-right] 'windmove-right)
+(global-set-key [M-C-left] 'windmove-left)
+(global-set-key [M-C-up] 'windmove-up)
+(global-set-key [M-C-down] 'windmove-down)
+; Scrolling "other window"
+(global-set-key [M-C-prior] 'scroll-other-window-down)
+(global-set-key [M-C-next] 'scroll-other-window)
+; Create and destroy windows
+;; (global-set-key [M-C--] 'split-window-vertically)   --- BROKEN
+(global-set-key (quote [201326637]) (quote split-window-vertically))
+;; (global-set-key [M-C-.] 'split-window-horizontally) --- BROKEN
+(global-set-key (quote [201326638]) (quote split-window-horizontally))
+(global-set-key [M-C-backspace] 'delete-window)
+(global-set-key [M-C-return] 'delete-other-windows)
+
+
+;; Next/Prev error for Quickfix
+(global-set-key [M-prior] 'previous-error) ; Does not work with LaTeX!
+(global-set-key [M-next] 'next-error)
+
+;; Spellcheck
+(global-set-key [f2] 'ispell-word)
+(global-set-key [S-f2] 'ispell-buffer) 
+
+;; Folding on/off (M-Space) 
+(global-set-key "\240" 'folding-toggle-show-hide) 
+
+;; Tab is actually a "Smart tab"
+(global-set-key [(tab)] 'smart-tab)
+
+;; Remember notes.
+(global-set-key [f5] 'org-remember)
+
+;; Tweet your tweets
+(global-set-key [f6] 'twit-post)
+;;}}}
+
+
+
+
 ; Editor customization 
 (require 'init-functions)    ;; Utility functions for configuration
 (require 'init-preferences)  ;; Basic editor preferences
@@ -32,95 +119,12 @@
 (setq auto-mode-alist (cons '("zshrc" . sh-mode) auto-mode-alist))
 
 
-;;}}}
-
-
-;;{{{ *** Key binding rules ***
-;;
-;; FIXME Two of them do not work at all!
-;; FIXME Some of them do not work in xterm
-;; FIXME Many of them do not work in console
-;;
-;;
-;;  One modifier for  intra-buffer operations (i.e. selection)
-;;  Two modifiers for inter-buffer operations (i.e. navigation)
-;;  Function keys for buffer processing (compile,check,...)
-;;
-;;  M-C-<arrow> for moving between windows 
-;;  M-S-<arrow> for moving between buffers/screens
-;;  CUA-selection on (C-<SPC) mark, C-<RET> rect.,C-z C-x C-c C-v)
-;;  F2   for local  spell check  
-;;  S-F2 for global spell check             
-;;  M-Space for folding
-;;  Tab for indent/complete
-;;  M-Tab for correct w.r.t. spellcheck (on Flyspell)
-;;
-
-;; Moving in text
-(global-set-key [C-left] 'backward-word) 
-(global-set-key [C-right] 'forward-word)
-(global-set-key [M-left] 'backward-sentence) 
-(global-set-key [M-right] 'forward-sentence)
-(global-set-key [C-up] 'backward-paragraph) 
-(global-set-key [C-down] 'forward-paragraph)
-(global-set-key [M-up] 'backward-paragraph) 
-(global-set-key [M-down] 'forward-paragraph)
-
-
-;; Management of ElScreens (M-S)
-(global-set-key "\C-t" 'elscreen-create)
-(global-set-key "\C-w" 'elscreen-kill)
-(global-set-key "\C-b" 'elscreen-toggle-display-tab)
-;; Moving between Elscreens
-(global-set-key [M-S-right] 'elscreen-next) 
-(global-set-key [M-S-left] 'elscreen-previous)
-(global-set-key [C-tab] 'elscreen-toogle)
-;; Moving between buffers (M-S)
-(global-set-key [M-S-up] 'previous-buffer) 
-(global-set-key [M-S-down] 'next-buffer)
-
-;; Managing windows [C-M]
-; Moving
-(global-set-key [M-C-right] 'windmove-right)
-(global-set-key [M-C-left] 'windmove-left)
-(global-set-key [M-C-up] 'windmove-up)
-(global-set-key [M-C-down] 'windmove-down)
-; Scrolling "other window"
-(global-set-key [M-C-prior] 'scroll-other-window-down)
-(global-set-key [M-C-next] 'scroll-other-window)
-; Create and destroy windows
-;; (global-set-key [M-C--] 'split-window-vertically)   --- BROKEN
-;; (global-set-key [M-C-.] 'split-window-horizontally) --- BROKEN
-(global-set-key [M-C-backspace] 'delete-window)
-(global-set-key [M-C-return] 'delete-other-windows)
-
-
-;; Next/Prev error for Quickfix
-(global-set-key [M-prior] 'previous-error) ; Does not work with LaTeX!
-(global-set-key [M-next] 'next-error)
-
-;; Spellcheck
-(global-set-key [f2] 'ispell-word)
-(global-set-key [S-f2] 'ispell-buffer) 
-
-;; Folding on/off (M-Space)
-(global-set-key [M-space] 'folding-toggle-show-hide) 
-
-;; Tab is actually a "Smart tab"
-(global-set-key [(tab)] 'smart-tab)
-
-;; Remember notes.
-(global-set-key [f5] 'org-remember)
-
-;; Tweet your tweets
-(global-set-key [f6] 'twit-post)
-;;}}}
-
 
 ;;{{{ *** Primary-Clipboard selection Panic! ***
 ;; Cut (C-x)  Copy(C-c) Paste(C-v) Undo(C-z)
 ;; S-<arrow> select, C-<Ret> rectangular mark, C-<SPC> mark
 (transient-mark-mode t)
+(delete-selection-mode t)
 (cua-mode t)
 (setq cua-keep-region-after-copy t)
 (setq mouse-drag-copy-region nil)   ; stops selection with a mouse being immediately injected to the kill ring
@@ -324,4 +328,8 @@ Otherwise, analyses point position and answers."
 (setq custom-file "~/config/emacs/custom.el")
 (load custom-file 'noerror)
 
+;; Local Variables:
+;; mode: emacs-lisp 
+;; folded-file: t
+;; End: 
 

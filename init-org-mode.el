@@ -20,6 +20,7 @@
 
 (setq org-log-done t)
 (setq org-CUA-compatible t)
+(setq org-support-shift-select t)
 
 (org-remember-insinuate)
 
@@ -42,7 +43,7 @@
   (org-insert-time-stamp (current-time) t)
   (open-line 2)
   (insert " "))
- 
+
 
 ;; Local Variables:
 ;; mode: emacs-lisp 
