@@ -164,6 +164,11 @@
       uniquify-separator ":"
 )
 
+;; Ediff customization 
+; (no external control frame) 
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+; (use vertical split by default)
+(setq ediff-split-window-function 'split-window-horizontally)
 
 ;; Save histories across sessions. Not buffers
 (savehist-mode 1)
@@ -255,7 +260,7 @@ document.")
   "turn this on if you want to use hippie-expand completion.")
 
 (setq hippie-expand-try-functions-list '(
-                                         yas/hippie-try-expand
+                                         ;;yas/hippie-try-expand
                                          try-expand-dabbrev 
                                          try-complete-file-name-partially 
                                          try-expand-dabbrev-all-buffers 
