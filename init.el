@@ -154,7 +154,7 @@
       '(lambda nil
 	 (setq fill-column 110)
 	 (auto-fill-mode 1)
-     (orgtbl-mode 1)
+     ;;(orgtbl-mode 1)
      ;;(flyspell-mode 1)  ; annoying spell checking 
 ))
 

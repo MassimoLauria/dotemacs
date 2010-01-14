@@ -30,9 +30,14 @@
 
 ;; Auto fill for LaTex
 (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
-
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(add-hook 'LaTeX-mode-hook 'auto-fill-mode)
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+  
+ 
 ;; TeX asks for Flyspell and American dictionary.
-(add-hook 'LaTeX-mode-hook (lambda () (flyspell-mode 1)))
+; (add-hook 'LaTeX-mode-hook (lambda () (flyspell-mode 1)))
 (add-hook 'TeX-language-en-hook
 	  (lambda () (ispell-change-dictionary "american")))
 (add-hook 'TeX-language-it-hook

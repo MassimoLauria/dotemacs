@@ -23,7 +23,6 @@
     )
   )
 
-
 ;; Local Variables:
 ;; mode: emacs-lisp 
 ;; folded-file: t
