@@ -167,8 +167,15 @@
 ;; Ediff customization 
 ; (no external control frame) 
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-; (use vertical split by default)
-(setq ediff-split-window-function 'split-window-horizontally)
+; (use vertical split if there is enough room)
+(setq ediff-split-window-function 
+      (lambda (&optional arg)
+        (if (> (frame-width) 150)
+            (split-window-horizontally arg)
+          (split-window-vertically arg)
+          )))
+
+
 
 ;; Save histories across sessions. Not buffers
 (savehist-mode 1)
