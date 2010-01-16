@@ -102,12 +102,12 @@
 ; Math packages
 (require 'init-latex)        ;; AucTeX
 (require 'init-imaxima)      ;; Imaxima and Imath
-(require 'init-sage)        ;; Sagemath 
+(require 'init-sage)         ;; Sagemath 
 
 ; Applications
 (require 'init-mail-wl)      ;; Wanderlust MUA + bbdb
 (require 'init-org-mode)     ;; The famous ORG-Mode! Yaiii!!
-
+(require 'twit)              ;; Twitter Support
 
 
 ;;; Things below here are still a little mess---------------------------------------------------------------------
