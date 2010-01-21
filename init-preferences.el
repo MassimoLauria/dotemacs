@@ -27,6 +27,10 @@
 (setq default-tab-width 4)
 
 
+;; Scroll preferences
+(setq scroll-preserve-screen-position 1)
+(setq scroll-margin 0)
+(setq scroll-conservatively 1000)
 
 ;; Local Variables:
 ;; mode: emacs-lisp 

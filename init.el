@@ -40,14 +40,6 @@
 (global-set-key [M-down] 'forward-paragraph)
 
 
-;; Management of ElScreens (M-S)
-(global-set-key "\C-t" 'elscreen-create)
-(global-set-key "\C-w" 'elscreen-kill)
-(global-set-key "\C-b" 'elscreen-toggle-display-tab)
-;; Moving between Elscreens
-(global-set-key [M-S-right] 'elscreen-next) 
-(global-set-key [M-S-left] 'elscreen-previous)
-(global-set-key [C-tab] 'elscreen-toggle)
 ;; Moving between buffers (M-S)
 (global-set-key [M-S-up] 'previous-buffer) 
 (global-set-key [M-S-down] 'next-buffer)
@@ -97,7 +89,9 @@
 ; Editor customization 
 (require 'init-functions)    ;; Utility functions for configuration
 (require 'init-preferences)  ;; Basic editor preferences
+(require 'init-elscreen)     ;; ElScreen preferences
 (require 'init-backup)       ;; Autosaves and backups behaviour
+(require 'init-unstable)     ;; Features that are not yet stable
 
 ; Math packages
 (require 'init-latex)        ;; AucTeX
@@ -157,6 +151,7 @@
      ;;(orgtbl-mode 1)
      ;;(flyspell-mode 1)  ; annoying spell checking 
 ))
+
 
 ;; Make buffer names unique
 (require 'uniquify)
