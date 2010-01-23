@@ -91,7 +91,7 @@
 (require 'init-preferences)  ;; Basic editor preferences
 (require 'init-elscreen)     ;; ElScreen preferences
 (require 'init-backup)       ;; Autosaves and backups behaviour
-(require 'init-unstable)     ;; Features that are not yet stable
+;; (require 'init-unstable)     ;; Features that are not yet stable
 
 ; Math packages
 (require 'init-latex)        ;; AucTeX
@@ -105,8 +105,6 @@
 
 
 ;;; Things below here are still a little mess---------------------------------------------------------------------
-;; Xterm setting
-(when (or (string= (getenv "TERM") "xterm")) (xterm-mouse-mode))
 
 ;; Auto-mode for renamed config files
 (setq auto-mode-alist (cons '("bashrc" . sh-mode) auto-mode-alist))

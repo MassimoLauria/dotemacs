@@ -7,15 +7,15 @@
 ;;;-------------------------------------------------------------------
 
 (defmacro require-maybe (feature &optional file)
-  "*Try to require FEATURE, but don't signal an error if `require' fails."
+  "Try to require FEATURE, but don't signal an error if `require' fails."
   `(require ,feature ,file 'noerror)) 
 
 (defmacro when-available (func foo)
-  "*Do something if FUNCTION is available."
+  "Do something if FUNCTION is available."
   `(when (fboundp ,func) ,foo)) 
 
 (defun root-file-reopen () 
-  "Reopen this file with root privileges."
+  "Visit the file corresponding to the active buffer using root privileges."
   (interactive)
   (let ((file (buffer-file-name)))
     (set-buffer (find-file (concat "/sudo::" file)))
