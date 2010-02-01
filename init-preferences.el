@@ -4,8 +4,14 @@
 (provide 'init-preferences)
 ;;;-----------------------------------------------------------------
 
+
 (set-default-font "Monospace-10")
 (add-to-list 'default-frame-alist '(font . "Monospace-10"))
+
+(when (boundp 'ask-bigfont) 
+  (set-default-font "Monospace-14")
+  (add-to-list 'default-frame-alist '(font . "Monospace-14"))
+)
 
 (scroll-bar-mode nil)
 (tool-bar-mode nil)

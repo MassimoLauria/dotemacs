@@ -91,17 +91,19 @@
 (require 'init-preferences)  ;; Basic editor preferences
 (require 'init-elscreen)     ;; ElScreen preferences
 (require 'init-backup)       ;; Autosaves and backups behaviour
-;; (require 'init-unstable)     ;; Features that are not yet stable
+;; (require 'init-unstable)  ;; Features that are not yet stable
 
 ; Math packages
-(require 'init-latex)        ;; AucTeX
-(require 'init-imaxima)      ;; Imaxima and Imath
-(require 'init-sage)         ;; Sagemath 
+(when (boundp 'ask-latex ) (require 'init-latex))        ;; AucTeX
+(when (boundp 'ask-maxima) (require 'init-imaxima))      ;; Imaxima and Imath
+(when (boundp 'ask-sage  ) (require 'init-sage))         ;; Sagemath 
 
 ; Applications
-(require 'init-mail-wl)      ;; Wanderlust MUA + bbdb
-(require 'init-org-mode)     ;; The famous ORG-Mode! Yaiii!!
-(require 'twit)              ;; Twitter Support
+(when (boundp 'ask-mail  )   (require 'init-mail-wl))    ;; Wanderlust MUA + bbdb
+(when (boundp 'ask-org-mode) (require 'init-org-mode))   ;; The famous ORG-Mode! Yaiii!!
+
+(autoload 'twit-post "twit" "Frontend for twitter" t)   ;; Twitter Support
+(when (boundp 'ask-twitter) (require 'twit))            ;; Explicit
 
 
 ;;; Things below here are still a little mess---------------------------------------------------------------------
