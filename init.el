@@ -84,8 +84,6 @@
 ;;}}}
 
 
-
-
 ; Editor customization 
 (require 'init-functions)    ;; Utility functions for configuration
 (require 'init-preferences)  ;; Basic editor preferences
@@ -101,6 +99,7 @@
 ; Applications
 (when (boundp 'ask-mail  )   (require 'init-mail-wl))    ;; Wanderlust MUA + bbdb
 (when (boundp 'ask-org-mode) (require 'init-org-mode))   ;; The famous ORG-Mode! Yaiii!!
+(require 'init-editserver-chrome)
 
 (autoload 'twit-post "twit" "Frontend for twitter" t)   ;; Twitter Support
 (when (boundp 'ask-twitter) (require 'twit))            ;; Explicit
