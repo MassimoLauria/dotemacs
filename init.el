@@ -145,11 +145,15 @@
 (setq default-major-mode 'text-mode)
 (setq text-mode-hook
       '(lambda nil
-	 (setq fill-column 110)
-	 (auto-fill-mode 1)
-     ;;(orgtbl-mode 1)
-     ;;(flyspell-mode 1)  ; annoying spell checking 
-))
+         (if (boundp 'ask-smallscreen)
+             (setq fill-column 75)
+           (setq fill-column 110)
+           )
+         (auto-fill-mode 1)
+         ;;(orgtbl-mode 1)
+         ;;(flyspell-mode 1)  ; annoying spell checking 
+         )
+      )
 
 
 ;; Make buffer names unique
