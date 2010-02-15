@@ -60,16 +60,23 @@
 (define-key wl-summary-mode-map "f" 'wl-summary-forward)
 
 (define-key wl-summary-mode-map "\M- " 'wl-thread-open-close)
+(define-key wl-summary-mode-map "."    'wl-summary-redisplay)
+
+(define-key wl-summary-mode-map "H"    nil)
+(define-key wl-summary-mode-map "h"    'wl-summary-toggle-all-header)
+
 
 (define-key wl-summary-mode-map "c" nil) ;;remove previous "mark all as read"
 (define-key wl-summary-mode-map "r" 'wl-summary-mark-as-read)
 (define-key wl-summary-mode-map "R" 'wl-summary-mark-as-read-all)
+(define-key wl-summary-mode-map "$" 'wl-summary-mark-as-important)
 
 (define-key wl-summary-mode-map "u" 'wl-summary-unmark)
 (define-key wl-summary-mode-map "U" 'wl-summary-unmark-all)
 
 (define-key wl-summary-mode-map "d" 'wl-summary-dispose)
 (define-key wl-summary-mode-map "D" 'wl-summary-delete)
+(define-key wl-summary-mode-map "o" 'wl-summary-refile)
 
 
 ;; Mail Viewing
@@ -112,7 +119,7 @@
 ;; Reply to all function...
 (defun wl-summary-reply-all-with-citation (&optional arg)
   (interactive "P")
-  (wl-summary-replay-with-citation t)
+  (wl-summary-reply-with-citation t)
 )
 
 
