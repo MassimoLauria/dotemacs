@@ -13,9 +13,9 @@
   (add-to-list 'default-frame-alist '(font . "Monospace-14"))
 )
 
-(scroll-bar-mode nil)
-(tool-bar-mode nil)
-(menu-bar-mode nil)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
 
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)

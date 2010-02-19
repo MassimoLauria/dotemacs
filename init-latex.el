@@ -43,6 +43,15 @@
 (add-hook 'TeX-language-it-hook
 	  (lambda () (ispell-change-dictionary "italian")))
 
+
+;; Flymake mode for LaTeX
+; it is not enabled by default, but it is ready to go.
+(defun flymake-get-tex-args (file-name)
+  (list "latex" (list "-file-line-error-style" 
+                      "-draftmode" 
+                      "-interaction=nonstopmode" file-name)))
+
+
 ;; Local Variables:
 ;; mode: emacs-lisp 
 ;; folded-file: t

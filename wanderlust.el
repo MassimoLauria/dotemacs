@@ -1,4 +1,4 @@
-;; mode: -*- emacs-lisp-*-
+; mode: -*- emacs-lisp-*-
 
 
 ;; My addresses
@@ -13,8 +13,8 @@
   wl-interactive-send t       ;; Ask before sending message
   wl-interactive-exit t       ;; Ask before quit
   wl-stay-folder-window t     ;; Folder window disappear 
-  wl-auto-select-first        ;; Do not open first message
-  wl-auto-select-next         ;; Go to the next folder when exit from summary
+  wl-auto-select-first  nil   ;; Do not open first message
+  wl-auto-select-next   nil   ;; Go to the next folder when exit from summary
 
   wl-draft-buffer-style        'full
   wl-draft-reply-buffer-style  'split
@@ -40,15 +40,40 @@
   elmo-localdir-folder-path "~/personal/localmail/"
 
 ;; number temporary-mark persistent-mark date branch [ (number-of-children) sender ] subject
-  wl-summary-line-format "%n%T%P%M/%D(%W) %t%[%30(%c %f%) %] %s"
+  wl-summary-line-format "%n%T%P%Y/%M/%D(%W) %t%[%30(%c %f%) %] %s"
+
+  ;;wl-summary-showto-folder-regexp "\\(.sent.*|Inviata\\)"
+
+  wl-thread-insert-opened t
+  wl-thread-open-reading-thread t
+
 )
+
+;; Set mail-icon to be shown universally in the modeline.
+(setq global-mode-string
+      (cons
+       '(wl-modeline-biff-status
+         wl-modeline-biff-state-on
+         wl-modeline-biff-state-off)
+       global-mode-string))
+
+;; Remove it when exiting. 
+(add-hook 'wl-exit-hook
+          '(lambda () 
+             (setq global-mode-string
+                   (delete  '(wl-modeline-biff-status
+                              wl-modeline-biff-state-on
+                              wl-modeline-biff-state-off) global-mode-string )
+                   )
+             ))
+
 
 ;; In case of a small screen we fix the previous settings.
 (when (boundp 'ask-smallscreen)
 (setq
  wl-stay-folder-window nil     ;; Folder window disappear 
  wl-summary-width 75
- wl-summary-line-format "%T%P%M/%D(%W)%t%[%20(%c %f%)%] %s"
+ wl-summary-line-format "%T%P%Y/%M/%D(%W)%t%[%20(%c %f%)%] %s"
  wl-draft-buffer-style        'full
  wl-draft-reply-buffer-style  'full
 ))
@@ -78,6 +103,17 @@
 (define-key wl-summary-mode-map "D" 'wl-summary-delete)
 (define-key wl-summary-mode-map "o" 'wl-summary-refile)
 
+;; MIME-View keybindings for usage into the  
+(add-hook 'mime-view-mode-hook 
+          (lambda () 
+            (local-unset-key "a" )
+            (local-unset-key "f" )
+            (local-set-key "/" 'browse-url)
+            (local-set-key "w" 'wl-summary-write)
+ ;;           (local-set-key "A" 'wl-summary-reply-all-with-citation)
+ ;;           (local-set-key "h"  'wl-summary-toggle-all-header)
+            )
+          )
 
 ;; Mail Viewing
 (setq
@@ -87,7 +123,7 @@
 
     "^Subject:"
     "^\\(From\\|Reply-To\\):"
-    "^Organization:"
+    ;;"^Organization:"
     ;;"^Message-Id:"
     "^\\(Posted\\|Date\\):"
     )
@@ -131,7 +167,14 @@
 ;; exceptional folders against auto collection
 (setq bbdb-wl-ignore-folder-regexp "^@")
 ;; shows the name of bbdb in the summary :-)
-(setq wl-summary-from-function 'bbdb-wl-from-func)
+
+;; The following does not work with  wl-summary-showto-folder-regexp
+;;(setq wl-summary-from-function 'bbdb-wl-from-func)
+(setq wl-summary-from-function 'wl-summary-default-from)
+
+
+(setq wl-summary-get-petname-function 'bbdb-wl-get-petname)
+
 (define-key wl-draft-mode-map (kbd "<C-tab>") 'bbdb-complete-name)
 
 
@@ -184,6 +227,3 @@
 ;;      (wl-summary-display-top)
 ;;    )  
 ;;)
-
-
-

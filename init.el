@@ -1,7 +1,7 @@
 (provide 'init)
 
 ;;; Load emacs code and personal data. -------------------------------------------------------------------------
-(defvar massimo-elisp-paths '("~/config/emacs" "~/config/emacs/3rdparties"))
+(defvar massimo-elisp-paths '("~/config/emacs" "~/config/emacs/3rdparties" "~/config/emacs/3rdparties/ac"))
 (setq load-path (append load-path massimo-elisp-paths))  
 (load-file "~/personal/emacs-data.el")
 
@@ -74,7 +74,7 @@
 (global-set-key "\240" 'folding-toggle-show-hide) 
 
 ;; Tab is actually a "Smart tab"
-(global-set-key [(tab)] 'smart-tab)
+;; (global-set-key [(tab)] 'smart-tab)
 
 ;; Remember notes.
 (global-set-key [f5] 'org-remember)
@@ -91,6 +91,10 @@
 (require 'init-backup)       ;; Autosaves and backups behaviour
 ;; (require 'init-unstable)  ;; Features that are not yet stable
 
+; Editor Utilities.
+(require 'init-auto-complete)
+
+
 ; Math packages
 (when (boundp 'ask-latex ) (require 'init-latex))        ;; AucTeX
 (when (boundp 'ask-maxima) (require 'init-imaxima))      ;; Imaxima and Imath
@@ -99,7 +103,7 @@
 ; Applications
 (when (boundp 'ask-mail  )   (require 'init-mail-wl))    ;; Wanderlust MUA + bbdb
 (when (boundp 'ask-org-mode) (require 'init-org-mode))   ;; The famous ORG-Mode! Yaiii!!
-(require 'init-editserver-chrome)
+;;(require 'init-editserver-chrome) ;; Edit text area on Google Chrome
 
 (autoload 'twit-post "twit" "Frontend for twitter" t)   ;; Twitter Support
 (when (boundp 'ask-twitter) (require 'twit))            ;; Explicit
@@ -277,8 +281,7 @@ document.")
                                          try-complete-lisp-symbol-partially 
                                          try-complete-lisp-symbol)
       )
-
-
+ 
 
 (defun smart-tab (prefix)
   "Needs `transient-mark-mode' to be on. This smart tab is
