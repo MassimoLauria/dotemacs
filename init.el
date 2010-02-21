@@ -1,8 +1,13 @@
 (provide 'init)
 
 ;;; Load emacs code and personal data. -------------------------------------------------------------------------
-(defvar massimo-elisp-paths '("~/config/emacs" "~/config/emacs/3rdparties" "~/config/emacs/3rdparties/ac"))
-(setq load-path (append load-path massimo-elisp-paths))  
+(setq default-elisp-path "~/config/emacs")
+(setq default-elisp-3rdparties "~/config/emacs/3rdparties")
+
+(setq load-path (cons 	default-elisp-path load-path ))
+(setq load-path (cons 	default-elisp-3rdparties load-path ))
+ 
+                       
 (load-file "~/personal/emacs-data.el")
 
 ;;; Module(s) initialization -----------------------------------------------------------------------------------

@@ -3,6 +3,10 @@
 ;; Filename: init-auto-complete.el
 
 ;;; Require
+
+(setq load-path (append load-path 
+                        (list (concat default-elisp-3rdparties "/ac"))))
+
 (require 'auto-complete)
 (require 'auto-complete-config nil t) ; utilities
 
