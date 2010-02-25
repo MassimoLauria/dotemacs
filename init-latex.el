@@ -47,9 +47,15 @@
 ;; Flymake mode for LaTeX
 ; it is not enabled by default, but it is ready to go.
 (defun flymake-get-tex-args (file-name)
-  (list "latex" (list "-file-line-error-style" 
-                      "-draftmode" 
-                      "-interaction=nonstopmode" file-name)))
+  (list "chktex" (list "-q" "-v0" file-name)))
+
+(defun my-flymake-show-help ()
+   (when (get-char-property (point) 'flymake-overlay)
+     (let ((help (get-char-property (point) 'help-echo)))
+       (if help (message "%s" help)))))
+
+(add-hook 'post-command-hook 'my-flymake-show-help)
+
 
 
 ;; Local Variables:

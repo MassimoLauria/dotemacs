@@ -26,7 +26,8 @@
                         perl-mode cperl-mode python-mode ruby-mode
                         ecmascript-mode javascript-mode php-mode css-mode
                         makefile-mode sh-mode fortran-mode f90-mode ada-mode
-                        xml-mode sgml-mode
+                        xml-mode sgml-mode 
+                        latex-mode
                         haskell-mode literate-haskell-mode
                         emms-tag-editor-mode
                         asm-mode
