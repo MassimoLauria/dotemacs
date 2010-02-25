@@ -101,14 +101,15 @@
 
 
 ; Math packages
-(when (boundp 'ask-latex ) (require 'init-latex))        ;; AucTeX
-(when (boundp 'ask-maxima) (require 'init-imaxima))      ;; Imaxima and Imath
-(when (boundp 'ask-sage  ) (require 'init-sage))         ;; Sagemath 
+(when (boundp 'ask-latex )   (require 'init-latex))        ;; AucTeX
+(when (boundp 'ask-maxima)   (require 'init-imaxima))      ;; Imaxima and Imath
+(when (boundp 'ask-sage  )   (require 'init-sage))         ;; Sagemath 
+(when (boundp 'ask-singular) (require 'init-singular))     ;; Singular 
 
 ; Applications
 (when (boundp 'ask-mail  )   (require 'init-mail-wl))    ;; Wanderlust MUA + bbdb
 (when (boundp 'ask-org-mode) (require 'init-org-mode))   ;; The famous ORG-Mode! Yaiii!!
-;;(require 'init-editserver-chrome) ;; Edit text area on Google Chrome
+(require 'init-editserver-chrome) ;; Edit text area on Google Chrome
 
 (autoload 'twit-post "twit" "Frontend for twitter" t)   ;; Twitter Support
 (when (boundp 'ask-twitter) (require 'twit))            ;; Explicit
