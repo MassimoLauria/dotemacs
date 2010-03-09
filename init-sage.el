@@ -4,8 +4,8 @@
 (provide 'init-sage)
 ;;;------------------------------------------------------------------
 
-(setq sage-version "4.2.1")
-(setq sage-basedir "/usr/local/lib/sage-4.2.1/")
+(setq sage-version "4.3.3")
+(setq sage-basedir "/usr/local/lib/sage-4.3.3/")
 (setq sage-elisp-path (concat sage-basedir "data/emacs"))
 
 ;;;-------------------------------------------------------------------
