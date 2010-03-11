@@ -4,23 +4,44 @@
 
 ;;; Require
 
-(setq load-path (append load-path 
-                        (list (concat default-elisp-3rdparties "/auto-complete") 
-                              (concat default-elisp-3rdparties "/auto-complete-latex")
-                              )))
+;; Choose either v1.0 or v1.2 versions (1.2 gives me problems with LaTeX)
+(defvar default-ac-version 1.0)
 
 
-;; Load auto-complete 
+;; Load v1.0 of autocomplete
+(when (= default-ac-version 1.0)
+  (setq default-ac-dir   (concat default-elisp-3rdparties "/auto-complete-v1.0"))
+  (setq load-path (append load-path (list default-ac-dir)))
+  (byte-recompile-directory default-ac-dir   0)
+  )
+
+
+;; Load v1.2 of autocomplete
+(when (>= default-ac-version 1.2)
+  (setq default-ac-dir   (concat default-elisp-3rdparties "/auto-complete-v1.2"))
+  (setq default-ac-l-dir (concat default-elisp-3rdparties "/auto-complete-v1.2-latex"))
+  (setq load-path (append load-path (list default-ac-dir default-ac-l-dir)))
+  (byte-recompile-directory default-ac-dir   0)
+  (byte-recompile-directory default-ac-l-dir 0)
+  )
+
+
+;; Finally load chosen auto-complete library.
 (require 'auto-complete)
-(require 'auto-complete-config) ; utilities
+(require 'auto-complete-config)
 
-;; Load auto-complete for latex.
-(require 'auto-complete-latex)
-(require 'auto-complete-latex-lib)
+(when (>= default-ac-version 1.2)
+  ;; v1.2 comes with dictionary facilities
+  (add-to-list 'ac-dictionary-directories (concat default-ac-dir "/dict"))
+  )
 
-(add-to-list 'ac-dictionary-directories (concat default-elisp-3rdparties "/auto-complete/dict"))
 
-;;; Code:
+;; Load LaTeX facilities only if set up
+(when (boundp 'default-ac-l-dir)
+  (require 'auto-complete-latex)
+  (require 'auto-complete-latex-lib)
+  )
+
 
 ;; Generic setup.
 (global-auto-complete-mode t)           ;enable global-mode
@@ -30,34 +51,28 @@
  
  
 ;; The mode that automatically startup.
-(setq ac-modes
-      '(emacs-lisp-mode lisp-interaction-mode lisp-mode scheme-mode
-                        c-mode cc-mode c++-mode java-mode
-                        perl-mode cperl-mode python-mode ruby-mode
-                        ecmascript-mode javascript-mode php-mode css-mode
-                        makefile-mode sh-mode fortran-mode f90-mode ada-mode
-                        xml-mode sgml-mode 
-                        latex-mode
-                        haskell-mode literate-haskell-mode
-                        emms-tag-editor-mode
-                        asm-mode
-                        org-mode
-                        text-mode))
-;; (add-to-list 'ac-trigger-commands 'org-self-insert-command) ; if you want enable auto-complete at org-mode, uncomment this line
+(setq ac-modes '(emacs-lisp-mode lisp-interaction-mode lisp-mode
+      scheme-mode c-mode cc-mode c++-mode java-mode perl-mode
+      cperl-mode python-mode ruby-mode ecmascript-mode
+      javascript-mode php-mode css-mode makefile-mode sh-mode
+      fortran-mode f90-mode ada-mode xml-mode sgml-mode
+      haskell-mode literate-haskell-mode latex-mode LaTeX-mode
+      emms-tag-editor-mode asm-mode org-mode text-mode))
+
+(add-to-list 'ac-trigger-commands 'org-self-insert-command) ; if you want enable auto-complete at org-mode, uncomment this line
+
  
 ;; The sources for common all mode.
 (custom-set-variables
  '(ac-sources
    '(
-     ac-source-yasnippet ;this source need file `auto-complete-yasnippet.el'
-     ;; ac-source-semantic    ;this source need file `auto-complete-semantic.el'
+     ac-source-yasnippet
      ac-source-imenu
      ac-source-abbrev
      ac-source-words-in-buffer
      ac-source-files-in-current-dir
      ac-source-filename
      )))
-
 
  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Lisp mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -87,7 +102,14 @@
 ;; Keywords.
 (add-hook 'haskell-mode-hook '(lambda ()
                                 (add-to-list 'ac-sources 'ac-source-haskell)))
- 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; LaTeX mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(when (fboundp 'ac-l-setup)
+  (add-hook 'latex-mode-hook 'ac-l-setup)
+  (add-hook 'LaTeX-mode-hook 'ac-l-setup)
+  )
+
 
 (provide 'init-auto-complete)
 
