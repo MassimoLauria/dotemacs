@@ -99,6 +99,9 @@
 ; Editor Utilities.
 (require 'init-auto-complete)
 
+; Programming Languages
+(require 'init-python)
+
 
 ; Math packages
 (when (boundp 'ask-latex )   (require 'init-latex))        ;; AucTeX

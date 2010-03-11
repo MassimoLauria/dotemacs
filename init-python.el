@@ -16,10 +16,11 @@
 (setq ipython-command "/usr/bin/ipython")
 (when (require-maybe 'ipython)
   (setq py-python-command-args '("-pylab" "-colors" "Linux"))
+  (setq ipython-completion-command-string "print(';'.join(__IP.Completer.all_completions('%s')))\n")
 )
 
 ;; Load ropemacs
-(pymacs-load "ropemacs" "rope-")
+;; (pymacs-load "ropemacs" "rope-")
 
 
 ;; Local Variables:
