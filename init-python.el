@@ -12,6 +12,7 @@
 (setq ipython-command "/usr/bin/ipython2.6")
 (when (require-maybe 'ipython)
   (setq py-python-command-args '("-pylab" "-colors" "Linux"))
+;;;- Functions Modified from ErgoEmacs ( previous/next user/emacs buffer ) -------------------------
   (setq ipython-completion-command-string "print(';'.join(__IP.Completer.all_completions('%s')))\n")
 )
 

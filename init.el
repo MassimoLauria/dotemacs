@@ -46,8 +46,8 @@
 
 
 ;; Moving between buffers (M-S)
-(global-set-key [M-S-up] 'previous-buffer) 
-(global-set-key [M-S-down] 'next-buffer)
+(global-set-key [M-S-up] 'previous-user-buffer) 
+(global-set-key [M-S-down] 'next-user-buffer)
 
 ;; Managing windows [C-M]
 ; Moving
@@ -136,10 +136,11 @@
 (setq x-select-enable-primary nil)	; stops killing/yanking interacting with primary X11 selection 
 (setq x-select-enable-clipboard t)	; makes killing/yanking interact with clipboard X11 selection
 (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
-(when (string= (window-system) "x") 
-  (setq select-active-regions t)                 ; active region sets primary X11 selection
-  (global-set-key [mouse-2] 'mouse-yank-primary) ; middle-click only pastes from primary X11 selection.
-  (setq yank-pop-change-selection t))            ; makes rotating the kill ring change the X11 clipboard.	
+;; (when (string= (window-system) "x") 
+(setq select-active-regions t)                 ; active region sets primary X11 selection
+(global-set-key [mouse-2] 'mouse-yank-primary) ; middle-click only pastes from primary X11 selection.
+(setq yank-pop-change-selection t)             ; makes rotating the kill ring change the X11 clipboard.	
+;;)                                 
 ;; shift + click select region
 (define-key global-map (kbd "<S-down-mouse-1>") 'ignore) ; turn off font dialog
 (define-key global-map (kbd "<S-mouse-1>") 'mouse-set-point)
