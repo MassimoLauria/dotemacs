@@ -102,7 +102,6 @@
 ; Programming Languages
 (require 'init-python)
 
-
 ; Math packages
 (when (boundp 'ask-latex )   (require 'init-latex))        ;; AucTeX
 (when (boundp 'ask-maxima)   (require 'init-imaxima))      ;; Imaxima and Imath

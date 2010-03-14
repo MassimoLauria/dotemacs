@@ -17,9 +17,13 @@
 (defun root-file-reopen () 
   "Visit the file corresponding to the active buffer using root privileges."
   (interactive)
-  (let ((file (buffer-file-name)))
+  (let (
+        (file (buffer-file-name))
+        (pos  (point))
+        )
     (set-buffer (find-file (concat "/sudo::" file)))
     (rename-buffer (concat "sudo::" (buffer-name)))
+    (goto-char pos)
     )
   )
 
