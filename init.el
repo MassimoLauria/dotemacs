@@ -356,7 +356,7 @@ Otherwise, analyses point position and answers."
 (setq custom-file "~/config/emacs/custom.el")
 (load custom-file 'noerror)
 
-:: Loading time 
+;; Loading time 
 (when (require 'time-date nil t)
   (message "Emacs startup time: %d seconds." (time-to-seconds (time-since emacs-load-start-time))))
 
