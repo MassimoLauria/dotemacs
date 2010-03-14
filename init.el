@@ -48,6 +48,8 @@
 ;; Moving between buffers (M-S)
 (global-set-key [M-S-up] 'previous-user-buffer) 
 (global-set-key [M-S-down] 'next-user-buffer)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
 
 ;; Managing windows [C-M]
 ; Moving
