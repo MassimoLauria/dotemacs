@@ -1,5 +1,9 @@
 (provide 'init)
 
+;;  Start time.
+(setq emacs-load-start-time (current-time))
+
+
 ;;; Load emacs code and personal data. -------------------------------------------------------------------------
 (setq default-elisp-path "~/config/emacs")
 (setq default-elisp-3rdparties "~/config/emacs/3rdparties")
@@ -352,19 +356,12 @@ Otherwise, analyses point position and answers."
 (setq custom-file "~/config/emacs/custom.el")
 (load custom-file 'noerror)
 
+:: Loading time 
+(when (require 'time-date nil t)
+  (message "Emacs startup time: %d seconds." (time-to-seconds (time-since emacs-load-start-time))))
+
 ;; Local Variables:
 ;; mode: emacs-lisp 
 ;; folded-file: t
 ;; End: 
 
-
-
-;;; This was installed by package-install.el.
-;;; This provides support for the package system and
-;;; interfacing with ELPA, the package archive.
-;;; Move this code earlier if you want to reference
-;;; packages in your .emacs.
-(when
-    (load
-     (expand-file-name "~/.emacs.d/elpa/package.el"))
-  (package-initialize))
