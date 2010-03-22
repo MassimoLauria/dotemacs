@@ -1,6 +1,5 @@
 ; mode: -*- emacs-lisp-*-
 
-
 ;; My addresses
 (setq
  wl-from                private-email
@@ -90,6 +89,8 @@
 (define-key wl-summary-mode-map "H"    nil)
 (define-key wl-summary-mode-map "h"    'wl-summary-toggle-all-header)
 
+(define-key wl-summary-mode-map "m"    'wl-summary-toggle-mime)
+
 
 (define-key wl-summary-mode-map "c" nil) ;;remove previous "mark all as read"
 (define-key wl-summary-mode-map "r" 'wl-summary-mark-as-read)
@@ -108,6 +109,7 @@
           (lambda () 
             (local-unset-key "a" )
             (local-unset-key "f" )
+            (local-unset-key "l" )
             (local-set-key "/" 'browse-url)
             (local-set-key "w" 'wl-summary-write)
  ;;           (local-set-key "A" 'wl-summary-reply-all-with-citation)
@@ -163,6 +165,13 @@
 ;; (Insidious) Big Brother DataBase integration with WL
 (require 'bbdb-wl)
 (bbdb-wl-setup)
+
+;; Fix some annoying behaviour with BBDB buffers.
+;; (add-hook 'wl-summary-toggle-disp-folder-message-resumed-hook 'bbdb-wl-hide-bbdb-buffer)
+(remove-hook 'wl-summary-toggle-disp-folder-message-resumed-hook 'bbdb-wl-show-bbdb-buffer)
+(add-hook 'wl-message-redisplay-hook 'bbdb-wl-hide-bbdb-buffer)
+
+
 
 ;; exceptional folders against auto collection
 (setq bbdb-wl-ignore-folder-regexp "^@")

@@ -41,6 +41,18 @@
       'wl-draft-kill
       'mail-send-hook))
 
+
+(add-hook
+ 'wl-draft-mode-hook
+ '(lambda ()
+    ;; Features in draft-mode
+    (auto-complete-mode)
+    (set-fill-column 75)
+    (wl-draft-highlight-and-recenter)
+    )
+ )
+
+
 (setq wl-draft-elide-ellipsis "[...]" )
 (define-key wl-draft-mode-map (kbd "<C-tab>") 'bbdb-complete-name)
 
