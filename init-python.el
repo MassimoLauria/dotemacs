@@ -28,6 +28,13 @@
  )
 
 ;; Autofill inside of comments
+
+(defsubst python-in-string/comment ()
+     "Return non-nil if point is in a Python literal (a comment or string)."
+     ;; We don't need to save the match data.
+     (nth 8 (syntax-ppss)))
+
+
 (defun python-auto-fill-comments-only ()
   (auto-fill-mode 1)
   (set (make-local-variable 'fill-nobreak-predicate)

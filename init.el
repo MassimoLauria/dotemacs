@@ -41,10 +41,12 @@
 ;; Moving in text
 (global-set-key [C-left] 'backward-word) 
 (global-set-key [C-right] 'forward-word)
-(global-set-key [M-left] 'backward-sentence) 
-(global-set-key [M-right] 'forward-sentence)
-(global-set-key [C-up] 'backward-paragraph) 
-(global-set-key [C-down] 'forward-paragraph)
+(global-set-key [C-up]   'backward-sentence) 
+(global-set-key [C-down] 'forward-sentence)
+
+;; Moving in structes
+(global-set-key [M-left] 'backward-sexp) 
+(global-set-key [M-right] 'forward-sexp)
 (global-set-key [M-up] 'backward-paragraph) 
 (global-set-key [M-down] 'forward-paragraph)
 
