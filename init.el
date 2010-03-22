@@ -50,6 +50,28 @@
 (global-set-key [M-up] 'backward-paragraph) 
 (global-set-key [M-down] 'forward-paragraph)
 
+;;; Possible keybinding for moving in text. Notice that 
+;;; such kybindings are made for not leaving the homerow. 
+;;; For me is quite premature to apply such bindings.
+
+;; (local-set-key [(control j)] 'backward-char)
+;; (local-set-key [(control l)]  'forward-char)
+;; (local-set-key [(control i)] 'previous-line)
+;; (local-set-key [(control k)]  'next-line)
+;;  
+;;  
+;; (local-set-key [(meta j)]  'backward-word)
+;; (local-set-key [(meta l)]   'forward-word)
+;; (local-set-key [(meta i)] 'backward-sentence)
+;; (local-set-key [(meta k)]  'forward-sentence)
+;;  
+;;  
+;; (local-set-key [(control meta j)]  'backward-sexp)
+;; (local-set-key [(control meta l)]   'forward-sexp)
+;; (local-set-key [(control meta i)] 'backward-paragraph)
+;; (local-set-key [(control meta k)]  'forward-paragraph)
+
+
 
 ;; Moving between buffers (M-S)
 (global-set-key [M-S-up] 'previous-user-buffer) 

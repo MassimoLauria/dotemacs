@@ -21,6 +21,7 @@
 (setq org-log-done t)
 (setq org-CUA-compatible t)
 (setq org-support-shift-select t)
+(setq org-disputed-keys t)
 
 (org-remember-insinuate)
 
@@ -28,11 +29,6 @@
       '(("Journal" ?j "* %U %?\n\n  %i\n  %a" "journal.org" "X")
         ("Idea" ?i "* %^{Title}\n  %i\n  %a" "notes.org" "New Ideas")))
 
-
-(add-hook 'org-mode-hook
-          	  (lambda ()
-          	    (org-set-local 'yas/trigger-key [tab])
-          	    (define-key yas/keymap [tab] 'yas/next-field-group)))
 
 (defun org-add-journal-entry ()
   "Start a new journal entry."
