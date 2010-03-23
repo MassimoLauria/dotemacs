@@ -19,9 +19,29 @@
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
 (setq org-log-done t)
-(setq org-CUA-compatible t)
-(setq org-support-shift-select t)
-(setq org-disputed-keys t)
+;;(setq org-CUA-compatible t)
+;;(setq org-support-shift-select t)
+
+;; Org-mode Keys
+(setq org-replace-disputed-keys t)
+(setq org-disputed-keys '(
+                          ([(shift up)]      . [(control i) ]) 
+                          ([(shift down)]    . [(control k) ]) 
+                          ([(shift left)]    . [(control j) ])
+                          ([(shift right)]   . [(control l) ]) 
+                          ([(meta  up)]      . [(meta i) ]) 
+                          ([(meta  down)]    . [(meta k) ]) 
+                          ([(meta  left)]    . [(meta j) ])
+                          ([(meta  right)]   . [(meta l) ])
+                          ([(meta  shift up)]      . [(control meta i) ]) 
+                          ([(meta  shift down)]    . [(control meta k) ]) 
+                          ([(meta  shift left)]    . [(control meta j) ])
+                          ([(meta  shift right)]   . [(control meta l) ])
+                          ([(tab)]           . [(meta space)])
+                          ([(control shift right)] . [(meta shift +)]) 
+                          ([(control shift left)] . [(meta shift _)])
+                          ))
+
 
 (org-remember-insinuate)
 
