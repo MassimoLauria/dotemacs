@@ -106,7 +106,7 @@
 (global-set-key [S-f2] 'ispell-buffer) 
 
 ;; Folding on/off (M-Space) 
-(global-set-key "\240" 'folding-toggle-show-hide) 
+(global-set-key "\M-\ " 'folding-toggle-show-hide) 
 
 ;; Tab is actually a "Smart tab"
 ;; (global-set-key [(tab)] 'smart-tab)
