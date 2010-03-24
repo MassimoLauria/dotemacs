@@ -24,6 +24,7 @@
  ;;org-support-shift-select t
  org-cycle-emulate-tab nil
  org-cycle-global-at-bob t
+ org-highlight-latex-fragments-and-specials t
 )
 
 
