@@ -51,6 +51,8 @@
 (defun org-mode-setup-local-keys ()
   "Define/>Undefine of org-mode keys"
   (local-unset-key "\t")                     ; Use Tab for more decent things (auto-complete or yasnippet)
+  (local-unset-key [tab])
+  (local-unset-key [(tab)])
   (local-set-key   "\M-\ " 'org-cycle)       ; Use M-SPC for org-cycle, which is similar to what I use for folding-toggle-show-hide
   (local-set-key   "\M-+" 'org-priority-up)  
   (local-set-key   "\M--" 'org-priority-down)
