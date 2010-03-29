@@ -52,16 +52,18 @@
  
 ;; The mode that automatically startup.
 (setq ac-modes '(emacs-lisp-mode lisp-interaction-mode lisp-mode
-      scheme-mode c-mode cc-mode c++-mode java-mode perl-mode
-      cperl-mode python-mode ruby-mode ecmascript-mode
-      javascript-mode php-mode css-mode makefile-mode sh-mode
-      fortran-mode f90-mode ada-mode xml-mode sgml-mode
-      haskell-mode literate-haskell-mode latex-mode LaTeX-mode
-      emms-tag-editor-mode asm-mode org-mode text-mode))
+                 inferior-emacs-lisp-mode scheme-mode c-mode
+                 cc-mode c++-mode java-mode perl-mode cperl-mode
+                 python-mode ruby-mode ecmascript-mode
+                 javascript-mode php-mode css-mode makefile-mode
+                 sh-mode fortran-mode f90-mode ada-mode xml-mode
+                 sgml-mode haskell-mode literate-haskell-mode
+                 latex-mode LaTeX-mode emms-tag-editor-mode
+                 asm-mode org-mode text-mode))
 
 (add-to-list 'ac-trigger-commands 'org-self-insert-command) ; if you want enable auto-complete at org-mode, uncomment this line
 
- 
+
 ;; The sources for common all mode.
 (custom-set-variables
  '(ac-sources
@@ -79,6 +81,7 @@
 (dolist (hook (list
                'emacs-lisp-mode-hook
                'lisp-interaction-mode
+               'inferior-emacs-lisp-mode-hook
                ))
   (add-hook hook '(lambda ()
                     (add-to-list 'ac-sources 'ac-source-symbols))))
