@@ -189,8 +189,8 @@
 (setq text-mode-hook
       '(lambda nil
          (if (boundp 'ask-smallscreen)
-             (setq fill-column 75)
-           (setq fill-column 110)
+             (setq fill-column 70)
+           (setq fill-column 80)
            )
          (auto-fill-mode 1)
          ;;(orgtbl-mode 1)
