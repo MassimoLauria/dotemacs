@@ -19,7 +19,7 @@
 ;; Load v1.2 of autocomplete
 (when (>= default-ac-version 1.2)
   (setq default-ac-dir   (concat default-elisp-3rdparties "/auto-complete-v1.2"))
-  (setq default-ac-l-dir (concat default-elisp-3rdparties "/auto-complete-v1.2-latex"))
+  (setq default-ac-l-dir (concat default-elisp-3rdparties "/auto-complete-latex"))
   (setq load-path (append load-path (list default-ac-dir default-ac-l-dir)))
   (byte-recompile-directory default-ac-dir   0)
   (byte-recompile-directory default-ac-l-dir 0)
@@ -39,7 +39,7 @@
 ;; Load LaTeX facilities only if set up
 (when (boundp 'default-ac-l-dir)
   (require 'auto-complete-latex)
-  (require 'auto-complete-latex-lib)
+  (setq ac-l-dict-directory (concat default-ac-l-dir "/ac-l-dict"))
   )
 
 
