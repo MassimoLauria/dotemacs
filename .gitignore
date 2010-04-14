@@ -1,9 +1,17 @@
 
-# Do not put 3rd part packages under version control
-3rdparties/*
+# We put 3rd parties packages under version control but we want to ignore their
+# own Git/Hg/SVN information to avoid mess.  Since such information is useful
+# for updating purposes, we keep it.  
+3rdparties/*/.git
+3rdparties/*/.cvs
+3rdparties/*/.hg
+3rdparties/*/.svn
 
-#Ignore backup files
+
+# Ignore backup files and precompiled files.
+
 *~
+*.elc
 
-# Exception
-!3rdparties/README
+# Exceptions
+# None

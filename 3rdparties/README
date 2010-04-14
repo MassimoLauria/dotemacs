@@ -1,6 +1,12 @@
 
-This directory contains 3rd party packages I use in my configuration and I had to install manually (i.e. with
-no help of ELPA).
+This directory contains 3rd party packages I use in my configuration and I had
+to install manually (i.e. with no help of ELPA).
 
-* External packages are not under revision control, unless I had to do some changes.
 
+* I put this files under revision control because it is easier to keep an
+  up to date folder online, and synchronize my .emacs.d.
+
+ 
+* The packages in this folder are NOT my own packages/config files, and most of
+  the time are not even sync'ed with their respective upstreams.  I update them
+  when I need so for my private usage.
