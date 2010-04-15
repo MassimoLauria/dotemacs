@@ -106,6 +106,63 @@ Emacs buffers are those whose name starts with *."
       (setq i (1+ i)) (previous-buffer) )))
 
 
+;;;------ Text processing ------------------------------------------- 
+
+(defun join-all-lines (start end)
+  "Produce a single line, joining all lines in the text."
+  (interactive "r")
+  (save-restriction 
+    (when mark-active 
+      (narrow-to-region start end))
+    (goto-char (point-min))
+    (while (search-forward "\n" nil t) (replace-match " " nil t))
+    )
+  )
+
+
+(defun format-author-string (start end)
+  "Replace all “and”s but last one, to commas. This is very
+  useful for formatting author lists in LaTeX."
+  (interactive "r")
+  (save-restriction 
+    (when mark-active 
+      (narrow-to-region start end))
+    (goto-char (point-min))
+    (setq last-match nil)
+    ;; Change all the "and" in commas
+    (while (word-search-forward "and" nil t) 
+      (setq last-match (match-beginning 0))
+      (replace-match "," nil t)
+      )
+    ;; Last "and" should have been left alone
+    (if (last-match)
+        (progn 
+          (goto-char last-match)
+          (delete-char 1)
+          (insert "and")
+          )
+      )
+    (normalize-space-punctuation (point-min) (point-max))
+    )
+  )
+
+(defun normalize-space-punctuation (start end)
+  "Remove un-necessary spaces in text.
+   In particular (1) multiple spaces
+                 (2) spaces before punctuation
+  "
+  (interactive "r")
+  (save-restriction 
+    (when mark-active 
+      (narrow-to-region start end))
+    (goto-char (point-min))
+    (while (re-search-forward "[ ]+" nil t) (replace-match " " nil t))
+    ;; It trims spaces in front of punctuation [,.:;]
+    (goto-char (point-min))
+    (while (re-search-forward "\\( +\\)[,.;:]" nil t) (replace-match "" nil t nil 1))
+    )
+  )
+
 
 ;;;-------------------------------------------------------------------
 
