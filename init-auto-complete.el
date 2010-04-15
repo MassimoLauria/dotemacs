@@ -5,7 +5,7 @@
 ;;; Require
 
 ;; Choose either v1.0 or v1.2 versions (1.2 gives me problems with LaTeX)
-(defvar default-ac-version 1.0)
+(defvar default-ac-version 1.2)
 
 
 ;; Load v1.0 of autocomplete
