@@ -31,6 +31,8 @@
 (require 'auto-complete-config)
 
 (when (>= default-ac-version 1.2)
+  ;; Solves incompatibility with flyspell
+  (ac-flyspell-workaround)
   ;; v1.2 comes with dictionary facilities
   (add-to-list 'ac-dictionary-directories (concat default-ac-dir "/dict"))
   )
