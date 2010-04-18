@@ -7,3 +7,6 @@
 [submodule "3rdparties/ebib"]
 	path = 3rdparties/ebib
 	url = git://repo.or.cz/ebib.git
+[submodule "3rdparties/auto-complete"]
+	path = 3rdparties/auto-complete
+	url = git://github.com/m2ym/auto-complete.git

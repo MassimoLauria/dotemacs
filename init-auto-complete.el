@@ -4,38 +4,23 @@
 
 ;;; Require
 
-;; Choose either v1.0 or v1.2 versions (1.2 gives me problems with LaTeX)
-(defvar default-ac-version 1.2)
 
+(setq default-ac-dir   (concat default-elisp-3rdparties "/auto-complete"))
+(setq default-ac-l-dir (concat default-elisp-3rdparties "/auto-complete-latex"))
+(setq load-path (append load-path (list default-ac-dir default-ac-l-dir)))
+(byte-recompile-directory default-ac-dir   0)
+(byte-recompile-directory default-ac-l-dir 0)
 
-;; Load v1.0 of autocomplete
-(when (= default-ac-version 1.0)
-  (setq default-ac-dir   (concat default-elisp-3rdparties "/auto-complete-v1.0"))
-  (setq load-path (append load-path (list default-ac-dir)))
-  (byte-recompile-directory default-ac-dir   0)
-  )
-
-
-;; Load v1.2 of autocomplete
-(when (>= default-ac-version 1.2)
-  (setq default-ac-dir   (concat default-elisp-3rdparties "/auto-complete-v1.2"))
-  (setq default-ac-l-dir (concat default-elisp-3rdparties "/auto-complete-latex"))
-  (setq load-path (append load-path (list default-ac-dir default-ac-l-dir)))
-  (byte-recompile-directory default-ac-dir   0)
-  (byte-recompile-directory default-ac-l-dir 0)
-  )
 
 
 ;; Finally load chosen auto-complete library.
 (require 'auto-complete)
 (require 'auto-complete-config)
 
-(when (>= default-ac-version 1.2)
-  ;; Solves incompatibility with flyspell
-  (ac-flyspell-workaround)
-  ;; v1.2 comes with dictionary facilities
-  (add-to-list 'ac-dictionary-directories (concat default-ac-dir "/dict"))
-  )
+;; Solves incompatibility with flyspell
+(ac-flyspell-workaround)
+;; auto-complete comes with dictionary facilities
+(add-to-list 'ac-dictionary-directories (concat default-ac-dir "/dict"))
 
 
 ;; Load LaTeX facilities only if set up
