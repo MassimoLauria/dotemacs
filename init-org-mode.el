@@ -54,12 +54,13 @@
   (local-unset-key [tab])
   (local-unset-key [(tab)])
   (local-set-key   "\M-\ " 'org-cycle)       ; Use M-SPC for org-cycle, which is similar to what I use for folding-toggle-show-hide
-  (local-set-key   "\M-+" 'org-priority-up)  
-  (local-set-key   "\M--" 'org-priority-down)
-  ;;(local-set-key   "\M-è" 'org-priority-up)  
-  ;;(local-set-key   "\M-à" 'org-priority-down)
+  ;;(local-set-key   "\M-+" 'org-shiftup)  
+  ;;(local-set-key   "\M--" 'org-shiftdown)
+  (local-set-key   "M-è" 'org-shiftup)  
+  (local-set-key   "M-à" 'org-shiftdown)
+  (local-set-key   "M-ò" 'org-shiftleft)  
+  (local-set-key   "M-ù" 'org-shiftright)
   )
-
 
 (add-hook 'org-mode-hook 'org-mode-setup-local-keys)
 
