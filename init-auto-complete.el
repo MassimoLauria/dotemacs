@@ -20,13 +20,13 @@
 ;; Solves incompatibility with flyspell
 (ac-flyspell-workaround)
 ;; auto-complete comes with dictionary facilities
-(add-to-list 'ac-dictionary-directories (concat default-ac-dir "/dict"))
+(add-to-list 'ac-dictionary-directories (concat default-ac-dir "/dict/"))
 
 
 ;; Load LaTeX facilities only if set up
 (when (boundp 'default-ac-l-dir)
   (require 'auto-complete-latex)
-  (setq ac-l-dict-directory (concat default-ac-l-dir "/ac-l-dict"))
+  (setq ac-l-dict-directory (concat default-ac-l-dir "/ac-l-dict/"))
   )
 
 
