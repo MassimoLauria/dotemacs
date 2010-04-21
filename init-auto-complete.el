@@ -48,7 +48,8 @@
                  latex-mode LaTeX-mode emms-tag-editor-mode
                  asm-mode org-mode text-mode))
 
-(add-to-list 'ac-trigger-commands 'org-self-insert-command) ; if you want enable auto-complete at org-mode, uncomment this line
+; if you want enable auto-complete at org-mode, uncomment this line
+(add-to-list 'ac-trigger-commands 'org-self-insert-command) 
 
 
 ;; The sources for common all mode.
@@ -99,6 +100,8 @@
   (add-hook 'latex-mode-hook 'ac-l-setup)
   (add-hook 'LaTeX-mode-hook 'ac-l-setup)
   )
+(setq ac-l-sources '( ac-source-yasnippet ac-source-words-in-buffer
+     ac-source-files-in-current-dir ac-source-filename ))
 
 
 (provide 'init-auto-complete)
