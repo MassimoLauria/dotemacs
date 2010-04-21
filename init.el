@@ -258,8 +258,9 @@
 
 (defvar guess-language-rules                                            
   '(                    
+    ("english" . "\\<\\(of\\|the\\|and\\|or\\|how\\)\\>")
     ("italiano" . "\\<\\(un\\|uno\\|una\\|il\\|lo\\|la\\|gli\\|le|\\|per\\|in\\)\\>")           
-    ("en" . "\\<\\(of\\|the\\|and\\|or\\|how\\)\\>"))                   
+)                   
   "Alist of rules to determine the language of some text.               
 Each rule has the form (CODE . REGEXP) where CODE is a string to        
 identify the language (probably according to ISO 639), and REGEXP is a  
@@ -278,7 +279,7 @@ document.")
           (cdr (assoc (car (sort (map 'list 'car count) '>)) 
                       count)))))
 
-(defun guess-language 
+(defun guess-language ()
   "Guess language in the current buffer."                               
   (interactive)                                                         
   (message (guess-buffer-language)))
@@ -287,6 +288,7 @@ document.")
     
 (defun set-guessed-dictionary ()
    "It tries to guess the language and to set it as dictionary for ispell"
+   (interactive)
    (let ( (language (guess-buffer-language)) )
      (if (null language)
          (message "Language unknown, ispell dictionary unchanged")
