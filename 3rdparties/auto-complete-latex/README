@@ -4,11 +4,6 @@ Auto Complete LaTeX is an extension of Auto Complete Mode on GNU Emacs.
 
 Auto Complete Mode:  http://cx4a.org/software/auto-complete/
 
-Supporting modes:
-    - built-in LaTeX mode
-    - AUCTeX
-    - YaTeX
-
 Installation:
 
 1. Put files into your load-path.
@@ -16,6 +11,8 @@ Installation:
 
      (require 'auto-complete-latex)
      (setq ac-l-dict-directory "/path/to/ac-l-dict/")
+     (add-to-list 'ac-modes 'foo-mode)
+     (add-hook 'foo-mode-hook 'ac-l-setup)
 
 License:
 
