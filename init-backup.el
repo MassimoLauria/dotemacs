@@ -5,8 +5,13 @@
 ;;;-----------------------------------------------------------------
 
 
-(defvar autosave-dir
- (concat "/tmp/emacs_autosaves/" (user-login-name) "/"))
+;; (defvar autosave-dir (concat "/tmp/emacs_autosaves/" (user-login-name) "/"))
+;; (defvar backup-dir (concat "/tmp/emacs_backups/" (user-login-name) "/"))
+
+(defvar autosave-dir "~/.emacs.d/autosaves/")
+(defvar   backup-dir "~/.emacs.d/backups/")
+
+
 (make-directory autosave-dir t)
 (defun auto-save-file-name-p (filename)
   (string-match "^#.*#$" (file-name-nondirectory filename)))
@@ -16,7 +21,6 @@
       (concat "#" (file-name-nondirectory buffer-file-name) "#")
     (expand-file-name
      (concat "#%" (buffer-name) "#")))))
-(defvar backup-dir (concat "/tmp/emacs_backups/" (user-login-name) "/"))
 (setq backup-directory-alist (list (cons "." backup-dir)))
 ;; No backups and autosaves for tramp files
 (add-to-list 'backup-directory-alist
