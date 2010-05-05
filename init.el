@@ -89,12 +89,10 @@
 (global-set-key [M-C-prior] 'scroll-other-window-down)
 (global-set-key [M-C-next] 'scroll-other-window)
 ; Create and destroy windows
-;; (global-set-key [M-C--] 'split-window-vertically)   --- BROKEN
-(global-set-key (quote [201326637]) (quote split-window-vertically))
-;; (global-set-key [M-C-.] 'split-window-horizontally) --- BROKEN
-(global-set-key (quote [201326638]) (quote split-window-horizontally))
-(global-set-key [M-C-backspace] 'delete-window)
-(global-set-key [M-C-return] 'delete-other-windows)
+(global-set-key (kbd "M-C--") 'split-window-vertically)
+(global-set-key (kbd "M-C-.") 'split-window-horizontally)
+(global-set-key (kbd "M-C-<backspace>") 'delete-window)
+(global-set-key (kbd "M-C-<return>") 'delete-other-windows)
 
 
 ;; Next/Prev error for Quickfix

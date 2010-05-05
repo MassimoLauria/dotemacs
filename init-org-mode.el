@@ -57,15 +57,11 @@
 
   (local-set-key   "\M-\ " 'org-cycle)       ; Use M-SPC for org-cycle, which is similar to what I use for folding-toggle-show-hide
 
-  ;;(local-set-key   "M-è" 'org-shiftup)   -- BROKEN  
-  ;;(local-set-key   "M-à" 'org-shiftdown) -- BROKEN
-  ;;(local-set-key   "M-ò" 'org-shiftleft) -- BROKEN 
-  ;;(local-set-key   "M-ù" 'org-shiftright)-- BROKEN
+  (local-set-key (kbd "M-è") 'org-shiftup    ) 
+  (local-set-key (kbd "M-à") 'org-shiftdown  ) 
+  (local-set-key (kbd "M-ò") 'org-shiftleft  ) 
+  (local-set-key (kbd "M-ù") 'org-shiftright ) 
 
-  (local-set-key (quote [134217960]) (quote org-shiftup))    ; M-è
-  (local-set-key (quote [134217952]) (quote org-shiftdown))  ; M-à
-  (local-set-key (quote [134217970]) (quote org-shiftleft))  ; M-ò
-  (local-set-key (quote [134217977]) (quote org-shiftright)) ; M-ù
   )
 
 (add-hook 'org-mode-hook 'org-mode-setup-local-keys)
