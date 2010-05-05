@@ -31,35 +31,41 @@
 ;; Org-mode Keys
 (setq org-replace-disputed-keys t)
 (setq org-disputed-keys '(
-                          ([(shift up)]      . [(meta è)]) 
-                          ([(shift down)]    . [(meta à)]) 
-                          ([(shift left)]    . [(meta ò) ])
-                          ([(shift right)]   . [(meta ù) ]) 
-                          ([(meta  up)]      . [(meta i) ]) 
-                          ([(meta  down)]    . [(meta k) ]) 
-                          ([(meta  left)]    . [(meta j) ])
-                          ([(meta  right)]   . [(meta l) ])
-                          ([(meta  shift up)]      . [(control meta i) ]) 
-                          ([(meta  shift down)]    . [(control meta k) ]) 
-                          ([(meta  shift left)]    . [(control meta j) ])
-                          ([(meta  shift right)]   . [(control meta l) ])
-                          ([(control shift right)] . [(meta shift +)]) 
-                          ([(control shift left)] . [(meta shift _)])
-                          ))
+                         ([(shift up)]      . [(meta è)]) 
+                         ([(shift down)]    . [(meta à)]) 
+                         ([(shift left)]    . [(meta ò) ])
+                         ([(shift right)]   . [(meta ù) ]) 
+                         ([(meta  up)]      . [(meta i) ]) 
+                         ([(meta  down)]    . [(meta k) ]) 
+                         ([(meta  left)]    . [(meta j) ])
+                         ([(meta  right)]   . [(meta l) ])
+                         ([(meta  shift up)]      . [(control meta i) ]) 
+                         ([(meta  shift down)]    . [(control meta k) ]) 
+                         ([(meta  shift left)]    . [(control meta j) ])
+                         ([(meta  shift right)]   . [(control meta l) ])
+                         ([(control shift right)] . [(meta shift +)]) 
+                         ([(control shift left)] . [(meta shift -)])
+                         ))
 
 
-(defun org-mode-setup-local-keys ()
+(defun org-mode-setup-local-keys()
   "Define/>Undefine of org-mode keys"
+  (interactive)
   (local-unset-key "\t")                     ; Use Tab for more decent things (auto-complete or yasnippet)
   (local-unset-key [tab])
   (local-unset-key [(tab)])
+
   (local-set-key   "\M-\ " 'org-cycle)       ; Use M-SPC for org-cycle, which is similar to what I use for folding-toggle-show-hide
-  ;;(local-set-key   "\M-+" 'org-shiftup)  
-  ;;(local-set-key   "\M--" 'org-shiftdown)
-  (local-set-key   "M-è" 'org-shiftup)  
-  (local-set-key   "M-à" 'org-shiftdown)
-  (local-set-key   "M-ò" 'org-shiftleft)  
-  (local-set-key   "M-ù" 'org-shiftright)
+
+  ;;(local-set-key   "M-è" 'org-shiftup)   -- BROKEN  
+  ;;(local-set-key   "M-à" 'org-shiftdown) -- BROKEN
+  ;;(local-set-key   "M-ò" 'org-shiftleft) -- BROKEN 
+  ;;(local-set-key   "M-ù" 'org-shiftright)-- BROKEN
+
+  (local-set-key (quote [134217960]) (quote org-shiftup))    ; M-è
+  (local-set-key (quote [134217952]) (quote org-shiftdown))  ; M-à
+  (local-set-key (quote [134217970]) (quote org-shiftleft))  ; M-ò
+  (local-set-key (quote [134217977]) (quote org-shiftright)) ; M-ù
   )
 
 (add-hook 'org-mode-hook 'org-mode-setup-local-keys)
