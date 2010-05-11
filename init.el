@@ -33,10 +33,9 @@
 ;;  F2   for local  spell check  
 ;;  S-F2 for global spell check             
 ;;  M-Space for folding
-;;  Tab for indent/complete
+;;  Tab for indent/auto-complete
 ;;  M-Tab for correct w.r.t. spellcheck (on Flyspell)
-;;
-
+;;  
 
 ;; Moving in text
 (global-set-key [C-left] 'backward-word) 

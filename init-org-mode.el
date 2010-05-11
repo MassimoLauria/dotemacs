@@ -67,6 +67,11 @@
   (local-set-key (kbd "M-ò") 'org-metaleft  ) 
   (local-set-key (kbd "M-ù") 'org-metaright ) 
 
+  (local-set-key (kbd "C-M-è") 'org-shiftmetaup    ) 
+  (local-set-key (kbd "C-M-à") 'org-shiftmetadown  ) 
+  (local-set-key (kbd "C-M-ò") 'org-shiftmetaleft  ) 
+  (local-set-key (kbd "C-M-ù") 'org-shiftmetaright ) 
+
   )
 
 (add-hook 'org-mode-hook 'org-mode-setup-local-keys)
