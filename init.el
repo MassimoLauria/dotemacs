@@ -77,7 +77,6 @@
 (global-set-key [M-S-down] 'next-user-buffer)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-
 ;; Managing windows [C-M]
 ; Moving
 (global-set-key [M-C-right] 'windmove-right)
@@ -99,8 +98,8 @@
 (global-set-key [M-next] 'next-error)
 
 ;; Spellcheck
-(global-set-key [f2] 'ispell-word)
-(global-set-key [S-f2] 'ispell-buffer) 
+(global-set-key (kbd "M-s") 'my-spell-correct-word)
+(global-set-key [f2] 'ispell-buffer) 
 
 ;; Folding on/off (M-Space) 
 (global-set-key "\M-\ " 'folding-toggle-show-hide) 

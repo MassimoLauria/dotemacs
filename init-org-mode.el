@@ -31,6 +31,7 @@
 ;; Org-mode Keys
 (setq org-replace-disputed-keys t)
 (setq org-disputed-keys '(
+                         ([(tab)]      . [(meta tab)]) 
                          ([(shift up)]      . [(control è)]) 
                          ([(shift down)]    . [(control à)]) 
                          ([(shift left)]    . [(control ò) ])
@@ -55,7 +56,16 @@
   (local-unset-key [tab])
   (local-unset-key [(tab)])
 
-  (local-set-key   "\M-\ " 'org-cycle)       ; Use M-SPC for org-cycle, which is similar to what I use for folding-toggle-show-hide
+  (local-set-key (kbd "M-<tab>")    'org-cycle)  ; Use M-Tab for
+                                                 ; org-cycle, which
+                                                 ; avoid to use the
+                                                 ; overloaded TAB key
+  
+  (local-set-key (kbd "M-<space> ") 'org-cycle)  ; Use M-Space for
+                                                 ; org-cycle, which is
+                                                 ; similar to what I
+                                                 ; use for
+                                                 ; folding-toggle-show-hide
 
   (local-set-key (kbd "C-è") 'org-shiftup    ) 
   (local-set-key (kbd "C-à") 'org-shiftdown  ) 
@@ -76,8 +86,8 @@
 
 (add-hook 'org-mode-hook 'org-mode-setup-local-keys)
 
-(org-remember-insinuate)
 
+(org-remember-insinuate)
 (setq org-remember-templates
       '(("Journal" ?j "* %U %?\n\n  %i\n  %a" "journal.org" "X")
         ("Idea" ?i "* %^{Title}\n  %i\n  %a" "notes.org" "New Ideas")))

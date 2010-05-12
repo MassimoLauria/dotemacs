@@ -16,6 +16,10 @@
  '(ebib-index-display-fields (quote (year author title)))
  '(ebib-print-multiline t)
  '(ebib-sort-order (quote ((year) (author editor) (title))))
+ '(flyspell-highlight-flag t)
+ '(flyspell-mode-line-string "Fly")
+ '(flyspell-persistent-highlight nil)
+ '(flyspell-use-meta-tab nil)
  '(safe-local-variable-values (quote ((ispell-default-dictionary . american) (Tex-PDF-mode . t) (folded-file . t))))
  '(show-paren-mode t))
 (custom-set-faces
