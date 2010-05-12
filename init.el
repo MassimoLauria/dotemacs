@@ -53,22 +53,33 @@
 ;;; such kybindings are made for not leaving the homerow. 
 ;;; For me is quite premature to apply such bindings.
 
-;; (local-set-key [(control j)] 'backward-char)
-;; (local-set-key [(control l)]  'forward-char)
-;; (local-set-key [(control i)] 'previous-line)
-;; (local-set-key [(control k)]  'next-line)
-;;  
-;;  
-;; (local-set-key [(meta j)]  'backward-word)
-;; (local-set-key [(meta l)]   'forward-word)
-;; (local-set-key [(meta i)] 'backward-sentence)
-;; (local-set-key [(meta k)]  'forward-sentence)
-;;  
-;;  
-;; (local-set-key [(control meta j)]  'backward-sexp)
-;; (local-set-key [(control meta l)]   'forward-sexp)
-;; (local-set-key [(control meta i)] 'backward-paragraph)
-;; (local-set-key [(control meta k)]  'forward-paragraph)
+;; Character based.
+(global-set-key (kbd "M-j") 'backward-char)
+(global-set-key (kbd "M-l")  'forward-char)
+(global-set-key (kbd "M-i") 'previous-line)
+(global-set-key (kbd "M-k")  'next-line)
+
+(global-set-key (kbd "M-u")  'beginning-of-line)
+(global-set-key (kbd "M-o")  'end-of-line)
+
+;; Logical unit based.
+;(global-set-key (kbd "C-j")  'backward-word) 
+;(global-set-key (kbd "C-l")  'forward-word)
+;(global-set-key (kbd "C-i")  'backward-sentence) 
+;(global-set-key (kbd "C-k")  'forward-sentence)
+; 
+;(global-set-key (kbd "C-u")  'backward-paragraph) 
+;(global-set-key (kbd "C-o")  'forward-paragraph)
+
+
+;; Deletion keys
+(global-set-key (kbd "M-w")  'backward-kill-word) 
+(global-set-key (kbd "M-d")  'backward-delete-char)
+(global-set-key (kbd "M-f")  'delete-char) 
+; 
+;(global-set-key (kbd "C-d")  'backward-kill-word)
+;(global-set-key (kbd "C-f")  'kill-word)
+
 
 
 
