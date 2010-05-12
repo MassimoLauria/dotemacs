@@ -223,7 +223,19 @@
 
 ;; IDO mode for selection of file and buffers. VERY GOOD
 (require 'ido)
+
+(add-hook 'ido-setup-hook 
+          (lambda () 
+            (define-key ido-completion-map (kbd "<tab>")   'ido-complete)
+            (define-key ido-completion-map (kbd "M-<tab>") 'ido-next-match)
+            (define-key ido-completion-map (kbd "M-j") 'ido-prev-match)
+            (define-key ido-completion-map (kbd "M-l") 'ido-next-match)
+            (define-key ido-completion-map (kbd "M-i") 'ido-prev-match)
+            (define-key ido-completion-map (kbd "M-k") 'ido-next-match)
+            ))
+
 (ido-mode t) 
+
 (setq ido-enable-flex-matching t ; fuzzy matching is a must have
       ido-max-prospects 5        ; minibuffer is not saturated
       ido-ignore-buffers ;; ignore these guys
@@ -231,7 +243,6 @@
       ido-everywhere t            ; use for many file dialogs
       ido-case-fold  t            ; be case-insensitive
       ido-auto-merge-werk-directories-length nil) ; all failed, no more digging
-
 
 ;; Moving between windows with (M-C-<arrow>)
 (require 'windmove)               ; to load the package
