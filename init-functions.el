@@ -166,12 +166,11 @@ Emacs buffers are those whose name starts with *."
 
 ;;;---- Spelling functions ------------------------------------------------
 
-(defun my-spell-correct-word (point)
+(defun my-spell-correct-word ()
   "Correct the spelling of a word at point by using
 either ispell or flyspell, if the latter is active"
-  (interactive "P")
-  (if (flyspell-mode-on)
-      (flyspell-auto-correct-previous-word point)
+  (interactive)
+  (if (not (flyspell-auto-correct-word))
     (ispell-word)
     )
   )
