@@ -100,8 +100,13 @@
 ; Create and destroy windows
 (global-set-key (kbd "M-C--") 'split-window-vertically)
 (global-set-key (kbd "M-C-.") 'split-window-horizontally)
+
+;; Broken on Xterm
 (global-set-key (kbd "M-C-<backspace>") 'delete-window)
 (global-set-key (kbd "M-C-<return>") 'delete-other-windows)
+;; Cheap Xterm substitutions
+(global-set-key (kbd "ESC C-h") 'delete-window)
+(global-set-key (kbd "ESC <C-return>") 'delete-other-windows)
 
 
 ;; Next/Prev error for Quickfix
