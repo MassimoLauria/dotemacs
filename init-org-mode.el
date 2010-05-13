@@ -67,16 +67,25 @@
                                                  ; use for
                                                  ; folding-toggle-show-hide
 
+  
+  ;; Seems to work in X window
   (local-set-key (kbd "C-è") 'org-shiftup    ) 
   (local-set-key (kbd "C-à") 'org-shiftdown  ) 
   (local-set-key (kbd "C-ò") 'org-shiftleft  ) 
   (local-set-key (kbd "C-ù") 'org-shiftright ) 
+  
+  ;; Seems to work in my Xterm
+  (local-set-key "\e[27;5;232~" 'org-shiftup)
+  (local-set-key "\e[27;5;224~" 'org-shiftdown)
+  (local-set-key "\e[27;5;242~" 'org-shiftleft)
+  (local-set-key "\e[27;5;249~" 'org-shiftright)
 
   (local-set-key (kbd "M-è") 'org-metaup    ) 
   (local-set-key (kbd "M-à") 'org-metadown  ) 
   (local-set-key (kbd "M-ò") 'org-metaleft  ) 
   (local-set-key (kbd "M-ù") 'org-metaright ) 
 
+  ;; Xterm apparently does not generate such sequences.
   (local-set-key (kbd "C-M-è") 'org-shiftmetaup    ) 
   (local-set-key (kbd "C-M-à") 'org-shiftmetadown  ) 
   (local-set-key (kbd "C-M-ò") 'org-shiftmetaleft  ) 
