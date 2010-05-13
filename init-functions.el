@@ -175,6 +175,14 @@ either ispell or flyspell, if the latter is active"
     )
   )
 
+;;----- Additional modes -—-------------------------------------------------
+(define-generic-mode vimrc-mode
+  '("\"")
+  '("set" "syntax" "noremap" "inoremap" "map")
+  nil
+  '("\\.vim\\'")
+  nil)
+
 ;; Local Variables:
 ;; mode: emacs-lisp 
 ;; folded-file: t
