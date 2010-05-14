@@ -63,13 +63,13 @@
 (global-set-key (kbd "M-o")  'end-of-line)
 
 ;; Logical unit based.
-;(global-set-key (kbd "C-j")  'backward-word) 
-;(global-set-key (kbd "C-l")  'forward-word)
-;(global-set-key (kbd "C-i")  'backward-sentence) 
-;(global-set-key (kbd "C-k")  'forward-sentence)
+(global-set-key (kbd "C-M-j")  'backward-word)
+(global-set-key (kbd "C-M-l")  'forward-word)
+(global-set-key (kbd "C-M-i")  'backward-sentence) 
+(global-set-key (kbd "C-M-k")  'forward-sentence)
 ; 
-;(global-set-key (kbd "C-u")  'backward-paragraph) 
-;(global-set-key (kbd "C-o")  'forward-paragraph)
+(global-set-key (kbd "C-M-u")  'backward-paragraph) 
+(global-set-key (kbd "C-M-o")  'forward-paragraph)
 
 
 ;; Deletion keys
@@ -77,8 +77,8 @@
 (global-set-key (kbd "M-d")  'backward-delete-char)
 (global-set-key (kbd "M-f")  'delete-char) 
 ; 
-;(global-set-key (kbd "C-d")  'backward-kill-word)
-;(global-set-key (kbd "C-f")  'kill-word)
+(global-set-key (kbd "C-M-d")  'backward-kill-word)
+(global-set-key (kbd "C-M-f")  'kill-word)
 
 
 
