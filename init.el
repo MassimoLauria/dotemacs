@@ -38,16 +38,16 @@
 ;;  
 
 ;; Moving in text
-(global-set-key [C-left] 'backward-word) 
+(global-set-key [C-left]  'backward-word) 
 (global-set-key [C-right] 'forward-word)
-(global-set-key [C-up]   'backward-sentence) 
-(global-set-key [C-down] 'forward-sentence)
+(global-set-key [C-up]    'backward-paragraph) 
+(global-set-key [C-down]  'forward-paragraph)
 
 ;; Moving in structes
-(global-set-key [M-left] 'backward-sexp) 
-(global-set-key [M-right] 'forward-sexp)
-(global-set-key [M-up] 'backward-paragraph) 
-(global-set-key [M-down] 'forward-paragraph)
+(global-set-key [M-left] 'backward-sentence) 
+(global-set-key [M-right] 'forward-sentence)
+(global-set-key [M-up] 'backward-sexp) 
+(global-set-key [M-down] 'forward-sexp)
 
 ;;; Possible keybinding for moving in text. Notice that 
 ;;; such kybindings are made for not leaving the homerow. 
@@ -65,11 +65,11 @@
 ;; Logical unit based.
 (global-set-key (kbd "C-M-j")  'backward-word)
 (global-set-key (kbd "C-M-l")  'forward-word)
-(global-set-key (kbd "C-M-i")  'backward-sentence) 
-(global-set-key (kbd "C-M-k")  'forward-sentence)
+(global-set-key (kbd "C-M-i")  'backward-paragraph) 
+(global-set-key (kbd "C-M-k")  'forward-paragraph)
 ; 
-(global-set-key (kbd "C-M-u")  'backward-paragraph) 
-(global-set-key (kbd "C-M-o")  'forward-paragraph)
+(global-set-key (kbd "C-M-u")  'backward-sentence) 
+(global-set-key (kbd "C-M-o")  'forward-sentence)
 
 
 ;; Deletion keys
