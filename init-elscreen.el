@@ -7,8 +7,8 @@
 
 ;; Keybindings
 ; create/destroy screens
-(global-set-key "\C-t" 'elscreen-create)
-(global-set-key "\C-w" 'elscreen-kill)
+;(global-set-key "\C-t" 'elscreen-create)
+;(global-set-key "\C-w" 'elscreen-kill)
 ; Moving between Elscreens (M-S)
 (global-set-key [M-S-right] 'elscreen-next) 
 (global-set-key [M-S-left] 'elscreen-previous)
