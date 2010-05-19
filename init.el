@@ -413,4 +413,3 @@ Otherwise, analyses point position and answers."
 ;; mode: emacs-lisp 
 ;; folded-file: t
 ;; End: 
-
