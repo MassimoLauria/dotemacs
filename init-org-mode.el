@@ -90,15 +90,14 @@
   (local-set-key (kbd "C-M-à") 'org-shiftmetadown  ) 
   (local-set-key (kbd "C-M-ò") 'org-shiftmetaleft  ) 
   (local-set-key (kbd "C-M-ù") 'org-shiftmetaright ) 
-
+  
   )
 
 (add-hook 'org-mode-hook 'org-mode-setup-local-keys)
 
-
 (org-remember-insinuate)
 (setq org-remember-templates
-      '(("Journal" ?j "* %U %?\n\n  %i\n  %a" "journal.org" "X")
+      '(("Journal" ?j "* %? %U\n\n  %i\n  %a" "journal.org" "Diario")
         ("Idea" ?i "* %^{Title}\n  %i\n  %a" "notes.org" "New Ideas")))
 
 
