@@ -126,9 +126,12 @@
 
 ;; Remember notes.
 (global-set-key [f5] 'org-remember)
-
+(global-set-key [f6] 'org-agenda)
 ;; Tweet your tweets
-(global-set-key [f6] 'twit-post)
+(global-set-key [f7] 'toggle-it-en)
+;; Tweet your tweets
+(global-set-key [f8] 'twit-post)
+
 ;;}}}
 
 ;; Folding - load early to avoid warnings.
@@ -310,7 +313,22 @@ document.")
   (interactive)                                                         
   (message (guess-buffer-language)))
 
-
+(defun toggle-it-en ()
+  "Swtich between ENGLISH and ITALIAN for spell checking, in the current buffer."                               
+  (interactive)   
+  (when (boundp 'ispell-local-dictionary)
+    (let ( 
+          (old-local-language ispell-local-dictionary) 
+          new-local-language 
+          )
+      (setq new-local-language (if (string= old-local-language "italian")
+                                   "english"
+                                 "italian"))
+      (ispell-change-dictionary  new-local-language)
+      (message (concat "Buffer language is " (upcase new-local-language )))
+      )
+    )
+  )
     
 (defun set-guessed-dictionary ()
    "It tries to guess the language and to set it as dictionary for ispell"
