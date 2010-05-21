@@ -16,6 +16,7 @@
 
 ;;; Module(s) initialization -----------------------------------------------------------------------------------
 
+
 ;;{{{ *** Key binding rules ***
 ;;
 ;; FIXME Two of them do not work at all!
@@ -129,6 +130,11 @@
 ;; Tweet your tweets
 (global-set-key [f6] 'twit-post)
 ;;}}}
+
+;; Folding - load early to avoid warnings.
+(load "folding" 'nomessage)
+(folding-mode-add-find-file-hook)
+
 
 
 ; Editor customization 
@@ -264,9 +270,6 @@
 (require 'windmove)               ; to load the package
 (setq windmove-wrap-around t)
 
-;; Folding
-(load "folding" 'nomessage 'noerror)
-(folding-mode-add-find-file-hook)
 ;;}}}
 
 

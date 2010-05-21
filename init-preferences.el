@@ -46,7 +46,7 @@
 (setq scroll-margin 0)
 (setq scroll-conservatively 1000)
 
-(setq warning-minimum-level :error)
+;;(setq warning-minimum-level :error)
 
 ;; Local Variables:
 ;; mode: emacs-lisp 
