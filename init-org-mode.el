@@ -101,6 +101,7 @@
         ("Leggere" ?l "* Leggere “%:title” %U\n\n  “%:title”, by\n  %:author (%:year)\n\n  %?\n\n  BibItem-> %a" "notes.org")
         ("Idea"    ?i "* %? %U\n\n  %i\n  %a" "notes.org")
       )
+      )
 
 
 ;; Local Variables:
