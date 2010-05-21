@@ -56,12 +56,12 @@
   (local-unset-key [(tab)])
 
   (local-set-key (kbd "M-<tab>")    'org-cycle)  ; Use M-Tab for
-  (local-set-key "M-TAB"            'org-cycle)  ; org-cycle, which
+  (local-set-key "M-TAB"            'org-cycle) ; org-cycle, which
                                                  ; avoid to use the
                                                  ; overloaded TAB key
   
   (local-set-key (kbd "M-<space>") 'org-cycle)   ; Use M-Space for
-  (local-set-key "M-SPC"           'org-cycle)   ; org-cycle, which is
+  (local-set-key "M-SPC"           'org-cycle)  ; org-cycle, which is
                                                  ; similar to what I
                                                  ; use for
                                                  ; folding-toggle-show-hide
