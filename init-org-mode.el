@@ -97,12 +97,12 @@
 (org-remember-insinuate)
 (setq org-remember-templates
       '(
-        ("Journal"        ?j "* %? %t\n\n  %i\n  %a\n\n" "journal.org")
-        ("Leggere"        ?l "* Leggere “%:title” %t\n\n  “%:title”, by\n  %:author (%:year)\n\n  %?\n\n  BibItem-> %a\n\n" "notes.org")
-        ("Idea"           ?i "* %? %T\n\n  %i\n  %a\n\n" "notes.org")
-        ("⌚ Appuntamento" ?a "* TODO ⌚ %? %T\n\n  %i\n\n\n" "notes.org")
-        ("⌚ Scadenza"     ?s "* TODO ⌚ %? %U\n  DEADLINE: %t\n\n  %i\n\n" "notes.org")
-        ("Evento"         ?e "* %? %t--%t\n\n  %i\n  %a\n\n" "notes.org")
+        ("journal"        ?j "* %? %t\n\n  %i\n  %a\n\n" "journal.org")
+        ("leggere"        ?l "* Leggere “%:title” %t\n\n  “%:title”, by\n  %:author (%:year)\n\n  %?\n\n  BibItem-> %a\n\n" "notes.org")
+        ("idea"           ?i "* %? %T\n\n  %i\n  %a\n\n" "notes.org")
+        ("appuntamento"   ?a "* TODO ⌚ %? %T\n\n  %i\n\n\n" "notes.org")
+        ("scadenza"       ?s "* TODO ⌚ %? %U\n  DEADLINE: %t\n\n  %i\n\n" "notes.org")
+        ("evento"         ?e "* %? %t--%t\n\n  %i\n  %a\n\n" "notes.org")
         )
       )
 
