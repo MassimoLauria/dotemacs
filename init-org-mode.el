@@ -4,7 +4,7 @@
 (provide 'init-org-mode)
 ;;;------------------------------------------------------------------
 
-(setq org-directory "~/personal/organizer/")
+(setq org-directory "~/personal/agenda/")
 (setq org-default-notes-file (concat org-directory "notes.org"))
 (setq org-default-journal-file (concat org-directory "journal.org"))
 (setq org-agenda-files (list org-directory))
@@ -95,16 +95,19 @@
 (add-hook 'org-mode-hook 'org-mode-setup-local-keys)
 
 (org-remember-insinuate)
-(setq org-remember-templates
-      '(
-        ("journal"        ?j "* %? %t\n\n  %i\n  %a\n\n" "journal.org")
-        ("leggere"        ?l "* Leggere “%:title” %t\n\n  “%:title”, by\n  %:author (%:year)\n\n  %?\n\n  BibItem-> %a\n\n" "notes.org")
-        ("idea"           ?i "* %? %T\n\n  %i\n  %a\n\n" "notes.org")
-        ("appuntamento"   ?a "* TODO ⌚ %? %T\n\n  %i\n\n\n" "notes.org")
-        ("scadenza"       ?s "* TODO ⌚ %? %U\n  DEADLINE: %t\n\n  %i\n\n" "notes.org")
-        ("evento"         ?e "* %? %t--%t\n\n  %i\n  %a\n\n" "notes.org")
+
+;; Normally my private (and translated) configuration is used.
+(when (not (boundp 'org-remember-templates))
+  (setq org-remember-templates
+        '(
+          ("journal"        ?j "* %? %t\n\n  %i\n  %a\n\n" "journal.org")
+          ("note"           ?n "* %? %T\n\n  %i\n  %a\n\n" "notes.org")
+          ("meeting"        ?m "* TODO ⌚ %? %T\n\n  %i\n\n\n" "notes.org")
+          ("deadline"       ?d "* TODO ⌚ %? %U\n  DEADLINE: %t\n\n  %i\n\n" "notes.org")
+          ("event"          ?e "* %? %t--%t\n\n  %i\n  %a\n\n" "notes.org")
+          )
         )
-      )
+  )
 
 
 ;; Local Variables:
