@@ -12,8 +12,6 @@
 (setq load-path (cons 	default-elisp-3rdparties load-path ))
  
                        
-(load-file "~/personal/emacs-data.el")
-
 ;;; Module(s) initialization -----------------------------------------------------------------------------------
 
 
@@ -141,11 +139,12 @@
 
 
 ; Editor customization 
-(require 'init-functions)    ;; Utility functions for configuration
-(require 'init-preferences)  ;; Basic editor preferences
-(require 'init-elscreen)     ;; ElScreen preferences
-(require 'init-backup)       ;; Autosaves and backups behaviour
-;; (require 'init-unstable)  ;; Features that are not yet stable
+(require 'init-functions)         ; Utility functions for configuration
+(require 'init-local-preferences) ; Host based and personal configuration
+(require 'init-preferences)       ; Basic editor preferences
+(require 'init-elscreen)          ; ElScreen preferences
+(require 'init-backup)            ; Autosaves and backups behaviour
+;; (require 'init-unstable)       ; Features that are not yet stable
 
 ; Editor Utilities.
 (require 'init-auto-complete)
@@ -155,18 +154,19 @@
 (require 'init-python)
 
 ; Math packages
-(when (boundp 'ask-latex )   (require 'init-latex))        ;; AucTeX
-(when (boundp 'ask-maxima)   (require 'init-imaxima))      ;; Imaxima and Imath
-(when (boundp 'ask-sage  )   (require 'init-sage))         ;; Sagemath 
-(when (boundp 'ask-singular) (require 'init-singular))     ;; Singular 
+(when prefs-activate-latex    (require 'init-latex))        ;; AucTeX
+(when prefs-activate-maxima   (require 'init-imaxima))      ;; Imaxima and Imath
+(when prefs-activate-sage     (require 'init-sage))         ;; Sagemath 
+(when prefs-activate-singular (require 'init-singular))     ;; Singular 
 
 ; Applications
-(when (boundp 'ask-mail  )   (require 'init-mail-wl))    ;; Wanderlust MUA + bbdb
-(when (boundp 'ask-org-mode) (require 'init-org-mode))   ;; The famous ORG-Mode! Yaiii!!
+(when prefs-activate-mail       (require 'init-mail-wl))    ;; Wanderlust MUA + bbdb
+(when prefs-activate-org-mode   (require 'init-org-mode))   ;; The famous ORG-Mode! Yaiii!!
+
 (require 'init-editserver-chrome) ;; Edit text area on Google Chrome
 
 (autoload 'twit-post "twit" "Frontend for twitter" t)   ;; Twitter Support
-(when (boundp 'ask-twitter) (require 'twit))            ;; Explicit
+(when prefs-activate-twitter    (require 'twit))            ;; Explicit
 
 
 ;;; Things below here are still a little mess---------------------------------------------------------------------
@@ -210,7 +210,7 @@
 (setq default-major-mode 'text-mode)
 (setq text-mode-hook
       '(lambda nil
-         (if (boundp 'ask-smallscreen)
+         (if prefs-activate-smallscreen
              (setq fill-column 70)
            (setq fill-column 80)
            )

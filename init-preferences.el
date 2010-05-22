@@ -8,7 +8,7 @@
 (set-default-font "Monospace-10")
 (add-to-list 'default-frame-alist '(font . "Monospace-10"))
 
-(when (boundp 'ask-bigfont) 
+(when (and (boundp 'prefs-activate-bigfont) prefs-activate-bigfont)
   (set-default-font "Monospace-14")
   (add-to-list 'default-frame-alist '(font . "Monospace-14"))
 )
