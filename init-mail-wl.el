@@ -10,10 +10,9 @@
 (require-maybe 'elscreen-wl)
 (setq 
  wl-init-file    "~/config/emacs/wanderlust.el"
- wl-folders-file "~/config/mail/folders"
- wl-address-file "~/config/mail/addresses"
- bbdb-file       "~/personal/contacts.bbdb"
- diary-file      "~/personal/diary"
+ wl-folders-file "~/personal/conf/wanderlust-folders"
+ wl-address-file "~/personal/agenda/contacts.wl"
+ bbdb-file       "~/personal/agenda/contacts.bbdb"
 )
 
 

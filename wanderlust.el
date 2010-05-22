@@ -36,7 +36,7 @@
 
   wl-summary-width 120
  
-  elmo-localdir-folder-path "~/personal/localmail/"
+  elmo-localdir-folder-path "~/personal/mail/"
 
 ;; number temporary-mark persistent-mark date branch [ (number-of-children) sender ] subject
   wl-summary-line-format "%n%T%P%Y/%M/%D(%W) %t%[%30(%c %f%) %] %s"
