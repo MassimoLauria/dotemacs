@@ -348,14 +348,14 @@ Otherwise, analyses point position and answers."
 (color-theme-zenburn)   ;; High color theme (xterm-256color and X11)
 
 ;; Multi-TTY support
-(add-hook 'after-make-frame-functions
-          (lambda (frame)
-            (set-variable 'color-theme-is-global nil)
-            (select-frame frame)
-            (if (> (display-color-cells) 255)
-                (color-theme-zenburn) ;; High color theme (xterm-256color and X11)
-              (color-theme-tty-dark)) ;; Low color theme (xterm or linux console)
-))
+;(add-hook 'after-make-frame-functions
+;          (lambda (frame)
+;            (set-variable 'color-theme-is-global nil)
+;            (select-frame frame)
+;            (if (> (display-color-cells) 255)
+;                (color-theme-zenburn) ;; High color theme (xterm-256color and X11)
+;              (color-theme-tty-dark)) ;; Low color theme (xterm or linux console)
+;))
 
 ;;}}}
 
