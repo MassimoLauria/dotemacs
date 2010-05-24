@@ -62,8 +62,16 @@ Overload the original 'mail' command with 'wl-draft'.
 Both are intended to draft and send emails
 "
   (interactive)
-  (wl-draft)
+  (wl-draft '(
+              (To . "") 
+              (Subject . "")
+              ) 
+            )
+  (mail-position-on-field "To")
 )
+
+(define-key global-map "\C-cm" 'mail)
+
 
 ;; (Insidious) Big Brother DataBase, collects mail addresses.
 (require 'bbdb)
