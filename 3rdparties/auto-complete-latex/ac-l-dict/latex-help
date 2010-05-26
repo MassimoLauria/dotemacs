@@ -1,7 +1,14 @@
-This is the short document of latex2e.txt. Modified for Auto Complete LaTeX.
+This is the short document of latex2e.txt.
+Modified for Auto Complete LaTeX.
+
+Maintainer: tequilasunset <tequilasunset.mac@gmail.com>
+
+Auto Complete LaTeX (an extension for auto-complete-mode on Emacs):
+   http://bitbucket.org/tequilasunset/auto-complete-latex/
 
 latex2e.txt (latex2e-help-texinfo):
    http://www.ctan.org/tex-archive/info/latex2e-help-texinfo/
+
 
 \documentclass[OPTIONS]{CLASS}
 

@@ -2,9 +2,10 @@
 
 ;; Copyright (C) 2010 tequilasunset
 
-;; Author:   tequilasunset <tequilasunset.mac@gmail.com>
-;; Keywords: LaTeX
-;; Version:  0.2.3 dev
+;; Author: tequilasunset <tequilasunset.mac@gmail.com>
+;; Repository: http://bitbucket.org/tequilasunset/auto-complete-latex
+;; Keywords: completion, LaTeX
+(defconst ac-l-version "0.2.4")
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -18,46 +19,135 @@
 
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
-;;
 
 ;;; Requirements:
 
-;;   auto-complete-mode:
-;;
-;;     http://cx4a.org/software/auto-complete/
-;;
-
-;;; NOTICE:
-
-;; This is development version. Current stable version is 0.2.2.
-;;
-;;   http://bitbucket.org/tequilasunset/auto-complete-latex/src/84383eb70aa5/
-;;
+;;  auto-complete-mode:  http://cx4a.org/software/auto-complete/
 
 ;;; Installation:
 
-;; Put files into your load-path, and add the following into your .emacs.
+;;  - Put files into load-path, and add the following into init file.
 ;;
-;;   (require 'auto-complete-latex)
-;;   (setq ac-l-dict-directory "/path/to/ac-l-dict/")
-;;   (add-to-list 'ac-modes 'foo-mode)
-;;   (add-hook 'foo-mode-hook 'ac-l-setup)
+;;      (require 'auto-complete-latex)
+;;      (setq ac-l-dict-directory "/path/to/ac-l-dict/")
+;;      (add-to-list 'ac-modes 'foo-mode)
+;;      (add-hook 'foo-mode-hook 'ac-l-setup)
 ;;
+;;  - If you get the error below
+;;
+;;      `variable binding depth exceeds max-specpdl-size',
+;;
+;;    add the following into init file.
+;;
+;;      (setq max-specpdl-size (+ 500 max-specpdl-size))
 
 ;;; Commentary:
 
-;;   When you get the error below
+;;  - Customize group:
 ;;
-;;     `variable binding depth exceeds max-specpdl-size',
+;;      M-x customize-group RET auto-complete-latex RET
 ;;
-;;   add the following into your .emacs.
+;;  - Don't use ac-sources:
 ;;
-;;     (setq max-specpdl-size (+ 500 max-specpdl-size))
+;;    Use `ac-l-sources' instead.
 ;;
-
-;;; History:
-
-;;   http://bitbucket.org/tequilasunset/auto-complete-latex/history/auto-complete-latex.el
+;;  - Examples of configuration:
+;;
+;;      * Setup for AUCTeX
+;;
+;;          (when (require 'auto-complete-latex nil t)
+;;            (setq ac-l-dict-directory "~/.emacs.d/ac-l-dict/")
+;;            (add-to-list 'ac-modes 'latex-mode)
+;;            (add-hook 'LaTeX-mode-hook 'ac-l-setup))
+;;
+;;      * Setup for YaTeX
+;;
+;;          (when (require 'auto-complete-latex nil t)
+;;            (setq ac-l-dict-directory "~/.emacs.d/ac-l-dict/")
+;;            (add-to-list 'ac-modes 'yatex-mode)
+;;            (add-hook 'yatex-mode-hook 'ac-l-setup))
+;;
+;;        If you want to use command help in Japanese, put
+;;        YATEXHLP.jp into ac-l-dict.
+;;
+;;  - ac-l-dict:
+;;
+;;    Files in it become sources, etc. Files are classified like below.
+;;    If there are unnecessary files, remove them.
+;;
+;;      1. Basic files
+;;
+;;           basic-commands, basic-arguments, macro, latex-dot-ltx,
+;;           platex-commands, platex-arguments, primitives,
+;;           ptex-primitives
+;;
+;;         Keywords in these files become candidates for basic sources.
+;;
+;;      2. User files
+;;
+;;           user-commands, user-arguments
+;;
+;;         These files become user sources.
+;;
+;;      3. Help file
+;;
+;;           latex-help
+;;
+;;         This file become a LaTeX command help.
+;;
+;;      4. External package files
+;;
+;;         Files other than above become package sources. the
+;;         form is NAME-TYPE-SYMBOL-REQUIRES.
+;;
+;;         NAME      Package or class file name. You can set the
+;;                   dependence with using `ac-l-package-dependences'.
+;;         TYPE      `c' (command) or `a' (argument).
+;;         SYMBOL    Symbol property. `*' => `p'.
+;;         REQUIRES  Requires property. `*' => not set.
+;;
+;;  - Commands that argument completion will work:
+;;
+;;      `ac-l-argument-regexps'
+;;      `ac-l-file-regexps'
+;;      `ac-l-label-regexps'
+;;      `ac-l-bib-regexps'
+;;
+;;    Above are related variables. If you want to complete label
+;;    names in argument of `\foo', write the following into init file.
+;;
+;;      (add-to-list 'ac-l-label-regexps "foo")
+;;
+;;  - Completion at point:
+;;
+;;    Two commands `ac-l-complete-labels' and `ac-l-complete-bibs'
+;;    are provided to complete at point.
+;;
+;;  - A table of symbol properties:
+;;
+;;       SYMBOL |           MEANING
+;;      --------+----------------------------------
+;;         l    | LaTeX or pLaTeX
+;;         a    | AMS packages
+;;         b    | beamer
+;;         h    | hyperlinks
+;;         g    | graphics
+;;         m    | math sign or equations
+;;         c    | colors
+;;         t    | tables
+;;         f    | fonts
+;;         p    | unclassified external packages
+;;         F    | file names in a current directory
+;;         L    | label names
+;;         B    | bib keys
+;;         u    | user-commands or user-arguments
+;;
+;;  - Startup improvement:
+;;
+;;    In case you use `ac-l-master-file', `ac-l-package-files' or
+;;    `ac-l-bib-files', startup will be slower. If you are using
+;;    ac-l-package-files, you can improve it with using the command
+;;    `ac-l-write-package-files'.
 
 ;;; Code:
 
@@ -79,392 +169,275 @@
 
 (defcustom ac-l-master-file nil
   "Specify LaTeX master file path as string.
-If valid file path is specified, parse master file's \\input and
-\\include, and create candidates from master file and parsed files."
+Parse master file's \\input and \\include(only).
+Then create candidates from master file and parsed files."
   :type 'string
   :group 'auto-complete-latex)
 (defvaralias 'ac-l-target 'ac-l-master-file)
 
 (defcustom ac-l-sources nil
   "A list of user sources.
-If you want to add sources defined in other elisp, use this list
-instead of `ac-sources'."
+This is similar to `ac-sources', but you don't have to add
+`ac-l-source-*' and below sources.
+
+   ac-source-dictionary
+   ac-source-files-in-current-dir
+   ac-source-filename
+   ac-source-words-in-*"
   :type '(repeat symbol)
   :group 'auto-complete-latex)
 
 (defcustom ac-l-package-files nil
   "A list of package files (valid suffixes are .sty and .cls).
-If valid file path is specified, parse LaTeX command definitions
-in it, and create candidates."
+Parse LaTeX command definitions in them, and create candidates."
   :type '(repeat string)
   :group 'auto-complete-latex)
 
 (defcustom ac-l-bib-files nil
   "A list of bib files (valid suffix is .bib).
-If valid file path is specified, parse bibliography keys in it,
-and create candidates."
+Parse bibliography keys in them, and create candidates."
   :type '(repeat string)
   :group 'auto-complete-latex)
 
 (defcustom ac-l-use-word-completion nil
-  "If non-nil, use sources for normal word completion."
+  "If non-nil, use sources for normal word (text) completion."
   :type 'boolean
   :group 'auto-complete-latex)
 
 ;;; internal
-(defconst ac-l-command-prefix "\\\\\\([a-zA-Z@]+\\)"
-  "Prefix property of sources for LaTeX commands.")
-
-(defvar ac-l-major-mode nil
-  "Major mode which Auto Complete LaTeX is working.")
-
-(defvar ac-l-update-timer nil
-  "Timer for `ac-l-update-all'.")
-
-(defconst ac-l-packages (make-hash-table :test 'equal)
-  "Hash table. k -> package name in `ac-l-package-files', v -> [cmds args]")
+(defvar ac-l-major-mode nil)
+(defvar ac-l-master-p nil)
+(defconst ac-l-command-prefix "\\\\\\([a-zA-Z@]+\\)")
+(defvar ac-l-update-timer nil)
 
 
 ;;;; functions
 
-(defsubst ac-l-master-p ()
-  "Return non-nil, if `ac-l-master-file' is valid. If not, return nil."
-  (if (and (stringp ac-l-master-file)
-           (file-exists-p ac-l-master-file))
-      t))
+;;; DB
+;; package-cmds, package-args, cur-bib-tables, all-bib-tables, latex-cmds,
+;; latex-args, package-sources, user-noprefix-sources, user-prefix-sources,
+;; label-cands, bibitem-cands, bib-cands, filenames, label-tables, sources,
+;; bibitem-tables, file-cmds, file-words, children,
+(defconst ac-l-db (make-hash-table :test 'eq))
 
-(defsubst ac-l-completions (candidates)
-  (all-completions ac-prefix `,candidates))
+(defsubst ac-l-db-get (sym)
+  (gethash sym ac-l-db))
 
-(defmacro ac-l-pushnew-1 (x place)
-  "(pushnew x place :test 'eq)"
-  `(if (memq ,x ,place) ,place (setq ,place (cons ,x ,place))))
+(defsubst ac-l-db-set (sym value)
+  (puthash sym value ac-l-db))
 
-(defmacro ac-l-pushnew-2 (x place)
-  "(pushnew x place :test 'equal)"
-  `(if (member ,x ,place) ,place (setq ,place (cons ,x ,place))))
+(defsubst ac-l-db-push (value sym)
+  (puthash sym (cons value (gethash sym ac-l-db)) ac-l-db))
 
-;;; define internal array and accessors
-(defconst ac-l--dummy (make-vector 16 nil))
+(defsubst ac-l-db-append (sym lst)
+  (puthash sym (append (gethash sym ac-l-db) lst) ac-l-db))
 
-(defsubst ac-l-get-package-commands      () (aref ac-l--dummy 0))
-(defsubst ac-l-get-package-arguments     () (aref ac-l--dummy 1))
-(defsubst ac-l-get-current-bib-tables    () (aref ac-l--dummy 2))
-(defsubst ac-l-get-all-bib-tables        () (aref ac-l--dummy 3))
-(defsubst ac-l-get-latex-commands        () (aref ac-l--dummy 4))
-(defsubst ac-l-get-latex-arguments       () (aref ac-l--dummy 5))
-(defsubst ac-l-get-package-sources       () (aref ac-l--dummy 6))
-(defsubst ac-l-get-user-noprefix-sources () (aref ac-l--dummy 7))
-(defsubst ac-l-get-user-prefix-sources   () (aref ac-l--dummy 8))
-(defsubst ac-l-get-label-cands           () (aref ac-l--dummy 9))
-(defsubst ac-l-get-bibitem-cands         () (aref ac-l--dummy 10))
-(defsubst ac-l-get-bib-cands             () (aref ac-l--dummy 11))
-(defsubst ac-l-get-buffer-sources        () (aref ac-l--dummy 12))
-(defsubst ac-l-get-filenames             () (aref ac-l--dummy 13))
-(defsubst ac-l-get-label-tables          () (aref ac-l--dummy 14))
-(defsubst ac-l-get-bibitem-tables        () (aref ac-l--dummy 15))
+;;; prefixes for arguments
+(defcustom ac-l-argument-regexps
+  '("\\(?:usep\\|RequireP\\)ackage" "documentclass" "begin" "end" "fnsymbol"
+    "\\(?:this\\)?pagestyle" "bibliography\\(?:style\\)?" "pagenumbering"
+    "\\(?:new\\|addto\\|set\\)counter" "[aA]lph" "arabic" "[rR]oman"
+    "@\\(?:addtoreset\\|startsection\\|namedef\\|definecounter\\)"
+    "addcontentsline" "numberwithin" "\\(?:text\\|page\\|f\\|define\\)color"
+    "colorbox" "\\(?:column\\|row\\|cell\\|arrayrule\\|doublerulesep\\)color"
+    "hypersetup" "include\\(?:graphics\\|slide\\)" "insert[a-z]+" "frame"
+    "lst[a-zDIMS]+" "resetcount\\(?:er\\)?onoverlays" "tableofcontents"
+    "movie" "hyperlink\\(?:movie\\|sound\\)" "multiinclude" "sound" "note"
+    "trans[a-z]+" "use[a-z]*theme" "[a-z]+beamertemplate[a-z]*"
+    "\\(?:use\\|set\\)beamer\\(?:color\\|font\\|covered\\)")
+  "A list of regexps to match commands which take arguments."
+  :type '(repeat regexp)
+  :group 'auto-complete-latex)
 
-(defsubst ac-l-set-package-commands      (newelt) (aset ac-l--dummy 0 newelt))
-(defsubst ac-l-set-package-arguments     (newelt) (aset ac-l--dummy 1 newelt))
-(defsubst ac-l-set-current-bib-tables    (newelt) (aset ac-l--dummy 2 newelt))
-(defsubst ac-l-set-all-bib-tables        (newelt) (aset ac-l--dummy 3 newelt))
-(defsubst ac-l-set-latex-commands        (newelt) (aset ac-l--dummy 4 newelt))
-(defsubst ac-l-set-latex-arguments       (newelt) (aset ac-l--dummy 5 newelt))
-(defsubst ac-l-set-package-sources       (newelt) (aset ac-l--dummy 6 newelt))
-(defsubst ac-l-set-user-noprefix-sources (newelt) (aset ac-l--dummy 7 newelt))
-(defsubst ac-l-set-user-prefix-sources   (newelt) (aset ac-l--dummy 8 newelt))
-(defsubst ac-l-set-label-cands           (newelt) (aset ac-l--dummy 9 newelt))
-(defsubst ac-l-set-bibitem-cands         (newelt) (aset ac-l--dummy 10 newelt))
-(defsubst ac-l-set-bib-cands             (newelt) (aset ac-l--dummy 11 newelt))
-(defsubst ac-l-set-buffer-sources        (newelt) (aset ac-l--dummy 12 newelt))
-(defsubst ac-l-set-filenames             (newelt) (aset ac-l--dummy 13 newelt))
-(defsubst ac-l-set-label-tables          (newelt) (aset ac-l--dummy 14 newelt))
-(defsubst ac-l-set-bibitem-tables        (newelt) (aset ac-l--dummy 15 newelt))
+(defcustom ac-l-file-regexps
+  '("include\\(?:only\\|graphics\\)?" "input" "hypersetup")
+  "A list of regexps to match commands which take file name argument."
+  :type '(repeat regexp)
+  :group 'auto-complete-latex)
 
-;;; prefix properties
-(defconst ac-l-argument-regexps
-  '("usepackage"
-    "RequirePackage"
-    "documentclass"
-    "begin"
-    "end"
-    "\\(?:this\\)?pagestyle"
-    "bibliography\\(?:style\\)?"
-    "pagenumbering"
-    "\\(?:new\\|addto\\|set\\)counter"
-    "[aA]lph"
-    "arabic"
-    "[rR]oman"
-    "fnsymbol"
-    "addcontentsline"
-    "@addtoreset"
-    "@startsection"
-    "@namedef"
-    "@definecounter"
-    ;; amsmath
-    "numberwithin"
-    ;; color
-    "\\(?:text\\|page\\|f\\|define\\)color"
-    "colorbox"
-    ;; colortbl
-    "\\(?:column\\|row\\|cell\\|arrayrule\\|doublerulesep\\)color"
-    ;; hyperref
-    "hypersetup"
-    ;; graphicx
-    "includegraphics"
-    ;; beamer
-    "insert[a-z]+"
-    "resetcount\\(?:er\\)?onoverlays"
-    "frame"
-    "tableofcontents"
-    "movie"
-    "hyperlinkmovie"
-    "multiinclude"
-    "sound"
-    "hyperlinksound"
-    "trans[a-z]+"
-    "use[a-z]*theme"
-    "ifbeamertemplateempty"
-    "expandbeamertemplate"
-    "defbeamertemplateparent"
-    "\\(?:use\\|set\\)beamer\\(?:color\\|font\\)"
-    "setbeamercovered"
-    "note"
-    "includeslide"
-    ;; listings
-    "lst[a-zDIMS]+")
-  "A list of regexps to match commands involved with arguments.")
+(defcustom ac-l-label-regexps
+  '("\\(?:page\\|auto\\|eq\\)?ref" "label")
+  "A list of regexps to match commands which take label name argument."
+  :type '(repeat regexp)
+  :group 'auto-complete-latex)
 
-(defconst ac-l-file-regexps
-  '("include\\(?:only\\)?"
-    "input"
-    ;; hyperref
-    "hypersetup"
-    ;; graphicx
-    "includegraphics")
-  "A list of regexps to match commands involved with file name argument.")
-
-(defconst ac-l-label-regexps
-  '("\\(?:page\\|auto\\|eq\\)?ref"
-    "label")
-  "A list of regexps to match commands involved with label name argument.")
-
-(defconst ac-l-bib-regexps
-  '("\\(?:no\\|short\\)?cite[a-zA-Z]*"
-    "bibitem")
-  "A list of regexps to match commands involved with bibliography argument.")
+(defcustom ac-l-bib-regexps
+  '("\\(?:no\\|short\\)?cite[a-zA-Z]*" "bibitem")
+  "A list of regexps to match commands which take bibliography argument."
+  :type '(repeat regexp)
+  :group 'auto-complete-latex)
 
 (defun ac-l-prefix-in-paren (regexps)
-  (if (looking-back (concat "\\\\\\("
-                            (mapconcat 'identity regexps "\\|")
-                            "\\)\\*?\\(\\s([^]>}]*\\s)\\)*\\(\\s([^]>}]*\\)"))
+  ;; This doesn't work as omni completion because the return is ac-point.
+  (if (save-excursion
+        (re-search-backward
+         (concat "\\\\\\("
+                 (mapconcat 'identity regexps "\\|")
+                 "\\)\\*?\\(\\s([^]>}]*\\s)\\)*\\(\\s([^]>}]*\\)\\=") nil t))
       ac-point))
 
 ;;; read file data
-(defun ac-l-convert-filename-to-file (filename)
-  (let ((file-nodir (file-name-nondirectory filename)))
-    (if (string-match "^[^.]+" file-nodir)
-        (match-string 0 file-nodir)
-      file-nodir)))
+(defsubst ac-l-convert-filename-to-file (filename)
+  ;; faster than file-name-sans-extension
+  (let ((nodir (file-name-nondirectory filename)))
+    (if (string-match "\\(.+\\)\\.[^.]*$" nodir)
+        (match-string 1 nodir)
+      nodir)))
 
-(defun ac-l-read-bibs (files)
-  (let ((regexp "^@[^{@]+{\\([^ =,\t\n]*\\),\n[^@]+\\(^}\\)"))
-    (dolist (filename files)
-      (let* ((file (ac-l-convert-filename-to-file filename))
-             (name (intern (format "ac-l-%s-table" file)))
-             (table (make-hash-table :test 'equal)))
-        (set name table)
-        (ignore-errors
-          (with-temp-buffer
-            (insert-file-contents filename)
-            (while (re-search-forward regexp nil t)
-              (puthash (match-string-no-properties 1)
-                       (match-string-no-properties 0)
-                       table))))
-        (ac-l-set-all-bib-tables `(,@(ac-l-get-all-bib-tables) ,name))
-        (ac-l-set-filenames `(,@(ac-l-get-filenames) ,file))))))
+(defun* ac-l-read-bibs
+    (&key (files ac-l-bib-files)
+          (regexp "^@[^{@]+{\\([^ =,\t\n]*\\),\n[^@]+\\(^}\\)"))
+  "Convert each bib file listed in FILES to a hash table."
+  (dolist (filename files)
+    (let* ((file (ac-l-convert-filename-to-file filename))
+           (table (make-hash-table :test 'equal)))
+      (ignore-errors
+        (with-temp-buffer
+          (insert-file-contents filename)
+          (while (re-search-forward regexp nil t)
+            (puthash (match-string-no-properties 1)
+                     (match-string-no-properties 0)
+                     table))))
+      (ac-l-db-push (cons file table) 'all-bib-tables)
+      (ac-l-db-push file 'filenames))))
 
-(defun ac-l-read-packages (files table)
-  (let ((cmd-re "\\\\\\(?:[a-z@]*def\\|let\\|new[a-z]+\\|providecommand\\|Declare[a-zA-Z@]+\\)\\*?[ \t]*{?\\\\\\([a-zA-Z]+\\)}?[ =\\#[{]")
-        (arg-re  "\\\\\\(?:DeclareOption[a-zA-Z]*\\|new[a-z]+\\|@definecounter\\)\\*?[ \t]*{\\([a-zA-Z]+\\)}"))
-    (dolist (filename files)
-      (let ((file (ac-l-convert-filename-to-file filename))
-            candidate commands arguments)
-        (ignore-errors
-          (with-temp-buffer
-            (insert-file-contents filename)
-            (while (re-search-forward cmd-re nil t)
-              (setq candidate (match-string-no-properties 1))
-              (ac-l-pushnew-2 candidate commands))
-            (goto-char (point-min))
-            (while (re-search-forward arg-re nil t)
-              (setq candidate (match-string-no-properties 1))
-              (ac-l-pushnew-2 candidate arguments))))
-        (puthash file (vector commands arguments) table)
-        (ac-l-set-filenames `(,@(ac-l-get-filenames) ,file))))))
+;; k -> package name in `ac-l-package-files', v -> [cmds args]
+(defconst ac-l-packages (make-hash-table :test 'equal))
 
-(defun ac-l-write-package-files (dir)
-  "Write files listed in `ac-l-package-files' into DIR."
-  (interactive
-   (list (read-directory-name "Directory: " ac-l-dict-directory nil t)))
-  (maphash (lambda (k v)
-             (dolist (pair `((c . ,(aref v 0)) (a . ,(aref v 1))))
-               (when (cdr pair)
-                 (with-temp-buffer
-                   (insert
-                    (mapconcat 'identity (sort (cdr pair) #'string<) "\n"))
-                   (write-region (point-min) (point-max)
-                                 (format "%s%s-%s-*-*" dir k (car pair)))))))
-           ac-l-packages))
+(defun* ac-l-read-packages
+    (&key (files ac-l-package-files)
+          (cmd-re "\\\\\\(?:[a-z@]*def\\|let\\|new[a-z]+\\|providecommand\\|Declare[a-zA-Z@]+\\)\\*?[ \t]*{?\\\\\\([a-zA-Z]+\\)}?[ =\\#[{]")
+          (arg-re  "\\\\\\(?:DeclareOption[a-zA-Z]*\\|new[a-z]+\\|@definecounter\\)\\*?[ \t]*{\\([a-zA-Z]+\\)}"))
+  "Convert each package listed in FILES to an element of `ac-l-packages'."
+  (dolist (filename files)
+    (let ((file (ac-l-convert-filename-to-file filename))
+          cand cmds args)
+      (ignore-errors
+        (with-temp-buffer
+          (insert-file-contents filename)
+          (while (re-search-forward cmd-re nil t)
+            (setq cand (match-string-no-properties 1))
+            (unless (member cand cmds)
+              (push cand cmds)))
+          (goto-char (point-min))
+          (while (re-search-forward arg-re nil t)
+            (setq cand (match-string-no-properties 1))
+            (unless (member cand args)
+              (push cand args)))))
+      (puthash file (vector cmds args) ac-l-packages)
+      (ac-l-db-push file 'filenames))))
 
 (defcustom ac-l-dict-directory "~/.emacs.d/ac-l-dict/"
-  "Path of the ac-l-dict.
-Make sources from files in this directory. If you want to add files,
-see `ac-l-make-source-from-dir' and `ac-l-write-package-files'."
+  "Path of the ac-l-dict."
   :type 'string
   :group 'auto-complete-latex)
 
-(defconst ac-l-package-dependences
-  (let ((table (make-hash-table :test 'equal))
-        (alist '(("hyperref" . "beamer")
-                 ("color" . "colortbl\\|beamer")
-                 ("array" . "tabularx\\|colortbl"))))
-    (loop for (k . v) in alist do (puthash k v table))
-    table)
-  "Hash table. k -> required package name, v -> package names (regexp)
+(defun ac-l-write-package-files (dir)
+  "Output candidates collected from files listed in `ac-l-package-files'.
+You can use them in the ac-l-dict."
+  (interactive (list (read-directory-name "Dir: " ac-l-dict-directory nil t)))
+  (maphash (lambda (k v)
+             (loop for (type cands) in `((c ,(aref v 0)) (a ,(aref v 1)))
+                   when cands do
+                   (with-temp-buffer
+                     (insert (mapconcat 'identity (sort cands #'string<) "\n"))
+                     (write-region (point-min) (point-max)
+                                   (format "%s%s-%s-*-*" dir k type)))))
+           ac-l-packages))
 
-KEY package is required in VALUE packages. For example, array.sty is
-required in tabularx.sty and colortbl.sty. So, KEY and VALUE must be
-like below.
+(defcustom ac-l-package-dependences
+  '(("hyperref" . "beamer")
+    ("color" . "colortbl\\|beamer")
+    ("array" . "tabularx\\|colortbl"))
+  "Alist of external package dependences.
+Each element is the form (REQUIRED PACKAGE . PACKAGES). Package and
+class files are treated equivalently. This is effective only for
+files read from the ac-l-dict."
+  :type '(repeat (cons string regexp))
+  :group 'auto-complete-latex)
 
-KEY    =>  \"array\"
-VALUE  =>  \"tabularx\\\\|colortbl\"
-
-Package and class files are treated equivalently. Below code indicates
-that candidates of amsmath.sty will be shown when beamer class is loaded.
-
-   \(puthash \"amsmath\" \"beamer\" ac-l-package-dependences)")
-
-(defun ac-l-make-source-from-dir (dir)
-  "Make source from files in DIR.
-
-file name form:  NAME-TYPE-SYMBOL-REQUIRES
-
-NAME      Package or class file name.
-          For example, you set NAME to foo, the source is included in
-          `ac-sources' while \\usepackage{foo}, \\RequirePackage{foo} or
-          \\documentclass{foo} is written in documents. If you want to
-          set package dependence, use `ac-l-package-dependences'.
-
-TYPE      `c' (command) or `a' (argument).
-
-SYMBOL    Symbol property. `*' => `p'.
-
-REQUIRES  Requires property. `*' => not set."
-  (let* ((files (directory-files dir nil "^[^.]"))
+(defun* ac-l-set-help-doc
+    (&optional (sources '(ac-l-source-latex-commands
+                          ac-l-source-latex-arguments)))
+  "Set document property to each source listed in SOURCES."
+  (let* ((files (directory-files ac-l-dict-directory))
          (help-fn (cond
-                   ((member "YATEXHLP.eng" files)
-                    'ac-l-yatex-eng-documentation)
                    ((member "YATEXHLP.jp" files)
+                    ;; `Warning: defvar ignored because kinsoku-limit is let-bound'.
+                    (load "international/kinsoku")
                     'ac-l-yatex-jp-documentation)
                    ((member "latex-help" files)
-                    'ac-l-latex2e-documentation)
-                   (t nil)))
-         (help (if (and help-fn (require 'mule-util nil t)) t)))
-    (dolist (file files)
-      (let ((symbol "p")
-            (prefix ac-l-command-prefix)
-            source package req latex-c latex-a)
-        ;; parse properties from file name
-        (cond
-         ((string-match "^\\([^-]+\\)-\\([^-]+\\)-\\([^-]+\\)-\\([^-]+\\)$" file)
-          (let* ((p (match-string 1 file))
-                 (T (match-string 2 file))
-                 (s (match-string 3 file))
-                 (r (match-string 4 file))
-                 (v (gethash p ac-l-package-dependences))
-                 (filenames (ac-l-get-filenames)))
-            (unless (member p filenames)
-              (ac-l-set-filenames (append filenames (list p))))
-            (if v (setq package (concat p "\\|" v)) (setq package p))
-            (unless (string= s "*") (setq symbol s))
-            (unless (string= r "*") (setq req (string-to-number r)))
-            (if (string= T "a")
-                (setq prefix 'ac-l-argument
-                      source (intern (format "ac-l-source-%s-arguments" p)))
-              (setq source (intern (format "ac-l-source-%s-commands" p))))))
-         ((or (string= "macro" file)
-              (string= "latex-dot-ltx" file)
-              (string-match "^\\(ptex-\\)?primitives$" file)
-              (string-match "^\\(basic\\|platex\\)-commands$" file))
-          (setq latex-c t))
-         ((string-match "^\\(basic\\|platex\\)-arguments$" file)
-          (setq latex-a t))
-         ((cond
-           ((string= "user-commands" file)
-            (setq symbol "u"))
-           ((string= "user-arguments" file)
-            (setq symbol "u"
-                  prefix 'ac-l-argument)))
-          (setq source (intern (format "ac-l-source-%s" file)))))
-        ;; read file contents, and define package and user sources
-        (when (or source latex-c latex-a)
-          (let ((candidates (with-temp-buffer
-                              (insert-file-contents (concat dir file))
-                              (split-string (buffer-string) "\n"))))
-            (unless (equal candidates '(""))
-              (cond
-               (source
-                (set source
-                     (delq nil
-                           (list (if package (cons 'ac-l-package package))
-                                 (if (integerp req) (cons 'requires req))
-                                 (cons 'symbol symbol)
-                                 (cons 'prefix prefix)
-                                 (cons 'candidates
-                                       `(ac-l-completions ',candidates)))))
-                (cond
-                 (package
-                  (ac-l-set-package-sources
-                   `(,@(ac-l-get-package-sources) ,source)))
-                 ((string= symbol "u")
-                  (ac-l-set-user-prefix-sources
-                   `(,@(ac-l-get-user-prefix-sources) ,source)))))
-               (latex-c
-                (ac-l-set-latex-commands
-                 (append (ac-l-get-latex-commands) candidates)))
-               (latex-a
-                (ac-l-set-latex-arguments
-                 (append (ac-l-get-latex-arguments) candidates)))))))))
-    ;; define basic sources
-    (when (ac-l-get-latex-commands)
-      (defvar ac-l-source-latex-commands
-        (delq nil
-              `((symbol . "l")
-                ,(if help (cons 'document help-fn))
-                (prefix . ,ac-l-command-prefix)
-                (candidates . (ac-l-completions (ac-l-get-latex-commands)))))))
-    (when (ac-l-get-latex-arguments)
-      (defvar ac-l-source-latex-arguments
-        (delq nil
-              `((symbol . "l")
-                ,(if help (cons 'document help-fn))
-                (prefix . ac-l-argument)
-                (candidates . (ac-l-completions (ac-l-get-latex-arguments)))))))))
+                    'ac-l-latex2e-documentation))))
+    (when help-fn
+      (dolist (source sources)
+        (push (cons 'document help-fn) (symbol-value source))))))
 
-;;; structure
+(defun ac-l-make-source-from-dir ()
+  (dolist (file (directory-files ac-l-dict-directory nil "^[^.]"))
+    (let ((sym "p")
+          (prx ac-l-command-prefix)
+          source package req)
+      ;; parse file name
+      (cond
+       ((string-match "^\\([^-]+\\)-\\([^-]\\)-\\([^-]\\)-\\([^-]\\)$" file)
+        (let* ((n (match-string 1 file))
+               (T (match-string 2 file))
+               (s (match-string 3 file))
+               (r (match-string 4 file))
+               (d (assoc-default n ac-l-package-dependences 'string=))
+               (filenames (ac-l-db-get 'filenames)))
+          (unless (member n filenames)
+            (ac-l-db-set 'filenames (cons n filenames)))
+          (if d (setq package (concat n "\\|" d)) (setq package n))
+          (unless (string= s "*") (setq sym s))
+          (unless (string= r "*") (setq req (string-to-number r)))
+          (if (string= T "a")
+              (setq prx 'ac-l-argument
+                    source (intern (format "ac-l-source-%s-arguments" n)))
+            (setq source (intern (format "ac-l-source-%s-commands" n))))))
+       ((or (string= "macro" file)
+            (string= "latex-dot-ltx" file)
+            (string-match "^\\(ptex-\\)?primitives$" file)
+            (string-match "^\\(basic\\|platex\\)-commands$" file))
+        (setq source 'latex-cmd))
+       ((string-match "^\\(basic\\|platex\\)-arguments$" file)
+        (setq source 'latex-arg))
+       ((cond ((string= "user-commands" file) t)
+              ((string= "user-arguments" file) (setq prx 'ac-l-argument)))
+        (setq sym "u"
+              source (intern (concat "ac-l-source-" file)))))
+      ;; read file contents
+      (when source
+        (let ((cands (with-temp-buffer
+                       (insert-file-contents (concat ac-l-dict-directory file))
+                       (split-string (buffer-string) "\n"))))
+          (case source
+            (latex-cmd (ac-l-db-append 'latex-cmds cands))
+            (latex-arg (ac-l-db-append 'latex-args cands))
+            (otherwise
+             (set source (delq nil `(,(if package `(ac-l-package . ,package))
+                                     ,(if (integerp req) `(requires . ,req))
+                                     (symbol . ,sym)
+                                     (prefix . ,prx)
+                                     (candidates . ',cands))))
+             (cond (package
+                    (ac-l-db-push source 'package-sources))
+                   ((string= sym "u")
+                    (ac-l-db-push source 'user-prefix-sources))))))))))
+
+;;; update file's info
 (defstruct ac-l-info
   "Information about each tex file."
-  filename                              ; file path
-  modification                          ; file modification
-  words                                 ;
-  commands                              ;
-  packages                              ; package & class names
-  labels                                ; ht: k -> label, v -> help
-  bibitems                              ; ht: k -> bibitem, v -> help
-  bibs)                                 ; bib file names
+  modification words commands packages labels bibitems bibs)
 
-(defun ac-l-candidates-hash (regexp table beg end)
+;; k -> filename (full path), v -> struct
+(defconst ac-l-structs (make-hash-table :test 'equal))
+(defconst ac-l-children (make-hash-table :test 'equal))
+
+(defsubst ac-l-split-string (str)
+  (split-string str "\\([ \t\n]\\|%.*\n\\|,\\)+" t))
+
+(defsubst ac-l-candidates-hash (regexp table beg end)
   (goto-char beg)
   (while (re-search-forward regexp end t)
     (puthash (match-string-no-properties 1)
@@ -472,335 +445,299 @@ REQUIRES  Requires property. `*' => not set."
              table)
     (goto-char (1+ (match-beginning 0)))))
 
-(defun ac-l-make-info (file filename &optional master)
+(defun ac-l-make-info (struct filename &optional master)
   (let* ((word-re "[^\\,]\\(\\<[-'a-zA-Z]+\\>\\)")
          (package-re "^[^%\n]*\\\\\\(?:\\(?:usep\\|RequireP\\)ackage\\|documentclass\\)\\(?:\\[[^]]*\\]\\)?{\\([^}]+\\)")
+         (lines ".*\n.*\n.*\n")
          (label-re "\\\\label{\\(\\(?:[^ }\t\n]\\)+\\)}")
-         (label-re-1 (concat "^[^%\n]*" label-re ".*$"))
-         (label-re-2 (concat "^.*\n.*\n.*\n[^%\n]*" label-re ".*\n.*\n.*\n.*$"))
+         (label-re1 (concat "^[^%\n]*" label-re ".*$"))
+         (label-re2 (concat "^" lines "[^%\n]*" label-re lines ".*$"))
          (bibitem-re "^[^%\n]*\\\\bibitem\\(?:\\[[^]]*\\]\\)?{\\(\\(?:[^ }\t\n]\\)+\\)}[^\\]*")
          (bib-re "^[^%\n]*\\\\bibliography{\\([^}]+\\)")
-         (split-fn (lambda (str) (split-string str "[ %,\t\n]+" t)))
-         (collect-p (and (ac-l-master-p)
-                         (not master)
-                         (not (buffer-file-name))))
+         (collect-p (not (or master (buffer-file-name))))
          (beg (point-min))
-         (label-beg (save-excursion (goto-char beg)
-                                    (forward-line 3)
-                                    (point)))
-         (label-end (save-excursion (goto-char (point-max))
-                                    (forward-line -3)
-                                    (point)))
-         (label-table (or (ignore-errors
-                            (ac-l-info-labels (symbol-value file)))
-                          (make-hash-table :test 'equal)))
-         (bibitem-table (or (ignore-errors
-                              (ac-l-info-bibitems (symbol-value file)))
-                            (make-hash-table :test 'equal)))
-         i candidate candidates)
-    (clrhash label-table)
-    (clrhash bibitem-table)
+         (label-beg (save-excursion
+                      (goto-char beg)
+                      (forward-line 3)
+                      (point)))
+         (label-end (save-excursion
+                      (goto-char (point-max))
+                      (forward-line -3)
+                      (point)))
+         (label-ht (or (ignore-errors (clrhash (ac-l-info-labels struct)))
+                       (make-hash-table :test 'equal)))
+         (bibitem-ht (or (ignore-errors (clrhash (ac-l-info-bibitems struct)))
+                         (make-hash-table :test 'equal)))
+         (i 0)
+         words commands packages bibs cand)
     (save-excursion
-      (make-ac-l-info
-       :filename filename
-       :modification (ignore-errors (nth 5 (file-attributes filename)))
-       :words (when (and ac-l-use-word-completion collect-p)
-                (setq i 0 candidates nil)
-                (goto-char beg)
-                (while (and (re-search-forward word-re nil t) (<= i 100))
-                  (setq candidate (match-string-no-properties 1))
-                  (when (and (not (member candidate candidates))
-                             (>= (length candidate) 3))
-                    (push candidate candidates)
-                    (incf i)))
-                candidates)
-       :commands (when collect-p
-                   (let ((latex-commands (ac-l-get-latex-commands)))
-                     (setq i 0 candidates nil)
-                     (goto-char beg)
-                     (while (and (re-search-forward ac-l-command-prefix nil t)
-                                 (<= i 100))
-                       (setq candidate (match-string-no-properties 1))
-                       (unless (or (member candidate candidates)
-                                   (member candidate latex-commands))
-                         (push candidate candidates)
-                         (incf i))))
-                   candidates)
-       :packages (when master
-                   (setq candidates nil)
-                   (goto-char beg)
-                   (while (re-search-forward package-re nil t)
-                     (dolist (name (funcall split-fn
-                                            (match-string-no-properties 1)))
-                       (ac-l-pushnew-2 name candidates)))
-                   candidates)
-       :labels (progn
-                 (ac-l-candidates-hash label-re-1 label-table beg label-beg)
-                 (ac-l-candidates-hash label-re-2 label-table label-beg nil)
-                 (ac-l-candidates-hash label-re-1 label-table label-end nil)
-                 label-table)
-       :bibitems (progn
-                   (ac-l-candidates-hash bibitem-re bibitem-table beg nil)
-                   bibitem-table)
-       :bibs (progn
-               (setq candidates nil)
-               (goto-char beg)
-               (when (re-search-forward bib-re nil t)
-                 (dolist (name (funcall split-fn (match-string-no-properties 1)))
-                   (ac-l-pushnew-2 name candidates)))
-               candidates)))))
+      (when (and ac-l-use-word-completion collect-p)
+        (goto-char beg)
+        (while (and (re-search-forward word-re nil t) (<= i 100))
+          (setq cand (match-string-no-properties 1))
+          (when (and (not (member cand words))
+                     (>= (length cand) 3))
+            (push cand words)
+            (incf i))))
+      (when collect-p
+        (let ((latex-cmds (ac-l-db-get 'latex-cmds)))
+          (goto-char beg)
+          (while (re-search-forward ac-l-command-prefix nil t)
+            (setq cand (match-string-no-properties 1))
+            (unless (or (member cand commands)
+                        (member cand latex-cmds))
+              (push cand commands)))))
+      (when master
+        (goto-char beg)
+        (while (re-search-forward package-re nil t)
+          (dolist (name (ac-l-split-string (match-string-no-properties 1)))
+            (unless (member name packages)
+              (push name packages)))))
+      (ac-l-candidates-hash label-re1 label-ht beg label-beg)
+      (ac-l-candidates-hash label-re2 label-ht beg nil)
+      (ac-l-candidates-hash label-re1 label-ht label-end nil)
+      (ac-l-candidates-hash bibitem-re bibitem-ht beg nil)
+      (when ac-l-bib-files
+        (goto-char beg)
+        (while (re-search-forward bib-re nil t)
+          (dolist (name (ac-l-split-string (match-string-no-properties 1)))
+            (unless (member name bibs)
+              (push name bibs))))))
+    (puthash filename
+             (make-ac-l-info
+              :modification (ignore-errors (nth 5 (file-attributes filename)))
+              :words words
+              :commands commands
+              :packages packages
+              :labels label-ht
+              :bibitems bibitem-ht
+              :bibs bibs)
+             ac-l-structs)))
 
-;;; update file's info
-(defconst ac-l-children (make-hash-table :test 'equal)
-  "Hash table. k -> filename (full path), v -> file (cl struct)")
+(defsubst ac-l-struct-master ()
+  (gethash ac-l-master-file ac-l-structs))
 
-(defvar ac-l-master nil
-  "Internal variable (cl struct).
-Are you looking for `ac-l-master-file'?")
+(defsubst ac-l-all-structs ()
+  (delq t (append (loop for v being the hash-values in ac-l-children collect v)
+                  (list (ac-l-struct-master)))))
 
-(defsubst ac-l-all-files ()
-  (append (loop for v being the hash-values in ac-l-children collect v)
-          '(ac-l-master)))
+(defsubst ac-l-append-info (info-fn)
+  (apply 'append (mapcar info-fn (ac-l-all-structs))))
 
-(defun ac-l-append-info (function)
-  (loop for file in (ac-l-all-files)
-        append (funcall function (symbol-value file)) into elts
-        finally return (nreverse elts)))
-
-(defun ac-l-collect-info (function)
-  (loop for file in (ac-l-all-files)
-        collect (funcall function (symbol-value file))))
+(defsubst ac-l-convert-file-to-filename (file base-dir suffix)
+  ;; FILE -> BASE-DIR/FILE.SUFFIX
+  (let ((path (expand-file-name file base-dir)))
+    (concat (if (string-match "^\\(.+\\)\\.[^./]+$" path)
+                (match-string 1 path)
+              path)
+            "." suffix)))
 
 (defun ac-l-update-children-names ()
-  "Update `ac-l-children'."
-  (let ((regexp "^[^%\n]*\\\\\\(?:input\\|include\\)[ {\t]+\\([^ }%\n]+\\)")
-        (dir (if (string-match "^\\(.+/\\).+$" ac-l-master-file)
-                 (match-string 1 ac-l-master-file)
-               "/"))
-        (i 0))
-    (clrhash ac-l-children)
+  ;; parse file names in master and push them into DB
+  (let* ((beg-re "^[^%\n]*\\\\\\(?:")
+         (end-re "\\)[ {\t]+\\([^ }%\n]+\\)")
+         (regexp (concat beg-re "in\\(?:put\\|clude\\)" end-re))
+         (beg (point-min))
+         (dir (if (string-match "^\\(.+/\\).+$" ac-l-master-file)
+                  (match-string 1 ac-l-master-file)
+                "/"))
+         names)
     (save-excursion
-      (goto-char (point-min))
-      (while (re-search-forward regexp nil t)
-        (let* ((path (expand-file-name (match-string-no-properties 1) dir))
-               (filename (concat (if (string-match "^\\(.+\\)\\.[^./]+$" path)
-                                     (match-string 1 path)
-                                   path)
-                                 ".tex")))
-          (when (and (file-exists-p filename)
-                     (not (gethash filename ac-l-children)))
-            (puthash filename
-                     (intern (format "ac-l-child-%d" i))
-                     ac-l-children)
-            (incf i)))))))
+      (goto-char beg)
+      (when (re-search-forward (concat beg-re "includeonly" end-re) nil t)
+        (setq names (ac-l-split-string (match-string-no-properties 1))
+              regexp (concat beg-re "input" end-re)))
+      (goto-char beg)
+      (setq names (append names
+                          (loop while (re-search-forward regexp nil t)
+                                collect (match-string-no-properties 1)))))
+    (ac-l-db-set 'children
+                 (loop for name in names
+                       for filename = (ac-l-convert-file-to-filename name dir "tex")
+                       if (file-exists-p filename)
+                       collect filename))))
 
-(defsubst ac-l-file-mod-p (file filename)
-  (if (not (equal (ac-l-info-modification (symbol-value file))
-                  (nth 5 (file-attributes filename))))
-      t))
+(defun ac-l-update-children (filenames)
+  (clrhash ac-l-children)
+  (dolist (filename filenames)
+    ;; If struct is undefined, put t.
+    (puthash filename (or (gethash filename ac-l-structs) t) ac-l-children))
+  ac-l-children)
 
-(defsubst ac-l-same-file-p (file filename)
-  (if (string= (ac-l-info-filename (symbol-value file)) filename) t))
+(defsubst ac-l-file-mod-p (struct filename)
+  (not (equal (ac-l-info-modification struct)
+              (nth 5 (file-attributes filename)))))
+
+(defsubst ac-l-update-master-info ()
+  (ac-l-make-info (ac-l-struct-master) ac-l-master-file t))
 
 (defun ac-l-update-info (&optional force)
-  (if (ac-l-master-p)
-      (let ((master-mod-p (or force
-                              (ac-l-file-mod-p 'ac-l-master ac-l-master-file))))
+  "If necessary, update file's info."
+  (if ac-l-master-p
+      (let ((master-mod-p (or force (ac-l-file-mod-p (ac-l-struct-master) ac-l-master-file)))
+            (buf-list (buffer-list)))
         ;; master
         (or (loop with master = (expand-file-name ac-l-master-file)
-                  for buf in (buffer-list)
+                  for buf in buf-list
                   if (string= master (buffer-file-name buf))
-                  do
-                  (when (or master-mod-p (buffer-modified-p buf))
-                    (with-current-buffer buf
-                      (ac-l-update-children-names)
-                      (setq ac-l-master
-                            (ac-l-make-info 'ac-l-master ac-l-master-file t))))
-                  and return t
-                  finally return nil)
+                  do (when (or (buffer-modified-p buf) master-mod-p)
+                       (with-current-buffer buf
+                         (ac-l-update-children-names)
+                         (ac-l-update-master-info)))
+                  and return t)
             (when master-mod-p
               (with-temp-buffer
                 (insert-file-contents ac-l-master-file)
                 (ac-l-update-children-names)
-                (setq ac-l-master
-                      (ac-l-make-info 'ac-l-master ac-l-master-file t)))))
+                (ac-l-update-master-info))))
         ;; children
-        (let ((table (copy-hash-table ac-l-children)))
-          (dolist (buf (buffer-list))
+        (let* ((filenames (ac-l-db-get 'children))
+               (table (ac-l-update-children filenames)))
+          (dolist (buf buf-list)
             (let* ((filename (buffer-file-name buf))
-                   (file (gethash filename table)))
-              (when (and file
-                         (or force
+                   (struct (gethash filename table)))
+              (when (and struct
+                         (or (not (ac-l-info-p struct))
                              (buffer-modified-p buf)
-                             (not (ac-l-same-file-p file filename))
-                             (ac-l-file-mod-p file filename)))
+                             (ac-l-file-mod-p struct filename)))
                 (with-current-buffer buf
-                  (set file (ac-l-make-info file filename)))
+                  (ac-l-make-info struct filename))
                 (remhash filename table))))
-          (maphash (lambda (filename file)
-                     (when (or force
-                               (not (ac-l-same-file-p file filename))
-                               (ac-l-file-mod-p file filename))
+          (maphash (lambda (filename struct)
+                     (when (or (not (ac-l-info-p struct))
+                               (ac-l-file-mod-p struct filename))
                        (with-temp-buffer
                          (insert-file-contents filename)
-                         (set file (ac-l-make-info file filename)))))
-                   table)))
+                         (ac-l-make-info struct filename))))
+                   table)
+          (ac-l-update-children filenames)))
     (when (or force (buffer-modified-p))
-      (setq ac-l-master (ac-l-make-info 'ac-l-master (buffer-file-name) t)))))
+      (ac-l-update-master-info))))
 
-;;; update
 (defun ac-l-update ()
-  "Update `ac-sources'."
-  (let (p-c-sources p-a-sources)
-    (ac-l-set-package-commands nil)
-    (ac-l-set-package-arguments nil)
-    ;; parse
-    (dolist (name (ac-l-info-packages ac-l-master))
-      (dolist (source (ac-l-get-package-sources))
+  "Update `ac-sources' according to packages."
+  (ac-l-db-set 'package-cmds nil)
+  (ac-l-db-set 'package-args nil)
+  (let ((sources (ac-l-db-get 'sources))
+        cmd-sources arg-sources)
+    (dolist (name (ac-l-info-packages (ac-l-struct-master)))
+      ;; sources
+      (dolist (source (ac-l-db-get 'package-sources))
         (let* ((alist (symbol-value source))
                (package (cdr (assq 'ac-l-package alist)))
                (prefix (cdr (assq 'prefix alist))))
           (when (string-match package name)
             (cond
              ((string= prefix ac-l-command-prefix)
-              (ac-l-pushnew-1 source p-c-sources))
+              (unless (memq source cmd-sources)
+                (push source cmd-sources)))
              ((eq prefix 'ac-l-argument)
-              (ac-l-pushnew-1 source p-a-sources))))))
-      ;; package candidates
-      (let* ((v (gethash name ac-l-packages))
-             (cmds (elt v 0))
-             (args (elt v 1)))
-        (when cmds
-          (ac-l-set-package-commands (append (ac-l-get-package-commands) cmds)))
-        (when args
-          (ac-l-set-package-arguments (append (ac-l-get-package-arguments) args)))))
-    ;; set
-    (setq ac-sources
-          (delq nil
-                (append (ac-l-get-user-prefix-sources)
-                        `(ac-source-filename
-                          ac-l-source-labels
-                          ac-l-source-bibitems
-                          ,(when ac-l-bib-files
-                             'ac-l-source-bibliographies)
-                          ,(when (boundp 'ac-l-source-latex-commands)
-                             'ac-l-source-latex-commands))
-                        (nreverse p-c-sources)
-                        `(,(when ac-l-package-files
-                             'ac-l-source-package-commands)
-                          ,(cdr (ac-l-get-buffer-sources))
-                          ,(when (ac-l-master-p)
-                             'ac-l-source-commands-in-files)
-                          ,(when (boundp 'ac-l-source-latex-arguments)
-                             'ac-l-source-latex-arguments))
-                        (nreverse p-a-sources)
-                        `(,(when ac-l-package-files
-                             'ac-l-source-package-arguments)
-                          ac-l-source-filenames
-                          ac-source-files-in-current-dir)
-                        ;; without prefix
-                        (ac-l-get-user-noprefix-sources)
-                        `(,(when ac-l-use-word-completion
-                             (car (ac-l-get-buffer-sources)))
-                          ,(when (and (ac-l-master-p)
-                                      ac-l-use-word-completion)
-                             'ac-l-source-words-in-files)
-                          ac-source-dictionary))))))
+              (unless (memq source arg-sources)
+                (push source arg-sources)))))))
+      ;; candidates
+      (let* ((vec (or (gethash name ac-l-packages) '[nil nil]))
+             (cmd (aref vec 0))
+             (arg (aref vec 1)))
+        (if cmd (ac-l-db-append 'package-cmds cmd))
+        (if arg (ac-l-db-append 'package-args arg))))
+    (setq ac-sources (append (ac-l-db-get 'user-prefix-sources)
+                             (nth 0 sources)
+                             cmd-sources
+                             (nth 1 sources)
+                             arg-sources
+                             (nth 2 sources)
+                             (ac-l-db-get 'user-noprefix-sources)
+                             (nth 3 sources)))))
 
-(defun ac-l-update-bib ()
-  "Update bib tables."
-  (ac-l-set-current-bib-tables nil)
-  (dolist (name (ac-l-append-info 'ac-l-info-bibs))
-    (dolist (table (ac-l-get-all-bib-tables))
-      (when (and (string= (format "ac-l-%s-table" name)
-                          (symbol-name table))
-                 (not (memq table (ac-l-get-current-bib-tables))))
-        (ac-l-set-current-bib-tables
-         `(,@(ac-l-get-current-bib-tables) ,table))))))
+(defun ac-l-set-sources ()
+  (let ((s0 `(ac-source-filename
+              ac-l-source-labels
+              ac-l-source-bibitems
+              ,(if ac-l-bib-files 'ac-l-source-bibliographies)
+              ,(if (ac-l-db-get 'latex-cmds) 'ac-l-source-latex-commands)))
+        (s1 `(,(if ac-l-package-files 'ac-l-source-package-commands)
+              ac-l-source-commands
+              ac-source-files-in-current-dir
+              ,(if (ac-l-db-get 'latex-args) 'ac-l-source-latex-arguments)))
+        (s2 `(,(if ac-l-package-files 'ac-l-source-package-arguments)
+              ,(if (ac-l-db-get 'filenames) 'ac-l-source-filenames)))
+        (s3 `(,(if ac-l-use-word-completion 'ac-l-source-words)
+              ac-source-dictionary)))
+    (ac-l-db-set 'sources
+                 (mapcar (lambda (s) (delq nil s)) (list s0 s1 s2 s3)))))
 
 ;;; candidate
-;;; copied from auto-complete.el and add arguments
-(defun ac-l-candidate (beg-regexp end-regexp)
+;; copied from auto-complete.el and added arguments
+(defun ac-l-candidate (beg-re end-re)
   (let ((i 0)
-        (regexp (concat beg-regexp (regexp-quote ac-prefix) end-regexp))
-        candidates)
+        (regexp (concat beg-re (regexp-quote ac-prefix) end-re))
+        cand cands)
     (save-excursion
       ;; Search backward
       (goto-char ac-point)
       (while (and (or (not (integerp ac-limit)) (< i ac-limit))
                   (re-search-backward regexp nil t))
-        (let ((candidate (match-string-no-properties 1)))
-          (unless (member candidate candidates)
-            (push candidate candidates)
-            (incf i))))
+        (setq cand (match-string-no-properties 1))
+        (unless (member cand cands)
+          (push cand cands)
+          (incf i)))
       ;; Search backward
       (goto-char (+ ac-point (length ac-prefix)))
       (while (and (or (not (integerp ac-limit)) (< i ac-limit))
                   (re-search-forward regexp nil t))
-        (let ((candidate (match-string-no-properties 1)))
-          (unless (member candidate candidates)
-            (push candidate candidates)
-            (incf i))))
-      (nreverse candidates))))
+        (setq cand (match-string-no-properties 1))
+        (unless (member cand cands)
+          (push cand cands)
+          (incf i))))
+    (nreverse cands)))
 
-(defun ac-l-incremental-update-index (index function)
-  (let ((pair (symbol-value index))
+(defun ac-l-incremental-update-index (idx cand-fn)
+  (let ((pair (symbol-value idx))
         (ac-limit (or (and (integerp ac-limit) ac-limit) 10)))
     (when (null pair)
-      (set index (cons nil nil)))
+      (set idx (cons nil nil)))
     ;; Mark incomplete
     (when (car pair)
       (setcar pair nil))
     (let ((list (cdr pair))
-          (words (funcall function)))
+          (words (funcall cand-fn)))
       (dolist (word words)
         (unless (member word list)
           (push word list)
           (setcdr pair list))))))
 
-(defun ac-l-update-index (index function &optional same-mode)
+(defun ac-l-update-index (idx cand-fn)
   (dolist (buf (buffer-list))
-    (when (and (if same-mode
-                   (eq ac-l-major-mode (buffer-local-value 'major-mode buf))
-                 t)
+    (when (and (eq ac-l-major-mode (buffer-local-value 'major-mode buf))
                (or ac-fuzzy-enable
                    (not (eq buf (current-buffer)))))
       (with-current-buffer buf
-        (when (and (not (car (symbol-value index)))
+        (when (and (not (car (symbol-value idx)))
                    (< (buffer-size) 1048576))
           ;; Complete index
-          (set index (cons t (let ((ac-point (point-min))
-                                   (ac-prefix "")
-                                   ac-limit)
-                               (funcall function)))))))))
+          (set idx (cons t (let ((ac-point (point-min))
+                                 (ac-prefix "")
+                                 ac-limit)
+                             (funcall cand-fn)))))))))
 
-(defun ac-l-candidates (index function &optional same-mode)
+(defun ac-l-candidates (idx cand-fn)
   (loop initially (unless ac-fuzzy-enable
-                    (ac-l-incremental-update-index index function))
+                    (ac-l-incremental-update-index idx cand-fn))
         for buf in (buffer-list)
-        if (and (or (not (integerp ac-limit))
-                    (< (length candidates) ac-limit))
-                (if same-mode
-                    (derived-mode-p (buffer-local-value 'major-mode buf))
-                  t))
-        append (funcall ac-match-function
-                        ac-prefix
-                        (cdr (buffer-local-value index buf)))
-        into candidates
-        finally return candidates))
+        if (and (or (not (integerp ac-limit)) (< (length cands) ac-limit))
+                (derived-mode-p (buffer-local-value 'major-mode buf)))
+        append (funcall ac-match-function ac-prefix
+                        (cdr (buffer-local-value idx buf)))
+        into cands
+        finally return cands))
 
 
 ;;;; sources
-
-;;; words
 (defvar ac-l-word-index nil)
 (make-variable-buffer-local 'ac-l-word-index)
 
-(defsubst ac-l-candidate-words-in-buffer ()
-  (ac-l-candidate "[^\\,]\\(\\<" "[-'a-zA-Z]+\\>\\)"))
-
-;; Meadow/Emacs memo: http://www.bookshelf.jp/soft/meadow_34.html#SEC495
 (defun ac-l-smart-capitalize ()
+  ;; Meadow/Emacs memo: http://www.bookshelf.jp/soft/meadow_34.html#SEC495
   (when (and (looking-back "[[:space:][:cntrl:]]+[a-z']+")
              (= (point) (save-excursion
                           (backward-sentence)
@@ -808,307 +745,232 @@ Are you looking for `ac-l-master-file'?")
                           (point))))
     (capitalize-word -1)))
 
-(defvar ac-l-source-words-in-buffer
-  '((candidates . (ac-l-candidates 'ac-l-word-index
-                                   'ac-l-candidate-words-in-buffer))
-    (action . ac-l-smart-capitalize)
-    (requires . 3))
-  "Source for words in current buffer.")
+(defun ac-l-candidate-words-in-buffer ()
+  (ac-l-candidate "[^\\,]\\(\\<" "[-'a-zA-Z]+\\>\\)"))
 
-(defvar ac-l-source-words-in-all-buffer
-  '((init . (ac-l-update-index 'ac-l-word-index
-                               'ac-l-candidate-words-in-buffer))
-    (candidates . (ac-l-candidates 'ac-l-word-index
-                                   'ac-l-candidate-words-in-buffer))
-    (action . ac-l-smart-capitalize)
-    (requires . 3))
-  "Source for words in all buffers.")
+(defvar ac-l-source-words
+  '((action . ac-l-smart-capitalize)
+    (requires . 3)))
 
-(defvar ac-l-source-words-in-same-mode-buffers
-  '((init . (ac-l-update-index 'ac-l-word-index
-                               'ac-l-candidate-words-in-buffer
-                               t))
-    (candidates . (ac-l-candidates 'ac-l-word-index
-                                   'ac-l-candidate-words-in-buffer
-                                   t))
-    (action . ac-l-smart-capitalize)
-    (requires . 3))
-  "Source for words in same mode buffers.")
-
-(defvar ac-l-source-words-in-files
-  '((candidates . (ac-l-completions (ac-l-append-info 'ac-l-info-words)))
-    (action . ac-l-smart-capitalize)
-    (requires . 3))
-  "Source for words in tex files.")
-
-;;; commands
 (defvar ac-l-command-index nil)
 (make-variable-buffer-local 'ac-l-command-index)
 
-(defsubst ac-l-candidate-commands-in-buffer ()
+(defun ac-l-candidate-commands-in-buffer ()
   (ac-l-candidate "\\\\\\(" "[a-zA-Z@]+\\)"))
 
-(defvar ac-l-source-commands-in-buffer
-  `((candidates . (ac-l-candidates 'ac-l-command-index
-                                   'ac-l-candidate-commands-in-buffer))
-    (prefix . ,ac-l-command-prefix))
-  "Source for commands in current buffer.")
+(defvar ac-l-source-commands
+  `((prefix . ,ac-l-command-prefix)))
 
-(defvar ac-l-source-commands-in-all-buffer
-  `((init . (ac-l-update-index 'ac-l-command-index
-                               'ac-l-candidate-commands-in-buffer))
-    (candidates . (ac-l-candidates 'ac-l-command-index
-                                   'ac-l-candidate-commands-in-buffer))
-    (prefix . ,ac-l-command-prefix))
-  "Source for commands in all buffers.")
+(defun ac-l-basic-sources-setup ()
+  ;; Add properties into basic sources.
+  ;; The sources work like ac-source-words-in-same-mode-buffers.
+  (let* ((cw-fn 'ac-l-candidate-words-in-buffer)
+         (cc-fn 'ac-l-candidate-commands-in-buffer)
+         (wc `(ac-l-candidates 'ac-l-word-index ',cw-fn))
+         (cc `(ac-l-candidates 'ac-l-command-index ',cc-fn))
+         (wi `(ac-l-update-index 'ac-l-word-index ',cw-fn))
+         (ci `(ac-l-update-index 'ac-l-command-index ',cc-fn)))
+    (labels ((pushprops (p1 p2 p3 p4)
+                        (push `(candidates . ,p1) ac-l-source-words)
+                        (push `(candidates . ,p2) ac-l-source-commands)
+                        (push `(init . ,p3) ac-l-source-words)
+                        (push `(init . ,p4) ac-l-source-commands)))
+      (if ac-l-master-p
+          ;; add functions for file's candidates
+          (pushprops `(append ,wc (ac-l-db-get 'file-words))
+                     `(append ,cc (ac-l-db-get 'file-cmds))
+                     `(lambda ()
+                        ,wi
+                        (ac-l-db-set 'file-words
+                                     (ac-l-append-info 'ac-l-info-words)))
+                     `(lambda ()
+                        ,ci
+                        (ac-l-db-set 'file-cmds
+                                     (ac-l-append-info 'ac-l-info-commands))))
+        (pushprops wc cc wi ci)))))
 
-(defvar ac-l-source-commands-in-same-mode-buffers
-  `((init . (ac-l-update-index 'ac-l-command-index
-                               'ac-l-candidate-commands-in-buffer
-                               t))
-    (candidates . (ac-l-candidates 'ac-l-command-index
-                                   'ac-l-candidate-commands-in-buffer
-                                   t))
-    (prefix . ,ac-l-command-prefix))
-  "Source for commands in same mode buffers.")
+(defvar ac-l-source-latex-commands
+  `((candidates . (ac-l-db-get 'latex-cmds))
+    (prefix . ,ac-l-command-prefix)
+    (symbol . "l")))
 
-(defvar ac-l-source-commands-in-files
-  `((candidates . (ac-l-completions (ac-l-append-info 'ac-l-info-commands)))
-    (prefix . ,ac-l-command-prefix))
-  "Source for commands in tex files.")
+(defvar ac-l-source-latex-arguments
+  `((candidates . (ac-l-db-get 'latex-args))
+    (prefix . ac-l-argument)
+    (symbol . "l")))
 
-;;; etc
 (defvar ac-l-source-filenames
-  '((candidates . (ac-l-completions (ac-l-get-filenames)))
+  '((candidates . (ac-l-db-get 'filenames))
     (prefix . ac-l-argument))
-  "Source for names of packages and bib files.")
+  "Source for package and bib file names.")
 
 (defvar ac-l-source-package-commands
-  `((candidates . (ac-l-completions (ac-l-get-package-commands)))
+  `((candidates . (ac-l-db-get 'package-cmds))
     (prefix . ,ac-l-command-prefix)
-    (symbol . "p"))
-  "Source for commands in `ac-l-package-files'.")
+    (symbol . "p")))
 
 (defvar ac-l-source-package-arguments
-  '((candidates . (ac-l-completions (ac-l-get-package-arguments)))
+  '((candidates . (ac-l-db-get 'package-args))
     (prefix . ac-l-argument)
-    (symbol . "p"))
-  "Source for arguments in `ac-l-package-files'.")
+    (symbol . "p")))
 
-(defsubst ac-l-thereis-hash-value (key tables)
-  (loop for table in tables
-        thereis (gethash key (if (hash-table-p table) table (symbol-value table)))))
+(defsubst ac-l-gethash (key tables)
+  (loop for table in tables thereis (gethash key table)))
+
+(defsubst ac-l-append-keys (tables)
+  (apply 'append (mapcar (lambda (table)
+                           (loop for k being the hash-keys in table collect k))
+                         tables)))
+
+(defun ac-l-update-labels ()
+  (let ((it (ac-l-db-set 'label-tables
+                         (mapcar 'ac-l-info-labels (ac-l-all-structs)))))
+    (ac-l-db-set 'label-cands (ac-l-append-keys it))))
 
 (defvar ac-l-source-labels
-  '((init . (ac-l-set-label-cands
-             (loop for table in (ac-l-set-label-tables
-                                 (ac-l-collect-info 'ac-l-info-labels))
-                   append (loop for k being the hash-keys in table collect k)
-                   into candidates
-                   finally return
-                   (if (looking-back "\\\\label{\\([^}]+\\)")
-                       (let ((m (match-beginning 1)))
-                         (delete (buffer-substring-no-properties m (1+ m))
-                                 candidates))
-                     candidates))))
-    (candidates . (ac-l-completions (ac-l-get-label-cands)))
+  '((init . ac-l-update-labels)
+    (candidates . (ac-l-db-get 'label-cands))
     (prefix . ac-l-label)
-    (document . (lambda (k) (ac-l-thereis-hash-value k (ac-l-get-label-tables))))
-    (symbol . "L"))
-  "Source for labels.")
+    (document . (lambda (k) (ac-l-gethash k (ac-l-db-get 'label-tables))))
+    (symbol . "L")))
 
 (defun ac-l-complete-labels ()
   "Start label name completion at point."
   (interactive)
-  (auto-complete
-   (list (remove '(prefix . ac-l-label) ac-l-source-labels))))
+  (auto-complete (list (remove '(prefix . ac-l-label) ac-l-source-labels))))
+
+(defun ac-l-update-bibitems ()
+  (let ((it (ac-l-db-set 'bibitem-tables
+                         (mapcar 'ac-l-info-bibitems (ac-l-all-structs)))))
+    (ac-l-db-set 'bibitem-cands (ac-l-append-keys it))))
 
 (defvar ac-l-source-bibitems
-  '((init . (ac-l-set-bibitem-cands
-             (loop for table in (ac-l-set-bibitem-tables
-                                 (ac-l-collect-info 'ac-l-info-bibitems))
-                   append (loop for k being the hash-keys in table collect k)
-                   into candidates
-                   finally return
-                   (if (looking-back "\\\\bibitem\\(\\[[^]]*\\]\\)?{\\([^}]+\\)")
-                       (let ((m (match-beginning 2)))
-                         (delete (buffer-substring-no-properties m (1+ m))
-                                 candidates))
-                     candidates))))
-    (candidates . (ac-l-completions (ac-l-get-bibitem-cands)))
+  '((init . ac-l-update-bibitems)
+    (candidates . (ac-l-db-get 'bibitem-cands))
     (prefix . ac-l-bib)
-    (document . (lambda (k) (ac-l-thereis-hash-value k (ac-l-get-bibitem-tables))))
-    (symbol . "B"))
-  "Source for bibitems.")
+    (document . (lambda (k) (ac-l-gethash k (ac-l-db-get 'bibitem-tables))))
+    (symbol . "B")))
+
+(defun ac-l-update-bib ()
+  (let ((it (ac-l-db-set 'cur-bib-tables
+                         (loop with tables = (ac-l-db-get 'all-bib-tables)
+                               for name in (ac-l-append-info 'ac-l-info-bibs)
+                               if (assoc-default name tables 'string=)
+                               collect it))))
+    (ac-l-db-set 'bib-cands (ac-l-append-keys it))))
 
 (defvar ac-l-source-bibliographies
-  '((init . (ac-l-set-bib-cands
-             (loop for table in (ac-l-get-current-bib-tables)
-                   append (loop for k being the hash-keys in (symbol-value table)
-                                collect k)
-                   into candidates
-                   finally return candidates)))
-    (candidates . (ac-l-completions (ac-l-get-bib-cands)))
+  '((init . ac-l-update-bib)
+    (candidates . (ac-l-db-get 'bib-cands))
     (prefix . ac-l-bib)
-    (document . (lambda (k) (ac-l-thereis-hash-value k (ac-l-get-current-bib-tables))))
-    (symbol . "B"))
-  "Source for bibliographies in `ac-l-bib-files'.")
+    (document . (lambda (k) (ac-l-gethash k (ac-l-db-get 'cur-bib-tables))))
+    (symbol . "B")))
 
 (defun ac-l-complete-bibs ()
   "Start bibliography completion at point."
   (interactive)
-  (auto-complete
-   (list (remove '(prefix . ac-l-bib) ac-l-source-bibitems)
-         (remove '(prefix . ac-l-bib) ac-l-source-bibliographies))))
+  (auto-complete `(,(remove '(prefix . ac-l-bib) ac-l-source-bibitems)
+                   ,(remove '(prefix . ac-l-bib) ac-l-source-bibliographies))))
 
 ;;; help
-(defconst ac-l-help (make-hash-table :test 'equal)
-  "Hash table. k -> keyword, v -> quick help contents")
+(defconst ac-l-help (make-hash-table :test 'equal))
 
-(defmacro ac-l-define-help-doc (name file beg-regexp end-regexp)
+(defmacro ac-l-define-help-doc (name file beg-re end-re)
   (declare (indent 1))
   `(defun ,(intern (format "ac-l-%s-documentation" name)) (str)
      (or (gethash str ac-l-help)
          (unless (string-match "@" str)
            (with-temp-buffer
              (insert-file-contents (concat ac-l-dict-directory ,file))
-             (if (re-search-forward (concat ,beg-regexp str ,end-regexp) nil t)
+             (if (re-search-forward (concat ,beg-re str ,end-re) nil t)
                  (puthash str (match-string-no-properties 1) ac-l-help)
                (puthash str t ac-l-help)))))))
 
 (ac-l-define-help-doc latex2e
   "latex-help"
-  "\\(?:\n\\)\\([^]*\\(?:^[`\\]"
-  "\\(?:\\s(\\|[ '\n]\\)[^]+\\)\\)")
+  "\\(?:\f\n\\)\\([^\f]*\\(?:^[`\\]"
+  "\\(?:\\s(\\|[ '\n]\\)[^\f]+\\)\\)")
 
 (ac-l-define-help-doc yatex-jp
   "YATEXHLP.jp"
   "^\\(\\\\?"
   "\n[^]+\\)")
 
-(ac-l-define-help-doc yatex-eng
-  "YATEXHLP.eng"
-  "^\\(\\\\?"
-  "\n[^]+\\)")
-
 
 ;;;; clear
-
-(defvar ac-l-clear-timer nil
-  "Timer for `ac-l-clear'.")
+(defvar ac-l-clear-timer nil)
 
 (defun ac-l-clear ()
   (clrhash ac-l-help))
 
-(defun ac-l-clear-all ()
+(defun* ac-l-cancel-timers
+    (&optional (timers '(ac-l-update-timer
+                         ac-l-clear-timer)))
   (interactive)
-  (ac-l-clear)
-  (ac-l-cancel-timer)
-  (clrhash ac-l-packages)
-  (dolist (file (append (ac-l-all-files)
-                        (ac-l-get-all-bib-tables)
-                        (ac-l-get-package-sources)))
-    (let ((v (symbol-value file)))
-      (if (hash-table-p v) (clrhash v))
-      (if (arrayp v) (fillarray v nil))
-      (set file nil)))
-  (dolist (buf (buffer-list))
-    (with-current-buffer buf
-      (setq ac-l-word-index nil
-            ac-l-command-index nil)))
-  (clrhash ac-l-children)
-  (fillarray ac-l--dummy nil)
-  (when (boundp 'ac-l-source-user-commands)
-    (setq ac-l-source-user-commands nil))
-  (when (boundp 'ac-l-source-user-arguments)
-    (setq ac-l-source-user-arguments nil))
-  (setq ac-l-major-mode nil))
-
-(defun ac-l-cancel-timer ()
-  (interactive)
-  (dolist (timer '(ac-l-update-timer
-                   ac-l-clear-timer))
-    (let ((T (symbol-value timer)))
-      (when (timerp T)
-        (cancel-timer T)
+  (dolist (timer timers)
+    (let ((val (symbol-value timer)))
+      (when (timerp val)
+        (cancel-timer val)
         (set timer nil)))))
 
 
 ;;;; setup
-
 (defun ac-l-update-all (&optional force)
   (when (eq ac-l-major-mode major-mode)
-    (if force (ac-l-update-info t) (ac-l-update-info))
-    (ac-l-update)
-    (ac-l-update-bib)))
+    (ac-l-update-info force)
+    (ac-l-update)))
+
+(defun ac-l-master-p ()
+  (setq ac-l-master-p (and (stringp ac-l-master-file)
+                           (file-exists-p ac-l-master-file))))
+
+(defmacro ac-l-set-local-variable (var val)
+  (declare (indent 1))
+  `(unless (local-variable-p ',var)
+     (set (make-local-variable ',var) ,val)))
+
+(defun ac-l-set-local-variables ()
+  (ac-l-set-local-variable ac-prefix-definitions
+    (append '((ac-l-argument . (ac-l-prefix-in-paren ac-l-argument-regexps))
+              (ac-l-file . (ac-l-prefix-in-paren ac-l-file-regexps))
+              (ac-l-label . (ac-l-prefix-in-paren ac-l-label-regexps))
+              (ac-l-bib . (ac-l-prefix-in-paren ac-l-bib-regexps)))
+            ac-prefix-definitions))
+  (ac-l-set-local-variable ac-source-files-in-current-dir
+    (append '((prefix . ac-l-file)
+              (symbol . "F"))
+            ac-source-files-in-current-dir)))
+
+(defun* ac-l-user-sources-setup (&optional (sources ac-l-sources))
+  (dolist (source sources)
+    (ac-l-db-push source (if (assq 'prefix (symbol-value source))
+                             'user-prefix-sources
+                           'user-noprefix-sources))))
+
+(defun ac-l-set-timers ()
+  (setq ac-l-update-timer (run-with-idle-timer ac-l-update-delay t 'ac-l-update-all)
+        ac-l-clear-timer (run-with-timer 600 600 'ac-l-clear)))
 
 (defun ac-l-setup ()
   "Set up Auto Complete LaTeX."
-  (let ((msg "Loading auto-complete-latex..."))
+  (let ((msg "Loading auto-complete-latex...")
+        (initial-p (not (ac-l-struct-master))))
     (message "%s" msg)
     (setq ac-l-major-mode major-mode)
-    ;; set buffer source
-    (unless (ac-l-get-buffer-sources)
-      (ac-l-set-buffer-sources
-       (cond
-        ((memq 'ac-source-words-in-buffer ac-sources)
-         (cons 'ac-l-source-words-in-buffer
-               'ac-l-source-commands-in-buffer))
-        ((memq 'ac-source-words-in-all-buffer ac-sources)
-         (cons 'ac-l-source-words-in-all-buffer
-               'ac-l-source-commands-in-all-buffer))
-        (t
-         (cons 'ac-l-source-words-in-same-mode-buffers
-               'ac-l-source-commands-in-same-mode-buffers)))))
-    ;; ac-l-sources
-    (when (and ac-l-sources
-               (null (ac-l-get-user-noprefix-sources))
-               (null (ac-l-get-user-prefix-sources)))
-      (dolist (source ac-l-sources)
-        (if (assq 'prefix (symbol-value source))
-            (ac-l-set-user-prefix-sources
-             (append (ac-l-get-user-prefix-sources) (list source)))
-          (ac-l-set-user-noprefix-sources
-           (append (ac-l-get-user-noprefix-sources) (list source))))))
-    ;; read files
-    (when (and ac-l-package-files
-               (= (hash-table-count ac-l-packages) 0))
-      (ac-l-read-packages ac-l-package-files ac-l-packages))
-    (when (and ac-l-bib-files
-               (null (ac-l-get-all-bib-tables)))
-      (ac-l-read-bibs ac-l-bib-files))
-    ;; make sources from ac-l-dict
-    (unless (or (ac-l-get-latex-commands)
-                (ac-l-get-latex-arguments)
-                (ac-l-get-package-sources))
-      (ac-l-make-source-from-dir ac-l-dict-directory))
-    ;; add prefix properties
-    (unless (local-variable-p 'ac-prefix-definitions)
-      (make-local-variable 'ac-prefix-definitions)
-      (setq ac-prefix-definitions
-            `((ac-l-argument . (ac-l-prefix-in-paren ac-l-argument-regexps))
-              (ac-l-file . (ac-l-prefix-in-paren ac-l-file-regexps))
-              (ac-l-label . (ac-l-prefix-in-paren ac-l-label-regexps))
-              (ac-l-bib . (ac-l-prefix-in-paren ac-l-bib-regexps))
-              ,@ac-prefix-definitions)))
-    ;; modify ac-source-*
-    (unless (local-variable-p 'ac-source-files-in-current-dir)
-      (make-local-variable 'ac-source-files-in-current-dir)
-      (setq ac-source-files-in-current-dir
-            `((prefix . ac-l-file)
-              (symbol . "F")
-              ,@ac-source-files-in-current-dir)))
-    ;; set timer
-    (ac-l-cancel-timer)
-    (setq ac-l-update-timer
-          (run-with-idle-timer ac-l-update-delay t 'ac-l-update-all)
-          ac-l-clear-timer
-          (run-with-timer 600 600 'ac-l-clear))
-    ;; initial update
-    (unless ac-l-master
+    (ac-l-set-local-variables)
+    (when initial-p
+      (ac-l-master-p)
+      (ac-l-basic-sources-setup)
+      (ac-l-user-sources-setup)
+      (ac-l-read-packages)
+      (ac-l-read-bibs)
+      (ac-l-make-source-from-dir)
+      (ac-l-set-help-doc)
+      (ac-l-set-sources)
+      (ac-l-set-timers))
+    (when (or initial-p (not ac-l-master-p))
       (ac-l-update-all t))
     (message "%sdone" msg)))
 
 (provide 'auto-complete-latex)
-
 ;;; auto-complete-latex.el ends here
