@@ -8,8 +8,10 @@
 (setq default-ac-dir   (concat default-elisp-3rdparties "/auto-complete"))
 (setq default-ac-l-dir (concat default-elisp-3rdparties "/auto-complete-latex"))
 (setq load-path (append load-path (list default-ac-dir default-ac-l-dir)))
-(byte-recompile-directory default-ac-dir   0)
-(byte-recompile-directory default-ac-l-dir 0)
+
+;; Disable byte compiling to avoid polluting the repository
+;;(byte-recompile-directory default-ac-dir   0)
+;;(byte-recompile-directory default-ac-l-dir 0)
 
 
 

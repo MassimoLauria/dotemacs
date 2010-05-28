@@ -6,6 +6,7 @@
 3rdparties/*/.cvs
 3rdparties/*/.hg
 3rdparties/*/.svn
+3rdparties/*/*.elc
 
 
 # Ignore backup files and precompiled files.
