@@ -8,7 +8,8 @@
 (load "auctex.el" nil t t)
 (load "preview-latex.el" nil t t)
 
-	
+
+
 ;; Multifile support, completition, style, reverse search support 
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
@@ -17,6 +18,16 @@
 (setq TeX-source-specials-view-start-server t)
 (setq reftex-plug-into-AUCTeX t)
 
+;; Macro are folded.
+(add-hook 'LaTeX-mode-hook (lambda () (TeX-fold-mode 1)))
+(add-hook 'find-file-hook 'TeX-fold-buffer t)
+
+
+;; Math writing facilities
+(setq TeX-electric-escape t)
+(setq TeX-electric-sub-and-superscript t)
+
+	
 ;; XDvi launch customization
 (add-hook 'LaTeX-mode-hook (lambda ()
                              (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
@@ -37,9 +48,9 @@
   
  
 ;; TeX asks for Flyspell and American dictionary.
-; (add-hook 'LaTeX-mode-hook (lambda () (flyspell-mode 1)))
+(add-hook 'LaTeX-mode-hook (lambda () (flyspell-mode 1))
 (add-hook 'TeX-language-en-hook
-	  (lambda () (ispell-change-dictionary "american")))
+	  (lambda () (ispell-change-dictionary "english")))
 (add-hook 'TeX-language-it-hook
 	  (lambda () (ispell-change-dictionary "italian")))
 
@@ -54,7 +65,7 @@
      (let ((help (get-char-property (point) 'help-echo)))
        (if help (message "%s" help)))))
 
-(add-hook 'post-command-hook 'my-flymake-show-help)
+;;(add-hook 'post-command-hook 'my-flymake-show-help)
 
 
 

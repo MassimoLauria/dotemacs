@@ -20,6 +20,7 @@
  '(flyspell-mode-line-string " Fly")
  '(flyspell-persistent-highlight nil)
  '(flyspell-use-meta-tab nil)
+ ;;'(font-latex-fontify-sectioning (quote color))
  '(safe-local-variable-values (quote ((ispell-default-dictionary . american) (Tex-PDF-mode . t) (folded-file . t))))
  '(show-paren-mode t))
 (custom-set-faces
