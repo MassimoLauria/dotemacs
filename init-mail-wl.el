@@ -53,19 +53,27 @@
 
 
 (setq wl-draft-elide-ellipsis "[...]" )
-(define-key wl-draft-mode-map (kbd "<C-tab>") 'bbdb-complete-name)
+(define-key wl-draft-mode-map (kbd "<M-tab>") 'bbdb-complete-name)
 
 
 (defun mail()
-" 
-Overload the original 'mail' command with 'wl-draft'. 
-Both are intended to draft and send emails
+"This 'mail' command calls 'wl-draft' with the appropriate
+headers by default. If a region is selected, then the text in the
+region is included in the mail body.
 "
   (interactive)
   (wl-draft '(
               (To . "") 
+              (Cc . "")
+              (Bcc . "")
               (Subject . "")
-              ) 
+              )
+            nil
+            nil
+            (when (use-region-p) 
+              (buffer-substring (region-beginning) 
+                                (region-end))
+              )
             )
   (mail-position-on-field "To")
 )
