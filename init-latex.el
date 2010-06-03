@@ -20,7 +20,7 @@
 
 ;; Macro are folded.
 (add-hook 'LaTeX-mode-hook (lambda () (TeX-fold-mode 1)))
-(add-hook 'find-file-hook 'TeX-fold-buffer t)
+(add-hook 'find-file-hook 'TeX-fold-buffer )
 
 
 ;; Math writing facilities
@@ -48,7 +48,7 @@
   
  
 ;; TeX asks for Flyspell and American dictionary.
-(add-hook 'LaTeX-mode-hook (lambda () (flyspell-mode 1))
+(add-hook 'LaTeX-mode-hook (lambda () (flyspell-mode 1)))
 (add-hook 'TeX-language-en-hook
 	  (lambda () (ispell-change-dictionary "english")))
 (add-hook 'TeX-language-it-hook
