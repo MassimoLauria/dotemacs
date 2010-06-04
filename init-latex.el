@@ -19,12 +19,31 @@
 (setq reftex-plug-into-AUCTeX t)
 
 ;; Macro are folded.
-(add-hook 'LaTeX-mode-hook (lambda () (TeX-fold-mode 1)))
-(add-hook 'find-file-hook 'TeX-fold-buffer )
-
+(defun TeX-fold-this-paragraph-toggle ()
+  "If TeX-fold-mode is active then alternate between folded and not folded text in a paragraph"
+  (interactive)
+  (unless (TeX-fold-clearout-paragraph)
+    (TeX-fold-paragraph)
+    )
+  )
+(defun TeX-fold-this-buffer-toggle ()
+  "If TeX-fold-mode is active then alternate between folded and not folded text in a paragraph"
+  (interactive)
+  (unless (TeX-fold-clearout-buffer)
+    (TeX-fold-buffer)
+    )
+  )
+(add-hook 'LaTeX-mode-hook 
+          (lambda () (progn 
+                       (TeX-fold-mode 1) 
+                       (local-set-key (kbd "M-<SPC>") 'TeX-fold-this-paragraph-toggle) ;;Folding on/off
+                       (TeX-fold-buffer)
+                       )
+            ))
+  
 
 ;; Math writing facilities
-(setq TeX-electric-escape t)
+;; (setq TeX-electric-escape t)
 (setq TeX-electric-sub-and-superscript t)
 
 	
