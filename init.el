@@ -174,6 +174,7 @@
 ;; Auto-mode for renamed config files
 (setq auto-mode-alist (cons '("bashrc" . sh-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("zshrc" . sh-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.zsh" . sh-mode) auto-mode-alist))
 
 
 

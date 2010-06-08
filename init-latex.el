@@ -62,7 +62,6 @@
 (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (add-hook 'LaTeX-mode-hook 'auto-fill-mode)
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
   
  
@@ -84,7 +83,7 @@
      (let ((help (get-char-property (point) 'help-echo)))
        (if help (message "%s" help)))))
 
-;;(add-hook 'post-command-hook 'my-flymake-show-help)
+(add-hook 'post-command-hook 'my-flymake-show-help)
 
 
 
