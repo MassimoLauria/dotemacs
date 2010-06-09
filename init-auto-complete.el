@@ -70,11 +70,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Lisp mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (dolist (hook (list
                'emacs-lisp-mode-hook
-               'lisp-interaction-mode
+               'lisp-interaction-mode-hook
                'inferior-emacs-lisp-mode-hook
                ))
   (add-hook hook '(lambda ()
-                    (add-to-list 'ac-sources 'ac-source-symbols))))
+                    (add-to-list 'ac-sources 'ac-source-symbols)))
+  )
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; C-common-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Enables omnicompletion with `c-mode-common'.

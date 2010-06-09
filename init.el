@@ -208,6 +208,8 @@
 ;;{{{ *** Advanced editing customization ***
 ;;
 ;; Text mode by default, with auto-fill
+(require 'typopunct)
+(setq-default typopunct-buffer-language 'english)
 (setq default-major-mode 'text-mode)
 (setq text-mode-hook
       '(lambda nil
@@ -218,6 +220,7 @@
          (auto-fill-mode 1)
          ;;(orgtbl-mode 1)
          (flyspell-mode 1)  ; annoying spell checking 
+         (typopunct-mode)
          )
       )
 
