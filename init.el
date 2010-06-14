@@ -278,6 +278,12 @@
 (require 'windmove)               ; to load the package
 (setq windmove-wrap-around t)
 
+;; Overwrite flymake-display-warning so that no annoying dialog box is
+;; used.
+(defun flymake-display-warning (warning) 
+  "Display a warning to the user, using lwarn"
+  (message warning))
+
 ;;}}}
 
 
