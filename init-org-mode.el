@@ -7,7 +7,10 @@
 (setq org-directory "~/personal/agenda/")
 (setq org-default-notes-file (concat org-directory "notes.org"))
 (setq org-default-journal-file (concat org-directory "journal.org"))
-(setq org-agenda-files (list org-directory))
+
+(when (not (boundp 'org-agenda-files))
+  (setq org-agenda-files (list org-directory))
+  )
 
 ;;;-------------------------------------------------------------------
 
