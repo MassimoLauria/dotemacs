@@ -37,7 +37,10 @@
           (lambda () (progn 
                        (TeX-fold-mode 1) 
                        (local-set-key (kbd "M-<SPC>") 'TeX-fold-this-paragraph-toggle) ;;Folding on/off
-                       (TeX-fold-buffer)
+                       (local-set-key (kbd "<f9>")    'TeX-command-master) ;; Compile
+                       (make-local-variable compilation-exit-message-function)
+                       (setq compilation-exit-message-function 'nil)
+                       ;;(TeX-fold-buffer)
                        )
             ))
   
@@ -51,10 +54,16 @@
 (add-hook 'LaTeX-mode-hook (lambda ()
                              (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
                              ))
+
 (add-hook 'LaTeX-mode-hook (lambda ()
+                             ;; Use xdvi for dvi files
                              (add-to-list 'TeX-output-view-style 
                                           '("^dvi$" "." 
                                             "%(o?)xdvi -watchfile 1 %dS %d"))
+                             ;; Use evince for PDF files
+                             ;;(add-to-list 'TeX-output-view-style 
+                             ;;             '("^pdf$" "." 
+                             ;;               "evince %o"))
                              ))
 
 

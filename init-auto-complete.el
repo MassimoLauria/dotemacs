@@ -10,8 +10,8 @@
 (setq load-path (append load-path (list default-ac-dir default-ac-l-dir)))
 
 ;; Disable byte compiling to avoid polluting the repository
-;;(byte-recompile-directory default-ac-dir   0)
-;;(byte-recompile-directory default-ac-l-dir 0)
+(byte-recompile-directory default-ac-dir   0)
+(byte-recompile-directory default-ac-l-dir 0)
 
 
 
@@ -76,22 +76,26 @@
   (add-hook hook '(lambda ()
                     (add-to-list 'ac-sources 'ac-source-symbols)))
   )
+(add-hook 'emacs-lisp-mode-hook '(lambda ()
+                    (add-to-list 'ac-sources 'ac-source-features)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; C-common-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Enables omnicompletion with `c-mode-common'.
 (add-hook 'c-mode-common-hook
           '(lambda ()
-             (add-to-list 'ac-omni-completion-sources
-                          (cons "\\." '(ac-source-semantic)))
-             (add-to-list 'ac-omni-completion-sources
-                          (cons "->" '(ac-source-semantic)))
              (add-to-list 'ac-sources 'ac-source-gtags)))
  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; C++-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Keywords.
 (add-hook 'c++-mode-hook '(lambda ()
-                            (add-to-list 'ac-sources 'ac-c++-sources)))
+                            (add-to-list 'ac-sources 'ac-c++-sources 'ac-source-gtags)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; CSS-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Keywords.
+(add-hook 'css-mode-hook '(lambda ()
+                            (add-to-list 'ac-sources 'ac-source-css-property)))
+
  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Haskell mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Keywords.

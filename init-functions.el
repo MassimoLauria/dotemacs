@@ -218,7 +218,15 @@ either ispell or flyspell, if the latter is active"
 ;; Specify my function (maybe I should have done a lambda function)
 (setq compilation-exit-message-function 'compilation-exit-autoclose)
 
-
+;; Keeps windows in order by dedicating them (make them sticky)
+(defun toggle-current-window-sticky ()
+ (interactive)
+ (let* ((window    (selected-window))
+        (dedicated (window-dedicated-p window)))
+   (set-window-dedicated-p window (not dedicated))
+   (message "Window %sdedicated to buffer \"%s\""
+            (if dedicated "no longer " "")
+            (buffer-name))))
 
 ;;----- Additional modes -—-------------------------------------------------
 (define-generic-mode vimrc-mode

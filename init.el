@@ -99,18 +99,27 @@
 ; Create and destroy windows
 (global-set-key (kbd "M-C--") 'split-window-vertically)
 (global-set-key (kbd "M-C-.") 'split-window-horizontally)
+;; Make a window to be sticky.
+(global-set-key [pause] 'toggle-current-window-sticky)
+
 
 ;; Broken on Xterm
 (global-set-key (kbd "M-C-<backspace>") 'delete-window)
+(global-set-key (kbd "<C-M-backspace>") 'delete-window)
 (global-set-key (kbd "M-C-<return>") 'delete-other-windows)
 ;; Cheap Xterm substitutions
 (global-set-key (kbd "ESC C-h") 'delete-window)
 (global-set-key (kbd "ESC <C-return>") 'delete-other-windows)
 
 
-;; Next/Prev error for Quickfix
+;; Next/Prev item after Compiling
+(global-set-key (kbd "<f9>") 'recompile)
+(global-set-key (kbd "<f10>") 'nil)
+(global-set-key (kbd "<f11>") 'previous-error) ; Does not work with LaTeX!
+(global-set-key (kbd "<f12>") 'next-error)
 (global-set-key [M-prior] 'previous-error) ; Does not work with LaTeX!
 (global-set-key [M-next] 'next-error)
+
 
 ;; Spellcheck
 (global-set-key (kbd "M-s") 'my-spell-correct-word)
@@ -125,10 +134,10 @@
 ;; Remember notes.
 (global-set-key [f5] 'org-remember)
 (global-set-key [f6] 'org-agenda)
-;; Tweet your tweets
+;; Switch language
 (global-set-key [f7] 'toggle-it-en)
-;; Tweet your tweets
-(global-set-key [f8] 'twit-post)
+;; Open a terminal
+(global-set-key [f8] 'mini-term-dedicated-toggle)
 
 ;;}}}
 
@@ -246,6 +255,23 @@
 
 ;; Save histories across sessions. Not buffers
 (savehist-mode 1)
+
+;; Use full featured gdb GUI.
+(setq gdb-many-windows t)
+(setq gdb-use-separate-io-buffer t)
+(add-hook 'gud-mode-hook '(lambda ()
+                            (local-set-key (kbd "<f10>") 'gud-nexti)
+                            (local-set-key (kbd "<f11>") 'gud-next )
+                            (local-set-key (kbd "<f12>") 'gud-cont)
+                            
+                            (local-set-key (kbd "M-<f10>") 'gud-stepi)
+                            (local-set-key (kbd "M-<f11>") 'gud-step )
+                            (local-set-key (kbd "M-<f12>") 'gud-until)
+
+                            (local-set-key (kbd "<f9>"  ) 'gud-break)
+                            (local-set-key (kbd "M-<f9>"  ) 'gud-tbreak)
+                            )
+          )
 
 
 ;; fixme highlight
