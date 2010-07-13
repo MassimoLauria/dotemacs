@@ -310,6 +310,15 @@
   "Display a warning to the user, using lwarn"
   (message warning))
 
+
+
+;; Settings for cc-mode
+(add-hook 'cc-mode-hook 
+          (lambda () 
+            (setq c-block-comment-prefix "*")
+            )
+          )
+
 ;;}}}
 
 
