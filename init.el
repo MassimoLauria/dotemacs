@@ -137,7 +137,7 @@
 ;; Switch language
 (global-set-key [f7] 'toggle-it-en)
 ;; Open a terminal
-(global-set-key [f8] 'mini-term-dedicated-toggle)
+(global-set-key [f8] 'multi-term-dedicated-toggle)
 
 ;;}}}
 
