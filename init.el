@@ -220,6 +220,7 @@
 (require 'typopunct)
 (setq-default typopunct-buffer-language 'english)
 (setq default-major-mode 'text-mode)
+(setq initial-major-mode 'text-mode)
 (setq text-mode-hook
       '(lambda nil
          (if prefs-activate-smallscreen
@@ -232,6 +233,18 @@
          (typopunct-mode)
          )
       )
+
+;; Prepare *scratch buffer*
+;; FROM: Morten Welind
+;;http://www.geocrawler.com/archives/3/338/1994/6/0/1877802/
+(save-excursion
+  (set-buffer (get-buffer-create "*scratch*"))
+  (if (boundp 'initial-major-mode)
+      (eval (cons initial-major-mode ()))
+      (lisp-interaction-mode)
+    )
+  (make-local-variable 'kill-buffer-query-functions)
+  (add-hook 'kill-buffer-query-functions 'kill-scratch-buffer))
 
 
 ;; Make buffer names unique
