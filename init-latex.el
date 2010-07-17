@@ -35,8 +35,8 @@
   )
 (add-hook 'LaTeX-mode-hook 
           (lambda () (progn 
-                       (TeX-fold-mode 1) 
-                       (local-set-key (kbd "M-<SPC>") 'TeX-fold-this-paragraph-toggle) ;;Folding on/off
+                       ;;(TeX-fold-mode 1) 
+                       ;;(local-set-key (kbd "M-<SPC>") 'TeX-fold-this-paragraph-toggle) ;;Folding on/off
                        (local-set-key (kbd "<f9>")    'TeX-command-master) ;; Compile
                        (make-local-variable compilation-exit-message-function)
                        (setq compilation-exit-message-function 'nil)
