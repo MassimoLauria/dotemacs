@@ -11,13 +11,14 @@
   
   wl-interactive-send t       ;; Ask before sending message
   wl-interactive-exit t       ;; Ask before quit
-  wl-stay-folder-window t     ;; Folder window disappear 
+  wl-stay-folder-window nil   ;; Folder window disappears 
+  wl-summary-always-sticky-folder-list nil
+
   wl-auto-select-first  nil   ;; Do not open first message
   wl-auto-select-next   nil   ;; Go to the next folder when exit from summary
 
   wl-draft-buffer-style        'full
   wl-draft-reply-buffer-style  'split
-
 
   wl-forward-subject-prefix "Fwd: " ;; default is 'Forward: '
   
@@ -160,6 +161,29 @@
   (wl-summary-reply-with-citation t)
 )
 
+
+(defun djcb-wl-draft-subject-check ()
+  "check whether the message has a subject before sending"
+  (if (and (< (length (std11-field-body "Subject")) 1)
+           (null (y-or-n-p "No subject! Send current draft?")))
+      (error "Abort.")))
+;; note, this check could cause some false positives; anyway, better
+;; safe than sorry...
+(defun djcb-wl-draft-attachment-check ()
+  "if attachment is mention but none included, warn the the user"
+  (save-excursion
+    (goto-char 0)
+    (unless ;; don't we have an attachment?
+        
+        (re-search-forward "^Content-Disposition: attachment" nil t)
+      (when ;; no attachment; did we mention an attachment?
+          (re-search-forward "attach\\|alleg\\|Attach\\|Alleg" nil t)
+        (unless (y-or-n-p "Possibly missing an attachment. Send current draft?")
+          (error "Abort."))))))
+
+;; Check some misbehaviour before sending mails 
+(add-hook 'wl-mail-send-pre-hook 'djcb-wl-draft-subject-check)
+(add-hook 'wl-mail-send-pre-hook 'djcb-wl-draft-attachment-check)
 
 
 ;; (Insidious) Big Brother DataBase integration with WL

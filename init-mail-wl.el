@@ -100,7 +100,7 @@ region is included in the mail body.
 
 (setq
     
-    bbdb-offer-save t                        ;; 1 means save-without-asking
+    bbdb-offer-save 1                        ;; 1 means save-without-asking
      
     bbdb-use-pop-up nil                      ;; allow popups for addresses
     bbdb-electric-p t                        ;; be disposable with SPC
@@ -120,6 +120,8 @@ region is included in the mail body.
 
     bbbd-message-caching-enabled t           ;; be fast
     bbdb-use-alternate-names t               ;; use AKA
+
+    bbdb-elided-display t                    ;; single-line addresses
 
 )
 
