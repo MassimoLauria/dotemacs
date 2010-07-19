@@ -97,6 +97,13 @@
 
 (add-hook 'org-mode-hook 'org-mode-setup-local-keys)
 
+;; Org Table movements
+(define-key orgtbl-mode-map (kbd "M-ò") 'org-table-move-column-left)
+(define-key orgtbl-mode-map (kbd "M-ù") 'org-table-move-column-right)
+(define-key orgtbl-mode-map (kbd "M-è") 'org-table-move-row-up)
+(define-key orgtbl-mode-map (kbd "M-à") 'org-table-move-row-down)
+
+
 (org-remember-insinuate)
 
 ;; Normally my private (and translated) configuration is used.
