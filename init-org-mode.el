@@ -95,14 +95,24 @@
  
   )
 
+
+(defun orgtbl-mode-setup-local-keys()
+  "Define/>Undefine of orgtbl-mode keys"
+  ;; Org Table movements
+  (define-key orgtbl-mode-map (kbd "M-ò") 'org-table-move-column-left)
+  (define-key orgtbl-mode-map (kbd "M-ù") 'org-table-move-column-right)
+  (define-key orgtbl-mode-map (kbd "M-è") 'org-table-move-row-up)
+  (define-key orgtbl-mode-map (kbd "M-à") 'org-table-move-row-down)
+
+  (define-key orgtbl-mode-map (kbd "C-M-ò") 'org-table-delete-column)
+  (define-key orgtbl-mode-map (kbd "C-M-ù") 'org-table-insert-column)
+  (define-key orgtbl-mode-map (kbd "C-M-è") 'org-table-kill-row)
+  (define-key orgtbl-mode-map (kbd "C-M-à") 'org-table-insert-row)
+  )
+
 (add-hook 'org-mode-hook 'org-mode-setup-local-keys)
-
-;; Org Table movements
-(define-key orgtbl-mode-map (kbd "M-ò") 'org-table-move-column-left)
-(define-key orgtbl-mode-map (kbd "M-ù") 'org-table-move-column-right)
-(define-key orgtbl-mode-map (kbd "M-è") 'org-table-move-row-up)
-(define-key orgtbl-mode-map (kbd "M-à") 'org-table-move-row-down)
-
+(add-hook 'org-mode-hook 'orgtbl-mode-setup-local-keys)
+(add-hook 'orgtbl-mode-hook 'orgtbl-mode-setup-local-keys)
 
 (org-remember-insinuate)
 
