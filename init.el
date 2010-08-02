@@ -114,7 +114,7 @@
 
 ;; Next/Prev item after Compiling
 (global-set-key (kbd "<f9>") 'recompile)
-(global-set-key (kbd "<f10>") 'nil)
+(global-set-key (kbd "<f10>") 'gdb)
 (global-set-key (kbd "<f11>") 'previous-error) ; Does not work with LaTeX!
 (global-set-key (kbd "<f12>") 'next-error)
 (global-set-key [M-prior] 'previous-error) ; Does not work with LaTeX!
