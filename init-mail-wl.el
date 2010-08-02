@@ -1,5 +1,5 @@
 ;;;
-;;; Mail: Wanderlust + BBDB
+;;; Mail: Wanderlust + BBDB + vCard
 ;;;
 (provide 'init-mail-wl)
 ;;;------------------------------------------------------------------
@@ -124,6 +124,16 @@ region is included in the mail body.
     bbdb-elided-display t                    ;; single-line addresses
 
 )
+
+;; vCard + BBDB-vCard 
+(setq load-path (append load-path (list (concat default-elisp-3rdparties "/bbdb-vcard") )))
+
+(autoload 'bbdb-vcard-import-region       "bbdb-vcard" "Import vCard entries in the selected region into BBDB database." t)
+(autoload 'bbdb-vcard-import-buffer       "bbdb-vcard" "Import vCard entries in the buffer into BBDB database." t)
+(autoload 'bbdb-vcard-import-file         "bbdb-vcard" "Import vCard entries from a file into BBDB database." t)
+(autoload 'bbdb-vcard-export              "bbdb-vcard" "Export BBDB entries to a vCard file." t)
+(autoload 'bbdb-vcard-export-to-kill-ring "bbdb-vcard" "Export BBDB entries to vCard, and put the text in the killring." t)
+
 
 ;; Local Variables:
 ;; mode: emacs-lisp 
