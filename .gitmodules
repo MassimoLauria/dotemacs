@@ -4,3 +4,6 @@
 [submodule "3rdparties/auto-complete"]
 	path = 3rdparties/auto-complete
 	url = git://github.com/m2ym/auto-complete.git
+[submodule "3rdparties/bbdb-vcard"]
+	path = 3rdparties/bbdb-vcard
+	url = http://github.com/trebb/bbdb-vcard.git
