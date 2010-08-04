@@ -53,7 +53,6 @@
 
 
 (setq wl-draft-elide-ellipsis "[...]" )
-(define-key wl-draft-mode-map (kbd "<M-tab>") 'bbdb-complete-name)
 
 
 (defun mail()
@@ -86,7 +85,10 @@ region is included in the mail body.
 (bbdb-initialize)
 
 (bbdb-insinuate-sendmail)
-(define-key mail-mode-map (kbd "<C-tab>") 'bbdb-complete-name)
+
+;; message-tab uses tab to call BBDB in header, but not elsewhere.
+(define-key mail-mode-map (kbd "<tab>") 'message-tab)
+(define-key wl-draft-mode-map (kbd "<tab>") 'message-tab)
 
 
 ;; Say NO! to auto collection
@@ -133,6 +135,23 @@ region is included in the mail body.
 (autoload 'bbdb-vcard-import-file         "bbdb-vcard" "Import vCard entries from a file into BBDB database." t)
 (autoload 'bbdb-vcard-export              "bbdb-vcard" "Export BBDB entries to a vCard file." t)
 (autoload 'bbdb-vcard-export-to-kill-ring "bbdb-vcard" "Export BBDB entries to vCard, and put the text in the killring." t)
+
+
+
+;; This is in the case we edit mail for MUtt client
+(add-to-list 'auto-mode-alist '(".*mutt.*" . message-mode))                                                                   
+(setq mail-header-separator "")                                                                                               
+(add-hook 'message-mode-hook
+          'turn-on-auto-fill
+          (function
+           (lambda ()
+             (progn
+               (local-unset-key "\C-c\C-c")
+               (define-key message-mode-map "\C-c\C-c" '(lambda ()
+                                                          "save and exit quickly"
+                                                          (interactive)
+                                                          (save-buffer)
+                                                          (server-edit)))))))
 
 
 ;; Local Variables:
