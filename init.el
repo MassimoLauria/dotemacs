@@ -47,7 +47,6 @@
 
 
 
-
 ;;; Module(s) initialization -----------------------------------------------------------------------------------
 
 ;;{{{ *** Key binding rules ***
@@ -145,8 +144,8 @@
 
 
 ;; Folding - load early to avoid warnings.
-(load "folding" 'nomessage)
-(folding-mode-add-find-file-hook)
+;(load "folding" 'nomessage)
+;(folding-mode-add-find-file-hook)
 
 
 

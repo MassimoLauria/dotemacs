@@ -73,7 +73,6 @@
 (menu-bar-mode -1)
 (when-available 'tabbar-mode     (tabbar-mode -1)    ) ;;     tabbar-mode defined only in Aquamacs
 
-
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
 
