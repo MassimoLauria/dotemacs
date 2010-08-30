@@ -13,6 +13,14 @@
   (add-to-list 'default-frame-alist '(font . "Monospace-14"))
 )
 
+;; Calendar localization
+(setq calendar-week-start-day 1
+      calendar-day-name-array ["Domenica" "Lunedì" "Martedì" "Mercoledì" 
+                               "Giovedì" "Venerdì" "Sabato"]
+      calendar-month-name-array ["Gennaio" "Febbraio" "Marzo" "Aprile" "Maggio"
+                                 "Giugno" "Luglio" "Agosto" "Settembre" 
+                                 "Ottobre" "Novembre" "Dicembre"])
+
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
