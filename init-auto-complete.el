@@ -10,8 +10,8 @@
 (setq load-path (append load-path (list default-ac-dir default-ac-l-dir)))
 
 ;; Disable byte compiling to avoid polluting the repository
-(byte-recompile-directory default-ac-dir   0)
-(byte-recompile-directory default-ac-l-dir 0)
+;(byte-recompile-directory default-ac-dir   0)
+;(byte-recompile-directory default-ac-l-dir 0)
 
 
 

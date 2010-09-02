@@ -52,19 +52,22 @@
 	
 ;; XDvi launch customization
 (add-hook 'LaTeX-mode-hook (lambda ()
-                             (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
-                             ))
+							 (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
+							 ))
 
 (add-hook 'LaTeX-mode-hook (lambda ()
-                             ;; Use xdvi for dvi files
-                             (add-to-list 'TeX-output-view-style 
-                                          '("^dvi$" "." 
-                                            "%(o?)xdvi -watchfile 1 %dS %d"))
-                             ;; Use evince for PDF files
-                             ;;(add-to-list 'TeX-output-view-style 
-                             ;;             '("^pdf$" "." 
-                             ;;               "evince %o"))
-                             ))
+							 ;; Use xdvi for dvi files
+							 (add-to-list 'TeX-output-view-style 
+										  '("^dvi$" "." 
+											"%(o?)xdvi -watchfile 1 %dS %d"))
+							 ;; Use Xpdf or Evince for PDF files
+							 (add-to-list 'TeX-output-view-style 
+											'("^pdf$" "." 
+											  "xpdf -remote %s -raise %o %(outpage)"))
+							 (add-to-list 'TeX-output-view-style 
+											'("^pdf$" "." 
+											  "evince %o"))
+							 ))
 
 
 ;; Auto fill for LaTex
