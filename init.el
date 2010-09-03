@@ -126,6 +126,7 @@
 
 ;; Folding on/off (M-Space) 
 (global-set-key (kbd "M-<SPC>") 'folding-toggle-show-hide) 
+(global-set-key (kbd " ") 'folding-toggle-show-hide)
 
 ;; Tab is actually a "Smart tab"
 ;; (global-set-key [(tab)] 'smart-tab)
@@ -144,8 +145,8 @@
 
 
 ;; Folding - load early to avoid warnings.
-;(load "folding" 'nomessage)
-;(folding-mode-add-find-file-hook)
+(load "folding" 'nomessage)
+(folding-mode-add-find-file-hook)
 
 
 
