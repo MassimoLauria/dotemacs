@@ -64,9 +64,9 @@
 							 (add-to-list 'TeX-output-view-style 
 											'("^pdf$" "." 
 											  "xpdf -remote %s -raise %o %(outpage)"))
-							 (add-to-list 'TeX-output-view-style 
-											'("^pdf$" "." 
-											  "evince %o"))
+							 ;;(add-to-list 'TeX-output-view-style 
+                             ;;					'("^pdf$" "." 
+                             ;;				  "evince %o"))
 							 ))
 
 
