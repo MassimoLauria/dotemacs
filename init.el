@@ -131,6 +131,29 @@
 ;; Tab is actually a "Smart tab"
 ;; (global-set-key [(tab)] 'smart-tab)
 
+;; Register at finger tips from 1 to ... 0!
+(global-unset-key (kbd "M-r"))
+(global-set-key (kbd "M-1") '(lambda () (interactive) (register-to-point 1) )  )
+(global-set-key (kbd "M-2") '(lambda () (interactive) (register-to-point 2) )  )
+(global-set-key (kbd "M-3") '(lambda () (interactive) (register-to-point 3) )  )
+(global-set-key (kbd "M-4") '(lambda () (interactive) (register-to-point 4) )  )
+(global-set-key (kbd "M-5") '(lambda () (interactive) (register-to-point 5) )  )
+(global-set-key (kbd "M-6") '(lambda () (interactive) (register-to-point 6) )  )
+(global-set-key (kbd "M-7") '(lambda () (interactive) (register-to-point 7) )  )
+(global-set-key (kbd "M-9") '(lambda () (interactive) (register-to-point 9) )  )
+(global-set-key (kbd "M-r 0") '(lambda () (interactive) (point-to-register 0) )  )
+(global-set-key (kbd "M-r 1") '(lambda () (interactive) (point-to-register 1) )  )
+(global-set-key (kbd "M-r 2") '(lambda () (interactive) (point-to-register 2) )  )
+(global-set-key (kbd "M-r 3") '(lambda () (interactive) (point-to-register 3) )  )
+(global-set-key (kbd "M-r 4") '(lambda () (interactive) (point-to-register 4) )  )
+(global-set-key (kbd "M-r 5") '(lambda () (interactive) (point-to-register 5) )  )
+(global-set-key (kbd "M-r 6") '(lambda () (interactive) (point-to-register 6) )  )
+(global-set-key (kbd "M-r 7") '(lambda () (interactive) (point-to-register 7) )  )
+(global-set-key (kbd "M-r 9") '(lambda () (interactive) (point-to-register 9) )  )
+(global-set-key (kbd "M-r 0") '(lambda () (interactive) (point-to-register 0) )  )
+
+
+
 ;; Remember notes.
 (global-set-key [f5] 'org-remember)
 (global-set-key [f6] 'org-agenda)
@@ -215,6 +238,7 @@
 
 
 ;;{{{ *** Advanced editing customization ***
+
 ;;
 ;; Text mode by default, with auto-fill
 (require 'typopunct)
@@ -230,7 +254,7 @@
          (auto-fill-mode 1)
          ;;(orgtbl-mode 1)
          (flyspell-mode 1)  ; annoying spell checking 
-         (typopunct-mode)
+         ;;(typopunct-mode)
          )
       )
 
