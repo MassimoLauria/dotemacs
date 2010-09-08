@@ -1,0 +1,92 @@
+#contributor : Massimo Lauria 
+#name : Beamer template
+#key : beamer
+# --
+% 
+% Slides for the talk “${1:TITLE}”.
+%
+% Copyright : Massimo Lauria (2010)
+% Encoding  : UTF-8
+% Engine    : PDFLaTeX
+
+
+%{{{-------------------------- PREAMBLE -------------------------------
+\documentclass{beamer}
+
+\mode<presentation>
+{
+    \useoutertheme{infolines}
+    \usetheme{Frankfurt}
+    \usecolortheme{crane}
+    
+}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{theorem}[ams style]
+\setbeamertemplate{theorems}[numbered]
+% ----------------------------- PACKAGES ------------------------------
+% GENERAL
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{times}
+\usepackage{comment}
+\usepackage{pdfsync}
+
+% MATH
+% \usepackage{amsmath}
+% \usepackage{amsthm}
+% \usepackage{amssymb}
+
+% ALGORITHM
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+\usepackage{listings}
+%\usepackage[noend]{algpseudocode}
+
+% GRAPHICS (sometimes I collect all tikz setting in tikz-themes.tex file)
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{fit,snakes,arrows,positioning,shapes,backgrounds,trees,decorations,shadows}
+\usetikzlibrary{shapes.callouts}
+%\include{tikz-themes}
+\usepackage{graphics,epsfig,subfigure}
+
+% PDF OUTPUT 
+%\usepackage[bookmarks=true,
+%            bookmarksnumbered=true,
+%            pagebackref=true,
+%            colorlinks=true,
+%            linkcolor=blue,
+%            citecolor=red]{hyperref}
+%}}}-------------------------------------------------------------------
+
+%{{{-------------------------- USER DATA ------------------------------
+
+\title{$1}
+\author{${2:Massimo Lauria}}
+\institute{}
+\date{}
+
+\hypersetup{
+  pdfauthor={$2}
+  pdftitle ={$1}
+}
+
+%}}}-------------------------------------------------------------------
+
+%{{{------------------ USER COMMAND -----------------------------------  
+%\includeonly{}
+%}}}-------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+\titlepage\       % Let's go with the title page.
+\end{frame}
+
+% Table of Contents Page 
+%\section[Outline]{} \frame{\tableofcontents} 
+
+
+$0
+
+\end{document}

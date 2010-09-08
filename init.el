@@ -258,6 +258,14 @@
          )
       )
 
+;; Setup YaSnippet directories
+(setq yas/root-directory 
+      (list "/usr/share/emacs/site-lisp/yasnippet/snippets/"
+            (concat default-elisp-path "/snippets/")))
+;; Map `yas/load-directory' to every element
+(mapc 'yas/load-directory yas/root-directory)
+(setq yas/ignore-filenames-as-triggers t)
+
 ;; Prepare *scratch buffer*
 ;; FROM: Morten Welind
 ;;http://www.geocrawler.com/archives/3/338/1994/6/0/1877802/
@@ -365,7 +373,7 @@
 ;;}}}
 
 
-;;{{{ *** Auto completion with SMART TAB *** 
+;;{{{ *** Auto completion with SMART TAB (OBSOLETE) *** 
 ;;
 ;; If a region is selected, indent.
 ;; If at the end of a symbol, complete

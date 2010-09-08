@@ -105,7 +105,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; LaTeX mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (when (fboundp 'ac-l-setup)
-  (add-hook 'latex-mode-hook 'ac-l-setup)
+  ;;(add-hook 'latex-mode-hook 'ac-l-setup)
   (add-hook 'LaTeX-mode-hook 'ac-l-setup)
   )
 (setq ac-l-sources '( ac-source-yasnippet ac-source-words-in-buffer

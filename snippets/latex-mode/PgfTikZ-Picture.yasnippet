@@ -1,0 +1,11 @@
+#contributor : Massimo Lauria 
+#name : PGF/Tikz picture
+#key : pgfpic
+# --
+\begin{tikzpicture}
+     \path[draw=none,use as bounding box] (${1:0},${2:0}) rectangle ($3,$4);
+     \draw[lightgray,thin] ($1,$2) grid ($3,$4);
+
+     $0
+
+\end{tikzpicture}
