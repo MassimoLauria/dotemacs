@@ -3,9 +3,9 @@
 #key : beamer
 # --
 % 
-% Slides for the talk “${1:TITLE}”.
+% Slides for the talk “$1”.
 %
-% Copyright : Massimo Lauria (2010)
+% Copyright : $2 (2010)
 % Encoding  : UTF-8
 % Engine    : PDFLaTeX
 
@@ -15,15 +15,20 @@
 
 \mode<presentation>
 {
-    \useoutertheme{infolines}
-    \usetheme{Frankfurt}
-    \usecolortheme{crane}
+  \useoutertheme{infolines}
+  \usetheme{Frankfurt}
+  \usecolortheme{crane}      % Clear, a little low contrast. Plain and simple.
+  % \usecolortheme{albatross}  % Dark, very high contrast. A little ugly.
     
 }
+\setbeamertemplate{footline}{}
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{theorem}[ams style]
 \setbeamertemplate{theorems}[numbered]
-% ----------------------------- PACKAGES ------------------------------
+\setbeamerfont{frametitle}{size=\small}
+\usefonttheme[onlymath]{serif}
+
+%{{{--------------------------- PACKAGES ------------------------------
 % GENERAL
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -61,7 +66,7 @@
 
 %{{{-------------------------- USER DATA ------------------------------
 
-\title{$1}
+\title{${1:Talk title}}
 \author{${2:Massimo Lauria}}
 \institute{}
 \date{}
@@ -80,7 +85,7 @@
 \begin{document}
 
 \begin{frame}
-\titlepage\       % Let's go with the title page.
+  \titlepage\       % Let's go with the title page.
 \end{frame}
 
 % Table of Contents Page 

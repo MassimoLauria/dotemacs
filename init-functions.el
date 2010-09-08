@@ -55,7 +55,7 @@
 
 ;;;- Previous/Next user/emacs buffer ----- and extension from ErgoEmacs ----------------------
 (setq user-buffer-whitelist '("^*scratch*" "^*eshell*"))
-(setq user-buffer-blacklist '("^*"))
+(setq user-buffer-blacklist '("^*" "\.pdfsync"))
 
 (defun user-buffer-p (name)
   "Decide if a buffer name correspond to a user's buffer or not.
