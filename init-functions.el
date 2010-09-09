@@ -6,6 +6,12 @@
 
 ;;;-------------------------------------------------------------------
 
+(defun get-buffer-major-mode (buffer-or-string)
+  "Returns the major mode associated with a buffer."
+  (save-excursion
+     (set-buffer buffer-or-string)
+     major-mode))
+
 (defmacro require-maybe (feature &optional file)
   "Try to require FEATURE, but don't signal an error if `require' fails."
   `(require ,feature ,file 'noerror)) 
@@ -30,8 +36,9 @@
 
 ;;------ Useful functions --------------------------------------------------------------------
 
-(defun list-or (s)
-  "Return the logical OR of a list"
+(defun or-of-map (fun l)
+  "Map a single argument function to list elements and return the
+OR of them, with short circuit logic"
   (reduce '(lambda (x y) (or x y)) s :initial-value nil)
 )
 
@@ -40,6 +47,12 @@
   (reduce '(lambda (x y) (and x y)) s :initial-value t)
 )
 
+(mapcar '(lambda (x) (list 'buffer-name-matches-rule-item-p x "buffer")) user-buffer-blacklist)
+(let (
+      (application '(lambda (x) (list 'buffer-name-matches-rule-item-p x "buffer")))
+      )
+  (cons 'or (mapcar application user-buffer-blacklist))
+)
 
 (defun wc (&optional start end)
   "Prints number of lines, words and characters in region or whole buffer."
@@ -54,17 +67,35 @@
 
 
 ;;;- Previous/Next user/emacs buffer ----- and extension from ErgoEmacs ----------------------
+
+; Those are DNFs, lists of lists. External list is an OR of rules, internal is an AND.
 (setq user-buffer-whitelist '("^*scratch*" "^*eshell*"))
-(setq user-buffer-blacklist '("^*" "\.pdfsync"))
+(setq user-buffer-blacklist '("^*" "\.pdfsync" ))
+
+
+(defun user-buffer-match-p (buffer-name rule) 
+  "BROKEN Decide if the buffer matches the rule. If the rule is a string
+then it has to match the name, if it is a mode, it has to match
+the mode, if it is a function which accept one arg, then the
+function is evaluated"
+;        (application '(lambda (x) (list 'buffer-name-matches-rule-item-p x buffer-name)))
+  (cond
+   ( (stringp   rule)  (string-match-p rule buffer-name))   ; Test the buffer name.
+   ( (and (symbolp   rule)
+          (string-match "-mode" (symbol-name rule))
+          ) (eq (find-buffer-major-mode buffer-name) rule)) ; Test if mode matches.
+   ( (functionp rule)  (funcall rule buffer-name))          ; Eval an arbitrary test function
+   )
+  )
 
 (defun user-buffer-p (name)
   "Decide if a buffer name correspond to a user's buffer or not.
 This is good for functions like 'next-user-buffer' which skip some 
 emacs annoying buffers."
   (or
-   (list-or (mapcar (lambda (p) (string-match-p p name)) user-buffer-whitelist))
+   (list-or (mapcar (lambda (r) (string-match-p r name)) user-buffer-whitelist))
    (not 
-    (list-or (mapcar (lambda (p) (string-match-p p name)) user-buffer-blacklist))
+    (list-or (mapcar (lambda (r) (string-match-p r name)) user-buffer-blacklist))
     )
   )
 )
