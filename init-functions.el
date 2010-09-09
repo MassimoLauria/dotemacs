@@ -35,34 +35,20 @@
 
 
 ;;------ Useful functions --------------------------------------------------------------------
+(defun decorate-formula (F sexp-arg)
+  "Given an S-exp, it descend in all subtrees to apply function F
+to the leaves of a formula (i.e.\ tokens).
 
-(defun or-of-map (fun l)
-  "Map a single argument function to list elements and return the
-OR of them, with short circuit logic"
-  (reduce '(lambda (x y) (or x y)) s :initial-value nil)
-)
-
-(defun list-and (s)
-  "Return the logical AND of a list"
-  (reduce '(lambda (x y) (and x y)) s :initial-value t)
-)
-
-
-
-(defun decorate-formula (arm mytree)
-  "Apply arm to the leaves of a formula in the form of either (or
-e1 e2 e3 ...) or (and e1 e2 e3 ...)"
+The resulting formula is a similar S-exp in which each tokens t is substituted by
+the result of (F t)
+"
   (cond 
-   ( (and (listp mytree) (eq (car mytree) 'or)) 
-     (cons 'or (mapcar '(lambda (l) (decorate-formula arm l)) (cdr mytree)))
+   ( (listp sexp-arg) 
+     (cons (car sexp-arg) (mapcar '(lambda (l) (decorate-formula F l)) (cdr sexp-arg)))
      )
-     
-   ( (and (listp mytree) (eq (car mytree) 'and)) 
-     (cons 'and (mapcar '(lambda (l) (decorate-formula arm l)) (cdr mytree)))
-     )
-   ( 't (funcall arm mytree))
-)
-)
+   ( 't (funcall F sexp-arg))
+   )
+  )
 
 
 (defun wc (&optional start end)
@@ -83,6 +69,7 @@ e1 e2 e3 ...) or (and e1 e2 e3 ...)"
 (setq user-buffer-whitelist '(or "^*scratch*" "^*eshell*"))
 (setq user-buffer-blacklist '(or "^*" "\.pdfsync" (and "\.log" latex-mode) ))
 
+
 (defun user-buffer-match-p (rule buffer-name-arg) 
   "Decide if the buffer matches the rule. If the rule is a string
 then it has to match the name, if it is a mode, it has to match
@@ -97,38 +84,6 @@ function is evaluated"
    )
   )
 
-;(defun user-buffer-old-p (buffer-name-arg)
-;  "Decide if a buffer name correspond to a user's buffer or not.
-;This is good for functions like 'next-user-buffer' which skip some 
-;emacs annoying buffers."
-;  (or
-;   (list-or (mapcar '(lambda (rule)  (user-buffer-match-p rule buffer-name-arg)) user-buffer-whitelist))
-;   (not 
-;    (list-or (mapcar '(lambda (rule) (user-buffer-match-p rule buffer-name-arg)) user-buffer-blacklist))
-;    )
-;  )
-;)
-
-(defun decorate-formula (F sexp-arg)
-  "Given an S-exp, it descend in all subtrees to apply function F
-to the leaves of a formula (i.e.\ tokens).
-
-The resulting formula is a similar S-exp in which each tokens t is substituted by
-the result of (F t)
-"
-  (cond 
-   ( (listp sexp-arg) 
-     (cons (car sexp-arg) (mapcar '(lambda (l) (decorate-formula F l)) (cdr sexp-arg)))
-     )
-;   ( (or (listp sexp-arg) (eq (car sexp-arg) 'or)) 
-;     (cons 'and (mapcar '(lambda (l) (decorate-formula F l)) (cdr sexp-arg)))
-;     )    
-;   ( (and (listp sexp-arg) (eq (car sexp-arg) 'and)) 
-;     (cons 'and (mapcar '(lambda (l) (decorate-formula F l)) (cdr sexp-arg)))
-;     )
-   ( 't (funcall F sexp-arg))
-)
-)
 
 (defun user-buffer-p (buffer-name-arg)
   "Test whether the buffer is actually a \"user buffer\", meaning
