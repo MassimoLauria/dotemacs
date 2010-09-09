@@ -84,11 +84,10 @@ e1 e2 e3 ...) or (and e1 e2 e3 ...)"
 (setq user-buffer-blacklist '(or "^*" "\.pdfsync" (and "\.log" latex-mode) ))
 
 (defun user-buffer-match-p (rule buffer-name-arg) 
-  "BROKEN Decide if the buffer matches the rule. If the rule is a string
+  "Decide if the buffer matches the rule. If the rule is a string
 then it has to match the name, if it is a mode, it has to match
 the mode, if it is a function which accept one arg, then the
 function is evaluated"
-;        (application '(lambda (x) (list 'buffer-name-matches-rule-item-p x buffer-name)))
   (cond
    ( (stringp   rule)  (string-match-p rule buffer-name-arg))   ; Test the buffer name.
    ( (and (symbolp   rule)
@@ -118,13 +117,15 @@ The resulting formula is a similar S-exp in which each tokens t is substituted b
 the result of (F t)
 "
   (cond 
-   ( (and (listp sexp-arg) (eq (car sexp-arg) 'or)) 
-     (cons 'or (mapcar '(lambda (l) (decorate-formula F l)) (cdr sexp-arg)))
+   ( (listp sexp-arg) 
+     (cons (car sexp-arg) (mapcar '(lambda (l) (decorate-formula F l)) (cdr sexp-arg)))
      )
-     
-   ( (and (listp sexp-arg) (eq (car sexp-arg) 'and)) 
-     (cons 'and (mapcar '(lambda (l) (decorate-formula F l)) (cdr sexp-arg)))
-     )
+;   ( (or (listp sexp-arg) (eq (car sexp-arg) 'or)) 
+;     (cons 'and (mapcar '(lambda (l) (decorate-formula F l)) (cdr sexp-arg)))
+;     )    
+;   ( (and (listp sexp-arg) (eq (car sexp-arg) 'and)) 
+;     (cons 'and (mapcar '(lambda (l) (decorate-formula F l)) (cdr sexp-arg)))
+;     )
    ( 't (funcall F sexp-arg))
 )
 )
