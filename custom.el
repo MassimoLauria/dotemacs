@@ -13,6 +13,8 @@
  '(ac-quick-help-prefer-x nil)
  '(ac-sources (quote (ac-source-yasnippet ac-source-imenu ac-source-abbrev ac-source-words-in-buffer ac-source-files-in-current-dir ac-source-filename)) t)
  '(ac-stop-flymake-on-completing t)
+ '(before-save-hook (quote (copyright-update time-stamp rope-before-save-actions)))
+ '(copyright-query nil)
  '(ebib-index-display-fields (quote (year author title)))
  '(ebib-print-multiline t)
  '(ebib-sort-order (quote ((year) (author editor) (title))))
@@ -20,9 +22,9 @@
  '(flyspell-mode-line-string " Fly")
  '(flyspell-persistent-highlight nil)
  '(flyspell-use-meta-tab nil)
- ;;'(font-latex-fontify-sectioning (quote color))
  '(safe-local-variable-values (quote ((ispell-default-dictionary . american) (Tex-PDF-mode . t) (folded-file . t))))
- '(show-paren-mode t))
+ '(show-paren-mode t)
+ '(time-stamp-format "%:y-%02m-%02d, %:a %02H:%02M:%02S (%Z) %U"))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
