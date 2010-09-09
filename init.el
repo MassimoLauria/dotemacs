@@ -174,7 +174,6 @@
 (when prefs-activate-sage     (require 'init-sage))         ;; Sagemath
 (when prefs-activate-singular (require 'init-singular))     ;; Singular
 
-
 ;; Applications
 (when prefs-activate-mail       (require 'init-mail-wl))    ;; Mail + Contacts
 (when prefs-activate-org-mode   (require 'init-org-mode))   ;; Organizer
