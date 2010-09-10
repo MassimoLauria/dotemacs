@@ -39,7 +39,7 @@
  '(flyspell-use-meta-tab nil)
  '(safe-local-variable-values (quote ((ispell-default-dictionary . american) (TeX-PDF-mode . t) (folded-file . t))))
  '(show-paren-mode t)
- '(time-stamp-format "%:y-%02m-%02d, %:a %02H:%02M:%02S (%Z) %U"))
+ '(time-stamp-format "%:y-%02m-%02d, %:a %02H:%02M:%02S (%Z) %U")
  '(ns-right-alternate-modifier nil)
  '(ns-tool-bar-display-mode (quote both) t)
  '(ns-tool-bar-size-mode (quote regular) t)
