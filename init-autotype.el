@@ -4,7 +4,7 @@
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: convenience
-;; Time-stamp: <2010-09-10, venerdì 12:26:59 (CEST) Massimo Lauria>
+;; Time-stamp: <2010-09-10, venerdì 18:33:51 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -26,6 +26,14 @@
 ;; and time-stamps, Yasnippet and auto-insert.
 
 
+;;; Markers for template filling
+(setq template-marker-for-name  ">>>NAME<<<" )
+(setq template-marker-for-email ">>>EMAIL<<<")
+(setq template-marker-for-point ">>>POINT<<<")
+(setq template-marker-for-time  ">>>TIME<<<")
+(setq template-time-format      "%Y-%02m-%02d, %A %02H:%02M:%02S (%Z)")  ;; Time format similar with time-stamp one.
+
+
 ;;; Auto Insert:
 
 (require 'autoinsert)
@@ -36,7 +44,7 @@
 ;;; Auto Insert rules:
 
 ;(define-auto-insert "\.sh" "sh-template.sh") ; Example of a template file based rule.
-(define-auto-insert 'sh-mode "sh-template.sh") ; Example of a template file based rule.
+(define-auto-insert 'sh-mode ["sh-template.sh" apply-template-marker]) ; Example of a template file based rule.
 
 
 ;;; YaSnippet
@@ -54,6 +62,42 @@
 
 ;;; Time-Stamp update --- setup in custom.el
 
+
+
+;;; Utility functions for template filling.
+
+(defun process-string-matches (mark-exp F) 
+  "Find matches of a particular string, and process the matching
+text with function F which return a string."
+  (save-excursion
+    (goto-char (point-min)) 
+    ;; We search for matchings
+    (while (search-forward mark-exp nil t) 
+      ;; We save the restriction, because we are going to call narrow-to-region
+      (save-restriction
+        (narrow-to-region (match-beginning 0) (match-end 0))
+        (let (
+              (new-text (funcall F (buffer-string)))
+              )
+          (kill-region (point-min) (point-max))
+          (insert new-text))))))
+
+
+(defun apply-template-marker()
+  "Fill template fields"
+  (interactive)
+  (process-string-matches ">>>NAME<<<"  '(lambda (x)  user-full-name))
+  (process-string-matches ">>>EMAIL<<<" '(lambda (x) user-mail-address))
+  (process-string-matches ">>>TIME<<<"  '(lambda (x) (format-time-string template-time-format (current-time))))
+  ;; Move to point
+  (goto-char (point-min))
+  (if (search-forward ">>>POINT<<<" nil t) 
+      (progn 
+        (goto-char (match-beginning 0))
+        (kill-region (match-beginning 0) (match-end 0))
+        )
+      )
+)
 
 
 (provide 'init-autotype)

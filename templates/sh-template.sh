@@ -1,7 +1,9 @@
 #!/bin/sh 
-
-# Copyright (C) 2010 by Massimo Lauria
-# Time-stamp: <>
+#
+# Copyright (C) 2010 by >>>NAME<<< <>>>EMAIL<<<>
+#
+# Created   : ">>>TIME<<< >>>NAME<<<"
+# Time-stamp: " "
 
 # Description::
 #
@@ -10,7 +12,7 @@
 
 # Code::
 
-
+>>>POINT<<<
 
 # Local Variables:
 # fill-column: 80
