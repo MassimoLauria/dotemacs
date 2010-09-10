@@ -179,8 +179,9 @@
 ;; (require 'init-unstable)       ; Features that are not yet stable
 
 ; Editor Utilities.
-(require 'init-auto-complete)
-(require 'init-spellcheck)
+(require 'init-autotype)          ; Automatic file filling
+(require 'init-auto-complete)     ; Completion configuration
+(require 'init-spellcheck)        ; Spellchecking
 
 ; Programming Languages
 (require 'init-python)
@@ -258,13 +259,6 @@
          )
       )
 
-;; Setup YaSnippet directories
-(setq yas/root-directory 
-      (list "/usr/share/emacs/site-lisp/yasnippet/snippets/"
-            (concat default-elisp-path "/snippets/")))
-;; Map `yas/load-directory' to every element
-(mapc 'yas/load-directory yas/root-directory)
-(setq yas/ignore-filenames-as-triggers t)
 
 ;; Prepare *scratch buffer*
 ;; FROM: Morten Welind
