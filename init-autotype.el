@@ -4,7 +4,7 @@
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: convenience
-;; Time-stamp: <2010-09-10, venerdì 18:33:51 (CEST) Massimo Lauria>
+;; Time-stamp: <2010-09-10, venerdì 21:03:00 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -50,9 +50,9 @@
 ;;; YaSnippet
 
 (require 'yasnippet)
-(setq yas/root-directory 
-      (list "/usr/share/emacs/site-lisp/yasnippet/snippets/"
-            (concat default-elisp-path "/snippets/")))   ;; Snippet's file folder. 
+(if (file-directory-p (concat default-elisp-path "/snippets/"))
+    (add-to-list 'yas/root-directory (concat default-elisp-path "/snippets/")) ;; Snippet's file folder. 
+  )
 ;; Map `yas/load-directory' to every element
 (mapc 'yas/load-directory yas/root-directory)
 (setq yas/ignore-filenames-as-triggers t)
