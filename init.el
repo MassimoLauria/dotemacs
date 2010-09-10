@@ -189,7 +189,10 @@
 (setq custom-file "~/config/emacs/custom.el")
 (load custom-file 'noerror)
 
-
+;; Aquamacs requires explicit server-start call.
+(if (and (boundp 'aquamacs-version)
+         (not (server-running-p)))
+    (server-start))
 
 
 (when (require 'time-date nil t) 
