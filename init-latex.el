@@ -40,6 +40,7 @@
                        (local-set-key (kbd "<f9>")    'TeX-command-master) ;; Compile
                        (make-local-variable compilation-exit-message-function)
                        (setq compilation-exit-message-function 'nil)
+                       (add-to-list 'LaTeX-verbatim-environments "comment")
                        ;;(TeX-fold-buffer)
                        )
             ))
