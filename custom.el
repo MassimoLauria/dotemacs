@@ -22,8 +22,7 @@
  '(flyspell-mode-line-string " Fly")
  '(flyspell-persistent-highlight nil)
  '(flyspell-use-meta-tab nil)
- '(org-google-weather-location "Rome")
- '(safe-local-variable-values (quote ((ispell-default-dictionary . american) (Tex-PDF-mode . t) (folded-file . t))))
+ '(safe-local-variable-values (quote ((ispell-default-dictionary . american) (TeX-PDF-mode . t) (folded-file . t))))
  '(show-paren-mode t)
  '(time-stamp-format "%:y-%02m-%02d, %:a %02H:%02M:%02S (%Z) %U"))
 (custom-set-faces
