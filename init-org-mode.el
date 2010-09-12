@@ -12,6 +12,9 @@
   (setq org-agenda-files (list org-directory))
   )
 
+(setq org-todo-keywords
+       '((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")))
+
 ;;;-------------------------------------------------------------------
 
 (define-key global-map "\C-cl" 'org-store-link)
@@ -128,6 +131,11 @@
           )
         )
   )
+
+
+;; Weather in Org-Agenda
+(require 'google-weather)
+(require 'org-google-weather)
 
 
 ;; Local Variables:

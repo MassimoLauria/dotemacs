@@ -111,6 +111,51 @@
 (setq ac-l-sources '( ac-source-yasnippet ac-source-words-in-buffer
      ac-source-files-in-current-dir ac-source-filename ))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;; Mail-mode + BBDB ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defvar ac-bbdb-header-list '("to" "from" "cc" "bcc"))
+
+(defun ac-bbdb-candidate ()
+  (delete-dups
+   (apply
+    'append
+    (mapcar (lambda (rec)
+              (mapcar (lambda (n) (bbdb-dwim-net-address rec n))
+                      (bbdb-record-net rec)))
+            (bbdb-records)))))
+
+(defun ac-bbdb-prefix ()
+  (interactive)
+  (let ((case-fold-search t))
+    (when (and
+           (< (point)
+              (save-excursion
+                (goto-char (point-min))
+                (search-forward (concat "\n" mail-header-separator "\n") nil t)
+                (point)))
+           (save-excursion
+             (beginning-of-line)
+             (while (and (looking-at "^[ \t]")
+                         (not (= (point) (point-min))))
+               (forward-line -1))
+             (looking-at (concat (regexp-opt ac-bbdb-header-list t) ":"))))
+      (ac-prefix-symbol))))
+
+(defvar ac-source-bbdb
+  '((candidates . ac-bbdb-candidate)
+    (match . substring)
+    (prefix . ac-bbdb-prefix)))
+
+(defun turn-on-ac-bbdb ()
+  "Activate auto-complete in message draft's (Wanderlust mail client)"
+  (interactive)
+  (setq ac-sources '(ac-source-bbdb))
+  (auto-complete-mode 1))
+
+;;; Activate BBDB completion on various message modes, using auto-complete.
+(add-hook 'wl-draft-mode-hook 'turn-on-ac-bbdb)
+(add-hook 'message-mode-hook  'turn-on-ac-bbdb)
+(add-hook 'mml-mode-hook      'turn-on-ac-bbdb)
+(add-hook 'mail-mode-hook     'turn-on-ac-bbdb)
 
 (provide 'init-auto-complete)
 

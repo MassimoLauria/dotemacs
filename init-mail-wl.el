@@ -87,8 +87,8 @@ region is included in the mail body.
 (bbdb-insinuate-sendmail)
 
 ;; message-tab uses tab to call BBDB in header, but not elsewhere.
-(define-key mail-mode-map (kbd "<tab>") 'message-tab)
-(define-key wl-draft-mode-map (kbd "<tab>") 'message-tab)
+;(define-key mail-mode-map (kbd "<tab>") 'message-tab)
+;(define-key wl-draft-mode-map (kbd "<tab>") 'message-tab)
 
 
 ;; Say NO! to auto collection
