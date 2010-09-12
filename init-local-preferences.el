@@ -31,7 +31,7 @@
 
 
 ;; Applications
-(setq prefs-activate-mail     nil) ; Mail support
+(setq prefs-activate-mail     t) ; Mail support
 (setq prefs-activate-org-mode t) ; The famous ORG-Mode! Yaiii!!
 (setq prefs-activate-twitter  nil) ; Explicit activation of Twitter
 
