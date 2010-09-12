@@ -148,6 +148,14 @@
         )
   )
 
+;; Aquamacs miss some org-agenda keybindings!
+(defun org-agenda-mode-setup-local-keys()
+  "Define/>Undefine of orgtbl-mode keys"
+  ;; Org Agenda Left/Right movements 
+  (define-key org-agenda-mode-map (kbd "<left>") 'org-agenda-earlier)
+  (define-key org-agenda-mode-map (kbd "<right>") 'org-agenda-later)
+)
+(add-hook 'org-agenda-mode-hook 'org-agenda-mode-setup-local-keys)
 
 ;; Weather in Org-Agenda
 (require 'google-weather)

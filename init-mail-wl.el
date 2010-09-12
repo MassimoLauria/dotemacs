@@ -5,8 +5,6 @@
 
 
 
-;; autoload configuration
-;; (Not required if you have installed Wanderlust as XEmacs package)
 (setq 
  wl-init-file    "~/config/emacs/wanderlust.el"
  wl-folders-file "~/personal/conf/wanderlust-folders"
@@ -81,6 +79,7 @@ region is included in the mail body.
 
 
 ;; (Insidious) Big Brother DataBase, collects mail addresses.
+(add-to-list 'load-path (concat default-elisp-3rdparties "/bbdb-2.3.5"))
 (require 'bbdb)
 (bbdb-initialize)
 
