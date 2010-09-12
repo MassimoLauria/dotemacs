@@ -1,15 +1,48 @@
-(provide 'init)
+;;; init.el --- Main configuration file
 
-;;  Start time.
+;; Copyright (C) 2010  Massimo Lauria
+;; Time-stamp: "2010-09-13, lunedì 00:38:56 (CEST) Massimo Lauria"
+
+;; Author: Massimo Lauria 
+;; Keywords: convenience
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; We define several function and environment variables useful for
+;; discovering the running OS type (Linux, MacOSX, Windows...) and the
+;; particular type of emacs running (GNU Emacs, XEmacs , Aquamacs,
+;; ...)
+
+;;; Code:
+
+;;  Save start time.
 (setq emacs-load-start-time (current-time))
 
 
-;;; Load emacs code and personal data. -------------------------------------------------------------------------
+;;; Setup load-path and runtime  -------------------------------------------------------------------------------
 (setq default-elisp-path "~/config/emacs")
 (setq default-elisp-3rdparties "~/config/emacs/3rdparties")
 
 (setq load-path (cons 	default-elisp-path load-path ))
 (setq load-path (cons 	default-elisp-3rdparties load-path ))
+
+;; First thing first, discover the running environment before anything
+;; else.  In this way even the basic setup can be system dependent.
+(require 'init-discover-runtime)
+
  
                        
 ;;; Module(s) initialization -----------------------------------------------------------------------------------
@@ -453,6 +486,7 @@ Otherwise, analyses point position and answers."
 (when (require 'time-date nil t)
   (message "Emacs startup time: %d seconds." (time-to-seconds (time-since emacs-load-start-time))))
 
+(provide 'init)
 ;; Local Variables:
 ;; mode: emacs-lisp 
 ;; folded-file: t
