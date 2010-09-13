@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-09-13, lunedì 00:38:56 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-09-13, lunedì 17:22:40 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria 
 ;; Keywords: convenience
@@ -49,8 +49,7 @@
 
 
 ;;{{{ *** Key binding rules ***
-;;
-;; FIXME Two of them do not work at all!
+
 ;; FIXME Some of them do not work in xterm
 ;; FIXME Many of them do not work in console
 ;;
@@ -187,13 +186,13 @@
 
 
 
-;; Remember notes.
-(global-set-key [f5] 'org-remember)
-(global-set-key [f6] 'org-agenda)
+;; Agenda.
+(global-set-key [f5] 'org-remember)  ;; Taking notes
+(global-set-key [f6] 'org-agenda)    ;; View agenda/Todo
+(global-set-key [f7] 'bbdb)          ;; Query Contacts
 ;; Switch language
-(global-set-key [f7] 'toggle-it-en)
-;; Open a terminal
-(global-set-key [f8] 'multi-term-dedicated-toggle)
+(global-set-key [f8] 'toggle-it-en)
+
 
 ;;}}}
 
