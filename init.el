@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-09-13, lunedì 17:22:40 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-09-13, lunedì 18:13:14 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria 
 ;; Keywords: convenience
@@ -272,12 +272,17 @@
 
 ;;{{{ *** Advanced editing customization ***
 
-;;
+;; Undo-Tree, much better than default.
+(require 'undo-tree)
+(global-undo-tree-mode)
+
+
+
 ;; Text mode by default, with auto-fill
 (require 'typopunct)
 (setq-default typopunct-buffer-language 'english)
 (setq default-major-mode 'text-mode)
-(setq initial-major-mode 'text-mode)
+;;(setq initial-major-mode 'text-mode) ;; Better to stick with Lisp-Interaction.
 (setq text-mode-hook
       '(lambda nil
          (if prefs-activate-smallscreen
