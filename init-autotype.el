@@ -3,8 +3,7 @@
 ;; Copyright (C) 2010  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Keywords: convenience
-;; Time-stamp: <2010-09-10, venerdì 21:03:00 (CEST) Massimo Lauria>
+;; Time-stamp: <2010-09-27, lunedì 20:19:12 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -38,7 +37,7 @@
 
 (require 'autoinsert)
 (add-hook 'find-file-hook 'auto-insert)  ;;; Adds hook to find-files-hook
-(setq auto-insert-directory "~/config/emacs/templates/") ;; Template's files folder, *NOTE* Trailing slash important
+(setq auto-insert-directory (concat default-elisp-path "/templates/")) ;; Template's files folder, *NOTE* Trailing slash important
 (setq auto-insert-query nil) ;;; If you don't want to be prompted before insertion
 
 ;;; Auto Insert rules:
