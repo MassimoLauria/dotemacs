@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2010-09-27, lunedì 23:15:50 (CEST) Massimo Lauria>
+;; Time-stamp: <2010-09-28, martedì 00:45:43 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -156,7 +156,16 @@ default handler."
                      (getf autopair-extra-pairs :comment))
                (push '(?` . ?')
                      (getf autopair-extra-pairs :string))))
- 
+
+;; Sh-mode
+(add-hook 'sh-mode-hook
+           #'(lambda ()
+               (push '(?' . ?')
+                     (getf autopair-extra-pairs :code)))
+
+;; Workaround for SLIME 
+(add-hook 'sldb-mode-hook #'(lambda () (setq autopair-dont-activate t)))
+
 
 (provide 'init-autotype)
 ;;; init-autotype.el ends here
