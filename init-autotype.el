@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2010-09-27, lunedì 20:19:12 (CEST) Massimo Lauria>
+;; Time-stamp: <2010-09-27, lunedì 23:15:50 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -33,20 +33,20 @@
 (setq template-time-format      "%Y-%02m-%02d, %A %02H:%02M:%02S (%Z)")  ;; Time format similar with time-stamp one.
 
 
-;;; Auto Insert:
+;;; Auto Insert: ----------------------------------------------------------------------
 
 (require 'autoinsert)
 (add-hook 'find-file-hook 'auto-insert)  ;;; Adds hook to find-files-hook
 (setq auto-insert-directory (concat default-elisp-path "/templates/")) ;; Template's files folder, *NOTE* Trailing slash important
 (setq auto-insert-query nil) ;;; If you don't want to be prompted before insertion
 
-;;; Auto Insert rules:
+;; Auto Insert rules:
 
 ;(define-auto-insert "\.sh" "sh-template.sh") ; Example of a template file based rule.
 (define-auto-insert 'sh-mode ["sh-template.sh" apply-template-marker]) ; Example of a template file based rule.
 
 
-;;; YaSnippet
+;;; YaSnippet -------------------------------------------------------------------------
 
 (require 'yasnippet)
 (if (file-directory-p (concat default-elisp-path "/snippets/"))
@@ -63,7 +63,7 @@
 
 
 
-;;; Utility functions for template filling.
+;;; Utility functions for template filling ---------------------------------------------
 
 (defun process-string-matches (mark-exp F) 
   "Find matches of a particular string, and process the matching
@@ -98,6 +98,65 @@ text with function F which return a string."
       )
 )
 
+
+;;; Auto pair configuration -----------------------------------------------------------
+(setq autopair-blink nil) 
+(setq autopair-autowrap t)
+(require 'autopair)
+(autopair-global-mode t)
+
+;; Auto pair work-around for term-mode 
+(defun autopair-term-mode-handle-action (action pair pos-before)
+  "Trick autopair to working with the `term-mode' nonsense.
+
+`insert' and friends don't really do anything in a term-mode
+buffer, we need to send actual strings to the subprocess. So
+override these emacs primitives to do so, then call the usual
+default handler."
+  (let ((proc (get-buffer-process (current-buffer))))
+    (flet ((insert (&rest args)
+                   (mapc #'(lambda (arg)
+                             (if (stringp arg)
+                                 (term-send-raw-string arg)
+                               (term-send-raw-string (char-to-string arg))))
+                         args))
+           (delete-char (howmany)
+                        (dotimes (i howmany)
+                          (term-send-del)))
+           (backward-char (howmany)
+                          (dotimes (i howmany)
+                            (term-send-left))))
+      (autopair-default-handle-action action pair pos-before)
+      (goto-char (process-mark proc)))))
+
+;; Term mode is quirky, this will fix it.
+(add-hook 'term-mode-hook
+          #'(lambda ()
+              (set (make-local-variable 'autopair-handle-action-fns) '(autopair-term-mode-handle-action))))
+
+;; Manage `` typed as ""
+(add-hook 'latex-mode-hook
+          #'(lambda ()
+              (set (make-local-variable 'autopair-handle-action-fns)
+                   (list #'autopair-default-handle-action
+                         #'autopair-latex-mode-paired-delimiter-action))))
+
+
+;; Pair triple quotes in python
+(add-hook 'python-mode-hook
+           #'(lambda ()
+               (set (make-local-variable 'autopair-handle-action-fns)
+                     (list #'autopair-default-handle-action
+                           #'autopair-python-triple-quote-action))))
+
+;; Pair ` ' in comments and strings
+(add-hook 'emacs-lisp-mode-hook
+           #'(lambda ()
+               (push '(?` . ?')
+                     (getf autopair-extra-pairs :comment))
+               (push '(?` . ?')
+                     (getf autopair-extra-pairs :string))))
+ 
 
 (provide 'init-autotype)
 ;;; init-autotype.el ends here
