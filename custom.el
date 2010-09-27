@@ -22,6 +22,7 @@
  '(flyspell-mode-line-string " Fly")
  '(flyspell-persistent-highlight nil)
  '(flyspell-use-meta-tab nil)
+ '(reftex-label-alist (quote (("theorem" 104 "thm:" "~\\ref{%s}" t ("th." "theorem") -3) ("lemma" 108 "lmm:" "~\\ref{%s}" t ("lemma") -3) ("definition" 100 "def:" "~\\ref{%s}" nil ("def." "definition") -3) ("corollary" 99 "cor:" "~\\ref{%s}" nil ("corollary") -3) ("example fact proposition property" 77 nil nil nil nil -3))))
  '(safe-local-variable-values (quote ((ispell-default-dictionary . american) (TeX-PDF-mode . t) (folded-file . t))))
  '(show-paren-mode t)
  '(time-stamp-format "%:y-%02m-%02d, %:a %02H:%02M:%02S (%Z) %U"))
