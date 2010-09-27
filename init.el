@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-09-27, lunedì 23:35:25 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-09-27, lunedì 23:52:26 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria 
 ;; Keywords: convenience
@@ -399,6 +399,8 @@
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
+;; Eldoc for C
+(add-hook 'c-mode 'c-turn-on-eldoc-mode)
 
 ;;}}}
 
