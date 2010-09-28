@@ -161,7 +161,7 @@ default handler."
 (add-hook 'sh-mode-hook
            #'(lambda ()
                (push '(?' . ?')
-                     (getf autopair-extra-pairs :code)))
+                     (getf autopair-extra-pairs :code))))
 
 ;; Workaround for SLIME 
 (add-hook 'sldb-mode-hook #'(lambda () (setq autopair-dont-activate t)))
