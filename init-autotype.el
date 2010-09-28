@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2010-09-28, martedì 00:45:43 (CEST) Massimo Lauria>
+;; Time-stamp: <2010-09-28, martedì 13:47:35 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -135,11 +135,11 @@ default handler."
               (set (make-local-variable 'autopair-handle-action-fns) '(autopair-term-mode-handle-action))))
 
 ;; Manage `` typed as ""
-(add-hook 'latex-mode-hook
-          #'(lambda ()
-              (set (make-local-variable 'autopair-handle-action-fns)
-                   (list #'autopair-default-handle-action
-                         #'autopair-latex-mode-paired-delimiter-action))))
+;;(add-hook 'latex-mode-hook
+;;          #'(lambda ()
+;;              (set (make-local-variable 'autopair-handle-action-fns)
+;;                   (list #'autopair-default-handle-action
+;;                         #'autopair-latex-mode-paired-delimiter-action))))
 
 
 ;; Pair triple quotes in python
