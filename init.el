@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-09-28, martedì 01:59:35 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-09-28, martedì 15:51:27 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria 
 ;; Keywords: convenience
@@ -90,17 +90,21 @@
 (global-set-key (kbd "M-i") 'previous-line)
 (global-set-key (kbd "M-k")  'next-line)
 
-(global-set-key (kbd "M-u")  'beginning-of-line)
-(global-set-key (kbd "M-o")  'end-of-line)
+(global-set-key (kbd "M-u")  'backward-word)
+(global-set-key (kbd "M-o")  'forward-word)
 
-;; Logical unit based.
-(global-set-key (kbd "C-M-j")  'backward-word)
-(global-set-key (kbd "C-M-l")  'forward-word)
-(global-set-key (kbd "C-M-i")  'backward-paragraph) 
-(global-set-key (kbd "C-M-k")  'forward-paragraph)
-; 
-(global-set-key (kbd "C-M-u")  'backward-sentence) 
-(global-set-key (kbd "C-M-o")  'forward-sentence)
+(global-set-key (kbd "M-g")  'beginning-of-line)
+(global-set-key (kbd "M-h")  'end-of-line)
+
+
+;;;; Logical unit based. (broken on terminal)
+;;(global-set-key (kbd "C-M-j")  'backward-word)
+;;(global-set-key (kbd "C-M-l")  'forward-word)
+;;(global-set-key (kbd "C-M-i")  'backward-paragraph) 
+;;(global-set-key (kbd "C-M-k")  'forward-paragraph)
+;;; 
+;;(global-set-key (kbd "C-M-u")  'backward-sentence) 
+;;(global-set-key (kbd "C-M-o")  'forward-sentence)
 
 
 ;; Deletion keys
