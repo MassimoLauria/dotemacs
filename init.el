@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-09-27, lunedì 23:52:26 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-09-28, martedì 01:59:35 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria 
 ;; Keywords: convenience
@@ -290,8 +290,9 @@
            (setq fill-column 80)
            )
          (auto-fill-mode 1)
-         ;;(orgtbl-mode 1)
+         (orgtbl-mode 1)
          (flyspell-mode 1)  ; annoying spell checking 
+         (goto-address-mode) ; Find urls/emails in text and press (C-c RET) to click them.
          ;;(typopunct-mode)
          )
       )
@@ -387,10 +388,12 @@
   (message warning))
 
 
+;; All urls/mails are clickable in comments and strings
+(add-hook 'find-file-hooks 'goto-address-prog-mode) 
 
 ;; Settings for cc-mode
 (add-hook 'cc-mode-hook 
-          (lambda () 
+          (lambda ()
             (setq c-block-comment-prefix "*")
             )
           )

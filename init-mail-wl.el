@@ -5,6 +5,7 @@
 ;;;------------------------------------------------------------------
 
 
+
 ;; autoload configuration
 ;; (Not required if you have installed Wanderlust as XEmacs package)
 (require-maybe 'elscreen-wl)
@@ -47,6 +48,7 @@
     ;; Features in draft-mode
     (auto-complete-mode)
     (set-fill-column 75)
+    (goto-address-mode)
     (wl-draft-highlight-and-recenter)
     )
  )
@@ -138,7 +140,7 @@ region is included in the mail body.
 
 
 
-;; This is in the case we edit mail for MUtt client
+;; This is in the case we edit mail for Mutt client
 (add-to-list 'auto-mode-alist '(".*mutt.*" . message-mode))                                                                   
 (setq mail-header-separator "")                                                                                               
 (add-hook 'message-mode-hook
@@ -153,6 +155,8 @@ region is included in the mail body.
                                                           (save-buffer)
                                                           (server-edit)))))))
 
+;; Click urls/mails in Mime-View
+(add-hook 'mime-view-mode-hook 'goto-address-mode)
 
 ;; Local Variables:
 ;; mode: emacs-lisp 
