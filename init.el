@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-09-28, martedì 15:51:27 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-09-29, mercoledì 18:53:24 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria 
 ;; Keywords: convenience
@@ -93,8 +93,11 @@
 (global-set-key (kbd "M-u")  'backward-word)
 (global-set-key (kbd "M-o")  'forward-word)
 
-(global-set-key (kbd "M-g")  'beginning-of-line)
-(global-set-key (kbd "M-h")  'end-of-line)
+(global-set-key (kbd "M-g")  'move-beginning-of-line) ;; Fights with folding-mode
+(global-set-key (kbd "M-h")  'move-end-of-line)
+
+(global-set-key (kbd "M-v")  'backward-paragraph) ;, Fights with cua-mode
+(global-set-key (kbd "M-b")  'forward-paragraph)
 
 
 ;;;; Logical unit based. (broken on terminal)
@@ -107,15 +110,12 @@
 ;;(global-set-key (kbd "C-M-o")  'forward-sentence)
 
 
+
 ;; Deletion keys
 (global-set-key (kbd "M-w")  'backward-kill-word) 
 (global-set-key (kbd "M-d")  'backward-delete-char)
 (global-set-key (kbd "M-f")  'delete-char) 
-; 
-(global-set-key (kbd "C-M-d")  'backward-kill-word)
-(global-set-key (kbd "C-M-f")  'kill-word)
-
-
+(global-set-key (kbd "C-w")  'kill-whole-line)
 
 
 ;; Moving between buffers (M-S)
@@ -169,6 +169,7 @@
 
 ;; Register at finger tips from 1 to ... 0!
 (global-unset-key (kbd "M-r"))
+(global-set-key (kbd "M-r M-r") 'pop-to-mark-command)
 (global-set-key (kbd "M-1") '(lambda () (interactive) (register-to-point 1) )  )
 (global-set-key (kbd "M-2") '(lambda () (interactive) (register-to-point 2) )  )
 (global-set-key (kbd "M-3") '(lambda () (interactive) (register-to-point 3) )  )
@@ -196,7 +197,6 @@
 (global-set-key [f7] 'bbdb)          ;; Query Contacts
 ;; Switch language
 (global-set-key [f8] 'toggle-it-en)
-
 
 ;;}}}
 
