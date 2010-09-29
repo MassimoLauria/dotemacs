@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-09-29, mercoledì 18:53:24 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-09-30, giovedì 00:49:28 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria 
 ;; Keywords: convenience
@@ -36,7 +36,7 @@
 (setq default-elisp-path "~/config/emacs")
 (setq default-elisp-3rdparties "~/config/emacs/3rdparties")
 
-(setq load-path (cons 	default-elisp-path load-path ))
+(setq load-path (cons 	default-elisp-path load-path       ))
 (setq load-path (cons 	default-elisp-3rdparties load-path ))
 
 ;; First thing first, discover the running environment before anything
@@ -80,42 +80,9 @@
 (global-set-key [M-up] 'backward-sexp) 
 (global-set-key [M-down] 'forward-sexp)
 
-;;; Possible keybinding for moving in text. Notice that 
-;;; such kybindings are made for not leaving the homerow. 
-;;; For me is quite premature to apply such bindings.
-
-;; Character based.
-(global-set-key (kbd "M-j") 'backward-char)
-(global-set-key (kbd "M-l")  'forward-char)
-(global-set-key (kbd "M-i") 'previous-line)
-(global-set-key (kbd "M-k")  'next-line)
-
-(global-set-key (kbd "M-u")  'backward-word)
-(global-set-key (kbd "M-o")  'forward-word)
-
-(global-set-key (kbd "M-g")  'move-beginning-of-line) ;; Fights with folding-mode
-(global-set-key (kbd "M-h")  'move-end-of-line)
-
-(global-set-key (kbd "M-v")  'backward-paragraph) ;, Fights with cua-mode
-(global-set-key (kbd "M-b")  'forward-paragraph)
-
-
-;;;; Logical unit based. (broken on terminal)
-;;(global-set-key (kbd "C-M-j")  'backward-word)
-;;(global-set-key (kbd "C-M-l")  'forward-word)
-;;(global-set-key (kbd "C-M-i")  'backward-paragraph) 
-;;(global-set-key (kbd "C-M-k")  'forward-paragraph)
-;;; 
-;;(global-set-key (kbd "C-M-u")  'backward-sentence) 
-;;(global-set-key (kbd "C-M-o")  'forward-sentence)
-
-
-
-;; Deletion keys
-(global-set-key (kbd "M-w")  'backward-kill-word) 
-(global-set-key (kbd "M-d")  'backward-delete-char)
-(global-set-key (kbd "M-f")  'delete-char) 
-(global-set-key (kbd "C-w")  'kill-whole-line)
+;; Text movements keybindings
+(require 'massimo-keyboard)
+(massimo-keyboard-global-mode)  
 
 
 ;; Moving between buffers (M-S)

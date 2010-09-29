@@ -22,7 +22,6 @@
  '(flyspell-mode-line-string " Fly")
  '(flyspell-persistent-highlight nil)
  '(flyspell-use-meta-tab nil)
- '(folding-goto-key "nil")
  '(safe-local-variable-values (quote ((ispell-default-dictionary . american) (TeX-PDF-mode . t) (folded-file . t))))
  '(show-paren-mode t)
  '(time-stamp-format "%:y-%02m-%02d, %:a %02H:%02M:%02S (%Z) %U"))
