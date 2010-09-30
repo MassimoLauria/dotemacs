@@ -31,11 +31,12 @@
 At least they are considered useful for the author.
 ")
 
-(defcustom massimo-keyboard-cua-meta-v-override-p t
-  "*If non-nil, override cua-mode M-v for cua-repeat-replace-region with backward-paragraph."
-  :tag "Massimo Keyboard CUA meta-v override"
-  :type 'boolean
-  :group 'massimo-keyboard)
+;; No more override (M-b is used instead on M-v)
+;;(defcustom massimo-keyboard-cua-meta-v-override-p nil
+;;  "*If non-nil, override cua-mode M-v for cua-repeat-replace-region with backward-paragraph."
+;;  :tag "Massimo Keyboard CUA meta-v override"
+;;  :type 'boolean
+;;  :group 'massimo-keyboard)
 
 (defcustom massimo-keyboard-folding-meta-g-override-p t
   "*If non-nil, override folding model M-g for folding-goto-line with backward-paragraph."
@@ -58,7 +59,7 @@ At least they are considered useful for the author.
     (define-key map (kbd "M-g") 'move-beginning-of-line) ;; Fights with folding-mode
     (define-key map (kbd "M-h") 'move-end-of-line)
     ;; Paragraphs
-    (define-key map (kbd "M-v") 'backward-paragraph) ;; Fights with cua-mode
+    (define-key map (kbd "M-b") 'backward-paragraph)     ;; Fight with canonical binding
     (define-key map (kbd "M-n") 'forward-paragraph)
 
     
@@ -139,17 +140,18 @@ modified according to the useage pattern of the author."
   :init-value nil
   :lighter " Massimo" ; Modeline string
 
-  (when (and
-         (not (eq massimo-keyboard-cua-meta-v-overridden 'massimo-keyboard-cua-meta-v-override))         
-         (boundp 'cua--cua-keys-keymap)
-         massimo-keyboard-cua-meta-v-override-p
-         )
-    ;; Function to be overridded
-    (setq massimo-keyboard-cua-meta-v-overridden (lookup-key cua--cua-keys-keymap [(meta v)]))
-    (if massimo-keyboard-cua-meta-v-overridden 
-         (define-key cua--cua-keys-keymap [(meta v)] 'massimo-keyboard-cua-meta-v-override)
-      )
-    )
+;;  (when (and
+;;         (not (eq massimo-keyboard-cua-meta-v-overridden 'massimo-keyboard-cua-meta-v-override))         
+;;         (boundp 'cua--cua-keys-keymap)
+;;         massimo-keyboard-cua-meta-v-override-p
+;;         nil ;; never overide, because now the key is on M-b
+;;         )
+;;    ;; Function to be overridded
+;;    (setq massimo-keyboard-cua-meta-v-overridden (lookup-key cua--cua-keys-keymap [(meta v)]))
+;;    (if massimo-keyboard-cua-meta-v-overridden 
+;;         (define-key cua--cua-keys-keymap [(meta v)] 'massimo-keyboard-cua-meta-v-override)
+;;      )
+;;    )
   (when (and 
          (not (eq massimo-keyboard-folding-meta-g-overridden 'massimo-keyboard-folding-meta-g-override))         
          (boundp 'folding-mode-map)
