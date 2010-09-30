@@ -11,6 +11,7 @@
 ;;;-------------------------------------------------------------------
 
 (add-to-list 'load-path (expand-file-name sage-elisp-path))
+(require 'help-mode) ;; help-mode is necessar for sage to load (BUG!)
 (require-maybe 'sage "sage")
 (setq sage-command (concat sage-basedir "sage"))
 
