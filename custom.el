@@ -18,8 +18,9 @@
  '(copyright-query nil)
  '(cua-enable-cursor-indications t)
  '(cua-normal-cursor-color (quote (bar . "white")))
- '(cua-overwrite-cursor-color (quote (box . "white")))
- '(cua-read-only-cursor-color (quote (hollow . "red")))
+ '(cua-overwrite-cursor-color (quote (box . "red")))
+ '(cua-read-only-cursor-color (quote (hollow . "yellow")))
+ '(display-hourglass t)
  '(ebib-index-display-fields (quote (year author title)))
  '(ebib-print-multiline t)
  '(ebib-sort-order (quote ((year) (author editor) (title))))
@@ -35,4 +36,4 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- )
+ '(cursor ((default nil) (nil nil))))
