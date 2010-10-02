@@ -14,6 +14,7 @@
  '(ac-sources (quote (ac-source-yasnippet ac-source-imenu ac-source-abbrev ac-source-words-in-buffer ac-source-files-in-current-dir ac-source-filename)) t)
  '(ac-stop-flymake-on-completing t)
  '(before-save-hook (quote (copyright-update time-stamp rope-before-save-actions)))
+ '(blink-cursor-mode nil)
  '(copyright-query nil)
  '(cua-enable-cursor-indications t)
  '(cua-normal-cursor-color (quote (bar . "white")))
