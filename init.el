@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-09-30, giovedì 00:49:28 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-10-02, sabato 19:50:36 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria 
 ;; Keywords: convenience
@@ -123,6 +123,7 @@
 (global-set-key [M-prior] 'previous-error) ; Does not work with LaTeX!
 (global-set-key [M-next] 'next-error)
 
+(global-set-key (kbd "#") 'comment-region-maybe)
 
 ;; Spellcheck
 (global-set-key (kbd "M-s") 'my-spell-correct-word)
@@ -134,27 +135,6 @@
 ;; Tab is actually a "Smart tab"
 ;; (global-set-key [(tab)] 'smart-tab)
 
-;; Register at finger tips from 1 to ... 0!
-(global-unset-key (kbd "M-r"))
-(global-set-key (kbd "M-r M-r") 'pop-to-mark-command)
-(global-set-key (kbd "M-1") '(lambda () (interactive) (register-to-point 1) )  )
-(global-set-key (kbd "M-2") '(lambda () (interactive) (register-to-point 2) )  )
-(global-set-key (kbd "M-3") '(lambda () (interactive) (register-to-point 3) )  )
-(global-set-key (kbd "M-4") '(lambda () (interactive) (register-to-point 4) )  )
-(global-set-key (kbd "M-5") '(lambda () (interactive) (register-to-point 5) )  )
-(global-set-key (kbd "M-6") '(lambda () (interactive) (register-to-point 6) )  )
-(global-set-key (kbd "M-7") '(lambda () (interactive) (register-to-point 7) )  )
-(global-set-key (kbd "M-9") '(lambda () (interactive) (register-to-point 9) )  )
-(global-set-key (kbd "M-r 0") '(lambda () (interactive) (point-to-register 0) )  )
-(global-set-key (kbd "M-r 1") '(lambda () (interactive) (point-to-register 1) )  )
-(global-set-key (kbd "M-r 2") '(lambda () (interactive) (point-to-register 2) )  )
-(global-set-key (kbd "M-r 3") '(lambda () (interactive) (point-to-register 3) )  )
-(global-set-key (kbd "M-r 4") '(lambda () (interactive) (point-to-register 4) )  )
-(global-set-key (kbd "M-r 5") '(lambda () (interactive) (point-to-register 5) )  )
-(global-set-key (kbd "M-r 6") '(lambda () (interactive) (point-to-register 6) )  )
-(global-set-key (kbd "M-r 7") '(lambda () (interactive) (point-to-register 7) )  )
-(global-set-key (kbd "M-r 9") '(lambda () (interactive) (point-to-register 9) )  )
-(global-set-key (kbd "M-r 0") '(lambda () (interactive) (point-to-register 0) )  )
 
 
 

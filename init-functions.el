@@ -34,6 +34,20 @@
   )
 
 
+(defun comment-region-maybe ()
+  "Comment a region or uncomment it, if it is already
+commented. If the command is called several times in a row the
+commentation is toggled. If there is no active region, then just
+insert the character used to activate the command.
+It will not work properly if it is not bound to a key.
+"
+  (interactive)
+  (if (or (region-active-p) (eq last-command 'comment-region-maybe))
+      (call-interactively 'comment-or-uncomment-region)
+    (progn
+      (setq this-command 'self-insert-command)
+      (call-interactively 'self-insert-command) ) ) )
+
 ;;------ Useful functions --------------------------------------------------------------------
 (defun decorate-formula (F sexp-arg)
   "Given an S-exp, it descend in all subtrees to apply function F
