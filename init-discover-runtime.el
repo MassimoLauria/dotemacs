@@ -1,7 +1,7 @@
 ;;; init-discover-runtime.el --- Find out running OS, Emacsen, and setup accordingly
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-09-13, lunedì 00:38:59 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-10-04, lunedì 01:08:23 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria 
 ;; Keywords: convenience
@@ -60,11 +60,19 @@
 (defvar running-Windows-frame (eq window-system 'w32)) ;; Windows
 
 ;; window system of the initial process
-(defvar running-NSCocoa-process  (eq initial-window-system 'ns))  ;; MacOS 
-(defvar running-X11-process      (eq initial-window-system 'x))   ;; X11
-(defvar running-Windows-process  (eq initial-window-system 'w32)) ;; Windows
+(if(boundp 'initial-window-system) ;; Does not exist on GNU Emacs 22. 
+    (progn 
+      (defvar running-NSCocoa-process  (eq initial-window-system 'ns))  ;; MacOS 
+      (defvar running-X11-process      (eq initial-window-system 'x))   ;; X11
+      (defvar running-Windows-process  (eq initial-window-system 'w32)) ;; Windows
+      )
+  (progn
+    (defvar running-NSCocoa-process  running-NSCocoa-frame)  ;; MacOS 
+    (defvar running-X11-process      running-X11-frame)      ;; X11
+    (defvar running-Windows-process  running-Windows-frame) ;; Windows
+    )
+  )
 
- 
 
 ;; Conditional running of code, based on OS
 (defmacro when-running-GNULinux (&rest body) (list 'if (string-match "linux" (prin1-to-string system-type))  (cons 'progn body)))
