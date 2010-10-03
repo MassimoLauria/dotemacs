@@ -101,7 +101,12 @@ text with function F which return a string."
 
 ;;; Auto pair configuration -----------------------------------------------------------
 (setq autopair-blink nil) 
-(setq autopair-autowrap t)
+(if running-GNUEmacs22 
+    (setq autopair-autowrap nil) ;; Broken on Emacs22 since it uses
+                                 ;; region-active-p which is not
+                                 ;; present here
+  (setq autopair-autowrap t)
+)
 (require 'autopair)
 (autopair-global-mode t)
 
