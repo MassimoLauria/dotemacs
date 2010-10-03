@@ -5,7 +5,7 @@
 ;;;-----------------------------------------------------------------
 
 
-(if (and (daemonp) (locate-library "edit-server"))
+(if (and (fboundp 'daemon) (daemonp) (locate-library "edit-server"))
     (progn
       (require 'edit-server)
       (setq edit-server-new-frame nil)
