@@ -21,11 +21,19 @@
       (concat "#" (file-name-nondirectory buffer-file-name) "#")
     (expand-file-name
      (concat "#%" (buffer-name) "#")))))
+
+;; Set backup dirs
 (setq backup-directory-alist (list (cons "." backup-dir)))
+
 ;; No backups and autosaves for tramp files
 (add-to-list 'backup-directory-alist
                 (cons tramp-file-name-regexp nil))
 (setq tramp-auto-save-directory nil)
+
+;; Enable backup files.
+(setq make-backup-files t)
+;; Enable versioning with default values (keep five last versions, I think!)
+(setq version-control t)
 
 
 ;; Local Variables:
