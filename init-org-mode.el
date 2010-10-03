@@ -1,3 +1,4 @@
+
 ;;;
 ;;; Utilities for robust and safe emacs usage.
 ;;;
@@ -33,25 +34,25 @@
 )
 
 
-;; Org-mode Keys
-(setq org-replace-disputed-keys t)
-(setq org-disputed-keys '(
-                         ([(tab)]      . [(meta tab)]) 
-                         ([(shift up)]      . [(control è)]) 
-                         ([(shift down)]    . [(control à)]) 
-                         ([(shift left)]    . [(control ò) ])
-                         ([(shift right)]   . [(control ù) ]) 
-                         ([(meta  up)]      . [(meta è) ]) 
-                         ([(meta  down)]    . [(meta à) ]) 
-                         ([(meta  left)]    . [(meta ò) ])
-                         ([(meta  right)]   . [(meta ù) ])
-                         ([(meta  shift up)]      . [(control meta è) ]) 
-                         ([(meta  shift down)]    . [(control meta à) ]) 
-                         ([(meta  shift left)]    . [(control meta ò) ])
-                         ([(meta  shift right)]   . [(control meta ù) ])
-                         ([(control shift right)] . [(meta shift +)]) 
-                         ([(control shift left)] . [(meta shift -)])
-                         ))
+;; ;; Org-mode Keys
+;; (setq org-replace-disputed-keys t)
+;; (setq org-disputed-keys '(
+;;                          ([(tab)]      . [(meta tab)]) 
+;;                          ([(shift up)]      . [(control è)]) 
+;;                          ([(shift down)]    . [(control à)]) 
+;;                          ([(shift left)]    . [(control ò) ])
+;;                          ([(shift right)]   . [(control ù) ]) 
+;;                          ([(meta  up)]      . [(meta è) ]) 
+;;                          ([(meta  down)]    . [(meta à) ]) 
+;;                          ([(meta  left)]    . [(meta ò) ])
+;;                          ([(meta  right)]   . [(meta ù) ])
+;;                          ([(meta  shift up)]      . [(control meta è) ]) 
+;;                          ([(meta  shift down)]    . [(control meta à) ]) 
+;;                          ([(meta  shift left)]    . [(control meta ò) ])
+;;                          ([(meta  shift right)]   . [(control meta ù) ])
+;;                          ([(control shift right)] . [(meta shift +)]) 
+;;                          ([(control shift left)] . [(meta shift -)])
+;;                          ))
 
 
 (defun org-mode-setup-local-keys()
@@ -117,7 +118,11 @@
 ;(add-hook 'org-mode-hook 'orgtbl-mode-setup-local-keys)
 (add-hook 'orgtbl-mode-hook 'orgtbl-mode-setup-local-keys)
 
-(org-remember-insinuate)
+;; Link org-mode to remember-mode (which is not present on Emacs <22)
+(when (fboundp 'org-remember-insinuate) 
+  (org-remember-insinuate)
+)
+
 
 ;; Normally my private (and translated) configuration is used.
 (when (not (boundp 'org-remember-templates))
