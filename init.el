@@ -1,9 +1,9 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-10-02, sabato 19:50:36 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-10-04, lunedì 01:13:03 (CEST) Massimo Lauria"
 
-;; Author: Massimo Lauria 
+;; Author: Massimo Lauria
 ;; Keywords: convenience
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -43,8 +43,8 @@
 ;; else.  In this way even the basic setup can be system dependent.
 (require 'init-discover-runtime)
 
- 
-                       
+
+
 ;;; Module(s) initialization -----------------------------------------------------------------------------------
 
 
@@ -153,13 +153,14 @@
 
 
 
-; Editor customization 
+; Editor customization
 (require 'init-functions)         ; Utility functions for configuration
 (require 'init-local-preferences) ; Host based and personal configuration
 (require 'init-preferences)       ; Basic editor preferences
 (require 'init-elscreen)          ; ElScreen preferences
 (require 'init-backup)            ; Autosaves and backups behaviour
 ;; (require 'init-unstable)       ; Features that are not yet stable
+
 
 ; Editor Utilities.
 (require 'init-autotype)          ; Automatic file filling
@@ -169,11 +170,13 @@
 ; Programming Languages
 (require 'init-python)
 
+
+
 ; Math packages
 (when prefs-activate-latex    (require 'init-latex))        ;; AucTeX
 (when prefs-activate-maxima   (require 'init-imaxima))      ;; Imaxima and Imath
-(when prefs-activate-sage     (require 'init-sage))         ;; Sagemath 
-(when prefs-activate-singular (require 'init-singular))     ;; Singular 
+(when prefs-activate-sage     (require 'init-sage))         ;; Sagemath
+(when prefs-activate-singular (require 'init-singular))     ;; Singular
 
 ; Applications
 (when prefs-activate-mail       (require 'init-mail-wl))    ;; Wanderlust MUA + bbdb
@@ -242,8 +245,8 @@
            )
          (auto-fill-mode 1)
          (orgtbl-mode 1)
-         (flyspell-mode 1)  ; annoying spell checking 
-         (goto-address-mode) ; Find urls/emails in text and press (C-c RET) to click them.
+         (flyspell-mode 1)  ; annoying spell checking
+         (when-available 'goto-address-mode (goto-address-mode)) ; Find urls/emails in text and press (C-c RET) to click them.
          ;;(typopunct-mode)
          )
       )
@@ -251,7 +254,7 @@
 
 ;; Prepare *scratch buffer*
 ;; FROM: Morten Welind
-;;http://www.geocrawler.com/archives/3/338/1994/6/0/1877802/
+;; http://www.geocrawler.com/archives/3/338/1994/6/0/1877802/
 (save-excursion
   (set-buffer (get-buffer-create "*scratch*"))
   (if (boundp 'initial-major-mode)
@@ -268,11 +271,11 @@
       uniquify-separator ":"
 )
 
-;; Ediff customization 
-; (no external control frame) 
+;; Ediff customization
+; (no external control frame)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 ; (use vertical split if there is enough room)
-(setq ediff-split-window-function 
+(setq ediff-split-window-function
       (lambda (&optional arg)
         (if (> (frame-width) 150)
             (split-window-horizontally arg)
@@ -291,7 +294,7 @@
                             (local-set-key (kbd "<f10>") 'gud-nexti)
                             (local-set-key (kbd "<f11>") 'gud-next )
                             (local-set-key (kbd "<f12>") 'gud-cont)
-                            
+
                             (local-set-key (kbd "M-<f10>") 'gud-stepi)
                             (local-set-key (kbd "M-<f11>") 'gud-step )
                             (local-set-key (kbd "M-<f12>") 'gud-until)
@@ -308,8 +311,8 @@
 ;; IDO mode for selection of file and buffers. VERY GOOD
 (require 'ido)
 
-(add-hook 'ido-setup-hook 
-          (lambda () 
+(add-hook 'ido-setup-hook
+          (lambda ()
             (define-key ido-completion-map (kbd "<tab>")   'ido-complete)
             (define-key ido-completion-map (kbd "M-<tab>") 'ido-next-match)
             (define-key ido-completion-map (kbd "M-j") 'ido-prev-match)
@@ -318,12 +321,12 @@
             (define-key ido-completion-map (kbd "M-k") 'ido-next-match)
             ))
 
-(ido-mode t) 
+(ido-mode t)
 
 (setq ido-enable-flex-matching t ; fuzzy matching is a must have
       ido-max-prospects 5        ; minibuffer is not saturated
       ido-ignore-buffers ;; ignore these guys
-       '("\\` " "^\*Mess" "^\*Back" "^\*scratch" ".*Completion" "^\*Ido") 
+       '("\\` " "^\*Mess" "^\*Back" "^\*scratch" ".*Completion" "^\*Ido")
       ido-everywhere t            ; use for many file dialogs
       ido-case-fold  t            ; be case-insensitive
       ido-auto-merge-werk-directories-length nil) ; all failed, no more digging
@@ -334,16 +337,21 @@
 
 ;; Overwrite flymake-display-warning so that no annoying dialog box is
 ;; used.
-(defun flymake-display-warning (warning) 
+(defun flymake-display-warning (warning)
   "Display a warning to the user, using lwarn"
   (message warning))
 
 
-;; All urls/mails are clickable in comments and strings
-(add-hook 'find-file-hooks 'goto-address-prog-mode) 
+;; All urls/mails are clickable in comments and strings (Not present in Emacs22)
+(when-available 'goto-address-prog-mode
+  (add-hook 'find-file-hooks 'goto-address-prog-mode)
+  )
+
+;; Remove trailing whitespaces before saving
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; Settings for cc-mode
-(add-hook 'cc-mode-hook 
+(add-hook 'cc-mode-hook
           (lambda ()
             (setq c-block-comment-prefix "*")
             )
@@ -420,39 +428,19 @@ Otherwise, analyses point position and answers."
   (unless (or (consp prefix)
               mark-active)
    (looking-at "\\_>")))
-;;}}}    
-
-
-;;{{{ *** Color Schemes (ZenBurn or tty-dark) ***
-;;
-(require 'color-theme)
-(require 'zenburn)
-(color-theme-zenburn)   ;; High color theme (xterm-256color and X11)
-
-;; Multi-TTY support
-;(add-hook 'after-make-frame-functions
-;          (lambda (frame)
-;            (set-variable 'color-theme-is-global nil)
-;            (select-frame frame)
-;            (if (> (display-color-cells) 255)
-;                (color-theme-zenburn) ;; High color theme (xterm-256color and X11)
-;              (color-theme-tty-dark)) ;; Low color theme (xterm or linux console)
-;))
-
 ;;}}}
-
 
 
 ;;; Customization variables (in a separate file)----------------------------------------------------------------
 (setq custom-file "~/config/emacs/custom.el")
 (load custom-file 'noerror)
 
-;; Loading time 
+;; Loading time
 (when (require 'time-date nil t)
   (message "Emacs startup time: %d seconds." (time-to-seconds (time-since emacs-load-start-time))))
 
 (provide 'init)
 ;; Local Variables:
-;; mode: emacs-lisp 
+;; mode: emacs-lisp
 ;; folded-file: t
-;; End: 
+;; End:

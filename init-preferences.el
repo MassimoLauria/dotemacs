@@ -5,13 +5,39 @@
 ;;;-----------------------------------------------------------------
 
 
-(set-default-font "Monospace-10")
-(add-to-list 'default-frame-alist '(font . "Monospace-10"))
+;;; Visual preferences for Emacs 23 and above 
 
-(when (and (boundp 'prefs-activate-bigfont) prefs-activate-bigfont)
-  (set-default-font "Monospace-14")
-  (add-to-list 'default-frame-alist '(font . "Monospace-14"))
-)
+;; Font aliases are supported
+;; BUG: color-theme-zenburn must be loaded AFTER setting the fonts.
+
+(unless running-GNUEmacs22  ;; Default font for Emacs >22.
+  ;; Default fonts
+  (set-default-font "Monospace-10")
+  (add-to-list 'default-frame-alist '(font . "Monospace-10"))
+  ;; Fonts for small screens
+  (when (and (boundp 'prefs-activate-bigfont) prefs-activate-bigfont)
+    (set-default-font "Monospace-14")
+    (add-to-list 'default-frame-alist '(font . "Monospace-14"))
+    )
+  ;; Color theme
+  (require 'zenburn)
+  (color-theme-zenburn)
+  )
+
+;;; Visual preferences for Emacs 22 
+
+;; Font aliases are not supported. I have to use the horrible barbwire syntax
+;; BUG: color-theme-zenburn must be loaded BEFORE setting the fonts.
+
+;; Font for system with no anti-alias support (e.g. Emacs 22 on X11).
+(setq no-anti-alias-font "-misc-fixed-medium-r-normal--18-120-100-100-c-90-iso10646-1")
+(when running-GNUEmacs22
+  ;; Color theme
+  (require 'zenburn)
+  (color-theme-zenburn)
+  ;; Default fonts
+  (when running-X11-process (set-default-font no-anti-alias-font))
+  )
 
 ;; Calendar localization
 (setq calendar-week-start-day 1
@@ -21,8 +47,9 @@
                                  "Giugno" "Luglio" "Agosto" "Settembre" 
                                  "Ottobre" "Novembre" "Dicembre"])
 
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
+
+(when-available 'scroll-bar-mode (scroll-bar-mode -1)) ;; scroll-bar-mode undefined in terminal emacs!
+(when-available 'tool-bar-mode   (tool-bar-mode -1)  ) ;;   tool-bar-mode undefined in terminal emacs!
 (menu-bar-mode -1)
 
 (setq inhibit-startup-message t)
