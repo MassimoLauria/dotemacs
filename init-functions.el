@@ -42,7 +42,7 @@ insert the character used to activate the command.
 It will not work properly if it is not bound to a key.
 "
   (interactive)
-  (if (or (region-active-p) (eq last-command 'comment-region-maybe))
+  (if (or (and transient-mark-mode mark-active) (eq last-command 'comment-region-maybe))
       (call-interactively 'comment-or-uncomment-region)
     (progn
       (setq this-command 'self-insert-command)
@@ -83,6 +83,15 @@ the result of (F t)
 (setq user-buffer-whitelist '(or "^*scratch*" "^*eshell*" "^*draft*"))
 (setq user-buffer-blacklist '(or "^*" "\.pdfsync" (and "\.log" latex-mode) "contacts.bbdb"))
 
+;; string-match-p does not exists before Emacs 23
+(unless (fboundp 'string-match-p) 
+(defun string-match-p (pattern text)
+  "It is a substitution of the noe in Emacs 23 and above.
+This function is equivalent to `string-match' but preserves match
+data" 
+  (save-match-data
+    (string-match pattern text) ) ) 
+)
 
 (defun user-buffer-match-p (rule buffer-name-arg) 
   "Decide if the buffer matches the rule. If the rule is a string
@@ -96,7 +105,7 @@ function is evaluated"
           ) (eq (get-buffer-major-mode buffer-name-arg) rule)) ; Test if mode matches.
    ( (functionp rule)  (funcall rule buffer-name-arg))          ; Eval an arbitrary test function
    )
-  )
+  ) 
 
 
 (defun user-buffer-p (buffer-name-arg)
