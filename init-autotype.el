@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2010-10-04, lunedì 02:05:55 (CEST) Massimo Lauria>
+;; Time-stamp: <2010-10-04, lunedì 11:53:11 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -99,45 +99,54 @@ text with function F which return a string."
 )
 
 
-;; ;;; Auto pair configuration --BROKEN---------------------------------------------------
-;; (setq autopair-blink nil) 
-;; (if running-GNUEmacs22 
-;;     (setq autopair-autowrap nil) ;; Broken on Emacs22 since it uses
-;;                                  ;; region-active-p which is not
-;;                                  ;; present here
-;;   (setq autopair-autowrap t)
-;; )
-;; (require 'autopair)
+;;; Auto pair configuration -----------------------------------------------------------
+(setq autopair-blink nil) 
+(if running-GNUEmacs22 
+    (setq autopair-autowrap nil) ;; Broken on Emacs22 since it uses
+                                 ;; region-active-p which is not
+                                 ;; present here
+  (setq autopair-autowrap t)
+)
+(require 'autopair)
+
+;; AutoPair seems to mess with Emacs in several Major-modes, so I will
+;; activate on single mode basis... Furthermore several modes require
+;; a workaround.
+;; 
 ;; (autopair-global-mode t)
 
-;; ;; Auto pair work-around for term-mode 
-;; (defun autopair-term-mode-handle-action (action pair pos-before)
-;;   "Trick autopair to working with the `term-mode' nonsense.
 
-;; `insert' and friends don't really do anything in a term-mode
-;; buffer, we need to send actual strings to the subprocess. So
-;; override these emacs primitives to do so, then call the usual
-;; default handler."
-;;   (let ((proc (get-buffer-process (current-buffer))))
-;;     (flet ((insert (&rest args)
-;;                    (mapc #'(lambda (arg)
-;;                              (if (stringp arg)
-;;                                  (term-send-raw-string arg)
-;;                                (term-send-raw-string (char-to-string arg))))
-;;                          args))
-;;            (delete-char (howmany)
-;;                         (dotimes (i howmany)
-;;                           (term-send-del)))
-;;            (backward-char (howmany)
-;;                           (dotimes (i howmany)
-;;                             (term-send-left))))
-;;       (autopair-default-handle-action action pair pos-before)
-;;       (goto-char (process-mark proc)))))
+;; Auto pair work-around for term-mode 
+(defun autopair-term-mode-handle-action (action pair pos-before)
+  "Trick autopair to working with the `term-mode' nonsense.
 
-;; ;; Term mode is quirky, this will fix it.
-;; (add-hook 'term-mode-hook
-;;           #'(lambda ()
-;;               (set (make-local-variable 'autopair-handle-action-fns) '(autopair-term-mode-handle-action))))
+`insert' and friends don't really do anything in a term-mode
+buffer, we need to send actual strings to the subprocess. So
+override these emacs primitives to do so, then call the usual
+default handler."
+  (let ((proc (get-buffer-process (current-buffer))))
+    (flet ((insert (&rest args)
+                   (mapc #'(lambda (arg)
+                             (if (stringp arg)
+                                 (term-send-raw-string arg)
+                               (term-send-raw-string (char-to-string arg))))
+                         args))
+           (delete-char (howmany)
+                        (dotimes (i howmany)
+                          (term-send-del)))
+           (backward-char (howmany)
+                          (dotimes (i howmany)
+                            (term-send-left))))
+      (autopair-default-handle-action action pair pos-before)
+      (goto-char (process-mark proc)))))
+
+;; Term mode is quirky, this will fix it.
+(add-hook 'term-mode-hook
+          #'(lambda ()
+              (set (make-local-variable 'autopair-handle-action-fns) '(autopair-term-mode-handle-action))
+              (autopair-mode 1)
+              ))
+
 
 ;; ;; Manage `` typed as ""
 ;; (add-hook 'latex-mode-hook
@@ -145,33 +154,36 @@ text with function F which return a string."
 ;;               (set (make-local-variable 'autopair-autowrap) nil)  ;; Seems broken on LaTeX
 ;;               (set (make-local-variable 'autopair-handle-action-fns)
 ;;                    (list #'autopair-default-handle-action
-;;                          #'autopair-latex-mode-paired-delimiter-action)))
-;;           )
+;;                          #'autopair-latex-mode-paired-delimiter-action))
+;;               ))
 
 
-;; ;; Pair triple quotes in python
-;; (add-hook 'python-mode-hook
-;;            #'(lambda ()
-;;                (set (make-local-variable 'autopair-handle-action-fns)
-;;                      (list #'autopair-default-handle-action
-;;                            #'autopair-python-triple-quote-action))))
+;; Activate autopair and also Pair triple quotes in python
+(add-hook 'python-mode-hook
+           #'(lambda ()
+               (set (make-local-variable 'autopair-handle-action-fns)
+                     (list #'autopair-default-handle-action
+                           #'autopair-python-triple-quote-action))
+               (autopair-mode t)
+               ))
 
-;; ;; Pair ` ' in comments and strings
-;; (add-hook 'emacs-lisp-mode-hook
-;;            #'(lambda ()
-;;                (push '(?` . ?')
-;;                      (getf autopair-extra-pairs :comment))
-;;                (push '(?` . ?')
-;;                      (getf autopair-extra-pairs :string))))
+;; Activate `autopair-mode' and pair ` ' in comments and strings
+(add-hook 'emacs-lisp-mode-hook
+           #'(lambda ()
+               (push '(?` . ?')
+                     (getf autopair-extra-pairs :comment))
+               (push '(?` . ?')
+                     (getf autopair-extra-pairs :string))
+               (autopair-mode t)
+               ))
 
-;; ;; Sh-mode
-;; (add-hook 'sh-mode-hook
-;;            #'(lambda ()
-;;                (push '(?' . ?')
-;;                      (getf autopair-extra-pairs :code))))
+;; Activate `autopair-mode' in sh-mode 
+(add-hook 'sh-mode-hook  #'(lambda () (autopair-mode t) ))
 
-;; ;; Workaround for SLIME 
-;; (add-hook 'sldb-mode-hook #'(lambda () (setq autopair-dont-activate t)))
+
+;; In these modes, autopair seems completely broken 
+(add-hook 'sldb-mode-hook #'(lambda () (setq autopair-dont-activate t)))
+(add-hook 'xrdb-mode-hook #'(lambda () (setq autopair-dont-activate t)))
 
 
 (provide 'init-autotype)
