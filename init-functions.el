@@ -1,7 +1,6 @@
 ;;;
 ;;; Utilities for robust and safe emacs usage.
 ;;;
-(provide 'init-functions)
 ;;;------------------------------------------------------------------
 
 
@@ -306,6 +305,8 @@ either ispell or flyspell, if the latter is active"
   '("\\.vim\\'")
   nil)
 
+
+(provide 'init-functions)
 ;; Local Variables:
 ;; mode: emacs-lisp 
 ;; folded-file: t

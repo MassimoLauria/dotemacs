@@ -1,9 +1,7 @@
 ;;;
 ;;; Elscreen setup
 ;;;
-(provide 'init-elscreen)
 ;;;-----------------------------------------------------------------
-
 
 ;; Keybindings
 ; create/destroy screens
@@ -40,7 +38,7 @@
   '(add-hook 'elscreen-screen-update-hook 'elscreen-frame-title-update))
 
 
-
+(provide 'init-elscreen)
 ;; Local Variables:
 ;; mode: emacs-lisp 
 ;; folded-file: t

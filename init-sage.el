@@ -1,7 +1,6 @@
 ;;;
 ;;;  Init file for SAGE math environment in Emacs
 ;;;
-(provide 'init-sage)
 ;;;------------------------------------------------------------------
 
 (setq sage-version "4.3.3")
@@ -25,7 +24,7 @@
 ;; to have xsome combination of features.  In future, the customize interface
 ;; will make this simpler... hint, hint!
 
-
+(provide 'init-sage)
 ;; Local Variables:
 ;; mode: emacs-lisp 
 ;; folded-file: t

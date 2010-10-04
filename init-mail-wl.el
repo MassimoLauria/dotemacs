@@ -1,7 +1,6 @@
 ;;;
 ;;; Mail: Wanderlust + BBDB + vCard
 ;;;
-(provide 'init-mail-wl)
 ;;;------------------------------------------------------------------
 
 
@@ -158,6 +157,8 @@ region is included in the mail body.
 ;; Click urls/mails in Mime-View
 (add-hook 'mime-view-mode-hook 'goto-address-mode)
 
+
+(provide 'init-mail-wl)
 ;; Local Variables:
 ;; mode: emacs-lisp 
 ;; folded-file: t

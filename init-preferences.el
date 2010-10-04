@@ -1,7 +1,6 @@
 ;;;
 ;;; Basic Editor customization
 ;;;
-(provide 'init-preferences)
 ;;;-----------------------------------------------------------------
 
 
@@ -83,6 +82,8 @@
 
 ;;(setq warning-minimum-level :error)
 
+
+(provide 'init-preferences)
 ;; Local Variables:
 ;; mode: emacs-lisp 
 ;; folded-file: t

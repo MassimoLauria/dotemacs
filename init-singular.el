@@ -1,7 +1,6 @@
 ;;;
 ;;; Singular math package for Emacs.
 ;;;
-(provide 'init-singular)
 ;;;------------------------------------------------------------------
 
 
@@ -12,6 +11,7 @@
 (require 'singular)
 
 
+(provide 'init-singular)
 ;; Local Variables:
 ;; mode: emacs-lisp 
 ;; folded-file: t

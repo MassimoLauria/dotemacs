@@ -1,7 +1,6 @@
 ;;;
 ;;; Local preferences based on host's env variables and personal data setting.
 ;;;
-(provide 'init-local-preferences)
 ;;;-----------------------------------------------------------------
 
 
@@ -51,6 +50,7 @@
 )
 
 
+(provide 'init-local-preferences)
 ;; Local Variables:
 ;; mode: emacs-lisp 
 ;; folded-file: t

@@ -1,7 +1,6 @@
 ;;;
 ;;; Spellcheck facilities, functions and settings.
 ;;;
-(provide 'init-spellcheck)
 ;;;-----------------------------------------------------------------
 
 
@@ -67,6 +66,7 @@ would happen for an empty document.")
 (add-hook 'find-file-hook  'set-guessed-dictionary)
 
 
+(provide 'init-spellcheck)
 ;; Local Variables:
 ;; mode: emacs-lisp 
 ;; folded-file: t

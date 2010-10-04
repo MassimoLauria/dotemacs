@@ -1,8 +1,6 @@
 ;;;
 ;;; Imath and Imaxima configuration.
 ;;;
-(provide 'init-imath)
-(provide 'init-imaxima)
 ;;;------------------------------------------------------------------
 
 (setq imaxima-elisp-path "/usr/local/share/maxima/5.19.2/emacs")
@@ -21,6 +19,8 @@
 (setq imaxima-use-maxima-mode-flag t)
 
 
+(provide 'init-imath)
+(provide 'init-imaxima)
 ;; Local Variables:
 ;; mode: emacs-lisp 
 ;; folded-file: t

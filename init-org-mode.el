@@ -1,10 +1,8 @@
-
 ;;;
 ;;; Utilities for robust and safe emacs usage.
 ;;; 
 ;;; In Emacs 22 or in some terminals the keybindings may not work properly. 
 ;;;
-(provide 'init-org-mode)
 ;;;------------------------------------------------------------------
 
 (require 'org)
@@ -156,6 +154,8 @@
 (require 'org-google-weather)
 
 
+
+(provide 'init-org-mode)
 ;; Local Variables:
 ;; mode: emacs-lisp 
 ;; folded-file: t

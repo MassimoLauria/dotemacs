@@ -1,7 +1,6 @@
 ;;;
 ;;; LaTex support (AucTeX) ***
 ;;;
-(provide 'init-latex)
 ;;;-----------------------------------------------------------------
 
 ;; AucTex system
@@ -153,6 +152,8 @@
         "\\includemovie[\n\tposter,\n\trepeat=1,\n\ttext=(%r)\n\t]{}{}{%r}\n")))))
  )
 
+
+(provide 'init-latex)
 ;; Local Variables:
 ;; mode: emacs-lisp 
 ;; folded-file: t
