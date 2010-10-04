@@ -19,9 +19,9 @@
     (set-default-font "Monospace-14")
     (add-to-list 'default-frame-alist '(font . "Monospace-14"))
     )
-  ;; Color theme
-  (require 'zenburn)
-  (color-theme-zenburn)
+  ;; Color theme (not available on default Emacs22 for MacOSX)
+  (require-maybe 'zenburn)
+  (when-available 'color-theme-zenburn (color-theme-zenburn))
   )
 
 ;;; Visual preferences for Emacs 22 
@@ -32,9 +32,9 @@
 ;; Font for system with no anti-alias support (e.g. Emacs 22 on X11).
 (setq no-anti-alias-font "-misc-fixed-medium-r-normal--18-120-100-100-c-90-iso10646-1")
 (when running-GNUEmacs22
-  ;; Color theme
-  (require 'zenburn)
-  (color-theme-zenburn)
+  ;; Color theme (not available on default Emacs22 for MacOSX)
+  (require-maybe 'zenburn)
+  (when-available 'color-theme-zenburn (color-theme-zenburn))
   ;; Default fonts
   (when running-X11-process (set-default-font no-anti-alias-font))
   )
