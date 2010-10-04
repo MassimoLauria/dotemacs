@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2010-10-04, lunedì 11:53:11 (CEST) Massimo Lauria>
+;; Time-stamp: <2010-10-04, lunedì 12:06:29 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -98,13 +98,14 @@ text with function F which return a string."
       )
 )
 
-
-;;; Auto pair configuration -----------------------------------------------------------
-(setq autopair-blink nil) 
 (if running-GNUEmacs22 
     (setq autopair-autowrap nil) ;; Broken on Emacs22 since it uses
                                  ;; region-active-p which is not
                                  ;; present here
+
+;;; Auto pair configuration -----------------------------------------------------------
+(setq autopair-blink nil) 
+
   (setq autopair-autowrap t)
 )
 (require 'autopair)

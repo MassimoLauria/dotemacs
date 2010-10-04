@@ -4,6 +4,28 @@
 (provide 'init-functions)
 ;;;------------------------------------------------------------------
 
+
+;;; Some functions maybe abstent in Emacs 22.
+
+;; Define `string-match-p' if it does not exists
+(unless (fboundp 'string-match-p) 
+(defun string-match-p (pattern text)
+  "It is a substitution of the one present only in Emacs 23 and above.
+This function is equivalent to `string-match' but preserves match
+data" 
+  (save-match-data
+    (string-match pattern text) ) ) 
+)
+
+;; Define `region-active-p' if it does not exists
+(unless (fboundp 'region-active-p) 
+(defun region-active-p ()
+  "It is a substitution of the one present only in Emacs 23 and above."
+  (and transient-mark-mode mark-active))
+)
+
+
+
 ;;;-------------------------------------------------------------------
 
 (defun get-buffer-major-mode (buffer-or-string)
@@ -42,7 +64,7 @@ insert the character used to activate the command.
 It will not work properly if it is not bound to a key.
 "
   (interactive)
-  (if (or (and transient-mark-mode mark-active) (eq last-command 'comment-region-maybe))
+  (if (or (region-active-p) (eq last-command 'comment-region-maybe))
       (call-interactively 'comment-or-uncomment-region)
     (progn
       (setq this-command 'self-insert-command)
