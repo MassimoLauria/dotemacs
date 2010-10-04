@@ -165,8 +165,9 @@
 
 
 ;; Programming Languages
-(require 'init-python)
-
+(unless running-MacOSX    ;; I don't have pymacs installed on Aquamacs
+  (require 'init-python)
+)
 
 ;; Math packages
 (when prefs-activate-latex    (require 'init-latex))        ;; AucTeX
