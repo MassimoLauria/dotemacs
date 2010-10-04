@@ -80,6 +80,13 @@
 (add-hook 'LaTeX-mode-hook 'auto-fill-mode)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 
+;;
+(add-hook 'LaTeX-mode-hook 'autopair-latex-setup)
+(add-hook 'latex-mode-hook 'autopair-latex-setup)
+(add-hook 'TeX-mode-hook   'autopair-latex-setup)
+
+
+
 ;; RefTeX hint for automatic ref creations
 (setq reftex-label-alist 
       '(
