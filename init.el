@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-10-04, lunedì 16:32:41 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-10-04, lunedì 16:34:02 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -179,9 +179,6 @@
 
 
 (require 'init-editserver-chrome) ;; Edit text area on Google Chrome
-(autoload 'twit-post "twit" "Frontend for twitter" t)   ;; Twitter Support
-(when prefs-activate-twitter    (require 'twit))            ;; Explicit
-
 
 ;; External packages
 (when (require-maybe 'package) (package-initialize))
