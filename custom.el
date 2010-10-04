@@ -43,7 +43,6 @@
  '(org-google-weather-icon-directory "~/config/emacs/3rdparties/google-weather-icons/")
  '(safe-local-variable-values (quote ((ispell-default-dictionary . american) (TeX-PDF-mode . t) (folded-file . t))))
  '(show-paren-mode t)
- '(tabbar-mode nil nil (tabbar))
  '(time-stamp-format "%:y-%02m-%02d, %:a %02H:%02M:%02S (%Z) %U")
  '(visual-line-mode nil t)
  '(x-select-enable-clipboard t))

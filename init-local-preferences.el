@@ -18,7 +18,7 @@
 
 
 ;; Math applications
-(setq prefs-activate-latex      t) ; Enable auctex
+(setq prefs-activate-latex    nil) ; Enable auctex
 (setq prefs-activate-maxima   nil) ; Imaxima and Imath
 (setq prefs-activate-sage     nil) ; Sagemath 
 (setq prefs-activate-singular nil) ; Singular
@@ -31,8 +31,8 @@
 
 
 ;; Applications
-(setq prefs-activate-mail     t) ; Mail support
-(setq prefs-activate-org-mode t) ; The famous ORG-Mode! Yaiii!!
+(setq prefs-activate-mail     nil) ; Mail support
+(setq prefs-activate-org-mode nil) ; The famous ORG-Mode! Yaiii!!
 (setq prefs-activate-twitter  nil) ; Explicit activation of Twitter
 
 
