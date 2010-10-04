@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-10-04, Monday 19:46:48 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-10-05, Tuesday 00:50:23 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -39,12 +39,15 @@
 (setq load-path (cons 	default-elisp-3rdparties load-path ))
 
 
-
 ;;; Recognize and setup the running environment ----------------------------------------------------------------
 
 (require 'init-discover-runtime)
 (require 'init-functions)         ; Utility functions for configuration
 
+(when-running-MacOSX 
+ (setq MacUser-site-lisp "~/Library/site-lisp")
+ (setq load-path (cons 	MacUser-site-lisp load-path))
+)
 
 
 ;;; Module(s) initialization -----------------------------------------------------------------------------------

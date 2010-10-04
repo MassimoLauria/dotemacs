@@ -78,12 +78,14 @@ region is included in the mail body.
 (define-key global-map "\C-cm" 'mail)
 
 
-;; (Insidious) Big Brother DataBase, collects mail addresses.
-(add-to-list 'load-path (concat default-elisp-3rdparties "/bbdb-2.3.5"))
-(require 'bbdb)
-(bbdb-initialize)
 
-(bbdb-insinuate-sendmail)
+(unless (and running-MacOSX running-GNUEmacs22)
+;; (Insidious) Big Brother DataBase, collects mail addresses.
+  (when running-Aquamacs  (add-to-list 'load-path (concat MacUser-site-lisp "/bbdb-2.3.5")))
+  (require 'bbdb)
+  (bbdb-initialize)
+  (bbdb-insinuate-sendmail))
+
 
 ;; message-tab uses tab to call BBDB in header, but not elsewhere.
 ;(define-key mail-mode-map (kbd "<tab>") 'message-tab)
