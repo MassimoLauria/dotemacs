@@ -6,10 +6,20 @@
 
 (setq ispell-process-directory (expand-file-name "~/"))
 
+;; Names for aspell dictionary
+(setq italian-dict-name "italiano")
+(setq english-dict-name "english")
+
+;; Names for Aquamacs dictionary
+(when running-Aquamacs
+  (setq italian-dict-name "it")
+  (setq english-dict-name "en")
+  )
+
 (defvar guess-language-rules                                            
-  '(                    
-    ("english" . "\\<\\(of\\|the\\|and\\|or\\|how\\)\\>")
-    ("italiano" . "\\<\\(un\\|uno\\|una\\|il\\|lo\\|la\\|gli\\|le|\\|per\\|in\\)\\>")           
+  `(                    
+    (,english-dict-name . "\\<\\(of\\|the\\|and\\|or\\|how\\)\\>")
+    (,italian-dict-name . "\\<\\(un\\|uno\\|una\\|il\\|lo\\|la\\|gli\\|le|\\|per\\|in\\)\\>")
     )                   
   "Alist of rules to determine the language of some text.  Each
 rule has the form (CODE . REGEXP) where CODE is a string to
@@ -53,9 +63,9 @@ would happen for an empty document.")
           (old-local-language ispell-local-dictionary) 
           new-local-language 
           )
-      (setq new-local-language (if (string= old-local-language "italiano")
-                                   "english"
-                                 "italiano"))
+      (setq new-local-language (if (string= old-local-language italian-dict-name)
+                                   english-dict-name
+                                 italian-dict-name))
       (ispell-change-dictionary  new-local-language)
       (message (concat "Buffer language is " (upcase new-local-language )))
       )
