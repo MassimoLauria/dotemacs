@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2010-10-04, lunedì 12:06:29 (CEST) Massimo Lauria>
+;; Time-stamp: <2010-10-04, lunedì 12:13:19 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -98,16 +98,13 @@ text with function F which return a string."
       )
 )
 
-(if running-GNUEmacs22 
-    (setq autopair-autowrap nil) ;; Broken on Emacs22 since it uses
-                                 ;; region-active-p which is not
-                                 ;; present here
-
 ;;; Auto pair configuration -----------------------------------------------------------
 (setq autopair-blink nil) 
 
-  (setq autopair-autowrap t)
-)
+;; Broken on Emacs22 since it uses `region-active-p' which is not
+;; present here
+(setq autopair-autowrap (fboundp 'region-active-p))
+
 (require 'autopair)
 
 ;; AutoPair seems to mess with Emacs in several Major-modes, so I will
