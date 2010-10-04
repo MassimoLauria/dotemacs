@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-10-04, lunedì 16:34:02 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-10-04, lunedì 16:59:38 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -28,27 +28,27 @@
 
 ;;; Code:
 
-;;  Save start time.
-(setq emacs-load-start-time (current-time))
+(setq emacs-load-start-time (current-time)) ;; save the clock at start-time  
 
 
-;;; Setup load-path and runtime  -------------------------------------------------------------------------------
+;;; Setup load-path --------------------------------------------------------------------------------------------
 (setq default-elisp-path "~/config/emacs")
 (setq default-elisp-3rdparties "~/config/emacs/3rdparties")
 
 (setq load-path (cons 	default-elisp-path load-path       ))
 (setq load-path (cons 	default-elisp-3rdparties load-path ))
 
-;; First thing first, discover the running environment before anything
-;; else.  In this way even the basic setup can be system dependent.
+
+
+;;; Recognize and setup the running environment ----------------------------------------------------------------
+
 (require 'init-discover-runtime)
 (require 'init-functions)         ; Utility functions for configuration
 
 
 
+
 ;;; Module(s) initialization -----------------------------------------------------------------------------------
-
-
 
 ;;{{{ *** Key binding rules ***
 
@@ -150,230 +150,51 @@
 
 
 
-; Editor customization
+;; Work environment customization
 (require 'init-local-preferences) ; Host based and personal configuration
 (require 'init-preferences)       ; Basic editor preferences
 (require 'init-elscreen)          ; ElScreen preferences
 (require 'init-backup)            ; Autosaves and backups behaviour
-;; (require 'init-unstable)       ; Features that are not yet stable
 
 
-; Editor Utilities.
+;; Editor behaviour customization
+(require 'init-clipboard)         ; Clipboard managing.
 (require 'init-autotype)          ; Automatic file filling
 (require 'init-auto-complete)     ; Completion configuration
 (require 'init-spellcheck)        ; Spellchecking
 
-; Programming Languages
+
+;; Programming Languages
 (require 'init-python)
 
 
-; Math packages
+;; Math packages
 (when prefs-activate-latex    (require 'init-latex))        ;; AucTeX
 (when prefs-activate-maxima   (require 'init-imaxima))      ;; Imaxima and Imath
 (when prefs-activate-sage     (require 'init-sage))         ;; Sagemath
 (when prefs-activate-singular (require 'init-singular))     ;; Singular
 
-; Applications
-(when prefs-activate-mail       (require 'init-mail-wl))    ;; Wanderlust MUA + bbdb
-(when prefs-activate-org-mode   (require 'init-org-mode))   ;; The famous ORG-Mode! Yaiii!!
 
+;; Applications
+(when prefs-activate-mail       (require 'init-mail-wl))    ;; Mail + Contacts
+(when prefs-activate-org-mode   (require 'init-org-mode))   ;; Organizer
 
-(require 'init-editserver-chrome) ;; Edit text area on Google Chrome
 
 ;; External packages
 (when (require-maybe 'package) (package-initialize))
 
-
-;;; Things below here are still a little mess---------------------------------------------------------------------
-
-;; Auto-mode for renamed config files
-(setq auto-mode-alist (cons '("bashrc" . sh-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("zshrc" . sh-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.zsh" . sh-mode) auto-mode-alist))
-
-
-
-;;{{{ *** Primary-Clipboard selection Panic! ***
-;; Cut (C-x)  Copy(C-c) Paste(C-v) Undo(C-z)
-;; S-<arrow> select, C-<Ret> rectangular mark, C-<SPC> mark
-(transient-mark-mode t)
-(delete-selection-mode t)
-(cua-mode t)
-(setq cua-keep-region-after-copy t)
-(setq mouse-drag-copy-region nil)   ; stops selection with a mouse being immediately injected to the kill ring
-(setq x-select-enable-primary nil)	; stops killing/yanking interacting with primary X11 selection 
-(setq x-select-enable-clipboard t)	; makes killing/yanking interact with clipboard X11 selection
-(if running-X11-process
-    (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
-)
-;; (when (string= (window-system) "x") 
-(setq select-active-regions t)                 ; active region sets primary X11 selection
-(global-set-key [mouse-2] 'mouse-yank-primary) ; middle-click only pastes from primary X11 selection.
-(setq yank-pop-change-selection t)             ; makes rotating the kill ring change the X11 clipboard.	
-;;)                                 
-;; shift + click select region
-(define-key global-map (kbd "<S-down-mouse-1>") 'ignore) ; turn off font dialog
-(define-key global-map (kbd "<S-mouse-1>") 'mouse-set-point)
-(put 'mouse-set-point 'CUA 'move)
-;; XTerm support
-(xterm-mouse-mode t)
-(global-set-key [mouse-4] 'scroll-down)
-(global-set-key [mouse-5] 'scroll-up)
-;;}}}
-
-
-;;{{{ *** Advanced editing customization ***
-
-;; Undo-Tree, much better than default.
-(require 'undo-tree)
-(global-undo-tree-mode)
-
-
-
-;; Text mode by default, with auto-fill
-(require 'typopunct)
-(setq-default typopunct-buffer-language 'english)
-(setq default-major-mode 'text-mode)
-;;(setq initial-major-mode 'text-mode) ;; Better to stick with Lisp-Interaction.
-(setq text-mode-hook
-      '(lambda nil
-         (if prefs-activate-smallscreen
-             (setq fill-column 70)
-           (setq fill-column 80)
-           )
-         (auto-fill-mode 1)
-         ;;(orgtbl-mode 1)  ; conflicts with autopair mode.
-         (flyspell-mode 1)  ; annoying spell checking
-         (when-available 'goto-address-mode (goto-address-mode)) ; Find urls/emails in text and press (C-c RET) to click them.
-         ;;(typopunct-mode)
-         )
-      )
-
-
-;; Prepare *scratch buffer*
-;; FROM: Morten Welind
-;; http://www.geocrawler.com/archives/3/338/1994/6/0/1877802/
-(save-excursion
-  (set-buffer (get-buffer-create "*scratch*"))
-  (if (boundp 'initial-major-mode)
-      (eval (cons initial-major-mode ()))
-      (lisp-interaction-mode)
-    )
-  (make-local-variable 'kill-buffer-query-functions)
-  (add-hook 'kill-buffer-query-functions 'kill-scratch-buffer))
-
-
-;; Make buffer names unique
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'post-forward
-      uniquify-separator ":"
-)
-
-;; Ediff customization
-; (no external control frame)
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
-; (use vertical split if there is enough room)
-(setq ediff-split-window-function
-      (lambda (&optional arg)
-        (if (> (frame-width) 150)
-            (split-window-horizontally arg)
-          (split-window-vertically arg)
-          )))
-
-
-
-;; Save histories across sessions. Not buffers
-(savehist-mode 1)
-
-;; Use full featured gdb GUI.
-(setq gdb-many-windows t)
-(setq gdb-use-separate-io-buffer t)
-(add-hook 'gud-mode-hook '(lambda ()
-                            (local-set-key (kbd "<f10>") 'gud-nexti)
-                            (local-set-key (kbd "<f11>") 'gud-next )
-                            (local-set-key (kbd "<f12>") 'gud-cont)
-
-                            (local-set-key (kbd "M-<f10>") 'gud-stepi)
-                            (local-set-key (kbd "M-<f11>") 'gud-step )
-                            (local-set-key (kbd "M-<f12>") 'gud-until)
-
-                            (local-set-key (kbd "<f9>"  ) 'gud-break)
-                            (local-set-key (kbd "M-<f9>"  ) 'gud-tbreak)
-                            )
-          )
-
-
-;; fixme highlight
-(require 'fixme)
-
-;; IDO mode for selection of file and buffers. VERY GOOD
-(require 'ido)
-
-(add-hook 'ido-setup-hook
-          (lambda ()
-            (define-key ido-completion-map (kbd "<tab>")   'ido-complete)
-            (define-key ido-completion-map (kbd "M-<tab>") 'ido-next-match)
-            (define-key ido-completion-map (kbd "M-j") 'ido-prev-match)
-            (define-key ido-completion-map (kbd "M-l") 'ido-next-match)
-            (define-key ido-completion-map (kbd "M-i") 'ido-prev-match)
-            (define-key ido-completion-map (kbd "M-k") 'ido-next-match)
-            ))
-
-(ido-mode t)
-
-(setq ido-enable-flex-matching t ; fuzzy matching is a must have
-      ido-max-prospects 5        ; minibuffer is not saturated
-      ido-ignore-buffers ;; ignore these guys
-       '("\\` " "^\*Mess" "^\*Back" "^\*scratch" ".*Completion" "^\*Ido")
-      ido-everywhere t            ; use for many file dialogs
-      ido-case-fold  t            ; be case-insensitive
-      ido-auto-merge-werk-directories-length nil) ; all failed, no more digging
-
-;; Moving between windows with (M-C-<arrow>)
-(require 'windmove)               ; to load the package
-(setq windmove-wrap-around t)
-
-;; Overwrite flymake-display-warning so that no annoying dialog box is
-;; used.
-(defun flymake-display-warning (warning)
-  "Display a warning to the user, using lwarn"
-  (message warning))
-
-
-;; All urls/mails are clickable in comments and strings (Not present in Emacs22)
-(when-available 'goto-address-prog-mode
-  (add-hook 'find-file-hooks 'goto-address-prog-mode)
-  )
-
-;; Remove trailing whitespaces before saving
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-;; Settings for cc-mode
-(add-hook 'cc-mode-hook
-          (lambda ()
-            (setq c-block-comment-prefix "*")
-            )
-          )
-
-;; Eldoc for lisp
-(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
-;; Eldoc for C
-(add-hook 'c-mode 'c-turn-on-eldoc-mode)
-
-;;}}}
-
-
+;; Other stuff
+(require 'init-unsorted-elisp)
 
 ;;; Customization variables (in a separate file)----------------------------------------------------------------
 (setq custom-file "~/config/emacs/custom.el")
 (load custom-file 'noerror)
 
-;; Loading time
-(when (require 'time-date nil t)
-  (message "Emacs startup time: %d seconds." (time-to-seconds (time-since emacs-load-start-time))))
 
+
+
+(when (require 'time-date nil t) 
+  (message "Emacs startup time: %d seconds." (time-to-seconds (time-since emacs-load-start-time)))) ;; compute load-time
 (provide 'init)
 ;; Local Variables:
 ;; mode: emacs-lisp

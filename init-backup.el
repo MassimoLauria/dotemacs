@@ -1,7 +1,6 @@
 ;;;
 ;;; Unified autosave and Backup dir
 ;;;
-(provide 'init-backup)
 ;;;-----------------------------------------------------------------
 
 
@@ -36,6 +35,7 @@
 (setq version-control t)
 
 
+(provide 'init-backup)
 ;; Local Variables:
 ;; mode: emacs-lisp 
 ;; folded-file: t
