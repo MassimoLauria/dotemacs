@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-10-04, lunedì 01:13:03 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-10-04, lunedì 02:06:22 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
