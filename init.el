@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-10-04, lunedì 16:24:46 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-10-04, lunedì 16:32:41 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -47,6 +47,7 @@
 
 
 ;;; Module(s) initialization -----------------------------------------------------------------------------------
+
 
 
 ;;{{{ *** Key binding rules ***
@@ -142,6 +143,7 @@
 
 ;;}}}
 
+
 ;; Folding - load early to avoid warnings.
 (load "folding" 'nomessage)
 (folding-mode-add-find-file-hook)
@@ -165,7 +167,6 @@
 (require 'init-python)
 
 
-
 ; Math packages
 (when prefs-activate-latex    (require 'init-latex))        ;; AucTeX
 (when prefs-activate-maxima   (require 'init-imaxima))      ;; Imaxima and Imath
@@ -176,10 +177,14 @@
 (when prefs-activate-mail       (require 'init-mail-wl))    ;; Wanderlust MUA + bbdb
 (when prefs-activate-org-mode   (require 'init-org-mode))   ;; The famous ORG-Mode! Yaiii!!
 
-(require 'init-editserver-chrome) ;; Edit text area on Google Chrome
 
+(require 'init-editserver-chrome) ;; Edit text area on Google Chrome
 (autoload 'twit-post "twit" "Frontend for twitter" t)   ;; Twitter Support
 (when prefs-activate-twitter    (require 'twit))            ;; Explicit
+
+
+;; External packages
+(when (require-maybe 'package) (package-initialize))
 
 
 ;;; Things below here are still a little mess---------------------------------------------------------------------
@@ -362,69 +367,6 @@
 
 ;;}}}
 
-
-;;{{{ *** ELPA Managing: Emacs Lisp Package Archive ***
-(when (require-maybe 'package)
-  (package-initialize))
-;;}}}
-
-
-;;{{{ *** Auto completion with SMART TAB (OBSOLETE) *** 
-;;
-;; If a region is selected, indent.
-;; If at the end of a symbol, complete
-;; 
-
-(defvar smart-tab-using-hippie-expand t
-  "turn this on if you want to use hippie-expand completion.")
-
-(setq hippie-expand-try-functions-list '(
-                                         ;;yas/hippie-try-expand
-                                         try-expand-dabbrev 
-                                         try-complete-file-name-partially 
-                                         try-expand-dabbrev-all-buffers 
-                                         try-expand-dabbrev-from-kill 
-                                         try-complete-file-name
-                                         ;;try-expand-all-abbrevs
-                                         try-expand-list 
-                                         ;;try-expand-line 
-                                         try-complete-lisp-symbol-partially 
-                                         try-complete-lisp-symbol)
-      )
- 
-
-(defun smart-tab (prefix)
-  "Needs `transient-mark-mode' to be on. This smart tab is
-minibuffer compliant: it acts as usual in the minibuffer.
-
-In all other buffers: if PREFIX is \\[universal-argument], calls
-`smart-indent'. Else if point is at the end of a symbol,
-expands it. Else calls `smart-indent'."
-  (interactive "P")
-  (if (minibufferp)
-      (minibuffer-complete)
-    (if (smart-tab-must-expand prefix)
-        (if smart-tab-using-hippie-expand
-            (hippie-expand nil)
-          (dabbrev-expand nil))
-      (smart-indent))))
-
-
-(defun smart-indent ()
-  "Indents region if mark is active, or current line otherwise."
-  (interactive)
-  (if mark-active
-      (indent-region (region-beginning)
-                     (region-end))
-    (indent-for-tab-command)))
-
-(defun smart-tab-must-expand (&optional prefix)
-  "If PREFIX is \\[universal-argument], answers no.
-Otherwise, analyses point position and answers."
-  (unless (or (consp prefix)
-              mark-active)
-   (looking-at "\\_>")))
-;;}}}
 
 
 ;;; Customization variables (in a separate file)----------------------------------------------------------------
