@@ -153,7 +153,6 @@
 ;; Work environment customization
 (require 'init-local-preferences) ; Host based and personal configuration
 (require 'init-preferences)       ; Basic editor preferences
-(require 'init-elscreen)          ; ElScreen preferences
 (require 'init-backup)            ; Autosaves and backups behaviour
 
 

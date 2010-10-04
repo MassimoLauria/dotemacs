@@ -7,7 +7,6 @@
 
 ;; autoload configuration
 ;; (Not required if you have installed Wanderlust as XEmacs package)
-(require-maybe 'elscreen-wl)
 (setq 
  wl-init-file    "~/config/emacs/wanderlust.el"
  wl-folders-file "~/personal/conf/wanderlust-folders"
