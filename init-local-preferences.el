@@ -18,21 +18,21 @@
 
 
 ;; Math applications
-(setq prefs-activate-latex    nil) ; Enable auctex
+(setq prefs-activate-latex      t) ; Enable auctex
 (setq prefs-activate-maxima   nil) ; Imaxima and Imath
 (setq prefs-activate-sage     nil) ; Sagemath 
 (setq prefs-activate-singular nil) ; Singular
 
 
 ;; Display preferences
-(setq prefs-activate-bigfont     nil) ; Big fonts for smallscreens
-(setq prefs-activate-smallscreen nil) ; Monitor is small here
-(setq prefs-activate-widescreen  nil) ; The screen aspect ration is wide
+(setq prefs-activate-bigfont     t) ; Big fonts for smallscreens
+(setq prefs-activate-smallscreen t) ; Monitor is small here
+(setq prefs-activate-widescreen  t) ; The screen aspect ration is wide
 
 
 ;; Applications
 (setq prefs-activate-mail     nil) ; Mail support
-(setq prefs-activate-org-mode nil) ; The famous ORG-Mode! Yaiii!!
+(setq prefs-activate-org-mode   t) ; The famous ORG-Mode! Yaiii!!
 (setq prefs-activate-twitter  nil) ; Explicit activation of Twitter
 
 
