@@ -4,8 +4,8 @@
 ;;;-----------------------------------------------------------------
 
 ;; AucTex system
-(load "auctex.el" nil t t)
-(load "preview-latex.el" nil t t)
+(load "auctex.el" t t t)          ;; Fail quietly
+(load "preview-latex.el" t t t)   ;; Fail quietly
 
 
 
