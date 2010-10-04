@@ -25,9 +25,9 @@
 
 
 ;; Display preferences
-(setq prefs-activate-bigfont     t) ; Big fonts for smallscreens
-(setq prefs-activate-smallscreen t) ; Monitor is small here
-(setq prefs-activate-widescreen  t) ; The screen aspect ration is wide
+(setq prefs-activate-bigfont     nil) ; Big fonts for smallscreens
+(setq prefs-activate-smallscreen nil) ; Monitor is small here
+(setq prefs-activate-widescreen  nil) ; The screen aspect ration is wide
 
 
 ;; Applications
