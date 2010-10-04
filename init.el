@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-10-04, lunedì 15:04:01 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-10-04, lunedì 16:24:46 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -42,6 +42,7 @@
 ;; First thing first, discover the running environment before anything
 ;; else.  In this way even the basic setup can be system dependent.
 (require 'init-discover-runtime)
+(require 'init-functions)         ; Utility functions for configuration
 
 
 
@@ -83,12 +84,6 @@
 ;; Text movements keybindings
 (require 'massimo-keyboard)
 (massimo-keyboard-global-mode)  
-
-
-;; Moving between buffers (M-S)
-(global-set-key [M-S-up] 'previous-user-buffer) 
-(global-set-key [M-S-down] 'next-user-buffer)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; Managing windows [C-M]
 ; Moving
@@ -154,7 +149,6 @@
 
 
 ; Editor customization
-(require 'init-functions)         ; Utility functions for configuration
 (require 'init-local-preferences) ; Host based and personal configuration
 (require 'init-preferences)       ; Basic editor preferences
 (require 'init-elscreen)          ; ElScreen preferences

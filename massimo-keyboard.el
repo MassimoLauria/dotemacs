@@ -68,6 +68,19 @@ At least they are considered useful for the author.
     (define-key map (kbd "M-d")  'backward-delete-char)
     (define-key map (kbd "M-f")  'delete-char) 
     (define-key map (kbd "C-w")  'kill-whole-line)
+
+
+    ;; Moving between buffers (M-S)
+    (if (fboundp 'previous-user-buffer)
+        (define-key map [M-S-up] 'previous-user-buffer) 
+      (define-key map [M-S-up] 'previous-buffer) 
+      )
+    
+    (if (fboundp 'next-user-buffer)
+        (define-key map [M-S-down] 'next-user-buffer) 
+      (define-key map [M-S-down] 'next-buffer) 
+      )
+    (define-key map (kbd "C-x C-b") 'ibuffer)
     
 
     ;; Register keys

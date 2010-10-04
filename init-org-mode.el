@@ -1,9 +1,13 @@
 
 ;;;
 ;;; Utilities for robust and safe emacs usage.
+;;; 
+;;; In Emacs 22 or in some terminals the keybindings may not work properly. 
 ;;;
 (provide 'init-org-mode)
 ;;;------------------------------------------------------------------
+
+(require 'org)
 
 (setq org-directory "~/personal/agenda/")
 (setq org-default-notes-file (concat org-directory "notes.org"))
@@ -13,8 +17,17 @@
   (setq org-agenda-files (list org-directory))
   )
 
-(setq org-todo-keywords
-       '((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")))
+
+(when (<= (string-to-number org-version) 5) ;; Older versions of Org mode (like the one inside Emacs22)
+  ;; In old version of ORG mode only one DONE state is allowed in a sequence
+  (setq org-todo-keywords '("TODO" "FEEDBACK" "WAIT" "DONE"))
+  (setq org-todo-interpretation 'type)
+  )
+
+(when (> (string-to-number org-version) 5) ;; Newer versions of Org-mode
+  (setq org-todo-keywords '((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")))
+  )
+  
 
 ;;;-------------------------------------------------------------------
 
@@ -26,8 +39,8 @@
 
 (setq 
  org-log-done t
- ;;org-CUA-compatible t
- ;;org-support-shift-select t
+ ;; org-CUA-compatible t
+ ;; org-support-shift-select t
  org-cycle-emulate-tab nil
  org-cycle-global-at-bob t
  org-highlight-latex-fragments-and-specials t
@@ -35,24 +48,24 @@
 
 
 ;; ;; Org-mode Keys
-;; (setq org-replace-disputed-keys t)
-;; (setq org-disputed-keys '(
-;;                          ([(tab)]      . [(meta tab)]) 
-;;                          ([(shift up)]      . [(control è)]) 
-;;                          ([(shift down)]    . [(control à)]) 
-;;                          ([(shift left)]    . [(control ò) ])
-;;                          ([(shift right)]   . [(control ù) ]) 
-;;                          ([(meta  up)]      . [(meta è) ]) 
-;;                          ([(meta  down)]    . [(meta à) ]) 
-;;                          ([(meta  left)]    . [(meta ò) ])
-;;                          ([(meta  right)]   . [(meta ù) ])
-;;                          ([(meta  shift up)]      . [(control meta è) ]) 
-;;                          ([(meta  shift down)]    . [(control meta à) ]) 
-;;                          ([(meta  shift left)]    . [(control meta ò) ])
-;;                          ([(meta  shift right)]   . [(control meta ù) ])
-;;                          ([(control shift right)] . [(meta shift +)]) 
-;;                          ([(control shift left)] . [(meta shift -)])
-;;                          ))
+(setq org-replace-disputed-keys t)
+(setq org-disputed-keys '(
+                         ([(tab)]      . [(meta tab)]) 
+                         ([(shift up)]      . [(control è)]) 
+                         ([(shift down)]    . [(control à)]) 
+                         ([(shift left)]    . [(control ò) ])
+                         ([(shift right)]   . [(control ù) ]) 
+                         ([(meta  up)]      . [(meta è) ]) 
+                         ([(meta  down)]    . [(meta à) ]) 
+                         ([(meta  left)]    . [(meta ò) ])
+                         ([(meta  right)]   . [(meta ù) ])
+                         ([(meta  shift up)]      . [(control meta è) ]) 
+                         ([(meta  shift down)]    . [(control meta à) ]) 
+                         ([(meta  shift left)]    . [(control meta ò) ])
+                         ([(meta  shift right)]   . [(control meta ù) ])
+                         ([(control shift right)] . [(meta shift +)]) 
+                         ([(control shift left)] . [(meta shift -)])
+                         ))
 
 
 (defun org-mode-setup-local-keys()
