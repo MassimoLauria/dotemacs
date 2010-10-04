@@ -103,6 +103,17 @@
 (setq scroll-margin 0)
 (setq scroll-conservatively 1000)
 
+;; Canonical behaviour of modern interfaces. Not the default in Emacs22
+;; Cut (C-x)  Copy(C-c) Paste(C-v) Undo(C-z)
+;; S-<arrow> select, C-<Ret> rectangular mark, C-<SPC> mark
+(transient-mark-mode t)
+(delete-selection-mode t)
+(cua-mode t)
+
+
+(setq cua-keep-region-after-copy t) 
+
+
 ;;(setq warning-minimum-level :error)
 
 
