@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2010-10-04, lunedì 14:30:52 (CEST) Massimo Lauria>
+;; Time-stamp: <2010-10-04, lunedì 15:08:36 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -150,7 +150,6 @@ default handler."
 (defun autopair-latex-setup ()
   "Install AutoPair in LaTex, with all the needed workarounds"
   (interactive)
-  (set (make-local-variable 'autopair-autowrap) nil)  ;; Seems broken on LaTeX
   (set (make-local-variable 'autopair-handle-action-fns)
        (list #'autopair-default-handle-action
              #'autopair-latex-mode-paired-delimiter-action))
@@ -184,7 +183,11 @@ default handler."
 ;; In these modes, autopair seems completely broken 
 (add-hook 'sldb-mode-hook #'(lambda () (setq autopair-dont-activate t)))
 (add-hook 'xrdb-mode-hook #'(lambda () (setq autopair-dont-activate t)))
-
+(add-hook 'orgtbl-mode-hook
+          (lambda ()
+            (set (make-local-variable 'autopair-autowrap) nil)  ;; Autowrap fights with Orgtbl-mode
+            (message "Autopair-Autowrap disactivated because it conflicts with OrgTbl-Mode... ")
+            ))
 
 (provide 'init-autotype)
 ;;; init-autotype.el ends here

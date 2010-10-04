@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-10-04, lunedì 12:10:54 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-10-04, lunedì 15:04:01 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -246,7 +246,7 @@
            (setq fill-column 80)
            )
          (auto-fill-mode 1)
-         (orgtbl-mode 1)
+         ;;(orgtbl-mode 1)  ; conflicts with autopair mode.
          (flyspell-mode 1)  ; annoying spell checking
          (when-available 'goto-address-mode (goto-address-mode)) ; Find urls/emails in text and press (C-c RET) to click them.
          ;;(typopunct-mode)
