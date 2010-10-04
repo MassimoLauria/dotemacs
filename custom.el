@@ -40,7 +40,6 @@
  '(ns-right-alternate-modifier nil)
  '(ns-tool-bar-display-mode (quote both) t)
  '(ns-tool-bar-size-mode (quote regular) t)
- '(org-google-weather-icon-directory "~/config/emacs/3rdparties/google-weather-icons/")
  '(safe-local-variable-values (quote ((ispell-default-dictionary . american) (TeX-PDF-mode . t) (folded-file . t))))
  '(time-stamp-format "%:y-%02m-%02d, %:a %02H:%02M:%02S (%Z) %U")
  '(visual-line-mode nil t)

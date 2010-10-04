@@ -158,6 +158,9 @@
 (add-hook 'org-agenda-mode-hook 'org-agenda-mode-setup-local-keys)
 
 ;; Weather in Org-Agenda
+(when-running-MacOSX 
+ (setq org-google-weather-icon-directory (concat MacUser-site-lisp "/google-weather-icons/"))
+)
 (require 'google-weather)
 (require 'org-google-weather)
 
