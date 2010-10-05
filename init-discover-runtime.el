@@ -96,9 +96,9 @@
 (defmacro when-running-Windows-frame (&rest body) (list 'if (eq window-system 'w32)     (cons 'progn body)))
 
 ;; Conditional running of code, based on graphical system of the process initial frame
-(defmacro when-running-NSCocoa-process (&rest body) (list 'if (eq initial-window-system 'ns)     (cons 'progn body)))
-(defmacro when-running-X11-process     (&rest body) (list 'if (eq initial-window-system 'x )     (cons 'progn body)))
-(defmacro when-running-Windows-process (&rest body) (list 'if (eq initial-window-system 'w32)    (cons 'progn body)))
+(defmacro when-running-NSCocoa-process (&rest body) (list 'if running-NSCocoa-process    (cons 'progn body)))
+(defmacro when-running-X11-process     (&rest body) (list 'if running-X11-process        (cons 'progn body)))
+(defmacro when-running-Windows-process (&rest body) (list 'if running-Windows-frame      (cons 'progn body)))
 
 
 (message "0 Discovering runtime environment...Done")
