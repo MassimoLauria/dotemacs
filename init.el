@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-10-06, mercoledì 00:41:54 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-10-06, Wednesday 01:13:49 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -160,7 +160,7 @@
 
 
 ;; Editor behaviour customization
-(unless running-MacOSX (require 'init-clipboard))         ; Clipboard managing.
+(require 'init-clipboard)         ; Clipboard managing.
 (require 'init-autotype)          ; Automatic file filling
 (require 'init-auto-complete)     ; Completion configuration
 (require 'init-spellcheck)        ; Spellchecking
