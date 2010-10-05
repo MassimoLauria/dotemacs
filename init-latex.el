@@ -53,10 +53,19 @@
 (setq TeX-electric-sub-and-superscript t)
 
 	
-;; XDvi launch customization
+;; Viewer customization
 (add-hook 'LaTeX-mode-hook (lambda ()
 							 (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
 							 ))
+
+(when-running-X11-process 
+ (add-hook 'LaTeX-mode-hook 
+           (lambda ()
+             ;; Use xdvi for dvi files
+             (add-to-list 'TeX-output-view-style '("^dvi$" "." "%(o?)xdvi -watchfile 1 %dS %d"))
+             ;; Use Xpdf or Evince for PDF files 
+             (add-to-list 'TeX-output-view-style '("^pdf$" "." "xpdf -remote %s -raise %o %(outpage)"))
+                                                       )))
 
 
 ;; Auto fill for LaTex

@@ -83,8 +83,7 @@ region is included in the mail body.
 ;; (Insidious) Big Brother DataBase, collects mail addresses.
   (when running-Aquamacs  (add-to-list 'load-path (concat MacUser-site-lisp "/bbdb-2.3.5")))
   (require 'bbdb)
-  (bbdb-initialize)
-  (bbdb-insinuate-sendmail))
+  (bbdb-initialize))
 
 
 ;; message-tab uses tab to call BBDB in header, but not elsewhere.
