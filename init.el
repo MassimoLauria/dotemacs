@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-10-05, Tuesday 00:50:23 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-10-06, mercoledì 00:41:54 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -142,7 +142,7 @@
 (global-set-key [f6] 'org-agenda)    ;; View agenda/Todo
 (global-set-key [f7] 'bbdb)          ;; Query Contacts
 ;; Switch language
-(global-set-key [f8] 'toggle-it-en)
+(global-set-key [f8] 'spellcheck-language-cycle)
 
 ;;}}}
 
