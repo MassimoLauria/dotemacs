@@ -36,8 +36,7 @@
    (add-to-list 'default-frame-alist `(font . ,font-X11-antialias))
    )
   ;; Color theme (not available on default Emacs22 for MacOSX)
-  (and 
-   (require-maybe 'color-theme)
+  (when (require-maybe 'color-theme)
    (require-maybe 'zenburn)
    (when-available 'color-theme-zenburn (color-theme-zenburn)))
   )
