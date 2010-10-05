@@ -5,7 +5,7 @@
 
 ;; Regular fonts
 (setq 
- font-X11-no-antialias "-misc-fixed-medium-r-normal--14-*-*-*-*-*-iso10646-1"
+ font-X11-no-antialias "-misc-fixed-medium-r-normal--18-*-*-*-*-*-iso10646-1"
  font-X11-antialias    "Monospace-10"
  font-Mac-antialias    "Monaco-12"
  )
@@ -13,7 +13,7 @@
 ;; Bigger fonts
 (when (and (boundp 'prefs-activate-bigfont) prefs-activate-bigfont) 
   (setq 
-   font-X11-no-antialias "-misc-fixed-medium-r-normal--18-*-*-*-*-*-iso10646-1"
+   font-X11-no-antialias "-misc-fixed-medium-r-normal--20-*-*-*-*-*-iso10646-1"
    font-X11-antialias    "Monospace-14"
    font-Mac-antialias    "Monaco-14"
    ))
