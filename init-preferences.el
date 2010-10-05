@@ -31,7 +31,7 @@
    (add-to-list 'default-frame-alist `(font . ,font-Mac-antialias))
    )
   ;; X11 main font
-  (unless running-Aquamacs
+  (when-running-GNULinux
    (set-default-font font-X11-antialias)
    (add-to-list 'default-frame-alist `(font . ,font-X11-antialias))
    )
@@ -50,12 +50,11 @@
 ;; Font for system with no anti-alias support (e.g. Emacs 22 on X11).
 (when running-GNUEmacs22
   ;; Color theme (not available on default Emacs22 for MacOSX)
-  (and 
-   (require-maybe 'color-theme)
+  (when (require-maybe 'color-theme)
    (require-maybe 'zenburn)
    (when-available 'color-theme-zenburn (color-theme-zenburn)))
   ;; Default fonts
-  (when running-X11-process (set-default-font font-X11-no-antialias))
+  (when running-GNULinux (set-default-font font-X11-no-antialias))
   )
 
 
