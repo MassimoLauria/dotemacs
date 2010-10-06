@@ -17,7 +17,7 @@
  '(aquamacs-autoface-mode nil)
  '(aquamacs-customization-version-id 210 t)
  '(aquamacs-tool-bar-user-customization nil t)
- '(before-save-hook (quote (copyright-update time-stamp)))
+ '(before-save-hook (quote (copyright-update time-stamp delete-trailing-whitespace)))
  '(blink-cursor-mode nil)
  '(copyright-query nil)
  '(cua-enable-cua-keys t)
