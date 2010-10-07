@@ -1,5 +1,5 @@
 
-;; File containing M-x customize data 
+;; File containing M-x customize data
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
@@ -39,7 +39,7 @@
  '(ns-tool-bar-size-mode (quote regular) t)
  '(safe-local-variable-values (quote ((ispell-default-dictionary . american) (TeX-PDF-mode . t) (folded-file . t))))
  '(show-paren-mode t)
- '(time-stamp-format "%:y-%02m-%02d, %:a %02H:%02M:%02S (%Z) %U"))
+ '(time-stamp-format "%:y-%02m-%02d, %:a %02H.%02M (%Z) %U"))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.

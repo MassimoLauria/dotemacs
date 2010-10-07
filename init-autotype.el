@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2010-10-04, lunedì 15:08:36 (CEST) Massimo Lauria>
+;; Time-stamp: <2010-10-07, giovedì 17:24 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 (setq template-marker-for-email ">>>EMAIL<<<")
 (setq template-marker-for-point ">>>POINT<<<")
 (setq template-marker-for-time  ">>>TIME<<<")
-(setq template-time-format      "%Y-%02m-%02d, %A %02H:%02M:%02S (%Z)")  ;; Time format similar with time-stamp one.
+(setq template-time-format      "%Y-%02m-%02d, %A %02H:%02M (%Z)")  ;; Time format similar with time-stamp one.
 
 
 ;;; Auto Insert: ----------------------------------------------------------------------
@@ -50,7 +50,7 @@
 
 (require 'yasnippet)
 (if (file-directory-p (concat default-elisp-path "/snippets/"))
-    (add-to-list 'yas/root-directory (concat default-elisp-path "/snippets/")) ;; Snippet's file folder. 
+    (add-to-list 'yas/root-directory (concat default-elisp-path "/snippets/")) ;; Snippet's file folder.
   )
 ;; Map `yas/load-directory' to every element
 (mapc 'yas/load-directory yas/root-directory)
@@ -65,13 +65,13 @@
 
 ;;; Utility functions for template filling ---------------------------------------------
 
-(defun process-string-matches (mark-exp F) 
+(defun process-string-matches (mark-exp F)
   "Find matches of a particular string, and process the matching
 text with function F which return a string."
   (save-excursion
-    (goto-char (point-min)) 
+    (goto-char (point-min))
     ;; We search for matchings
-    (while (search-forward mark-exp nil t) 
+    (while (search-forward mark-exp nil t)
       ;; We save the restriction, because we are going to call narrow-to-region
       (save-restriction
         (narrow-to-region (match-beginning 0) (match-end 0))
@@ -90,8 +90,8 @@ text with function F which return a string."
   (process-string-matches ">>>TIME<<<"  '(lambda (x) (format-time-string template-time-format (current-time))))
   ;; Move to point
   (goto-char (point-min))
-  (if (search-forward ">>>POINT<<<" nil t) 
-      (progn 
+  (if (search-forward ">>>POINT<<<" nil t)
+      (progn
         (goto-char (match-beginning 0))
         (kill-region (match-beginning 0) (match-end 0))
         )
@@ -99,7 +99,7 @@ text with function F which return a string."
 )
 
 ;;; Auto pair configuration -----------------------------------------------------------
-(setq autopair-blink nil) 
+(setq autopair-blink nil)
 
 ;; Broken on Emacs22 since it uses `region-active-p' which is not
 ;; present here
@@ -110,11 +110,11 @@ text with function F which return a string."
 ;; AutoPair seems to mess with Emacs in several Major-modes, so I will
 ;; activate on single mode basis... Furthermore several modes require
 ;; a workaround.
-;; 
+;;
 ;; (autopair-global-mode t)
 
 
-;; Auto pair work-around for term-mode 
+;; Auto pair work-around for term-mode
 (defun autopair-term-mode-handle-action (action pair pos-before)
   "Trick autopair to working with the `term-mode' nonsense.
 
@@ -176,11 +176,11 @@ default handler."
                (autopair-mode t)
                ))
 
-;; Activate `autopair-mode' in sh-mode 
+;; Activate `autopair-mode' in sh-mode
 (add-hook 'sh-mode-hook  #'(lambda () (autopair-mode t) ))
 
 
-;; In these modes, autopair seems completely broken 
+;; In these modes, autopair seems completely broken
 (add-hook 'sldb-mode-hook #'(lambda () (setq autopair-dont-activate t)))
 (add-hook 'xrdb-mode-hook #'(lambda () (setq autopair-dont-activate t)))
 (add-hook 'orgtbl-mode-hook
