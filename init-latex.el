@@ -9,13 +9,21 @@
 
 
 
-;; Multifile support, completition, style, reverse search support 
+;; Multifile support, completition, style, reverse search support
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
 (setq-default TeX-master nil)
 (setq TeX-source-specials-mode t)
 (setq TeX-source-specials-view-start-server t)
 (setq reftex-plug-into-AUCTeX t)
+
+
+;; These are the files that are produced by LaTeX processes.
+(setq TeX-byproduct-files '(".aux" ".log" ".brf" ".bbl" ".dvi" ".ps" ".pdf" "spl" "out" ".ps.gz"))
+
+;; Ignore them while opening files
+(setq ido-ignore-files (append ido-ignore-files TeX-byproduct-files))
+
 
 ;; Macro are folded.
 (defun TeX-fold-this-paragraph-toggle ()
@@ -33,9 +41,9 @@
     )
   )
 
-(add-hook 'LaTeX-mode-hook 
-          (lambda () (progn 
-                       ;;(TeX-fold-mode 1) 
+(add-hook 'LaTeX-mode-hook
+          (lambda () (progn
+                       ;;(TeX-fold-mode 1)
                        ;;(local-set-key (kbd "M-<SPC>") 'TeX-fold-this-paragraph-toggle) ;;Folding on/off
                        (local-set-key (kbd "<f9>")    'TeX-command-master) ;; Compile
                        (make-local-variable compilation-exit-message-function)
@@ -44,7 +52,7 @@
                        ;;(TeX-fold-buffer)
                        )
             ))
-  
+
 
 
 
@@ -52,18 +60,18 @@
 ;; (setq TeX-electric-escape t)
 (setq TeX-electric-sub-and-superscript t)
 
-	
+
 ;; Viewer customization
 (add-hook 'LaTeX-mode-hook (lambda ()
 							 (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
 							 ))
 
-(when-running-X11-process 
- (add-hook 'LaTeX-mode-hook 
+(when-running-X11-process
+ (add-hook 'LaTeX-mode-hook
            (lambda ()
              ;; Use xdvi for dvi files
              (add-to-list 'TeX-output-view-style '("^dvi$" "." "%(o?)xdvi -watchfile 1 %dS %d"))
-             ;; Use Xpdf or Evince for PDF files 
+             ;; Use Xpdf or Evince for PDF files
              (add-to-list 'TeX-output-view-style '("^pdf$" "." "xpdf -remote %s -raise %o %(outpage)"))
                                                        )))
 
@@ -82,13 +90,13 @@
 
 
 ;; RefTeX hint for automatic ref creations
-(setq reftex-label-alist 
+(setq reftex-label-alist
       '(
-        ("definition" ?d "def:"  "~\\ref{%s}" nil ("definition" "def.") -3) 
+        ("definition" ?d "def:"  "~\\ref{%s}" nil ("definition" "def.") -3)
 
         ("theorem"    ?h "thm:"  "~\\ref{%s}" t   ("th." "theorem") -3)
-        ("lemma"      ?l "lmm:"  "~\\ref{%s}" t   ("lemma") -3) 
-        ("corollary"  ?c "cor:"  "~\\ref{%s}" nil ("corollary"  "cor.") -3) 
+        ("lemma"      ?l "lmm:"  "~\\ref{%s}" t   ("lemma") -3)
+        ("corollary"  ?c "cor:"  "~\\ref{%s}" nil ("corollary"  "cor.") -3)
 
         ("fact"        ?F "fact:"  "~\\ref{%s}" nil ("fact") -3)
         ("claim"       ?C "clm:"   "~\\ref{%s}" nil ("claim") -3)
@@ -102,9 +110,9 @@
 
         ("open.problem" ?o "open:"   "~\\ref{%s}" nil ("problem") -3)
         ("problem"      ?p "prob:"   "~\\ref{%s}" nil ("problem") -3)
-       
+
         ))
- 
+
 ;; TeX asks for Flyspell and American dictionary.
 (add-hook 'LaTeX-mode-hook (lambda () (flyspell-mode 1)))
 (add-hook 'TeX-language-en-hook
@@ -141,15 +149,15 @@
        ("\\.pdf\\'" . "\\includegraphics[]{%r}\n")
        ("\\.jpg\\'" . "\\includegraphics[]{%r}\n")
        ("\\.png\\'" . "\\includegraphics[]{%n}\n")
-       ("\\.mov\\'" . 
+       ("\\.mov\\'" .
         "\\includemovie[\n\tposter,\n\trepeat=1,\n\ttext=(%r)\n\t]{}{}{%r}\n")
-       ("\\.avi\\'" . 
+       ("\\.avi\\'" .
         "\\includemovie[\n\tposter,\n\trepeat=1,\n\ttext=(%r)\n\t]{}{}{%r}\n")))))
  )
 
 
 (provide 'init-latex)
 ;; Local Variables:
-;; mode: emacs-lisp 
+;; mode: emacs-lisp
 ;; folded-file: t
-;; End: 
+;; End:
