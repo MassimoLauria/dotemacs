@@ -22,8 +22,10 @@
 (setq TeX-byproduct-files '(".aux" ".log" ".brf" ".bbl" ".dvi" ".ps" ".pdf" "spl" "out" ".ps.gz"))
 
 ;; Ignore them while opening files
-(setq ido-ignore-files (append ido-ignore-files TeX-byproduct-files))
-
+(setq ido-ignore-files (if (boundp 'ido-ignore-files)
+                           (append ido-ignore-files TeX-byproduct-files)
+                         TeX-byproduct-files
+                         ))
 
 ;; Macro are folded.
 (defun TeX-fold-this-paragraph-toggle ()
