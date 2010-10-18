@@ -49,6 +49,10 @@
 ;;; YaSnippet -------------------------------------------------------------------------
 
 (require 'yasnippet)
+(setq yas/root-directory nil)
+(if (file-directory-p "/usr/share/emacs/site-lisp/yasnippet/snippets")
+    (add-to-list 'yas/root-directory "/usr/share/emacs/site-lisp/yasnippet/snippets") ;; Snippet's file folder.
+  )
 (if (file-directory-p (concat default-elisp-path "/snippets/"))
     (add-to-list 'yas/root-directory (concat default-elisp-path "/snippets/")) ;; Snippet's file folder.
   )
