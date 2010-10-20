@@ -32,11 +32,11 @@
 ;; Enable backup files.
 (setq make-backup-files t)
 ;; Enable versioning with default values (keep five last versions, I think!)
-(setq version-control t)
+;; (setq version-control t)
 
 
 (provide 'init-backup)
 ;; Local Variables:
-;; mode: emacs-lisp 
+;; mode: emacs-lisp
 ;; folded-file: t
-;; End: 
+;; End:
