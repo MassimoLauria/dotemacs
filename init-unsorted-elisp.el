@@ -180,7 +180,7 @@
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
 ;; Eldoc for C
-(add-hook 'c-mode 'c-turn-on-eldoc-mode)
+(add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
 
 ;;}}}
 

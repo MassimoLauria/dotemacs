@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2010-10-07, giovedì 17:24 (CEST) Massimo Lauria>
+;; Time-stamp: <2010-10-25, lunedì 12.57 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -44,6 +44,9 @@
 
 ;(define-auto-insert "\.sh" "sh-template.sh") ; Example of a template file based rule.
 (define-auto-insert 'sh-mode ["sh-template.sh" apply-template-marker]) ; Example of a template file based rule.
+(define-auto-insert 'makefile-mode ["make-template.mak" apply-template-marker]) ; Example of a template file based rule.
+(define-auto-insert 'makefile-gmake-mode ["make-template.mak" apply-template-marker]) ; Example of a template file based rule.
+(define-auto-insert 'c-mode ["c-template.c" apply-template-marker]) ; Example of a template file based rule.
 
 
 ;;; YaSnippet -------------------------------------------------------------------------
@@ -182,6 +185,7 @@ default handler."
 
 ;; Activate `autopair-mode' in sh-mode
 (add-hook 'sh-mode-hook  #'(lambda () (autopair-mode t) ))
+(add-hook 'c-mode-hook   #'(lambda () (autopair-mode t) ))
 
 
 ;; In these modes, autopair seems completely broken
