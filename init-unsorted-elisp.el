@@ -33,6 +33,9 @@
 (setq auto-mode-alist (cons '("bashrc" . sh-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("zshrc" . sh-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.zsh" . sh-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.dot" . graphviz-dot-mode) auto-mode-alist))
+(autoload 'graphviz-dot-mode
+  "graphviz-dot-mode" "Edit/View Graphviz's dot files" t)
 
 
 
