@@ -37,8 +37,8 @@
 (setq ac-auto-start 3)                  ;automatically start
 (setq ac-dwim t)                        ;Do what i mean
 (setq ac-override-local-map nil)        ;don't override local map
- 
- 
+
+
 ;; The mode that automatically startup.
 (setq ac-modes '(emacs-lisp-mode lisp-interaction-mode lisp-mode
                  inferior-emacs-lisp-mode scheme-mode c-mode
@@ -51,7 +51,7 @@
                  asm-mode org-mode text-mode))
 
 ; if you want enable auto-complete at org-mode, uncomment this line
-(add-to-list 'ac-trigger-commands 'org-self-insert-command) 
+(add-to-list 'ac-trigger-commands 'org-self-insert-command)
 
 
 ;; The sources for common all mode.
@@ -66,7 +66,7 @@
      ac-source-filename
      )))
 
- 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Lisp mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (dolist (hook (list
                'emacs-lisp-mode-hook
@@ -85,7 +85,7 @@
 (add-hook 'c-mode-common-hook
           '(lambda ()
              (add-to-list 'ac-sources 'ac-source-gtags)))
- 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; C++-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Keywords.
 (add-hook 'c++-mode-hook '(lambda ()
@@ -93,10 +93,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; CSS-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Keywords.
-(add-hook 'css-mode-hook '(lambda ()
-                            (add-to-list 'ac-sources 'ac-source-css-property)))
+(ac-css-mode-setup)
 
- 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Haskell mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Keywords.
 (add-hook 'haskell-mode-hook '(lambda ()
