@@ -84,7 +84,11 @@
 ;; Enables omnicompletion with `c-mode-common'.
 (add-hook 'c-mode-common-hook
           '(lambda ()
-             (add-to-list 'ac-sources 'ac-source-gtags)))
+             (add-to-list 'ac-sources 'ac-source-gtags)
+             (when (boundp 'ac-source-semantic)
+               (add-to-list 'ac-sources 'ac-source-semantic)
+               )
+             ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; C++-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Keywords.
