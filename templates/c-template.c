@@ -2,7 +2,7 @@
    Copyright (C) 2010 by >>>NAME<<< <>>>EMAIL<<<>
 
    Created   : ">>>TIME<<< >>>NAME<<<"
-   Time-stamp: ""
+   Time-stamp: " "
 
    Description::
 
