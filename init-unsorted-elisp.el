@@ -43,27 +43,6 @@
 (require 'undo-tree)
 (global-undo-tree-mode)
 
-
-;; Text mode by default, with auto-fill
-(require 'typopunct)
-(setq-default typopunct-buffer-language 'english)
-(setq default-major-mode 'text-mode)
-;;(setq initial-major-mode 'text-mode) ;; Better to stick with Lisp-Interaction.
-(setq text-mode-hook
-      '(lambda nil
-         (if prefs-activate-smallscreen
-             (setq fill-column 70)
-           (setq fill-column 80)
-           )
-         (auto-fill-mode 1)
-         ;;(orgtbl-mode 1)  ; conflicts with autopair mode.
-         (flyspell-mode 1)  ; annoying spell checking
-         (when-available 'goto-address-mode (goto-address-mode)) ; Find urls/emails in text and press (C-c RET) to click them.
-         ;;(typopunct-mode)
-         )
-      )
-
-
 ;; Prepare *scratch buffer*
 ;; FROM: Morten Welind
 ;; http://www.geocrawler.com/archives/3/338/1994/6/0/1877802/

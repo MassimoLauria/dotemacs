@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Keywords: 
+;; Keywords:
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -27,17 +27,22 @@
 
 
 
-(setq mouse-drag-copy-region nil)   ; stops selection with a mouse being immediately injected to the kill ring
+(setq mouse-drag-copy-region nil)   ; stops selection with a mouse
+                                    ; being immediately injected to
+                                    ; the kill ring
 
-(setq x-select-enable-primary nil)	; stops killing/yanking interacting with primary X11 selection 
+(setq x-select-enable-primary nil)	; stops killing/yanking
+                                    ; interacting with primary X11
+                                    ; selection
 
-(setq x-select-enable-clipboard t)	; makes killing/yanking interact with clipboard X11 selection
+(setq x-select-enable-clipboard t)	; makes killing/yanking interact
+                                    ; with clipboard X11 selection
 
 (when running-X11-process
   (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
   (setq select-active-regions t)                 ; active region sets primary X11 selection (This corrupt Aquamacs clipboard)
   (global-set-key [mouse-2] 'mouse-yank-primary) ; middle-click only pastes from primary X11 selection.
-  (setq yank-pop-change-selection t)             ; makes rotating the kill ring change the X11 clipboard.	
+  (setq yank-pop-change-selection t)             ; makes rotating the kill ring change the X11 clipboard.
 )
 
 

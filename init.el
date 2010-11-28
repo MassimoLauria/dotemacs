@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-10-06, Wednesday 01:13:49 (CEST) Massimo Lauria"
+;; Time-stamp: "2010-11-28, domenica 15:51 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -28,7 +28,7 @@
 
 ;;; Code:
 
-(setq emacs-load-start-time (current-time)) ;; save the clock at start-time  
+(setq emacs-load-start-time (current-time)) ;; save the clock at start-time
 
 
 ;;; Setup load-path --------------------------------------------------------------------------------------------
@@ -44,7 +44,7 @@
 (require 'init-discover-runtime)
 (require 'init-functions)         ; Utility functions for configuration
 
-(when-running-MacOSX 
+(when-running-MacOSX
  (setq MacUser-site-lisp "~/Library/site-lisp")
  (setq load-path (cons 	MacUser-site-lisp load-path))
 )
@@ -160,7 +160,8 @@
 
 
 ;; Editor behaviour customization
-(require 'init-clipboard)         ; Clipboard managing.
+(require 'init-textmode)          ; Preferences for text editing
+(require 'init-clipboard)         ; Clipboard managing
 (require 'init-autotype)          ; Automatic file filling
 (require 'init-auto-complete)     ; Completion configuration
 (require 'init-spellcheck)        ; Spellchecking
@@ -198,7 +199,7 @@
     (server-start))
 
 
-(when (require 'time-date nil t) 
+(when (require 'time-date nil t)
   (message "Emacs startup time: %d seconds." (time-to-seconds (time-since emacs-load-start-time)))) ;; compute load-time
 (provide 'init)
 ;; Local Variables:

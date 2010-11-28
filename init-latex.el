@@ -78,13 +78,14 @@
                                                        )))
 
 
-;; Auto fill for LaTex
-(add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
+;; Do not auto fill for LaTex (it is annoying to co-authors)
+;; (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
+
+;; Additional facilities
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-(add-hook 'LaTeX-mode-hook 'auto-fill-mode)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 
-;;
+;; Auto pairs
 (add-hook 'LaTeX-mode-hook 'autopair-latex-setup)
 (add-hook 'latex-mode-hook 'autopair-latex-setup)
 (add-hook 'TeX-mode-hook   'autopair-latex-setup)
