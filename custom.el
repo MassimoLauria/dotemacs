@@ -27,7 +27,7 @@
  '(cua-normal-cursor-color (quote (bar . "white")))
  '(cua-overwrite-cursor-color (quote (box . "red")))
  '(cua-read-only-cursor-color (quote (hollow . "yellow")))
- '(default-justification (quote full))
+ '(default-justification (quote left))
  '(display-hourglass t)
  '(ebib-index-display-fields (quote (year author title)))
  '(ebib-print-multiline t)
