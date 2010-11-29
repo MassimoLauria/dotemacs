@@ -45,10 +45,10 @@
              (setq fill-column 70)
            (setq fill-column 80)
            )
-         ; (auto-fill-mode) ; Hard word wrapping
-         (if (fboundp 'visual-line-mode)
-             (visual-line-mode)
-           ) ; Soft word wrapping at the end of the window Emacs23
+
+         (auto-fill-mode)                   ; Hard word wrapping...
+         (setq default-justification 'full) ; ... with full justification
+
          ;;(orgtbl-mode 1)  ; conflicts with autopair mode.
          (flyspell-mode 1)  ; annoying spell checking
          (when-available 'goto-address-mode (goto-address-mode)) ; Find urls/emails in text and press (C-c RET) to click them.

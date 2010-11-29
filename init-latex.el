@@ -78,8 +78,22 @@
                                                        )))
 
 
-;; Do not auto fill for LaTex (it is annoying to co-authors)
-;; (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
+;; To help collaboration, in LaTeX file I will only use soft word
+;; wrapping.  Furthermore the filling is made to an arbitrary large
+;; value, so that fill-paragraph won't do hard-wrapping by error.
+;;
+;; From Emacs 23, the visual-line-mode helps to visualize the file
+;; properly.
+(add-hook 'LaTeX-mode-hook (lambda ()
+                             (turn-off-auto-fill)
+							 (setq  default-justification 'left)
+                             (setq  fill-column 99999)
+							 ))
+(if (fboundp 'visual-line-mode)
+    (add-hook 'LaTeX-mode-hook 'visual-line-mode)
+  )
+
+
 
 ;; Additional facilities
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
