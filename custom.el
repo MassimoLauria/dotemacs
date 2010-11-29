@@ -19,6 +19,7 @@
  '(aquamacs-tool-bar-user-customization nil t)
  '(before-save-hook (quote (copyright-update time-stamp delete-trailing-whitespace)))
  '(blink-cursor-mode nil)
+ '(colon-double-space t)
  '(copyright-query nil)
  '(cua-enable-cua-keys t)
  '(cua-enable-cursor-indications t)
@@ -26,6 +27,7 @@
  '(cua-normal-cursor-color (quote (bar . "white")))
  '(cua-overwrite-cursor-color (quote (box . "red")))
  '(cua-read-only-cursor-color (quote (hollow . "yellow")))
+ '(default-justification (quote full))
  '(display-hourglass t)
  '(ebib-index-display-fields (quote (year author title)))
  '(ebib-print-multiline t)
@@ -45,4 +47,4 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
-)
+ )
