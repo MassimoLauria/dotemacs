@@ -34,17 +34,14 @@
 ;;(setq initial-major-mode 'text-mode)
 
 ;; Smart quotes setup. Like “this and that”.
-(if (require 'typopunct "typepunct" t)
+(if (require 'typopunct "typopunct" t)
     (setq-default typopunct-buffer-language 'english)
   )
 
 ;; Setup of text-mode
 (setq text-mode-hook
       '(lambda nil
-         (if prefs-activate-smallscreen
-             (setq fill-column 70)
-           (setq fill-column 80)
-           )
+         (setq fill-column 70)
 
          (auto-fill-mode)                   ; Hard word wrapping...
          (setq default-justification 'full) ; ... with full justification
