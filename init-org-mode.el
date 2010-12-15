@@ -144,6 +144,9 @@
   (org-remember-insinuate)
 )
 
+;; Org-protocol to make org-mode to interact with other applications
+(require 'org-protocol)
+
 
 ;; Normally my private (and translated) configuration is used.
 (when (not (boundp 'org-remember-templates))
@@ -154,9 +157,11 @@
           ("meeting"        ?m "* TODO ⌚ %? %T\n\n  %i\n\n\n" "notes.org")
           ("deadline"       ?d "* TODO ⌚ %? %U\n  DEADLINE: %t\n\n  %i\n\n" "notes.org")
           ("event"          ?e "* %? %t--%t\n\n  %i\n  %a\n\n" "notes.org")
+          ("webpage"        ?w "* %^{Title}\n\n  Source: %u, %c\n\n  %i" nil "notes.org")
           )
         )
   )
+
 
 ;; Aquamacs miss some org-agenda keybindings!
 (defun org-agenda-mode-setup-local-keys()
