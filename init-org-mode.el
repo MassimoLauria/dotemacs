@@ -146,7 +146,9 @@
 
 ;; Org-protocol to make org-mode to interact with other applications
 (require 'org-protocol)
-
+;; Autofocus and raise the Emacs frame which should get the input.
+(add-hook 'org-remember-mode-hook
+          (lambda ()(select-frame-set-input-focus (selected-frame))))
 
 ;; Normally my private (and translated) configuration is used.
 (when (not (boundp 'org-remember-templates))

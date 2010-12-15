@@ -101,7 +101,7 @@ the result of (F t)
 ;;;- Previous/Next user/emacs buffer ----- and extension alike ErgoEmacs ----------------------
 
 ; Those are DNFs, lists of lists. External list is an OR of rules, internal is an AND.
-(setq user-buffer-whitelist '(or "^*scratch*" "^*eshell*" "^*draft*" "^*info"))
+(setq user-buffer-whitelist '(or "^*scratch*" "^*Remember*" "^*eshell*" "^*draft*" "^*info"))
 (setq user-buffer-blacklist '(or "^*" "\.pdfsync" (and "\.log" latex-mode) "contacts.bbdb"))
 
 ;; string-match-p does not exists before Emacs 23
