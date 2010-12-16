@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2010-10-25, lunedì 12.57 (CEST) Massimo Lauria>
+;; Time-stamp: <2010-12-16, giovedì 21:33 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -26,10 +26,16 @@
 
 
 ;;; Markers for template filling
-(setq template-marker-for-name  ">>>NAME<<<" )
-(setq template-marker-for-email ">>>EMAIL<<<")
-(setq template-marker-for-point ">>>POINT<<<")
-(setq template-marker-for-time  ">>>TIME<<<")
+(setq template-marker-for-name            ">>>NAME<<<" )
+(setq template-marker-for-email           ">>>EMAIL<<<")
+(setq template-marker-for-point           ">>>POINT<<<")
+(setq template-marker-for-time            ">>>TIME<<<")
+(setq template-marker-for-header          ">>>HEADERNAME<<<" )
+(setq template-marker-for-ucfname         ">>>UCFILENAME<<<" )
+(setq template-marker-for-lcfname         ">>>LCFILENAME<<<" )
+(setq template-marker-for-fname           ">>>FILENAME<<<" )
+(setq template-marker-for-fname-sans-ext  ">>>FNAMENOEXT<<<" )
+
 (setq template-time-format      "%Y-%02m-%02d, %A %02H:%02M (%Z)")  ;; Time format similar with time-stamp one.
 
 
@@ -42,12 +48,11 @@
 
 ;; Auto Insert rules:
 
-;(define-auto-insert "\.sh" "sh-template.sh") ; Example of a template file based rule.
 (define-auto-insert 'sh-mode ["sh-template.sh" apply-template-marker]) ; Example of a template file based rule.
 (define-auto-insert 'makefile-mode ["make-template.mak" apply-template-marker]) ; Example of a template file based rule.
 (define-auto-insert 'makefile-gmake-mode ["make-template.mak" apply-template-marker]) ; Example of a template file based rule.
-(define-auto-insert 'c-mode ["c-template.c" apply-template-marker]) ; Example of a template file based rule.
-
+(define-auto-insert "\\.\\([Cc]\\|cc\\|cpp\\)\\'" ["c-template.c" apply-template-marker]) ; Example of a template file based rule.
+(define-auto-insert "\\.\\([Hh]\\|hh\\|hpp\\)\\'" ["h-template.h" apply-template-marker]) ; Example of a template file based rule.
 
 ;;; YaSnippet -------------------------------------------------------------------------
 
@@ -92,12 +97,26 @@ text with function F which return a string."
 (defun apply-template-marker()
   "Fill template fields"
   (interactive)
-  (process-string-matches ">>>NAME<<<"  '(lambda (x)  user-full-name))
-  (process-string-matches ">>>EMAIL<<<" '(lambda (x) user-mail-address))
-  (process-string-matches ">>>TIME<<<"  '(lambda (x) (format-time-string template-time-format (current-time))))
+  (process-string-matches template-marker-for-name  '(lambda (x)  user-full-name))
+  (process-string-matches template-marker-for-email '(lambda (x) user-mail-address))
+  (process-string-matches template-marker-for-time  '(lambda (x) (format-time-string template-time-format (current-time))))
+
+  (process-string-matches template-marker-for-header
+                          '(lambda (x)   (upcase (concat (file-name-nondirectory
+                                                          (file-name-sans-extension buffer-file-name))
+                                                         "_"
+                                                         (file-name-extension buffer-file-name)))))
+  (process-string-matches template-marker-for-ucfname
+                          '(lambda (x) (upcase (file-name-nondirectory buffer-file-name))))
+  (process-string-matches template-marker-for-lcfname
+                          '(lambda (x) (downcase (file-name-nondirectory buffer-file-name))))
+  (process-string-matches template-marker-for-fname
+                          '(lambda (x) (file-name-nondirectory buffer-file-name)))
+  (process-string-matches template-marker-for-fname-sans-ext
+                          '(lambda (x)(file-name-nondirectory (file-name-sans-extension buffer-file-name))))
   ;; Move to point
   (goto-char (point-min))
-  (if (search-forward ">>>POINT<<<" nil t)
+  (if (search-forward template-marker-for-point  nil t)
       (progn
         (goto-char (match-beginning 0))
         (kill-region (match-beginning 0) (match-end 0))
