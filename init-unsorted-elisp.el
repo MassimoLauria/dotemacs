@@ -168,6 +168,28 @@
 ;;}}}
 
 
+;; Tags managements ----------------------------------------
+;; Fix the keybindings for Gtags and Etags
+
+;; M-. is for finding the tag
+;; M-, is for popping the tag stack
+;; The usual binding for popping is M-* which is disabled here.
+
+;; Gtags keys
+(add-hook 'gtags-mode-hook
+          '(lambda()
+             (define-key gtags-mode-map (kbd "M-.") 'gtags-find-tag)
+             (define-key gtags-mode-map (kbd "M-,") 'gtags-pop-stack)
+             (define-key gtags-mode-map (kbd "M-*") 'nil)
+             ))
+
+;; Etags keys
+(define-key esc-map "." 'find-tag)
+(define-key esc-map "," 'pop-tag-mark)
+(define-key esc-map "*" 'nil)
+
+;; Auto modes for Gtags
+(add-hook 'c-mode-common-hook 'gtags-mode)
 
 (provide 'init-unsorted-elisp)
 ;;; init-unsorted-elisp.el ends here

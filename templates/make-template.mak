@@ -15,7 +15,7 @@ C_STANDARD=-std=c99
 TAGS=gtags
 #TAGS=etags
 #TAGS=ctags
-TAGFILES=GPATH GRTAGS GSYMS GTAGS tags TAGS
+TAGFILES=GPATH GRTAGS GSYMS GTAGS tags TAGS ID
 
 CFLAGS=-fno-builtin --pedantic --pedantic-errors -Wall ${C_STANDARD}
 LDFLAGS=
@@ -38,7 +38,7 @@ clean:
 	@-rm -f ${TARGET}
 	@-rm -f *.o
 	@-rm -fr *.dSYM
-	@-rm GPATH GRTAGS GSYMS GTAGS tags TAGS 2>/dev/null
+	@-rm -f ${TAGFILES}
 
 tags:
 	@-$(TAGS) .
