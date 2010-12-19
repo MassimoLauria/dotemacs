@@ -1,46 +1,54 @@
 # Copyright (C) 2010 by >>>NAME<<< <>>>EMAIL<<<>
 #
 # Created   : ">>>TIME<<< >>>NAME<<<"
-# Time-stamp: "2010-10-25, lunedì 11.25 (CEST) Massimo Lauria"
+# Time-stamp: " "
 
-# Description::
+# ---------- Environment variables ------------
 #
-# >>>POINT<<<
-#
-
-# ------ TARGETS -------------------
-TARGET=
-
-
-# ------ COMPILER SETTINGS ---------
-
-# Define the C compiler and standard to use for the exercises
 CC=gcc
-C_STANDARD=-std=c89 -ansi
-#C_STANDARD=-std=c99 -ansi
+#CC=cc
+
+C_STANDARD=-std=c99
+#C_STANDARD=-ansi
+#C_STANDARD=-std=c89
+
+TAGS=gtags
+#TAGS=etags
+#TAGS=ctags
+TAGFILES=GPATH GRTAGS GSYMS GTAGS tags TAGS
+
+CFLAGS=-fno-builtin --pedantic --pedantic-errors -Wall ${C_STANDARD}
+LDFLAGS=
+
+DEBUG=-DDEBUG -g
+#DEBUG=
+
+# --------- Project dependent rules ---------------
+TARGET=>>>POINT<<<
+all: tags ${TARGET}
+
+# <Insert custom rules here>
 
 
-CFLAGS=-g -fno-builtin -pedantic -Wall ${C_STANDARD}
 
 
-# ------ DEFAULT RULES --------------
-all: ${TARGET}
 
+# --------- Default rules -------------------------
 clean:
-	rm ${TARGET}
+	@-rm -f ${TARGET}
+	@-rm -f *.o
+	@-rm -fr *.dSYM
+	@-rm GPATH GRTAGS GSYMS GTAGS tags TAGS 2>/dev/null
+
+tags:
+	@-$(TAGS) .
+
+check-syntax:
+	$(CC) ${CFLAGS} -o - -S ${CHK_SOURCES} >/dev/null
 
 %.o: %.c
 	$(CC) ${CFLAGS} -c $< -o $@
 
-# Rule for flymake emacs
-check-syntax:
-	$(CC) -o - -S ${CHK_SOURCES}  >/dev/null
-
-
-# ------ CUSTOM RULES ---------------
-#
-# <Put here any build rule which is not custom>
-#
 
 # Local Variables:
 # fill-column: 80
