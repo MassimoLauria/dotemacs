@@ -63,6 +63,23 @@
 (setq TeX-electric-sub-and-superscript t)
 
 
+
+(defun LaTeX-up-list ()
+  "A function similar to standard Emacs `up-list', but if we are
+outside of a syntax block, it attempts to escape math from
+delimiters"
+  (interactive)
+  (condition-case X
+      ;; Try to jump to an outer syntax block.
+      (up-list)
+    ('error
+     ;; If inside math mode, escape from it.
+     (if (or
+               (eq (get-text-property (point) 'face) 'font-latex-math-face)
+               (member 'font-latex-math-face (get-text-property (point) 'face)))
+              (search-forward-regexp "\\$?\\$")))))
+
+
 ;; Viewer customization
 (add-hook 'LaTeX-mode-hook (lambda ()
 							 (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
