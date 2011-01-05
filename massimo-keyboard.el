@@ -63,9 +63,7 @@ At least they are considered useful for the author.
     (define-key map (kbd "M-n") 'forward-paragraph)
 
     ;; Out of expression
-    (if (fboundp 'forward-up-list)
-        (define-key map (kbd "M-p") 'forward-up-list)
-        )
+    (define-key map (kbd "M-p") 'up-list)
 
     ;; Deletion keys
     (define-key map (kbd "M-w")  'backward-kill-word)
