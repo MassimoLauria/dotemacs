@@ -4,7 +4,7 @@
 ;;;------------------------------------------------------------------
 
 
-;;; Some functions maybe abstent in Emacs 22.
+;;; Some functions maybe absent in Emacs 22.
 
 ;; Define `string-match-p' if it does not exists
 (unless (fboundp 'string-match-p)
@@ -70,6 +70,15 @@ It will not work properly if it is not bound to a key.
       (call-interactively 'self-insert-command) ) ) )
 
 ;;------ Useful functions --------------------------------------------------------------------
+
+;; Escape from syntax block
+(defun forward-up-list ()
+  "Go after the end of the Sexp at point"
+  (interactive)
+  (backward-up-list -1)
+  )
+
+
 (defun decorate-formula (F sexp-arg)
   "Given an S-exp, it descend in all subtrees to apply function F
 to the leaves of a formula (i.e.\ tokens).

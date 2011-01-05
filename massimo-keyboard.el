@@ -1,6 +1,6 @@
 ;;; massimo-keyboard.el --- Keybindings specific for the author habits
 
-;; Copyright (C) 2010  Massimo Lauria
+;; Copyright (C) 2010, 2011  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: convenience
@@ -26,7 +26,7 @@
 
 ;;; Code:
 
-(defgroup massimo-keyboard nil 
+(defgroup massimo-keyboard nil
   "Minor mode for which setup a bunch of useful keybindings.
 At least they are considered useful for the author.
 ")
@@ -39,7 +39,7 @@ At least they are considered useful for the author.
 ;;  :group 'massimo-keyboard)
 
 (defcustom massimo-keyboard-folding-meta-g-override-p t
-  "*If non-nil, override folding model M-g for folding-goto-line with backward-paragraph."
+  "*If non-nil, override folding model M-g for `folding-goto-line' with `move-beginning-of-line'."
   :tag "Massimo Keyboard Folding meta-g override"
   :type 'boolean
   :group 'massimo-keyboard)
@@ -62,31 +62,35 @@ At least they are considered useful for the author.
     (define-key map (kbd "M-b") 'backward-paragraph)     ;; Fight with canonical binding
     (define-key map (kbd "M-n") 'forward-paragraph)
 
-    
+    ;; Out of expression
+    (if (fboundp 'forward-up-list)
+        (define-key map (kbd "M-p") 'forward-up-list)
+        )
+
     ;; Deletion keys
-    (define-key map (kbd "M-w")  'backward-kill-word) 
+    (define-key map (kbd "M-w")  'backward-kill-word)
     (define-key map (kbd "M-d")  'backward-delete-char)
-    (define-key map (kbd "M-f")  'delete-char) 
+    (define-key map (kbd "M-f")  'delete-char)
     (define-key map (kbd "C-w")  'kill-whole-line)
 
 
     ;; Moving between buffers (M-S)
     (if (fboundp 'previous-user-buffer)
-        (define-key map [M-S-up] 'previous-user-buffer) 
-      (define-key map [M-S-up] 'previous-buffer) 
+        (define-key map [M-S-up] 'previous-user-buffer)
+      (define-key map [M-S-up] 'previous-buffer)
       )
-    
+
     (if (fboundp 'next-user-buffer)
-        (define-key map [M-S-down] 'next-user-buffer) 
-      (define-key map [M-S-down] 'next-buffer) 
+        (define-key map [M-S-down] 'next-user-buffer)
+      (define-key map [M-S-down] 'next-buffer)
       )
     (define-key map (kbd "C-x C-b") 'ibuffer)
-    
+
 
     ;; Register keys
     ;; Register at finger tips from 1 to ... 0!
     (define-key map (kbd "M-r M-r") 'pop-to-mark-command) ;; Pop mark-ring
-    
+
     ;; Load registers position
     (define-key map (kbd "M-1") '(lambda () (interactive) (register-to-point 1) )  )
     (define-key map (kbd "M-2") '(lambda () (interactive) (register-to-point 2) )  )
@@ -107,7 +111,7 @@ At least they are considered useful for the author.
     (define-key map (kbd "M-r 7") '(lambda () (interactive) (point-to-register 7) )  )
     (define-key map (kbd "M-r 9") '(lambda () (interactive) (point-to-register 9) )  )
     (define-key map (kbd "M-r 0") '(lambda () (interactive) (point-to-register 0) )  )
-    
+
     map)
   "Keymap for massimo-keyboard-mode.")
 
@@ -122,18 +126,18 @@ At least they are considered useful for the author.
 (make-variable-buffer-local 'massimo-keyboard-cua-meta-v-overridden)
 (make-variable-buffer-local 'massimo-keyboard-folding-meta-g-overridden)
 
-(defun massimo-keyboard-cua-meta-v-override () 
+(defun massimo-keyboard-cua-meta-v-override ()
 "If massimo-keyboard-mode is active then run backward-paragraph,
-otherwise cua-repeat-replace-region. An ugly hack to solve key conflicts..." 
+otherwise cua-repeat-replace-region. An ugly hack to solve key conflicts..."
 (interactive)
 (if massimo-keyboard-mode
     (call-interactively 'backward-paragraph)
   (call-interactively 'cua-repeat-replace-region))
 )
 
-(defun massimo-keyboard-folding-meta-g-override () 
+(defun massimo-keyboard-folding-meta-g-override ()
 "If massimo-keyboard-mode is active then run backward-paragraph,
-otherwise cua-repeat-replace-region. An ugly hack to solve key conflicts..." 
+otherwise cua-repeat-replace-region. An ugly hack to solve key conflicts..."
   (interactive)
   (if massimo-keyboard-mode
       (call-interactively 'move-beginning-of-line)
@@ -144,7 +148,7 @@ otherwise cua-repeat-replace-region. An ugly hack to solve key conflicts..."
 
 (define-minor-mode massimo-keyboard-mode
   "Toggle Massimo-Keyboard mode.
-With no argument, this command toggles the mode.  
+With no argument, this command toggles the mode.
 Non-null prefix argument turns on the mode.
 Null prefix argument turns off the mode.
 
@@ -154,25 +158,25 @@ modified according to the useage pattern of the author."
   :lighter " Massimo" ; Modeline string
 
 ;;  (when (and
-;;         (not (eq massimo-keyboard-cua-meta-v-overridden 'massimo-keyboard-cua-meta-v-override))         
+;;         (not (eq massimo-keyboard-cua-meta-v-overridden 'massimo-keyboard-cua-meta-v-override))
 ;;         (boundp 'cua--cua-keys-keymap)
 ;;         massimo-keyboard-cua-meta-v-override-p
 ;;         nil ;; never overide, because now the key is on M-b
 ;;         )
 ;;    ;; Function to be overridded
 ;;    (setq massimo-keyboard-cua-meta-v-overridden (lookup-key cua--cua-keys-keymap [(meta v)]))
-;;    (if massimo-keyboard-cua-meta-v-overridden 
+;;    (if massimo-keyboard-cua-meta-v-overridden
 ;;         (define-key cua--cua-keys-keymap [(meta v)] 'massimo-keyboard-cua-meta-v-override)
 ;;      )
 ;;    )
-  (when (and 
-         (not (eq massimo-keyboard-folding-meta-g-overridden 'massimo-keyboard-folding-meta-g-override))         
+  (when (and
+         (not (eq massimo-keyboard-folding-meta-g-overridden 'massimo-keyboard-folding-meta-g-override))
          (boundp 'folding-mode-map)
          massimo-keyboard-folding-meta-g-override-p
          )
     ;; Function to be overridded
     (setq massimo-keyboard-folding-meta-g-overridden (lookup-key folding-mode-map [(meta g)]))
-    (if massimo-keyboard-folding-meta-g-overridden 
+    (if massimo-keyboard-folding-meta-g-overridden
          (define-key folding-mode-map [(meta g)] 'massimo-keyboard-folding-meta-g-override)
       )
     )
