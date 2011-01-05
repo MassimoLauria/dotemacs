@@ -67,17 +67,25 @@
 (defun LaTeX-up-list ()
   "A function similar to standard Emacs `up-list', but if we are
 outside of a syntax block, it attempts to escape math from
-delimiters"
+delimiters. It substitues `up-list' the first time AucTeX is
+started."
   (interactive)
   (condition-case X
       ;; Try to jump to an outer syntax block.
       (up-list)
     ('error
-     ;; If inside math mode, escape from it.
+     ;; If inside math mode of LaTeX-mode, escape from it.
      (if (or
                (eq (get-text-property (point) 'face) 'font-latex-math-face)
                (member 'font-latex-math-face (get-text-property (point) 'face)))
-              (search-forward-regexp "\\$?\\$")))))
+         (save-match-data (search-forward-regexp "\\$?\\$"))))))
+;; Install LaTeX improved `up-list' command
+(add-hook 'LaTeX-mode-hook (lambda()
+                             (if (boundp 'massimo-keyboard-mode-map)
+                                 (define-key massimo-keyboard-mode-map (kbd "M-p") 'LaTeX-up-list)
+                                 )
+                             ))
+
 
 
 ;; Viewer customization
