@@ -4,22 +4,22 @@
 ;;;-----------------------------------------------------------------
 
 ;; Regular fonts
-(setq 
+(setq
  font-X11-no-antialias "-misc-fixed-medium-r-normal--18-*-*-*-*-*-iso10646-1"
  font-X11-antialias    "Monospace-10"
  font-Mac-antialias    "Monaco-12"
  )
 
 ;; Bigger fonts
-(when (and (boundp 'prefs-activate-bigfont) prefs-activate-bigfont) 
-  (setq 
+(when (and (boundp 'prefs-activate-bigfont) prefs-activate-bigfont)
+  (setq
    font-X11-no-antialias "-misc-fixed-medium-r-normal--20-*-*-*-*-*-iso10646-1"
    font-X11-antialias    "Monospace-14"
    font-Mac-antialias    "Monaco-14"
    ))
 
 
-;;; Visual preferences for Emacs 23 and above 
+;;; Visual preferences for Emacs 23 and above
 
 ;; Font aliases are supported
 ;; BUG: color-theme-zenburn must be loaded AFTER setting the fonts.
@@ -41,7 +41,7 @@
    (when-available 'color-theme-zenburn (color-theme-zenburn)))
   )
 
-;;; Visual preferences for Emacs 22 
+;;; Visual preferences for Emacs 22
 
 ;; Font aliases are not supported. I have to use the horrible barbwire syntax
 ;; BUG: color-theme-zenburn must be loaded BEFORE setting the fonts.
@@ -60,10 +60,10 @@
 
 ;; Calendar localization
 (setq calendar-week-start-day 1
-      calendar-day-name-array ["Domenica" "Lunedì" "Martedì" "Mercoledì" 
+      calendar-day-name-array ["Domenica" "Lunedì" "Martedì" "Mercoledì"
                                "Giovedì" "Venerdì" "Sabato"]
       calendar-month-name-array ["Gennaio" "Febbraio" "Marzo" "Aprile" "Maggio"
-                                 "Giugno" "Luglio" "Agosto" "Settembre" 
+                                 "Giugno" "Luglio" "Agosto" "Settembre"
                                  "Ottobre" "Novembre" "Dicembre"])
 
 (when-available 'scroll-bar-mode (scroll-bar-mode -1)) ;; scroll-bar-mode undefined in terminal emacs!
@@ -109,14 +109,15 @@
 (cua-mode t)
 
 
-(setq cua-keep-region-after-copy t) 
+(setq cua-keep-region-after-copy t)
 
 
 ;;(setq warning-minimum-level :error)
+(setq frame-title-format '( " " "%[%b%]" " [%*] %p" "  <%@" invocation-name "@" (:eval (system-name)) ">"))
 
 
 (provide 'init-preferences)
 ;; Local Variables:
-;; mode: emacs-lisp 
+;; mode: emacs-lisp
 ;; folded-file: t
-;; End: 
+;; End:
