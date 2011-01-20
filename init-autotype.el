@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2011-01-05, mercoledì 03:29 (CET) Massimo Lauria>
+;; Time-stamp: <2011-01-20, giovedì 12:22 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -230,6 +230,7 @@ default handler."
 ;; Activate `autopair-mode' in sh-mode
 (add-hook 'sh-mode-hook  #'(lambda () (autopair-mode t) ))
 (add-hook 'c-mode-hook   #'(lambda () (autopair-mode t) ))
+(add-hook 'org-mode-hook #'(lambda () (autopair-mode t) ))
 
 
 ;; In these modes, autopair seems completely broken
