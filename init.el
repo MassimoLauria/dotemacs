@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
-;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-11-28, domenica 15:51 (CET) Massimo Lauria"
+;; Copyright (C) 2010, 2011  Massimo Lauria
+;; Time-stamp: "2011-01-21, venerdì 15:29 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -62,31 +62,31 @@
 ;;  Two modifiers for inter-buffer operations (i.e. navigation)
 ;;  Function keys for buffer processing (compile,check,...)
 ;;
-;;  M-C-<arrow> for moving between windows 
+;;  M-C-<arrow> for moving between windows
 ;;  M-S-<arrow> for moving between buffers/screens
 ;;  CUA-selection on (C-<SPC) mark, C-<RET> rect.,C-z C-x C-c C-v)
-;;  F2   for local  spell check  
-;;  S-F2 for global spell check             
+;;  F2   for local  spell check
+;;  S-F2 for global spell check
 ;;  M-Space for folding
 ;;  Tab for indent/auto-complete
 ;;  M-Tab for correct w.r.t. spellcheck (on Flyspell)
-;;  
+;;
 
 ;; Moving in text
-(global-set-key [C-left]  'backward-word) 
+(global-set-key [C-left]  'backward-word)
 (global-set-key [C-right] 'forward-word)
-(global-set-key [C-up]    'backward-paragraph) 
+(global-set-key [C-up]    'backward-paragraph)
 (global-set-key [C-down]  'forward-paragraph)
 
 ;; Moving in structes
-(global-set-key [M-left] 'backward-sentence) 
+(global-set-key [M-left] 'backward-sentence)
 (global-set-key [M-right] 'forward-sentence)
-(global-set-key [M-up] 'backward-sexp) 
+(global-set-key [M-up] 'backward-sexp)
 (global-set-key [M-down] 'forward-sexp)
 
 ;; Text movements keybindings
 (require 'massimo-keyboard)
-(massimo-keyboard-global-mode)  
+(massimo-keyboard-global-mode)
 
 ;; Managing windows [C-M]
 ; Moving
@@ -121,14 +121,14 @@
 (global-set-key [M-prior] 'previous-error) ; Does not work with LaTeX!
 (global-set-key [M-next] 'next-error)
 
-(global-set-key (kbd "#") 'comment-region-maybe)
+;; (global-set-key (kbd "#") 'comment-region-maybe) `comment-dwim' is already bound to M-;
 
 ;; Spellcheck
 (global-set-key (kbd "M-s") 'my-spell-correct-word)
-(global-set-key [f2] 'ispell-buffer) 
+(global-set-key [f2] 'ispell-buffer)
 
-;; Folding on/off (M-Space) 
-(global-set-key (kbd "M-<SPC>") 'folding-toggle-show-hide) 
+;; Folding on/off (M-Space)
+(global-set-key (kbd "M-<SPC>") 'folding-toggle-show-hide)
 (global-set-key (kbd " ") 'folding-toggle-show-hide)
 
 ;; Tab is actually a "Smart tab"

@@ -18,7 +18,7 @@
 ;; commands inline, uncomment the following line and configure sage-view:
 (require-maybe 'sage-view "sage-view")
 (add-hook 'sage-startup-after-prompt-hook 'sage-view)
-;; You can use commands like 
+;; You can use commands like
 ;; (add-hook 'sage-startup-after-prompt-hook 'sage-view
 ;; 'sage-view-disable-inline-output 'sage-view-disable-inline-plots)
 ;; to have xsome combination of features.  In future, the customize interface
@@ -26,6 +26,6 @@
 
 (provide 'init-sage)
 ;; Local Variables:
-;; mode: emacs-lisp 
+;; mode: emacs-lisp
 ;; folded-file: t
-;; End: 
+;; End:
