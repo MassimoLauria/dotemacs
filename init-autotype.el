@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2011-01-20, giovedì 12:22 (CET) Massimo Lauria>
+;; Time-stamp: <2011-01-25, Tuesday 10:11 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -56,18 +56,21 @@
 
 ;;; YaSnippet -------------------------------------------------------------------------
 
-(require 'yasnippet)
-(setq yas/root-directory nil)
-(if (file-directory-p "/usr/share/emacs/site-lisp/yasnippet/snippets")
-    (add-to-list 'yas/root-directory "/usr/share/emacs/site-lisp/yasnippet/snippets") ;; Snippet's file folder.
-  )
-(if (file-directory-p (concat default-elisp-path "/snippets/"))
-    (add-to-list 'yas/root-directory (concat default-elisp-path "/snippets/")) ;; Snippet's file folder.
-  )
-;; Map `yas/load-directory' to every element
-(mapc 'yas/load-directory yas/root-directory)
-(setq yas/ignore-filenames-as-triggers t)
-
+(require-maybe 'yasnippet)
+(when-available
+ 'yas/about
+ (progn
+   (setq yas/root-directory nil)
+   (if (file-directory-p "/usr/share/emacs/site-lisp/yasnippet/snippets")
+       (add-to-list 'yas/root-directory "/usr/share/emacs/site-lisp/yasnippet/snippets") ;; Snippet's file folder.
+     )
+   (if (file-directory-p (concat default-elisp-path "/snippets/"))
+       (add-to-list 'yas/root-directory (concat default-elisp-path "/snippets/")) ;; Snippet's file folder.
+     )
+   ;; Map `yas/load-directory' to every element
+   (mapc 'yas/load-directory yas/root-directory)
+   (setq yas/ignore-filenames-as-triggers t)
+   ))
 
 ;;; Copyright update --- setup in custom.el
 
