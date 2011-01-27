@@ -7,3 +7,6 @@
 [submodule "3rdparties/bbdb-vcard"]
 	path = 3rdparties/bbdb-vcard
 	url = http://github.com/trebb/bbdb-vcard.git
+[submodule "3rdparties/org2blog"]
+	path = 3rdparties/org2blog
+	url = http://github.com/punchagan/org2blog.git
