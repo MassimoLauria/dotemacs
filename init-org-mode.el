@@ -5,6 +5,13 @@
 ;;;
 ;;;------------------------------------------------------------------
 
+(when running-MacOSX
+  (setq MacUser-org-path (concat MacUser-site-lisp "/org-7.4"))
+  (if (file-directory-p MacUser-org-path)
+      (setq load-path (cons MacUser-org-path load-path)))
+)
+
+
 (require 'org)
 
 (setq org-directory "~/personal/agenda/")
