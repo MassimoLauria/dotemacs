@@ -1,6 +1,6 @@
 ;;; init-unsorted-elisp.el --- Contains small chunks of elisp code in no particular order
 
-;; Copyright (C) 2010  Massimo Lauria
+;; Copyright (C) 2010, 2011  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -130,6 +130,23 @@
       ido-everywhere t            ; use for many file dialogs
       ido-case-fold  t            ; be case-insensitive
       ido-auto-merge-werk-directories-length nil) ; all failed, no more digging
+
+;; Recentf with ido-completio.
+(require-maybe 'recentf)
+; 50 files ought to be enough.
+(setq recentf-max-saved-items 50)
+
+(defun ido-recentf-open ()
+  "Use `ido-completing-read' to \\[find-file] a recent file"
+  (interactive)
+  (if (find-file (ido-completing-read "Find recent file: " recentf-list))
+      (message "Opening file...")
+    (message "Aborting")))
+
+;; get rid of `find-file-read-only' and replace it with something
+;; more useful.
+(when-available 'recentf-mode (recentf-mode t))
+(when-available 'recentf-mode (global-set-key (kbd "C-x C-r") 'ido-recentf-open))
 
 ;; Moving between windows with (M-C-<arrow>)
 (require 'windmove)               ; to load the package
