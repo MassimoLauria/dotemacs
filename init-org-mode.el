@@ -6,11 +6,13 @@
 ;;;------------------------------------------------------------------
 
 (when running-MacOSX
-  (setq MacUser-org-path (concat MacUser-site-lisp "/org-7.4"))
+  (setq MacUser-org-path (concat MacUser-site-lisp "/org-7.4/lisp/"))
+  (setq MacUser-org-contrib-path (concat MacUser-site-lisp "/org-7.4/contrib/lisp"))
   (if (file-directory-p MacUser-org-path)
       (setq load-path (cons MacUser-org-path load-path)))
+  (if (file-directory-p MacUser-org-contrib-path)
+      (setq load-path (cons MacUser-org-contrib-path load-path)))
 )
-
 
 (require 'org)
 
@@ -189,6 +191,10 @@
 (require 'google-weather)
 (require 'org-google-weather)
 
+
+;; Wordpress blogging in Org-mode! (with Math!)
+(add-to-list 'load-path (concat default-elisp-3rdparties "/org2blog"))
+(require-maybe 'org2blog)
 
 
 (provide 'init-org-mode)
