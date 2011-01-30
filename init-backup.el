@@ -29,15 +29,15 @@
                 (cons tramp-file-name-regexp nil))
 (setq tramp-auto-save-directory nil)
 
-;; Enable backup files.
-(setq make-backup-files t)
-;; Enable versioning with default values (keep five last versions, I think!)
-(setq version-control t)
-
-;; Control backup
-(setq delete-old-version t) ;; Do not ask
-(setq kept-old-versions 5)
-(setq kept-new-versions 5)
+;; Backup setting in Customized.
+;; ;; Enable backup files.
+;; (setq make-backup-files t)
+;; ;; Enable versioning with default values (keep five last versions, I think!)
+;; (setq version-control nil)
+;; ;; Control backup
+;; (setq delete-old-version t) ;; Do not ask
+;; (setq kept-old-versions 5)
+;; (setq kept-new-versions 5)
 
 
 
