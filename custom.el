@@ -47,7 +47,7 @@
  '(ns-right-alternate-modifier nil)
  '(ns-tool-bar-display-mode (quote both) t)
  '(ns-tool-bar-size-mode (quote regular) t)
- '(one-buffer-one-frame-mode nil nil (aquamacs-frame-setup))
+;; '(one-buffer-one-frame-mode nil nil (aquamacs-frame-setup)) ; It makes non aquamacs emacs to FAIL
  '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
  '(safe-local-variable-values (quote ((ispell-default-dictionary . american) (TeX-PDF-mode . t) (folded-file . t))))
  '(show-paren-mode t)
