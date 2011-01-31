@@ -8,10 +8,10 @@
 
 ;; wanderlust conf file
 (setq
-  
+
   wl-interactive-send t       ;; Ask before sending message
   wl-interactive-exit t       ;; Ask before quit
-  wl-stay-folder-window nil   ;; Folder window disappears 
+  wl-stay-folder-window nil   ;; Folder window disappears
   wl-summary-always-sticky-folder-list nil
 
   wl-auto-select-first  nil   ;; Do not open first message
@@ -21,22 +21,22 @@
   wl-draft-reply-buffer-style  'split
 
   wl-forward-subject-prefix "Fwd: " ;; default is 'Forward: '
-  
+
   wl-folder-window-width 30     ;; toggle on/off with 'l'
-  
+
   wl-demo-display-logo nil
 
   wl-insert-message-id nil
-  
+
   wl-draft-always-delete-myself t
 
   wl-folder-check-async t
   elmo-imap4-use-modified-utf7 t
-  
+
   wl-temporary-file-directory "~/queue/"
 
   wl-summary-width 120
- 
+
   elmo-localdir-folder-path "~/personal/mail/"
 
 ;; number temporary-mark persistent-mark date branch [ (number-of-children) sender ] subject
@@ -57,9 +57,9 @@
          wl-modeline-biff-state-off)
        global-mode-string))
 
-;; Remove it when exiting. 
+;; Remove it when exiting.
 (add-hook 'wl-exit-hook
-          '(lambda () 
+          '(lambda ()
              (setq global-mode-string
                    (delete  '(wl-modeline-biff-status
                               wl-modeline-biff-state-on
@@ -71,7 +71,7 @@
 ;; In case of a small screen we fix the previous settings.
 (when (boundp 'ask-smallscreen)
 (setq
- wl-stay-folder-window nil     ;; Folder window disappear 
+ wl-stay-folder-window nil     ;; Folder window disappear
  wl-summary-width 75
  wl-summary-line-format "%T%P%Y/%M/%D(%W)%t%[%20(%c %f%)%] %s"
  wl-draft-buffer-style        'full
@@ -105,9 +105,9 @@
 (define-key wl-summary-mode-map "D" 'wl-summary-delete)
 (define-key wl-summary-mode-map "o" 'wl-summary-refile)
 
-;; MIME-View keybindings for usage into the  
-(add-hook 'mime-view-mode-hook 
-          (lambda () 
+;; MIME-View keybindings for usage into the
+(add-hook 'mime-view-mode-hook
+          (lambda ()
             (local-unset-key "a" )
             (local-unset-key "f" )
             (local-unset-key "l" )
@@ -120,7 +120,7 @@
 
 ;; Mail Viewing
 (setq
-  wl-message-ignored-field-list '("^.*:") ;; Ignored fields 
+  wl-message-ignored-field-list '("^.*:") ;; Ignored fields
   wl-message-visible-field-list           ;; Visible list
   '("^\\(To\\|Cc\\):"
 
@@ -174,14 +174,14 @@
   (save-excursion
     (goto-char 0)
     (unless ;; don't we have an attachment?
-        
+
         (re-search-forward "^Content-Disposition: attachment" nil t)
       (when ;; no attachment; did we mention an attachment?
           (re-search-forward "attach\\|alleg\\|Attach\\|Alleg" nil t)
         (unless (y-or-n-p "Possibly missing an attachment. Send current draft?")
           (error "Abort."))))))
 
-;; Check some misbehaviour before sending mails 
+;; Check some misbehaviour before sending mails
 (add-hook 'wl-mail-send-pre-hook 'djcb-wl-draft-subject-check)
 (add-hook 'wl-mail-send-pre-hook 'djcb-wl-draft-attachment-check)
 
@@ -213,12 +213,12 @@
 
 
 ;; IMAP settings (incoming mail)
-(setq elmo-imap4-default-user   private-imap4-login ) 
+(setq elmo-imap4-default-user   private-imap4-login )
 (setq elmo-imap4-default-server private-imap4-server)
 (setq elmo-imap4-default-port   private-imap4-port  )
-(setq elmo-imap4-default-authenticate-type 'clear) 
+(setq elmo-imap4-default-authenticate-type 'clear)
 (setq elmo-imap4-default-stream-type 'ssl)
-(setq elmo-imap4-use-modified-utf7 t) 
+(setq elmo-imap4-use-modified-utf7 t)
 
 ;; SMTP settings (outgoing mail)
 (setq wl-smtp-connection-type 'starttls)
@@ -233,17 +233,17 @@
 (setq wl-default-folder "%inbox")
 (setq wl-default-spec "%")
 (setq wl-fcc "+sent")            ;; Local folders for saving sent messages
-(setq wl-fcc-force-as-read t)    ;; Mails FCCed are set as read. 
+(setq wl-fcc-force-as-read t)    ;; Mails FCCed are set as read.
 (setq wl-draft-folder "+drafts") ;; IMAP folder is too slow for autosaves.
 (setq wl-trash-folder private-imap4-trash) ;; Trash folder is online.
 
   ;; check this folder periodically, and update modeline
-(setq 
+(setq
  wl-biff-check-folder-list '("%inbox") ;; check every 180 seconds
  wl-biff-check-interval    180
 )
 
-;; Add reverse ordering 
+;; Add reverse ordering
 (defun wl-summary-overview-entity-compare-by-rdate (x y)
   (wl-summary-overview-entity-compare-by-date y x)
   )
@@ -258,5 +258,5 @@
 ;;(defadvice wl-summary-rescan (after wl-summary-rescan-move-cursor activate)
 ;;  (if (string-match "^r" (ad-get-arg 0))
 ;;      (wl-summary-display-top)
-;;    )  
+;;    )
 ;;)

@@ -3,9 +3,33 @@
 ;;;
 ;;;------------------------------------------------------------------
 
+; Load paths for wanderlust
+(when running-Aquamacs
+  (setq MacUser-apel-path (concat MacUser-site-lisp "/apel"))
+  (setq MacUser-semi-path (concat MacUser-site-lisp "/semi"))
+  (setq MacUser-flim-path (concat MacUser-site-lisp "/flim"))
+  (setq MacUser-wl-path   (concat MacUser-site-lisp "/wanderlust/wl"))
+  (setq MacUser-elmo-path (concat MacUser-site-lisp "/wanderlust/elmo"))
+  (setq MacUser-wlutil-path (concat MacUser-site-lisp "/wanderlust/utils"))
+
+(if (file-directory-p MacUser-apel-path)
+      (add-to-list 'load-path MacUser-apel-path))
+  (if (file-directory-p MacUser-semi-path)
+      (add-to-list 'load-path MacUser-semi-path))
+  (if (file-directory-p MacUser-flim-path)
+      (add-to-list 'load-path MacUser-flim-path))
+  (if (file-directory-p MacUser-wl-path)
+      (add-to-list 'load-path MacUser-wl-path))
+  (if (file-directory-p MacUser-elmo-path)
+      (add-to-list 'load-path MacUser-elmo-path))
+  (if (file-directory-p MacUser-wlutil-path)
+      (add-to-list 'load-path MacUser-wlutil-path))
+  (require 'wl)
+)
 
 
-(setq 
+
+(setq
  wl-init-file    "~/config/emacs/wanderlust.el"
  wl-folders-file "~/personal/conf/wanderlust-folders"
  wl-address-file "~/personal/agenda/contacts.wl"
@@ -60,15 +84,15 @@ region is included in the mail body.
 "
   (interactive)
   (wl-draft '(
-              (To . "") 
+              (To . "")
               (Cc . "")
               (Bcc . "")
               (Subject . "")
               )
             nil
             nil
-            (when (use-region-p) 
-              (buffer-substring (region-beginning) 
+            (when (use-region-p)
+              (buffer-substring (region-beginning)
                                 (region-end))
               )
             )
@@ -86,7 +110,7 @@ region is included in the mail body.
       (add-to-list 'load-path MacUser-bbdb-path))
 )
 ;; Load bbdb
-(and 
+(and
  (require-maybe 'bbdb)
  (bbdb-initialize)
 )
@@ -106,13 +130,13 @@ region is included in the mail body.
 
 
 (setq
-    
+
     bbdb-offer-save 1                        ;; 1 means save-without-asking
-     
+
     bbdb-use-pop-up nil                      ;; allow popups for addresses
     bbdb-electric-p t                        ;; be disposable with SPC
     bbdb-popup-target-lines  1               ;; very small
-    
+
     bbdb-dwim-net-address-allow-redundancy t ;; always use full name
     bbdb-quiet-about-name-mismatches t       ;; show name-mismatches 2 secs
 
@@ -132,7 +156,7 @@ region is included in the mail body.
 
 )
 
-;; vCard + BBDB-vCard 
+;; vCard + BBDB-vCard
 (setq load-path (append load-path (list (concat default-elisp-3rdparties "/bbdb-vcard") )))
 
 (autoload 'bbdb-vcard-import-region       "bbdb-vcard" "Import vCard entries in the selected region into BBDB database." t)
@@ -144,8 +168,8 @@ region is included in the mail body.
 
 
 ;; This is in the case we edit mail for Mutt client
-(add-to-list 'auto-mode-alist '(".*mutt.*" . message-mode))                                                                   
-(setq mail-header-separator "")                                                                                               
+(add-to-list 'auto-mode-alist '(".*mutt.*" . message-mode))
+(setq mail-header-separator "")
 (add-hook 'message-mode-hook
           'turn-on-auto-fill
           (function
@@ -164,6 +188,6 @@ region is included in the mail body.
 
 (provide 'init-mail-wl)
 ;; Local Variables:
-;; mode: emacs-lisp 
+;; mode: emacs-lisp
 ;; folded-file: t
-;; End: 
+;; End:
