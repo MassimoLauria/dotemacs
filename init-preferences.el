@@ -18,11 +18,27 @@
    font-Mac-antialias    "Monaco-14"
    ))
 
+;; Meta usage in MacOSX requires some thought
+(when running-NSCocoa-process
+  (if (boundp 'ns-right-alternate-modifier)
+      (progn
+        (setq ns-alternate-modifier 'meta)
+        (setq ns-right-alternate-modifier 'nil))
+    (setq ns-alternate-modifier 'nil)
+    )
+)
 
 ;;; Visual preferences for Emacs 23 and above
 
 ;; Font aliases are supported
 ;; BUG: color-theme-zenburn must be loaded AFTER setting the fonts.
+
+;; Try to set a load-path color-theme as a custom package.
+(when running-MacOSX
+  (setq MacUser-color-theme-path (concat MacUser-site-lisp "/color-theme"))
+  (if (file-directory-p MacUser-color-theme-path)
+      (setq load-path (cons MacUser-color-theme-path load-path)))
+)
 
 (unless running-GNUEmacs22  ;; Default font for Emacs >22.
   ;; Aquamacs main font

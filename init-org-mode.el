@@ -6,8 +6,8 @@
 ;;;------------------------------------------------------------------
 
 (when running-MacOSX
-  (setq MacUser-org-path (concat MacUser-site-lisp "/org-7.4/lisp/"))
-  (setq MacUser-org-contrib-path (concat MacUser-site-lisp "/org-7.4/contrib/lisp"))
+  (setq MacUser-org-path (concat MacUser-site-lisp "/org/lisp/"))
+  (setq MacUser-org-contrib-path (concat MacUser-site-lisp "/org/contrib/lisp"))
   (if (file-directory-p MacUser-org-path)
       (setq load-path (cons MacUser-org-path load-path)))
   (if (file-directory-p MacUser-org-contrib-path)

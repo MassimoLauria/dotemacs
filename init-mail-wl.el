@@ -105,7 +105,7 @@ region is included in the mail body.
 ;; (Insidious) Big Brother DataBase, collects mail addresses.
 ;; MacOSX alternative path
 (when running-MacOSX
-  (setq MacUser-bbdb-path (concat MacUser-site-lisp "/bbdb-2.3.5"))
+  (setq MacUser-bbdb-path (concat MacUser-site-lisp "/bbdb"))
   (if (file-directory-p MacUser-bbdb-path)
       (add-to-list 'load-path MacUser-bbdb-path))
 )
