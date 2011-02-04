@@ -44,7 +44,7 @@
 
 (unless running-GNUEmacs22  ;; Default font for Emacs >22.
   ;; Aquamacs main font
-  (when-running-Aquamacs
+  (when-running-MacOSX
    (set-default-font font-Mac-antialias)
    (add-to-list 'default-frame-alist `(font . ,font-Mac-antialias))
    )
