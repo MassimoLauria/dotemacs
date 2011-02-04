@@ -88,10 +88,10 @@ started."
 
 
 
-;; Viewer customization
-(add-hook 'LaTeX-mode-hook (lambda ()
-							 (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
-							 ))
+;; ;; Viewer customization (seems to be broken on Aquamacs)
+;; (add-hook 'LaTeX-mode-hook (lambda ()
+;; 							 (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
+;; 							 ))
 
 (when-running-X11-process
  (add-hook 'LaTeX-mode-hook
