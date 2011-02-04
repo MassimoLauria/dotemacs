@@ -4,13 +4,14 @@
 ;;;-----------------------------------------------------------------
 
 
-;; First of all, load all Emacs specific personal preferences
+;; Load all Emacs specific personal preferences
 ;; and information
 (setq prefs-local-file-name "~/personal/conf/emacs.el")
 
 (when (file-readable-p prefs-local-file-name)
   (load-file prefs-local-file-name)
 )
+
 
 ;;;
 ;;;  Default values
@@ -20,7 +21,7 @@
 ;; Math applications
 (setq prefs-activate-latex      t) ; Enable auctex
 (setq prefs-activate-maxima   nil) ; Imaxima and Imath
-(setq prefs-activate-sage     nil) ; Sagemath 
+(setq prefs-activate-sage     nil) ; Sagemath
 (setq prefs-activate-singular nil) ; Singular
 
 
@@ -49,9 +50,8 @@
   (setq prefs-activate-widescreen  t)
 )
 
-
 (provide 'init-local-preferences)
 ;; Local Variables:
-;; mode: emacs-lisp 
+;; mode: emacs-lisp
 ;; folded-file: t
-;; End: 
+;; End:
