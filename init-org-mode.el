@@ -188,9 +188,11 @@
 (when-running-MacOSX
  (setq org-google-weather-icon-directory (concat MacUser-site-lisp "/google-weather-icons/"))
 )
+(when-running-Aquamacs
+ (require 'mailcap)
+ )
 (require 'google-weather)
 (require 'org-google-weather)
-
 
 ;; Wordpress blogging in Org-mode! (with Math!)
 (add-to-list 'load-path (concat default-elisp-3rdparties "/org2blog"))
