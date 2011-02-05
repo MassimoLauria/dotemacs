@@ -184,22 +184,6 @@
 )
 (add-hook 'org-agenda-mode-hook 'org-agenda-mode-setup-local-keys)
 
-;; Weather in Org-Agenda
-(unless running-GNUEmacs22
-
-  (when-running-MacOSX
-   (setq org-google-weather-icon-directory (concat MacUser-site-lisp "/google-weather-icons/"))
-   )
-
-  (if (not (fboundp 'mailcap-parse-mailcaps))
-      (require 'mailcap)
-    )
-
-  (require 'google-weather)
-  (require 'org-google-weather)
-
-  )
-
 ;; Wordpress blogging in Org-mode! (with Math!)
 (add-to-list 'load-path (concat default-elisp-3rdparties "/org2blog"))
 (require-maybe 'org2blog)
