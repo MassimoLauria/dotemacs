@@ -3,32 +3,6 @@
 ;;;
 ;;;------------------------------------------------------------------
 
-; Load paths for wanderlust
-(when running-Aquamacs
-  (setq MacUser-apel-path (concat MacUser-site-lisp "/apel"))
-  (setq MacUser-semi-path (concat MacUser-site-lisp "/semi"))
-  (setq MacUser-flim-path (concat MacUser-site-lisp "/flim"))
-  (setq MacUser-wl-path   (concat MacUser-site-lisp "/wanderlust/wl"))
-  (setq MacUser-elmo-path (concat MacUser-site-lisp "/wanderlust/elmo"))
-  (setq MacUser-wlutil-path (concat MacUser-site-lisp "/wanderlust/utils"))
-
-(if (file-directory-p MacUser-apel-path)
-      (add-to-list 'load-path MacUser-apel-path))
-  (if (file-directory-p MacUser-semi-path)
-      (add-to-list 'load-path MacUser-semi-path))
-  (if (file-directory-p MacUser-flim-path)
-      (add-to-list 'load-path MacUser-flim-path))
-  (if (file-directory-p MacUser-wl-path)
-      (add-to-list 'load-path MacUser-wl-path))
-  (if (file-directory-p MacUser-elmo-path)
-      (add-to-list 'load-path MacUser-elmo-path))
-  (if (file-directory-p MacUser-wlutil-path)
-      (add-to-list 'load-path MacUser-wlutil-path))
-  (require 'wl)
-)
-
-
-
 (setq
  wl-init-file    "~/config/emacs/wanderlust.el"
  wl-folders-file "~/personal/conf/wanderlust-folders"
