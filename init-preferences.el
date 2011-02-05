@@ -106,8 +106,10 @@
 (show-paren-mode 1)
 
 (defalias 'yes-or-no-p 'y-or-n-p) ; y/n instead of yes/no
-(setq confirm-kill-emacs 'y-or-n-p)
-
+(if running-Aquamacs
+    (setq confirm-kill-emacs nil)     ; Aquamacs won't interrupt logging out
+  (setq confirm-kill-emacs 'y-or-n-p) ; In other cases daemon is just killed.
+  )
 
 ;;  Tab expansion
 (setq-default indent-tabs-mode nil) ;; Expand tabs as spaces
