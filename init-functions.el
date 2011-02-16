@@ -299,12 +299,19 @@ either ispell or flyspell, if the latter is active"
             (buffer-name))))
 
 ;;----- Additional modes -—-------------------------------------------------
-(define-generic-mode vimrc-mode
-  '("\"")
-  '("set" "syntax" "noremap" "inoremap" "map")
-  nil
-  '("\\.vim\\'")
-  nil)
+(define-generic-mode 'vimrc-mode
+    '("\"")
+    '("set" "syntax" "noremap" "inoremap" "map")
+    '(("^[\t ]*:?\\(!\\|ab\\|map\\|unmap\\)[^\r\n\"]*\"[^\r\n\"]*\\(\"[^\r\n\"]*\"[^\r\n\"]*\\)*$"
+       (0 font-lock-warning-face))
+      ("\\(^\\|[\t ]\\)\\(\".*\\)$"
+      (2 font-lock-comment-face))
+      ("\"\\([^\n\r\"\\]\\|\\.\\)*\""
+       (0 font-lock-string-face)))
+    '("/vimrc\\'" "\\.vim\\(rc\\)?\\'")
+    '((lambda ()
+        (modify-syntax-entry ?\" ".")))
+    "Generic mode for Vim configuration files.")
 
 
 (provide 'init-functions)
