@@ -155,7 +155,8 @@
 )
 
 ;; Org-protocol to make org-mode to interact with other applications
-(require 'org-protocol)
+(require-maybe 'org-protocol)  ;; Do not exists on Emacs22
+
 ;; Autofocus and raise the Emacs frame which should get the input.
 (add-hook 'org-remember-mode-hook
           (lambda ()(select-frame-set-input-focus (selected-frame))))
