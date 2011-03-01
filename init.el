@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010, 2011  Massimo Lauria
-;; Time-stamp: "2011-02-05, Saturday 21:56 (CET) Massimo Lauria"
+;; Time-stamp: "2011-03-01, martedì 13:43 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -102,6 +102,13 @@
 (global-set-key (kbd "M-C-.") 'split-window-horizontally)
 ;; Make a window to be sticky.
 (global-set-key [pause] 'toggle-current-window-sticky)
+
+
+
+;; Moving between buffers (M-S)
+(global-set-key [M-S-up] 'previous-user-buffer)
+(global-set-key [M-S-down] 'next-user-buffer)
+
 
 
 ;; Broken on Xterm
