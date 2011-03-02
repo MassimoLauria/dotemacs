@@ -10,13 +10,12 @@
 (setq ipython-command "/usr/bin/ipython2.6")
 (when (require-maybe 'ipython)
   (setq py-python-command-args '("-pylab" "-colors" "Linux"))
-;;;- Functions Modified from ErgoEmacs ( previous/next user/emacs buffer ) -------------------------
   (setq ipython-completion-command-string "print(';'.join(__IP.Completer.all_completions('%s')))\n")
 )
 
 
 ;; Python Hook(s) ----------------------------------------------------------------------------------
-(add-hook 
+(add-hook
  'python-mode-hook (lambda ()
                      (set-variable 'py-indent-offset 4)
                      ;;(set-variable 'py-smart-indentation nil)
@@ -54,7 +53,7 @@
 ;; '(add-to-list 'pymacs-load-path YOUR-PYMACS-DIRECTORY"))
 (pymacs-load "ropemacs" "rope-")
 (setq ropemacs-enable-autoimport t)
- 
+
 
 
 ;; Auto Syntax Error Hightlight (very preliminary and with poor support) --------------------------
@@ -75,7 +74,7 @@
 
 (provide 'init-python)
 ;; Local Variables:
-;; mode: emacs-lisp 
+;; mode: emacs-lisp
 ;; folded-file: t
-;; End: 
+;; End:
 

@@ -3,8 +3,8 @@
 ;;;
 ;;;------------------------------------------------------------------
 
-(setq sage-version "4.3.3")
-(setq sage-basedir "/usr/local/lib/sage-4.3.3/")
+(setq sage-version "4.6")
+(setq sage-basedir "/usr/local/lib/sage-4.6/")
 (setq sage-elisp-path (concat sage-basedir "data/emacs"))
 
 ;;;-------------------------------------------------------------------
