@@ -158,7 +158,6 @@
   "Display a warning to the user, using lwarn"
   (message warning))
 
-
 ;; All urls/mails are clickable in comments and strings (Not present in Emacs22)
 (when-available 'goto-address-prog-mode
   (add-hook 'find-file-hooks 'goto-address-prog-mode)
@@ -183,6 +182,22 @@
 (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
 
 ;;}}}
+
+(require-maybe 'lambda-mode)
+(setq lambda-symbol "λ")
+
+
+
+;; Comint keys
+(require 'comint)
+(add-hook 'comint-mode-hook
+          '(lambda()
+             (local-set-key (kbd "M-n") 'comint-next-input)
+             (local-set-key (kbd "M-p") 'comint-previous-input)
+             (local-set-key [down] 'comint-next-matching-input-from-input)
+             (local-set-key [up] 'comint-previous-matching-input-from-input)
+             ))
+
 
 
 ;; Tags managements ----------------------------------------

@@ -16,7 +16,7 @@ ignore = ",".join ( [
 ] )
 
 cmd = "pylint --output-format parseable --include-ids y --reports n --disable-msg=%s %s" % \
-    ( ignore, sys.argv[1], )
+    ( ignore , sys.argv[1], )
 
 p = Popen ( cmd, shell = True, bufsize = -1,
             stdin = PIPE, stdout = PIPE, stderr = PIPE, close_fds = True )
@@ -24,6 +24,7 @@ p = Popen ( cmd, shell = True, bufsize = -1,
 pylint_re = re.compile (
     '^([^:]+):(\d+):\s*\[([WECR])([^,]+),\s*([^\]]+)\]\s*(.*)$'
     )
+
 
 for line in p.stdout:
     line = line.strip()
@@ -43,7 +44,7 @@ for line in p.stdout:
         # where the number at the end indicate the index into the regexp
         # groups of ( file, line, column, error text )
         #
-        # You can see what regexps flymake uses to parse its output by   
+        # You can see what regexps flymake uses to parse its output by
         # running 'M-x describe-variable' on the variable
         # 'flymake-err-line-patterns'
 

@@ -10,3 +10,6 @@
 [submodule "3rdparties/org2blog"]
 	path = 3rdparties/org2blog
 	url = http://github.com/punchagan/org2blog.git
+[submodule "3rdparties/pylookup"]
+	path = 3rdparties/pylookup
+	url = http://github.com/tsgates/pylookup.git
