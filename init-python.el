@@ -64,16 +64,14 @@
 
 ;; Code checkers
 
-;; PyChecker
-;; already included in python-mode
-(defun pychecker ()
-  "Run pychecker with default arguments"
-  (interactive)
-  (call-interactively 'py-pychecker-run)
+;; PyChecker and PyFlakes
+;; Use pyflakes instead of pychecker
+(if (executable-find "pyflakes")
+    (progn
+         (setq py-pychecker-command "pyflakes")
+         (setq py-pychecker-command-args "")
+      )
 )
-
-;; PyFlakes
-;; Still to be setup.
 
 ;; PyLint
 ;; already included but use a more recent version if present.
@@ -110,16 +108,32 @@
 ;;             (local-set-key (kbd "C-c h") 'pylookup-lookup)))
 
 
-;; Auto Syntax Error Hightlight (very preliminary and with poor support) --------------------------
+;; Auto Syntax Error Hightlight (very preliminary and with poor support) -------
+
+;; Choose a file checker
+(setq flymake-python-syntax-checker nil)
+(if (and (executable-find "epylint") (not flymake-python-syntax-checker))
+    (setq flymake-python-syntax-checker "epylint")
+)
+(if (and (executable-find "pep8") (not flymake-python-syntax-checker))
+    (setq flymake-python-syntax-checker "pep8")
+)
+(if (and (executable-find "pyflakes") (not flymake-python-syntax-checker))
+    (setq flymake-python-syntax-checker "pyflakes")
+)
+(if (and (executable-find "pychecker") (not flymake-python-syntax-checker))
+    (setq flymake-python-syntax-checker "pychecker")
+)
+
 (when (load "flymake" t)
-  (defun flymake-pylint-init ()
+  (defun flymake-python-init ()
 	(let* ((temp-file (flymake-init-create-temp-buffer-copy
                        'flymake-create-temp-inplace))
            (local-file (file-relative-name
                         temp-file
                         (file-name-directory buffer-file-name))))
-	  (list "~/config/emacs/scripts/epylint.py" (list local-file))))
-  (add-to-list 'flymake-allowed-file-name-masks '("\\.py\\'" flymake-pylint-init)))
+	  (list flymake-python-syntax-checker (list local-file))))
+  (add-to-list 'flymake-allowed-file-name-masks '("\\.py\\'" flymake-python-init)))
 
 (add-hook 'find-file-hook 'flymake-find-file-hook)
 ;; (add-hook 'python-mode-hook
