@@ -27,7 +27,7 @@
 
 ;; Load LaTeX facilities only if set up
 (when (boundp 'default-ac-l-dir)
-  (require 'auto-complete-latex)
+  (require-maybe 'auto-complete-latex)
   (setq ac-l-dict-directory (concat default-ac-l-dir "/ac-l-dict/"))
   )
 
