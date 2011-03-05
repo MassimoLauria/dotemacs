@@ -25,8 +25,8 @@
 (add-to-list 'ac-dictionary-directories (concat default-ac-dir "/dict/"))
 
 
-;; Load LaTeX facilities only if set up
-(when (boundp 'default-ac-l-dir)
+;; Load LaTeX facilities only if present
+(when (and (boundp 'default-ac-l-dir) (file-directory-p default-ac-l-dir))
   (require-maybe 'auto-complete-latex)
   (setq ac-l-dict-directory (concat default-ac-l-dir "/ac-l-dict/"))
   )

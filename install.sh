@@ -3,7 +3,7 @@
 # Copyright (C) 2010, 2011 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2011-03-05, sabato 01:03 (CET) Massimo Lauria"
-# Time-stamp: "2011-03-05, sabato 17:13 (CET) Massimo Lauria"
+# Time-stamp: "2011-03-05, sabato 18:07 (CET) Massimo Lauria"
 
 # Description::
 #
@@ -104,60 +104,59 @@ echo ""
 
 
 #------------- Installing auto-complete-latex. A little bit dirty :-(
-# ACLTGZFILE=http://bitbucket.org/tequilasunset/auto-complete-latex/get/c936a026703b.tar.gz
-# ACLTGZDIR=tequilasunset-auto-complete-latex-c936a026703b
+ACLTGZFILE=http://bitbucket.org/tequilasunset/auto-complete-latex/get/c936a026703b.tar.gz
+ACLTGZDIR=tequilasunset-auto-complete-latex-c936a026703b
 
-# which "hg" 2> /dev/null > /dev/null
-# if [ $? -ne 0 ]; then
+which "hg" 2> /dev/null > /dev/null
+if [ $? -ne 0 ]; then
 
-#     # Check if it is possible to download the package
-#     ACLDOWNLOAD="yes"
+    # Check if it is possible to download the package
+    ACLDOWNLOAD="yes"
 
-#     which "wget" 2> /dev/null > /dev/null
-#     if [ $? -ne 0 ]; then
-#         ACLDOWNLOAD="no"
-#     fi
+    which "wget" 2> /dev/null > /dev/null
+    if [ $? -ne 0 ]; then
+        ACLDOWNLOAD="no"
+    fi
 
-#     which "tar" 2> /dev/null > /dev/null
-#     if [ $? -ne 0 ]; then
-#         ACLDOWNLOAD="no"
-#     fi
+    which "tar" 2> /dev/null > /dev/null
+    if [ $? -ne 0 ]; then
+        ACLDOWNLOAD="no"
+    fi
 
-#     which "mv" 2> /dev/null > /dev/null
-#     if [ $? -ne 0 ]; then
-#         ACLDOWNLOAD="no"
-#     fi
+    which "mv" 2> /dev/null > /dev/null
+    if [ $? -ne 0 ]; then
+        ACLDOWNLOAD="no"
+    fi
 
-#     if [ "$ACLDOWNLOAD" = "yes" ]; then
+    if [ "$ACLDOWNLOAD" = "yes" ]; then
 
-#         echo "Install 'auto-complete-latex' (from tag.gz file)"
-#         wget $ACLTGZFILE -O $PWD/ac-latex.tgz
-#         tar xvfz $PWD/ac-latex.tgz
+        echo "Install 'auto-complete-latex' (from tag.gz file)"
+        wget $ACLTGZFILE -O $PWD/ac-latex.tgz
+        tar xvfz $PWD/ac-latex.tgz
 
-#         $RM    -fr  $PWD/3rdparties/auto-complete-latex/
-#         $MKDIR -p   $PWD/3rdparties/auto-complete-latex/
+        $RM    -fr  $PWD/3rdparties/auto-complete-latex/
+        $MKDIR -p   $PWD/3rdparties/auto-complete-latex/
 
-#         mv $PWD/$ACLTGZDIR/* 3rdparties/auto-complete-latex/
+        mv $PWD/$ACLTGZDIR/* 3rdparties/auto-complete-latex/
 
-#         $RM    -fr  $PWD/ac-latex.tgz
-#         $RM    -fr  $PWD/$ACLTGZDIR/
+        $RM    -fr  $PWD/ac-latex.tgz
+        $RM    -fr  $PWD/$ACLTGZDIR/
 
-#         echo "DONE."
-#     else
-#         echo "Installation of 'auto-complete-latex' failed"
-#         $MKDIR -p   $PWD/3rdparties/auto-complete-latex/
-#     fi
-# else
-#     echo "Install 'auto-complete-latex' (on mercurial)"
-#     rm -fr   $PWD/3rdparties/auto-complete-latex/
-#     echo "Download auto-complete-latex from Mercurial repository"
-#     hg clone \
-#         http://bitbucket.org/tequilasunset/auto-complete-latex \
-#         3rdparties/auto-complete-latex/
-#     echo "DONE"
-# fi
-# echo ""
-# echo ""
+        echo "DONE."
+    else
+        echo "Installation of 'auto-complete-latex' failed"
+        $MKDIR -p   $PWD/3rdparties/auto-complete-latex/
+    fi
+else
+    echo "Install 'auto-complete-latex' (from bitbucket.org with Mercurial)"
+    rm -fr   $PWD/3rdparties/auto-complete-latex/
+    hg clone \
+        http://bitbucket.org/tequilasunset/auto-complete-latex \
+        3rdparties/auto-complete-latex/
+    echo "DONE"
+fi
+echo ""
+echo ""
 
 
 
