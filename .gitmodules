@@ -13,3 +13,6 @@
 [submodule "3rdparties/pylookup"]
 	path = 3rdparties/pylookup
 	url = http://github.com/tsgates/pylookup.git
+[submodule "3rdparties/cclookup"]
+	path = 3rdparties/cclookup
+	url = git://github.com/tsgates/cclookup.git
