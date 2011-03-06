@@ -187,6 +187,27 @@
 (setq lambda-symbol "λ")
 
 
+;; CCLookup documentation of C/C++
+
+;; add pylookup to your loadpath, ex) "~/.lisp/addons/pylookup"
+(setq cclookup-dir (concat default-elisp-3rdparties "/cclookup"))
+(add-to-list 'load-path cclookup-dir)
+;; load pylookup when compile time
+(eval-when-compile (require-maybe 'cclookup))
+
+;; set executable file and db file
+(setq cclookup-program (concat cclookup-dir "/cclookup.py"))
+(setq cclookup-db-file "~/.emacs.d/cclookup.db")
+(if (not (file-exists-p pylookup-db-file))
+    (warn "CClookup database not yet initialized")
+    )
+
+;; to speedup, just load it on demand
+(autoload 'cclookup-lookup "cclookup"
+  "Lookup SEARCH-TERM in the C++ reference indexes." t)
+(autoload 'pylookup-update "cclookup"
+  "Run cclookup-update and create the database at `cclookup-db-file'." t)
+
 
 ;; Comint keys
 (require 'comint)

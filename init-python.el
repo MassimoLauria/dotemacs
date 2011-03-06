@@ -88,7 +88,7 @@
 (setq pylookup-dir (concat default-elisp-3rdparties "/pylookup"))
 (add-to-list 'load-path pylookup-dir)
 ;; load pylookup when compile time
-(eval-when-compile (require 'pylookup))
+(eval-when-compile (require-maybe 'pylookup))
 
 ;; set executable file and db file
 (setq pylookup-program (concat pylookup-dir "/pylookup.py"))
