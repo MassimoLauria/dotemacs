@@ -106,12 +106,17 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; LaTeX mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(when (fboundp 'ac-l-setup)
-  ;;(add-hook 'latex-mode-hook 'ac-l-setup)
-  (add-hook 'LaTeX-mode-hook 'ac-l-setup)
-  )
-(setq ac-l-sources '( ac-source-yasnippet ac-source-words-in-buffer
-     ac-source-files-in-current-dir ac-source-filename ))
+(setq ac-l-sources '(ac-source-yasnippet
+                     ac-source-words-in-buffer
+                     ac-source-files-in-current-dir
+                     ac-source-filename ))
+
+(add-hook 'latex-mode-hook '(lambda ()
+                              (when (fboundp 'ac-l-setup) (ac-l-setup))
+                              ))
+(add-hook 'LaTeX-mode-hook '(lambda ()
+                              (when (fboundp 'ac-l-setup) (ac-l-setup))
+                              ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Python mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TODO: setup using ac-ropemacs-initialize
