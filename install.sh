@@ -3,7 +3,7 @@
 # Copyright (C) 2010, 2011 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2011-03-05, sabato 01:03 (CET) Massimo Lauria"
-# Time-stamp: "2011-03-05, sabato 18:07 (CET) Massimo Lauria"
+# Time-stamp: "2011-03-06, domenica 01:31 (CET) Massimo Lauria"
 
 # Description::
 #
@@ -157,6 +157,42 @@ else
 fi
 echo ""
 echo ""
+
+
+#------------- Update python documentation for pylookup
+PYLOOKUP=$PWD/3rdparties/pylookup/pylookup.py
+PYDOCDIR1=/usr/share/doc/python2.6-doc/html/
+PYDOCDIR2=$PWD/3rdparties/pylookup/python-2.7.1-docs-html/
+PYDOCURL=http://docs.python.org
+PYDOCDB=$EMACSD/pylookup.db
+
+if [ -x "$PYLOOKUP" ]; then
+    if [ -d "$PYDOCDIR1" ]; then
+        echo "Update python documentation DB (my local files)"
+        PYLOOKUPURL=$PYDOCDIR1
+    elif [ -d "$PYDOCDIR2" ]; then
+        echo "Update python documentation DB (included files)"
+        PYLOOKUPURL=$PYDOCDIR2
+    else
+        echo "Update python documentation DB (web)"
+        PYLOOKUPURL=$PYDOCURL
+    fi
+    $PYLOOKUP -u $PYLOOKUPURL -d $PYDOCDB
+else
+    echo "Python documentation DB not installed."
+fi
+
+#------------- Update C/C++ documentation for cclookup
+CCLOOKUP=$PWD/3rdparties/cclookup/cclookup.py
+CCDOCDIR=$PWD/3rdparties/cclookup/www.cppreference.com/wiki/
+CCDOCDB=$EMACSD/cclookup.db
+
+if [ -x "$CCLOOKUP" -a -d "$CCDOCDIR" ]; then
+    echo "Update C/C++ documentation DB (included files)"
+    $CCLOOKUP -u $CCDOCDIR -d $CCDOCDB
+else
+    echo "C/C++ documentation DB not installed."
+fi
 
 
 

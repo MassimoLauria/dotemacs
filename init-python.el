@@ -111,12 +111,13 @@
 ;; Auto Syntax Error Hightlight (very preliminary and with poor support) -------
 
 ;; Choose a file checker
-(setq flymake-python-syntax-checker nil)
-(if (and (executable-find "epylint") (not flymake-python-syntax-checker))
-    (setq flymake-python-syntax-checker "epylint")
-)
+(setq flymake-python-syntax-checker "pep8")
+
 (if (and (executable-find "pep8") (not flymake-python-syntax-checker))
     (setq flymake-python-syntax-checker "pep8")
+)
+(if (and (executable-find "epylint") (not flymake-python-syntax-checker))
+    (setq flymake-python-syntax-checker "epylint")
 )
 (if (and (executable-find "pyflakes") (not flymake-python-syntax-checker))
     (setq flymake-python-syntax-checker "pyflakes")
