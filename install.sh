@@ -3,7 +3,7 @@
 # Copyright (C) 2010, 2011 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2011-03-05, sabato 01:03 (CET) Massimo Lauria"
-# Time-stamp: "2011-03-06, domenica 01:31 (CET) Massimo Lauria"
+# Time-stamp: "2011-03-06, domenica 14:11 (CET) Massimo Lauria"
 
 # Description::
 #
@@ -194,15 +194,22 @@ else
     echo "C/C++ documentation DB not installed."
 fi
 
-
+# -------- Pymacs and Local Python environment ------------------
+install-pymacsenv.sh
+if [ $? -eq 0 ]; then
+    echo "Successful installation of Pymacs and Ropemacs in local python environment."
+else
+    echo "Failed installation pf Pymacs and Ropemacs"
+fi
 
 # -------------------- init.el ----------------------------------
 
-echo "Everything was smooth, now we install a new init.el file..."
+echo "Everything was (more or less) smooth, now we install a new init.el file..."
 backup_maybe $EMACSD/init.el
 $RM -f $EMACSD/init.el
 $LN -s $PWD/init.el $EMACSD/init.el
 echo "OK."
+
 
 
 # Local Variables:

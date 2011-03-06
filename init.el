@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010, 2011  Massimo Lauria
-;; Time-stamp: "2011-03-02, mercoledì 11:34 (CET) Massimo Lauria"
+;; Time-stamp: "2011-03-06, domenica 12:54 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -37,6 +37,7 @@
 
 (setq load-path (cons 	default-elisp-path load-path       ))
 (setq load-path (cons 	default-elisp-3rdparties load-path ))
+(setq load-path (cons 	"~/.emacs.d" load-path))
 
 
 ;;; Recognize and setup the running environment ----------------------------------------------------------------

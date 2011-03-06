@@ -16,6 +16,6 @@
 
 *~
 *.elc
-
+*.pyc
 # Exceptions
 # None

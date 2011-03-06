@@ -119,7 +119,7 @@
                               ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Python mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; TODO: setup using ac-ropemacs-initialize
+(ac-ropemacs-initialize) ;; Cross the fingers
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; Mail-mode + BBDB ;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -130,6 +130,11 @@
 ;;         (unless (eq buffer-file-name nil) (flymake-mode 1)) ;dont invoke flymake on temporary buffers for the interpreter
 ;;         ))
 
+;; Pymacs should point to the local enviromnents
+(if (file-executable-p "~/.emacs.d/local-python/bin/python")
+    (setenv "PYMACS_PYTHON" "~/.emacs.d/local-python/bin/python")
+  (message "Unable to setup Python for Pymacs")
+  )
 
 
 (provide 'init-python)
