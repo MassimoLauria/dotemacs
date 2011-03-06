@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2011-01-25, Tuesday 10:11 (CET) Massimo Lauria>
+;; Time-stamp: <2011-03-06, domenica 02:48 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@
 
 ;;; YaSnippet -------------------------------------------------------------------------
 
-(require-maybe 'yasnippet)
+(require-maybe 'yasnippet-bundle)
 (when-available
  'yas/about
  (progn
