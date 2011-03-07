@@ -3,7 +3,7 @@
 # Copyright (C) 2010, 2011 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2011-03-06, domenica 11:52 (CET) Massimo Lauria"
-# Time-stamp: "2011-03-06, domenica 14:08 (CET) Massimo Lauria"
+# Time-stamp: "2011-03-07, lunedì 11:28 (CET) Massimo Lauria"
 
 # Description::
 #
@@ -60,6 +60,28 @@ exit_on_missing_program() {
     exit $FILE_NOT_FOUND
 }
 
+
+find_mercurial_avoid_sagemath() {
+
+    which grep >/dev/null 2>/dev/null
+    if [ $? -ne 0 ]; then
+        echo "grep is not present. Can't test Mercurial to avoid sagemath installation."
+        return 2
+    fi
+
+    for hg in `which hg` "/usr/bin/hg" "/usr/local/bin/hg"; do
+        grep sage "$hg" >/dev/null
+        if [ $? -ne 0 -a -x $hg ]; then
+            echo "A useful Mercurial installation was found at $hg"
+            export HG=$hg
+            return 0
+        fi
+    done
+    return 2
+}
+
+
+find_mercurial_avoid_sagemath
 
 require_program $GIT
 require_program $HG

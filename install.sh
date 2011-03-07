@@ -3,7 +3,7 @@
 # Copyright (C) 2010, 2011 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2011-03-05, sabato 01:03 (CET) Massimo Lauria"
-# Time-stamp: "2011-03-07, lunedì 10:55 (CET) Massimo Lauria"
+# Time-stamp: "2011-03-07, lunedì 11:28 (CET) Massimo Lauria"
 
 # Description::
 #
@@ -70,10 +70,32 @@ issue_warning_on_pwd() {
     fi
 }
 
+
+find_mercurial_avoid_sagemath() {
+
+    which grep >/dev/null 2>/dev/null
+    if [ $? -ne 0 ]; then
+        echo "grep is not present. Can't test Mercurial to avoid sagemath installation."
+        return 2
+    fi
+
+    for hg in `which hg` "/usr/bin/hg" "/usr/local/bin/hg"; do
+        grep sage "$hg" >/dev/null
+        if [ $? -ne 0 -a -x $hg ]; then
+            echo "A useful Mercurial installation was found at $hg"
+            export HG=$hg
+            return 0
+        fi
+    done
+    return 2
+}
+
+
 # ------------------- Installation -------------------------
 
 # Goto config folder.
 cd $(dirname $0)
+
 
 issue_warning_on_pwd "config/emacs"
 
@@ -107,8 +129,9 @@ echo ""
 ACLTGZFILE=http://bitbucket.org/tequilasunset/auto-complete-latex/get/c936a026703b.tar.gz
 ACLTGZDIR=tequilasunset-auto-complete-latex-c936a026703b
 
-which "hg" 2> /dev/null > /dev/null
-if [ $? -ne 0 ]; then
+find_mercurial_avoid_sagemath
+
+if [ -x "$HG"  ]; then
 
     # Check if it is possible to download the package
     ACLDOWNLOAD="yes"
@@ -149,8 +172,8 @@ if [ $? -ne 0 ]; then
     fi
 else
     echo "Install 'auto-complete-latex' (from bitbucket.org with Mercurial)"
-    rm -fr   $PWD/3rdparties/auto-complete-latex/
-    hg clone \
+    $RM -fr   $PWD/3rdparties/auto-complete-latex/
+    $HG clone \
         http://bitbucket.org/tequilasunset/auto-complete-latex \
         3rdparties/auto-complete-latex/
     echo "DONE"
