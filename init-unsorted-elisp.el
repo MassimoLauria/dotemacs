@@ -199,7 +199,7 @@
 (setq cclookup-program (concat cclookup-dir "/cclookup.py"))
 (setq cclookup-db-file "~/.emacs.d/cclookup.db")
 (if (not (file-exists-p cclookup-db-file))
-    (warn "CClookup database not yet initialized")
+    (message "CClookup database not yet initialized")
     )
 
 ;; to speedup, just load it on demand
