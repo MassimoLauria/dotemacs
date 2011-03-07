@@ -3,7 +3,7 @@
 # Copyright (C) 2010, 2011 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2011-03-05, sabato 01:03 (CET) Massimo Lauria"
-# Time-stamp: "2011-03-07, lunedì 11:28 (CET) Massimo Lauria"
+# Time-stamp: "2011-03-07, lunedì 11:39 (CET) Massimo Lauria"
 
 # Description::
 #
@@ -210,11 +210,17 @@ CCLOOKUP=$PWD/3rdparties/cclookup/cclookup.py
 CCDOCDIR=$PWD/3rdparties/cclookup/www.cppreference.com/wiki/
 CCDOCDB=$EMACSD/cclookup.db
 
-if [ -x "$CCLOOKUP" -a -d "$CCDOCDIR" ]; then
+#Test for a library which is necessary to CCLookup"
+python -c "import BeautifulSoup" 2>/dev/null >/dev/null
+if [ $? -ne 0 ]; then
+    echo "CC Lookup depends on BeautifulSoup module, which is not present."
+    echo "Please run 'sudo apt-get install python-beautifulsoup'"
+    echo "CC Lookup installation failed."
+elif [ -x "$CCLOOKUP" -a -d "$CCDOCDIR" ]; then
     echo "Update C/C++ documentation DB (included files)"
     $CCLOOKUP -u $CCDOCDIR -d $CCDOCDB
 else
-    echo "C/C++ documentation DB not installed."
+    echo "C/C++ documentation DB not installed (Either cclookup.py or doc files are missing)"
 fi
 
 # -------- Pymacs and Local Python environment ------------------
