@@ -119,7 +119,10 @@
                               ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Python mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(ac-ropemacs-initialize) ;; Cross the fingers
+(ac-ropemacs-initialize)
+(add-hook 'python-mode-hook
+          (lambda ()
+            (add-to-list 'ac-sources 'ac-source-ropemacs)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; Mail-mode + BBDB ;;;;;;;;;;;;;;;;;;;;;;;;;;;
