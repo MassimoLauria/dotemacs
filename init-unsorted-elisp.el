@@ -198,14 +198,14 @@
 ;; set executable file and db file
 (setq cclookup-program (concat cclookup-dir "/cclookup.py"))
 (setq cclookup-db-file "~/.emacs.d/cclookup.db")
-(if (not (file-exists-p pylookup-db-file))
+(if (not (file-exists-p cclookup-db-file))
     (warn "CClookup database not yet initialized")
     )
 
 ;; to speedup, just load it on demand
 (autoload 'cclookup-lookup "cclookup"
   "Lookup SEARCH-TERM in the C++ reference indexes." t)
-(autoload 'pylookup-update "cclookup"
+(autoload 'cclookup-update "cclookup"
   "Run cclookup-update and create the database at `cclookup-db-file'." t)
 
 
