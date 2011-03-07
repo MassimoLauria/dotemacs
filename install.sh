@@ -3,7 +3,7 @@
 # Copyright (C) 2010, 2011 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2011-03-05, sabato 01:03 (CET) Massimo Lauria"
-# Time-stamp: "2011-03-06, domenica 14:11 (CET) Massimo Lauria"
+# Time-stamp: "2011-03-07, lunedì 10:55 (CET) Massimo Lauria"
 
 # Description::
 #
@@ -195,7 +195,7 @@ else
 fi
 
 # -------- Pymacs and Local Python environment ------------------
-install-pymacsenv.sh
+./install-pymacsenv.sh
 if [ $? -eq 0 ]; then
     echo "Successful installation of Pymacs and Ropemacs in local python environment."
 else
