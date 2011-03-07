@@ -121,14 +121,22 @@ started."
 
 
 ;; Additional facilities
-(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 
 ;; Auto pairs
 (add-hook 'LaTeX-mode-hook 'autopair-latex-setup)
 (add-hook 'TeX-mode-hook   'autopair-latex-setup)
 
-;; RefTeX hint for automatic ref creations
+;; RefTeX setup
+(add-hook 'LaTeX-mode-hook (lambda ()
+                             (turn-on-reftex)
+                             (local-set-key (kbd "C-c l") 'reftex-label)     ;; Label creation
+                             (local-set-key (kbd "C-c r") 'reftex-reference) ;; Label selection
+                             (local-set-key (kbd "C-c b") 'reftex-citation) ;; add a citation
+							 ))
+
+
+;; Hints for automatic reference creation
 (setq reftex-label-alist
       '(
         ("definition" ?d "def:"  "~\\ref{%s}" nil ("definition" "def.") -3)
@@ -151,6 +159,7 @@ started."
         ("problem"      ?p "prob:"   "~\\ref{%s}" nil ("problem") -3)
 
         ))
+
 
 ;; TeX asks for Flyspell and American dictionary.
 (add-hook 'LaTeX-mode-hook (lambda () (flyspell-mode 1)))
