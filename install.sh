@@ -3,7 +3,7 @@
 # Copyright (C) 2010, 2011 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2011-03-05, sabato 01:03 (CET) Massimo Lauria"
-# Time-stamp: "2011-03-07, lunedì 11:39 (CET) Massimo Lauria"
+# Time-stamp: "2011-03-07, lunedì 11:47 (CET) Massimo Lauria"
 
 # Description::
 #
@@ -131,7 +131,7 @@ ACLTGZDIR=tequilasunset-auto-complete-latex-c936a026703b
 
 find_mercurial_avoid_sagemath
 
-if [ -x "$HG"  ]; then
+if [ ! -x "$HG"  ]; then
 
     # Check if it is possible to download the package
     ACLDOWNLOAD="yes"
