@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2011-03-06, domenica 02:48 (CET) Massimo Lauria>
+;; Time-stamp: <2011-03-12, sabato 15:34 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -93,7 +93,7 @@ text with function F which return a string."
         (let (
               (new-text (funcall F (buffer-string)))
               )
-          (kill-region (point-min) (point-max))
+          (delete-region (point-min) (point-max))
           (insert new-text))))))
 
 
@@ -122,7 +122,7 @@ text with function F which return a string."
   (if (search-forward template-marker-for-point  nil t)
       (progn
         (goto-char (match-beginning 0))
-        (kill-region (match-beginning 0) (match-end 0))
+        (delete-region (match-beginning 0) (match-end 0))
         )
       )
 )
