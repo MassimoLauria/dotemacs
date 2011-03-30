@@ -48,7 +48,9 @@
                  sh-mode fortran-mode f90-mode ada-mode xml-mode
                  sgml-mode haskell-mode literate-haskell-mode
                  latex-mode LaTeX-mode emms-tag-editor-mode
-                 asm-mode org-mode text-mode))
+                 asm-mode org-mode text-mode
+                 wl-draft-mode message-mode
+                 mml-mode mail-mode))
 
 ; if you want enable auto-complete at org-mode, uncomment this line
 (add-to-list 'ac-trigger-commands 'org-self-insert-command)
@@ -176,7 +178,7 @@
 (defun turn-on-ac-bbdb ()
   "Activate auto-complete in message draft's (Wanderlust mail client)"
   (interactive)
-  (setq ac-sources '(ac-source-bbdb))
+  (add-to-list 'ac-sources 'ac-source-bbdb)
   (auto-complete-mode 1))
 
 ;;; Activate BBDB completion on various message modes, using auto-complete.
