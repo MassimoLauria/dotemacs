@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file
 
 ;; Copyright (C) 2010, 2011  Massimo Lauria
-;; Time-stamp: "2011-03-30, mercoledì 15:32 (CEST) Massimo Lauria"
+;; Time-stamp: "2011-03-31, giovedì 00:07 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -188,7 +188,7 @@
 (when prefs-activate-singular (require 'init-singular))     ;; Singular
 
 ;; Applications
-(when prefs-activate-mail       (require 'init-mail))    ;; Mail + Contacts
+(require 'init-mail)    ;; Mail + Contacts
 (when prefs-activate-org-mode   (require 'init-org-mode))   ;; Organizer
 
 

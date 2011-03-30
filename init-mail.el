@@ -18,22 +18,32 @@
 (add-hook 'mime-view-mode-hook 'goto-address-mode)
 
 
-;; Setup SEND MAIL (password is aked for sending)
-(setq starttls-use-gnutls t)
+;; Setup SEND MAIL
 (setq smtpmail-smtp-server private-smtp-server)
 (setq send-mail-function 'smtpmail-send-it
       message-send-mail-function 'smtpmail-send-it
-      smtpmail-starttls-credentials
-      `((,private-smtp-server ,private-smtp-port nil nil))
-      smtpmail-auth-credentials
-      `((,private-smtp-server ,private-smtp-port ,private-smtp-login nil))
       smtpmail-default-smtp-server private-smtp-server
       smtpmail-smtp-server private-smtp-server
       smtpmail-smtp-service private-smtp-port
       smtpmail-debug-info t)
+
+;; Setup SEND MAIL Authentication
+(setq starttls-use-gnutls t)
+(setq smtpmail-starttls-credentials `((,private-smtp-server
+                                       ,private-smtp-port nil nil)))
+
+(setq auth-file-name (expand-file-name "~/personal/keys/authinfo.gpg"))
+
+(if (file-exists-p auth-file-name)
+    (setq smtpmail-auth-credentials auth-file-name) ; Load password
+                                                    ; from encrypted
+                                                    ; file
+  (setq smtpmail-auth-credentials
+        `((,private-smtp-server
+           ,private-smtp-port ,private-smtp-login nil))) ; Password must be inserted
+)
+
 (require 'smtpmail)
-
-
 
 
 ;; (Insidious) Big Brother DataBase, collects mail addresses.
