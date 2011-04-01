@@ -17,6 +17,10 @@
 ;; Click urls/mails in Mime-View
 (add-hook 'mime-view-mode-hook 'goto-address-mode)
 
+;; Use with Mutt
+(add-to-list 'auto-mode-alist '(".*mutt.*" . message-mode))
+(setq mail-header-separator "")
+
 
 ;; Setup SEND MAIL
 (setq smtpmail-smtp-server private-smtp-server)
