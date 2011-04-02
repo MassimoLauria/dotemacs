@@ -100,6 +100,7 @@
 
     bbdb-elided-display t                    ;; single-line addresses
 
+    bbdb-send-mail-style 'message
 )
 
 ;; vCard + BBDB-vCard
