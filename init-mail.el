@@ -12,8 +12,10 @@
 (setq compose-mail-user-agent-warnings nil)
 (setq mail-user-agent 'message-user-agent)
 (setq message-default-mail-headers "Cc: \nBcc: \n")
+(setq message-signature private-email-signature)
 (setq message-auto-save-directory "~/personal/mail/drafts")
 (add-hook 'message-mode-hook 'turn-on-auto-fill)
+
 ;; Click urls/mails in Mime-View
 (add-hook 'mime-view-mode-hook 'goto-address-mode)
 
