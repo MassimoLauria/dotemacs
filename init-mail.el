@@ -75,6 +75,12 @@
 (setq bbdb-auto-notes-alist '(("X-ML-Name" (".*$" ML 0))))
 
 
+;; Save address from outgoing mails
+(require-maybe 'moy-bbdb-modified)
+(when-available 'bbdb/send-hook
+                (add-hook 'message-send-hook 'bbdb/send-hook)
+                )
+
 (setq
 
     bbdb-file "~/personal/agenda/contacts.bbdb"
