@@ -1,3 +1,4 @@
+;;; -*- coding: utf-8 -*-
 ;;;
 ;;; Basic Editor customization
 ;;;
@@ -9,6 +10,7 @@
  font-X11-antialias    "Monospace-10"
  ;; font-Mac-antialias    "Monaco-12"
  font-Mac-antialias    "-apple-dejavu sans mono-medium-r-normal--0-0-0-0-m-0-mac-roman"
+ font-Win-antialias    "Consolas-10"
  )
 
 ;; Bigger fonts
@@ -18,6 +20,7 @@
    font-X11-antialias    "Monospace-14"
    ;; font-Mac-antialias    "Monaco-14"
    font-Mac-antialias    "-apple-dejavu sans mono-medium-r-normal--20-0-0-0-m-0-mac-roman"
+   font-Win-antialias    "Consolas-12"
    ))
 
 ;; Meta usage in MacOSX requires some thought
@@ -52,6 +55,10 @@
   (when-running-GNULinux
    (set-default-font font-X11-antialias)
    (add-to-list 'default-frame-alist `(font . ,font-X11-antialias))
+   )
+  (when-running-Windows
+   (set-default-font font-Win-antialias)
+   (add-to-list 'default-frame-alist `(font . ,font-Win-antialias))
    )
   ;; Color theme (not available on default Emacs22 for MacOSX)
   (when (require-maybe 'color-theme)
