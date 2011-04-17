@@ -132,6 +132,7 @@ started."
                              (turn-on-reftex)
                              (local-set-key (kbd "C-c l") 'reftex-label)     ;; Label creation
                              (local-set-key (kbd "C-c r") 'reftex-reference) ;; Label selection
+                             (local-unset-key (kdb "C-c b b")) ; Uses binding for bob-make-bibliography
                              (local-set-key (kbd "C-c b") 'reftex-citation) ;; add a citation
 							 ))
 
