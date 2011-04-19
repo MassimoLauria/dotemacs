@@ -130,12 +130,14 @@ started."
 ;; RefTeX setup
 (add-hook 'LaTeX-mode-hook (lambda ()
                              (turn-on-reftex)
+                             (local-unset-key (kdb "C-c b b")) ; Uses binding for bib-make-bibliography
+                             ))
+
+(add-hook 'reftex-mode-hook (lambda ()
                              (local-set-key (kbd "C-c l") 'reftex-label)     ;; Label creation
                              (local-set-key (kbd "C-c r") 'reftex-reference) ;; Label selection
-                             (local-unset-key (kdb "C-c b b")) ; Uses binding for bob-make-bibliography
-                             (local-set-key (kbd "C-c b") 'reftex-citation) ;; add a citation
+                             (local-set-key (kbd "C-c b") 'reftex-citation)  ;; Citation creation
 							 ))
-
 
 ;; Hints for automatic reference creation
 (setq reftex-label-alist
