@@ -1,0 +1,43 @@
+#name : Note Template
+#key : latex-note-template
+#expand-env: ((time-format "%Y-%02m-%02d, %A %02H:%02M (%Z)"))
+# --
+% Copyright (C) `(substring (current-time-string) -4)` by $2
+% Created   : "`(format-time-string time-format (current-time))` `user-full-name`"
+% Time-stamp: <>
+% Encoding  : UTF-8
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{fullpage}
+\usepackage{amsmath,amsthm,amssymb}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{open.problem}{Open Problem}
+\newtheorem{example}{Example}
+
+\begin{document} % ----------- BEGIN DOCUMENT -------------------------
+\centerline{\bf \Large ${1:Title}}
+\bigskip
+\noindent ${2:`user-full-name`}
+\newline
+\noindent \today
+\bigskip
+%%
+
+$0
+
+%%
+\bibliography{theoryofcomputing}
+\bibliographystyle{plain}
+\end{document} % ------------- END DOCUMENT --------------------------
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
