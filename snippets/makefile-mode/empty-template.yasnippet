@@ -1,6 +1,10 @@
-# Copyright (C) 2010 by >>>NAME<<< <>>>EMAIL<<<>
+# name : Makefile template
+# key : empty-template
+# expand-env: ((time-format "%Y-%02m-%02d, %A %02H:%02M (%Z)"))
+# --
+# Copyright (C) `(substring (current-time-string) -4)` by `user-full-name` <`user-mail-address`>
 #
-# Created   : ">>>TIME<<< >>>NAME<<<"
+# Created   : "`(format-time-string time-format (current-time))` `user-full-name`"
 # Time-stamp: " "
 
 # ---------- Environment variables ------------
@@ -24,13 +28,12 @@ DEBUG=-DDEBUG -g
 #DEBUG=
 
 # --------- Project dependent rules ---------------
-TARGET=>>>POINT<<<
+TARGET=${1:target_file}
 all: tags ${TARGET}
 
 # <Insert custom rules here>
 
-
-
+$0
 
 
 # --------- Default rules -------------------------

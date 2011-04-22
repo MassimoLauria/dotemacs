@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# name: C file template
+# key: empty-c-template
+# expand-env: ((time-format "%Y-%02m-%02d, %A %02H:%02M (%Z)"))
+# --
+/*
+   Copyright (C) `(substring (current-time-string) -4)` by `user-full-name` <`user-mail-address`>
+
+   Created   : "`(format-time-string time-format (current-time))` `user-full-name`"
+   Time-stamp: " "
+
+   Description::
+
+   $2
+
+*/
+
+/* Preamble */
+#include <stdlib.h>
+#include "`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`.h"
+
+/* Code */
+
+$0

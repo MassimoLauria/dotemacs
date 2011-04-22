@@ -1,12 +1,13 @@
-#contributor : Massimo Lauria 
-#name : Beamer template
-#key : beamer
+#name : Slides Template
+#key : latex-slides-template
+#expand-env: ((time-format "%Y-%02m-%02d, %A %02H:%02M (%Z)"))
 # --
-% 
+%
 % Slides for the talk “$1”.
 %
+% Copyright (C) `(substring (current-time-string) -4)` by $2
 %
-% Copyright (C) 2010 by $2
+% Created   : "`(format-time-string time-format (current-time))` `user-full-name`"
 % Time-stamp: <>
 % Encoding  : UTF-8
 % Engine    : PDFLaTeX
@@ -21,7 +22,7 @@
   \usecolortheme{crane}      % Clear, a little low contrast. Plain and simple.
   % \usecolortheme{albatross}  % Dark, very high contrast. A little ugly.
   % \useoutertheme{infolines}
-    
+
 }
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{theorem}[ams style]
@@ -40,9 +41,7 @@
 \usepackage{pdfsync}
 
 % MATH
-% \usepackage{amsmath}
-% \usepackage{amsthm}
-% \usepackage{amssymb}
+% \usepackage{amsmath,amsthm,amssymb}
 
 % ALGORITHM
 %\usepackage{algorithm}
@@ -58,7 +57,7 @@
 %\include{tikz-themes}
 \usepackage{graphics,epsfig,subfigure}
 
-% PDF OUTPUT 
+% PDF OUTPUT
 %\usepackage[bookmarks=true,
 %            bookmarksnumbered=true,
 %            pagebackref=true,
@@ -70,7 +69,7 @@
 %{{{-------------------------- USER DATA ------------------------------
 
 \title{${1:Talk title}}
-\author{${2:Massimo Lauria}}
+\author{${2:`user-full-name`}}
 \institute{}
 \date{}
 
@@ -81,7 +80,7 @@
 
 %}}}-------------------------------------------------------------------
 
-%{{{------------------ USER COMMAND -----------------------------------  
+%{{{------------------ USER COMMAND -----------------------------------
 %\includeonly{}
 %}}}-------------------------------------------------------------------
 
@@ -91,10 +90,16 @@
   \titlepage\       % Let's go with the title page.
 \end{frame}
 
-% Table of Contents Page 
-%\section[Outline]{} \frame{\tableofcontents} 
+% Table of Contents Page
+%\section[Outline]{} \frame{\tableofcontents}
 
 
 $0
 
 \end{document}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

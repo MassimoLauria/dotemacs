@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2011-03-12, sabato 15:34 (CET) Massimo Lauria>
+;; Time-stamp: <2011-04-22, Friday 12:27 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -25,17 +25,6 @@
 ;; and time-stamps, Yasnippet and auto-insert.
 
 
-;;; Markers for template filling
-(setq template-marker-for-name            ">>>NAME<<<" )
-(setq template-marker-for-email           ">>>EMAIL<<<")
-(setq template-marker-for-point           ">>>POINT<<<")
-(setq template-marker-for-time            ">>>TIME<<<")
-(setq template-marker-for-header          ">>>HEADERNAME<<<" )
-(setq template-marker-for-ucfname         ">>>UCFILENAME<<<" )
-(setq template-marker-for-lcfname         ">>>LCFILENAME<<<" )
-(setq template-marker-for-fname           ">>>FILENAME<<<" )
-(setq template-marker-for-fname-sans-ext  ">>>FNAMENOEXT<<<" )
-
 (setq template-time-format      "%Y-%02m-%02d, %A %02H:%02M (%Z)")  ;; Time format similar with time-stamp one.
 
 
@@ -43,16 +32,24 @@
 
 (require 'autoinsert)
 (add-hook 'find-file-hook 'auto-insert)  ;;; Adds hook to find-files-hook
-(setq auto-insert-directory (concat default-elisp-path "/templates/")) ;; Template's files folder, *NOTE* Trailing slash important
-(setq auto-insert-query nil) ;;; If you don't want to be prompted before insertion
-
+(setq auto-insert-query nil)
+(setq auto-insert-alist nil)  ;; Reset auto-insert rules.
 ;; Auto Insert rules:
 
-(define-auto-insert 'sh-mode ["sh-template.sh" apply-template-marker]) ; Example of a template file based rule.
-(define-auto-insert 'makefile-mode ["make-template.mak" apply-template-marker]) ; Example of a template file based rule.
-(define-auto-insert 'makefile-gmake-mode ["make-template.mak" apply-template-marker]) ; Example of a template file based rule.
-(define-auto-insert "\\.\\([Cc]\\|cc\\|cpp\\)\\'" ["c-template.c" apply-template-marker]) ; Example of a template file based rule.
-(define-auto-insert "\\.\\([Hh]\\|hh\\|hpp\\)\\'" ["h-template.h" apply-template-marker]) ; Example of a template file based rule.
+;; Use yasnippet to implement templates.
+(defun apply-yasnippet-function (template)
+  "It produces a function which insert a yasnipper template"
+  `(lambda ()
+     (goto-char (point-min))
+     (insert ,template)
+     (call-interactively 'yas/expand))
+  )
+
+(define-auto-insert 'sh-mode (apply-yasnippet-function "empty-template"))
+(define-auto-insert 'makefile-bsdmake-mode (apply-yasnippet-function "empty-template"))
+(define-auto-insert 'makefile-gmake-mode (apply-yasnippet-function "empty-template"))
+(define-auto-insert "\\.\\([Cc]\\|cc\\|cpp\\)\\'" (apply-yasnippet-function "empty-c-template"))
+(define-auto-insert "\\.\\([Hh]\\|hh\\|hpp\\)\\'" (apply-yasnippet-function "empty-h-template"))
 
 ;;; YaSnippet -------------------------------------------------------------------------
 
@@ -75,57 +72,6 @@
 ;;; Copyright update --- setup in custom.el
 
 ;;; Time-Stamp update --- setup in custom.el
-
-
-
-;;; Utility functions for template filling ---------------------------------------------
-
-(defun process-string-matches (mark-exp F)
-  "Find matches of a particular string, and process the matching
-text with function F which return a string."
-  (save-excursion
-    (goto-char (point-min))
-    ;; We search for matchings
-    (while (search-forward mark-exp nil t)
-      ;; We save the restriction, because we are going to call narrow-to-region
-      (save-restriction
-        (narrow-to-region (match-beginning 0) (match-end 0))
-        (let (
-              (new-text (funcall F (buffer-string)))
-              )
-          (delete-region (point-min) (point-max))
-          (insert new-text))))))
-
-
-(defun apply-template-marker()
-  "Fill template fields"
-  (interactive)
-  (process-string-matches template-marker-for-name  '(lambda (x)  user-full-name))
-  (process-string-matches template-marker-for-email '(lambda (x) user-mail-address))
-  (process-string-matches template-marker-for-time  '(lambda (x) (format-time-string template-time-format (current-time))))
-
-  (process-string-matches template-marker-for-header
-                          '(lambda (x)   (upcase (concat (file-name-nondirectory
-                                                          (file-name-sans-extension buffer-file-name))
-                                                         "_"
-                                                         (file-name-extension buffer-file-name)))))
-  (process-string-matches template-marker-for-ucfname
-                          '(lambda (x) (upcase (file-name-nondirectory buffer-file-name))))
-  (process-string-matches template-marker-for-lcfname
-                          '(lambda (x) (downcase (file-name-nondirectory buffer-file-name))))
-  (process-string-matches template-marker-for-fname
-                          '(lambda (x) (file-name-nondirectory buffer-file-name)))
-  (process-string-matches template-marker-for-fname-sans-ext
-                          '(lambda (x)(file-name-nondirectory (file-name-sans-extension buffer-file-name))))
-  ;; Move to point
-  (goto-char (point-min))
-  (if (search-forward template-marker-for-point  nil t)
-      (progn
-        (goto-char (match-beginning 0))
-        (delete-region (match-beginning 0) (match-end 0))
-        )
-      )
-)
 
 ;;; Auto pair configuration -----------------------------------------------------------
 (setq autopair-blink nil)

@@ -1,0 +1,111 @@
+#name : Paper Template
+#key : latex-paper-template
+#expand-env: ((time-format "%Y-%02m-%02d, %A %02H:%02M (%Z)"))
+# --
+% Copyright (C) `(substring (current-time-string) -4)` by $2
+%
+% Created   : "`(format-time-string time-format (current-time))` `user-full-name`"
+% Time-stamp: <>
+% Encoding  : UTF-8
+
+%{{{-------------------------- PREAMBLE -------------------------------
+\documentclass[a4paper,11pt]{article}
+
+% ---------------------------- PACKAGES -------------------------------
+% GENERAL
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+%\usepackage{comment}  % I try not to use this package.
+\usepackage{fullpage}
+\usepackage{xspace}
+\usepackage{pdfsync}
+% MATH
+\usepackage{amsmath,amsthm,amssymb}
+% ALGORITHM
+% \usepackage{algorithm}
+% \usepackage[noend]{algpseudocode}
+% \usepackage{listings}
+% GRAPHICS
+% \usepackage{graphicx,graphics,epsfig,subfigure}
+% \usepackage{pgf}
+% \usepackage{tikz}
+% \usetikzlibrary{arrows,shapes,backgrounds,snakes}
+% PDF OUTPUT
+\usepackage[bookmarks=true,
+            bookmarksnumbered=true,
+            pagebackref=true,
+            colorlinks=true,
+            linkcolor=blue,
+            citecolor=red]{hyperref}
+% ---------------------------------------------------------------------
+
+%{{{-------------------------- USER DATA ------------------------------
+
+\title{${1:Talk title}}
+\author{${2:`user-full-name`}}
+\date{\today}
+
+\hypersetup{
+  pdfauthor={$2}
+  pdftitle ={$1}
+}
+
+%}}}-------------------------------------------------------------------
+
+
+% ---------------------------- THEOREM ENVIRONMENTS -------------------
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{fact}{Fact}
+\newtheorem{claim}{Claim}
+\newtheorem{open.problem}{Open Problem}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem*{corollary*}{Corollary}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem*{fact*}{Fact}
+\newtheorem*{claim*}{Claim}
+\newtheorem*{open.problem*}{Open Problem}
+\newtheorem*{remark*}{Remark}
+\newtheorem*{example*}{Example}
+\newtheorem*{exercise*}{Exercise}
+% ---------------------------------------------------------------------
+
+
+% ---------------------------- MACROS ---------------------------------
+% Define your macro here.
+% ---------------------------------------------------------------------
+
+
+
+\begin{document} % ----------- BEGIN DOCUMENT -------------------------
+
+% ---------------------------- TITLE/ABSTRACT PAGE --------------------
+\maketitle
+
+\begin{abstract}
+$0
+\end{abstract}
+
+% Uncomment this if you want the paper to start in the next page.
+%\thispagestyle{empty}
+%\clearpage
+% ---------------------------------------------------------------------
+
+
+% --------------------------- CONTENT --------------------------------
+
+\bibliography{theoryofcomputing}
+\bibliographystyle{plain}
+
+\end{document} % ------------- END DOCUMENT --------------------------
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

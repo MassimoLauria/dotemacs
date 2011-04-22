@@ -12,7 +12,7 @@
 ;; Multifile support, completition, style, reverse search support
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
-(setq-default TeX-master nil)
+(setq-default TeX-master t)  ;; Do not query for master file, and applies auto-insertion.
 (setq TeX-source-specials-mode t)
 (setq TeX-source-specials-view-start-server t)
 (setq reftex-plug-into-AUCTeX t)
@@ -206,6 +206,27 @@ started."
         "\\includemovie[\n\tposter,\n\trepeat=1,\n\ttext=(%r)\n\t]{}{}{%r}\n")))))
  )
 
+
+;; Latex autoinsertion
+(defun choose-initial-latex-template ()
+  "Query the user to choose a template for a new latex file"
+  (interactive)
+  (let ((input-char ?0))
+    (loop until (member input-char '(?n ?p ?s ?l ?e))
+          do
+          (setq input-char (read-char "Template: [n]ote, [p]aper, [s]lide, [l]etter, [e]mpty:"))
+          )
+    (case input-char
+      ((?n) (insert "latex-note-template"  ) (yas/expand))
+      ((?p) (insert "latex-paper-template" ) (yas/expand))
+      ((?s) (insert "latex-slides-template" ) (yas/expand))
+      ((?l) (insert "latex-letter-template") (yas/expand))
+      ((?e) (insert ""))
+      )
+    )
+  )
+
+(define-auto-insert 'latex-mode 'choose-initial-latex-template)
 
 (provide 'init-latex)
 ;; Local Variables:
