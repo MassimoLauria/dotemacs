@@ -1,0 +1,35 @@
+#name : Letter Template
+#key : latex-letter-template
+#expand-env: ((time-format "%Y-%02m-%02d, %A %02H:%02M (%Z)") (yas/indent-line 'fixed))
+# --
+% Created   : "`(format-time-string time-format (current-time))` `user-full-name`"
+% Time-stamp: <>
+% Encoding  : UTF-8
+\documentclass[a4paper,11pt]{letter}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\begin{document}
+
+%Sender
+\name{
+  ${1:`user-full-name` {\\tt `user-mail-address`}}\\\\
+  ${2:sender address line 1 \\\\ line 2 \\\\ line 3}}
+\date{\today}
+
+%Recipient
+\begin{letter}{${3:Recipient} \\\\
+               ${4:recipient address line 1 \\\\ line 2 \\\\ line 3}}
+
+%Letter
+\opening{Dear $5}
+
+$0
+
+\closing{Best,}
+
+\end{letter}
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
