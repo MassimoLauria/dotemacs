@@ -1,4 +1,4 @@
-;;; init-coding.el --- Configuration of the utf-8 encoding. -*- codig: utf-8 -*-
+;;; init-coding.el --- Configuration of the utf-8 encoding. -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2011  Massimo Lauria
 
