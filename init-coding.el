@@ -37,6 +37,9 @@
 ;; MS Windows clipboard is UTF-16LE
 (set-clipboard-coding-system 'utf-16le-dos)
 
+;; Default input method is TeX, but it is not active by default
+(setq default-input-method 'TeX)
+(set-input-method nil)
 
 (provide 'init-coding)
 ;;; init-coding.el ends here
