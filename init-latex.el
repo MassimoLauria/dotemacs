@@ -228,6 +228,7 @@ started."
 
 (define-auto-insert 'latex-mode 'choose-initial-latex-template)
 
+
 (provide 'init-latex)
 ;; Local Variables:
 ;; mode: emacs-lisp
