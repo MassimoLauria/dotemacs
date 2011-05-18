@@ -31,7 +31,6 @@
  '(cua-normal-cursor-color (quote (bar . "white")))
  '(cua-overwrite-cursor-color (quote (box . "red")))
  '(cua-read-only-cursor-color (quote (hollow . "yellow")))
- '(default-frame-alist (quote ((fringe) (right-fringe) (left-fringe . 1) (internal-border-width . 0) (cursor-color . "Red") (cursor-type . box) (font . "-apple-dejavu sans mono-medium-r-normal--20-0-0-0-m-0-mac-roman") (background-color . "#3f3f3f") (background-mode . dark) (border-color . "#3f3f3f") (foreground-color . "#dcdccc") (mouse-color . "#dcdccc") (vertical-scroll-bars) (tool-bar-lines . 0) (menu-bar-lines . 1))))
  '(default-input-method "TeX")
  '(default-justification (quote left))
  '(delete-old-versions t)
