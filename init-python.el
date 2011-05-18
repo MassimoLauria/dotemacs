@@ -61,6 +61,7 @@
       )
 )
 
+(require 'compile)
 ;; PyLint
 ;; already included but use a more recent version if present.
 (require-maybe 'python-pylint)
