@@ -12,6 +12,8 @@
 ;; Multifile support, completition, style, reverse search support
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
+(setq TeX-save-query nil)
+
 (setq-default TeX-master t)  ;; Do not query for master file, and applies auto-insertion.
 (setq TeX-source-specials-mode t)
 (setq TeX-source-specials-view-start-server t)
