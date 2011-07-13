@@ -142,7 +142,11 @@
 (defun ido-recentf-open ()
   "Use `ido-completing-read' to \\[find-file] a recent file"
   (interactive)
-  (if (find-file (ido-completing-read "Find recent file: " (mapcar 'recentf-shorten-file-name recentf-list)))
+  (if (fboundp 'recentf-shorten-file-name)
+      (setq rfile-list (mapcar 'recentf-shorten-file-name recentf-list))
+    (setq rfile-list recentf-list)
+    )
+  (if (find-file (ido-completing-read "Find recent file: " rfile-list))
       (message "Opening file...")
     (message "Aborting")))
 
