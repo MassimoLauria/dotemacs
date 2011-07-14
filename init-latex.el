@@ -132,7 +132,7 @@ started."
 ;; RefTeX setup
 (add-hook 'LaTeX-mode-hook (lambda ()
                              (turn-on-reftex)
-                             (local-unset-key (kdb "C-c b b")) ; Uses binding for bib-make-bibliography
+                             (local-unset-key (kbd "C-c b b")) ; Uses binding for bib-make-bibliography
                              ))
 
 (add-hook 'reftex-mode-hook (lambda ()
