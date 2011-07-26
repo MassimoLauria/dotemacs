@@ -25,17 +25,18 @@
 ;;; Code:
 ;;;;;;;;;;;;;;;;;;;;
 
-;; set up unicode
+;; set up unicode and utf-8 coding for buffers.
 (prefer-coding-system       'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-;; This from a japanese individual.  I hope it works.
 (setq default-buffer-file-coding-system 'utf-8)
-;; From Emacs wiki
+
+
+;; Utf-8 encoding for clipboard
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
-;; MS Windows clipboard is UTF-16LE
-(set-clipboard-coding-system 'utf-16le-dos)
+(set-clipboard-coding-system 'utf-8)
+
 
 ;; Default input method is TeX, but it is not active by default
 (setq default-input-method 'TeX)
