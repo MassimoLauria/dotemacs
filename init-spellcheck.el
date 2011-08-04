@@ -26,7 +26,7 @@
 (defvar spellcheck-languages nil
   "All languages which are available to the spellchecking facilities like:
 
-   -  language guessing 
+   -  language guessing
    -  dictionary cycling
 
    By default the list is empty and is filled at init time, by a
@@ -46,11 +46,11 @@ would happen for an empty document.")
 
 (setq ispell-process-directory (expand-file-name "~/"))
 
-(defun spellcheck-first-valid-dictionary (dict-seq) 
+(defun spellcheck-first-valid-dictionary (dict-seq)
   "Given a list of dictionary names, try them until one is valid. If none is valid, return `nil'"
   (catch 'break-on-good-dict
-    (loop for dict in dict-seq do 
-          (ignore-errors 
+    (loop for dict in dict-seq do
+          (ignore-errors
             (ispell-change-dictionary dict)
             (throw 'break-on-good-dict dict)))))
 
@@ -92,6 +92,11 @@ would happen for an empty document.")
                   count)))))
 
 
+
+
+
+;; Interactive commands -------------------------------------------------------------
+
 (defun spellcheck-set-guessed-dictionary ()
    "It tries to guess the language and to set it as dictionary for ispell"
    (interactive)
@@ -102,9 +107,6 @@ would happen for an empty document.")
        (spellcheck-set-dictionary language))))
 
 
-
-
-;; Interactive commands -------------------------------------------------------------
 
 (defun spellcheck-guess-language ()
   "Guess the language in the current buffer."
@@ -124,11 +126,11 @@ would happen for an empty document.")
           new-pos
           old-pos
           )
-      (setq old-pos (loop for lang in spellcheck-languages 
+      (setq old-pos (loop for lang in spellcheck-languages
             until (string= lang old-local-language)
             count lang
             ))
-      (cond 
+      (cond
        ((= old-pos (length spellcheck-languages))       (setq new-pos 0))
        ((= old-pos (- (length spellcheck-languages) 1)) (setq new-pos 0))
        (t                                               (setq new-pos (+ old-pos 1)))

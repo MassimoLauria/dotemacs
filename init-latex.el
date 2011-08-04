@@ -16,6 +16,7 @@
 
 (setq-default TeX-master t)  ;; Do not query for master file, and applies auto-insertion.
 
+
 ;; Since version 11.86 of AUCTeX the inverse/forward search is implemented using
 ;; source correlation.  Source correlation can be realized either with
 ;; source-specials, as has even been; or using SyncTeX. The latter methods also
@@ -25,6 +26,11 @@
 (if
     (>= (string-to-number AUCTeX-version) 11.86)
     (progn
+      ;; To work in Linux with XDVI we need to force the usage of source
+      ;; special.  Unfortunately working with Evince as PDF viewer is not
+      ;; yet fully working because of some problem with dbus-initializations
+      (when-running-GNULinux
+       (setq TeX-source-correlate-method 'source-specials))
       (setq TeX-source-correlate-mode t)
       (setq TeX-source-correlate-start-server t)
       )
@@ -34,6 +40,10 @@
     ))
 
 (setq reftex-plug-into-AUCTeX t)
+
+
+
+
 
 
 ;; These are the files that are produced by LaTeX processes.  It is annoying
@@ -108,12 +118,7 @@ started."
 
 
 
-;; Setup Evince as a PDF viewer on Linux
-(when-running-GNULinux
- (setq TeX-view-program-list '(("Evince" "evince --page-index=%(outpage) %o")))
- (setq TeX-view-program-selection '((output-pdf "Evince")))
-)
-
+;; Setup DBUS communication between Evince and AUCTeX using SyncTeX
 (require-maybe 'dbus)
 
 (defun th-evince-sync (file linecol)
@@ -197,7 +202,7 @@ started."
 
 
 ;; TeX asks for Flyspell and American dictionary.
-(add-hook 'LaTeX-mode-hook (lambda () (flyspell-mode 1)))
+(add-hook 'LaTeX-mode-hook 'turn-on-flyspell)
 (add-hook 'TeX-language-en-hook
 	  (lambda () (ispell-change-dictionary "english")))
 (add-hook 'TeX-language-it-hook
