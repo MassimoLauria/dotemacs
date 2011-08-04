@@ -15,28 +15,45 @@
 (setq TeX-save-query nil)
 
 (setq-default TeX-master t)  ;; Do not query for master file, and applies auto-insertion.
-(setq TeX-source-specials-mode t)
-(setq TeX-source-specials-view-start-server t)
+
+;; Since version 11.86 of AUCTeX the inverse/forward search is implemented using
+;; source correlation.  Source correlation can be realized either with
+;; source-specials, as has even been; or using SyncTeX. The latter methods also
+;; works with PDF reader as Skin and Evince.
+;;
+;; If AUCTeX implementatio is below 11.86 source specials are used.
+(if
+    (>= (string-to-number AUCTeX-version) 11.86)
+    (progn
+      (setq TeX-source-correlate-mode t)
+      (setq TeX-source-correlate-start-server t)
+      )
+  (progn
+    (setq TeX-source-specials-mode t)
+    (setq TeX-source-specials-view-start-server t)
+    ))
+
 (setq reftex-plug-into-AUCTeX t)
 
 
-;; These are the files that are produced by LaTeX processes.
-(setq TeX-byproduct-files '(".aux" ".log" ".brf" ".bbl" ".dvi" ".ps" ".pdf" "spl" "out" ".ps.gz"))
-
-;; Ignore them while opening files
-(setq ido-ignore-files (if (boundp 'ido-ignore-files)
-                           (append ido-ignore-files TeX-byproduct-files)
-                         TeX-byproduct-files
-                         ))
+;; These are the files that are produced by LaTeX processes.  It is annoying
+;; that they show up while I'm trying to open a proper TeX file (or any other
+;; text file).  IDO-mode can be instructed how to ignore such files.
+(setq TeX-byproduct-files
+'(".aux" ".log" ".brf" ".bbl" ".dvi" ".ps" ".pdf" "spl" "out" ".ps.gz" ".synctex.gz"))
+(setq ido-ignore-files
+      (if (boundp 'ido-ignore-files)
+          (append ido-ignore-files TeX-byproduct-files)
+        TeX-byproduct-files ))
 
 ;; Macro are folded.
 (defun TeX-fold-this-paragraph-toggle ()
-  "If TeX-fold-mode is active then alternate between folded and not folded text in a paragraph"
+  "If TeX-fold-mode is active then alternate between folded and
+not folded text in a paragraph"
   (interactive)
   (unless (TeX-fold-clearout-paragraph)
-    (TeX-fold-paragraph)
-    )
-  )
+    (TeX-fold-paragraph) ) )
+
 (defun TeX-fold-this-buffer-toggle ()
   "If TeX-fold-mode is active then alternate between folded and not folded text in a paragraph"
   (interactive)
@@ -90,19 +107,36 @@ started."
 
 
 
-;; ;; Viewer customization (seems to be broken on Aquamacs)
-;; (add-hook 'LaTeX-mode-hook (lambda ()
-;; 							 (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
-;; 							 ))
 
-(when-running-X11-process
- (add-hook 'LaTeX-mode-hook
-           (lambda ()
-             ;; Use xdvi for dvi files
-             (add-to-list 'TeX-output-view-style '("^dvi$" "." "%(o?)xdvi -watchfile 1 %dS %d"))
-             ;; Use Xpdf or Evince for PDF files
-             (add-to-list 'TeX-output-view-style '("^pdf$" "." "xpdf -remote %s -raise %o %(outpage)"))
-                                                       )))
+;; Setup Evince as a PDF viewer on Linux
+(when-running-GNULinux
+ (setq TeX-view-program-list '(("Evince" "evince --page-index=%(outpage) %o")))
+ (setq TeX-view-program-selection '((output-pdf "Evince")))
+)
+
+(require-maybe 'dbus)
+
+(defun th-evince-sync (file linecol)
+  (let ((buf (get-buffer file))
+        (line (car linecol))
+        (col (cadr linecol)))
+    (if (null buf)
+        (message "Sorry, %s is not opened..." file)
+      (switch-to-buffer buf)
+      (goto-line (car linecol))
+      (unless (= col -1)
+        (move-to-column col)))))
+
+(when (and
+       (eq window-system 'x)
+       (fboundp 'dbus-register-signal))
+  (condition-case nil
+      (dbus-register-signal
+       :session nil "/org/gnome/evince/Window/0"
+       "org.gnome.evince.Window" "SyncSource"
+       'th-evince-sync)
+    (error nil))
+)
 
 
 ;; To help collaboration, in LaTeX file I will only use soft word
