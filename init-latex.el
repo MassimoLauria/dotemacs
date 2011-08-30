@@ -44,8 +44,6 @@
 
 
 
-
-
 ;; These are the files that are produced by LaTeX processes.  It is annoying
 ;; that they show up while I'm trying to open a proper TeX file (or any other
 ;; text file).  IDO-mode can be instructed how to ignore such files.
@@ -210,6 +208,7 @@ started."
 
 
 ;; Choose a checker for Flymake (compilation on the fly).
+(fmakunbound 'flymake-get-tex-args)
 
 ;; chktex
 (if (and (executable-find "chktex")
