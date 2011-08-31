@@ -187,7 +187,7 @@
 
 ;; Wordpress blogging in Org-mode! (with Math!)
 (add-to-list 'load-path (concat default-elisp-3rdparties "/org2blog"))
-(require-maybe 'org2blog)
+(require-maybe 'org2blog-autoloads)
 
 
 
