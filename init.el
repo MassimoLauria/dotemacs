@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011  Massimo Lauria
-;; Time-stamp: "2011-04-05, martedì 13:39 (CEST) Massimo Lauria"
+;; Time-stamp: "2011-09-10, Saturday 00:20 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -178,9 +178,7 @@
 
 
 ;; Programming Languages
-(unless running-MacOSX    ;; I don't have pymacs installed on Aquamacs
-  (require 'init-python)
-)
+(require 'init-python)
 
 ;; Math packages
 (when prefs-activate-latex    (require 'init-latex))        ;; AucTeX

@@ -4,56 +4,72 @@
 ;;;-------------------------------------------------------------------
 
 
-;;; Try to set up IPython Shell. -------------------------------------------------------------------
+;; Uses Virtual Python Environment if present ----------------------------------------------------
+(defvar python-virtualenv-path (concat (getenv "HOME")
+                                       "/.emacs.d/local-python")
+"Sometimes it is useful to prepare a well defined python environment
+for Emacs (e.g. using the virtualenv utility). This is its default
+path."
+)
 
-;; We force the ipython path to avoid troubles with SAGE math version.
-(setq ipython-command "/usr/bin/ipython")
-(when (require-maybe 'ipython)
-  (setq py-python-command-args '("-pylab" "-colors" "Linux"))
-  (setq ipython-completion-command-string "print(';'.join(__IP.Completer.all_completions('%s')))\n")
+;; Put the virtual env path in front.
+(if (file-executable-p (concat python-virtualenv-path "/bin/python"))
+    (setq exec-path (cons (concat python-virtualenv-path "/bin/") exec-path))
+    (setenv "PATH" (concat python-virtualenv-path "/bin/:" (getenv "PATH")))
+  (message "Unable to setup Python vitual environment. I'll rely on the system.")
+  )
+
+
+
+
+
+;; Load python-mode.el ---------------------------------------------------------------------------
+(require 'python-mode)
+
+
+
+
+
+
+
+;; Try to set up IPython Shell. -------------------------------------------------------------------
+(when (executable-find "ipython")
+  (require-maybe 'ipython)
 )
 
 
+
+
+
+
 ;; Python Hook(s) ----------------------------------------------------------------------------------
+
 (add-hook
  'python-mode-hook (lambda ()
                      (set-variable 'py-indent-offset 4)
-                     ;;(set-variable 'py-smart-indentation nil)
-                     ;;(set-variable 'indent-tabs-mode nil)
+                     (set-variable 'py-smart-indentation t)
+                     (set-variable 'indent-tabs-mode nil)
                      (define-key py-mode-map (kbd "RET") 'newline-and-indent)
                      )
  )
 
-;; Use a graphical lambda
-(require-maybe 'lambda-mode)
-(when-available 'lambda-mode
-                (add-hook 'python-mode-hook #'lambda-mode 1)
-                )
 
-;; Autofill inside of comments
-
-(defsubst python-in-string/comment ()
-     "Return non-nil if point is in a Python literal (a comment or string)."
-     ;; We don't need to save the match data.
-     (nth 8 (syntax-ppss)))
-
-
-(defun python-auto-fill-comments-only ()
-  (auto-fill-mode 1)
-  (set (make-local-variable 'fill-nobreak-predicate)
-       (lambda ()
-         (not (python-in-string/comment)))))
-
-(add-hook 'python-mode-hook
-          (lambda ()
-            (python-auto-fill-comments-only)))
+;; Force filling only on strings/comments
+(add-hook
+ 'python-mode-hook (lambda ()
+                     (auto-fill-mode t)
+                     (set 'auto-fill-function 'py-fill-paragraph)
+                     (set 'fill-paragraph-function 'py-fill-paragraph) ;; this is redundant
+                     ))
 
 
 
-;; Code checkers
 
-;; PyChecker and PyFlakes
-;; Use pyflakes instead of pychecker
+
+
+;; Code checker(s) -----------------------------------------------------------------
+
+;; PyChecker and/or PyFlakes for checking on demand.
 (if (executable-find "pyflakes")
     (progn
          (setq py-pychecker-command "pyflakes")
@@ -62,16 +78,76 @@
 )
 
 (require 'compile)
-;; PyLint
-;; already included but use a more recent version if present.
-(require-maybe 'python-pylint)
 
-;; Pep8
-;; python style checker
-(require-maybe 'python-pep8)
+(setq python-pep8-command (executable-find "pep8"))
+(setq python-pylint-command (executable-find "pylint"))
+(autoload 'python-pylint "python-pylint")
+(autoload 'pylint "python-pylint")
+(autoload 'python-pep8 "python-pep8")
+(autoload 'pep8 "python-pep8")
 
 
-;; PyLookup documentation
+
+
+
+;; Flymake code checker(s) ---------------------------------------------------------------------
+(setq flymake-python-syntax-checker nil)
+
+(if (and (executable-find "pep8") (not flymake-python-syntax-checker))
+    (setq flymake-python-syntax-checker "pep8")
+)
+(if (and (executable-find "epylint") (not flymake-python-syntax-checker))
+    (setq flymake-python-syntax-checker "epylint")
+)
+(if (and (executable-find "pyflakes") (not flymake-python-syntax-checker))
+    (setq flymake-python-syntax-checker "pyflakes")
+)
+(if (and (executable-find "pychecker") (not flymake-python-syntax-checker))
+    (setq flymake-python-syntax-checker "pychecker")
+)
+
+(when (and flymake-python-syntax-checker (load "flymake" t))
+  (defun flymake-python-init ()
+	(let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+	  (list flymake-python-syntax-checker (list local-file))))
+  (add-to-list 'flymake-allowed-file-name-masks '("\\.py\\'" flymake-python-init)))
+
+(add-hook 'find-file-hook 'flymake-find-file-hook)
+
+
+
+
+;; Ropemacs completion (not on Aquamacs, because it is too slow!) ------------------------------
+(defvar ac-ropemacs-completions-cache nil)
+(ac-define-source ropemacs-max
+  '((init
+     . (lambda ()
+         (setq ac-ropemacs-completions-cache
+               (mapcar
+                (lambda (completion)
+                  (concat ac-prefix completion))
+                (ignore-errors
+                  (rope-completions))))))
+    (candidates . ac-ropemacs-completions-cache)))
+
+(unless running-Aquamacs
+  (ac-ropemacs-initialize)
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (add-to-list 'ac-sources 'ac-source-ropemacs-max)
+              (local-set-key (kbd "M-TAB") 'ac-complete-ropemacs-max)
+              ))
+)
+
+
+
+
+
+;; PyLookup documentation --------------------------------------------------------------------
 
 ;; add pylookup to your loadpath, ex) "~/.lisp/addons/pylookup"
 (setq pylookup-dir (concat default-elisp-3rdparties "/pylookup"))
@@ -91,51 +167,6 @@
   "Lookup SEARCH-TERM in the Python HTML indexes." t)
 (autoload 'pylookup-update "pylookup"
   "Run pylookup-update and create the database at `pylookup-db-file'." t)
-
-;; (add-hook 'python-mode-hook
-;;           (lambda ()
-;;             (local-set-key (kbd "C-c h") 'pylookup-lookup)))
-
-
-;; Auto Syntax Error Hightlight (very preliminary and with poor support) -------
-
-;; Choose a file checker
-(setq flymake-python-syntax-checker "pep8")
-
-(if (and (executable-find "pep8") (not flymake-python-syntax-checker))
-    (setq flymake-python-syntax-checker "pep8")
-)
-(if (and (executable-find "epylint") (not flymake-python-syntax-checker))
-    (setq flymake-python-syntax-checker "epylint")
-)
-(if (and (executable-find "pyflakes") (not flymake-python-syntax-checker))
-    (setq flymake-python-syntax-checker "pyflakes")
-)
-(if (and (executable-find "pychecker") (not flymake-python-syntax-checker))
-    (setq flymake-python-syntax-checker "pychecker")
-)
-
-(when (load "flymake" t)
-  (defun flymake-python-init ()
-	(let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-	  (list flymake-python-syntax-checker (list local-file))))
-  (add-to-list 'flymake-allowed-file-name-masks '("\\.py\\'" flymake-python-init)))
-
-(add-hook 'find-file-hook 'flymake-find-file-hook)
-;; (add-hook 'python-mode-hook
-;;       (lambda ()
-;;         (unless (eq buffer-file-name nil) (flymake-mode 1)) ;dont invoke flymake on temporary buffers for the interpreter
-;;         ))
-
-;; Pymacs should point to the local enviromnents
-(if (file-executable-p "~/.emacs.d/local-python/bin/python")
-    (setenv "PYMACS_PYTHON" "~/.emacs.d/local-python/bin/python")
-  (message "Unable to setup Python for Pymacs")
-  )
 
 
 (provide 'init-python)

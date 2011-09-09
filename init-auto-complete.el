@@ -120,26 +120,6 @@
                               (when (fboundp 'ac-l-setup) (ac-l-setup))
                               ))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Python mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defvar ac-ropemacs-completions-cache nil)
-(ac-define-source ropemacs-max
-  '((init
-     . (lambda ()
-         (setq ac-ropemacs-completions-cache
-               (mapcar
-                (lambda (completion)
-                  (concat ac-prefix completion))
-                (ignore-errors
-                  (rope-completions))))))
-    (candidates . ac-ropemacs-completions-cache)))
-
-(ac-ropemacs-initialize)
-(add-hook 'python-mode-hook
-          (lambda ()
-            (add-to-list 'ac-sources 'ac-source-ropemacs-max)
-            (local-set-key (kbd "M-TAB") 'ac-complete-ropemacs-max)
-            ))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; Mail-mode + BBDB ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defvar ac-bbdb-header-list '("to" "from" "cc" "bcc"))
