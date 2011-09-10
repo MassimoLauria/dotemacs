@@ -1,3 +1,4 @@
+
 #!/bin/sh
 #
 # Copyright (C) 2010, 2011 by Massimo Lauria <lauria.massimo@gmail.com>
@@ -14,7 +15,7 @@
 
 # Python program and packages to be installed
 PYTHON=python
-PKGS="pyflakes pylint pep8 pymacs rope ropemode ipython cython readline"
+PKGS="pyflakes pylint pep8 rope ropemode ipython cython readline"
 
 # Pymacs version
 PYMACS=https://github.com/pinard/Pymacs/
@@ -33,13 +34,13 @@ VENV=$PWD/virtualenv.py
 
 # Setup the basic environment
 echo "[1/3] Setup of basic environment."
-#rm -fr $PYENV
-#$PYTHON $VENV --clear --no-site-packages $PYENV
+rm -fr $PYENV
+$PYTHON $VENV --clear --no-site-packages $PYENV
 . $PYENV/bin/activate
 
 # Install all packages (may require some ti)
 echo "[2/3] Packages installation (wait several minutes)."
-#$PYENV/bin/pip install $PKGS
+$PYENV/bin/pip install $PKGS
 
 
 # Install
