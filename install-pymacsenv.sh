@@ -13,7 +13,7 @@
 # Code::
 
 # Python program and packages to be installed
-PYTHON=python2.7
+PYTHON=python
 PKGS="pyflakes pylint pep8 pymacs rope ropemode ipython cython readline"
 
 # Pymacs version
@@ -23,7 +23,6 @@ PYMACSVER=v0.24-beta2
 # Paths
 EMACSD=$HOME/.emacs.d/
 PYENV=$EMACSD/local-python
-PYENV=$HOME/prova/
 OLD_PWD=$PWD
 
 # Programs
