@@ -92,10 +92,6 @@
                )
              ))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; C++-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Keywords.
-(add-hook 'c++-mode-hook '(lambda ()
-                            (add-to-list 'ac-sources 'ac-c++-sources 'ac-source-gtags)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; CSS-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Keywords.

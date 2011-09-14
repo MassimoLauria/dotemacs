@@ -1,15 +1,13 @@
 ;=============================================================================
+; CMake - Cross Platform Makefile Generator
+; Copyright 2000-2009 Kitware, Inc., Insight Software Consortium
 ;
-;  Program:   CMake - Cross-Platform Makefile Generator
-;  Module:    $RCSfile: cmake-mode.el,v $
+; Distributed under the OSI-approved BSD License (the "License");
+; see accompanying file Copyright.txt for details.
 ;
-;  Copyright (c) 2000-$Date: 2006/09/23 20:32:34 $ Kitware, Inc., Insight Consortium.  All rights reserved.
-;  See Copyright.txt or http://www.cmake.org/HTML/Copyright.html for details.
-;
-;     This software is distributed WITHOUT ANY WARRANTY; without even
-;     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-;     PURPOSE.  See the above copyright notices for more information.
-;
+; This software is distributed WITHOUT ANY WARRANTY; without even the
+; implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+; See the License for more information.
 ;=============================================================================
 ;;; cmake-mode.el --- major-mode for editing CMake sources
 
@@ -32,13 +30,27 @@
 ;------------------------------------------------------------------------------
 
 ;;; Code:
+;;
+;; cmake executable variable used to run cmake --help-command
+;; on commands in cmake-mode
+;;
+;; cmake-command-help Written by James Bigler 
+;;
 
+(defcustom cmake-mode-cmake-executable "cmake"
+  "*The name of the cmake executable.
+
+This can be either absolute or looked up in $PATH.  You can also
+set the path with these commands:
+ (setenv \"PATH\" (concat (getenv \"PATH\") \";C:\\\\Program Files\\\\CMake 2.8\\\\bin\"))
+ (setenv \"PATH\" (concat (getenv \"PATH\") \":/usr/local/cmake/bin\"))"
+  :type 'file
+  :group 'cmake)
 ;;
 ;; Regular expressions used by line indentation function.
 ;;
 (defconst cmake-regex-blank "^[ \t]*$")
-(defconst cmake-regex-comment "#.*$")
-(defconst cmake-regex-blank-comment "#^[ \t]*$")
+(defconst cmake-regex-comment "#.*")
 (defconst cmake-regex-paren-left "(")
 (defconst cmake-regex-paren-right ")")
 (defconst cmake-regex-argument-quoted
@@ -56,9 +68,9 @@
                                        "\\|" "[ \t\r\n]"
                                        "\\)*"))
 (defconst cmake-regex-block-open
-  "^\\(IF\\|MACRO\\|FOREACH\\|ELSE\\|ELSEIF\\|WHILE\\)$")
+  "^\\(IF\\|MACRO\\|FOREACH\\|ELSE\\|ELSEIF\\|WHILE\\|FUNCTION\\)$")
 (defconst cmake-regex-block-close
-  "^[ \t]*\\(ENDIF\\|ENDFOREACH\\|ENDMACRO\\|ELSE\\|ELSEIF\\|ENDWHILE\\)[ \t]*(")
+  "^[ \t]*\\(ENDIF\\|ENDFOREACH\\|ENDMACRO\\|ELSE\\|ELSEIF\\|ENDWHILE\\|ENDFUNCTION\\)[ \t]*(")
 
 ;------------------------------------------------------------------------------
 
@@ -103,198 +115,88 @@
 (defun cmake-indent ()
   "Indent current line as CMAKE code."
   (interactive)
-  (beginning-of-line)
   (if (cmake-line-starts-inside-string)
       ()
     (if (bobp)
-        (indent-line-to 0)
-      (let ((point-start (point))
-            token cur-indent)
+        (cmake-indent-line-to 0)
+      (let (cur-indent)
 
         (save-excursion
-          ; Search back for the last indented line.
-          (cmake-find-last-indented-line)
+          (beginning-of-line)
 
-          ; Start with the indentation on this line.
-          (setq cur-indent (current-indentation))
+          (let ((point-start (point))
+                token)
 
-          ; Search forward counting tokens that adjust indentation.
-          (while (re-search-forward cmake-regex-token point-start t)
-            (setq token (match-string 0))
-            (if (string-match (concat "^" cmake-regex-paren-left "$") token)
-                (setq cur-indent (+ cur-indent cmake-tab-width))
+            ; Search back for the last indented line.
+            (cmake-find-last-indented-line)
+
+            ; Start with the indentation on this line.
+            (setq cur-indent (current-indentation))
+
+            ; Search forward counting tokens that adjust indentation.
+            (while (re-search-forward cmake-regex-token point-start t)
+              (setq token (match-string 0))
+              (if (string-match (concat "^" cmake-regex-paren-left "$") token)
+                  (setq cur-indent (+ cur-indent cmake-tab-width))
+                )
+              (if (string-match (concat "^" cmake-regex-paren-right "$") token)
+                  (setq cur-indent (- cur-indent cmake-tab-width))
+                )
+              (if (and
+                   (string-match cmake-regex-block-open token)
+                   (looking-at (concat "[ \t]*" cmake-regex-paren-left))
+                   )
+                  (setq cur-indent (+ cur-indent cmake-tab-width))
+                )
               )
-            (if (string-match (concat "^" cmake-regex-paren-right "$") token)
+            (goto-char point-start)
+
+            ; If this is the end of a block, decrease indentation.
+            (if (looking-at cmake-regex-block-close)
                 (setq cur-indent (- cur-indent cmake-tab-width))
               )
-            (if (and
-                 (string-match cmake-regex-block-open token)
-                 (looking-at (concat "[ \t]*" cmake-regex-paren-left))
-                 )
-                (setq cur-indent (+ cur-indent cmake-tab-width))
-              )
             )
-          )
-
-        ; If this is the end of a block, decrease indentation.
-        (if (looking-at cmake-regex-block-close)
-            (setq cur-indent (- cur-indent cmake-tab-width))
           )
 
         ; Indent this line by the amount selected.
         (if (< cur-indent 0)
-            (indent-line-to 0)
-          (indent-line-to cur-indent)
+            (cmake-indent-line-to 0)
+          (cmake-indent-line-to cur-indent)
           )
         )
       )
     )
   )
 
+(defun cmake-point-in-indendation ()
+  (string-match "^[ \\t]*$" (buffer-substring (point-at-bol) (point))))
+
+(defun cmake-indent-line-to (column)
+  "Indent the current line to COLUMN.
+If point is within the existing indentation it is moved to the end of
+the indentation.  Otherwise it retains the same position on the line"
+  (if (cmake-point-in-indendation)
+      (indent-line-to column)
+    (save-excursion (indent-line-to column))))
+
 ;------------------------------------------------------------------------------
 
 ;;
-;; Fill comment paragraph functions.
+;; Helper functions for buffer
 ;;
-(defconst cmake-fill-comment-prefix "# ")
-
-(defun cmake-fill-comment-paragraph-justify ()
-  "Fills the current comment paragraph with justified margins."
+(defun unscreamify-cmake-buffer ()
+  "Convert all CMake commands to lowercase in buffer."
   (interactive)
-  (cmake-fill-comment-paragraph 1)
-  )
-
-(defun cmake-fill-comment-paragraph (&optional justify)
-  "Fills the current comment paragraph."
-  (interactive "P")
-  (let ((opos (point-marker))
-        (begin nil)
-        (end nil)
-        (indent nil)
-        )
-
-    ; Check if we are inside a comment.
-    (if (not (progn
-               (back-to-indentation)
-               (looking-at cmake-regex-comment)))
-        (error "not inside a comment paragraph ..."))
-    ; *** are right-side comments valid; how do we treat them here??? ***
-
-    (message "filling comment paragraph ...")
-
-    ;;
-    ;; Find limits of paragraph.
-    ;;
-    ; Find end of paragraph.
-    (save-excursion
-      (while (and
-              ; we are in a comment
-              (progn
-                (back-to-indentation)
-                (and (looking-at cmake-regex-comment)
-                     (not (looking-at cmake-regex-blank-comment))))
-              ; and not at the end of the buffer
-              (progn
-                (end-of-line)
-                (not (= (point) (point-max))))
-              )
-        (forward-line 1)
-        )
-      (if (progn
-            (back-to-indentation)
-            (not (and (looking-at cmake-regex-comment)
-                      (not (looking-at cmake-regex-blank-comment)))))
-          (forward-line -1))
-      (end-of-line)
-      (setq end (point-marker))
-      )
-    ; Find beginning of paragraph.
-    (save-excursion
-      (while (and
-              ; we are in a comment
-              (progn
-                (back-to-indentation)
-                (and (looking-at cmake-regex-comment)
-                     (not (looking-at cmake-regex-blank-comment))))
-              ; and not at the beginning of the buffer
-              (progn
-                (beginning-of-line)
-                (not (= (point) (point-min))))
-              )
-        (forward-line -1)
-        )
-      (if (progn
-            (back-to-indentation)
-            (not (and (looking-at cmake-regex-comment)
-                      (not (looking-at cmake-regex-blank-comment))))
-            )
-          (forward-line 1))
-      (back-to-indentation)
-      (setq begin (point-marker))
-      (setq indent(current-column))
-      )
-
-    ;;
-    ;; Delete leading whitespace and uncomment.
-    ;;
-    (save-excursion
-      (goto-char begin)
-      (beginning-of-line)
-      (while (re-search-forward
-              (concat "^[ \t]*\\("
-                      cmake-fill-comment-prefix
-                      "\\|#\\)[ \t]*"
-                      )
-              end t)
-        (replace-match "")
-        )
-      )
-
-    ;;
-    ;; Fill paragraph
-    ;;
-    ; Calculate fill width minus indent minus prefix.
-    (setq fill-column (- fill-column
-                         indent
-                         (length cmake-fill-comment-prefix)
-                         ))
-    ; Fill paragraph.
-    (fill-region begin end justify)
-    ; Restore fill width.
-    (setq fill-column (+ fill-column
-                         indent
-                         (length cmake-fill-comment-prefix)
-                         ))
-
-    ;;
-    ;; Re-comment and re-indent region.
-    ;;
-    (save-excursion
-      (goto-char begin)
-      (setq count (point-marker))
-      (while (< count end)
-        (beginning-of-line)
-        (indent-to indent)
-        (insert cmake-fill-comment-prefix)
-        (forward-line 1)
-        (setq count (point-marker))
-        )
-      )
-
-    ;;
-    ;; Delete the extra line that gets inserted somehow in XEmacs???
-    ;;
-    (if version-xemacs
-      (save-excursion
-        (goto-char end)
-        (end-of-line)
-        (delete-char 1)
-        )
-      )
-
-    (message "filling comment paragraph ... done")
-    (goto-char opos)
-    )
+  (setq save-point (point))
+  (goto-char (point-min))
+  (while (re-search-forward "^\\([ \t]*\\)\\(\\w+\\)\\([ \t]*(\\)" nil t)
+    (replace-match 
+     (concat 
+      (match-string 1) 
+      (downcase (match-string 2)) 
+      (match-string 3)) 
+     t))
+  (goto-char save-point)
   )
 
 ;------------------------------------------------------------------------------
@@ -359,12 +261,77 @@
   (make-local-variable 'comment-start)
   (setq comment-start "#")
 
-  ; Some local overrides of functions
-  (make-local-variable 'fill-paragraph-function)
-  (setq fill-paragraph-function 'cmake-fill-comment-paragraph)
-  
   ; Run user hooks.
   (run-hooks 'cmake-mode-hook))
+
+; Help mode starts here
+
+
+(defun cmake-command-run (type &optional topic)
+  "Runs the command cmake with the arguments specified.  The
+optional argument topic will be appended to the argument list."
+  (interactive "s")
+  (let* ((bufname (concat "*CMake" type (if topic "-") topic "*"))
+         (buffer  (get-buffer bufname))
+         )
+    (if buffer
+        (display-buffer buffer 'not-this-window)
+      ;; Buffer doesn't exist.  Create it and fill it
+      (setq buffer (generate-new-buffer bufname))
+      (setq command (concat cmake-mode-cmake-executable " " type " " topic))
+      (message "Running %s" command)
+      ;; We don't want the contents of the shell-command running to the
+      ;; minibuffer, so turn it off.  A value of nil means don't automatically
+      ;; resize mini-windows.
+      (setq resize-mini-windows-save resize-mini-windows)
+      (setq resize-mini-windows nil)
+      (shell-command command buffer)
+      ;; Save the original window, so that we can come back to it later.
+      ;; save-excursion doesn't seem to work for this.
+      (setq window (selected-window))
+      ;; We need to select it so that we can apply special modes to it
+      (select-window (display-buffer buffer 'not-this-window))
+      (cmake-mode)
+      (toggle-read-only t)
+      ;; Restore the original window
+      (select-window window)
+      (setq resize-mini-windows resize-mini-windows-save)
+      )
+    )
+  )
+
+(defun cmake-help-list-commands ()
+  "Prints out a list of the cmake commands."
+  (interactive)
+  (cmake-command-run "--help-command-list")
+  )
+
+(defvar cmake-help-command-history nil "Topic read history.")
+
+(require 'thingatpt)
+(defun cmake-get-topic (type)
+  "Gets the topic from the minibuffer input.  The default is the word the cursor is on."
+  (interactive)
+  (let* ((default-entry (word-at-point))
+         (input (read-string
+                 (format "CMake %s (default %s): " type default-entry) ; prompt
+                 nil ; initial input
+                 'cmake-help-command-history ; command history
+                 default-entry ; default-value
+                 )))
+    (if (string= input "")
+        (error "No argument given")
+      input))
+  )
+
+
+(defun cmake-help-command ()
+  "Prints out the help message corresponding to the command the cursor is on."
+  (interactive)
+  (setq command (cmake-get-topic "command"))
+  (cmake-command-run "--help-command" (downcase command))
+  )
+
 
 ; This file provides cmake-mode.
 (provide 'cmake-mode)
