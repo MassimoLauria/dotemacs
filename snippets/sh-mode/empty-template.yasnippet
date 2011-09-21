@@ -1,17 +1,18 @@
 #contributor : Massimo Lauria
 #name : Shell script template
 #key : empty-template
+#expand-env: ((time-format "%Y-%02m-%02d, %A %02H:%02M (%Z)"))
 # --
 #!/bin/sh
 #
-# Copyright (C) 2011 by >>>NAME<<< <>>>EMAIL<<<>
+# Copyright (C) `(substring (current-time-string) -4)` by `user-full-name`
 #
-# Created   : ">>>TIME<<< >>>NAME<<<"
+# Created   : "`(format-time-string time-format (current-time))` `user-full-name`"
 # Time-stamp: " "
-
+#
 # Description::
 #
-# <Put your file descrition here>
+# ${1:Put your file descrition here}
 #
 
 # Code::
