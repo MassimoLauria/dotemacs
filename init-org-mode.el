@@ -146,7 +146,6 @@
 
 (add-hook 'org-mode-hook 'org-mode-setup-local-keys)
 ;(add-hook 'org-mode-hook 'turn-on-org-cdlatex)
-(add-hook 'org-mode-hook 'turn-on-reftex)
 ;(add-hook 'org-mode-hook 'orgtbl-mode-setup-local-keys)
 (add-hook 'orgtbl-mode-hook 'orgtbl-mode-setup-local-keys)
 
