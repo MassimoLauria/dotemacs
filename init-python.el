@@ -81,11 +81,10 @@ path."
 
 (setq python-pep8-command (executable-find "pep8"))
 (setq python-pylint-command (executable-find "pylint"))
-(autoload 'python-pylint "python-pylint")
-(autoload 'pylint "python-pylint")
-(autoload 'python-pep8 "python-pep8")
-(autoload 'pep8 "python-pep8")
-
+(autoload 'python-pylint "python-pylint" "Run pylint checker on the current buffer." t nil)
+(autoload 'pylint "python-pylint" "Run pylint checker on the current buffer." t nil)
+(autoload 'python-pep8 "python-pep8" "Run PEP8 checker on the current buffer." t nil)
+(autoload 'pep8 "python-pep8" "Run PEP8 checker on the current buffer." t nil)
 
 
 
