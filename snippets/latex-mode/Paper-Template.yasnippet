@@ -20,7 +20,9 @@
 \usepackage{xspace}
 \usepackage{pdfsync}
 % MATH
-\usepackage{amsmath,amsthm,amssymb}
+\usepackage{amsmath,amssymb}
+\@ifclassloaded{llncs}{}{\usepackage{amsthm}}% AMS Theorem is incompatible with LLNCS
+                                             % which defines it's own theorem environments.
 % ALGORITHM
 % \usepackage{algorithm}
 % \usepackage[noend]{algpseudocode}
@@ -54,25 +56,47 @@
 
 
 % ---------------------------- THEOREM ENVIRONMENTS -------------------
-\newtheorem{definition}{Definition}
-\newtheorem{theorem}{Theorem}
-\newtheorem{corollary}{Corollary}
-\newtheorem{lemma}{Lemma}
-\newtheorem{fact}{Fact}
-\newtheorem{claim}{Claim}
-\newtheorem{open.problem}{Open Problem}
-\newtheorem{remark}{Remark}
-\newtheorem{example}{Example}
-\newtheorem{exercise}{Exercise}
-\newtheorem*{theorem*}{Theorem}
-\newtheorem*{corollary*}{Corollary}
-\newtheorem*{lemma*}{Lemma}
-\newtheorem*{fact*}{Fact}
-\newtheorem*{claim*}{Claim}
-\newtheorem*{open.problem*}{Open Problem}
-\newtheorem*{remark*}{Remark}
-\newtheorem*{example*}{Example}
-\newtheorem*{exercise*}{Exercise}
+% In LLNCS most envs are defined. It uses \spnewtheorem to fill the voids.
+\@ifclassloaded{llncs}{%
+\spnewtheorem{fact}{Fact}{\bfseries}{\itshape}%
+\spnewtheorem{open.problem}{Open Problem}{\bfseries}{\itshape}%
+\spnewtheorem*{fact*}{Fact}{\bfseries}{\itshape}%
+\spnewtheorem*{open.problem*}{Open Problem}{\bfseries}{\itshape}%
+}{}
+% Using AMSTHM  command \newtheorem
+\@ifpackageloaded{amsthm}{%
+\newtheorem{claim}{Claim}%
+\newtheorem{corollary}{Corollary}%
+\newtheorem{definition}{Definition}%
+\newtheorem{example}{Example}%
+\newtheorem{exercise}{Exercise}%
+\newtheorem{fact}{Fact}%
+\newtheorem{lemma}{Lemma}%
+\newtheorem{note}{Note}%
+\newtheorem{open.problem}{Open Problem}%
+\newtheorem{problem}{Problem}%
+\newtheorem{proposition}{Proposition}%
+\newtheorem{question}{Question}%
+\newtheorem{remark}{Remark}%
+\newtheorem{solution}{Solution}%
+\newtheorem{theorem}{Theorem}%
+%-------------------------------
+\newtheorem*{claim*}{Claim}%
+\newtheorem*{corollary*}{Corollary}%
+\newtheorem*{definition*}{Definition}%
+\newtheorem*{example*}{Example}%
+\newtheorem*{exercise*}{Exercise}%
+\newtheorem*{fact*}{Fact}%
+\newtheorem*{lemma*}{Lemma}%
+\newtheorem*{note*}{Note}%
+\newtheorem*{open.problem*}{Open Problem}%
+\newtheorem*{problem*}{Problem}%
+\newtheorem*{proposition*}{Proposition}%
+\newtheorem*{question*}{Question}%
+\newtheorem*{remark*}{Remark}%
+\newtheorem*{solution*}{Solution}%
+\newtheorem*{theorem*}{Theorem}%
+}{}
 % ---------------------------------------------------------------------
 
 
