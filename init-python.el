@@ -50,18 +50,9 @@ path."
                      (set-variable 'py-smart-indentation t)
                      (set-variable 'indent-tabs-mode nil)
                      (define-key py-mode-map (kbd "RET") 'newline-and-indent)
+                     (define-key py-mode-map (kbd "M-q") 'py-fill-paragraph)
                      )
  )
-
-
-;; Force filling only on strings/comments
-(add-hook
- 'python-mode-hook (lambda ()
-                     (auto-fill-mode t)
-                     (set 'auto-fill-function 'py-fill-paragraph)
-                     (set 'fill-paragraph-function 'py-fill-paragraph) ;; this is redundant
-                     ))
-
 
 
 
