@@ -24,7 +24,7 @@
 ;;
 ;; If AUCTeX implementatio is below 11.86 source specials are used.
 (if
-    (>= (string-to-number AUCTeX-version) 11.86)
+    (and (boundp 'AUCTeX-version) (>= (string-to-number AUCTeX-version) 11.86))
     (progn
       ;; To work in Linux with XDVI we need to force the usage of source
       ;; special.  Unfortunately working with Evince as PDF viewer is not
