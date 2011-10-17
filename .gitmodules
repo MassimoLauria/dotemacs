@@ -16,3 +16,6 @@
 [submodule "3rdparties/cclookup"]
 	path = 3rdparties/cclookup
 	url = git://github.com/tsgates/cclookup.git
+[submodule "3rdparties/twittering-mode"]
+	path = 3rdparties/twittering-mode
+	url = http://github.com/hayamiz/twittering-mode.git
