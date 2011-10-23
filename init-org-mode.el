@@ -237,26 +237,27 @@
 ;; Requires Org-mode 7.0
 (when (>= (string-to-number org-version) 7)
 
-;; Configuration
-(setq org-src-fontify-natively t)
-(setq org-src-tab-acts-natively t)
-;; (setq org-confirm-babel-evaluate t)
-;; (setq org-babel-no-eval-on-ctrl-c-ctrl-c t)
+  ;; Configuration
+  (setq org-src-fontify-natively t)
+  (setq org-src-tab-acts-natively t)
+  ;; (setq org-confirm-babel-evaluate t)
+  ;; (setq org-babel-no-eval-on-ctrl-c-ctrl-c t)
 
-;; Activate languages (it could be a security RISK!!)
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '(
-   (emacs-lisp . t)
-   (sh .t)
-   (python . t)
-   (C . t)
-   (latex . t)
-   (dot . t)
-   (gnuplot . t)
-   (ditaa . t)
-   ))
-)
+  ;; Activate languages (it could be a security RISK!!)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(
+     (emacs-lisp . t)
+     (sh .t)
+     (python . t)
+     (C . t)
+     (latex . t)
+     (dot . t)
+     (gnuplot . t)
+     (ditaa . t)
+     ))
+
+  ) ;; Org babel for Org-mode > 7.0
 
 
 (provide 'init-org-mode)
