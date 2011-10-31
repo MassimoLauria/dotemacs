@@ -160,7 +160,8 @@ started."
 
 
 ;; Additional facilities
-(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+;; (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+(add-hook 'LaTeX-mode-hook 'reftex-mode)
 
 ;; Auto pairs
 (add-hook 'LaTeX-mode-hook 'autopair-latex-setup)
