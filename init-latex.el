@@ -9,10 +9,11 @@
 
 
 
-;; Multifile support, completition, style, reverse search support
+;; Multifile support, completition, style, reverse search support, ...
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
 (setq TeX-save-query nil)
+(setq TeX-display-help 'expert)
 
 (setq-default TeX-master t)  ;; Do not query for master file, and applies auto-insertion.
 
