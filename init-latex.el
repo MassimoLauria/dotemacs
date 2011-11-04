@@ -150,7 +150,9 @@ started."
 ;; properly.
 (add-hook 'LaTeX-mode-hook (lambda ()
                              (turn-off-auto-fill)
-							 (setq  default-justification 'left)
+                             (if (fboundp 'bib-cite-minor-mode)
+                                 (bib-cite-minor-mode -1))
+                             (setq  default-justification 'left)
                              (setq  fill-column 99999)
 							 ))
 (if (fboundp 'visual-line-mode)

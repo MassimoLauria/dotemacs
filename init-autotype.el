@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2011-04-22, Friday 12:27 (CEST) Massimo Lauria>
+;; Time-stamp: <2011-11-04, Friday 02:17 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -68,6 +68,17 @@
    (mapc 'yas/load-directory yas/root-directory)
    (setq yas/ignore-filenames-as-triggers t)
    ))
+
+
+;; How to prompt for a snippet, e.g. because of `yas/visit-snippet-file'
+(setq yas/prompt-functions '(yas/ido-prompt
+                             yas/completing-prompt))
+
+;; Avoid automatic insertion of newlines at the end of a snippet recipe.
+(add-hook 'snippet-mode-hook (lambda ()
+                               (make-local-variable 'require-final-newline)
+                               (setq require-final-newline nil)
+                               ))
 
 ;;; Copyright update --- setup in custom.el
 

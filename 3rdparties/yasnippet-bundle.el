@@ -1,7 +1,7 @@
 ;;; yasnippet-bundle.el --- Yet another snippet extension (Auto compiled bundle)
 ;;; Yasnippet.el --- Yet another snippet extension for Emacs.
 
-;; Copyright 2008 pluskid
+;; Copyright 2008, 2011 pluskid
 ;;           2009 pluskid, joaotavora
 
 ;; Authors: pluskid <pluskid@gmail.com>, joaotavora <joaotavora@gmail.com>
@@ -14,7 +14,7 @@
 
 ;; This file is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation; either version 2, or (at your option)
+;; the Free Software Foundation; either version 3, or (at your option)
 ;; any later version.
 
 ;; This file is distributed in the hope that it will be useful,
@@ -247,7 +247,7 @@ representation using `read-kbd-macro'."
              ;; `yas/trigger-key' is *not* loaded.
              (if (fboundp 'yas/trigger-key-reload)
                  (yas/trigger-key-reload old)))))
-  
+
 (defcustom yas/next-field-key '("TAB" "<tab>")
   "The key to navigate to next field when a snippet is active.
 
@@ -262,7 +262,7 @@ Can also be a list of strings."
            (set-default symbol val)
            (if (fboundp 'yas/init-yas-in-snippet-keymap)
                (yas/init-yas-in-snippet-keymap))))
-           
+
 
 (defcustom yas/prev-field-key '("<backtab>" "<S-tab>")
   "The key to navigate to previous field when a snippet is active.
@@ -490,7 +490,7 @@ This variable is a lisp form:
     * If it evaluates to t or some other non-nil value
 
        * Snippet bearing no conditions, or conditions that
-         evaluate to non-nil, are considered for expansion. 
+         evaluate to non-nil, are considered for expansion.
 
        * Otherwise, the snippet is not considered.
 
@@ -586,7 +586,7 @@ snippet itself contains a condition that returns the symbol
         ["Visit snippet file..." yas/visit-snippet-file
          :help "Prompt for an expandable snippet and find its file"]
         ["Find snippets..." yas/find-snippets
-         :help "Invoke `find-file' in the appropriate snippet directory"] 
+         :help "Invoke `find-file' in the appropriate snippet directory"]
         "----"
         ("Snippet menu behaviour"
          ["Visit snippets" (setq yas/visit-from-menu t)
@@ -653,27 +653,27 @@ snippet itself contains a condition that returns the symbol
                                                  'yas/completing-prompt-prompt)]
          )
         ("Misc"
-         ["Wrap region in exit marker" 
+         ["Wrap region in exit marker"
           (setq yas/wrap-around-region
                 (not yas/wrap-around-region))
           :help "If non-nil automatically wrap the selected text in the $0 snippet exit"
           :style toggle :selected yas/wrap-around-region]
-         ["Allow stacked expansions " 
+         ["Allow stacked expansions "
           (setq yas/triggers-in-field
                 (not yas/triggers-in-field))
           :help "If non-nil allow snippets to be triggered inside other snippet fields"
           :style toggle :selected yas/triggers-in-field]
-         ["Revive snippets on undo " 
+         ["Revive snippets on undo "
           (setq yas/snippet-revival
                 (not yas/snippet-revival))
           :help "If non-nil allow snippets to become active again after undo"
           :style toggle :selected yas/snippet-revival]
-         ["Good grace " 
+         ["Good grace "
           (setq yas/good-grace
                 (not yas/good-grace))
           :help "If non-nil don't raise errors in bad embedded eslip in snippets"
           :style toggle :selected yas/good-grace]
-         ["Ignore filenames as triggers" 
+         ["Ignore filenames as triggers"
           (setq yas/ignore-filenames-as-triggers
                 (not yas/ignore-filenames-as-triggers))
           :help "If non-nil don't derive tab triggers from filenames"
@@ -705,7 +705,7 @@ With optional UNBIND-KEY, try to unbind that key from
   (when (and unbind-key
              (stringp unbind-key)
              (not (string= unbind-key "")))
-    (define-key yas/minor-mode-map (read-kbd-macro unbind-key) nil)) 
+    (define-key yas/minor-mode-map (read-kbd-macro unbind-key) nil))
   (when  (and yas/trigger-key
               (stringp yas/trigger-key)
               (not (string= yas/trigger-key "")))
@@ -1503,7 +1503,7 @@ Here's the default value for all the parameters:
                       \"dropdown-list.el\")
 "
   (interactive "ffind the yasnippet.el file: \nFTarget bundle file: \nDSnippet directory to bundle: \nMExtra code? \nfdropdown-library: ")
-  
+
   (let* ((yasnippet (or yasnippet
                         "yasnippet.el"))
          (yasnippet-bundle (or yasnippet-bundle
@@ -1547,7 +1547,7 @@ Here's the default value for all the parameters:
                         (group                  (fifth   snippet))
                         (expand-env             (sixth   snippet))
                         ;; Omit the file on purpose
-                        (file                   nil) ;; (seventh snippet)) 
+                        (file                   nil) ;; (seventh snippet))
                         (binding                (eighth  snippet)))
                     (push `(,key
                             ,template-content
@@ -1570,14 +1570,14 @@ Here's the default value for all the parameters:
       ;; bundle-specific provide and value for yas/dont-activate
       (let ((bundle-feature-name (file-name-nondirectory
                                   (file-name-sans-extension
-                                   yasnippet-bundle)))) 
+                                   yasnippet-bundle))))
         (insert (pp-to-string `(set-default 'yas/dont-activate
                                             #'(lambda ()
                                                 (and (or yas/root-directory
                                                          (featurep ',(make-symbol bundle-feature-name)))
                                                      (null (yas/get-snippet-tables)))))))
         (insert (pp-to-string `(provide ',(make-symbol bundle-feature-name)))))
-      
+
       (insert ";;; "
               (file-name-nondirectory yasnippet-bundle)
               " ends here\n"))))
@@ -1660,7 +1660,7 @@ not need to be a real mode."
       (let* ((file (seventh snippet))
              (key (or (car snippet)
                       (unless yas/ignore-filenames-as-triggers
-                        (and file 
+                        (and file
                              (file-name-sans-extension (file-name-nondirectory file))))))
              (name (or (third snippet)
                        (and file
@@ -1770,7 +1770,7 @@ not need to be a real mode."
         ((eq yas/use-menu 'real-modes)
          (yas/real-mode? mode))
         (t
-         t))) 
+         t)))
 
 (defun yas/delete-from-keymap (keymap name)
   "Recursively delete items name NAME from KEYMAP and its submenus.
@@ -1858,7 +1858,7 @@ defined in `yas/fallback-behavior'"
                     (keys-1 (this-command-keys-vector))
                     (keys-2 (and yas/trigger-key
                                  (stringp yas/trigger-key)
-                                 (read-kbd-macro yas/trigger-key))) 
+                                 (read-kbd-macro yas/trigger-key)))
                     (command-1 (and keys-1 (key-binding keys-1)))
                     (command-2 (and keys-2 (key-binding keys-2)))
                     (command (or (and (not (eq command-1 'yas/expand))
@@ -1957,7 +1957,7 @@ visited file in `snippet-mode'."
 (defun yas/guess-snippet-directories-1 (table &optional suffix)
   "Guesses possible snippet subdirsdirectories for TABLE."
   (unless suffix
-    (setq suffix (yas/snippet-table-name table))) 
+    (setq suffix (yas/snippet-table-name table)))
   (cons suffix
         (mapcan #'(lambda (parent)
                     (yas/guess-snippet-directories-1
@@ -1982,11 +1982,11 @@ lurking."
     ;; work. The real table, if it does not exist in
     ;; yas/snippet-tables will be created when the first snippet for
     ;; that mode is loaded.
-    ;; 
+    ;;
     (unless (gethash major-mode yas/snippet-tables)
       (setq tables (cons (yas/make-snippet-table (symbol-name major-mode))
                          tables)))
-    
+
     (mapcar #'(lambda (table)
                 (cons table
                       (mapcar #'(lambda (subdir)
@@ -2049,7 +2049,7 @@ lurking."
           (snippet-mode)
           (unless (and choose-instead-of-guess
                        (not (y-or-n-p "Insert a snippet with useful headers? ")))
-            (yas/expand-snippet (format 
+            (yas/expand-snippet (format
                                  "\
 # -*- mode: snippet -*-
 # name: %s
@@ -2070,7 +2070,7 @@ With prefix arg SAME-WINDOW opens the buffer in the same window.
 Because snippets can be loaded from many different locations,
 this has to guess the correct directory using
 `yas/guess-snippet-directories', which returns a list of
-options. 
+options.
 
 If any one of these exists, it is taken and `find-file' is called
 there, otherwise, proposes to create the first option returned by
@@ -3310,7 +3310,7 @@ When multiple expressions are found, only the last one counts."
   ;; if we entered from a parent field, now search for the
   ;; `yas/multi-dollar-lisp-expression-regexp'. THis is used for
   ;; primary field transformations
-  ;; 
+  ;;
   (when parent-field
     (save-excursion
       (while (re-search-forward yas/multi-dollar-lisp-expression-regexp nil t)
@@ -4157,7 +4157,7 @@ Use multiple times to bind different COMMANDs to the same KEY."
 
 ;;; snippets for latex-mode
 (yas/define-snippets 'latex-mode
-		     '(("begin" "\n\\begin{${1:environment}}\n$0\n\\end{$1}\n" "\\begin{environment} ... \\end{environment}" nil nil nil nil nil))
+		     '()
 		     '(text-mode))
 
 
