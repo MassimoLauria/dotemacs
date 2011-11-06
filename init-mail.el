@@ -7,6 +7,10 @@
 
 (define-key global-map "\C-cm" 'compose-mail)
 
+;; Setup SEND MAIL (just three lines!!)
+(setq message-send-mail-function 'message-send-mail-with-sendmail)
+(setq sendmail-program (executable-find "msmtp"))
+; (setq message-sendmail-extra-arguments '("-a" "gmail"))
 
 ;; Setup MAIL EDITOR
 (setq compose-mail-user-agent-warnings nil)
@@ -22,35 +26,6 @@
 ;; Use with Mutt
 (add-to-list 'auto-mode-alist '(".*mutt.*" . message-mode))
 (setq mail-header-separator "")
-
-
-;; Setup SEND MAIL
-(setq smtpmail-smtp-server private-smtp-server)
-(setq send-mail-function 'smtpmail-send-it
-      message-send-mail-function 'smtpmail-send-it
-      smtpmail-default-smtp-server private-smtp-server
-      smtpmail-smtp-server private-smtp-server
-      smtpmail-smtp-service private-smtp-port
-      smtpmail-debug-info t)
-
-;; Setup SEND MAIL Authentication
-(setq starttls-use-gnutls t)
-(setq smtpmail-starttls-credentials `((,private-smtp-server
-                                       ,private-smtp-port nil nil)))
-
-(setq auth-file-name (expand-file-name "~/personal/keys/authinfo.gpg"))
-
-(if (file-exists-p auth-file-name)
-    (setq smtpmail-auth-credentials auth-file-name) ; Load password
-                                                    ; from encrypted
-                                                    ; file
-  (setq smtpmail-auth-credentials
-        `((,private-smtp-server
-           ,private-smtp-port ,private-smtp-login nil))) ; Password must be inserted
-)
-
-(require 'smtpmail)
-
 
 ;; (Insidious) Big Brother DataBase, collects mail addresses.
 
