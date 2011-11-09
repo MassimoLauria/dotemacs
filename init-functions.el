@@ -96,13 +96,13 @@ the result of (F t)
     (save-excursion
       (goto-char start)
       (while (< (point) end) (if (forward-word 1) (setq n (1+ n)))))
-    (message "%3dL %3dW %3dC" (count-lines start end) n (- end start))))
+    (message "%3d lines, %3d words, %3d chars" (count-lines start end) n (- end start))))
 
 
 ;;;- Previous/Next user/emacs buffer ----- and extension alike ErgoEmacs ----------------------
 
 ; Those are DNFs, lists of lists. External list is an OR of rules, internal is an AND.
-(setq user-buffer-whitelist '(or "^*scratch*" "^*Remember*" "^*eshell*" "^*mail*" "^*draft*" "^*info" rcirc-mode))
+(setq user-buffer-whitelist '(or "^*scratch*" "^*Remember*" "^*shell*" "^*Python*" "^*mail*" "^*draft*" "^*info" rcirc-mode))
 (setq user-buffer-blacklist '(or "^*" "\.pdfsync" (and "\\.log" latex-mode) "contacts.bbdb"))
 
 ;; string-match-p does not exists before Emacs 23

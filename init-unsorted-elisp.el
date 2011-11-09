@@ -40,6 +40,8 @@
 (autoload 'graphviz-dot-mode
   "graphviz-dot-mode" "Edit/View Graphviz's dot files" t)
 
+(autoload 'muttrc-mode "muttrc-mode"
+  "Mode to edit mutt configuration files")
 
 
 ;; Undo-Tree, much better than default.
