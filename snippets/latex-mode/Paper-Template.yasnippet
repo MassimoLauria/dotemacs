@@ -5,7 +5,7 @@
 % Copyright (C) `(substring (current-time-string) -4)` by $2
 %
 % Created   : "`(format-time-string time-format (current-time))` `user-full-name`"
-% Time-stamp: <>
+% Time-stamp: <2011-11-13, Sunday 21:14 (CET) Massimo Lauria>
 % Encoding  : UTF-8
 
 %{{{-------------------------- PREAMBLE -------------------------------
@@ -20,9 +20,7 @@
 \usepackage{xspace}
 \usepackage{pdfsync}
 % MATH
-\usepackage{amsmath,amssymb}
-\@ifclassloaded{llncs}{}{\usepackage{amsthm}}% AMS Theorem is incompatible with LLNCS
-                                             % which defines it's own theorem environments.
+\usepackage{theoryofcomputing} % this is a non standard package
 % ALGORITHM
 % \usepackage{algorithm}
 % \usepackage[noend]{algpseudocode}
@@ -54,50 +52,6 @@
 
 %}}}-------------------------------------------------------------------
 
-
-% ---------------------------- THEOREM ENVIRONMENTS -------------------
-% In LLNCS most envs are defined. It uses \spnewtheorem to fill the voids.
-\@ifclassloaded{llncs}{%
-\spnewtheorem{fact}{Fact}{\bfseries}{\itshape}%
-\spnewtheorem{open.problem}{Open Problem}{\bfseries}{\itshape}%
-\spnewtheorem*{fact*}{Fact}{\bfseries}{\itshape}%
-\spnewtheorem*{open.problem*}{Open Problem}{\bfseries}{\itshape}%
-}{}
-% Using AMSTHM  command \newtheorem
-\@ifpackageloaded{amsthm}{%
-\newtheorem{claim}{Claim}%
-\newtheorem{corollary}{Corollary}%
-\newtheorem{definition}{Definition}%
-\newtheorem{example}{Example}%
-\newtheorem{exercise}{Exercise}%
-\newtheorem{fact}{Fact}%
-\newtheorem{lemma}{Lemma}%
-\newtheorem{note}{Note}%
-\newtheorem{open.problem}{Open Problem}%
-\newtheorem{problem}{Problem}%
-\newtheorem{proposition}{Proposition}%
-\newtheorem{question}{Question}%
-\newtheorem{remark}{Remark}%
-\newtheorem{solution}{Solution}%
-\newtheorem{theorem}{Theorem}%
-%-------------------------------
-\newtheorem*{claim*}{Claim}%
-\newtheorem*{corollary*}{Corollary}%
-\newtheorem*{definition*}{Definition}%
-\newtheorem*{example*}{Example}%
-\newtheorem*{exercise*}{Exercise}%
-\newtheorem*{fact*}{Fact}%
-\newtheorem*{lemma*}{Lemma}%
-\newtheorem*{note*}{Note}%
-\newtheorem*{open.problem*}{Open Problem}%
-\newtheorem*{problem*}{Problem}%
-\newtheorem*{proposition*}{Proposition}%
-\newtheorem*{question*}{Question}%
-\newtheorem*{remark*}{Remark}%
-\newtheorem*{solution*}{Solution}%
-\newtheorem*{theorem*}{Theorem}%
-}{}
-% ---------------------------------------------------------------------
 
 
 % ---------------------------- MACROS ---------------------------------
