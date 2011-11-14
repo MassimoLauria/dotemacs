@@ -56,31 +56,13 @@
           (append ido-ignore-files TeX-byproduct-files)
         TeX-byproduct-files ))
 
-;; Macro are folded.
-(defun TeX-fold-this-paragraph-toggle ()
-  "If TeX-fold-mode is active then alternate between folded and
-not folded text in a paragraph"
-  (interactive)
-  (unless (TeX-fold-clearout-paragraph)
-    (TeX-fold-paragraph) ) )
-
-(defun TeX-fold-this-buffer-toggle ()
-  "If TeX-fold-mode is active then alternate between folded and not folded text in a paragraph"
-  (interactive)
-  (unless (TeX-fold-clearout-buffer)
-    (TeX-fold-buffer)
-    )
-  )
 
 (add-hook 'LaTeX-mode-hook
           (lambda () (progn
-                       ;;(TeX-fold-mode 1)
-                       ;;(local-set-key (kbd "M-<SPC>") 'TeX-fold-this-paragraph-toggle) ;;Folding on/off
                        (local-set-key (kbd "<f9>")    'TeX-command-master) ;; Compile
                        (make-local-variable compilation-exit-message-function)
                        (setq compilation-exit-message-function 'nil)
                        (add-to-list 'LaTeX-verbatim-environments "comment")
-                       ;;(TeX-fold-buffer)
                        )
             ))
 
@@ -116,33 +98,71 @@ started."
                              ))
 
 
-
-
 ;; Setup DBUS communication between Evince and AUCTeX using SyncTeX
-(require-maybe 'dbus)
+;; Forward/inverse search with evince using D-bus.
+(if (require 'dbus "dbus" t)
+    (progn
+      ;; Forward search.
+      ;; Adapted from http://dud.inf.tu-dresden.de/~ben/evince_synctex.tar.gz
+      (defun auctex-evince-forward-sync (pdffile texfile line)
+        (let ((dbus-name
+           (dbus-call-method :session
+                     "org.gnome.evince.Daemon"  ; service
+                     "/org/gnome/evince/Daemon" ; path
+                     "org.gnome.evince.Daemon"  ; interface
+                     "FindDocument"
+                     (concat "file://" pdffile)
+                     t     ; Open a new window if the file is not opened.
+                     )))
+          (dbus-call-method :session
+                dbus-name
+                "/org/gnome/evince/Window/0"
+                "org.gnome.evince.Window"
+                "SyncView"
+                texfile
+                (list :struct :int32 line :int32 1))))
 
-(defun th-evince-sync (file linecol)
-  (let ((buf (get-buffer file))
-        (line (car linecol))
-        (col (cadr linecol)))
-    (if (null buf)
-        (message "Sorry, %s is not opened..." file)
-      (switch-to-buffer buf)
-      (goto-line (car linecol))
-      (unless (= col -1)
-        (move-to-column col)))))
+      (defun auctex-evince-view ()
+        (let ((pdf (file-truename (concat default-directory
+                          (TeX-master-file (TeX-output-extension)))))
+          (tex (buffer-file-name))
+          (line (line-number-at-pos)))
+          (auctex-evince-forward-sync pdf tex line)))
 
-(when (and
-       (eq window-system 'x)
-       (fboundp 'dbus-register-signal))
-  (condition-case nil
-      (dbus-register-signal
-       :session nil "/org/gnome/evince/Window/0"
-       "org.gnome.evince.Window" "SyncSource"
-       'th-evince-sync)
-    (error nil))
-)
+      (when (eq TeX-source-correlate-method 'SyncTeX)
+        ;; New view entry: Evince via D-bus.
+        (add-to-list 'TeX-view-program-list
+                     '("EvinceDbus" auctex-evince-view))
 
+        ;; Prepend Evince via D-bus to program selection list
+        ;; overriding other settings for PDF viewing.
+        (add-to-list 'TeX-view-program-selection
+                     '(output-pdf "EvinceDbus"))
+
+        )
+
+      ;; Inverse search.
+      ;; Adapted from: http://www.mail-archive.com/auctex@gnu.org/msg04175.html
+      (defun auctex-evince-inverse-sync (file linecol)
+        (let ((buf (get-buffer (file-name-nondirectory file)))
+          (line (car linecol))
+          (col (cadr linecol)))
+          (if (null buf)
+          (message "Sorry, %s is not opened..." file)
+        (switch-to-buffer buf)
+        (goto-line (car linecol))
+        (unless (= col -1)
+          (move-to-column col)))))
+
+      ;; if DBus is off, this may fail.
+      (condition-case nil
+          (dbus-register-signal
+           :session nil "/org/gnome/evince/Window/0"
+           "org.gnome.evince.Window" "SyncSource"
+           'auctex-evince-inverse-sync)
+        (error nil))
+
+      )) ;; D-Bus + Evince + SyncTeX
 
 ;; To help collaboration, in LaTeX file I will only use soft word
 ;; wrapping.  Furthermore the filling is made to an arbitrary large
@@ -287,6 +307,22 @@ started."
   )
 
 (define-auto-insert 'latex-mode 'choose-initial-latex-template)
+
+;; Macro are folded.
+(defun TeX-fold-this-paragraph-toggle ()
+  "If TeX-fold-mode is active then alternate between folded and
+not folded text in a paragraph"
+  (interactive)
+  (unless (TeX-fold-clearout-paragraph)
+    (TeX-fold-paragraph) ) )
+
+(defun TeX-fold-this-buffer-toggle ()
+  "If TeX-fold-mode is active then alternate between folded and not folded text in a paragraph"
+  (interactive)
+  (unless (TeX-fold-clearout-buffer)
+    (TeX-fold-buffer)
+    )
+  )
 
 
 (provide 'init-latex)
