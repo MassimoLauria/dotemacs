@@ -14,7 +14,8 @@
 (setq TeX-parse-self t)
 (setq TeX-save-query nil)
 (setq TeX-display-help 'expert)
-
+(setq bib-cite-use-reftex-view-crossref t)
+(setq TeX-complete-word '(lambda () ))
 (setq-default TeX-master t)  ;; Do not query for master file, and applies auto-insertion.
 
 
@@ -173,10 +174,13 @@ started."
 ;; RefTeX setup
 (add-hook 'reftex-mode-hook (lambda ()
                               (local-unset-key (kbd "C-c b b")) ; Uses binding for bib-make-bibliography
-                              (local-set-key (kbd "C-c l") 'reftex-label)     ;; Label creation
-                              (local-set-key (kbd "C-c r") 'reftex-reference) ;; Label selection
-                              (local-set-key (kbd "C-c b") 'reftex-citation)  ;; Citation creation
+                              (local-set-key (kbd "C-c C-l") 'reftex-label)       ;; Label creation
+                              (local-set-key (kbd "C-c C-r") 'reftex-reference)   ;; Label selection
+                              (local-set-key (kbd "C-c C-b") 'reftex-citation)  ;; Citation creation
+                              (local-set-key (kbd "M-,") 'reftex-view-crossref) ;; View crossref
+                              (local-set-key (kbd "M-.") 'delete-other-windows-vertically)
                               ))
+
 
 ;; Hints for automatic reference creation
 (setq reftex-label-alist
