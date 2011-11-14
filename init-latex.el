@@ -90,12 +90,12 @@ started."
                (eq (get-text-property (point) 'face) 'font-latex-math-face)
                (member 'font-latex-math-face (get-text-property (point) 'face)))
          (save-match-data (search-forward-regexp "\\$?\\$"))))))
+
 ;; Install LaTeX improved `up-list' command
-(add-hook 'LaTeX-mode-hook (lambda()
-                             (if (boundp 'massimo-keyboard-mode-map)
-                                 (define-key massimo-keyboard-mode-map (kbd "M-p") 'LaTeX-up-list)
-                                 )
-                             ))
+(add-hook 'LaTeX-mode-hook 
+          (lambda()
+            (if (boundp 'massimo-keyboard-mode-map)
+                (define-key massimo-keyboard-mode-map (kbd "M-p") 'LaTeX-up-list))))
 
 
 ;; Setup DBUS communication between Evince and AUCTeX using SyncTeX
@@ -129,18 +129,6 @@ started."
           (line (line-number-at-pos)))
           (auctex-evince-forward-sync pdf tex line)))
 
-      (when (eq TeX-source-correlate-method 'SyncTeX)
-        ;; New view entry: Evince via D-bus.
-        (add-to-list 'TeX-view-program-list
-                     '("EvinceDbus" auctex-evince-view))
-
-        ;; Prepend Evince via D-bus to program selection list
-        ;; overriding other settings for PDF viewing.
-        (add-to-list 'TeX-view-program-selection
-                     '(output-pdf "EvinceDbus"))
-
-        )
-
       ;; Inverse search.
       ;; Adapted from: http://www.mail-archive.com/auctex@gnu.org/msg04175.html
       (defun auctex-evince-inverse-sync (file linecol)
@@ -155,12 +143,25 @@ started."
           (move-to-column col)))))
 
       ;; if DBus is off, this may fail.
+      (setq TeX-evince-dbus-registered t)
       (condition-case nil
           (dbus-register-signal
            :session nil "/org/gnome/evince/Window/0"
            "org.gnome.evince.Window" "SyncSource"
            'auctex-evince-inverse-sync)
-        (error nil))
+        (error (setq TeX-evince-dbus-registered nil)))
+
+      (when (and TeX-evince-dbus-registered
+                 (boundp 'TeX-source-correlate-method)
+                 (eq TeX-source-correlate-method 'SyncTeX))
+        ;; New view entry: Evince via D-bus.
+        (add-to-list 'TeX-view-program-list
+                     '("EvinceDbus" auctex-evince-view))
+        ;; Prepend Evince via D-bus to program selection list
+        ;; overriding other settings for PDF viewing.
+        (add-to-list 'TeX-view-program-selection
+                     '(output-pdf "EvinceDbus"))
+        )
 
       )) ;; D-Bus + Evince + SyncTeX
 
