@@ -253,5 +253,11 @@
 ;; Auto modes for Gtags
 (add-hook 'c-mode-common-hook 'gtags-mode)
 
+
+;; Kill buffers with running processes
+;; (setq kill-buffer-query-functions
+;;      (remove 'process-kill-buffer-query-function kill-buffer-query-functions))
+
+
 (provide 'init-unsorted-elisp)
 ;;; init-unsorted-elisp.el ends here
