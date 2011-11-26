@@ -92,7 +92,7 @@ started."
          (save-match-data (search-forward-regexp "\\$?\\$"))))))
 
 ;; Install LaTeX improved `up-list' command
-(add-hook 'LaTeX-mode-hook 
+(add-hook 'LaTeX-mode-hook
           (lambda()
             (if (boundp 'massimo-keyboard-mode-map)
                 (define-key massimo-keyboard-mode-map (kbd "M-p") 'LaTeX-up-list))))
@@ -172,9 +172,7 @@ started."
 ;; From Emacs 23, the visual-line-mode helps to visualize the file
 ;; properly.
 (add-hook 'LaTeX-mode-hook (lambda ()
-                             (turn-off-auto-fill)
-                             (if (fboundp 'bib-cite-minor-mode)
-                                 (bib-cite-minor-mode -1))
+                             (auto-fill-mode -1)
                              (setq  default-justification 'left)
                              (setq  fill-column 99999)
 							 ))
@@ -329,5 +327,4 @@ not folded text in a paragraph"
 (provide 'init-latex)
 ;; Local Variables:
 ;; mode: emacs-lisp
-;; folded-file: t
 ;; End:
