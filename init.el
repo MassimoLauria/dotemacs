@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011  Massimo Lauria
-;; Time-stamp: "2011-11-26, Saturday 13:45 (CET) Massimo Lauria"
+;; Time-stamp: "2011-11-27, Sunday 00:49 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -153,12 +153,6 @@
 (global-set-key [f8] 'spellcheck-language-cycle)
 
 ;;}}}
-
-
-;; Folding - load early to avoid warnings.
-(if (load "folding" 'nomessage)
-    (folding-mode-add-find-file-hook))
-
 
 
 ;; Work environment customization

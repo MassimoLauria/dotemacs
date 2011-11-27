@@ -45,7 +45,7 @@
       (setq load-path (cons MacUser-color-theme-path load-path)))
 )
 
-(unless running-GNUEmacs22  ;; Default font for Emacs >22.
+(when running-GNUEmacs23  ;; Default font for Emacs 23.
   ;; Aquamacs main font
   (when-running-MacOSX
    (set-default-font font-Mac-antialias)
