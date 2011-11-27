@@ -161,11 +161,15 @@
 (require 'windmove)               ; to load the package
 (setq windmove-wrap-around t)
 
+;; Flymake loading
 ;; Overwrite flymake-display-warning so that no annoying dialog box is
 ;; used.
 (defun flymake-display-warning (warning)
   "Display a warning to the user, using lwarn"
   (message warning))
+;; Let's run 4 checks at once instead.
+(setq flymake-max-parallel-syntax-checks 4)
+(setq flymake-run-in-place nil)
 
 ;; All urls/mails are clickable in comments and strings (Not present in Emacs22)
 (when-available 'goto-address-prog-mode
@@ -255,8 +259,8 @@
 
 
 ;; Kill buffers with running processes
-;; (setq kill-buffer-query-functions
-;;      (remove 'process-kill-buffer-query-function kill-buffer-query-functions))
+(setq kill-buffer-query-functions
+      (remove 'process-kill-buffer-query-function kill-buffer-query-functions))
 
 
 (provide 'init-unsorted-elisp)
