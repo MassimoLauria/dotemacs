@@ -169,7 +169,7 @@
   (message warning))
 ;; Let's run 4 checks at once instead.
 (setq flymake-max-parallel-syntax-checks 4)
-(setq flymake-run-in-place nil)
+(setq flymake-run-in-place t)
 
 ;; All urls/mails are clickable in comments and strings (Not present in Emacs22)
 (when-available 'goto-address-prog-mode
