@@ -1,6 +1,6 @@
 ;;; init-textmode.el --- Preferences for Text editing
 
-;; Copyright (C) 2010  Massimo Lauria
+;; Copyright (C) 2010, 2011  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: files, wp
@@ -30,29 +30,36 @@
 ;; Text mode is default for files with no definite mode
 (setq default-major-mode 'text-mode)
 
-;; To make Text mode default for *scratch* uncomment below
-;;(setq initial-major-mode 'text-mode)
 
 ;; Smart quotes setup. Like “this and that”.
 (if (require 'typopunct "typopunct" t)
     (setq-default typopunct-buffer-language 'english)
   )
 
-;; Setup of text-mode
-(setq text-mode-hook
-      '(lambda nil
-         (setq fill-column 70)
 
-         (auto-fill-mode)                   ; Hard word wrapping...
-         (setq default-justification 'full) ; ... with full justification
+(defun my-setup-of-text-mode-common()
+  "Initial setup of Text mode (common to all children modes)"
+  (when-available 'flyspell-mode     (flyspell-mode     1))
+  (when-available 'goto-address-mode (goto-address-mode 1))
+  )
 
-         ;;(orgtbl-mode 1)  ; conflicts with autopair mode.
-         (flyspell-mode 1)  ; annoying spell checking
-         (when-available 'goto-address-mode (goto-address-mode)) ; Find urls/emails in text and press (C-c RET) to click them.
-         ;;(typopunct-mode)
-         )
-      )
 
+(defun my-setup-of-text-mode-major()
+  "Initial setup of Text mode (only for major mode)"
+  (when (eq major-mode 'text-mode)
+    ;; Text formatting
+    (setq fill-column 70)
+    (auto-fill-mode 1)
+    (setq default-justification 'full)
+    ;; Typography
+    (when-available 'typopunct-mode    (typopunct-mode    1))
+    ))
+
+
+;; Reset the text-mode hook
+(setq text-mode-hook nil)
+(add-hook 'text-mode-hook 'my-setup-of-text-mode-common)
+(add-hook 'text-mode-hook 'my-setup-of-text-mode-major)
 
 
 (provide 'init-textmode)

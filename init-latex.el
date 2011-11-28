@@ -54,6 +54,16 @@
         TeX-byproduct-files ))
 
 
+;; Basic LaTeX-mode-hook setup  -- start by resetting the hook list
+(setq LaTeX-mode-hook nil)
+(setq TeX-mode-hook nil)
+
+(add-hook 'TeX-mode-hook 'turn-on-reftex)
+(add-hook 'TeX-mode-hook 'turn-on-flyspell)
+(add-hook 'TeX-mode-hook 'autopair-latex-setup)
+(when-available 'aquamacs-latex-viewer-support
+      (add-hook 'TeX-mode-hook 'aquamacs-latex-viewer-support 'append)) ;; load reftex first
+
 (add-hook 'LaTeX-mode-hook
           (lambda () (progn
                        (local-set-key (kbd "<f9>")    'TeX-command-master) ;; Compile
@@ -63,13 +73,6 @@
                        )
             ))
 
-
-;; I don't like neither math mode nor fold mode.
-(add-hook 'LaTeX-mode-hook (lambda () (LaTeX-math-mode -1)))
-(add-hook 'TeX-mode-hook   (lambda () (TeX-fold-mode -1)  ))
-;; Additional facilities
-(add-hook 'LaTeX-mode-hook 'reftex-mode)
-(add-hook 'TeX-mode-hook   'autopair-latex-setup)
 
 
 
@@ -180,7 +183,6 @@ started."
 
 ;; RefTeX setup
 (add-hook 'reftex-mode-hook (lambda ()
-                              (local-unset-key (kbd "C-c b b")) ; Uses binding for bib-make-bibliography
                               (local-set-key (kbd "C-c l") 'reftex-label)       ;; Label creation
                               (local-set-key (kbd "C-c r") 'reftex-reference)   ;; Label selection
                               (local-set-key (kbd "C-c b") 'reftex-citation)  ;; Citation creation
@@ -215,7 +217,6 @@ started."
 
 
 ;; TeX asks for Flyspell and American dictionary.
-(add-hook 'LaTeX-mode-hook 'turn-on-flyspell)
 (add-hook 'TeX-language-en-hook
 	  (lambda () (ispell-change-dictionary "english")))
 (add-hook 'TeX-language-it-hook
