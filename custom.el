@@ -54,7 +54,7 @@
  '(safe-local-variable-values (quote ((TeX-source-correlate-method-active . source-specials) (ispell-default-dictionary . american) (TeX-PDF-mode . t) (folded-file . t))))
  '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/places")
- '(time-stamp-format "%:y-%02m-%02d, %:a %02H:%02M (%Z) %U")
+ '(time-stamp-format "%:y-%02m-%02d, %02H:%02M (%Z) %U")
  '(version-control t)
  '(visual-line-mode nil t))
 (custom-set-faces

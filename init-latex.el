@@ -172,7 +172,6 @@ started."
 ;; From Emacs 23, the visual-line-mode helps to visualize the file
 ;; properly.
 (add-hook 'LaTeX-mode-hook (lambda ()
-                             (auto-fill-mode -1)
                              (setq  default-justification 'left)
                              (setq  fill-column 99999)
 							 ))
@@ -193,9 +192,9 @@ started."
 ;; RefTeX setup
 (add-hook 'reftex-mode-hook (lambda ()
                               (local-unset-key (kbd "C-c b b")) ; Uses binding for bib-make-bibliography
-                              (local-set-key (kbd "C-c C-l") 'reftex-label)       ;; Label creation
-                              (local-set-key (kbd "C-c C-r") 'reftex-reference)   ;; Label selection
-                              (local-set-key (kbd "C-c C-b") 'reftex-citation)  ;; Citation creation
+                              (local-set-key (kbd "C-c l") 'reftex-label)       ;; Label creation
+                              (local-set-key (kbd "C-c r") 'reftex-reference)   ;; Label selection
+                              (local-set-key (kbd "C-c b") 'reftex-citation)  ;; Citation creation
                               (local-set-key (kbd "M-,") 'reftex-view-crossref) ;; View crossref
                               (local-set-key (kbd "M-.") 'delete-other-windows-vertically)
                               ))
