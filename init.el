@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011  Massimo Lauria
-;; Time-stamp: "2011-11-27, Sunday 00:49 (CET) Massimo Lauria"
+;; Time-stamp: "2011-11-28, 16:44 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -135,9 +135,6 @@
 (global-set-key (kbd "M-s") 'my-spell-correct-word)
 (global-set-key [f2] 'ispell-buffer)
 
-;; Folding on/off (M-Space)
-(global-set-key (kbd "M-<SPC>") 'folding-toggle-show-hide)
-(global-set-key (kbd " ") 'folding-toggle-show-hide)
 
 ;; Tab is actually a "Smart tab"
 ;; (global-set-key [(tab)] 'smart-tab)
