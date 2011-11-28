@@ -61,7 +61,7 @@
    (add-to-list 'default-frame-alist `(font . ,font-Win-antialias))
    )
   ;; Color theme (not available on default Emacs22 for MacOSX)
-  (when (require-maybe 'color-theme)
+  (when (and (>= (display-color-cells) 256) (require-maybe 'color-theme))
     (when (not (commandp 'color-theme-snapshot))
       (fset 'color-theme-snapshot (color-theme-make-snapshot)))
     (require-maybe 'zenburn)
@@ -76,7 +76,7 @@
 ;; Font for system with no anti-alias support (e.g. Emacs 22 on X11).
 (when running-GNUEmacs22
   ;; Color theme (not available on default Emacs22 for MacOSX)
-  (when (require-maybe 'color-theme)
+  (when (and (>= (display-color-cells) 256) (require-maybe 'color-theme))
     (require-maybe 'zenburn)
     (when (not (commandp 'color-theme-snapshot))
       (fset 'color-theme-snapshot (color-theme-make-snapshot)))
@@ -88,22 +88,22 @@
 
 
 ;; Dark/Light theme switching
-(defun toggle-night-color-theme ()
-  "Switch to/from night color scheme."
-  (interactive)
-  (require 'color-theme)
-  (require 'zenburn)
-  (if (eq (frame-parameter (next-frame) 'background-mode) 'dark)
-      (progn
-        (color-theme-snapshot) ; restore default (light) colors
-        (setq cua-normal-cursor-color (quote (bar . "black")))
-        )
-    ;; create the snapshot if necessary
-    (when (not (commandp 'color-theme-snapshot))
-      (fset 'color-theme-snapshot (color-theme-make-snapshot)))
-    (color-theme-zenburn)
-    (setq cua-normal-cursor-color (quote (bar . "white")))
-    ))
+;; (defun toggle-night-color-theme ()
+;;   "Switch to/from night color scheme."
+;;   (interactive)
+;;   (require 'color-theme)
+;;   (require 'zenburn)
+;;   (if (eq (frame-parameter (next-frame) 'background-mode) 'dark)
+;;       (progn
+;;         (color-theme-snapshot) ; restore default (light) colors
+;;         (setq cua-normal-cursor-color (quote (bar . "black")))
+;;         )
+;;     ;; create the snapshot if necessary
+;;     (when (not (commandp 'color-theme-snapshot))
+;;       (fset 'color-theme-snapshot (color-theme-make-snapshot)))
+;;     (color-theme-zenburn)
+;;     (setq cua-normal-cursor-color (quote (bar . "white")))
+;;     ))
 
 
 
