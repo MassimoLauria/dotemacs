@@ -172,7 +172,6 @@ started."
 ;; From Emacs 23, the visual-line-mode helps to visualize the file
 ;; properly.
 (add-hook 'LaTeX-mode-hook (lambda ()
-                             (auto-fill-mode -1)
                              (setq  default-justification 'left)
                              (setq  fill-column 99999)
 							 ))
