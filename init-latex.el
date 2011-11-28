@@ -14,6 +14,8 @@
 (setq TeX-parse-self t)
 (setq TeX-save-query nil)
 (setq TeX-display-help 'expert)
+(setq TeX-electric-sub-and-superscript t)
+(setq reftex-plug-into-AUCTeX t)
 (setq bib-cite-use-reftex-view-crossref t)
 (setq TeX-complete-word '(lambda () ))
 (setq-default TeX-master t)  ;; Do not query for master file, and applies auto-insertion.
@@ -41,11 +43,6 @@
     (setq TeX-source-specials-view-start-server t)
     ))
 
-(setq reftex-plug-into-AUCTeX t)
-
-
-
-
 ;; These are the files that are produced by LaTeX processes.  It is annoying
 ;; that they show up while I'm trying to open a proper TeX file (or any other
 ;; text file).  IDO-mode can be instructed how to ignore such files.
@@ -67,11 +64,12 @@
             ))
 
 
-
-
-;; Math writing facilities
-;; (setq TeX-electric-escape t)
-(setq TeX-electric-sub-and-superscript t)
+;; I don't like neither math mode nor fold mode.
+(add-hook 'LaTeX-mode-hook (lambda () (LaTeX-math-mode -1)))
+(add-hook 'TeX-mode-hook   (lambda () (TeX-fold-mode -1)  ))
+;; Additional facilities
+(add-hook 'LaTeX-mode-hook 'reftex-mode)
+(add-hook 'TeX-mode-hook   'autopair-latex-setup)
 
 
 
@@ -179,15 +177,6 @@ started."
     (add-hook 'LaTeX-mode-hook 'visual-line-mode)
   )
 
-
-
-;; Additional facilities
-;; (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-(add-hook 'LaTeX-mode-hook 'reftex-mode)
-
-;; Auto pairs
-(add-hook 'LaTeX-mode-hook 'autopair-latex-setup)
-(add-hook 'TeX-mode-hook   'autopair-latex-setup)
 
 ;; RefTeX setup
 (add-hook 'reftex-mode-hook (lambda ()
@@ -305,22 +294,6 @@ started."
   )
 
 (define-auto-insert 'latex-mode 'choose-initial-latex-template)
-
-;; Macro are folded.
-(defun TeX-fold-this-paragraph-toggle ()
-  "If TeX-fold-mode is active then alternate between folded and
-not folded text in a paragraph"
-  (interactive)
-  (unless (TeX-fold-clearout-paragraph)
-    (TeX-fold-paragraph) ) )
-
-(defun TeX-fold-this-buffer-toggle ()
-  "If TeX-fold-mode is active then alternate between folded and not folded text in a paragraph"
-  (interactive)
-  (unless (TeX-fold-clearout-buffer)
-    (TeX-fold-buffer)
-    )
-  )
 
 
 (provide 'init-latex)
