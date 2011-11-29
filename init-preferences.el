@@ -33,6 +33,21 @@
     )
 )
 
+;; Decide whether load the color-theme
+(defun my-theme-loadable-p (theme-name required-colors)
+  "It is possible or desiderable to load the color-theme?  If
+Emacs is running as a server, or it has enough color, then tries
+to load the theme.
+"
+  (and
+   (or  ;; enough colors? (meaningless in server-mode)
+    (>= (display-color-cells) required-colors)
+    (if (fboundp 'daemonp) (daemonp))
+    )
+   (require 'color-theme nil t)
+   (require theme-name nil t)
+   t ))
+
 ;;; Visual preferences for Emacs 23 and above
 
 ;; Font aliases are supported
@@ -61,10 +76,9 @@
    (add-to-list 'default-frame-alist `(font . ,font-Win-antialias))
    )
   ;; Color theme (not available on default Emacs22 for MacOSX)
-  (when (and (>= (display-color-cells) 256) (require-maybe 'color-theme))
+  (when (my-theme-loadable-p 'zenburn 256)
     (when (not (commandp 'color-theme-snapshot))
       (fset 'color-theme-snapshot (color-theme-make-snapshot)))
-    (require-maybe 'zenburn)
     (when-available 'color-theme-zenburn (color-theme-zenburn)))
   )
 
@@ -76,8 +90,7 @@
 ;; Font for system with no anti-alias support (e.g. Emacs 22 on X11).
 (when running-GNUEmacs22
   ;; Color theme (not available on default Emacs22 for MacOSX)
-  (when (and (>= (display-color-cells) 256) (require-maybe 'color-theme))
-    (require-maybe 'zenburn)
+  (when (my-theme-loadable-p 'zenburn 256)
     (when (not (commandp 'color-theme-snapshot))
       (fset 'color-theme-snapshot (color-theme-make-snapshot)))
     (when-available 'color-theme-zenburn (color-theme-zenburn)))
