@@ -50,7 +50,6 @@
  '(ns-right-alternate-modifier nil)
  '(ns-tool-bar-display-mode (quote both) t)
  '(ns-tool-bar-size-mode (quote regular) t)
- '(one-buffer-one-frame-mode nil nil (aquamacs-frame-setup))
  '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
  '(require-final-newline (quote t))
  '(safe-local-variable-values (quote ((TeX-source-correlate-method-active . source-specials) (ispell-default-dictionary . american) (TeX-PDF-mode . t) (folded-file . t))))
