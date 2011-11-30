@@ -76,7 +76,7 @@ to load the theme.
    (add-to-list 'default-frame-alist `(font . ,font-Win-antialias))
    )
   ;; Color theme (not available on default Emacs22 for MacOSX)
-  (when (my-theme-loadable-p 'color-theme-zenburn 256)
+  (when (my-theme-loadable-p 'zenburn 256)
     (when (not (commandp 'color-theme-snapshot))
       (fset 'color-theme-snapshot (color-theme-make-snapshot)))
     (when-available 'color-theme-zenburn (color-theme-zenburn)))
