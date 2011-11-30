@@ -90,7 +90,7 @@ to load the theme.
 ;; Font for system with no anti-alias support (e.g. Emacs 22 on X11).
 (when running-GNUEmacs22
   ;; Color theme (not available on default Emacs22 for MacOSX)
-  (when (my-theme-loadable-p 'color-theme-zenburn 256)
+  (when (my-theme-loadable-p 'zenburn 256)
     (when (not (commandp 'color-theme-snapshot))
       (fset 'color-theme-snapshot (color-theme-make-snapshot)))
     (when-available 'color-theme-zenburn (color-theme-zenburn)))
