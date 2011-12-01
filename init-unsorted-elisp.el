@@ -262,6 +262,10 @@
 (setq kill-buffer-query-functions
       (remove 'process-kill-buffer-query-function kill-buffer-query-functions))
 
+;; This is just nice
+(require 'which-func)
+(add-to-list 'which-func-modes 'org-mode)
+(which-func-mode 1)
 
 (provide 'init-unsorted-elisp)
 ;;; init-unsorted-elisp.el ends here
