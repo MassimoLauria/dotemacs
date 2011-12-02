@@ -48,10 +48,6 @@ to load the theme.
    (require theme-name nil t)
    t ))
 
-;;; Visual preferences for Emacs 23 and above
-
-;; Font aliases are supported
-;; BUG: color-theme-zenburn must be loaded AFTER setting the fonts.
 
 ;; Try to set a load-path color-theme as a custom package.
 (when running-MacOSX
@@ -60,43 +56,33 @@ to load the theme.
       (setq load-path (cons MacUser-color-theme-path load-path)))
 )
 
-(when running-GNUEmacs23  ;; Default font for Emacs 23.
-  ;; Aquamacs main font
-  (when-running-MacOSX
-   (set-default-font font-Mac-antialias)
-   (add-to-list 'default-frame-alist `(font . ,font-Mac-antialias))
-   )
-  ;; X11 main font
-  (when-running-GNULinux
-   (set-default-font font-X11-antialias)
-   (add-to-list 'default-frame-alist `(font . ,font-X11-antialias))
-   )
-  (when-running-Windows
-   (set-default-font font-Win-antialias)
-   (add-to-list 'default-frame-alist `(font . ,font-Win-antialias))
-   )
-  ;; Color theme (not available on default Emacs22 for MacOSX)
-  (when (my-theme-loadable-p 'zenburn 256)
-    (when (not (commandp 'color-theme-snapshot))
-      (fset 'color-theme-snapshot (color-theme-make-snapshot)))
-    (when-available 'color-theme-zenburn (color-theme-zenburn)))
+;;; Font setup
+;; Linux (GNUEmacs >22)
+(when (and running-GNULinux (or running-GNUEmacs23 running-GNUEmacs24))
+  (set-default-font font-X11-antialias)
+  (add-to-list 'default-frame-alist `(font . ,font-X11-antialias))
   )
-
-;;; Visual preferences for Emacs 22
-
-;; Font aliases are not supported. I have to use the horrible barbwire syntax
-;; BUG: color-theme-zenburn must be loaded BEFORE setting the fonts.
-
-;; Font for system with no anti-alias support (e.g. Emacs 22 on X11).
-(when running-GNUEmacs22
-  ;; Color theme (not available on default Emacs22 for MacOSX)
-  (when (my-theme-loadable-p 'zenburn 256)
-    (when (not (commandp 'color-theme-snapshot))
-      (fset 'color-theme-snapshot (color-theme-make-snapshot)))
-    (when-available 'color-theme-zenburn (color-theme-zenburn)))
-  ;; Default fonts
-  (when running-GNULinux (set-default-font font-X11-no-antialias))
+;; Linux (GNUEmacs 22)
+(when (and running-GNULinux running-GNUEmacs22)
+  (set-default-font font-X11-no-antialias)
+  (add-to-list 'default-frame-alist `(font . ,font-X11-no-antialias))
   )
+;; MacOSX
+(when (and running-MacOSX running-GNUEmacs23)
+  (set-default-font font-Mac-antialias)
+  (add-to-list 'default-frame-alist `(font . ,font-Mac-antialias))
+  )
+;; Windows
+(when (and running-Windows running-GNUEmacs23)
+ (set-default-font font-Win-antialias)
+ (add-to-list 'default-frame-alist `(font . ,font-Win-antialias))
+ )
+
+;; Color theme (not available on default Emacs22 for MacOSX)
+(when (my-theme-loadable-p 'zenburn 256)
+  (when (not (commandp 'color-theme-snapshot))
+    (fset 'color-theme-snapshot (color-theme-make-snapshot)))
+  (when-available 'color-theme-zenburn (color-theme-zenburn)))
 
 
 
