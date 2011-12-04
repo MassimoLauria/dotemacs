@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2011-11-04, Friday 02:17 (CET) Massimo Lauria>
+;; Time-stamp: <2011-12-04, 03:04 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -132,38 +132,13 @@ default handler."
               ))
 
 
-;; LaTeX version of `autopair-latex-mode-paired-delimiter-action'. The
-;; original does not work for AucTeX (at least for me).
-(defun autopair-LaTeX-mode-paired-delimiter-action (action pair pos-before)
-  "Pair or skip latex's \"paired delimiter\" syntax in math mode. FIXED by Massimo Lauria"
-  (when (eq action 'paired-delimiter)
-    (when (eq (char-before) pair)
-      (if (and (or
-                (eq (get-text-property (- pos-before 1) 'face) 'font-latex-math-face)
-                (member 'font-latex-math-face (get-text-property (- pos-before 1) 'face)))
-               (eq (char-after) pair))
-          (cond ((and (eq (char-after) pair)
-                      (eq (char-after (1+ (point))) pair))
-                 ;; double skip
-                 (delete-char 1)
-                 (forward-char))
-                ((eq (char-before pos-before) pair)
-                 ;; doube insert
-                 (insert pair)
-                 (backward-char))
-                (t
-                 ;; simple skip
-                 (delete-char 1)))
-        (insert pair)
-        (backward-char)))))
-
 ;; Manage `` typed as "
 (defun autopair-latex-setup ()
   "Install AutoPair in LaTex, with all the needed workarounds"
   (interactive)
   (set (make-local-variable 'autopair-handle-action-fns)
        (list #'autopair-default-handle-action
-             #'autopair-LaTeX-mode-paired-delimiter-action))
+             #'autopair-latex-mode-paired-delimiter-action))
   (autopair-mode t)
   )
 
