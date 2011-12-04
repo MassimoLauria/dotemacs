@@ -57,8 +57,8 @@ to load the theme.
 )
 
 ;;; Font setup
-;; Linux (GNUEmacs >22)
-(when (and running-GNULinux (or running-GNUEmacs23 running-GNUEmacs24))
+;; Linux (GNUEmacs >=23)
+(when (and running-GNULinux running-GNUEmacs23+ )
   (set-default-font font-X11-antialias)
   (add-to-list 'default-frame-alist `(font . ,font-X11-antialias))
   )
@@ -68,12 +68,12 @@ to load the theme.
   (add-to-list 'default-frame-alist `(font . ,font-X11-no-antialias))
   )
 ;; MacOSX
-(when (and running-MacOSX running-GNUEmacs23)
+(when (and running-MacOSX running-GNUEmacs23+)
   (set-default-font font-Mac-antialias)
   (add-to-list 'default-frame-alist `(font . ,font-Mac-antialias))
   )
 ;; Windows
-(when (and running-Windows running-GNUEmacs23)
+(when (and running-Windows running-GNUEmacs23+)
  (set-default-font font-Win-antialias)
  (add-to-list 'default-frame-alist `(font . ,font-Win-antialias))
  )

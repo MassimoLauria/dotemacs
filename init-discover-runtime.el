@@ -1,9 +1,9 @@
 ;;; init-discover-runtime.el --- Find out running OS, Emacsen, and setup accordingly
 
-;; Copyright (C) 2010  Massimo Lauria
-;; Time-stamp: "2010-10-04, lunedì 01:08:23 (CEST) Massimo Lauria"
+;; Copyright (C) 2010, 2011  Massimo Lauria
+;; Time-stamp: "2011-12-04, 01:17 (CET) Massimo Lauria"
 
-;; Author: Massimo Lauria 
+;; Author: Massimo Lauria
 ;; Keywords: convenience
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -46,28 +46,30 @@
 
 
 ;; GNU Emacs version, try from 22 to 24.
-(defvar running-GNUEmacs22   (string-match "GNU Emacs 22" (version)))
-(defvar running-GNUEmacs23   (string-match "GNU Emacs 23" (version)))
-(defvar running-GNUEmacs24   (string-match "GNU Emacs 24" (version)))
-(defvar running-Aquamacs     (boundp 'aquamacs-version)) 
-
+(defvar running-GNUEmacs22   (= emacs-major-version 22))
+(defvar running-GNUEmacs23   (= emacs-major-version 23))
+(defvar running-GNUEmacs24   (= emacs-major-version 24))
+(defvar running-GNUEmacs22+  (>= emacs-major-version 22))
+(defvar running-GNUEmacs23+  (>= emacs-major-version 23))
+(defvar running-GNUEmacs24+  (>= emacs-major-version 24))
+(defvar running-Aquamacs     (boundp 'aquamacs-version))
 
 ;; Graphical capabilities (MacOS interface, or X11)
 
 ;; window system of the frame
-(defvar running-NSCocoa-frame (eq window-system 'ns))  ;; MacOS 
+(defvar running-NSCocoa-frame (eq window-system 'ns))  ;; MacOS
 (defvar running-X11-frame     (eq window-system 'x))  ;; X11
 (defvar running-Windows-frame (eq window-system 'w32)) ;; Windows
 
 ;; window system of the initial process
-(if(boundp 'initial-window-system) ;; Does not exist on GNU Emacs 22. 
-    (progn 
-      (defvar running-NSCocoa-process  (eq initial-window-system 'ns))  ;; MacOS 
+(if(boundp 'initial-window-system) ;; Does not exist on GNU Emacs 22.
+    (progn
+      (defvar running-NSCocoa-process  (eq initial-window-system 'ns))  ;; MacOS
       (defvar running-X11-process      (eq initial-window-system 'x))   ;; X11
       (defvar running-Windows-process  (eq initial-window-system 'w32)) ;; Windows
       )
   (progn
-    (defvar running-NSCocoa-process  running-NSCocoa-frame)  ;; MacOS 
+    (defvar running-NSCocoa-process  running-NSCocoa-frame)  ;; MacOS
     (defvar running-X11-process      running-X11-frame)      ;; X11
     (defvar running-Windows-process  running-Windows-frame) ;; Windows
     )
