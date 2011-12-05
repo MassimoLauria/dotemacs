@@ -51,7 +51,7 @@
  '(ns-tool-bar-size-mode (quote regular) t)
  '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
  '(require-final-newline (quote t))
- '(safe-local-variable-values (quote ((TeX-source-correlate-method-active . source-specials) (ispell-default-dictionary . american) (TeX-PDF-mode . t) (folded-file . t))))
+ '(safe-local-variable-values (quote ((default-justification . full) (TeX-source-correlate-method-active . source-specials) (ispell-default-dictionary . american) (TeX-PDF-mode . t) (folded-file . t))))
  '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/places")
  '(time-stamp-format "%:y-%02m-%02d, %02H:%02M (%Z) %U")

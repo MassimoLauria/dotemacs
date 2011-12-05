@@ -64,6 +64,8 @@
 (when-available 'aquamacs-latex-viewer-support
       (add-hook 'TeX-mode-hook 'aquamacs-latex-viewer-support 'append)) ;; load reftex first
 
+(require-maybe 'TeX-texify)
+
 (add-hook 'LaTeX-mode-hook
           (lambda () (progn
                        (if (fboundp 'TeX-texify)
@@ -72,11 +74,12 @@
                        (make-local-variable compilation-exit-message-function)
                        (setq compilation-exit-message-function 'nil)
                        (add-to-list 'LaTeX-verbatim-environments "comment")
+                       ;; Avoid the DVI preview launcher to ask for confirmation.
+                       (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
+
                        )
             ))
 
-;; Avoid the DVI preview launcher to ask for confirmation.
-(add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
 
 
 

@@ -128,3 +128,5 @@ If there is still something left do do start the next latex-command."
 	     (setq proc (get-buffer-process (current-buffer)))
 	     (setq TeX-texify-sentinel (process-sentinel proc))
 	     (set-process-sentinel proc 'TeX-texify-sentinel))))))
+
+(provide 'TeX-texify)
