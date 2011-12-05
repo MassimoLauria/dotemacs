@@ -19,16 +19,6 @@
 (setq message-signature private-email-signature)
 (setq message-auto-save-directory "~/personal/mail/drafts")
 
-(defun my-setup-of-message-mode ()
-  "Setup of mode to write email messages."
-  (setq fill-column 70)
-  (auto-fill-mode 1)
-  (setq default-justification 'full)
-  ;; Typography
-  (when-available 'typopunct-mode    (typopunct-mode    1))
-  )
-(add-hook 'message-mode-hook 'my-setup-of-message-mode)
-
 
 ;; Click urls/mails in Mime-View
 (add-hook 'mime-view-mode-hook 'goto-address-mode)

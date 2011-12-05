@@ -44,22 +44,25 @@
   )
 
 
-(defun my-setup-of-text-mode-major()
-  "Initial setup of Text mode (only for major mode)"
-  (when (eq major-mode 'text-mode)
+(defun my-setup-of-text-mode-nontex()
+  "Setup of text modes which are not for LaTeX."
+  (when (notany (lambda (m) (eq m major-mode))
+                '(LaTeX-mode TeX-mode latex-mode tex-mode))
     ;; Text formatting
     (setq fill-column 70)
     (auto-fill-mode 1)
     (setq default-justification 'full)
     ;; Typography
-    (when-available 'typopunct-mode    (typopunct-mode    1))
+    (when-available 'typopunct-mode (typopunct-mode 1))
+    ;; Use TeX input method.
+    (set-input-method 'TeX)
     ))
 
 
 ;; Reset the text-mode hook
 (setq text-mode-hook nil)
 (add-hook 'text-mode-hook 'my-setup-of-text-mode-common)
-(add-hook 'text-mode-hook 'my-setup-of-text-mode-major)
+(add-hook 'text-mode-hook 'my-setup-of-text-mode-nontex)
 
 
 (provide 'init-textmode)
