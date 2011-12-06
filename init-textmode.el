@@ -41,6 +41,7 @@
   "Initial setup of Text mode (common to all children modes)"
   (when-available 'flyspell-mode     (flyspell-mode     1))
   (when-available 'goto-address-mode (goto-address-mode 1))
+  (inactivate-input-method)
   )
 
 
@@ -54,8 +55,6 @@
     (setq default-justification 'full)
     ;; Typography
     (when-available 'typopunct-mode (typopunct-mode 1))
-    ;; Use TeX input method.
-    ;;(set-input-method 'TeX)
     ))
 
 
