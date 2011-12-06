@@ -70,15 +70,14 @@
           (lambda () (progn
                        (if (fboundp 'TeX-texify)
                            (local-set-key (kbd "<f9>")    'TeX-texify)
-                         (local-set-key (kbd "<f9>")    'TeX-command-master))
-                       (make-local-variable compilation-exit-message-function)
+                         (local-set-key (kbd "<f9>")    'TeX-command-master)
+                         )
+                       (make-local-variable 'compilation-exit-message-function)
                        (setq compilation-exit-message-function 'nil)
                        (add-to-list 'LaTeX-verbatim-environments "comment")
                        ;; Avoid the DVI preview launcher to ask for confirmation.
                        (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
-
-                       )
-            ))
+                        )))
 
 
 
