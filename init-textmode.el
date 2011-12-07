@@ -54,8 +54,6 @@
     (setq default-justification 'full)
     ;; Typography
     (when-available 'typopunct-mode (typopunct-mode 1))
-    ;; Use TeX input method.
-    ;;(set-input-method 'TeX)
     ))
 
 
