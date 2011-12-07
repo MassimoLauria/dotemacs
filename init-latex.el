@@ -75,8 +75,9 @@
                        (setq compilation-exit-message-function 'nil)
                        (add-to-list 'LaTeX-verbatim-environments "comment")
                        ;; Avoid the DVI preview launcher to ask for confirmation.
-                       (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
-
+                       (when (not running-Aquamacs)
+                         (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
+                         )
                        )
             ))
 
