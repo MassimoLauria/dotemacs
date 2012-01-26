@@ -64,6 +64,7 @@
 (when-available 'aquamacs-latex-viewer-support
       (add-hook 'TeX-mode-hook 'aquamacs-latex-viewer-support 'append)) ;; load reftex first
 
+;; All TeX made with a single keystroke (BibTeX must run at least once).
 (require-maybe 'TeX-texify)
 
 (add-hook 'LaTeX-mode-hook

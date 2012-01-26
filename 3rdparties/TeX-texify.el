@@ -4,8 +4,7 @@
 ;; http://www.emacswiki.org/emacs/TN
 ;;
 
-
-(require 'tex-buf)
+(load  "text-buf.el" t t t)
 (defun TeX-command-default (name)
   "Next TeX command to use. Most of the code is stolen from `TeX-command-query'."
   (cond ((if (string-equal name TeX-region)
@@ -68,7 +67,6 @@ If there is still something left do do start the next latex-command."
 
 
 
-(require 'tex-buf)
 (defun TeX-command-default (name)
   "Next TeX command to use. Most of the code is stolen from `TeX-command-query'."
   (cond ((if (string-equal name TeX-region)
