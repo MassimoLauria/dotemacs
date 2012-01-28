@@ -1,6 +1,6 @@
 ;;; init-unsorted-elisp.el --- Contains small chunks of elisp code in no particular order
 
-;; Copyright (C) 2010, 2011  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -62,7 +62,7 @@
 
 
 ;; Edit text area on Google Chrome
-(if (and (fboundp 'daemon) (daemonp) (locate-library "edit-server"))
+(if (and (fboundp 'daemonp) (daemonp) (locate-library "edit-server"))
     (progn
       (require 'edit-server)
       (setq edit-server-new-frame nil)
