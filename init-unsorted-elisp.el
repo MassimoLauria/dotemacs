@@ -161,15 +161,27 @@
 (require 'windmove)               ; to load the package
 (setq windmove-wrap-around t)
 
-;; Flymake loading
-;; Overwrite flymake-display-warning so that no annoying dialog box is
-;; used.
+;;; Flymake setup --------
+
+;; Overwrite flymake-display-warning to suppress annoying dialog boxs
 (defun flymake-display-warning (warning)
-  "Display a warning to the user, using lwarn"
+  "Display a warning to the user, using minibuffer"
   (message warning))
+
 ;; Let's run 4 checks at once instead.
 (setq flymake-max-parallel-syntax-checks 4)
 (setq flymake-run-in-place t)
+
+;; Set faces for flymake
+(custom-set-faces
+ '(flymake-errline ((((class color)) (:underline "red"))))
+ '(flymake-warnline ((((class color)) (:underline "yellow")))))
+
+;; load flymake
+(when (require 'flymake nil t)
+  (add-hook 'find-file-hook 'flymake-find-file-hook)
+  )
+
 
 ;; All urls/mails are clickable in comments and strings (Not present in Emacs22)
 (when-available 'goto-address-prog-mode

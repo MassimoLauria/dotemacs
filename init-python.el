@@ -106,9 +106,6 @@ path."
 	  (list flymake-python-syntax-checker (list local-file))))
   (add-to-list 'flymake-allowed-file-name-masks '("\\.py\\'" flymake-python-init)))
 
-(add-hook 'find-file-hook 'flymake-find-file-hook)
-
-
 
 
 ;; Ropemacs completion (not on Aquamacs, because it is too slow!) ------------------------------
