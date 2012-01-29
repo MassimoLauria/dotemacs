@@ -1,9 +1,9 @@
 #!/bin/sh
 #
-# Copyright (C) 2010, 2011 by Massimo Lauria <lauria.massimo@gmail.com>
+# Copyright (C) 2010, 2011, 2012 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2011-03-05, sabato 01:03 (CET) Massimo Lauria"
-# Time-stamp: "2011-03-07, lunedì 11:47 (CET) Massimo Lauria"
+# Time-stamp: "2012-01-30, 00:19 (CET) Massimo Lauria"
 
 # Description::
 #
@@ -54,7 +54,7 @@ backup_maybe() {
 # Check backup possibility.
     if [ $# -ne 1 ]; then echo "Wrong argument number."; exit 1; fi
     if [ -e $1 ]; then
-        $CP -arb $1 $1.bak.`date +%Y-%m-%d.%H.%M.%S`
+        $CP -af $1 $1.bak.`date +%Y-%m-%d.%H.%M.%S`
     fi
 }
 
