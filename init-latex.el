@@ -164,7 +164,7 @@ started."
 
       (when (and TeX-evince-dbus-registered
                  (boundp 'TeX-source-correlate-method)
-                 (eq TeX-source-correlate-method 'SyncTeX))
+                 (eq TeX-source-correlate-method 'synctex))
         ;; New view entry: Evince via D-bus.
         (add-to-list 'TeX-view-program-list
                      '("EvinceDbus" auctex-evince-view))
