@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010, 2011  Massimo Lauria
-;; Time-stamp: "2011-11-28, 16:44 (CET) Massimo Lauria"
+;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
+;; Time-stamp: "2012-02-19, 23:06 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -154,6 +154,7 @@
 
 ;; Work environment customization
 (require 'init-coding)
+(require 'init-italian-l10n)
 (require 'init-local-preferences) ; Host based and personal configuration
 (require 'init-preferences)       ; Basic editor preferences
 (require 'init-backup)            ; Autosaves and backups behaviour
