@@ -190,6 +190,46 @@
 (require-maybe 'org2blog-autoloads)
 
 
+;; Calendar navigation plus agenda
+(setq org-popup-calendar-for-date-prompt t)
+(setq org-read-date-display-live t)
+
+(defun th-calendar-open-agenda () ;; by tassilo horn
+  (interactive)
+  (let* ((calendar-date (or
+                         ;; the date at point in the calendar buffer
+                         (calendar-cursor-to-date)
+                         ;; if there's none, use the curren date
+                         (calendar-current-date)))
+         (day (time-to-days (encode-time 1 1 1
+                                         (second calendar-date)
+                                         (first calendar-date)
+                                         (third calendar-date))))
+         (calendar-buffer (current-buffer)))
+    (org-agenda-list nil day)
+    (select-window (get-buffer-window calendar-buffer))
+    (th-org-agenda-follow-calendar-mode t)
+    ))
+
+(add-hook 'calendar-mode-hook 
+          (lambda ()
+            (define-key calendar-mode-map (kbd "RET") 'th-calendar-open-agenda)))
+
+
+(define-minor-mode th-org-agenda-follow-calendar-mode
+  "If enabled, each calendar movement will refresh the org agenda
+buffer."
+  :lighter " OrgAgendaFollow"
+  (if (not (eq major-mode 'calendar-mode))
+      (message "Cannot activate th-org-agenda-follow-calendar-mode in %s." major-mode)
+    (if th-org-agenda-follow-calendar-mode
+        (add-hook 'calendar-move-hook 'th-calendar-open-agenda)
+      (remove-hook 'calendar-move-hook 'th-calendar-open-agenda))))
+
+;; (add-hook 'calendar-mode-hook 'th-org-agenda-follow-calendar-mode)
+
+
+
 
 ;; Patch org-bibtex-store-link to manage Capitalized Fields.
 (require 'org-bibtex)

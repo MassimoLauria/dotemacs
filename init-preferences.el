@@ -106,14 +106,6 @@ to load the theme.
 
 
 
-;; Calendar localization
-(setq calendar-week-start-day 1
-      calendar-day-name-array ["Domenica" "Lunedì" "Martedì" "Mercoledì"
-                               "Giovedì" "Venerdì" "Sabato"]
-      calendar-month-name-array ["Gennaio" "Febbraio" "Marzo" "Aprile" "Maggio"
-                                 "Giugno" "Luglio" "Agosto" "Settembre"
-                                 "Ottobre" "Novembre" "Dicembre"])
-
 (when-available 'scroll-bar-mode (scroll-bar-mode -1)) ;; scroll-bar-mode undefined in terminal emacs!
 (when-available 'tool-bar-mode   (tool-bar-mode -1)  ) ;;   tool-bar-mode undefined in terminal emacs!
 (menu-bar-mode -1)
