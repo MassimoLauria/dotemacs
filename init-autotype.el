@@ -1,9 +1,9 @@
 ;;; init-autotype.el --- Automatic test insertion configuration
 
-;; Copyright (C) 2010, 2011  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2011-12-04, 03:04 (CET) Massimo Lauria>
+;; Time-stamp: <2012-02-20, 10:56 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -123,13 +123,6 @@ default handler."
                             (term-send-left))))
       (autopair-default-handle-action action pair pos-before)
       (goto-char (process-mark proc)))))
-
-;; Term mode is quirky, this will fix it.
-(add-hook 'term-mode-hook
-          #'(lambda ()
-              (set (make-local-variable 'autopair-handle-action-fns) '(autopair-term-mode-handle-action))
-              (autopair-mode 1)
-              ))
 
 
 ;; Manage `` typed as "
