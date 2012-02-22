@@ -3,8 +3,30 @@
 ;;;
 ;;;------------------------------------------------------------------
 
-(setq imaxima-elisp-path "/usr/local/share/maxima/5.19.2/emacs")
+(defvar imaxima-base-path nil
+"Path of Maxima (use the SageMath one by default)")
 
+
+(defvar imaxima-elisp-path nil
+"Path of the Emacs packages to be used with Maxima (use the SageMath one by default)")
+
+(defvar imaxima-maxima-version nil
+"Version number of installed Maxima (use SageMath one by default)")
+
+
+
+;; Find Maxima inside SageMath folder
+(when sagemath-root-directory
+  (setq imaxima-base-path (concat sagemath-root-directory "/local/share/maxima/"))
+  (let ((tmp nil))
+    (setq tmp (shell-command-to-string (concat "ls " imaxima-base-path)))
+    (when (string-match "[ \t\n]*$" tmp)
+      (setq tmp (replace-match "" nil nil tmp))
+      (setq imaxima-maxima-version tmp)
+      ))
+  (setq imaxima-elisp-path (concat imaxima-base-path imaxima-maxima-version "/emacs/"))
+  (setq maxima-command     (concat sagemath-root-directory "/local/bin/maxima"))
+  )
 ;;;-------------------------------------------------------------------
 
 
@@ -22,6 +44,6 @@
 (provide 'init-imath)
 (provide 'init-imaxima)
 ;; Local Variables:
-;; mode: emacs-lisp 
+;; mode: emacs-lisp
 ;; folded-file: t
-;; End: 
+;; End:

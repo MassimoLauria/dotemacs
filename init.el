@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
-;; Time-stamp: "2012-02-20, 11:00 (CET) Massimo Lauria"
+;; Time-stamp: "2012-02-22, 12:05 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -174,8 +174,8 @@
 
 ;; Math packages
 (when prefs-activate-latex    (require 'init-latex))        ;; AucTeX
-(when prefs-activate-maxima   (require 'init-imaxima))      ;; Imaxima and Imath
-;; (when prefs-activate-sage     (require 'init-sage))         ;; Sagemath (broken)
+(when prefs-activate-sage     (require 'init-sage))         ;; Sagemath (broken)
+(when prefs-activate-maxima   (require 'init-imaxima))      ;; Imaxima and Imath (from SageMath)
 (when prefs-activate-singular (require 'init-singular))     ;; Singular
 
 ;; Applications
