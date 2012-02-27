@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
-;; Time-stamp: "2012-02-22, 12:05 (CET) Massimo Lauria"
+;; Time-stamp: "2012-02-27, 11:08 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -173,10 +173,10 @@
 (require 'init-python)
 
 ;; Math packages
-(when prefs-activate-latex    (require 'init-latex))        ;; AucTeX
-(when prefs-activate-sage     (require 'init-sage))         ;; Sagemath (broken)
-(when prefs-activate-maxima   (require 'init-imaxima))      ;; Imaxima and Imath (from SageMath)
-(when prefs-activate-singular (require 'init-singular))     ;; Singular
+(require 'init-latex)        ;; AucTeX
+(require 'init-sage)         ;; SageMath
+(require 'init-imaxima)      ;; Imaxima and Imath (from SageMath)
+(require 'init-singular)     ;; Singular (not from SageMath!)
 
 ;; Applications
 (require 'init-mail)    ;; Mail + Contacts

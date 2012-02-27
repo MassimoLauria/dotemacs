@@ -20,10 +20,6 @@
 
 ;; Math applications
 (setq prefs-activate-latex      t) ; Enable auctex
-(setq prefs-activate-maxima   nil) ; Imaxima and Imath
-(setq prefs-activate-sage     nil) ; Sagemath
-(setq prefs-activate-singular nil) ; Singular
-
 
 ;; Display preferences
 (setq prefs-activate-bigfont     nil) ; Big fonts for smallscreens
@@ -40,10 +36,6 @@
 ;;;
 ;;;  Host and env based preferences
 ;;;
-(when (string= (getenv "SAGEMATH") "yes")
-  (setq prefs-activate-sage t)
-)
-
 (when (string= (getenv "LAPTOP") "yes")
   (setq prefs-activate-smallscreen t)
   (setq prefs-activate-bigfont     t)

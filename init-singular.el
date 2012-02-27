@@ -3,17 +3,19 @@
 ;;;
 ;;;------------------------------------------------------------------
 
+(defvar singular-emacs-path nil
+"Path where to find singular Emacs support files")
 
+(setq singular-emacs-path "/usr/share/Singular/emacs")
 
-(setq load-path (append load-path 
-                        (list "/usr/share/Singular/emacs")))
-
-(require 'singular)
-
+(when (file-directory-p singular-emacs-path)
+  (add-to-list 'load-path singular-emacs-path t)
+  (require 'singular)
+)
 
 (provide 'init-singular)
 ;; Local Variables:
-;; mode: emacs-lisp 
+;; mode: emacs-lisp
 ;; folded-file: t
-;; End: 
+;; End:
 
