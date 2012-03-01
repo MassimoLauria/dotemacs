@@ -38,6 +38,18 @@
 (setq ac-dwim t)                        ;Do what i mean
 (setq ac-override-local-map nil)        ;don't override local map
 
+;; autopair-mode conflicts with the use of "\r" key to force completion.
+;; We use this instead since it is more convenient (for me)
+(define-key ac-completing-map   "\M-\t"  'ac-complete) ; use M-tab to force expansion.
+(define-key ac-completing-map   "\r"     'nil)         ; remove "\r" binding
+;; Menu movement
+(define-key ac-completing-map (kbd "M-j") 'nil)
+(define-key ac-completing-map (kbd "M-l") 'nil)
+(define-key ac-completing-map (kbd "M-i") 'ac-previous)
+(define-key ac-completing-map (kbd "M-k") 'ac-next)
+(define-key ac-completing-map (kbd "M-u") 'ac-expand)
+(define-key ac-completing-map (kbd "M-o") 'ac-complete)
+
 
 ;; The mode that automatically startup.
 (setq ac-modes '(emacs-lisp-mode lisp-interaction-mode lisp-mode
