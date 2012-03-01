@@ -34,7 +34,7 @@
       ;; special.  Unfortunately working with Evince as PDF viewer is not
       ;; yet fully working because of some problem with dbus-initializations
       (when-running-GNULinux
-       (setq TeX-source-correlate-method 'source-specials))
+          (setq TeX-source-correlate-method 'source-specials))
       (setq TeX-source-correlate-mode t)
       (setq TeX-source-correlate-start-server t)
       )
@@ -42,6 +42,15 @@
     (setq TeX-source-specials-mode t)
     (setq TeX-source-specials-view-start-server t)
     ))
+
+;; Setup some useful variables
+(if (not (boundp 'TeX-view-program-list))
+    (setq TeX-view-program-list nil)
+    )
+(if (not (boundp 'TeX-view-program-selection))
+    (setq TeX-view-program-selection nil)
+    )
+
 
 ;; These are the files that are produced by LaTeX processes.  It is annoying
 ;; that they show up while I'm trying to open a proper TeX file (or any other
