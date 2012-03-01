@@ -49,7 +49,6 @@ data"
         (pos  (point))
         )
     (set-buffer (find-file (concat "/sudo::" file)))
-    (rename-buffer (concat "sudo::" (buffer-name)))
     (goto-char pos)
     )
   )
