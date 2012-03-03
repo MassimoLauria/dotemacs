@@ -43,13 +43,12 @@
     (setq TeX-source-specials-view-start-server t)
     ))
 
-;; Setup some useful variables
-(if (not (boundp 'TeX-view-program-list))
-    (setq TeX-view-program-list nil)
-    )
-(if (not (boundp 'TeX-view-program-selection))
-    (setq TeX-view-program-selection nil)
-    )
+;; (if (not (boundp 'TeX-view-program-list))
+;;     (setq TeX-view-program-list nil)
+;;     )
+;; (if (not (boundp 'TeX-view-program-selection))
+;;     (setq TeX-view-program-selection nil)
+;;     )
 
 
 ;; These are the files that are produced by LaTeX processes.  It is annoying
@@ -124,7 +123,10 @@ started."
     (progn
       ;; Forward search.
       ;; Adapted from http://dud.inf.tu-dresden.de/~ben/evince_synctex.tar.gz
+      ;; Changed for Gnome3 according to
+      ;; http://ubuntuforums.org/showthread.php?p=11010827#post11010827
       (defun auctex-evince-forward-sync (pdffile texfile line)
+        (message (concat "**" pdffile "**" texfile "*" (number-to-string line)))
         (let ((dbus-name
            (dbus-call-method :session
                      "org.gnome.evince.Daemon"  ; service
@@ -133,16 +135,19 @@ started."
                      "FindDocument"
                      (concat "file://" pdffile)
                      t     ; Open a new window if the file is not opened.
-                     )))
+                     ))
+              (time (current-time)))
           (dbus-call-method :session
                 dbus-name
                 "/org/gnome/evince/Window/0"
                 "org.gnome.evince.Window"
                 "SyncView"
                 texfile
-                (list :struct :int32 line :int32 1))))
+                (list :struct :int32 line :int32 1)
+                (+ (* (car time) (expt 2 16)) (cadr time)))))
 
       (defun auctex-evince-view ()
+        (interactive)
         (let ((pdf (file-truename (concat default-directory
                           (TeX-master-file (TeX-output-extension)))))
           (tex (buffer-file-name))
@@ -151,7 +156,9 @@ started."
 
       ;; Inverse search.
       ;; Adapted from: http://www.mail-archive.com/auctex@gnu.org/msg04175.html
-      (defun auctex-evince-inverse-sync (file linecol)
+      ;; Changed for Gnome3 according to
+      ;; http://ubuntuforums.org/showthread.php?p=11010827#post11010827
+      (defun auctex-evince-inverse-sync (file linecol timestamp)
         (let ((buf (get-buffer (file-name-nondirectory file)))
           (line (car linecol))
           (col (cadr linecol)))
