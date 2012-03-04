@@ -6,6 +6,7 @@
 ;; AucTex system
 (load "auctex.el" t t t)          ;; Fail quietly
 (load "preview-latex.el" t t t)   ;; Fail quietly
+(load "tex.el" t t t)             ;; Fail quietly
 
 
 
