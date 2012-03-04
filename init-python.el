@@ -145,9 +145,9 @@ path."
 ;; set executable file and db file
 (setq pylookup-program (concat pylookup-dir "/pylookup.py"))
 (setq pylookup-db-file "~/.emacs.d/pylookup.db")
-(if (not (file-exists-p pylookup-db-file))
-    (warn "Pylookup database not yet initialized")
-    )
+;; (if (not (file-exists-p pylookup-db-file))
+;;     (warn "Pylookup database not yet initialized")
+;;     )
 
 ;; to speedup, just load it on demand
 (autoload 'pylookup-lookup "pylookup"
