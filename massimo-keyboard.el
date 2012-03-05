@@ -1,6 +1,6 @@
 ;;; massimo-keyboard.el --- Keybindings specific for the author habits
 
-;; Copyright (C) 2010, 2011  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: convenience
@@ -73,13 +73,15 @@ At least they are considered useful for the author.
 
 
     ;; Moving between buffers (M-S)
-    (if (fboundp 'previous-user-buffer)
-        (define-key map [M-S-up] 'previous-user-buffer)
+    (require 'init-buffer-navigation nil t)
+    (if (boundp 'buffer-navigation-method)
+        (progn
+          (define-key map [M-S-up] 'previous-buffer-smart)
+          (define-key map [M-S-down] 'next-buffer-smart)
+          (define-key map [M-S-left] 'previous-buffer-navigation-method)
+          (define-key map [M-S-right] 'next-buffer-navigation-method)
+          )
       (define-key map [M-S-up] 'previous-buffer)
-      )
-
-    (if (fboundp 'next-user-buffer)
-        (define-key map [M-S-down] 'next-user-buffer)
       (define-key map [M-S-down] 'next-buffer)
       )
     (define-key map (kbd "C-x C-b") 'ibuffer)
