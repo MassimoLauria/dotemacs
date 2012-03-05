@@ -66,6 +66,7 @@
  '(flymake-warnline ((((class color)) (:underline "yellow"))))
  '(flyspell-duplicate ((t (:underline "red"))))
  '(flyspell-incorrect ((t (:underline "red"))))
+ '(font-lock-fixme-face ((((class color) (background dark)) (:background "Yellow" :foreground "Red" :underline nil))))
  '(writegood-duplicates-face ((t (:underline "DeepPink"))))
  '(writegood-passive-voice-face ((t (:underline "DeepPink"))))
  '(writegood-weasels-face ((((class color) (background dark)) (:underline "DeepPink")))))
