@@ -110,9 +110,6 @@
           )
 
 
-;; fixme highlight
-(require 'fixme)
-
 ;; IDO mode for selection of file and buffers. VERY GOOD
 (require 'ido)
 
