@@ -22,6 +22,9 @@
 
 ;; Click urls/mails in Mime-View
 (add-hook 'mime-view-mode-hook 'goto-address-mode)
+(add-hook 'message-mode-hook
+          (lambda () (define-key message-mode-map [f2] 'ispell-message)))
+
 
 ;; Use with Mutt
 (add-to-list 'auto-mode-alist '(".*mutt.*" . message-mode))
