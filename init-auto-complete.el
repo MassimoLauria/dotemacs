@@ -42,10 +42,10 @@
 ;; Menu movement
 (define-key ac-completing-map (kbd "M-j") 'ac-quick-help-scroll-up)
 (define-key ac-completing-map (kbd "M-l") 'ac-quick-help-scroll-down)
-(define-key ac-completing-map (kbd "\M-i") 'ac-previous)
-(define-key ac-completing-map (kbd "\M-k") 'ac-next)
-(define-key ac-completing-map (kbd "\M-u") 'ac-expand)
-(define-key ac-completing-map (kbd "\M-o") 'ac-complete)
+(define-key ac-completing-map (kbd "M-i") 'ac-previous)
+(define-key ac-completing-map (kbd "M-k") 'ac-next)
+(define-key ac-completing-map (kbd "M-u") 'ac-expand)
+(define-key ac-completing-map (kbd "M-o") 'ac-complete)
 
 
 ;; autopair-mode conflicts with the use of "\r" key to force completion.
@@ -53,9 +53,15 @@
 (define-key ac-completing-map   "\r"     'nil)         ; remove "\r" binding
 
 ;; Enforce yas/expand sometimes
+(defun yas/expand-no-fallback-behavior ()
+  "Execute `yas/expand' with `yas/fallback-behavior' set to (ac-complete)"
+  (interactive)
+  (let ((yas/fallback-behavior 'nil))
+    (yas/expand)))
+
 (when (fboundp 'yas/expand)
-  (define-key ac-completing-map (kbd "\M-\t") 'yas/expand)
-  (define-key ac-completing-map (kbd "\M-o" ) 'yas/expand))
+  (define-key ac-completing-map (kbd "M-t") 'yas/expand-no-fallback-behavior)
+  (define-key ac-completing-map (kbd "M-o" ) 'yas/expand-no-fallback-behavior))
 
 
 
