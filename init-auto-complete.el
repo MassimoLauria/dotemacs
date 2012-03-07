@@ -44,7 +44,7 @@
 (define-key ac-completing-map (kbd "M-l") 'ac-quick-help-scroll-down)
 (define-key ac-completing-map (kbd "M-i") 'ac-previous)
 (define-key ac-completing-map (kbd "M-k") 'ac-next)
-(define-key ac-completing-map (kbd "M-u") 'ac-expand)
+(define-key ac-completing-map (kbd "M-u") 'ac-stop)
 (define-key ac-completing-map (kbd "M-o") 'ac-complete)
 
 
@@ -53,15 +53,18 @@
 (define-key ac-completing-map   "\r"     'nil)         ; remove "\r" binding
 
 ;; Enforce yas/expand sometimes
-(defun yas/expand-no-fallback-behavior ()
-  "Execute `yas/expand' with `yas/fallback-behavior' set to (ac-complete)"
+(defun ac-complete-yas/expand ()
+  "Try complete and then call yas/expand."
   (interactive)
-  (let ((yas/fallback-behavior 'nil))
-    (yas/expand)))
+  (let* ((candidate (ac-selected-candidate))
+         (yas/fallback-behavior 'nil))
+    (when candidate
+      (ac-expand-string candidate))
+    (yas/expand)
+    (ac-abort)))
 
 (when (fboundp 'yas/expand)
-  (define-key ac-completing-map (kbd "M-t") 'yas/expand-no-fallback-behavior)
-  (define-key ac-completing-map (kbd "M-o" ) 'yas/expand-no-fallback-behavior))
+  (define-key ac-completing-map (kbd "M-o") 'ac-complete-yas/expand))
 
 
 
