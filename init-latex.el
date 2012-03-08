@@ -127,7 +127,6 @@ started."
       ;; Changed for Gnome3 according to
       ;; http://ubuntuforums.org/showthread.php?p=11010827#post11010827
       (defun auctex-evince-forward-sync (pdffile texfile line)
-        (message (concat "**" pdffile "**" texfile "*" (number-to-string line)))
         (let ((dbus-name
            (dbus-call-method :session
                      "org.gnome.evince.Daemon"  ; service
