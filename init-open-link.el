@@ -1,6 +1,6 @@
 ;;; init-open-link.el --- Keybindings for opening links in various modes
 
-;; Copyright (C) 2011  Massimo Lauria
+;; Copyright (C) 2011, 2012  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: convenience
@@ -35,6 +35,36 @@
 "Secondary key sequence used to open links in text files."
 )
 
+
+;; Xah Lee function for opening links in dired-mode
+;; http://xahlee.org/emacs/emacs_dired_open_file_in_ext_apps.html
+(defun open-in-external-app ()
+  "Open the current file or dired marked files in external app.
+Works in Microsoft Windows, Mac OS X, Linux."
+  (interactive)
+
+  (let ( doIt
+         (myFileList
+          (cond
+           ((string-equal major-mode "dired-mode") (dired-get-marked-files))
+           (t (list (buffer-file-name))) ) ) )
+
+    (setq doIt (if (<= (length myFileList) 5)
+                   t
+                 (y-or-n-p "Open more than 5 files?") ) )
+
+    (when doIt
+      (cond
+       ((string-equal system-type "windows-nt")
+        (mapc (lambda (fPath) (w32-shell-execute "open" (replace-regexp-in-string "/" "\\" fPath t t)) ) myFileList)
+        )
+       ((string-equal system-type "darwin")
+        (mapc (lambda (fPath) (shell-command (format "open \"%s\" &" fPath)) )  myFileList) )
+       ((string-equal system-type "gnu/linux")
+        (mapc (lambda (fPath) (shell-command (format "xdg-open \"%s\" &" fPath)) ) myFileList) ) ) ) ) )
+
+
+
 ;; Setup for `goto-address-mode' and `goto-address-prog-mode'
 (add-hook 'goto-address-mode-hook
           (lambda ()
@@ -57,6 +87,17 @@
             (define-key org-mode-map
               massimo-keyboard-open-link-key2 'org-open-at-point)
             ))
+
+;; Setup for `dired-mode'
+(add-hook 'dired-mode-hook
+          (lambda ()
+            ;; Remove old binding
+            (define-key org-mode-map
+              massimo-keyboard-open-link-key1 'open-in-external-app)
+            (define-key org-mode-map
+              massimo-keyboard-open-link-key2 'open-in-external-app)
+            ))
+
 
 ;; Fall back keybinding. Mode maps will override this choice.
 (global-set-key massimo-keyboard-open-link-key1 'browse-url-at-point)
