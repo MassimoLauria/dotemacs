@@ -21,7 +21,7 @@
 ;;; Commentary:
 
 ;; When Massimo-Keyboard mode is enabled, several keybindings are
-;; modified according to the useage pattern of the author."
+;; modified according to the usage pattern of the author."
 
 
 ;;; Code:
@@ -31,15 +31,17 @@
 At least they are considered useful for the author.
 ")
 
-;; No more override (M-b is used instead on M-v)
-;;(defcustom massimo-keyboard-cua-meta-v-override-p nil
-;;  "*If non-nil, override cua-mode M-v for cua-repeat-replace-region with backward-paragraph."
-;;  :tag "Massimo Keyboard CUA meta-v override"
-;;  :type 'boolean
-;;  :group 'massimo-keyboard)
+
+(defcustom massimo-keyboard-comint-modes nil
+  "A list of major modes for which the keymap variant for
+`comint-mode' is activated."
+  :tag "Comint derived modes with special keymap"
+  :type 'sexp
+  :group 'massimo-keyboard
+  )
 
 (defcustom massimo-keyboard-folding-meta-g-override-p t
-  "*If non-nil, override folding model M-g for `folding-goto-line' with `move-beginning-of-line'."
+  "*If non-nil, override folding mode M-g for `folding-goto-line' with `move-beginning-of-line'."
   :tag "Massimo Keyboard Folding meta-g override"
   :type 'boolean
   :group 'massimo-keyboard)
@@ -116,24 +118,19 @@ At least they are considered useful for the author.
   "Keymap for massimo-keyboard-mode.")
 
 
-
 ;; Define the mode as global
-(define-globalized-minor-mode massimo-keyboard-global-mode massimo-keyboard-mode massimo-keyboard-activate)
+(define-globalized-minor-mode
+  massimo-keyboard-global-mode
+  massimo-keyboard-mode
+  massimo-keyboard-activate
+  :group 'massimo-keyboard)
 
 ;; Utility functions
 (defun massimo-keyboard-activate () (massimo-keyboard-mode 1))
 
-(make-variable-buffer-local 'massimo-keyboard-cua-meta-v-overridden)
 (make-variable-buffer-local 'massimo-keyboard-folding-meta-g-overridden)
 
-(defun massimo-keyboard-cua-meta-v-override ()
-"If massimo-keyboard-mode is active then run backward-paragraph,
-otherwise cua-repeat-replace-region. An ugly hack to solve key conflicts..."
-(interactive)
-(if massimo-keyboard-mode
-    (call-interactively 'backward-paragraph)
-  (call-interactively 'cua-repeat-replace-region))
-)
+
 
 (defun massimo-keyboard-folding-meta-g-override ()
 "If massimo-keyboard-mode is active then run backward-paragraph,
@@ -143,7 +140,6 @@ otherwise cua-repeat-replace-region. An ugly hack to solve key conflicts..."
       (call-interactively 'move-beginning-of-line)
     (call-interactively 'folding-goto-line))
   )
-
 
 
 (define-minor-mode massimo-keyboard-mode
@@ -156,19 +152,8 @@ When Massimo-Keyboard mode is enabled, several keybindings are
 modified according to the useage pattern of the author."
   :init-value nil
   :lighter " Massimo" ; Modeline string
+  :group   'massimo-keyboard
 
-;;  (when (and
-;;         (not (eq massimo-keyboard-cua-meta-v-overridden 'massimo-keyboard-cua-meta-v-override))
-;;         (boundp 'cua--cua-keys-keymap)
-;;         massimo-keyboard-cua-meta-v-override-p
-;;         nil ;; never overide, because now the key is on M-b
-;;         )
-;;    ;; Function to be overridded
-;;    (setq massimo-keyboard-cua-meta-v-overridden (lookup-key cua--cua-keys-keymap [(meta v)]))
-;;    (if massimo-keyboard-cua-meta-v-overridden
-;;         (define-key cua--cua-keys-keymap [(meta v)] 'massimo-keyboard-cua-meta-v-override)
-;;      )
-;;    )
   (when (and
          (not (eq massimo-keyboard-folding-meta-g-overridden 'massimo-keyboard-folding-meta-g-override))
          (boundp 'folding-mode-map)
@@ -177,11 +162,50 @@ modified according to the useage pattern of the author."
     ;; Function to be overridded
     (setq massimo-keyboard-folding-meta-g-overridden (lookup-key folding-mode-map [(meta g)]))
     (if massimo-keyboard-folding-meta-g-overridden
-         (define-key folding-mode-map [(meta g)] 'massimo-keyboard-folding-meta-g-override)
-      )
-    )
-  ) ;; Mode definition finish here
+         (define-key folding-mode-map [(meta g)] 'massimo-keyboard-folding-meta-g-override)))
 
+  ;; suppress auxiliary keymaps
+  (setq massimo-keyboard-comint nil)
+  (when massimo-keyboard-mode
+    (setq massimo-keyboard-comint (member major-mode massimo-keyboard-comint-modes))
+    ))
+
+
+;;; Auxiliary keymaps which extend `massimo-keyboard-mode-map', in
+;;; order to specify keybindings for specific modes
+
+;; ---- `comint-mode'  ----------------------------------------------------
+
+(make-variable-buffer-local 'massimo-keyboard-comint)
+(set-default 'massimo-keyboard-comint     nil)
+
+(defvar massimo-keyboard-comint-mode-map
+  (let ((map (make-sparse-keymap)))
+    ;; History searching
+    (define-key map (kbd "M-i") 'comint-previous-input)
+    (define-key map (kbd "M-k") 'comint-next-input)
+    (define-key map (kbd "<up>") 'comint-previous-input)
+    (define-key map (kbd "<down>") 'comint-next-input)
+    (define-key map (kbd "<prior>") 'comint-previous-matching-input-from-input)
+    (define-key map (kbd "<next>")  'comint-next-matching-input-from-input)
+    ;; Line ends
+    (define-key map (kbd "M-g") 'comint-bol-or-process-mark)
+    (define-key map (kbd "M-h") 'move-end-of-line)
+    (define-key map (kbd "<home>") 'comint-bol-or-process-mark)
+    (define-key map (kbd "<end>")  'move-end-of-line)
+
+    ;; Paragraphs
+    (define-key map (kbd "M-b") 'comint-previous-prompt)     ;; Fight with canonical binding
+    (define-key map (kbd "M-n") 'comint-next-prompt)
+
+    ;; Deletion keys
+    (define-key map (kbd "C-w")  'comint-kill-whole-line)
+
+    map)
+  "Keymap for massimo-keyboard-mode (for Comint mode).")
+
+(add-to-list 'minor-mode-map-alist
+             (cons 'massimo-keyboard-comint massimo-keyboard-comint-mode-map))
 
 
 (provide 'massimo-keyboard)

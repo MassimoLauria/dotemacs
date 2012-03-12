@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
-;; Time-stamp: "2012-03-05, 12:21 (CET) Massimo Lauria"
+;; Time-stamp: "2012-03-12, 00:45 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -87,7 +87,6 @@
 
 ;; Text movements keybindings
 (require 'massimo-keyboard)
-(massimo-keyboard-global-mode)
 
 ;; Managing windows [C-M]
 ; Moving
