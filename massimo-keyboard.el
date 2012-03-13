@@ -40,6 +40,15 @@ At least they are considered useful for the author.
   :group 'massimo-keyboard
   )
 
+(defcustom massimo-keyboard-eshell-active t
+  "A list of major modes for which the keymap variant for
+`comint-mode' is activated."
+  :tag "Activate special keymap for Eshell"
+  :type 'boolean
+  :group 'massimo-keyboard
+  )
+
+
 (defcustom massimo-keyboard-folding-meta-g-override-p t
   "*If non-nil, override folding mode M-g for `folding-goto-line' with `move-beginning-of-line'."
   :tag "Massimo Keyboard Folding meta-g override"
@@ -165,10 +174,18 @@ modified according to the useage pattern of the author."
          (define-key folding-mode-map [(meta g)] 'massimo-keyboard-folding-meta-g-override)))
 
   ;; suppress auxiliary keymaps
-  (setq massimo-keyboard-comint nil)
+  (setq
+   massimo-keyboard-comint nil
+   massimo-keyboard-eshell nil
+   )
   (when massimo-keyboard-mode
-    (setq massimo-keyboard-comint (member major-mode massimo-keyboard-comint-modes))
-    ))
+    (setq
+     ;; comint
+     massimo-keyboard-comint (member major-mode massimo-keyboard-comint-modes)
+     ;; eshell
+     massimo-keyboard-eshell (and massimo-keyboard-eshell-active
+                                  (eq major-mode 'eshell-mode))
+     )))
 
 
 ;;; Auxiliary keymaps which extend `massimo-keyboard-mode-map', in
@@ -206,6 +223,40 @@ modified according to the useage pattern of the author."
 
 (add-to-list 'minor-mode-map-alist
              (cons 'massimo-keyboard-comint massimo-keyboard-comint-mode-map))
+
+
+;; ---- `eshell-mode'  ----------------------------------------------------
+
+(make-variable-buffer-local 'massimo-keyboard-eshell)
+(set-default 'massimo-keyboard-eshell     nil)
+
+(defvar massimo-keyboard-eshell-mode-map
+  (let ((map (make-sparse-keymap)))
+    ;; History searching
+    (define-key map (kbd "M-i") 'eshell-previous-input)
+    (define-key map (kbd "M-k") 'eshell-next-input)
+    (define-key map (kbd "<up>") 'eshell-previous-input)
+    (define-key map (kbd "<down>") 'eshell-next-input)
+    (define-key map (kbd "<prior>") 'eshell-previous-matching-input-from-input)
+    (define-key map (kbd "<next>")  'eshell-next-matching-input-from-input)
+    ;; Line ends
+    (define-key map (kbd "M-g") 'eshell-bol)
+    (define-key map (kbd "M-h") 'move-end-of-line)
+    (define-key map (kbd "<home>") 'eshell-bol)
+    (define-key map (kbd "<end>")  'move-end-of-line)
+
+    ;; Paragraphs
+    (define-key map (kbd "M-b") 'eshell-previous-prompt)     ;; Fight with canonical binding
+    (define-key map (kbd "M-n") 'eshell-next-prompt)
+
+    ;; Deletion keys
+    (define-key map (kbd "C-w")  'eshell-kill-input)
+
+    map)
+  "Keymap for massimo-keyboard-mode (for Eshell mode).")
+
+(add-to-list 'minor-mode-map-alist
+             (cons 'massimo-keyboard-eshell massimo-keyboard-eshell-mode-map))
 
 
 (provide 'massimo-keyboard)

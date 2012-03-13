@@ -17,10 +17,6 @@
 ;;;  Default values
 ;;;
 
-
-;; Math applications
-(setq prefs-activate-latex      t) ; Enable auctex
-
 ;; Display preferences
 (setq prefs-activate-bigfont     nil) ; Big fonts for smallscreens
 (setq prefs-activate-smallscreen nil) ; Monitor is small here
@@ -28,9 +24,7 @@
 
 
 ;; Applications
-(setq prefs-activate-mail       t) ; Mail support
 (setq prefs-activate-org-mode   t) ; The famous ORG-Mode! Yaiii!!
-(setq prefs-activate-twitter  nil) ; Explicit activation of Twitter
 
 
 ;;;
