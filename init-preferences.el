@@ -33,6 +33,12 @@
     )
 )
 
+
+;; Load color-theme (minimal version) + zenburn.
+(setq default-zenburn-path   (concat default-elisp-3rdparties "/zenburn-emacs"))
+(setq load-path (cons default-zenburn-path load-path))
+(require 'color-theme-zenburn nil t)
+
 ;; Decide whether load the color-theme
 (defun my-theme-loadable-p (theme-name required-colors)
   "It is possible or desiderable to load the color-theme?  If
@@ -44,8 +50,7 @@ to load the theme.
     (>= (display-color-cells) required-colors)
     (if (fboundp 'daemonp) (daemonp))
     )
-   (require 'color-theme nil t)
-   (require theme-name nil t)
+   (fboundp theme-name)
    t ))
 
 
@@ -78,33 +83,10 @@ to load the theme.
  (add-to-list 'default-frame-alist `(font . ,font-Win-antialias))
  )
 
+
 ;; Color theme (not available on default Emacs22 for MacOSX)
-(when (my-theme-loadable-p 'zenburn 256)
-  (when (not (commandp 'color-theme-snapshot))
-    (fset 'color-theme-snapshot (color-theme-make-snapshot)))
+(when (my-theme-loadable-p 'color-theme-zenburn 256)
   (when-available 'color-theme-zenburn (color-theme-zenburn)))
-
-
-
-;; Dark/Light theme switching
-(defun toggle-night-color-theme ()
-  "Switch to/from night color scheme."
-  (interactive)
-  (require 'color-theme)
-  (require 'zenburn)
-  (if (eq (frame-parameter (next-frame) 'background-mode) 'dark)
-      (progn
-        (color-theme-snapshot) ; restore default (light) colors
-        (setq cua-normal-cursor-color (quote (bar . "black")))
-        )
-    ;; create the snapshot if necessary
-    (when (not (commandp 'color-theme-snapshot))
-      (fset 'color-theme-snapshot (color-theme-make-snapshot)))
-    (color-theme-zenburn)
-    (setq cua-normal-cursor-color (quote (bar . "white")))
-    ))
-
-
 
 (when-available 'scroll-bar-mode (scroll-bar-mode -1)) ;; scroll-bar-mode undefined in terminal emacs!
 (when-available 'tool-bar-mode   (tool-bar-mode -1)  ) ;;   tool-bar-mode undefined in terminal emacs!

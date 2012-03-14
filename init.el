@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
-;; Time-stamp: "2012-03-12, 00:45 (CET) Massimo Lauria"
+;; Time-stamp: "2012-03-15, 00:23 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -38,6 +38,9 @@
 (setq load-path (cons 	default-elisp-path load-path       ))
 (setq load-path (cons 	default-elisp-3rdparties load-path ))
 (setq load-path (cons 	"~/.emacs.d" load-path))
+
+;; External packages
+(when (require 'package nil t) (package-initialize))
 
 
 ;;; Recognize and setup the running environment ----------------------------------------------------------------
@@ -176,8 +179,6 @@
 (when prefs-activate-org-mode   (require 'init-org-mode))   ;; Organizer
 
 
-;; External packages
-(when (require-maybe 'package) (package-initialize))
 
 ;; Other stuff
 (require 'init-unsorted-elisp)
