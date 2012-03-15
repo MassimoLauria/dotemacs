@@ -70,6 +70,7 @@
  '(flymake-warnline ((((class color)) (:underline "yellow"))))
  '(flyspell-duplicate ((t (:underline "red"))))
  '(flyspell-incorrect ((t (:underline "red"))))
+ '(font-latex-sedate-face ((t (:inherit zenburn-strong-1-face))))
  '(font-lock-fixme-face ((((class color) (background dark)) (:background "Yellow" :foreground "Red" :underline nil))))
  '(writegood-duplicates-face ((t (:underline "DeepPink"))))
  '(writegood-passive-voice-face ((t (:underline "DeepPink"))))
