@@ -85,6 +85,9 @@ to load the theme.
 
 
 ;; Color theme (not available on default Emacs22 for MacOSX)
+(autoload 'color-theme-zenburn "zenburn.el"
+  "Just some alien fruit salad to keep you in the zone." t nil)
+
 (when (my-theme-loadable-p 'color-theme-zenburn 256)
   (when-available 'color-theme-zenburn (color-theme-zenburn)))
 
