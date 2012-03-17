@@ -87,6 +87,15 @@
           (split-window-vertically arg)
           )))
 
+;; Customize Tramp
+
+; sometimes remote shells are very bad and unusable by TRAMP
+; (e.g. some busybox found in NAS) problem is that even if you install
+; better commands TRAMP will stick to default ones because of the
+; $PATH variable.  With the following setup, the remote path setting
+; are taken in consideration.  This allows to fix a remote system to
+; be accessed by TRAMP.
+(add-to-list 'tramp-remote-path 'tramp-own-remote-path)
 
 
 ;; Save histories across sessions. Not buffers
