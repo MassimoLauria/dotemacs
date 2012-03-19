@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
-;; Time-stamp: "2012-03-15, 00:23 (CET) Massimo Lauria"
+;; Time-stamp: "2012-03-19, 10:57 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -158,6 +158,7 @@
 
 ;; Editor behaviour customization
 (require 'init-textmode)          ; Preferences for text editing
+(require 'init-terminal-fix)      ; Fix some keys combinations in terminals
 (require 'init-clipboard)         ; Clipboard managing
 (require 'init-open-link)         ; Keys for opening/jumping links
 (require 'init-autotype)          ; Automatic file filling
