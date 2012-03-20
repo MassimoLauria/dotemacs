@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
-;; Time-stamp: "2012-03-21, 00:13 (CET) Massimo Lauria"
+;; Time-stamp: "2012-03-21, 00:32 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -26,9 +26,6 @@
 ;; particular type of emacs running (GNU Emacs, XEmacs , Aquamacs,
 ;; ...)
 
-;;; Code:
-
-(setq emacs-load-start-time (current-time)) ;; save the clock at start-time
 
 ;;; Setup Emacs environment --------------------------------------------
 (setq default-elisp-path        "~/config/emacs")
@@ -45,104 +42,6 @@
 (require 'init-discover-runtime) ; Discover emacs version and runtime
 (require 'init-functions)        ; Utility functions for configuration
 
-;; Elpa in Emacs 23
-(when-running-GNUEmacs23
- (when (require 'package nil t) (package-initialize)))
-
-
-;;; Global keys .........-------------------------------------------
-
-;;{{{ *** Key binding rules ***
-
-;; FIXME Some of them do not work in xterm
-;; FIXME Many of them do not work in console
-;;
-;;
-;;  One modifier for  intra-buffer operations (i.e. selection)
-;;  Two modifiers for inter-buffer operations (i.e. navigation)
-;;  Function keys for buffer processing (compile,check,...)
-;;
-;;  M-C-<arrow> for moving between windows
-;;  M-S-<arrow> for moving between buffers/screens
-;;  CUA-selection on (C-<SPC) mark, C-<RET> rect.,C-z C-x C-c C-v)
-;;  F2   for local  spell check
-;;  S-F2 for global spell check
-;;  M-Space for folding
-;;  Tab for indent/auto-complete
-;;  M-Tab for correct w.r.t. spellcheck (on Flyspell)
-;;
-
-;; Moving in text
-(global-set-key [C-left]  'backward-word)
-(global-set-key [C-right] 'forward-word)
-(global-set-key [C-up]    'backward-paragraph)
-(global-set-key [C-down]  'forward-paragraph)
-
-;; Moving in structes
-(global-set-key [M-left] 'backward-sentence)
-(global-set-key [M-right] 'forward-sentence)
-(global-set-key [M-up] 'backward-sexp)
-(global-set-key [M-down] 'forward-sexp)
-
-;; Text movements keybindings
-(require 'massimo-keyboard)
-
-;; Managing windows [C-M]
-; Moving
-(global-set-key [M-C-right] 'windmove-right)
-(global-set-key [M-C-left] 'windmove-left)
-(global-set-key [M-C-up] 'windmove-up)
-(global-set-key [M-C-down] 'windmove-down)
-; Scrolling "other window"
-(global-set-key [M-C-prior] 'scroll-other-window-down)
-(global-set-key [M-C-next] 'scroll-other-window)
-; Create and destroy windows
-(global-set-key (kbd "M-C--") 'split-window-vertically)
-(global-set-key (kbd "M-C-.") 'split-window-horizontally)
-;; Make a window to be sticky.
-(global-set-key [pause] 'toggle-current-window-sticky)
-
-
-
-;; Broken on Xterm
-(global-set-key (kbd "M-C-<backspace>") 'delete-window)
-(global-set-key (kbd "<C-M-backspace>") 'delete-window)
-(global-set-key (kbd "M-C-<return>") 'delete-other-windows)
-;; Cheap Xterm substitutions
-(global-set-key (kbd "ESC C-h") 'delete-window)
-(global-set-key (kbd "ESC <C-return>") 'delete-other-windows)
-
-
-;; Next/Prev item after Compiling
-(global-set-key (kbd "<f9>") 'recompile)
-(global-set-key (kbd "<f10>") 'gdb)
-(global-set-key (kbd "<f11>") 'previous-error) ; Does not work with LaTeX!
-(global-set-key (kbd "<f12>") 'next-error)
-(global-set-key [M-prior] 'previous-error) ; Does not work with LaTeX!
-(global-set-key [M-next] 'next-error)
-
-;; (global-set-key (kbd "#") 'comment-region-maybe) `comment-dwim' is already bound to M-;
-
-;; Spellcheck
-(global-set-key (kbd "M-s") 'my-spell-correct-word)
-(global-set-key [f2] 'ispell-buffer)
-
-
-;; Tab is actually a "Smart tab"
-;; (global-set-key [(tab)] 'smart-tab)
-
-
-
-
-;; Agenda.
-(global-set-key [f5] 'org-remember)  ;; Taking notes
-(global-set-key [f6] 'org-agenda)    ;; View agenda/Todo
-(global-set-key [f7] 'bbdb)          ;; Query Contacts
-;; Switch language
-(global-set-key [f8] 'spellcheck-language-cycle)
-
-;;}}}
-
 
 ;;; Module(s) initialization -------------------------------------------
 
@@ -157,10 +56,14 @@
 (require 'init-textmode)          ; Preferences for text editing
 (require 'init-terminal-fix)      ; Fix some keys combinations in terminals
 (require 'init-clipboard)         ; Clipboard managing
-(require 'init-open-link)         ; Keys for opening/jumping links
 (require 'init-autotype)          ; Automatic file filling
 (require 'init-auto-complete)     ; Completion configuration
 (require 'init-spellcheck)        ; Spellchecking
+
+;; Keyboard settings
+(require 'massimo-keyboard)       ; basic keyboard settings
+(require 'init-global-keys)       ; global keys
+(require 'init-open-link)         ; keys for opening links
 
 ;; Programming Languages
 (require 'init-python)
@@ -185,17 +88,10 @@
 
 
 ;;; Start server in Aquamacs --------------------------------------------
-(if (and (boundp 'aquamacs-version)
-         (not (server-running-p)))
-    (server-start))
+(if (and (boundp 'aquamacs-version) (not (server-running-p))) (server-start))
 
-;;; Starting time -------------------------------------------------------
-(when (require 'time-date nil t)
-  (message "Emacs startup time: %d seconds."
-           (time-to-seconds (time-since emacs-load-start-time)))) ;; compute load-time
+
 (provide 'init)
-
-
 ;; Local Variables:
 ;; mode: emacs-lisp
 ;; End:
