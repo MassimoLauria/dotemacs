@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
-;; Time-stamp: "2012-03-19, 10:57 (CET) Massimo Lauria"
+;; Time-stamp: "2012-03-21, 00:13 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -30,31 +30,27 @@
 
 (setq emacs-load-start-time (current-time)) ;; save the clock at start-time
 
+;;; Setup Emacs environment --------------------------------------------
+(setq default-elisp-path        "~/config/emacs")
+(setq default-elisp-3rdparties  "~/config/emacs/3rdparties")
+(setq default-elisp-macosx      "~/Library/site-lisp")
 
-;;; Setup load-path --------------------------------------------------------------------------------------------
-(setq default-elisp-path "~/config/emacs")
-(setq default-elisp-3rdparties "~/config/emacs/3rdparties")
 
 (setq load-path (cons 	default-elisp-path load-path       ))
 (setq load-path (cons 	default-elisp-3rdparties load-path ))
+(setq load-path (cons 	default-elisp-macosx     load-path))
+
 (setq load-path (cons 	"~/.emacs.d" load-path))
 
-;; External packages
-(when (require 'package nil t) (package-initialize))
+(require 'init-discover-runtime) ; Discover emacs version and runtime
+(require 'init-functions)        ; Utility functions for configuration
+
+;; Elpa in Emacs 23
+(when-running-GNUEmacs23
+ (when (require 'package nil t) (package-initialize)))
 
 
-;;; Recognize and setup the running environment ----------------------------------------------------------------
-
-(require 'init-discover-runtime)
-(require 'init-functions)         ; Utility functions for configuration
-
-(when-running-MacOSX
- (setq MacUser-site-lisp "~/Library/site-lisp")
- (setq load-path (cons 	MacUser-site-lisp load-path))
-)
-
-
-;;; Module(s) initialization -----------------------------------------------------------------------------------
+;;; Global keys .........-------------------------------------------
 
 ;;{{{ *** Key binding rules ***
 
@@ -148,13 +144,14 @@
 ;;}}}
 
 
+;;; Module(s) initialization -------------------------------------------
+
 ;; Work environment customization
 (require 'init-coding)
 (require 'init-italian-l10n)
 (require 'init-local-preferences) ; Host based and personal configuration
 (require 'init-preferences)       ; Basic editor preferences
 (require 'init-backup)            ; Autosaves and backups behaviour
-
 
 ;; Editor behaviour customization
 (require 'init-textmode)          ; Preferences for text editing
@@ -164,7 +161,6 @@
 (require 'init-autotype)          ; Automatic file filling
 (require 'init-auto-complete)     ; Completion configuration
 (require 'init-spellcheck)        ; Spellchecking
-
 
 ;; Programming Languages
 (require 'init-python)
@@ -179,24 +175,27 @@
 (require 'init-mail)    ;; Mail + Contacts
 (when prefs-activate-org-mode   (require 'init-org-mode))   ;; Organizer
 
-
-
 ;; Other stuff
 (require 'init-unsorted-elisp)
 
-;;; Customization variables (in a separate file)----------------------------------------------------------------
+
+;;; Customized settings -------------------------------------------------
 (setq custom-file "~/config/emacs/custom.el")
 (load custom-file 'noerror)
 
-;; Aquamacs requires explicit server-start call.
+
+;;; Start server in Aquamacs --------------------------------------------
 (if (and (boundp 'aquamacs-version)
          (not (server-running-p)))
     (server-start))
 
-
+;;; Starting time -------------------------------------------------------
 (when (require 'time-date nil t)
-  (message "Emacs startup time: %d seconds." (time-to-seconds (time-since emacs-load-start-time)))) ;; compute load-time
+  (message "Emacs startup time: %d seconds."
+           (time-to-seconds (time-since emacs-load-start-time)))) ;; compute load-time
 (provide 'init)
+
+
 ;; Local Variables:
 ;; mode: emacs-lisp
 ;; End:
