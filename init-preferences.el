@@ -34,11 +34,6 @@
 )
 
 
-;; Load color-theme (minimal version) + zenburn.
-(setq default-zenburn-path   (concat default-elisp-3rdparties "/zenburn-emacs"))
-(setq load-path (cons default-zenburn-path load-path))
-(require 'color-theme-zenburn nil t)
-
 ;; Decide whether load the color-theme
 (defun my-theme-loadable-p (theme-name required-colors)
   "It is possible or desiderable to load the color-theme?  If
