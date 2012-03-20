@@ -140,7 +140,7 @@ to load the theme.
 
 
 ;;(setq warning-minimum-level :error)
-(setq frame-title-format '( " " "%[%b%]" " [%*] %p" "  <%@" invocation-name "@" (:eval (system-name)) ">"))
+(setq frame-title-format '( " " "%[%b%]" " [%*] %p" "  <" invocation-name "@" (:eval (system-name)) ">%@"))
 
 ;; Tramp connection caching causes pain.  When characteristics on the
 ;; system change, it may cause double password request.
