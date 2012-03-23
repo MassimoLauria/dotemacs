@@ -148,15 +148,23 @@
 (setq recentf-max-saved-items 50)
 
 (defun ido-recentf-open ()
-  "Use `ido-completing-read' to \\[find-file] a recent file"
+  "Use `ido-completing-read' to \\[find-file] a recently opened file"
   (interactive)
-  (if (fboundp 'recentf-shorten-file-name)
-      (setq rfile-list (mapcar 'recentf-shorten-file-name recentf-list))
-    (setq rfile-list recentf-list)
-    )
-  (if (find-file (ido-completing-read "Find recent file: " rfile-list))
-      (message "Opening file...")
-    (message "Aborting")))
+  (let* ((file-assoc-list
+	  (mapcar (lambda (x)
+		    (cons (file-name-nondirectory x)
+			  x))
+		  recentf-list))
+	 (filename-list
+	  (remove-duplicates (mapcar #'car file-assoc-list)
+			     :test #'string=))
+	 (filename (ido-completing-read "Recent file: "
+					filename-list
+					nil
+					t)))
+    (when filename
+      (find-file (cdr (assoc filename
+			     file-assoc-list))))))
 
 ;; get rid of `find-file-read-only' and replace it with something
 ;; more useful.
