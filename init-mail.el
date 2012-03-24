@@ -34,7 +34,7 @@
 
 ;; MacOSX alternative path
 (when running-MacOSX
-  (setq MacUser-bbdb-path (concat MacUser-site-lisp "/bbdb"))
+  (setq MacUser-bbdb-path (concat default-elisp-macosx "/bbdb"))
   (if (file-directory-p MacUser-bbdb-path)
       (add-to-list 'load-path MacUser-bbdb-path))
 )

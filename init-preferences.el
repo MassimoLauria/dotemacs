@@ -51,7 +51,7 @@ to load the theme.
 
 ;; Try to set a load-path color-theme as a custom package.
 (when running-MacOSX
-  (setq MacUser-color-theme-path (concat MacUser-site-lisp "/color-theme"))
+  (setq MacUser-color-theme-path (concat default-elisp-macosx "/color-theme"))
   (if (file-directory-p MacUser-color-theme-path)
       (setq load-path (cons MacUser-color-theme-path load-path)))
 )
