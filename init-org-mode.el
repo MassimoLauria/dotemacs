@@ -50,7 +50,6 @@
  org-support-shift-select t
  org-cycle-emulate-tab nil
  org-cycle-global-at-bob t
- org-highlight-latex-fragments-and-specials t
 )
 
 
@@ -211,7 +210,7 @@
     (th-org-agenda-follow-calendar-mode t)
     ))
 
-(add-hook 'calendar-mode-hook 
+(add-hook 'calendar-mode-hook
           (lambda ()
             (define-key calendar-mode-map (kbd "RET") 'th-calendar-open-agenda)))
 
