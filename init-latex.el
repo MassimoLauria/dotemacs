@@ -120,6 +120,7 @@ started."
 
 ;; Setup DBUS communication between Evince and AUCTeX using SyncTeX
 ;; Forward/inverse search with evince using D-bus.
+;; Forward search does not work with C-c C-v
 (if (require 'dbus "dbus" t)
     (progn
       ;; Forward search.
@@ -154,16 +155,41 @@ started."
           (line (line-number-at-pos)))
           (auctex-evince-forward-sync pdf tex line)))
 
+      ;; (when (and TeX-evince-dbus-registered
+      ;;            (boundp 'TeX-source-correlate-method)
+      ;;            (eq TeX-source-correlate-method 'synctex))
+      ;;   ;; New view entry: Evince via D-bus.
+      ;; (add-to-list 'TeX-view-program-list
+      ;;             '("EvinceDbus" auctex-evince-view))
+      ;; ;; Prepend Evince via D-bus to program selection list
+      ;; ;; overriding other settings for PDF viewing.
+      ;; (add-to-list 'TeX-view-program-selection
+      ;;              '(output-pdf "EvinceDbus"))
+      ;;   )
+
       ;; Inverse search.
       ;; Adapted from: http://www.mail-archive.com/auctex@gnu.org/msg04175.html
       ;; Changed for Gnome3 according to
       ;; http://ubuntuforums.org/showthread.php?p=11010827#post11010827
-      (defun auctex-evince-inverse-sync (file linecol timestamp)
-        (let ((buf (get-buffer (file-name-nondirectory file)))
+      ;;
+      ;; Between Evince 2.32 and 3.2 Evince started to give url
+      ;; instead of filenames.
+      (defun un-urlify (fname-or-url)
+        "A trivial function that replaces a prefix of file:/// with just /."
+        (if (string= (substring fname-or-url 0 8) "file:///")
+            (substring fname-or-url 7)
+          fname-or-url))
+
+      (defun auctex-evince-inverse-sync (url linecol &rest timestamp)
+        (message "Try to open %s is not opened..." url)
+        (let (
+          (buf (get-buffer
+                (file-name-nondirectory
+                  (replace-regexp-in-string "%20" " " (un-urlify url)))))
           (line (car linecol))
           (col (cadr linecol)))
           (if (null buf)
-          (message "Sorry, %s is not opened..." file)
+              (message "Sorry, %s is not opened..." url)
         (switch-to-buffer buf)
         (goto-line (car linecol))
         (unless (= col -1)
@@ -177,18 +203,6 @@ started."
            "org.gnome.evince.Window" "SyncSource"
            'auctex-evince-inverse-sync)
         (error (setq TeX-evince-dbus-registered nil)))
-
-      (when (and TeX-evince-dbus-registered
-                 (boundp 'TeX-source-correlate-method)
-                 (eq TeX-source-correlate-method 'synctex))
-        ;; New view entry: Evince via D-bus.
-        (add-to-list 'TeX-view-program-list
-                     '("EvinceDbus" auctex-evince-view))
-        ;; Prepend Evince via D-bus to program selection list
-        ;; overriding other settings for PDF viewing.
-        (add-to-list 'TeX-view-program-selection
-                     '(output-pdf "EvinceDbus"))
-        )
 
       )) ;; D-Bus + Evince + SyncTeX
 
