@@ -22,34 +22,40 @@
 (setq-default TeX-master t)  ;; Do not query for master file, and applies auto-insertion.
 
 
-;; Since version 11.86 of AUCTeX the inverse/forward search is implemented using
-;; source correlation.  Source correlation can be realized either with
-;; source-specials, as has even been; or using SyncTeX. The latter methods also
-;; works with PDF reader as Skin and Evince.
+;; Since version 11.86 of AUCTeX the inverse/forward search is
+;; implemented using source correlation.  Source correlation can be
+;; realized either with source-specials, as has always been; or using
+;; SyncTeX. The latter methods also works with PDF reader as Skin and
+;; Evince.  The method is *guessed wrongly* in Auctex, so I switch it
+;; according to TeX-PDF-mode.
 ;;
-;; If AUCTeX implementatio is below 11.86 source specials are used.
+;; If AUCTeX implementation is below 11.86 source specials are used.
 (if
     (and (boundp 'AUCTeX-version) (>= (string-to-number AUCTeX-version) 11.86))
     (progn
-      ;; To work in Linux with XDVI we need to force the usage of source
-      ;; special.  Unfortunately working with Evince as PDF viewer is not
-      ;; yet fully working because of some problem with dbus-initializations
-      (when-running-GNULinux
-          (setq TeX-source-correlate-method 'source-specials))
       (setq TeX-source-correlate-mode t)
-      (setq TeX-source-correlate-start-server t)
-      )
+      (setq TeX-source-correlate-method 'source-specials) ; Default. It is toggled by TeX-PDF-mode-hook
+      (setq TeX-source-correlate-start-server t))
   (progn
     (setq TeX-source-specials-mode t)
-    (setq TeX-source-specials-view-start-server t)
-    ))
+    (setq TeX-source-specials-view-start-server t)))
 
-;; (if (not (boundp 'TeX-view-program-list))
-;;     (setq TeX-view-program-list nil)
-;;     )
-;; (if (not (boundp 'TeX-view-program-selection))
-;;     (setq TeX-view-program-selection nil)
-;;     )
+
+(defun mysetup-TeX-PDF-mode ()
+  "Setup the proper environment for TeX PDF mode. Mainly the
+source-specials/synctex toggle."
+  (interactive)
+  (when (and (boundp 'AUCTeX-version)
+             (>= (string-to-number AUCTeX-version) 11.86))
+    (setq TeX-source-correlate-method-active
+          (if TeX-PDF-mode 'synctex 'source-specials))
+    (message "[AUCTeX] forward/inverse search mode: %s" TeX-source-correlate-method-active)))
+
+(add-hook 'TeX-PDF-mode-hook 'mysetup-TeX-PDF-mode)
+
+
+
+
 
 
 ;; These are the files that are produced by LaTeX processes.  It is annoying
@@ -85,9 +91,12 @@
                        (make-local-variable 'compilation-exit-message-function)
                        (setq compilation-exit-message-function 'nil)
                        (add-to-list 'LaTeX-verbatim-environments "comment")
-                       ;; Avoid the DVI preview launcher to ask for confirmation.
+
+                       ;; The following viewer command:
+                       ;;   - avoid confirmation or editing of view command
+                       ;;   - allows for function to be used as viewer
                        (when (not running-Aquamacs)
-                         (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
+                         (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard-or-function nil t))
                          )
                        )
             ))
@@ -123,7 +132,36 @@ started."
 ;; Forward search does not work with C-c C-v
 (if (require 'dbus "dbus" t)
     (progn
-      ;; Forward search.
+
+      ;;; Inverse search setup (C-leftclick in Evince --> Open in Emacs).
+      ;; Adapted from: http://www.mail-archive.com/auctex@gnu.org/msg04175.html
+      ;; Changed for Gnome3 according to
+      ;; http://ubuntuforums.org/showthread.php?p=11010827#post11010827
+      ;;
+      ;; Between Evince 2.32 and 3.2 Evince started to give url
+      ;; instead of filenames.
+      (defun un-urlify (fname-or-url)
+        "A trivial function that replaces a prefix of file:/// with just /."
+        (if (string= (substring fname-or-url 0 8) "file:///")
+            (substring fname-or-url 7)
+          fname-or-url))
+
+      (defun auctex-evince-inverse-sync (url linecol &rest timestamp)
+        (message "Try to open %s is not opened..." url)
+        (let (
+          (buf (get-buffer
+                (file-name-nondirectory
+                  (replace-regexp-in-string "%20" " " (un-urlify url)))))
+          (line (car linecol))
+          (col (cadr linecol)))
+          (if (null buf)
+              (message "Sorry, %s is not opened..." url)
+        (switch-to-buffer buf)
+        (goto-line (car linecol))
+        (unless (= col -1)
+          (move-to-column col)))))
+
+      ;;; Forward search (View in Emacs --> Open in Evince ).
       ;; Adapted from http://dud.inf.tu-dresden.de/~ben/evince_synctex.tar.gz
       ;; Changed for Gnome3 according to
       ;; http://ubuntuforums.org/showthread.php?p=11010827#post11010827
@@ -155,47 +193,8 @@ started."
           (line (line-number-at-pos)))
           (auctex-evince-forward-sync pdf tex line)))
 
-      ;; (when (and TeX-evince-dbus-registered
-      ;;            (boundp 'TeX-source-correlate-method)
-      ;;            (eq TeX-source-correlate-method 'synctex))
-      ;;   ;; New view entry: Evince via D-bus.
-      ;; (add-to-list 'TeX-view-program-list
-      ;;             '("EvinceDbus" auctex-evince-view))
-      ;; ;; Prepend Evince via D-bus to program selection list
-      ;; ;; overriding other settings for PDF viewing.
-      ;; (add-to-list 'TeX-view-program-selection
-      ;;              '(output-pdf "EvinceDbus"))
-      ;;   )
 
-      ;; Inverse search.
-      ;; Adapted from: http://www.mail-archive.com/auctex@gnu.org/msg04175.html
-      ;; Changed for Gnome3 according to
-      ;; http://ubuntuforums.org/showthread.php?p=11010827#post11010827
-      ;;
-      ;; Between Evince 2.32 and 3.2 Evince started to give url
-      ;; instead of filenames.
-      (defun un-urlify (fname-or-url)
-        "A trivial function that replaces a prefix of file:/// with just /."
-        (if (string= (substring fname-or-url 0 8) "file:///")
-            (substring fname-or-url 7)
-          fname-or-url))
-
-      (defun auctex-evince-inverse-sync (url linecol &rest timestamp)
-        (message "Try to open %s is not opened..." url)
-        (let (
-          (buf (get-buffer
-                (file-name-nondirectory
-                  (replace-regexp-in-string "%20" " " (un-urlify url)))))
-          (line (car linecol))
-          (col (cadr linecol)))
-          (if (null buf)
-              (message "Sorry, %s is not opened..." url)
-        (switch-to-buffer buf)
-        (goto-line (car linecol))
-        (unless (= col -1)
-          (move-to-column col)))))
-
-      ;; if DBus is off, this may fail.
+      ;; Register inverse and forward search
       (setq TeX-evince-dbus-registered t)
       (condition-case nil
           (dbus-register-signal
@@ -203,6 +202,14 @@ started."
            "org.gnome.evince.Window" "SyncSource"
            'auctex-evince-inverse-sync)
         (error (setq TeX-evince-dbus-registered nil)))
+
+      (when (and TeX-evince-dbus-registered
+                 (boundp 'TeX-source-correlate-method))
+        ;; View program and selection rule
+        ;; for this to work `TeX-run-discard-or-function' must be in the "View" command.
+        (add-to-list 'TeX-view-program-list '("EvinceDbus" auctex-evince-view))
+        (add-to-list 'TeX-view-program-selection '(output-pdf "EvinceDbus"))
+        )
 
       )) ;; D-Bus + Evince + SyncTeX
 
