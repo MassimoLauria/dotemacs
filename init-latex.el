@@ -9,7 +9,6 @@
 (load "tex.el" t t t)             ;; Fail quietly
 
 
-
 ;; Multifile support, completition, style, reverse search support, ...
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
@@ -70,12 +69,14 @@ source-specials/synctex toggle."
 
 
 ;; Basic LaTeX-mode-hook setup  -- start by resetting the hook list
-(setq LaTeX-mode-hook nil)
-(setq TeX-mode-hook nil)
+;; (setq LaTeX-mode-hook nil)
+;; (setq TeX-mode-hook nil)
 
 (add-hook 'TeX-mode-hook 'turn-on-reftex)
 (add-hook 'TeX-mode-hook 'turn-on-flyspell)
 (add-hook 'TeX-mode-hook 'autopair-latex-setup)
+(add-hook 'LaTeX-mode-hook 'turn-on-ac-latex 'append)
+(add-hook 'latex-mode-hook 'turn-on-ac-latex 'append)
 (when-available 'aquamacs-latex-viewer-support
       (add-hook 'TeX-mode-hook 'aquamacs-latex-viewer-support 'append)) ;; load reftex first
 

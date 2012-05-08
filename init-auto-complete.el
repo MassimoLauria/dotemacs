@@ -33,7 +33,7 @@
 
 
 ;; Generic setup.
-(global-auto-complete-mode t)           ;enable global-mode
+(global-auto-complete-mode)             ;enable global-mode
 (setq ac-dwim t)                        ;Do what i mean
 (setq ac-override-local-map nil)        ;don't override local map
 (ac-config-default)
@@ -68,17 +68,17 @@
 
 
 ;; The mode that automatically startup.
-;; (setq ac-modes '(emacs-lisp-mode lisp-interaction-mode lisp-mode
-;;                  inferior-emacs-lisp-mode scheme-mode c-mode
-;;                  cc-mode c++-mode java-mode perl-mode cperl-mode
-;;                  python-mode ruby-mode ecmascript-mode
-;;                  javascript-mode php-mode css-mode makefile-mode
-;;                  sh-mode fortran-mode f90-mode ada-mode xml-mode
-;;                  sgml-mode haskell-mode literate-haskell-mode
-;;                  latex-mode LaTeX-mode emms-tag-editor-mode
-;;                  asm-mode org-mode text-mode
-;;                  wl-draft-mode message-mode
-;;                  mml-mode mail-mode))
+(setq ac-modes '(emacs-lisp-mode lisp-interaction-mode lisp-mode
+                 inferior-emacs-lisp-mode scheme-mode c-mode
+                 cc-mode c++-mode java-mode perl-mode cperl-mode
+                 python-mode ruby-mode ecmascript-mode
+                 javascript-mode php-mode css-mode makefile-mode
+                 sh-mode fortran-mode f90-mode ada-mode xml-mode
+                 sgml-mode haskell-mode literate-haskell-mode
+                 latex-mode LaTeX-mode emms-tag-editor-mode
+                 asm-mode org-mode text-mode
+                 wl-draft-mode message-mode
+                 mml-mode mail-mode))
 
 ; if you want enable auto-complete at org-mode, uncomment this line
 (add-to-list 'ac-trigger-commands 'org-self-insert-command)
@@ -112,18 +112,19 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; LaTeX mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq ac-l-sources '(ac-source-yasnippet
-                     ac-source-words-in-buffer
+(setq ac-l-sources '(ac-source-dictionary
                      ac-source-files-in-current-dir
-                     ac-source-filename ))
+                     ac-source-filename
+                     ac-source-words-in-buffer
+                    ))
 
-(add-hook 'latex-mode-hook '(lambda ()
-                              (when (fboundp 'ac-l-setup) (ac-l-setup))
-                              ))
-(add-hook 'LaTeX-mode-hook '(lambda ()
-                              (when (fboundp 'ac-l-setup) (ac-l-setup))
-                              ))
+(when (boundp 'reftex-default-bibliography)
+  (setq ac-l-bib-files reftex-default-bibliography))
 
+(defun turn-on-ac-latex ()
+  "Activate auto-complete in latex"
+  (auto-complete-mode t)
+  (when (fboundp 'ac-l-setup) (ac-l-setup)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; Mail-mode + BBDB ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defvar ac-bbdb-header-list '("to" "from" "cc" "bcc"))
