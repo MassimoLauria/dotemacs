@@ -34,7 +34,6 @@
 
 ;; Generic setup.
 (global-auto-complete-mode t)           ;enable global-mode
-(setq ac-auto-start 3)                  ;automatically start
 (setq ac-dwim t)                        ;Do what i mean
 (setq ac-override-local-map nil)        ;don't override local map
 
