@@ -109,15 +109,12 @@ path."
 
 
 ;; Ropemacs completion (not on Aquamacs, because it is too slow!) ------------------------------
-(defun ac-ropemacs-setup () ;; Fix the obsolete definition in the sources
-  (ac-ropemacs-require)
-  (setq ac-sources (append '(ac-source-ropemacs) ac-sources)))
-
 (unless running-Aquamacs
   (ac-ropemacs-initialize)
   (add-hook 'python-mode-hook
             (lambda ()
-              (local-set-key (kbd "M-TAB") 'ac-complete-ropemacs-max)
+              (setq ac-sources (append '(ac-source-ropemacs) ac-sources))
+              (local-set-key (kbd "M-TAB") 'ac-complete-ropemacs)
               )))
 
 

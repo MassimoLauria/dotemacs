@@ -3,7 +3,7 @@
 # Copyright (C) 2010, 2011, 2012 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2011-03-06, domenica 11:52 (CET) Massimo Lauria"
-# Time-stamp: "2012-01-30, 01:14 (CET) Massimo Lauria"
+# Time-stamp: "2012-05-08, 19:12 (CEST) Massimo Lauria"
 
 # Description::
 #
@@ -14,7 +14,7 @@
 
 
 # ---- Packages to be installed --------------------------------------
-PKGS="pyflakes pylint pep8 rope ropemode ipython cython readline"
+PKGS="pyflakes pylint pep8 rope ropemode ipython readline"
 
 PYMACS=https://github.com/pinard/Pymacs/   # Pymacs must be downloaded
 PYMACSVER=v0.24-beta2
