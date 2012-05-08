@@ -36,7 +36,7 @@
 (global-auto-complete-mode t)           ;enable global-mode
 (setq ac-dwim t)                        ;Do what i mean
 (setq ac-override-local-map nil)        ;don't override local map
-
+(ac-config-default)
 
 ;; Menu movement
 (define-key ac-completing-map (kbd "M-j") 'ac-quick-help-scroll-up)
@@ -68,17 +68,17 @@
 
 
 ;; The mode that automatically startup.
-(setq ac-modes '(emacs-lisp-mode lisp-interaction-mode lisp-mode
-                 inferior-emacs-lisp-mode scheme-mode c-mode
-                 cc-mode c++-mode java-mode perl-mode cperl-mode
-                 python-mode ruby-mode ecmascript-mode
-                 javascript-mode php-mode css-mode makefile-mode
-                 sh-mode fortran-mode f90-mode ada-mode xml-mode
-                 sgml-mode haskell-mode literate-haskell-mode
-                 latex-mode LaTeX-mode emms-tag-editor-mode
-                 asm-mode org-mode text-mode
-                 wl-draft-mode message-mode
-                 mml-mode mail-mode))
+;; (setq ac-modes '(emacs-lisp-mode lisp-interaction-mode lisp-mode
+;;                  inferior-emacs-lisp-mode scheme-mode c-mode
+;;                  cc-mode c++-mode java-mode perl-mode cperl-mode
+;;                  python-mode ruby-mode ecmascript-mode
+;;                  javascript-mode php-mode css-mode makefile-mode
+;;                  sh-mode fortran-mode f90-mode ada-mode xml-mode
+;;                  sgml-mode haskell-mode literate-haskell-mode
+;;                  latex-mode LaTeX-mode emms-tag-editor-mode
+;;                  asm-mode org-mode text-mode
+;;                  wl-draft-mode message-mode
+;;                  mml-mode mail-mode))
 
 ; if you want enable auto-complete at org-mode, uncomment this line
 (add-to-list 'ac-trigger-commands 'org-self-insert-command)
@@ -99,31 +99,11 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Lisp mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (dolist (hook (list
-               'emacs-lisp-mode-hook
                'lisp-interaction-mode-hook
                'inferior-emacs-lisp-mode-hook
                ))
-  (add-hook hook '(lambda ()
-                    (add-to-list 'ac-sources 'ac-source-symbols)))
-  )
-(add-hook 'emacs-lisp-mode-hook '(lambda ()
-                    (add-to-list 'ac-sources 'ac-source-features)))
+  (add-hook hook 'ac-emacs-lisp-mode-setup))
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; C-common-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Enables omnicompletion with `c-mode-common'.
-(add-hook 'c-mode-common-hook
-          '(lambda ()
-             (add-to-list 'ac-sources 'ac-source-gtags)
-             (when (boundp 'ac-source-semantic)
-               (add-to-list 'ac-sources 'ac-source-semantic)
-               )
-             ))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; CSS-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Keywords.
-(ac-css-mode-setup)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Haskell mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Keywords.

@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2012-05-08, 14:37 (CEST) Massimo Lauria>
+;; Time-stamp: <2012-05-08, 15:07 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,11 +23,35 @@
 ;; This is my setup for C/C++ code.
 
 ;; CC-mode
-(add-hook 'c-mode-hook '(lambda ()
-        (local-set-key (kbd "RET") 'newline-and-indent)
-        (when (fboundp 'semantic-mode)
-          (semantic-mode t)
-          )))
+
+(defun setup-c-mode-completion ()
+  "Add gtags and semantic sources for auto-completion."
+
+  ;; Semantic completion (from CEDET)
+  (when (boundp 'ac-source-semantic)
+    (setq ac-sources (append '(ac-source-semantic) ac-sources))
+    )
+  ;; gtags completion (from gtags-mode)
+  (when (boundp 'ac-source-gtags)
+    (setq ac-sources (append '(ac-source-gtags) ac-sources))
+    )
+)
+
+
+
+(defun setup-c-mode ()
+  "Setup all for C/C++ modes"
+  (local-set-key (kbd "RET") 'newline-and-indent)
+  (when (fboundp 'semantic-mode)
+    (semantic-mode t))
+  (setup-c-mode-completion)
+  )
+
+
+
+;; install the hook
+(add-hook 'c-mode-hook 'setup-c-mode)
+
 
 (provide 'init-cc-mode)
 ;;; init-autotype.el ends here

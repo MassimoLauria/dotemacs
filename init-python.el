@@ -109,26 +109,16 @@ path."
 
 
 ;; Ropemacs completion (not on Aquamacs, because it is too slow!) ------------------------------
-(defvar ac-ropemacs-completions-cache nil)
-(ac-define-source ropemacs-max
-  '((init
-     . (lambda ()
-         (setq ac-ropemacs-completions-cache
-               (mapcar
-                (lambda (completion)
-                  (concat ac-prefix completion))
-                (ignore-errors
-                  (rope-completions))))))
-    (candidates . ac-ropemacs-completions-cache)))
+(defun ac-ropemacs-setup () ;; Fix the obsolete definition in the sources
+  (ac-ropemacs-require)
+  (setq ac-sources (append '(ac-source-ropemacs) ac-sources)))
 
 (unless running-Aquamacs
   (ac-ropemacs-initialize)
   (add-hook 'python-mode-hook
             (lambda ()
-              (add-to-list 'ac-sources 'ac-source-ropemacs-max)
               (local-set-key (kbd "M-TAB") 'ac-complete-ropemacs-max)
-              ))
-)
+              )))
 
 
 
