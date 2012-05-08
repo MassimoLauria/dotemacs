@@ -95,8 +95,8 @@
 ; $PATH variable.  With the following setup, the remote path setting
 ; are taken in consideration.  This allows to fix a remote system to
 ; be accessed by TRAMP.
-(add-to-list 'tramp-remote-path 'tramp-own-remote-path)
-
+(eval-after-load "tramp"
+  '(add-to-list 'tramp-remote-path 'tramp-own-remote-path))
 
 ;; Save histories across sessions. Not buffers
 (savehist-mode 1)
