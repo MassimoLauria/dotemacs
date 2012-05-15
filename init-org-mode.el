@@ -55,7 +55,7 @@
 
 ;; ;; Org-mode Keys
 (setq org-replace-disputed-keys t)
-(setq org-disputed-keys '(
+(setq org-disputed-keys-gb-layout '(
                          ([(tab)]      . [(meta tab)])
                          ([(shift up)]      . [(control è)])
                          ([(shift down)]    . [(control à)])
@@ -72,6 +72,26 @@
                          ([(control shift right)] . [(meta shift +)])
                          ([(control shift left)] . [(meta shift -)])
                          ))
+
+(setq org-disputed-keys-it-layout '(
+                         ([(tab)]      . [(meta tab)])
+                         ([(shift up)]      . [(control è)])
+                         ([(shift down)]    . [(control à)])
+                         ([(shift left)]    . [(control ò) ])
+                         ([(shift right)]   . [(control ù) ])
+                         ([(meta  up)]      . [(meta è) ])
+                         ([(meta  down)]    . [(meta à) ])
+                         ([(meta  left)]    . [(meta ò) ])
+                         ([(meta  right)]   . [(meta ù) ])
+                         ([(meta  shift up)]      . [(control meta è) ])
+                         ([(meta  shift down)]    . [(control meta à) ])
+                         ([(meta  shift left)]    . [(control meta ò) ])
+                         ([(meta  shift right)]   . [(control meta ù) ])
+                         ([(control shift right)] . [(meta shift +)])
+                         ([(control shift left)] . [(meta shift -)])
+                         ))
+
+(setq org-disputed-keys org-disputed-keys-gb-layout)
 
 
 (defun org-mode-setup-local-keys()
