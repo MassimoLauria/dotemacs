@@ -41,9 +41,15 @@ At least they are considered useful for the author.
   )
 
 (defcustom massimo-keyboard-eshell-active t
-  "A list of major modes for which the keymap variant for
-`comint-mode' is activated."
+  "Activate special keybinding for Eshell."
   :tag "Activate special keymap for Eshell"
+  :type 'boolean
+  :group 'massimo-keyboard
+  )
+
+(defcustom massimo-keyboard-org-active t
+  "Activate special keybinding for org-mode."
+  :tag "Activate special keymap for Org"
   :type 'boolean
   :group 'massimo-keyboard
   )
@@ -175,8 +181,9 @@ modified according to the useage pattern of the author."
 
   ;; suppress auxiliary keymaps
   (setq
-   massimo-keyboard-comint nil
-   massimo-keyboard-eshell nil
+   massimo-keyboard-comint   nil
+   massimo-keyboard-eshell   nil
+   massimo-keyboard-org      nil
    )
   (when massimo-keyboard-mode
     (setq
@@ -185,6 +192,8 @@ modified according to the useage pattern of the author."
      ;; eshell
      massimo-keyboard-eshell (and massimo-keyboard-eshell-active
                                   (eq major-mode 'eshell-mode))
+     ;; org-mode
+     massimo-keyboard-org    (and massimo-keyboard-org-active (org-mode-p))
      )))
 
 
@@ -257,6 +266,52 @@ modified according to the useage pattern of the author."
 
 (add-to-list 'minor-mode-map-alist
              (cons 'massimo-keyboard-eshell massimo-keyboard-eshell-mode-map))
+
+
+;; ---- `org-mode'  ----------------------------------------------------
+
+(make-variable-buffer-local 'massimo-keyboard-org)
+(set-default 'massimo-keyboard-org     nil)
+
+(defvar massimo-keyboard-org-mode-map
+  (let ((map (make-sparse-keymap)))
+
+    (define-key map (kbd "M-SPC")   'org-cycle)  ; Use M-Space for
+                                                 ; org-cycle, which is
+                                                 ; similar to what I
+                                                 ; use for
+                                                 ; folding-toggle-show-hide
+
+    ;; Seems to work in X window
+    (define-key map (kbd "C-è") 'org-shiftup    )
+    (define-key map (kbd "C-à") 'org-shiftdown  )
+    (define-key map (kbd "C-ò") 'org-shiftleft  )
+    (define-key map (kbd "C-ù") 'org-shiftright )
+
+    ;; Seems to work in my Xterm
+    (define-key map "\e[27;5;232~" 'org-shiftup)
+    (define-key map "\e[27;5;224~" 'org-shiftdown)
+    (define-key map "\e[27;5;242~" 'org-shiftleft)
+    (define-key map "\e[27;5;249~" 'org-shiftright)
+
+    (define-key map (kbd "M-è") 'org-metaup    )
+    (define-key map (kbd "M-à") 'org-metadown  )
+    (define-key map (kbd "M-ò") 'org-metaleft  )
+    (define-key map (kbd "M-ù") 'org-metaright )
+
+    ;; Xterm apparently does not generate such sequences.
+    (define-key map (kbd "C-M-è") 'org-shiftmetaup    )
+    (define-key map (kbd "C-M-à") 'org-shiftmetadown  )
+    (define-key map (kbd "C-M-ò") 'org-shiftmetaleft  )
+    (define-key map (kbd "C-M-ù") 'org-shiftmetaright )
+
+    map)
+  "Keymap for massimo-keyboard-mode (for Org mode).")
+
+(add-to-list 'minor-mode-map-alist
+             (cons 'massimo-keyboard-org massimo-keyboard-org-mode-map))
+
+
 
 
 (provide 'massimo-keyboard)
