@@ -27,16 +27,18 @@
 
 ;; Load LaTeX facilities only if present
 (when (and (boundp 'default-ac-l-dir) (file-directory-p default-ac-l-dir))
-  (require-maybe 'auto-complete-latex)
+  (require 'auto-complete-latex nil t)
   (setq ac-l-dict-directory (concat default-ac-l-dir "/ac-l-dict/"))
   )
 
 
 ;; Generic setup.
 (global-auto-complete-mode)             ;enable global-mode
-(setq ac-dwim t)                        ;Do what i mean
 (setq ac-override-local-map nil)        ;don't override local map
 (ac-config-default)
+(setq popup-use-optimized-column-computation nil) ; slower but precise
+                                                  ; menu positioning
+
 
 ;; Menu movement
 (define-key ac-completing-map (kbd "M-j") 'ac-quick-help-scroll-up)
@@ -47,23 +49,27 @@
 (define-key ac-completing-map (kbd "M-o") 'ac-complete)
 
 
-;; autopair-mode conflicts with the use of "\r" key to force completion.
-;; We use this instead since it is more convenient (for me)
-(define-key ac-completing-map   "\r"     'nil)         ; remove "\r" binding
+;; `ac-complete' is the aggressive completion: complete and execute the action.
+;; `ac-expand' just expand the common part or go to the next candidate.
+;; By default RET = `ac-complete'
+;;            TAB = `ac-expand'
+(define-key ac-completing-map   "\r"     'nil)         ; conflicts with autopair-mode
+(define-key ac-completing-map   "\t"     'ac-complete) ; aggressive expansion
+
 
 ;; Enforce yas/expand sometimes
-(defun ac-complete-yas/expand ()
-  "Try complete and then call yas/expand."
-  (interactive)
-  (let* ((candidate (ac-selected-candidate))
-         (yas/fallback-behavior 'nil))
-    (when candidate
-      (ac-expand-string candidate))
-    (yas/expand)
-    (ac-abort)))
+;; (defun ac-complete-yas/expand ()
+;;   "Try complete and then call yas/expand."
+;;   (interactive)
+;;   (let* ((candidate (ac-selected-candidate))
+;;          (yas/fallback-behavior 'nil))
+;;     (when candidate
+;;       (ac-expand-string candidate))
+;;     (yas/expand)
+;;     (ac-abort)))
 
-(when (fboundp 'yas/expand)
-  (define-key ac-completing-map (kbd "M-o") 'ac-complete-yas/expand))
+;; (when (fboundp 'yas/expand)
+;;   (define-key ac-completing-map (kbd "M-o") 'ac-complete-yas/expand))
 
 
 
