@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2012-05-08, 15:07 (CEST) Massimo Lauria>
+;; Time-stamp: <2012-05-19, 02:24 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -24,12 +24,22 @@
 
 ;; CC-mode
 
+
+;; Auxiliary libraries
+(require 'auto-complete-clang "auto-complete-clang/auto-complete-clang.el" t)
+
+
+
 (defun setup-c-mode-completion ()
-  "Add gtags and semantic sources for auto-completion."
+  "Add gtags/Clang/semantic sources for auto-completion."
 
   ;; Semantic completion (from CEDET)
   (when (boundp 'ac-source-semantic)
     (setq ac-sources (append '(ac-source-semantic) ac-sources))
+    )
+  ;; Compleion using CLang
+  (when (boundp 'ac-source-clang)
+    (setq ac-sources (append '(ac-source-clang) ac-sources))
     )
   ;; gtags completion (from gtags-mode)
   (when (boundp 'ac-source-gtags)
