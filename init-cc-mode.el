@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2012-05-19, 02:24 (CEST) Massimo Lauria>
+;; Time-stamp: <2012-05-19, 16:58 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -25,8 +25,9 @@
 ;; CC-mode
 
 
-;; Auxiliary libraries
+;; Auxiliary libraries dedicated to C/C++ support
 (require 'auto-complete-clang "auto-complete-clang/auto-complete-clang.el" t)
+(require 'c-eldoc nil t)
 
 
 
@@ -51,9 +52,16 @@
 
 (defun setup-c-mode ()
   "Setup all for C/C++ modes"
+
+  ;; editing facilities
   (local-set-key (kbd "RET") 'newline-and-indent)
-  (when (fboundp 'semantic-mode)
-    (semantic-mode t))
+  (setq c-block-comment-prefix "*")
+
+  ;; Minor modes
+  (when (fboundp 'semantic-mode) (semantic-mode t))
+  (when (fboundp 'doxygen-mode)  (doxygen-mode  t))
+  (when (fboundp 'c-turn-on-eldoc-mode) (c-turn-on-eldoc-mode))
+
   (setup-c-mode-completion)
   )
 

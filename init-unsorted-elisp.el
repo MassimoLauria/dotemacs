@@ -202,24 +202,14 @@
   (add-hook 'find-file-hooks 'goto-address-prog-mode)
   )
 
+
 ;; Remove trailing whitespaces before saving
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-;; Settings for cc-mode
-(add-hook 'cc-mode-hook
-          (lambda ()
-            (setq c-block-comment-prefix "*")
-            )
-          )
 
 ;; Eldoc for lisp
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
-;; Eldoc for C
-(require 'c-eldoc)
-(add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
-
 ;;}}}
 
 (require-maybe 'lambda-mode)

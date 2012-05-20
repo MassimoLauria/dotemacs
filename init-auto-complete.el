@@ -19,26 +19,25 @@
 (require 'auto-complete)
 (require 'auto-complete-config)
 
-;; Solves incompatibility with flyspell
-(ac-flyspell-workaround)
-;; auto-complete comes with dictionary facilities
+;; auto-complete dictionaries
 (add-to-list 'ac-dictionary-directories (concat default-ac-dir "/dict/"))
-
 
 ;; Load LaTeX facilities only if present
 (when (and (boundp 'default-ac-l-dir) (file-directory-p default-ac-l-dir))
   (require 'auto-complete-latex nil t)
-  (setq ac-l-dict-directory (concat default-ac-l-dir "/ac-l-dict/"))
-  )
+
+  ;; LaTeX dictionaries
+  (setq ac-l-dict-directory (concat default-ac-l-dir "/ac-l-dict/")))
 
 
 ;; Generic setup.
 (global-auto-complete-mode)             ;enable global-mode
+(setq ac-dwim nil)                      ;do not change keys semantic
+(setq ac-auto-start 2)
 (setq ac-override-local-map nil)        ;don't override local map
-(ac-config-default)
 (setq popup-use-optimized-column-computation nil) ; slower but precise
                                                   ; menu positioning
-
+(ac-config-default)
 
 ;; Menu movement
 (define-key ac-completing-map (kbd "M-j") 'ac-quick-help-scroll-up)
@@ -55,22 +54,6 @@
 ;;            TAB = `ac-expand'
 (define-key ac-completing-map   "\r"     'nil)         ; conflicts with autopair-mode
 (define-key ac-completing-map   "\t"     'ac-complete) ; aggressive expansion
-
-
-;; Enforce yas/expand sometimes
-;; (defun ac-complete-yas/expand ()
-;;   "Try complete and then call yas/expand."
-;;   (interactive)
-;;   (let* ((candidate (ac-selected-candidate))
-;;          (yas/fallback-behavior 'nil))
-;;     (when candidate
-;;       (ac-expand-string candidate))
-;;     (yas/expand)
-;;     (ac-abort)))
-
-;; (when (fboundp 'yas/expand)
-;;   (define-key ac-completing-map (kbd "M-o") 'ac-complete-yas/expand))
-
 
 
 ;; The mode that automatically startup.
