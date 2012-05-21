@@ -238,18 +238,6 @@ Emacs buffers are those whose name starts with *."
   )
 
 
-;;;---- Spelling functions ------------------------------------------------
-
-(defun my-spell-correct-word ()
-  "Correct the spelling of a word at point by using
-either ispell or flyspell, if the latter is active"
-  (interactive)
-  (if (not (flyspell-auto-correct-word))
-    (ispell-word)
-    )
-  )
-
-
 ;;;---- Recreate *scratch* buffer as soon as it's killed ------------------
 
 ;; If the *scratch* buffer is killed, recreate it automatically

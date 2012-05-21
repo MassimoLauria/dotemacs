@@ -73,10 +73,8 @@
 (global-set-key [M-prior] 'previous-error) ; Does not work with LaTeX!
 (global-set-key [M-next] 'next-error)
 
-;; (global-set-key (kbd "#") 'comment-region-maybe) `comment-dwim' is already bound to M-;
-
-;; Spellcheck
-(global-set-key (kbd "M-s") 'my-spell-correct-word)
+;; Ispell
+(global-set-key (kbd "M-s") 'ispell-word) ; usually overridden by flyspell
 (global-set-key [f2] 'ispell-buffer)
 
 
