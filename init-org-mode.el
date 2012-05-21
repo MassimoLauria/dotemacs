@@ -54,89 +54,56 @@
 
 
 ;; ;; Org-mode Keys
-(setq org-replace-disputed-keys t)
-(setq org-disputed-keys-gb-layout '(
-                         ([(tab)]      . [(meta tab)])
-                         ([(shift up)]      . [(control è)])
-                         ([(shift down)]    . [(control à)])
-                         ([(shift left)]    . [(control ò) ])
-                         ([(shift right)]   . [(control ù) ])
-                         ([(meta  up)]      . [(meta è) ])
-                         ([(meta  down)]    . [(meta à) ])
-                         ([(meta  left)]    . [(meta ò) ])
-                         ([(meta  right)]   . [(meta ù) ])
-                         ([(meta  shift up)]      . [(control meta è) ])
-                         ([(meta  shift down)]    . [(control meta à) ])
-                         ([(meta  shift left)]    . [(control meta ò) ])
-                         ([(meta  shift right)]   . [(control meta ù) ])
-                         ([(control shift right)] . [(meta shift +)])
-                         ([(control shift left)] . [(meta shift -)])
-                         ))
+;; (setq org-replace-disputed-keys t)
+;; (setq org-disputed-keys-gb-layout '(
+;;                          ([(tab)]      . [(meta tab)])
+;;                          ([(shift up)]      . [(control è)])
+;;                          ([(shift down)]    . [(control à)])
+;;                          ([(shift left)]    . [(control ò) ])
+;;                          ([(shift right)]   . [(control ù) ])
+;;                          ([(meta  up)]      . [(meta è) ])
+;;                          ([(meta  down)]    . [(meta à) ])
+;;                          ([(meta  left)]    . [(meta ò) ])
+;;                          ([(meta  right)]   . [(meta ù) ])
+;;                          ([(meta  shift up)]      . [(control meta è) ])
+;;                          ([(meta  shift down)]    . [(control meta à) ])
+;;                          ([(meta  shift left)]    . [(control meta ò) ])
+;;                          ([(meta  shift right)]   . [(control meta ù) ])
+;;                          ([(control shift right)] . [(meta shift +)])
+;;                          ([(control shift left)] . [(meta shift -)])
+;;                          ))
 
-(setq org-disputed-keys-it-layout '(
-                         ([(tab)]      . [(meta tab)])
-                         ([(shift up)]      . [(control è)])
-                         ([(shift down)]    . [(control à)])
-                         ([(shift left)]    . [(control ò) ])
-                         ([(shift right)]   . [(control ù) ])
-                         ([(meta  up)]      . [(meta è) ])
-                         ([(meta  down)]    . [(meta à) ])
-                         ([(meta  left)]    . [(meta ò) ])
-                         ([(meta  right)]   . [(meta ù) ])
-                         ([(meta  shift up)]      . [(control meta è) ])
-                         ([(meta  shift down)]    . [(control meta à) ])
-                         ([(meta  shift left)]    . [(control meta ò) ])
-                         ([(meta  shift right)]   . [(control meta ù) ])
-                         ([(control shift right)] . [(meta shift +)])
-                         ([(control shift left)] . [(meta shift -)])
-                         ))
+;; (setq org-disputed-keys-it-layout '(
+;;                          ([(tab)]      . [(meta tab)])
+;;                          ([(shift up)]      . [(control è)])
+;;                          ([(shift down)]    . [(control à)])
+;;                          ([(shift left)]    . [(control ò) ])
+;;                          ([(shift right)]   . [(control ù) ])
+;;                          ([(meta  up)]      . [(meta è) ])
+;;                          ([(meta  down)]    . [(meta à) ])
+;;                          ([(meta  left)]    . [(meta ò) ])
+;;                          ([(meta  right)]   . [(meta ù) ])
+;;                          ([(meta  shift up)]      . [(control meta è) ])
+;;                          ([(meta  shift down)]    . [(control meta à) ])
+;;                          ([(meta  shift left)]    . [(control meta ò) ])
+;;                          ([(meta  shift right)]   . [(control meta ù) ])
+;;                          ([(control shift right)] . [(meta shift +)])
+;;                          ([(control shift left)] . [(meta shift -)])
+;;                          ))
 
-(setq org-disputed-keys org-disputed-keys-gb-layout)
+;; (setq org-disputed-keys org-disputed-keys-gb-layout)
 
 
-(defun org-mode-setup-local-keys()
-  "Define/>Undefine of org-mode keys"
-  (interactive)
-  (local-unset-key "\t")                     ; Use Tab for more decent things (auto-complete or yasnippet)
+;; Setup of different org-mode auxiliary layout.
+(defun org-mode/setup-keys/clean-default ()
+  "Remove the auxiliary keys which fight with other modes."
+
+  ;; Free tab for completion
+  (local-unset-key "\t")
   (local-unset-key [tab])
   (local-unset-key [(tab)])
 
-  (local-set-key (kbd "M-<tab>")    'org-cycle)  ; Use M-Tab for
-                                                 ; org-cycle, which
-                                                 ; avoid to use the
-                                                 ; overloaded TAB key
-
-  (local-set-key (kbd "M-SPC")      'org-cycle)  ; Use M-Space for
-                                                 ; org-cycle, which is
-                                                 ; similar to what I
-                                                 ; use for
-                                                 ; folding-toggle-show-hide
-
-
-  ;; Seems to work in X window
-  (local-set-key (kbd "C-è") 'org-shiftup    )
-  (local-set-key (kbd "C-à") 'org-shiftdown  )
-  (local-set-key (kbd "C-ò") 'org-shiftleft  )
-  (local-set-key (kbd "C-ù") 'org-shiftright )
-
-  ;; Seems to work in my Xterm
-  (local-set-key "\e[27;5;232~" 'org-shiftup)
-  (local-set-key "\e[27;5;224~" 'org-shiftdown)
-  (local-set-key "\e[27;5;242~" 'org-shiftleft)
-  (local-set-key "\e[27;5;249~" 'org-shiftright)
-
-  (local-set-key (kbd "M-è") 'org-metaup    )
-  (local-set-key (kbd "M-à") 'org-metadown  )
-  (local-set-key (kbd "M-ò") 'org-metaleft  )
-  (local-set-key (kbd "M-ù") 'org-metaright )
-
-  ;; Xterm apparently does not generate such sequences.
-  (local-set-key (kbd "C-M-è") 'org-shiftmetaup    )
-  (local-set-key (kbd "C-M-à") 'org-shiftmetadown  )
-  (local-set-key (kbd "C-M-ò") 'org-shiftmetaleft  )
-  (local-set-key (kbd "C-M-ù") 'org-shiftmetaright )
-
-  ;; Disable the S-Arrow keys, to support CUA-mode.
+  ;; Disable the defaults to support CUA-mode.
   (local-unset-key (kbd "<S-up>")    )
   (local-unset-key (kbd "<S-down>")  )
   (local-unset-key (kbd "<S-left>")  )
@@ -145,12 +112,93 @@
   (local-unset-key (kbd "<C-S-down>")  )
   (local-unset-key (kbd "<C-S-left>")  )
   (local-unset-key (kbd "<C-S-right>") )
-
   )
 
 
-(defun orgtbl-mode-setup-local-keys()
-  "Define/>Undefine of orgtbl-mode keys"
+(defun org-mode/setup-keys/gb ()
+  "Setup auxiliary org-mode keys for GB keyboard layout.  They are
+structured as a reverse L centered on charachter `#' on the right
+part of the keyboard.
+
+         ]
+     ; ' #
+
+I could not use a reverse T layout because C-[ is low level
+translated to an escape sequence.
+"
+
+  (interactive)
+
+  (org-mode/setup-keys/clean-default)
+
+  ;; Alternative `org-cycle' keys
+  (local-set-key (kbd "M-<tab>")    'org-cycle)
+  (local-set-key (kbd "M-SPC")      'org-cycle)
+
+  ;; X window
+  (local-set-key (kbd "C-]") 'org-shiftup    )
+  (local-set-key (kbd "C-#") 'org-shiftdown  )
+  (local-set-key (kbd "C-;") 'org-shiftleft  )
+  (local-set-key (kbd "C-'") 'org-shiftright )
+
+  (local-set-key (kbd "M-]") 'org-metaup    )
+  (local-set-key (kbd "M-#") 'org-metadown  )
+  (local-set-key (kbd "M-;") 'org-metaleft  )
+  (local-set-key (kbd "M-'") 'org-metaright )
+
+  (local-set-key (kbd "C-M-]") 'org-shiftmetaup    )
+  (local-set-key (kbd "C-M-#") 'org-shiftmetadown  )
+  (local-set-key (kbd "C-M-;") 'org-shiftmetaleft  )
+  (local-set-key (kbd "C-M-'") 'org-shiftmetaright )
+
+  ;; FIXME: org-shiftdown does not work in XTerm
+  )
+
+
+
+(defun org-mode/setup-keys/it()
+  "Setup auxiliary org-mode keys for IT keyboard layout. They are
+structured as a reverse T centered on charachter `à' on the right
+part of the keyboard.
+
+       è
+     ò à ù
+"
+  (interactive)
+
+  (org-mode/setup-keys/clean-default)
+
+  ;; Alternative `org-cycle' keys
+  (local-set-key (kbd "M-<tab>")    'org-cycle)
+  (local-set-key (kbd "M-SPC")      'org-cycle)
+
+  ;; X window
+  (local-set-key (kbd "C-è") 'org-shiftup    )
+  (local-set-key (kbd "C-à") 'org-shiftdown  )
+  (local-set-key (kbd "C-ò") 'org-shiftleft  )
+  (local-set-key (kbd "C-ù") 'org-shiftright )
+
+  (local-set-key (kbd "M-è") 'org-metaup    )
+  (local-set-key (kbd "M-à") 'org-metadown  )
+  (local-set-key (kbd "M-ò") 'org-metaleft  )
+  (local-set-key (kbd "M-ù") 'org-metaright )
+
+  (local-set-key (kbd "C-M-]") 'org-shiftmetaup    )
+  (local-set-key (kbd "C-M-#") 'org-shiftmetadown  )
+  (local-set-key (kbd "C-M-;") 'org-shiftmetaleft  )
+  (local-set-key (kbd "C-M-'") 'org-shiftmetaright )
+
+  ;; Xterm fix
+  (local-set-key "\e[27;5;232~" 'org-shiftup)
+  (local-set-key "\e[27;5;224~" 'org-shiftdown)
+  (local-set-key "\e[27;5;242~" 'org-shiftleft)
+  (local-set-key "\e[27;5;249~" 'org-shiftright)
+  )
+
+
+(defun orgtbl-mode/setup-keys/it ()
+  "Define orgtbl-mode keys for IT keyboard layout"
+  (interactive)
   ;; Org Table movements
   (define-key orgtbl-mode-map (kbd "M-ò") 'org-table-move-column-left)
   (define-key orgtbl-mode-map (kbd "M-ù") 'org-table-move-column-right)
@@ -163,10 +211,25 @@
   (define-key orgtbl-mode-map (kbd "C-M-à") 'org-table-insert-row)
   )
 
-(add-hook 'org-mode-hook 'org-mode-setup-local-keys)
-;(add-hook 'org-mode-hook 'turn-on-org-cdlatex)
-;(add-hook 'org-mode-hook 'orgtbl-mode-setup-local-keys)
-(add-hook 'orgtbl-mode-hook 'orgtbl-mode-setup-local-keys)
+
+(defun orgtbl-mode/setup-keys/gb ()
+  "Define orgtbl-mode keys for GB keyboard layout"
+  (interactive)
+  ;; Org Table movements
+  (define-key orgtbl-mode-map (kbd "M-;") 'org-table-move-column-left)
+  (define-key orgtbl-mode-map (kbd "M-'") 'org-table-move-column-right)
+  (define-key orgtbl-mode-map (kbd "M-]") 'org-table-move-row-up)
+  (define-key orgtbl-mode-map (kbd "M-#") 'org-table-move-row-down)
+
+  (define-key orgtbl-mode-map (kbd "C-M-;") 'org-table-delete-column)
+  (define-key orgtbl-mode-map (kbd "C-M-'") 'org-table-insert-column)
+  (define-key orgtbl-mode-map (kbd "C-M-]") 'org-table-kill-row)
+  (define-key orgtbl-mode-map (kbd "C-M-#") 'org-table-insert-row)
+  )
+
+
+(add-hook 'org-mode-hook    'org-mode/setup-keys/gb)
+(add-hook 'orgtbl-mode-hook 'orgtbl-mode/setup-keys/gb)
 
 ;; Link org-mode to remember-mode (which is not present on Emacs <22)
 (when (fboundp 'org-remember-insinuate)

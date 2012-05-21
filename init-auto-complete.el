@@ -33,7 +33,6 @@
 ;; Generic setup.
 (global-auto-complete-mode)             ;enable global-mode
 (setq ac-dwim nil)                      ;do not change keys semantic
-(setq ac-auto-start 2)
 (setq ac-override-local-map nil)        ;don't override local map
 (setq popup-use-optimized-column-computation nil) ; slower but precise
                                                   ; menu positioning
