@@ -156,6 +156,14 @@ otherwise cua-repeat-replace-region. An ugly hack to solve key conflicts..."
     (call-interactively 'folding-goto-line))
   )
 
+(defun massimo-keyboard/org-mode-active ()
+  "Check if org-mode is active. Workaround to compatibility."
+  (interactive)
+  (let ((org-predicate (and (fboundp 'org-mode-p) (org-mode-p))) ; Org 6.xx
+        (org-variable  (and (boundp 'org-mode) org-mode))        ; Org 7.xx
+        )
+    (or org-predicate org-variable)
+    ))
 
 (define-minor-mode massimo-keyboard-mode
   "Toggle Massimo-Keyboard mode.
@@ -193,7 +201,7 @@ modified according to the useage pattern of the author."
      massimo-keyboard-eshell (and massimo-keyboard-eshell-active
                                   (eq major-mode 'eshell-mode))
      ;; org-mode
-     massimo-keyboard-org    (and massimo-keyboard-org-active (org-mode-p))
+     massimo-keyboard-org    (and massimo-keyboard-org-active (massimo-keyboard/org-mode-active))
      )))
 
 
