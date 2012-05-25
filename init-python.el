@@ -80,21 +80,17 @@ path."
 
 
 
-;; Flymake code checker(s) ---------------------------------------------------------------------
+;; Flymake code checker(s) ------------------------------------------python-synta---------------------------
 (setq flymake-python-syntax-checker nil)
 
 (if (and (executable-find "pep8") (not flymake-python-syntax-checker))
-    (setq flymake-python-syntax-checker "pep8")
-)
+    (setq flymake-python-syntax-checker "pep8"))
 (if (and (executable-find "epylint") (not flymake-python-syntax-checker))
-    (setq flymake-python-syntax-checker "epylint")
-)
+    (setq flymake-python-syntax-checker "epylint"))
 (if (and (executable-find "pyflakes") (not flymake-python-syntax-checker))
-    (setq flymake-python-syntax-checker "pyflakes")
-)
+    (setq flymake-python-syntax-checker "pyflakes"))
 (if (and (executable-find "pychecker") (not flymake-python-syntax-checker))
-    (setq flymake-python-syntax-checker "pychecker")
-)
+    (setq flymake-python-syntax-checker "pychecker"))
 
 (when (and flymake-python-syntax-checker (load "flymake" t))
   (defun flymake-python-init ()

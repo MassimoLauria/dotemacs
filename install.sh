@@ -3,7 +3,7 @@
 # Copyright (C) 2010, 2011, 2012 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2011-03-05, sabato 01:03 (CET) Massimo Lauria"
-# Time-stamp: "2012-01-30, 00:19 (CET) Massimo Lauria"
+# Time-stamp: "2012-05-25, 14:35 (CEST) Massimo Lauria"
 
 # Description::
 #
@@ -223,12 +223,12 @@ else
     echo "C/C++ documentation DB not installed (Either cclookup.py or doc files are missing)"
 fi
 
-# -------- Pymacs and Local Python environment ------------------
-./install-pymacsenv.sh
+# -------- User python packages for Emacs -----------------------
+./install-pypkg.sh
 if [ $? -eq 0 ]; then
-    echo "Successful installation of Pymacs and Ropemacs in local python environment."
+    echo "Successful installation of Pymacs and Ropemacs in user python module path."
 else
-    echo "Failed installation pf Pymacs and Ropemacs"
+    echo "Failed installation of Pymacs and Ropemacs"
 fi
 
 # -------------------- init.el ----------------------------------
