@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2012-05-19, 16:58 (CEST) Massimo Lauria>
+;; Time-stamp: <2012-06-02, 12:32 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -72,4 +72,4 @@
 
 
 (provide 'init-cc-mode)
-;;; init-autotype.el ends here
+;;; init-cc-mode.el ends here

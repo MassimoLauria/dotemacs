@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
-;; Time-stamp: "2012-05-08, 15:12 (CEST) Massimo Lauria"
+;; Time-stamp: "2012-06-02, 13:48 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -68,6 +68,7 @@
 ;; Programming Languages
 (require 'init-cc-mode)
 (require 'init-python)
+(require 'init-java-mode)
 
 ;; Math packages
 (require 'init-latex)        ;; AucTeX

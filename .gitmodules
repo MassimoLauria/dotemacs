@@ -19,3 +19,6 @@
 [submodule "3rdparties/twittering-mode"]
 	path = 3rdparties/twittering-mode
 	url = http://github.com/hayamiz/twittering-mode.git
+[submodule "3rdparties/eclim"]
+	path = 3rdparties/eclim
+	url = git://github.com/senny/emacs-eclim.git
