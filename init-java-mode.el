@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2012-06-02, 13:20 (CEST) Massimo Lauria>
+;; Time-stamp: <2012-06-02, 13:56 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@
 (defun local-eclim-executable-find ()
   (let ((file "~/.eclipse"))
     (and (file-exists-p
-          (setq file (expand-file-name eclipse-local-root)))
+          (setq file (expand-file-name file)))
          (setq file (car (last (directory-files file t "^org.eclipse.platform_"))))
          (file-exists-p
           (setq file (expand-file-name "plugins" file)))
@@ -44,17 +44,15 @@
          (file-exists-p (setq file (expand-file-name "bin/eclim" file)))
          file)))
 
-(setq eclim-executable
-      (or
-       (executable-find "eclim")
-       (eclim-executable-find)
-       (local-eclim-executable-find)))
-
-
 ;; Load Eclim
 (when (require 'eclim nil t)
   (setq eclim-auto-save t)
-  (global-eclim-mode t))
+  (global-eclim-mode t)
+  (setq eclim-executable
+      (or
+       (executable-find "eclim")
+       (eclim-executable-find)
+       (local-eclim-executable-find))))
 
 
 (defun setup-java-mode-completion ()
