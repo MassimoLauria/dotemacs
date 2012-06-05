@@ -1,4 +1,4 @@
-;;; massimo-keyboard.el --- Keybindings specific for the author habits
+;;; massimo-keyboard.el --- Keybindings specific for the author habits -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
 

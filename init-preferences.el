@@ -10,7 +10,7 @@
  font-X11-antialias    "Monospace-10"
  ;; font-Mac-antialias    "Monaco-12"
  font-Mac-antialias    "-apple-dejavu sans mono-medium-r-normal--0-0-0-0-m-0-mac-roman"
- font-Win-antialias    "Consolas-10"
+ font-Win-antialias    "Consolas-12"
  )
 
 ;; Bigger fonts
