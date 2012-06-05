@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2012-06-02, 12:32 (CEST) Massimo Lauria>
+;; Time-stamp: <2012-06-04, 01:52 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -33,29 +33,41 @@
 
 (defun setup-c-mode-completion ()
   "Add gtags/Clang/semantic sources for auto-completion."
+  (interactive)
+  (setq ac-sources nil)
 
-  ;; Semantic completion (from CEDET)
+  ;; Yasnippet
+  (when (boundp 'ac-source-yasnippet)
+    (setq ac-sources (append '(ac-source-yasnippet) ac-sources)))
+
+  ;; Semantic (CEDET)
   (when (boundp 'ac-source-semantic)
-    (setq ac-sources (append '(ac-source-semantic) ac-sources))
-    )
-  ;; Compleion using CLang
+    (setq ac-sources (append '(ac-source-semantic) ac-sources)))
+
+  ;; Clang
   (when (boundp 'ac-source-clang)
-    (setq ac-sources (append '(ac-source-clang) ac-sources))
-    )
-  ;; gtags completion (from gtags-mode)
+    (setq ac-sources (append '(ac-source-clang) ac-sources)))
+
+  ;; Gtags
   (when (boundp 'ac-source-gtags)
-    (setq ac-sources (append '(ac-source-gtags) ac-sources))
-    )
+    (setq ac-sources (append '(ac-source-gtags) ac-sources)))
+
+  ;; File
+  (when (boundp 'ac-source-filename)
+    (setq ac-sources (append '(ac-source-filename) ac-sources)))
 )
 
 
 
 (defun setup-c-mode ()
   "Setup all for C/C++ modes"
+  (interactive)
 
   ;; editing facilities
   (local-set-key (kbd "RET") 'newline-and-indent)
-  (setq c-block-comment-prefix "*")
+  (local-set-key (kbd "M-SPC") 'ff-find-related-file)
+  (setq c-block-comment-prefix "")
+  (setq fill-column 70)
 
   ;; Minor modes
   (when (fboundp 'semantic-mode) (semantic-mode t))
