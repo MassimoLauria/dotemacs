@@ -283,5 +283,10 @@
 (add-to-list 'which-func-modes 'org-mode)
 (which-func-mode 1)
 
+;; Powershell facilities
+(autoload 'powershell-mode "powershell-mode" "A editing mode for Microsoft PowerShell." t)
+(add-to-list 'auto-mode-alist '("\\.ps1\\'" . powershell-mode)) ; PowerShell script
+(autoload 'powershell "powershell" "Start a interactive shell of PowerShell." t)
+
 (provide 'init-unsorted-elisp)
 ;;; init-unsorted-elisp.el ends here
