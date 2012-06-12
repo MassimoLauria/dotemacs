@@ -29,13 +29,17 @@
 
 
 
-;; Auto-mode for renamed config files
-(setq auto-mode-alist (cons '("bashrc" . sh-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("zshrc" . sh-mode) auto-mode-alist))
+;; Auto-mode
 (setq auto-mode-alist (cons '("\\.zsh" . sh-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.dot" . graphviz-dot-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.yasnippet" . snippet-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.snippet" . snippet-mode) auto-mode-alist))
+
+;; Command line editing
+(setq auto-mode-alist (cons '("zshec[0-9]*" . sh-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("bash-fc-[0-9]*" . sh-mode) auto-mode-alist))
+
+
 
 (autoload 'graphviz-dot-mode
   "graphviz-dot-mode" "Edit/View Graphviz's dot files" t)
