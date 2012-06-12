@@ -68,7 +68,7 @@
 ;; Programming Languages
 (require 'init-cc-mode)
 (require 'init-python)
-(require 'init-java-mode)
+;;(require 'init-java-mode)
 
 ;; Math packages
 (require 'init-latex)        ;; AucTeX
