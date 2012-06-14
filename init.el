@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
-;; Time-stamp: "2012-06-02, 13:48 (CEST) Massimo Lauria"
+;; Time-stamp: "2012-06-14, 23:09 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -77,8 +77,8 @@
 (require 'init-singular)     ;; Singular (not from SageMath!)
 
 ;; Applications
-(require 'init-mail)    ;; Mail + Contacts
-(when prefs-activate-org-mode   (require 'init-org-mode))   ;; Organizer
+(require 'init-mail)       ;; Mail + Contacts
+(require 'init-org-mode)   ;; Organizer
 
 ;; Other stuff
 (require 'init-unsorted-elisp)

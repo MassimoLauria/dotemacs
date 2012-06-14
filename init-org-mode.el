@@ -5,6 +5,8 @@
 ;;;
 ;;;------------------------------------------------------------------
 
+
+;;;------------------------- Load -----------------------------------
 (when running-MacOSX
   (setq MacUser-org-path (concat default-elisp-macosx "/org/lisp/"))
   (setq MacUser-org-contrib-path (concat default-elisp-macosx "/org/contrib/lisp"))
@@ -14,36 +16,28 @@
       (setq load-path (cons MacUser-org-contrib-path load-path)))
 )
 
-(require 'org)
+(if (require 'org-install)
+    (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
+;;;------------ File locations ---------------------------------------
 (setq org-directory "~/personal/agenda/")
 (setq org-default-notes-file (concat org-directory "notes.org"))
 (setq org-default-journal-file (concat org-directory "journal.org"))
-
 (when (not (boundp 'org-agenda-files))
-  (setq org-agenda-files (list org-directory))
-  )
+  (setq org-agenda-files (list org-directory))) ;May be already
+                                                ;defined in personal
+                                                ;conf file.
+
+;;;---------------- TODO states --------------------------------------
+(when (boundp 'org-version)
+  (if (> (string-to-number org-version) 5)
+      (setq org-todo-keywords
+            '((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")))
+    (setq org-todo-keywords '("TODO" "FEEDBACK" "WAIT" "DONE")
+          org-todo-interpretation 'type)))
 
 
-(when (<= (string-to-number org-version) 5) ;; Older versions of Org mode (like the one inside Emacs22)
-  ;; In old version of ORG mode only one DONE state is allowed in a sequence
-  (setq org-todo-keywords '("TODO" "FEEDBACK" "WAIT" "DONE"))
-  (setq org-todo-interpretation 'type)
-  )
-
-(when (> (string-to-number org-version) 5) ;; Newer versions of Org-mode
-  (setq org-todo-keywords '((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")))
-  )
-
-
-;;;-------------------------------------------------------------------
-
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
-(define-key global-map "\C-cr" 'org-remember)
-
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-
+;;;---------------- Basic setup --------------------------------------
 (setq
  org-log-done t
  org-CUA-compatible t
@@ -53,45 +47,13 @@
 )
 
 
-;; ;; Org-mode Keys
-;; (setq org-replace-disputed-keys t)
-;; (setq org-disputed-keys-gb-layout '(
-;;                          ([(tab)]      . [(meta tab)])
-;;                          ([(shift up)]      . [(control è)])
-;;                          ([(shift down)]    . [(control à)])
-;;                          ([(shift left)]    . [(control ò) ])
-;;                          ([(shift right)]   . [(control ù) ])
-;;                          ([(meta  up)]      . [(meta è) ])
-;;                          ([(meta  down)]    . [(meta à) ])
-;;                          ([(meta  left)]    . [(meta ò) ])
-;;                          ([(meta  right)]   . [(meta ù) ])
-;;                          ([(meta  shift up)]      . [(control meta è) ])
-;;                          ([(meta  shift down)]    . [(control meta à) ])
-;;                          ([(meta  shift left)]    . [(control meta ò) ])
-;;                          ([(meta  shift right)]   . [(control meta ù) ])
-;;                          ([(control shift right)] . [(meta shift +)])
-;;                          ([(control shift left)] . [(meta shift -)])
-;;                          ))
 
-;; (setq org-disputed-keys-it-layout '(
-;;                          ([(tab)]      . [(meta tab)])
-;;                          ([(shift up)]      . [(control è)])
-;;                          ([(shift down)]    . [(control à)])
-;;                          ([(shift left)]    . [(control ò) ])
-;;                          ([(shift right)]   . [(control ù) ])
-;;                          ([(meta  up)]      . [(meta è) ])
-;;                          ([(meta  down)]    . [(meta à) ])
-;;                          ([(meta  left)]    . [(meta ò) ])
-;;                          ([(meta  right)]   . [(meta ù) ])
-;;                          ([(meta  shift up)]      . [(control meta è) ])
-;;                          ([(meta  shift down)]    . [(control meta à) ])
-;;                          ([(meta  shift left)]    . [(control meta ò) ])
-;;                          ([(meta  shift right)]   . [(control meta ù) ])
-;;                          ([(control shift right)] . [(meta shift +)])
-;;                          ([(control shift left)] . [(meta shift -)])
-;;                          ))
+;;;---------------- Global keys --------------------------------------
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(define-key global-map "\C-cr" 'org-remember)
 
-;; (setq org-disputed-keys org-disputed-keys-gb-layout)
+
 
 
 ;; Setup of different org-mode auxiliary layout.
@@ -237,11 +199,13 @@ part of the keyboard.
 )
 
 ;; Org-protocol to make org-mode to interact with other applications
-(require-maybe 'org-protocol)  ;; Do not exists on Emacs22
+(require 'org-protocol nil t)          ;; Does not exists on Emacs22
 
 ;; Autofocus and raise the Emacs frame which should get the input.
-(add-hook 'org-remember-mode-hook
-          (lambda ()(select-frame-set-input-focus (selected-frame))))
+(when (boundp 'org-remember-mode-hook)
+  (add-hook 'org-remember-mode-hook
+            (lambda ()(select-frame-set-input-focus (selected-frame)))))
+
 
 ;; Normally my private (and translated) configuration is used.
 (when (not (boundp 'org-remember-templates))
@@ -267,9 +231,12 @@ part of the keyboard.
 )
 (add-hook 'org-agenda-mode-hook 'org-agenda-mode-setup-local-keys)
 
+
+
 ;; Wordpress blogging in Org-mode! (with Math!)
-(add-to-list 'load-path (concat default-elisp-3rdparties "/org2blog"))
-(require-maybe 'org2blog-autoloads)
+(when (fboundp 'org-mode)
+  (add-to-list 'load-path (concat default-elisp-3rdparties "/org2blog"))
+  (require 'org2blog-autoloads nil t))
 
 
 ;; Calendar navigation plus agenda
