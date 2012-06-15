@@ -16,7 +16,7 @@
       (setq load-path (cons MacUser-org-contrib-path load-path)))
 )
 
-(if (require 'org-install)
+(if (require 'org nil t)
     (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
 ;;;------------ File locations ---------------------------------------
