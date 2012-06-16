@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2012-02-20, 10:56 (CET) Massimo Lauria>
+;; Time-stamp: <2012-06-16, 03:11 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -48,7 +48,8 @@
 (define-auto-insert 'sh-mode (apply-yasnippet-function "empty-template"))
 (define-auto-insert 'makefile-bsdmake-mode (apply-yasnippet-function "empty-template"))
 (define-auto-insert 'makefile-gmake-mode (apply-yasnippet-function "empty-template"))
-(define-auto-insert "\\.\\([Cc]\\|cc\\|cpp\\)\\'" (apply-yasnippet-function "empty-c-template"))
+(define-auto-insert "\\.c\\'" (apply-yasnippet-function "empty-c-template"))
+(define-auto-insert "\\.\\(C\\|cc\\|cpp\\)\\'"    (apply-yasnippet-function "empty-cc-template-x"))
 (define-auto-insert "\\.\\([Hh]\\|hh\\|hpp\\)\\'" (apply-yasnippet-function "empty-h-template"))
 
 ;;; YaSnippet -------------------------------------------------------------------------
