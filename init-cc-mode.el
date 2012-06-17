@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2012-06-04, 01:52 (CEST) Massimo Lauria>
+;; Time-stamp: <2012-06-17, 17:05 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@
 
 
 (defun setup-c-mode ()
-  "Setup all for C/C++ modes"
+  "Setup for C mode"
   (interactive)
 
   ;; editing facilities
@@ -73,14 +73,36 @@
   (when (fboundp 'semantic-mode) (semantic-mode t))
   (when (fboundp 'doxygen-mode)  (doxygen-mode  t))
   (when (fboundp 'c-turn-on-eldoc-mode) (c-turn-on-eldoc-mode))
+  (when (fboundp 'flyspell- c-turn-on-eldoc-mode) (c-turn-on-eldoc-mode))
+
+  (setup-c-mode-completion)
+  )
+turn-on-flyspell
+
+(defun setup-c++-mode ()
+  "Setup for C++ mode"
+  (interactive)
+
+  ;; editing facilities
+  (local-set-key (kbd "RET") 'newline-and-indent)
+  (local-set-key (kbd "M-SPC") 'ff-find-related-file)
+  (setq fill-column 70)
+
+  ;; Minor modes
+  (when (fboundp 'semantic-mode) (semantic-mode t))
+  (when (fboundp 'doxygen-mode)  (doxygen-mode  t))
+  (when (fboundp 'c-turn-on-eldoc-mode) (c-turn-on-eldoc-mode))
 
   (setup-c-mode-completion)
   )
 
 
 
+
+
 ;; install the hook
-(add-hook 'c-mode-hook 'setup-c-mode)
+(add-hook 'c-mode-hook   'setup-c-mode)
+(add-hook 'c++-mode-hook 'setup-c++-mode)
 
 
 (provide 'init-cc-mode)
