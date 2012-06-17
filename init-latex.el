@@ -48,7 +48,8 @@ source-specials/synctex toggle."
              (>= (string-to-number AUCTeX-version) 11.86))
     (setq TeX-source-correlate-method-active
           (if TeX-PDF-mode 'synctex 'source-specials))
-    (message "[AUCTeX] forward/inverse search mode: %s" TeX-source-correlate-method-active)))
+    ;; (message "[AUCTeX] forward/inverse search mode: %s" TeX-source-correlate-method-active)
+    ))
 
 (add-hook 'TeX-PDF-mode-hook 'mysetup-TeX-PDF-mode)
 
