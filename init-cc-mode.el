@@ -73,11 +73,10 @@
   (when (fboundp 'semantic-mode) (semantic-mode t))
   (when (fboundp 'doxygen-mode)  (doxygen-mode  t))
   (when (fboundp 'c-turn-on-eldoc-mode) (c-turn-on-eldoc-mode))
-  (when (fboundp 'flyspell- c-turn-on-eldoc-mode) (c-turn-on-eldoc-mode))
+  (when (fboundp 'flyspell-prog-mode) (flyspell-prog-mode 1))
 
   (setup-c-mode-completion)
   )
-turn-on-flyspell
 
 (defun setup-c++-mode ()
   "Setup for C++ mode"
@@ -92,6 +91,7 @@ turn-on-flyspell
   (when (fboundp 'semantic-mode) (semantic-mode t))
   (when (fboundp 'doxygen-mode)  (doxygen-mode  t))
   (when (fboundp 'c-turn-on-eldoc-mode) (c-turn-on-eldoc-mode))
+  (when (fboundp 'flyspell-prog-mode) (flyspell-prog-mode 1))
 
   (setup-c-mode-completion)
   )
