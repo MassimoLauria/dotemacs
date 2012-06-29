@@ -275,23 +275,21 @@ started."
 ;; Choose a checker for Flymake (compilation on the fly).
 (fmakunbound 'flymake-get-tex-args)
 
-;; chktex
-(if (and (executable-find "chktex")
-         (not (fboundp 'flymake-get-tex-args)))
-
-    (defun flymake-get-tex-args (file-name)
-      (list "chktex" (list "-q" "-v0" file-name)))
-
-)
-
 ;; lacheck
 (if (and (executable-find "lacheck")
          (not (fboundp 'flymake-get-tex-args)))
 
     (defun flymake-get-tex-args (file-name)
-      (list "lacheck" (list file-name)))
+      (list "lacheck" (list file-name))))
 
-)
+;; chktex
+(if (and (executable-find "chktex")
+         (not (fboundp 'flymake-get-tex-args)))
+
+    (defun flymake-get-tex-args (file-name)
+      (list "chktex" (list "-q" "-v0" file-name))))
+
+
 
 (defun my-flymake-show-help ()
    (when (get-char-property (point) 'flymake-overlay)
