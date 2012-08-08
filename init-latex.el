@@ -3,11 +3,8 @@
 ;;;
 ;;;-----------------------------------------------------------------
 
-;; AucTex system
-(load "auctex.el" t t t)          ;; Fail quietly
-(load "preview-latex.el" t t t)   ;; Fail quietly
-(load "tex.el" t t t)             ;; Fail quietly
-
+;; Load AucTeX system
+(require 'tex-site nil t)
 
 ;; Multifile support, completition, style, reverse search support, ...
 (setq TeX-auto-save t)
