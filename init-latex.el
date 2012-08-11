@@ -3,8 +3,9 @@
 ;;;
 ;;;-----------------------------------------------------------------
 
-;; Load AucTeX system
-(require 'tex-site nil t)
+;; On Mac OSX LaTeX may be installed in some non canonical path.
+(when running-MacOSX
+  (add-to-list 'exec-path "/usr/texbin/" 'append))
 
 ;; Multifile support, completition, style, reverse search support, ...
 (setq TeX-auto-save t)
@@ -26,18 +27,24 @@
 ;; according to TeX-PDF-mode.
 ;;
 ;; If AUCTeX implementation is below 11.86 source specials are used.
-(if
-    (and (boundp 'AUCTeX-version) (>= (string-to-number AUCTeX-version) 11.86))
-    (progn
+(defun init-latex--forward-search-setup ()
+  "Setup the source special mode, depending on the AucTeX version loaded."
+  (interactive)
+  (if (not (boundp 'AUCTeX-version))
+      (error "AUCTeX not installed or not loaded"))
+  (let ((version (string-to-number AUCTeX-version)))
+    (cond
+     ((>= version 11.86)
       (setq TeX-source-correlate-mode t)
-      (setq TeX-source-correlate-method 'source-specials) ; Default. It is toggled by TeX-PDF-mode-hook
+      (setq TeX-source-correlate-method 'source-specials) ; Default
       (setq TeX-source-correlate-start-server t))
-  (progn
-    (setq TeX-source-specials-mode t)
-    (setq TeX-source-specials-view-start-server t)))
+     (t
+      (setq TeX-source-specials-mode t)
+      (setq TeX-source-specials-view-start-server t))
+     )))
 
 
-(defun mysetup-TeX-PDF-mode ()
+(defun init-latex--pdfmode-toggle ()
   "Setup the proper environment for TeX PDF mode. Mainly the
 source-specials/synctex toggle."
   (interactive)
@@ -45,11 +52,12 @@ source-specials/synctex toggle."
              (>= (string-to-number AUCTeX-version) 11.86))
     (setq TeX-source-correlate-method-active
           (if TeX-PDF-mode 'synctex 'source-specials))
-    ;; (message "[AUCTeX] forward/inverse search mode: %s" TeX-source-correlate-method-active)
     ))
 
-(add-hook 'TeX-PDF-mode-hook 'mysetup-TeX-PDF-mode)
+(add-hook 'TeX-PDF-mode-hook 'init-latex--pdfmode-toggle)
 
+
+(eval-after-load "tex-site" '(init-latex--forward-search-setup))
 
 
 
@@ -269,23 +277,21 @@ started."
 	  (lambda () (ispell-change-dictionary "italian")))
 
 
-;; Choose a checker for Flymake (compilation on the fly).
-(fmakunbound 'flymake-get-tex-args)
 
-;; lacheck
-(if (and (executable-find "lacheck")
-         (not (fboundp 'flymake-get-tex-args)))
+(defun init-latex--flymake-setup ()
+  "Setup flymake for latex using one of the checker available on the system.
+It either tries \"lacheck\" or \"chktex\"."
+  (interactive)
+  (cond ((executable-find "lacheck")
+         (defun flymake-get-tex-args (file-name)
+           (list "lacheck" (list file-name))))
+        ((executable-find "chktex")
+         (defun flymake-get-tex-args (file-name)
+           (list "chktex" (list "-q" "-v0" file-name))))
+        (t nil)
+    ))
 
-    (defun flymake-get-tex-args (file-name)
-      (list "lacheck" (list file-name))))
-
-;; chktex
-(if (and (executable-find "chktex")
-         (not (fboundp 'flymake-get-tex-args)))
-
-    (defun flymake-get-tex-args (file-name)
-      (list "chktex" (list "-q" "-v0" file-name))))
-
+(eval-after-load "flymake" '(init-latex--flymake-setup))
 
 
 (defun my-flymake-show-help ()
