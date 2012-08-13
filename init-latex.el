@@ -201,22 +201,26 @@ started."
           (auctex-evince-forward-sync pdf tex line)))
 
 
+      (defun init-latex--evince--register ()
+        "Evince is connected to Emacs Auctex using DBUS"
+        (setq TeX-evince-dbus-registered t)
+        (condition-case nil
+            (dbus-register-signal
+             :session nil "/org/gnome/evince/Window/0"
+             "org.gnome.evince.Window" "SyncSource"
+             'auctex-evince-inverse-sync)
+          (error (setq TeX-evince-dbus-registered nil)))
+        
+        (when (and TeX-evince-dbus-registered
+                   (boundp 'TeX-source-correlate-method))
+          ;; View program and selection rule
+          ;; for this to work `TeX-run-discard-or-function' must be in the "View" command.
+          (add-to-list 'TeX-view-program-list '("EvinceDbus" auctex-evince-view))
+          (add-to-list 'TeX-view-program-selection '(output-pdf "EvinceDbus"))
+          ))      
+        
       ;; Register inverse and forward search
-      (setq TeX-evince-dbus-registered t)
-      (condition-case nil
-          (dbus-register-signal
-           :session nil "/org/gnome/evince/Window/0"
-           "org.gnome.evince.Window" "SyncSource"
-           'auctex-evince-inverse-sync)
-        (error (setq TeX-evince-dbus-registered nil)))
-
-      (when (and TeX-evince-dbus-registered
-                 (boundp 'TeX-source-correlate-method))
-        ;; View program and selection rule
-        ;; for this to work `TeX-run-discard-or-function' must be in the "View" command.
-        (add-to-list 'TeX-view-program-list '("EvinceDbus" auctex-evince-view))
-        (add-to-list 'TeX-view-program-selection '(output-pdf "EvinceDbus"))
-        )
+      (eval-after-load "tex" '(init-latex--evince--register))
 
       )) ;; D-Bus + Evince + SyncTeX
 
