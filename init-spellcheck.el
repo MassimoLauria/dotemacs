@@ -10,7 +10,7 @@
 ;; English
 (defvar spellcheck-english-regexp "\\<\\(of\\|the\\|and\\|or\\|how\\)\\>"
   "If a buffer match this REGEXP it is supposed to be in english.")
-(defvar spellcheck-english-names '("english" "en" "american" "en_GB" "en_US" )
+(defvar spellcheck-english-names '("british" "american" "english" "en_GB" "en_US" "en" )
   "Possible names for an ENGLISH dictionary.")
 
 
@@ -43,6 +43,11 @@ That will be the language returned when no REGEXP matches, as
 would happen for an empty document.")
 
 ;; Setup ----------------------------------------------------------------------------------------
+
+(when (executable-find "aspell")
+    (setq ispell-program-name "aspell")
+    (setq ispell-list-command "list"))
+
 
 (setq ispell-process-directory (expand-file-name "~/"))
 

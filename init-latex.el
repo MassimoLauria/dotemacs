@@ -56,6 +56,19 @@ source-specials/synctex toggle."
 
 (add-hook 'TeX-PDF-mode-hook 'init-latex--pdfmode-toggle)
 
+(defun init-latex--fix-viewer-invocation ()
+  "Fix viewer invocation by not asking for an annoying confirmation.
+      - avoid confirmation or editing of view command
+      - allows for function to be used as viewer (AucTeX >= 11.86)"
+  (interactive)
+  (when (not running-Aquamacs)
+    (let ((version (string-to-number AUCTeX-version)))
+      (cond
+       ((>= version 11.86)
+        (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard-or-function nil t)))
+       (t
+        (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t)))
+       ))))
 
 (eval-after-load "tex-site" '(init-latex--forward-search-setup))
 
@@ -98,15 +111,8 @@ source-specials/synctex toggle."
                        (make-local-variable 'compilation-exit-message-function)
                        (setq compilation-exit-message-function 'nil)
                        (add-to-list 'LaTeX-verbatim-environments "comment")
-
-                       ;; The following viewer command:
-                       ;;   - avoid confirmation or editing of view command
-                       ;;   - allows for function to be used as viewer
-                       (when (not running-Aquamacs)
-                         (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
-                         )
-                       )
-            ))
+                       (init-latex--fix-viewer-invocation)
+                       )))
 
 
 
