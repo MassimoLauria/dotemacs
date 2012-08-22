@@ -103,7 +103,7 @@ source-specials/synctex toggle."
                        ;;   - avoid confirmation or editing of view command
                        ;;   - allows for function to be used as viewer
                        (when (not running-Aquamacs)
-                         (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard-or-function nil t))
+                         (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t))
                          )
                        )
             ))
@@ -210,15 +210,15 @@ started."
              "org.gnome.evince.Window" "SyncSource"
              'auctex-evince-inverse-sync)
           (error (setq TeX-evince-dbus-registered nil)))
-        
+
         (when (and TeX-evince-dbus-registered
                    (boundp 'TeX-source-correlate-method))
           ;; View program and selection rule
           ;; for this to work `TeX-run-discard-or-function' must be in the "View" command.
           (add-to-list 'TeX-view-program-list '("EvinceDbus" auctex-evince-view))
           (add-to-list 'TeX-view-program-selection '(output-pdf "EvinceDbus"))
-          ))      
-        
+          ))
+
       ;; Register inverse and forward search
       (eval-after-load "tex" '(init-latex--evince--register))
 
