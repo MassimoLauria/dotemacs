@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
-;; Time-stamp: "2012-06-14, 23:09 (CEST) Massimo Lauria"
+;; Time-stamp: "2012-08-23, 14:12 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -28,16 +28,40 @@
 
 
 ;;; Setup Emacs environment --------------------------------------------
-(setq default-elisp-path        "~/config/emacs")
-(setq default-elisp-3rdparties  "~/config/emacs/3rdparties")
-(setq default-elisp-macosx      "~/Library/site-lisp")
+(setq default-elisp-path        "~/config/emacs")             ;; configuration files
+(setq default-elisp-3rdparties  "~/config/emacs/3rdparties")  ;; 3rd parties conf. packages
+(setq load-path (cons 	default-elisp-path        load-path))
+(setq load-path (cons 	default-elisp-3rdparties  load-path))
 
 
-(setq load-path (cons 	default-elisp-path load-path       ))
-(setq load-path (cons 	default-elisp-3rdparties load-path ))
-(setq load-path (cons 	default-elisp-macosx     load-path))
+;; Sometimes the system does not contains important packages as Org or
+;; BBDB, which cannot be installed using ELPA (either because Emacs <
+;; 24 or because BBDB is not on ELPA).
+;;
+;; If there is an user installation of those packages, those will be
+;; found first. I guess ELPA will overload them. Anyway everything
+;; lives in the user local installation which can be tuned for the
+;; specific system.
+;;
+(setq additional-elisp-paths (list
+                              "~/Library/site-lisp" ;; macosx user site-lisp
+                              "~/.emacs.d/"         ;; standard user path
+                              ))
 
-(setq load-path (cons 	"~/.emacs.d" load-path))
+(setq additional-elisp-packages (list
+                              "bbdb/lisp"        ;; main bbdb
+                              "bbdb/bits"        ;; bbdb contributed utilities
+                              "org/lisp"         ;; main org-mode
+                              "org/contrib/lisp" ;; org-mode contributed utilities
+                              "color-theme"      ;; for older emacs
+                              ))
+
+(dolist (path additional-elisp-paths)
+  (dolist (package additional-elisp-packages)
+    (let ((pp (concat path package)))
+      (if (file-directory-p pp)
+              (setq load-path (cons pp load-path))))))
+
 
 (require 'init-discover-runtime) ; Discover emacs version and runtime
 (require 'init-functions)        ; Utility functions for configuration

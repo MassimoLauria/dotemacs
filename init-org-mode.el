@@ -7,17 +7,6 @@
 
 
 ;;;------------------------- Load -----------------------------------
-
-;; Aquamacs 2.3 (Emacs 23.3) has an older version of org-mode
-(when (and running-MacOSX (not running-GNUEmacs24+))
-  (setq MacUser-org-path (concat default-elisp-macosx "/org-7.4/lisp/"))
-  (setq MacUser-org-contrib-path (concat default-elisp-macosx "/org-7.4/contrib/lisp"))
-  (if (file-directory-p MacUser-org-path)
-      (setq load-path (cons MacUser-org-path load-path)))
-  (if (file-directory-p MacUser-org-contrib-path)
-      (setq load-path (cons MacUser-org-contrib-path load-path)))
-)
-
 (if (require 'org nil t)
     (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 

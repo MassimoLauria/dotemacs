@@ -32,15 +32,10 @@
 
 ;; (Insidious) Big Brother DataBase, collects mail addresses.
 
-;; MacOSX alternative path
-(when running-MacOSX
-  (setq MacUser-bbdb-path (concat default-elisp-macosx "/bbdb"))
-  (if (file-directory-p MacUser-bbdb-path)
-      (add-to-list 'load-path MacUser-bbdb-path))
-)
+
 ;; Load bbdb
 (and
- (require-maybe 'bbdb)
+ (require 'bbdb nil t)
  (bbdb-initialize)
 )
 

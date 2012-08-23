@@ -49,13 +49,6 @@ to load the theme.
    t ))
 
 
-;; Try to set a load-path color-theme as a custom package.
-(when running-MacOSX
-  (setq MacUser-color-theme-path (concat default-elisp-macosx "/color-theme"))
-  (if (file-directory-p MacUser-color-theme-path)
-      (setq load-path (cons MacUser-color-theme-path load-path)))
-)
-
 ;;; Font setup
 ;; Linux (GNUEmacs >=23)
 (when (and running-GNULinux running-GNUEmacs23+ )
