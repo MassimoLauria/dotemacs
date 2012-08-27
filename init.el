@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
-;; Time-stamp: "2012-08-23, 17:07 (CEST) Massimo Lauria"
+;; Time-stamp: "2012-08-27, 11:27 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -49,6 +49,7 @@
                               ))
 
 (setq additional-elisp-packages (list
+                              ""
                               "bbdb/lisp"        ;; main bbdb
                               "bbdb/bits"        ;; bbdb contributed utilities
                               "org/lisp"         ;; main org-mode
