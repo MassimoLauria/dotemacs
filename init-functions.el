@@ -24,6 +24,20 @@ data"
 )
 
 
+;;; Older versions of `called-interactively-p' do not take the
+;;; optional argument.
+
+(condition-case nil (called-interactively-p 'interactive)
+  (error
+   ; Save reference to called-interactively-p in
+   ; inglorion-system-called-interactively-p
+   (fset 'inglorion-system-called-interactively-p
+         (symbol-function 'called-interactively-p))
+   ; Define called-interactively-p so that it discards
+   ; its arguments and calls inglorion-system-called-interactively-p
+   (fset 'called-interactively-p
+         (lambda (&rest args)
+           (inglorion-system-called-interactively-p)))))
 
 ;;;-------------------------------------------------------------------
 
