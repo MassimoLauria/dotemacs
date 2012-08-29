@@ -3,7 +3,7 @@
 # Copyright (C) 2010, 2011, 2012 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2011-03-06, domenica 11:52 (CET) Massimo Lauria"
-# Time-stamp: "2012-05-25, 14:24 (CEST) Massimo Lauria"
+# Time-stamp: "2012-08-29, 15:43 (CEST) Massimo Lauria"
 
 # Description::
 #
@@ -88,10 +88,16 @@ $GIT clone $PYMACSREPO
 cd $(basename "$PYMACS")
 $GIT co $PYMACSVER
 make
-$PYEIN --user .
+
+$PYEIN --user . 2>/dev/null || {
+    echo "$PYEIN does not accept '--user' option. "
+    echo "We use '--prefix=$HOME/.local/' as fallback."
+    $PYEIN --prefix=$HOME/.local/ .
+}
+
 
 $RM -f $EMACSD/pymacs.el
-$CP pymacs.el $EMACSD
+$CP pymacs.el $EMACSD/site-lisp/
 cd ..
 $RM -fr $(basename "$PYMACS")
 
