@@ -354,7 +354,7 @@ It either tries \"lacheck\" or \"chktex\"."
     )
   )
 
-(define-auto-insert 'latex-mode 'choose-initial-latex-template)
+;; (define-auto-insert 'latex-mode 'choose-initial-latex-template)
 
 
 (provide 'init-latex)
