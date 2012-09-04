@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
-;; Time-stamp: "2012-08-27, 11:27 (CEST) Massimo Lauria"
+;; Time-stamp: "2012-09-04, 21:10 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -112,10 +112,14 @@
 ;;; Customized settings -------------------------------------------------
 (setq custom-file "~/config/emacs/custom.el")
 (load custom-file 'noerror)
+;;; Enabled commands
+(put 'narrow-to-region 'disabled nil)
 
 
 ;;; Start server in Aquamacs --------------------------------------------
 (if (and (boundp 'aquamacs-version) (not (server-running-p))) (server-start))
+
+
 
 
 (provide 'init)
