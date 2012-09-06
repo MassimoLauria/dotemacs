@@ -236,23 +236,24 @@ started."
 ;;
 ;; From Emacs 23, the visual-line-mode helps to visualize the file
 ;; properly.
-(add-hook 'LaTeX-mode-hook (lambda ()
-                             (setq  default-justification 'left)
-                             (setq  fill-column 99999)
-							 ))
+(add-hook 'LaTeX-mode-hook
+          (lambda ()
+            (setq  default-justification 'left)
+            (setq  fill-column 99999)))
+
+
 (if (fboundp 'visual-line-mode)
-    (add-hook 'LaTeX-mode-hook 'visual-line-mode)
-  )
+    (add-hook 'LaTeX-mode-hook 'visual-line-mode))
 
 
 ;; RefTeX setup
-(add-hook 'reftex-mode-hook (lambda ()
-                              (local-set-key (kbd "C-c l") 'reftex-label)       ;; Label creation
-                              (local-set-key (kbd "C-c r") 'reftex-reference)   ;; Label selection
-                              (local-set-key (kbd "C-c b") 'reftex-citation)  ;; Citation creation
-                              (local-set-key (kbd "M-,") 'reftex-view-crossref) ;; View crossref
-                              (local-set-key (kbd "M-.") 'delete-other-windows-vertically)
-                              ))
+(add-hook 'reftex-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c l") 'reftex-label)       ;; Label creation
+            (local-set-key (kbd "C-c r") 'reftex-reference)   ;; Label selection
+            (local-set-key (kbd "C-c b") 'reftex-citation)  ;; Citation creation
+            (local-set-key (kbd "M-,") 'reftex-view-crossref) ;; View crossref
+            (local-set-key (kbd "M-.") 'delete-other-windows-vertically)))
 
 
 ;; Hints for automatic reference creation
@@ -298,8 +299,7 @@ It either tries \"lacheck\" or \"chktex\"."
         ((executable-find "chktex")
          (defun flymake-get-tex-args (file-name)
            (list "chktex" (list "-q" "-v0" file-name))))
-        (t nil)
-    ))
+        (t nil)))
 
 (eval-after-load "flymake" '(init-latex--flymake-setup))
 
@@ -338,21 +338,19 @@ It either tries \"lacheck\" or \"chktex\"."
 (defun choose-initial-latex-template ()
   "Query the user to choose a template for a new latex file"
   (interactive)
-  (let ((input-char ?0))
-    (loop until (member input-char '(?n ?p ?s ?l ?d ?e))
-          do
-          (setq input-char (read-char "Template: [n]ote, [p]aper, [s]lide, [l]etter, [d]rawing, [e]mpty:"))
-          )
-    (case input-char
-      ((?n) (insert "latex-note-template"  ) (yas/expand))
-      ((?p) (insert "latex-paper-template" ) (yas/expand))
-      ((?s) (insert "latex-slides-template" ) (yas/expand))
-      ((?l) (insert "latex-letter-template") (yas/expand))
-      ((?d) (insert "latex-pgfpic-template") (yas/expand))
-      ((?e) (insert ""))
-      )
-    )
-  )
+  (if (or (not (string-equal (buffer-name) "_region_.tex"))
+          (called-interactively-p))
+      (let ((input-char ?0))
+        (loop until (member input-char '(?n ?p ?s ?l ?d ?e)) do
+              (setq input-char (read-char "Template: [n]ote, [p]aper, [s]lide, [l]etter, [d]rawing, [e]mpty:")))
+        (case input-char
+          ((?n) (insert "latex-note-template"  ) (yas/expand))
+          ((?p) (insert "latex-paper-template" ) (yas/expand))
+          ((?s) (insert "latex-slides-template" ) (yas/expand))
+          ((?l) (insert "latex-letter-template") (yas/expand))
+          ((?d) (insert "latex-pgfpic-template") (yas/expand))
+          ((?e) (insert ""))))))
+
 
 ;; (define-auto-insert 'latex-mode 'choose-initial-latex-template)
 
