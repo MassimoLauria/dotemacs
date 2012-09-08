@@ -187,8 +187,9 @@
   (message warning))
 
 ;; Let's run 4 checks at once instead.
-(setq flymake-max-parallel-syntax-checks 4)
+(setq flymake-max-parallel-syntax-checks 1)
 (setq flymake-run-in-place t)
+(setq flymake-gui-warnings-enabled nil)
 
 ;; Set faces for flymake
 (custom-set-faces

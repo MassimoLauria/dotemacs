@@ -1,14 +1,11 @@
 ;;;
 ;;; Utilities for robust and safe emacs usage.
 ;;;
-;;; In Emacs 22 or in some terminals the keybindings may not work properly.
+;;; In some terminals the keybindings may not work properly.
 ;;;
+;;; No support for Org-Mode <= 6.36
 ;;;------------------------------------------------------------------
 
-
-;;;------------------------- Load -----------------------------------
-(if (require 'org nil t)
-    (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
 ;;;------------ File locations ---------------------------------------
 (setq org-directory "~/personal/agenda/")
@@ -19,32 +16,60 @@
                                                 ;defined in personal
                                                 ;conf file.
 
+
 ;;;---------------- TODO states --------------------------------------
-(when (boundp 'org-version)
-  (if (> (string-to-number org-version) 5)
-      (setq org-todo-keywords
+(setq org-todo-keywords
             '((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")))
-    (setq org-todo-keywords '("TODO" "FEEDBACK" "WAIT" "DONE")
-          org-todo-interpretation 'type)))
 
 
 ;;;---------------- Basic setup --------------------------------------
 (setq
+ org-agenda-include-diary t
  org-log-done t
  org-CUA-compatible t
  org-support-shift-select t
  org-cycle-emulate-tab nil
  org-cycle-global-at-bob t
-)
+ org-popup-calendar-for-date-prompt t
+ org-read-date-display-live t
+ org-src-fontify-natively t
+ org-src-tab-acts-natively t
+ ;; org-confirm-babel-evaluate t
+ ;; org-babel-no-eval-on-ctrl-c-ctrl-c t
+ )
 
 
+(defun init-org-mode--setup ()
+  "Setup for org-mode"
+  (interactive)
+  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
-;;;---------------- Global keys --------------------------------------
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
-(define-key global-map "\C-cr" 'org-remember)
+  ;; org-babel-setup
+  (init-org-mode--babel-setup)
+  ;; org-bibtex patch
+  (init-org-mode--patch-org-bibtex)
 
+  ;; Org-mode communicating with external applications.
+  (require 'org-protocol nil t)
 
+  ;; Wordpress blogging in Org-mode! (with Math!)
+  (add-to-list 'load-path (concat default-elisp-3rdparties "/org2blog"))
+  (require 'org2blog-autoloads nil t)
+
+  ;; Setup keyboard
+  (add-hook 'org-mode-hook    'org-mode/setup-keys/gb)
+  (add-hook 'orgtbl-mode-hook 'orgtbl-mode/setup-keys/gb)
+  (org-agenda-mode-setup-local-keys)
+  (define-key calendar-mode-map (kbd "RET") 'th-calendar-open-agenda)
+
+  ;; org-capture
+  (add-hook 'org-capture-mode-hook
+            (lambda ()(select-frame-set-input-focus (selected-frame))))
+
+  ;; org-agenda and calendar in sync
+  ;; (add-hook 'calendar-mode-hook 'th-org-agenda-follow-calendar-mode)
+
+  (message "Setup of org-mode"))
 
 
 ;; Setup of different org-mode auxiliary layout.
@@ -180,24 +205,6 @@ part of the keyboard.
   (define-key orgtbl-mode-map (kbd "C-M-#") 'org-table-insert-row)
   )
 
-
-(add-hook 'org-mode-hook    'org-mode/setup-keys/gb)
-(add-hook 'orgtbl-mode-hook 'orgtbl-mode/setup-keys/gb)
-
-;; Link org-mode to remember-mode (which is not present on Emacs <22)
-(when (fboundp 'org-remember-insinuate)
-  (org-remember-insinuate)
-)
-
-;; Org-protocol to make org-mode to interact with other applications
-(require 'org-protocol nil t)          ;; Does not exists on Emacs22
-
-;; Autofocus and raise the Emacs frame which should get the input.
-(when (boundp 'org-remember-mode-hook)
-  (add-hook 'org-remember-mode-hook
-            (lambda ()(select-frame-set-input-focus (selected-frame)))))
-
-
 ;; Normally my private (and translated) configuration is used.
 (when (not (boundp 'org-remember-templates))
   (setq org-remember-templates
@@ -220,19 +227,6 @@ part of the keyboard.
   (define-key org-agenda-mode-map (kbd "<left>") 'org-agenda-earlier)
   (define-key org-agenda-mode-map (kbd "<right>") 'org-agenda-later)
 )
-(add-hook 'org-agenda-mode-hook 'org-agenda-mode-setup-local-keys)
-
-
-
-;; Wordpress blogging in Org-mode! (with Math!)
-(when (fboundp 'org-mode)
-  (add-to-list 'load-path (concat default-elisp-3rdparties "/org2blog"))
-  (require 'org2blog-autoloads nil t))
-
-
-;; Calendar navigation plus agenda
-(setq org-popup-calendar-for-date-prompt t)
-(setq org-read-date-display-live t)
 
 (defun th-calendar-open-agenda () ;; by tassilo horn
   (interactive)
@@ -246,14 +240,10 @@ part of the keyboard.
                                          (first calendar-date)
                                          (third calendar-date))))
          (calendar-buffer (current-buffer)))
-    (org-agenda-list nil day)
+    (org-agenda-list nil day 1)
     (select-window (get-buffer-window calendar-buffer))
     (th-org-agenda-follow-calendar-mode t)
     ))
-
-(add-hook 'calendar-mode-hook
-          (lambda ()
-            (define-key calendar-mode-map (kbd "RET") 'th-calendar-open-agenda)))
 
 
 (define-minor-mode th-org-agenda-follow-calendar-mode
@@ -266,14 +256,17 @@ buffer."
         (add-hook 'calendar-move-hook 'th-calendar-open-agenda)
       (remove-hook 'calendar-move-hook 'th-calendar-open-agenda))))
 
-;; (add-hook 'calendar-mode-hook 'th-org-agenda-follow-calendar-mode)
-
-
 
 
 ;; Patch org-bibtex-store-link to manage Capitalized Fields.
-(require 'org-bibtex)
-(defun org-bibtex-store-link ()
+(defun init-org-mode--patch-org-bibtex ()
+  "The original `org-bibtex-store-link' does not accept capitalized fields."
+  (if (member 'org-bibtex-store-link org-store-link-functions)
+      (progn
+        (remove-hook 'org-store-link-functions 'org-bibtex-store-link)
+        (add-hook 'org-store-link-functions 'org-bibtex-store-link-patched))))
+
+(defun org-bibtex-store-link-patched ()
   "Store a link to a BibTeX entry."
   (when (eq major-mode 'bibtex-mode)
     (let* ((search (org-create-file-search-in-bibtex))
@@ -313,31 +306,30 @@ buffer."
        :description description))))
 
 
-;; Org-babel configuration. Code in org-mode files!
-;; Requires Org-mode 7.0
-(when (>= (string-to-number org-version) 7)
 
-  ;; Configuration
-  (setq org-src-fontify-natively t)
-  (setq org-src-tab-acts-natively t)
-  ;; (setq org-confirm-babel-evaluate t)
-  ;; (setq org-babel-no-eval-on-ctrl-c-ctrl-c t)
+(defun init-org-mode--babel-setup ()
+  "Org-babel configuration. Code in org-mode files!
+Requires Org-mode 7.0"
+  (when (>= (string-to-number org-version) 7)
 
-  ;; Activate languages (it could be a security RISK!!)
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '(
-     (emacs-lisp . t)
-     (sh .t)
-     (python . t)
-     (C . t)
-     (latex . t)
-     (dot . t)
-     (gnuplot . t)
-     (ditaa . t)
-     ))
+    ;; Activate languages (it could be a security RISK!!)
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '(
+       (emacs-lisp . t)
+       (sh .t)
+       (python . t)
+       (C . t)
+       (latex . t)
+       (dot . t)
+       (gnuplot . t)
+       (ditaa . t)
+       ))))
 
-  ) ;; Org babel for Org-mode > 7.0
+;;;------------------------- Load -----------------------------------
+(if (and running-GNUEmacs23+
+         (require 'org-install nil t))
+    (eval-after-load "org.el" '(init-org-mode--setup)))
 
 
 (provide 'init-org-mode)
