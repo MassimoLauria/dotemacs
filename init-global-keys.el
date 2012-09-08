@@ -83,7 +83,7 @@
 
 
 ;; Agenda.
-(global-set-key [f5] 'org-remember)  ;; Taking notes
+(global-set-key [f5] 'org-capture)  ;; Taking notes
 (global-set-key [f6] 'org-agenda)    ;; View agenda/Todo
 (global-set-key [f7] 'bbdb)          ;; Query Contacts
 ;; Switch language

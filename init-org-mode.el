@@ -24,7 +24,7 @@
 
 ;;;---------------- Basic setup --------------------------------------
 (setq
- org-agenda-include-diary t
+ org-agenda-include-diary nil
  org-log-done t
  org-CUA-compatible t
  org-support-shift-select t
@@ -34,7 +34,7 @@
  org-read-date-display-live t
  org-src-fontify-natively t
  org-src-tab-acts-natively t
- ;; org-confirm-babel-evaluate t
+ org-confirm-babel-evaluate t
  ;; org-babel-no-eval-on-ctrl-c-ctrl-c t
  )
 
@@ -59,7 +59,7 @@
   ;; Setup keyboard
   (add-hook 'org-mode-hook    'org-mode/setup-keys/gb)
   (add-hook 'orgtbl-mode-hook 'orgtbl-mode/setup-keys/gb)
-  (org-agenda-mode-setup-local-keys)
+  (add-hook 'org-agenda-mode-hook  'org-agenda-mode-setup-local-keys)
   (define-key calendar-mode-map (kbd "RET") 'th-calendar-open-agenda)
 
   ;; org-capture
@@ -206,18 +206,20 @@ part of the keyboard.
   )
 
 ;; Normally my private (and translated) configuration is used.
-(when (not (boundp 'org-remember-templates))
-  (setq org-remember-templates
+(when (not (boundp 'org-capture-templates))
+  (setq org-capture-templates
         '(
-          ("journal"        ?j "* %? %t\n\n  %i\n  %a\n\n" "journal.org")
-          ("note"           ?n "* %? %T\n\n  %i\n  %a\n\n" "notes.org")
-          ("meeting"        ?m "* TODO ⌚ %? %T\n\n  %i\n\n\n" "notes.org")
-          ("deadline"       ?d "* TODO ⌚ %? %U\n  DEADLINE: %t\n\n  %i\n\n" "notes.org")
-          ("event"          ?e "* %? %t--%t\n\n  %i\n  %a\n\n" "notes.org")
-          ("webpage"        ?w "* %^{Title}\n\n  Source: %u, %c\n\n  %i" nil "notes.org")
-          )
-        )
-  )
+          ;; task
+          ("t" "task" entry (file "agenda.org")
+           "* TODO ⌚ %?\n  %U\n\n  %i\n\n")
+          ;; meeting and events
+          ("e" "event" entry (file "agenda.org")
+           "* %?\n  WHEN %^t\n  %i\n\n")
+          ;; notebook
+          ("n" "note" entry (file "notebook.org")
+           "* %?\n  %U\n  %i\n  %a\n\n")
+          )))
+
 
 
 ;; Aquamacs miss some org-agenda keybindings!
@@ -329,7 +331,7 @@ Requires Org-mode 7.0"
 ;;;------------------------- Load -----------------------------------
 (if (and running-GNUEmacs23+
          (require 'org-install nil t))
-    (eval-after-load "org.el" '(init-org-mode--setup)))
+    (eval-after-load "org" '(init-org-mode--setup)))
 
 
 (provide 'init-org-mode)
