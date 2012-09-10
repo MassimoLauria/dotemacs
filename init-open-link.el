@@ -35,6 +35,18 @@
 "Secondary key sequence used to open links in text files."
 )
 
+(defvar massimo-keyboard-fallback-browser "google-chrome"
+"What browser to use if none is configured."
+)
+
+
+;; Setup default browser
+(when running-GNULinux
+  (let ((browser
+         (or (getenv "BROWSER")
+             massimo-keyboard-fallback-browser)))
+    (setq browse-url-browser-function 'browse-url-generic
+          browse-url-generic-program browser)))
 
 ;; Xah Lee function for opening links in dired-mode
 ;; http://xahlee.org/emacs/emacs_dired_open_file_in_ext_apps.html
