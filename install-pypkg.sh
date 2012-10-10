@@ -3,7 +3,7 @@
 # Copyright (C) 2010, 2011, 2012 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2011-03-06, domenica 11:52 (CET) Massimo Lauria"
-# Time-stamp: "2012-08-29, 15:43 (CEST) Massimo Lauria"
+# Time-stamp: "2012-10-10, 23:39 (CEST) Massimo Lauria"
 
 # Description::
 #
@@ -29,10 +29,15 @@ FILE_NOT_FOUND=127
 
 GIT=git
 PYTHON=python
-PYPIP=pip
-PYEIN=easy_install
+PYPIP=pip-2.7
+PYEIN=easy_install-2.7
 
-EMACSD=$HOME/.emacs.d/
+
+if [ x`uname` == "xDarwin" ]; then
+    SITELISP=$HOME/Library/site-lisp/
+else
+    SITELISP=$HOME/.emacs.d/site-lisp/
+fi
 
 # Virtual env script
 OLD_PWD=$PWD
@@ -97,7 +102,8 @@ $PYEIN --user . 2>/dev/null || {
 
 
 $RM -f $EMACSD/pymacs.el
-$CP pymacs.el $EMACSD/site-lisp/
+$MKDIR -p $SITELISP
+$CP pymacs.el $SITELISP
 cd ..
 $RM -fr $(basename "$PYMACS")
 
