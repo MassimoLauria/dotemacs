@@ -289,7 +289,7 @@ Emacs buffers are those whose name starts with *."
   (cons msg code))
 
 ;; Specify my function (maybe I should have done a lambda function)
-(setq compilation-exit-message-function 'compilation-exit-autoclose)
+;; (setq compilation-exit-message-function 'compilation-exit-autoclose)
 
 ;; Keeps windows in order by dedicating them (make them sticky)
 (defun toggle-current-window-sticky ()
