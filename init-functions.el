@@ -280,12 +280,14 @@ Emacs buffers are those whose name starts with *."
 (defun compilation-exit-autoclose (status code msg)
   ;; If M-x compile exists with a 0
   (when (and (eq status 'exit) (zerop code))
-    ;; then bury the *compilation* buffer, so that C-x b doesn't go there
-    (bury-buffer "*compilation*")
-    ;; and delete the *compilation* window
-    (delete-window (get-buffer-window (get-buffer "*compilation*"))))
+    (let ((cmpl-buffername (buffer-name)))
+      ;; then bury the *compilation* buffer, so that C-x b doesn't go there
+      (bury-buffer cmpl-buffername)
+      ;; and delete the *compilation* window
+      (delete-window (get-buffer-window (get-buffer cmpl-buffername)))))
   ;; Always return the anticipated result of compilation-exit-message-function
   (cons msg code))
+
 ;; Specify my function (maybe I should have done a lambda function)
 (setq compilation-exit-message-function 'compilation-exit-autoclose)
 
