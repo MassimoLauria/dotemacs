@@ -45,27 +45,11 @@ is a workaround."
   ;; Initialize the python shell with an appropriate completer to be used with
   ;; ipython.el
   (py-execute-string
-   "import rlcompleter\nemacs_completer=rlcompleter.Completer(globals())")
+   "import readline\n__emacs_complete=readline.get_completer()")
   ;; Setup of a completion command for ipython.el
   (set (make-local-variable 'ipython-completion-command-string)
-   "print(';'.join(filter(bool,[emacs_completer.complete(('%s','%s')[1],i) for i in range(200)]))) #PYTHON-MODE SILENT\n")
+   "print(';'.join(filter(bool,[__emacs_complete('%s',i,'%s') for i in range(200)]))) #PYTHON-MODE SILENT\n")
   (end-of-buffer))
-
-
-
-
-
-;; Python Hook(s) ----------------------------------------------------------------------------------
-
-(add-hook
- 'python-mode-hook (lambda ()
-                     (set-variable 'py-indent-offset 4)
-                     (set-variable 'py-smart-indentation t)
-                     (set-variable 'indent-tabs-mode nil)
-                     (define-key py-mode-map (kbd "RET") 'newline-and-indent)
-                     (define-key py-mode-map (kbd "M-q") 'py-fill-paragraph)
-                     )
- )
 
 
 
