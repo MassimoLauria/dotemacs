@@ -37,6 +37,19 @@ path."
   (require-maybe 'ipython)
 )
 
+(defun setup-ipython-010-completion ()
+  "Ipython.el does not support completion for Ipython 0.10. This
+is a workaround."
+
+  (interactive)
+  ;; Initialize the python shell with an appropriate completer to be used with
+  ;; ipython.el
+  (py-execute-string
+   "import rlcompleter\nemacs_completer=rlcompleter.Completer(globals())")
+  ;; Setup of a completion command for ipython.el
+  (set (make-local-variable 'ipython-completion-command-string)
+   "print(';'.join(filter(bool,[emacs_completer.complete(('%s','%s')[1],i) for i in range(200)]))) #PYTHON-MODE SILENT\n")
+  (end-of-buffer))
 
 
 
