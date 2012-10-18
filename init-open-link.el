@@ -103,10 +103,9 @@ Works in Microsoft Windows, Mac OS X, Linux."
 ;; Setup for `dired-mode'
 (add-hook 'dired-mode-hook
           (lambda ()
-            ;; Remove old binding
-            (define-key org-mode-map
+            (define-key dired-mode-map
               massimo-keyboard-open-link-key1 'open-in-external-app)
-            (define-key org-mode-map
+            (define-key dired-mode-map
               massimo-keyboard-open-link-key2 'open-in-external-app)
             ))
 
