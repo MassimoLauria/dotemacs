@@ -233,13 +233,14 @@ started."
 ;; To help collaboration, in LaTeX file I will only use soft word
 ;; wrapping.  Furthermore the filling is made to an arbitrary large
 ;; value, so that fill-paragraph won't do hard-wrapping by error.
+;; (that is not what my recent collaborators want! Back to 70 columns)
 ;;
 ;; From Emacs 23, the visual-line-mode helps to visualize the file
 ;; properly.
 (add-hook 'LaTeX-mode-hook
           (lambda ()
             (setq  default-justification 'left)
-            (setq  fill-column 99999)))
+            (setq  fill-column 70)))
 
 
 (if (fboundp 'visual-line-mode)
@@ -332,6 +333,32 @@ It either tries \"lacheck\" or \"chktex\"."
        ("\\.avi\\'" .
         "\\includemovie[\n\tposter,\n\trepeat=1,\n\ttext=(%r)\n\t]{}{}{%r}\n")))))
  )
+
+;; Guess master file
+(add-hook
+ 'LaTeX-mode-hook
+ (lambda () (setq TeX-master (guess-TeX-master (buffer-file-name)))))
+
+(defun guess-TeX-master (filename)
+  "Guess the master file for FILENAME from currently open .tex files."
+  (let ((candidate nil)
+        (filename (file-name-nondirectory filename)))
+    (save-excursion
+      (dolist (buffer (buffer-list))
+        (with-current-buffer buffer
+          (let ((name (buffer-name))
+                (file buffer-file-name))
+            (if (and file (string-match "\\.tex$" file))
+                (progn
+                  (goto-char (point-min))
+                  (if (re-search-forward (concat "\\\\input{" filename "}") nil t)
+                      (setq candidate file))
+                  (if (re-search-forward (concat "\\\\include{" (file-name-sans-extension filename) "}") nil t)
+                      (setq candidate file))))))))
+    (if candidate
+        (message "TeX master document: %s" (file-name-nondirectory candidate)))
+        candidate))
+
 
 
 ;; Latex autoinsertion
