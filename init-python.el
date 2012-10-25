@@ -34,8 +34,10 @@ path."
 
 ;; Try to set up IPython Shell. -------------------------------------------------------------------
 (when (executable-find "ipython")
-  (require-maybe 'ipython)
+  (if (require 'ipython nil t)
+      (setq py-python-command-args nil)) ; ipython.el sets up some ugly defaults
 )
+
 
 (defun setup-ipython-010-completion ()
   "Ipython.el does not support completion for Ipython 0.10. This

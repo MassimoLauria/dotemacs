@@ -111,6 +111,10 @@ to load the theme.
 (setq default-tab-width 4)
 
 
+;; VC warning
+(setq vc-follow-symlinks nil)
+
+
 ;; Scroll preferences
 (setq scroll-preserve-screen-position 1)
 (setq scroll-margin 0)
