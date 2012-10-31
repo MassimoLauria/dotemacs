@@ -114,6 +114,8 @@ to load the theme.
 ;; VC warning
 (setq vc-follow-symlinks nil)
 
+;; Go to the first error
+(setq compilation-auto-jump-to-first-error t)
 
 ;; Scroll preferences
 (setq scroll-preserve-screen-position 1)

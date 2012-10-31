@@ -102,17 +102,84 @@ source-specials/synctex toggle."
 ;; All TeX made with a single keystroke (BibTeX must run at least once).
 (require-maybe 'TeX-texify)
 
+;; Various improvements to the mode
 (add-hook 'LaTeX-mode-hook
           (lambda () (progn
-                       (if (fboundp 'TeX-texify)
-                           (local-set-key (kbd "<f9>")    'TeX-texify)
-                         (local-set-key (kbd "<f9>")    'TeX-command-master)
-                         )
                        (make-local-variable 'compilation-exit-message-function)
                        (setq compilation-exit-message-function 'nil)
                        (add-to-list 'LaTeX-verbatim-environments "comment")
                        (init-latex--fix-viewer-invocation)
                        )))
+
+
+;; Keyboard shortcut
+(add-hook 'TeX-mode-hook
+          '(lambda ()
+             (define-key TeX-mode-map (kbd "<f9>") 'init-latex--make)
+             (define-key TeX-mode-map (kbd "<f10>") 'TeX-view)))
+
+(defun init-latex--error-keys (style)
+  "There ar edifferent ways to navigate through compilatiol
+errors, depending on what system has been used to compile.
+
+Var `style' can be either one of the symbols `compile' and `auctex'.
+"
+  (cond
+   ((equal style 'compile)
+      (local-set-key (kbd "<f11>") 'previous-error)
+      (local-set-key (kbd "<f12>") 'next-error)
+      (local-set-key [M-prior] 'previous-error)
+      (local-set-key [M-next]  'next-error))
+   ((equal style 'auctex)
+      (local-set-key (kbd "<f11>")  'TeX-previous-error)
+      (local-set-key (kbd "<f12>") 'TeX-next-error)
+      (local-set-key [M-prior] 'TeX-previous-error)
+      (local-set-key [M-next]  'TeX-next-error))))
+
+
+(defun init-latex--make ()
+  "Produce the document, by trying several bould commands"
+  (interactive)
+  (cond
+
+   ;; if region is pinned, call master command on region
+   (TeX-command-region-begin
+        (init-latex--error-keys 'auctex)
+        (TeX-command-region t))
+   ;; is there a 'Makefile' in the folder? use that
+   ((file-exists-p "Makefile")
+        (set (make-local-variable 'compile-command)
+             "make -k")
+        (set (make-local-variable 'compilation-read-command)
+             nil)
+        (init-latex--error-keys 'compile)
+        (call-interactively 'compile)
+        (TeX-view))
+   ;; or use the TeX-texify function
+   ((fboundp 'TeX-texify)
+        (init-latex--error-keys 'auctex)
+        (call-interactively 'TeX-texify))
+   ;; otherwise build the document with rubber. I would prefer this to
+   ;; TeX-texify, but it does not support source correlation. Also it
+   ;; is broken for paths with spaces in it.
+   ((executable-find "rubber")
+        (set (make-local-variable 'compile-command)
+             (concat "rubber "
+                     (if TeX-PDF-mode "--pdf " "")
+                     (file-name-nondirectory (buffer-file-name))))
+        (set (make-local-variable 'compilation-read-command)
+             nil)
+        (init-latex--error-keys 'compile)
+        (call-interactively 'compile)
+        (TeX-view))
+   ;; or use the TeX-texify function
+   ((fboundp 'TeX-texify)
+        (init-latex--error-keys 'auctex)
+        (call-interactively 'TeX-texify))
+   ;; auctex default
+   (t
+        (init-latex--error-nav 'auctex)
+        (call-interactively 'TeX-command-master))))
 
 
 
@@ -358,6 +425,20 @@ It either tries \"lacheck\" or \"chktex\"."
     (if candidate
         (message "TeX master document: %s" (file-name-nondirectory candidate)))
         candidate))
+
+;; Rubber is a nice tool which is basically a make-like system for
+;; LaTeX documents
+(eval-after-load "tex"
+  '(progn
+     (add-to-list 'TeX-expand-list
+                  '("%(RubberPDF)"
+                    (lambda ()
+                      (if
+                          (not TeX-PDF-mode)
+                          ""
+                        "--pdf"))))
+     (add-to-list 'TeX-command-list
+                  '("Rubber" "rubber %(RubberPDF) %t" TeX-run-shell t t) t)))
 
 
 
