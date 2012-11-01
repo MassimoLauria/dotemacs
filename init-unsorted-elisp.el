@@ -275,6 +275,31 @@
 (define-key esc-map "," 'pop-tag-mark)
 (define-key esc-map "*" 'nil)
 
+
+;; HideShow mode
+(defun hs-minor-mode-setup (key)
+  "Setup keys for hs-mode."
+  (if (not (boundp 'hs-minor-mode-map))
+      (setq hs-minor-mode-map (make-sparse-keymap)))
+  (define-key hs-minor-mode-map key 'hs-toggle-hiding)
+  )
+(hs-minor-mode-setup (kbd "M-SPC"))
+
+(defadvice goto-line (after expand-after-goto-line
+                            activate compile)
+  "hideshow-expand affected block when using goto-line in a collapsed buffer"
+  (save-excursion
+    (hs-show-block)))
+
+(add-hook 'c-mode-common-hook   'hs-minor-mode)
+(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
+(add-hook 'java-mode-hook       'hs-minor-mode)
+(add-hook 'lisp-mode-hook       'hs-minor-mode)
+(add-hook 'perl-mode-hook       'hs-minor-mode)
+(add-hook 'python-mode-hook     'hs-minor-mode)
+(add-hook 'sh-mode-hook         'hs-minor-mode)
+
+
 ;; Auto modes for Gtags
 (add-hook 'c-mode-common-hook 'gtags-mode)
 
