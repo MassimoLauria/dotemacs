@@ -172,13 +172,9 @@ Var `style' can be either one of the symbols `compile' and `auctex'.
         (init-latex--error-keys 'compile)
         (call-interactively 'compile)
         (TeX-view))
-   ;; or use the TeX-texify function
-   ((fboundp 'TeX-texify)
-        (init-latex--error-keys 'auctex)
-        (call-interactively 'TeX-texify))
    ;; auctex default
    (t
-        (init-latex--error-nav 'auctex)
+        (init-latex--error-keys 'auctex)
         (call-interactively 'TeX-command-master))))
 
 
