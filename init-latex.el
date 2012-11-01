@@ -220,18 +220,34 @@ started."
       ;;
       ;; Between Evince 2.32 and 3.2 Evince started to give url
       ;; instead of filenames.
-      (defun un-urlify (fname-or-url)
+
+      ;; `dbus-un-urlify' and `dbus-urlify-escape-only' should be improved to handle
+      ;; all special characters, not only spaces.
+      ;; The fix for spaces is based on the first comment on
+      ;; http://emacswiki.org/emacs/AUCTeX#toc20
+
+      (defun dbus-un-urlify (fname-or-url)
         "A trivial function that replaces a prefix of file:/// with just /."
         (if (string= (substring fname-or-url 0 8) "file:///")
-            (substring fname-or-url 7)
+            (url-unhex-string (substring fname-or-url 7))
           fname-or-url))
+
+      (defun dbus-urlify-escape-only (path)
+        "Handle special characters for urlify"
+        (replace-regexp-in-string " " "%20" path))
+
+      (defun dbus-urlify (absolute-path)
+        "Transform /absolute/path to file:///absolute/path for Gnome with very limited support for special characters"
+        (if (string= (substring absolute-path 0 1) "/")
+            (concat "file://" (dbus-urlify-escape-only absolute-path))
+          absolute-path))
 
       (defun auctex-evince-inverse-sync (url linecol &rest timestamp)
         (message "Try to open %s is not opened..." url)
         (let (
           (buf (get-buffer
                 (file-name-nondirectory
-                  (replace-regexp-in-string "%20" " " (un-urlify url)))))
+                  (replace-regexp-in-string "%20" " " (dbus-un-urlify url)))))
           (line (car linecol))
           (col (cadr linecol)))
           (if (null buf)
@@ -252,7 +268,7 @@ started."
                      "/org/gnome/evince/Daemon" ; path
                      "org.gnome.evince.Daemon"  ; interface
                      "FindDocument"
-                     (concat "file://" pdffile)
+                     (dbus-urlify pdffile)
                      t     ; Open a new window if the file is not opened.
                      ))
               (time (current-time)))
