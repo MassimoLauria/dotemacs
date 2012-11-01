@@ -229,8 +229,9 @@ started."
           fname-or-url))
 
       (defun dbus-urlify-escape-only (path)
-        "Handle special characters for urlify"
-        (replace-regexp-in-string " " "%20" path))
+        "Handle special characters for urlify. Charachter '/' is added temporarily to the non escaped characters, so that `url-hexify-string' won't remove path separator."
+        (let ((url-unreserved-chars (cons ?/ url-unreserved-chars )))
+          (url-hexify-string path)))
 
       (defun dbus-urlify (absolute-path)
         "Transform /absolute/path to file:///absolute/path for Gnome with very limited support for special characters"
