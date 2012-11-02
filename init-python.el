@@ -14,10 +14,11 @@ path."
 
 ;; Put the virtual env path in front.
 (if (file-executable-p (concat python-virtualenv-path "/bin/python"))
-    (setq exec-path (cons (concat python-virtualenv-path "/bin/") exec-path))
-    (setenv "PATH" (concat python-virtualenv-path "/bin/:" (getenv "PATH")))
-  (message "Unable to setup Python vitual environment. I'll rely on the system.")
-  )
+    (progn (setq exec-path (cons (concat python-virtualenv-path "/bin/")
+                                 exec-path))
+           (setenv "PATH" (concat python-virtualenv-path "/bin/:"
+                                  (getenv "PATH"))))
+  (message "Unable to setup Python vitual environment. I'll rely on the system."))
 
 
 
@@ -146,4 +147,3 @@ is a workaround."
 ;; mode: emacs-lisp
 ;; folded-file: t
 ;; End:
-

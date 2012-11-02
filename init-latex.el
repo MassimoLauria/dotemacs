@@ -4,7 +4,7 @@
 ;;;-----------------------------------------------------------------
 
 ;; On Mac OSX LaTeX may be installed in some non canonical path.
-(when running-MacOSX
+(when (file-directory-p "/usr/texbin/")
   (add-to-list 'exec-path "/usr/texbin/" 'append))
 
 ;; Multifile support, completition, style, reverse search support, ...
@@ -206,7 +206,7 @@ started."
 ;; Setup DBUS communication between Evince and AUCTeX using SyncTeX
 ;; Forward/inverse search with evince using D-bus.
 ;; Forward search does not work with C-c C-v
-(if (require 'dbus "dbus" t)
+(if (and (require 'dbus "dbus" t) (executable-find "evince"))
     (progn
 
       ;;; Inverse search setup (C-leftclick in Evince --> Open in Emacs).

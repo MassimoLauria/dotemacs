@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
-;; Time-stamp: "2012-09-04, 21:10 (CEST) Massimo Lauria"
+;; Time-stamp: "2012-11-02, 22:18 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -32,6 +32,13 @@
 (setq default-elisp-3rdparties  "~/config/emacs/3rdparties")  ;; 3rd parties conf. packages
 (setq load-path (cons 	default-elisp-path        load-path))
 (setq load-path (cons 	default-elisp-3rdparties  load-path))
+
+;; Set paths, since sometime Mac OSX has weird paths and Emacs.app don't pick them up.
+; Local
+(add-to-list 'exec-path "/usr/local/bin/") ; local
+(add-to-list 'exec-path "/opt/local/bin/") ; macports
+(add-to-list 'exec-path "~/.local/bin")    ; home
+
 
 
 ;; Sometimes the system does not contains important packages as Org or
