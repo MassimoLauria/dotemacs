@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
-;; Time-stamp: "2012-11-03, 02:08 (CET) Massimo Lauria"
+;; Time-stamp: "2012-11-03, 02:20 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -124,6 +124,7 @@
 
 
 ;;; Start server in Mac OSX --------------------------------------------
+(require 'server)
 (if (and running-MacOSX (not (server-running-p))) (server-start))
 
 
