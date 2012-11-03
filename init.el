@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
-;; Time-stamp: "2012-11-02, 22:18 (CET) Massimo Lauria"
+;; Time-stamp: "2012-11-03, 02:08 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -33,8 +33,8 @@
 (setq load-path (cons 	default-elisp-path        load-path))
 (setq load-path (cons 	default-elisp-3rdparties  load-path))
 
-;; Set paths, since sometime Mac OSX has weird paths and Emacs.app don't pick them up.
-; Local
+;; Set paths, since sometime Mac OSX has weird paths and Emacs.app
+;; doesn't pick them up.
 (add-to-list 'exec-path "/usr/local/bin/") ; local
 (add-to-list 'exec-path "/opt/local/bin/") ; macports
 (add-to-list 'exec-path "~/.local/bin")    ; home
@@ -123,8 +123,8 @@
 (put 'narrow-to-region 'disabled nil)
 
 
-;;; Start server in Aquamacs --------------------------------------------
-(if (and (boundp 'aquamacs-version) (not (server-running-p))) (server-start))
+;;; Start server in Mac OSX --------------------------------------------
+(if (and running-MacOSX (not (server-running-p))) (server-start))
 
 
 

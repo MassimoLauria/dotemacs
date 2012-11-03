@@ -310,6 +310,30 @@ started."
 
       )) ;; D-Bus + Evince + SyncTeX
 
+
+;; For MacOSX I tend to use Skim viewer for PDFs. Skim is already set
+;; up in Aquamacs, but it is useful in Emacs.app
+(defun skim-make-url () (concat
+        (TeX-current-line)
+        " "
+        (expand-file-name (funcall file (TeX-output-extension) t)
+            (file-name-directory (TeX-master-file)))
+        " "
+        (buffer-file-name)))
+
+(when (and running-MacOSX (not running-Aquamacs))
+  (eval-after-load "tex"
+    '(progn
+       (add-to-list 'TeX-expand-list '("%q" skim-make-url))
+       (add-to-list 'TeX-view-program-list
+                    '("Skim" "/Applications/Skim.app/Contents/SharedSupport/displayline %q"))
+       (add-to-list 'TeX-view-program-list
+                    '("Preview" "open -a Preview.app %o"))
+       (add-to-list 'TeX-view-program-selection '(output-pdf "Skim"))
+       )))
+
+
+
 ;; To help collaboration, in LaTeX file I will only use soft word
 ;; wrapping.  Furthermore the filling is made to an arbitrary large
 ;; value, so that fill-paragraph won't do hard-wrapping by error.

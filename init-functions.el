@@ -272,6 +272,14 @@ Emacs buffers are those whose name starts with *."
   ;; Since we killed it, don't let caller do that.
   nil)
 
+;; Fake fullscreen
+(defun toggle-fullscreen ()
+  "Toggle full screen"
+  (interactive)
+  (set-frame-parameter
+     nil 'fullscreen
+     (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
+
 
 ;;----- Fix compile modes ------------------------------------------------
 
