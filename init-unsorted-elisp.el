@@ -49,8 +49,13 @@
 
 
 ;; Undo-Tree, much better than default.
-(require 'undo-tree)
-(global-undo-tree-mode)
+(if (require 'undo-tree)
+    (progn
+      (global-undo-tree-mode 1)
+      (defalias 'redo 'undo-tree-redo)
+      (defalias 'undo 'undo-tree-undo)
+      (global-set-key (kbd "C-S-z") 'redo))) ; 【Ctrl+Shift+z】 to Redo
+
 
 ;; Prepare *scratch buffer*
 ;; FROM: Morten Welind

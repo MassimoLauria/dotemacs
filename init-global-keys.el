@@ -66,34 +66,34 @@
 
 
 ;; Next/Prev item after Compiling
-(global-set-key (kbd "<f9>") 'recompile)
-(global-set-key (kbd "<f10>") 'gdb)
-(global-set-key (kbd "<f11>") 'previous-error) ; Does not work with LaTeX!
-(global-set-key (kbd "<f12>") 'next-error)
 (global-set-key [M-prior] 'previous-error) ; Does not work with LaTeX!
 (global-set-key [M-next] 'next-error)
 
 ;; Ispell
 (global-set-key (kbd "M-s") 'ispell-word) ; usually overridden by flyspell
-(global-set-key [f2] 'ispell-buffer)
 
+;;; ---- Function keys ----
 
-;; Tab is actually a "Smart tab"
-;; (global-set-key [(tab)] 'smart-tab)
+;; emacs commands
+(global-set-key [f1]  'help)
+(global-set-key [f2]  'ispell-buffer)
+(global-set-key [f3]  'kmacro-start-macro-or-insert-counter)
+(global-set-key [f4]  'kmacro-end-or-call-macro)
+;; daily life
+(global-set-key [f5]  'org-capture)  ;; Taking notes
+(global-set-key [f6]  'org-agenda)    ;; View agenda/Todo
+(global-set-key [f7]  'bbdb)          ;; Query Contacts
+(global-set-key [f8]  'spellcheck-language-cycle)
+;; devel (adapted to each mode)
+(global-set-key [f9]  'recompile)
+(global-set-key [f10] 'gdb)
+(global-set-key [f11] 'previous-error) ; Does not work with LaTeX!
+(global-set-key [f12] 'next-error)
 
-
-;; Agenda.
-(global-set-key [f5] 'org-capture)  ;; Taking notes
-(global-set-key [f6] 'org-agenda)    ;; View agenda/Todo
-(global-set-key [f7] 'bbdb)          ;; Query Contacts
-;; Switch language
-(global-set-key [f8] 'spellcheck-language-cycle)
-
-;;}}}
 
 
 (provide 'init-global-keys)
 ;; Local Variables:
 ;; mode: emacs-lisp
-;; folded-file: t
+;; coding: utf-8
 ;; End:

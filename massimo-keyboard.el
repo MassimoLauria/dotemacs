@@ -324,5 +324,3 @@ modified according to the useage pattern of the author."
 
 (provide 'massimo-keyboard)
 ;;; massimo-keyboard.el ends here
-
-
