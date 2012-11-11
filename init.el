@@ -84,6 +84,10 @@
 (require 'init-preferences)       ; Basic editor preferences
 (require 'init-backup)            ; Autosaves and backups behaviour
 
+;; Load packages which can be setup later
+(if (fboundp 'package-initialize)
+    (package-initialize))
+
 ;; Editor behaviour customization
 (require 'init-textmode)          ; Preferences for text editing
 (require 'init-terminal-fix)      ; Fix some keys combinations in terminals
