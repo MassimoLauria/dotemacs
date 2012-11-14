@@ -73,11 +73,11 @@ to load the theme.
 
 
 ;; Color theme (not available on default Emacs22 for MacOSX)
-(autoload 'color-theme-zenburn "zenburn.el"
-  "Just some alien fruit salad to keep you in the zone." t nil)
+;; (autoload 'color-theme-zenburn "zenburn.el"
+;;   "Just some alien fruit salad to keep you in the zone." t nil)
 
-(when (my-theme-loadable-p 'color-theme-zenburn 256)
-  (when-available 'color-theme-zenburn (color-theme-zenburn)))
+;; (when (my-theme-loadable-p 'color-theme-zenburn 256)
+;;   (when-available 'color-theme-zenburn (color-theme-zenburn)))
 
 (when-available 'scroll-bar-mode (scroll-bar-mode -1)) ;; scroll-bar-mode undefined in terminal emacs!
 (when-available 'tool-bar-mode   (tool-bar-mode -1)  ) ;;   tool-bar-mode undefined in terminal emacs!
