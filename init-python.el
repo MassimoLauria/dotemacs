@@ -35,9 +35,7 @@ path."
 
 ;; Try to set up IPython Shell. -------------------------------------------------------------------
 (when (executable-find "ipython")
-  (if (require 'ipython nil t)
-      (setq py-python-command-args nil)) ; ipython.el sets up some ugly defaults
-)
+  (require 'ipython nil t))
 
 
 (defun setup-ipython-010-completion ()
