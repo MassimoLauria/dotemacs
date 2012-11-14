@@ -24,18 +24,24 @@ path."
 
 
 
-;; Load python-mode.el ---------------------------------------------------------------------------
-(require 'python-mode)
+;; Load `python-mode.el' and the ipython `ipython.el' ----------------------------------------
+;;
+;; Notice that `sage-mode' may load `python.el' which is distributed with Emacs.
+;; in such case bad things happen (don't ask me why)
+;;
+;; Even more strange: if I load `python.el' before `python-mode.el' everything is fine.
 
+(require 'python)             ;; we don't like you...
+(require 'python-mode nil t)  ;; ..we like him
 
+;; ipython completion command (for ipython > 0.11)
+(defvar ipython-completion-command-string
+  "print(';'.join(get_ipython().complete('%s', '%s')[1])) #PYTHON-MODE SILENT\n"
+  "The string send to ipython to query for all possible completions")
 
-
-
-
-
-;; Try to set up IPython Shell. -------------------------------------------------------------------
 (when (executable-find "ipython")
   (require 'ipython nil t))
+
 
 
 (defun setup-ipython-010-completion ()
