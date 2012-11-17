@@ -44,6 +44,7 @@
  '(ebib-index-display-fields (quote (year author title)))
  '(ebib-print-multiline t)
  '(ebib-sort-order (quote ((year) (author editor) (title))))
+ '(edit-server-new-frame t)
  '(flyspell-auto-correct-binding "\363")
  '(flyspell-highlight-flag t)
  '(flyspell-mode-line-string " Fly")
