@@ -70,15 +70,6 @@
   (add-hook 'kill-buffer-query-functions 'kill-scratch-buffer))
 
 
-;; Edit text area on Google Chrome
-(if (and (fboundp 'daemonp) (daemonp) (locate-library "edit-server"))
-    (progn
-      (require 'edit-server)
-      (setq edit-server-new-frame nil)
-      (edit-server-start))
-  )
-
-
 ;; Make buffer names unique
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward
