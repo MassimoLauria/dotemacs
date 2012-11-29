@@ -218,11 +218,32 @@ part of the keyboard.
           ;; notebook
           ("n" "note" entry (file "notebook.org")
            "* %?\n  %U\n  %i\n  %a\n\n")
-          )))
+          ;; org-capture from the web
+          ("w" "webpage" entry (file "notebook.org")
+         "* “%:description” :webpage:\n  %u\n\n  %?\n\n  ----- Source: %c\n\n  %i")
+          ("g" "gmail" entry (file "agenda.org")
+         "* “%:description” :mail:\n  Message: %(org-gmail-extract-msgid (current-kill 0))\n  %?")
+
+        )))
+
+(defun org-gmail-extract-msgid (orgurl)
+  "Extract the message ID from a GMail urls"
+  (save-match-data
+    (string-match "\/\\([0-9a-f]*\\)\]" orgurl)
+    (match-string 1 orgurl)))
+
+(setq org-default-capture-template "w")
 
 
+;; Url abbreviation (and search engine)
+(setq org-link-abbrev-alist
+      '(("gmail"   . "https://mail.google.com/mail/u/0/#all/%s")
+        ("google"  . "http://www.google.com/search?q=%s")
+        ("map"     . "http://maps.google.com/maps?q=%s")
+        ))
 
-;; Aquamacs miss some org-agenda keybindings!
+
+;; Aquamacs misses some org-agenda keybindings!
 (defun org-agenda-mode-setup-local-keys()
   "Define/>Undefine of orgtbl-mode keys"
   ;; Org Agenda Left/Right movements
