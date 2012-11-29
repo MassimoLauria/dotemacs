@@ -330,6 +330,7 @@ started."
        (add-to-list 'TeX-view-program-list
                     '("Preview" "open -a Preview.app %o"))
        (add-to-list 'TeX-view-program-selection '(output-pdf "Skim"))
+       (TeX-global-PDF-mode t)
        )))
 
 
