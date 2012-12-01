@@ -10,7 +10,7 @@
 ;; English
 (defvar spellcheck-english-regexp "\\<\\(of\\|the\\|and\\|or\\|how\\)\\>"
   "If a buffer match this REGEXP it is supposed to be in english.")
-(defvar spellcheck-english-names '("british" "american" "english" "en_GB" "en_US" "en" )
+(defvar spellcheck-english-names '("american" "english" "british" "en_GB" "en_US" "en" )
   "Possible names for an ENGLISH dictionary.")
 
 
