@@ -222,8 +222,7 @@ part of the keyboard.
           ("w" "webpage" entry (file "notebook.org")
          "* “%:description” :webpage:\n  %u\n\n  %?\n\n  ----- Source: %c\n\n  %i")
           ("g" "gmail" entry (file "agenda.org")
-         "* “%:description” :mail:\n  Message: %(org-gmail-extract-msgid (current-kill 0))\n  %?")
-
+         "* “%:description” :mail:\n\n  --- [[gmail:%(org-gmail-extract-msgid (current-kill 0))][link to message]]\n\n  %?\n\n  %i")
         )))
 
 (defun org-gmail-extract-msgid (orgurl)
