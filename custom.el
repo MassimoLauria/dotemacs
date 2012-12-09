@@ -76,7 +76,7 @@
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("elpa" . "http://tromey.com/elpa/") ("marmalade" . "http://marmalade-repo.org/packages/"))))
  '(require-final-newline (quote t))
  '(ropemacs-guess-project t)
- '(safe-local-variable-values (quote ((default-justification . full) (TeX-source-correlate-method-active . source-specials) (ispell-default-dictionary . american) (TeX-PDF-mode . t) (folded-file . t))))
+ '(safe-local-variable-values (quote ((default-justification . full) (TeX-source-correlate-method-active . source-specials) (ispell-default-dictionary . american) (TeX-PDF-mode . t) )))
  '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/places")
  '(time-stamp-format "%:y-%02m-%02d, %02H:%02M (%Z) %U")
