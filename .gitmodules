@@ -16,3 +16,6 @@
 [submodule "3rdparties/auto-complete-clang"]
 	path = 3rdparties/auto-complete-clang
 	url = git://github.com/brianjcj/auto-complete-clang.git
+[submodule "3rdparties/auto-complete-new"]
+	path = 3rdparties/auto-complete-new
+	url = https://github.com/auto-complete/auto-complete.git
