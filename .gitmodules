@@ -1,9 +1,3 @@
-[submodule "3rdparties/ebib"]
-	path = 3rdparties/ebib
-	url = git://repo.or.cz/ebib.git
-[submodule "3rdparties/auto-complete"]
-	path = 3rdparties/auto-complete
-	url = git://github.com/m2ym/auto-complete.git
 [submodule "3rdparties/bbdb-vcard"]
 	path = 3rdparties/bbdb-vcard
 	url = http://github.com/trebb/bbdb-vcard.git
@@ -16,9 +10,6 @@
 [submodule "3rdparties/cclookup"]
 	path = 3rdparties/cclookup
 	url = git://github.com/tsgates/cclookup.git
-[submodule "3rdparties/twittering-mode"]
-	path = 3rdparties/twittering-mode
-	url = http://github.com/hayamiz/twittering-mode.git
 [submodule "3rdparties/eclim"]
 	path = 3rdparties/eclim
 	url = git://github.com/senny/emacs-eclim.git
