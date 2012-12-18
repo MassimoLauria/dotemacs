@@ -55,7 +55,9 @@
 ;; By default RET = `ac-complete'
 ;;            TAB = `ac-expand'
 (define-key ac-completing-map   "\r"     'nil)         ; conflicts with autopair-mode
+(define-key ac-completing-map   [return] 'nil)
 (define-key ac-completing-map   "\t"     'ac-complete) ; aggressive expansion
+(define-key ac-completing-map   [tab]    'ac-complete)
 
 
 ;; The mode that automatically startup.
