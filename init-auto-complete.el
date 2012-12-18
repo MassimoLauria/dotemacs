@@ -38,6 +38,9 @@
                                                   ; menu positioning
 (ac-config-default)
 
+;; Workaround for flyspell-mode
+(ac-flyspell-workaround)
+
 ;; Menu movement
 (define-key ac-completing-map (kbd "M-j") 'ac-quick-help-scroll-up)
 (define-key ac-completing-map (kbd "M-l") 'ac-quick-help-scroll-down)
@@ -163,4 +166,3 @@
 (provide 'init-auto-complete)
 
 ;;; init-auto-complete.el ends here
-
