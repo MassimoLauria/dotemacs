@@ -149,5 +149,4 @@ is a workaround."
 (provide 'init-python)
 ;; Local Variables:
 ;; mode: emacs-lisp
-;; folded-file: t
 ;; End:
