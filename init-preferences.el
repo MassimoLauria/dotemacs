@@ -121,7 +121,6 @@ to load the theme.
 (setq scroll-preserve-screen-position 1)
 (setq scroll-margin 0)
 (setq scroll-conservatively 1000)
-(setq jit-lock-defer-time 0.02)
 
 ;; Canonical behaviour of modern interfaces. Not the default in Emacs22
 ;; Cut (C-x)  Copy(C-c) Paste(C-v) Undo(C-z)
@@ -144,5 +143,4 @@ to load the theme.
 (provide 'init-preferences)
 ;; Local Variables:
 ;; mode: emacs-lisp
-;; folded-file: t
 ;; End:
