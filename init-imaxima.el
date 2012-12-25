@@ -19,14 +19,10 @@
 (when sagemath-root-directory
   (setq imaxima-base-path (concat sagemath-root-directory "/local/share/maxima/"))
   (let ((tmp nil))
-    (setq tmp (shell-command-to-string (concat "ls " imaxima-base-path)))
-    (when (string-match "[ \t\n]*$" tmp)
-      (setq tmp (replace-match "" nil nil tmp))
-      (setq imaxima-maxima-version tmp)
-      ))
+    (setq tmp (split-string (shell-command-to-string (concat "ls " imaxima-base-path)) "\n" t))
+    (setq imaxima-maxima-version (first (last tmp))))
   (setq imaxima-elisp-path (concat imaxima-base-path imaxima-maxima-version "/emacs/"))
-  (setq maxima-command     (concat sagemath-root-directory "/local/bin/maxima"))
-  )
+  (setq maxima-command     (concat sagemath-root-directory "/local/bin/maxima")))
 ;;;-------------------------------------------------------------------
 
 
@@ -45,5 +41,4 @@
 (provide 'init-imaxima)
 ;; Local Variables:
 ;; mode: emacs-lisp
-;; folded-file: t
 ;; End:

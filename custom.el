@@ -77,7 +77,6 @@
  '(org-hide-leading-stars t)
  '(org-highlight-latex-fragments-and-specials t)
  '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
- '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("elpa" . "http://tromey.com/elpa/") ("marmalade" . "http://marmalade-repo.org/packages/"))))
  '(require-final-newline (quote t))
  '(ropemacs-guess-project t)
  '(safe-local-variable-values (quote ((default-justification . full) (TeX-source-correlate-method-active . source-specials) (ispell-default-dictionary . american) (TeX-PDF-mode . t))))

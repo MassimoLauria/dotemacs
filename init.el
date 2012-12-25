@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
-;; Time-stamp: "2012-11-17, 13:34 (CET) Massimo Lauria"
+;; Time-stamp: "2012-12-25, 20:19 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -27,19 +27,31 @@
 ;; ...)
 
 
+
 ;;; Setup Emacs environment --------------------------------------------
+
 (setq default-elisp-path        "~/config/emacs")             ;; configuration files
 (setq default-elisp-3rdparties  "~/config/emacs/3rdparties")  ;; 3rd parties conf. packages
 (setq load-path (cons 	default-elisp-path        load-path))
 (setq load-path (cons 	default-elisp-3rdparties  load-path))
 
-;; Set paths, since sometime Mac OSX has weird paths and Emacs.app
-;; doesn't pick them up.
-(add-to-list 'exec-path "/usr/local/bin/") ; local
-(add-to-list 'exec-path "/opt/local/bin/") ; macports
-(add-to-list 'exec-path "~/.local/bin")    ; home
+(require 'init-discover-runtime) ; Discover emacs version and runtime
 
 
+(setq compat-elisp-emacs24 (concat default-elisp-path "/compat24"))  ;; For compatibility with Emacs 24
+(setq compat-elisp-emacs23 (concat default-elisp-path "/compat23"))  ;; For compatibility with Emacs 23
+(setq compat-elisp-emacs22 (concat default-elisp-path "/compat22"))  ;; For compatibility with Emacs 22
+
+(when (< emacs-major-version 24)
+  (setq load-path (cons compat-elisp-emacs24 load-path)))
+(when (< emacs-major-version 23)
+  (setq load-path (cons compat-elisp-emacs23 load-path)))
+(when (< emacs-major-version 22)
+  (setq load-path (cons compat-elisp-emacs22 load-path)))
+
+
+(require 'init-functions)        ; Utility functions for configuration
+(require 'init-elpa)
 
 ;; Sometimes the system does not contains important packages as Org or
 ;; BBDB, which cannot be installed using ELPA (either because Emacs <
@@ -61,7 +73,6 @@
                               "bbdb/bits"        ;; bbdb contributed utilities
                               "org/lisp"         ;; main org-mode
                               "org/contrib/lisp" ;; org-mode contributed utilities
-                              "color-theme"      ;; for older emacs
                               ))
 
 (dolist (path additional-elisp-paths)
@@ -71,8 +82,11 @@
               (setq load-path (cons pp load-path))))))
 
 
-(require 'init-discover-runtime) ; Discover emacs version and runtime
-(require 'init-functions)        ; Utility functions for configuration
+;; Set paths, since sometime Mac OSX has weird paths and Emacs.app
+;; doesn't pick them up.
+(add-to-list 'exec-path "/usr/local/bin/") ; local
+(add-to-list 'exec-path "/opt/local/bin/") ; macports
+(add-to-list 'exec-path "~/.local/bin")    ; home
 
 
 ;;; Module(s) initialization -------------------------------------------
@@ -84,9 +98,6 @@
 (require 'init-preferences)       ; Basic editor preferences
 (require 'init-backup)            ; Autosaves and backups behaviour
 
-;; Load packages which can be setup later
-(if (fboundp 'package-initialize)
-    (package-initialize))
 
 ;; Editor behaviour customization
 (require 'init-textmode)          ; Preferences for text editing

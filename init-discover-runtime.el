@@ -1,7 +1,7 @@
 ;;; init-discover-runtime.el --- Find out running OS, Emacsen, and setup accordingly
 
-;; Copyright (C) 2010, 2011  Massimo Lauria
-;; Time-stamp: "2011-12-04, 01:17 (CET) Massimo Lauria"
+;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
+;; Time-stamp: "2012-12-25, 19:35 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -31,8 +31,6 @@
 
 ;;; Code:
 
-
-(message "0 Discovering runtime environment...")
 
 ;; OS type --- are we running what?
 (defvar running-GNULinux (string-match "linux" (prin1-to-string system-type)))
