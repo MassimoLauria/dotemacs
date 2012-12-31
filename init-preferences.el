@@ -4,6 +4,13 @@
 ;;;
 ;;;-----------------------------------------------------------------
 
+;; Color theme
+(setq
+ default-color-theme-emacs24     'zenburn
+ default-color-theme-emacs23less 'color-theme-zenburn
+ default-color-number 256)
+
+
 ;; Regular fonts
 (setq
  font-X11-no-antialias "-misc-fixed-medium-r-normal--18-*-*-*-*-*-iso10646-1"
@@ -34,21 +41,6 @@
 )
 
 
-;; Decide whether load the color-theme
-(defun my-theme-loadable-p (theme-name required-colors)
-  "It is possible or desiderable to load the color-theme?  If
-Emacs is running as a server, or it has enough color, then tries
-to load the theme.
-"
-  (and
-   (or  ;; enough colors? (meaningless in server-mode)
-    (>= (display-color-cells) required-colors)
-    (if (fboundp 'daemonp) (daemonp))
-    )
-   (fboundp theme-name)
-   t ))
-
-
 ;;; Font setup
 ;; Linux (GNUEmacs >=23)
 (when (and running-GNULinux running-GNUEmacs23+ )
@@ -72,12 +64,17 @@ to load the theme.
  )
 
 
-;; Color theme (not available on default Emacs22 for MacOSX)
-;; (autoload 'color-theme-zenburn "zenburn.el"
-;;   "Just some alien fruit salad to keep you in the zone." t nil)
+;; Load color theme
+(when (or  ;; enough colors? (meaningless in server-mode)
+       (>= (display-color-cells) default-color-number)
+       (if (fboundp 'daemonp) (daemonp)))
+  (condition-case msg
+      (if (>= emacs-major-version 24)
+          (load-theme default-color-theme-emacs24 t)
+        (funcall default-color-theme-emacs23less))
+    (error (format "%s" msg) )))
 
-;; (when (my-theme-loadable-p 'color-theme-zenburn 256)
-;;   (when-available 'color-theme-zenburn (color-theme-zenburn)))
+
 
 (when-available 'scroll-bar-mode (scroll-bar-mode -1)) ;; scroll-bar-mode undefined in terminal emacs!
 (when-available 'tool-bar-mode   (tool-bar-mode -1)  ) ;;   tool-bar-mode undefined in terminal emacs!

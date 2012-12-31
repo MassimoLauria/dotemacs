@@ -3,7 +3,7 @@
 # Copyright (C) 2010, 2011, 2012 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2011-03-06, domenica 11:52 (CET) Massimo Lauria"
-# Time-stamp: "2012-12-22, 00:10 (CET) Massimo Lauria"
+# Time-stamp: "2012-12-31, 19:18 (CET) Massimo Lauria"
 
 # Description::
 #
@@ -29,8 +29,8 @@ FILE_NOT_FOUND=127
 
 GIT=git
 PYTHON=python
-PYPIP=pip-2.7
-PYEIN=easy_install-2.7
+PYPIP=pip
+PYEIN=easy_install
 
 
 if [ x`uname` == "xDarwin" ]; then

@@ -1,6 +1,6 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Time-stamp: "2012-12-25, 20:23 (CET) Massimo Lauria"
+;; Time-stamp: "2012-12-31, 17:47 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -89,6 +89,7 @@ ARCHIVE is the string name of the package archive.")
 ;;------------------------------------------------------------------------------
 
 (require-package 'auto-complete)
+(require-package 'diminish)
 
 (when (< emacs-major-version 24)
   (require-package 'color-theme)
