@@ -328,5 +328,4 @@ Emacs buffers are those whose name starts with *."
 (provide 'init-functions)
 ;; Local Variables:
 ;; mode: emacs-lisp
-;; folded-file: t
 ;; End:

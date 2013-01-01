@@ -357,5 +357,4 @@ Requires Org-mode 7.0"
 (provide 'init-org-mode)
 ;; Local Variables:
 ;; mode: emacs-lisp
-;; folded-file: t
 ;; End:

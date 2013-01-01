@@ -149,5 +149,4 @@ would happen for an empty document.")
 (provide 'init-spellcheck)
 ;; Local Variables:
 ;; mode: emacs-lisp
-;; folded-file: t
 ;; End:

@@ -44,5 +44,4 @@
 (provide 'init-backup)
 ;; Local Variables:
 ;; mode: emacs-lisp
-;; folded-file: t
 ;; End:

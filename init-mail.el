@@ -97,5 +97,4 @@
 (provide 'init-mail)
 ;; Local Variables:
 ;; mode: emacs-lisp
-;; folded-file: t
 ;; End:

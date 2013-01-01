@@ -39,5 +39,4 @@
 (provide 'init-local-preferences)
 ;; Local Variables:
 ;; mode: emacs-lisp
-;; folded-file: t
 ;; End:
