@@ -1,6 +1,6 @@
 ;;; init-unsorted-elisp.el --- Contains small chunks of elisp code in no particular order
 
-;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -86,6 +86,24 @@
             (split-window-horizontally arg)
           (split-window-vertically arg)
           )))
+
+
+
+;; Add a message to yank-pop
+(defun kill-ring-counters ()
+  "Output a cons (pos . len) whenre `len' is the number of the elements
+in the kill-ring and `pos' is the position current-kill"
+  (interactive)
+  (let ((len (length kill-ring))
+        (pos (length kill-ring-yank-pointer)))
+    (cons pos len)))
+
+(defadvice yank-pop (before print-kill-ring-counter ())
+  "Show in the minibuffer what is the current element of the kill-ring"
+  (let ((pl (kill-ring-counters)))
+    (message (format "(Yank Pop) kill-ring position %d/%d" (car pl) (cdr pl)))))
+
+(ad-activate 'yank-pop)
 
 ;; Customize Tramp
 
