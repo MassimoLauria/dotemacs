@@ -3,39 +3,23 @@
 ;; Filename: init-auto-complete.el
 
 ;;; Require
-
-
 (setq default-ac-dir   (concat default-elisp-3rdparties "/auto-complete"))
-(setq default-ac-l-dir (concat default-elisp-3rdparties "/auto-complete-latex"))
-(setq load-path (append load-path (list default-ac-dir default-ac-l-dir)))
-
-;; Disable byte compiling to avoid polluting the repository
-;(byte-recompile-directory default-ac-dir   0)
-;(byte-recompile-directory default-ac-l-dir 0)
-
-
-
-;; Finally load chosen auto-complete library.
+(add-to-list 'load-path default-ac-dir)
 (require 'auto-complete)
 (require 'auto-complete-config)
 
 ;; auto-complete dictionaries
 (add-to-list 'ac-dictionary-directories (concat default-ac-dir "/dict/"))
 
-;; Load LaTeX facilities only if present
-(when (and (boundp 'default-ac-l-dir) (file-directory-p default-ac-l-dir))
-  (require 'auto-complete-latex nil t)
-
-  ;; LaTeX dictionaries
-  (setq ac-l-dict-directory (concat default-ac-l-dir "/ac-l-dict/")))
-
+;; Load `auto-complete-auctex'
+(require 'auto-complete-auctex nil t)
 
 ;; Generic setup.
 (global-auto-complete-mode)             ;enable global-mode
 (setq ac-dwim nil)                      ;do not change keys semantic
 (setq ac-override-local-map nil)        ;don't override local map
-(setq popup-use-optimized-column-computation nil) ; slower but precise
-                                                  ; menu positioning
+(setq popup-use-optimized-column-computation t)  ; slower but precise
+                                                 ; menu positioning
 (ac-config-default)
 
 ;; Workaround for flyspell-mode
@@ -105,19 +89,10 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; LaTeX mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq ac-l-sources '(ac-source-dictionary
-                     ac-source-files-in-current-dir
-                     ac-source-filename
-                     ac-source-words-in-buffer
-                    ))
-
-(when (boundp 'reftex-default-bibliography)
-  (setq ac-l-bib-files reftex-default-bibliography))
-
 (defun turn-on-ac-latex ()
   "Activate auto-complete in latex"
-  (auto-complete-mode t)
-  (when (fboundp 'ac-l-setup) (ac-l-setup)))
+  (auto-complete-mode t))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; Mail-mode + BBDB ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defvar ac-bbdb-header-list '("to" "from" "cc" "bcc"))
