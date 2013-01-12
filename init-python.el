@@ -59,7 +59,14 @@ is a workaround."
   (end-of-buffer))
 
 
+;; Jedi library for completion -----------------------------------------------------
+(setq jedi-python-dir (concat default-elisp-3rdparties "/emacs-jedi"))
+(add-to-list 'load-path jedi-python-dir)
 
+(autoload 'jedi:setup "jedi" nil t)
+(setq jedi:setup-keys nil)
+(add-hook 'python-mode-hook 'jedi:setup)
+(add-hook 'python-mode-hook 'jedi:ac-setup)
 
 
 ;; Code checker(s) -----------------------------------------------------------------
@@ -108,19 +115,6 @@ is a workaround."
                         (file-name-directory buffer-file-name))))
 	  (list flymake-python-syntax-checker (list local-file))))
   (add-to-list 'flymake-allowed-file-name-masks '("\\.py\\'" flymake-python-init)))
-
-
-
-;; Ropemacs completion (not on Aquamacs, because it is too slow!) ------------------------------
-(unless running-Aquamacs
-  (ac-ropemacs-initialize)
-  (add-hook 'python-mode-hook
-            (lambda ()
-              (setq ac-sources (append '(ac-source-ropemacs) ac-sources))
-              (local-set-key (kbd "M-TAB") 'auto-complete)
-              )))
-
-
 
 
 

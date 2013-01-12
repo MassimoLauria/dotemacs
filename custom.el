@@ -60,6 +60,7 @@
  '(google-translate-default-target-language "en")
  '(google-translate-enable-ido-completion t)
  '(initial-major-mode (quote lisp-interaction-mode))
+ '(jedi:complete-on-dot t)
  '(jit-lock-defer-time nil)
  '(kept-new-versions 5)
  '(kept-old-versions 5)

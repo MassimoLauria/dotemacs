@@ -16,3 +16,6 @@
 [submodule "3rdparties/auto-complete-clang"]
 	path = 3rdparties/auto-complete-clang
 	url = git://github.com/brianjcj/auto-complete-clang.git
+[submodule "3rdparties/emacs-jedi"]
+	path = 3rdparties/emacs-jedi
+	url = git://github.com/tkf/emacs-jedi.git

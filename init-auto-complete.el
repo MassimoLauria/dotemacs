@@ -66,8 +66,6 @@
  '(ac-sources
    '(
      ac-source-yasnippet
-     ac-source-imenu
-     ac-source-abbrev
      ac-source-words-in-buffer
      ac-source-files-in-current-dir
      ac-source-filename
@@ -86,12 +84,6 @@
 ;; Keywords.
 (add-hook 'haskell-mode-hook '(lambda ()
                                 (add-to-list 'ac-sources 'ac-source-haskell)))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; LaTeX mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun turn-on-ac-latex ()
-  "Activate auto-complete in latex"
-  (auto-complete-mode t))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; Mail-mode + BBDB ;;;;;;;;;;;;;;;;;;;;;;;;;;;

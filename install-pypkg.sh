@@ -1,9 +1,9 @@
 #!/bin/sh
 #
-# Copyright (C) 2010, 2011, 2012 by Massimo Lauria <lauria.massimo@gmail.com>
+# Copyright (C) 2010, 2011, 2012, 2013 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2011-03-06, domenica 11:52 (CET) Massimo Lauria"
-# Time-stamp: "2012-12-31, 19:18 (CET) Massimo Lauria"
+# Time-stamp: "2013-01-12, 18:30 (CET) Massimo Lauria"
 
 # Description::
 #
@@ -11,14 +11,33 @@
 
 # Code::
 
+# -- OPTIONS ---------------
+INSTALL_ROPEMACS="no"
+INSTALL_JEDI="yes"
+INSTALL_CHECKERS="no"
+CHECKERS="pyflakes pylint pep8"
+
 
 # ---- Packages to be installed --------------------------------------
-PKGS="rope ropemode ropemacs"
-#PKGS="pyflakes pylint pep8 rope ropemode ropemacs"
+PKGS=""
+
+if [ $INSTALL_JEDI = "yes" ]; then
+    PKGS="$PKGS jedi epc"
+fi
+
+if [ $INSTALL_ROPEMACS = "yes" ]; then
+    PKGS="$PKGS rope ropemode ropemacs"
+fi
+
+if [ $INSTALL_CHECKERS = "yes" ]; then
+    PKGS="$PKGS $CHECKERS"
+fi
+
+# Pymacs version
 PYMACSREPO=git://github.com/pinard/Pymacs.git
 PYMACS=Pymacs
-#PYMACSVER=v0.24-beta2
 PYMACSVER=v0.25
+
 
 # ---- Env variables -------------------------------------------
 CP=cp
@@ -33,7 +52,7 @@ PYPIP=pip
 PYEIN=easy_install
 
 
-if [ x`uname` == "xDarwin" ]; then
+if [ x`uname` = "xDarwin" ]; then
     SITELISP=$HOME/Library/site-lisp/
 else
     SITELISP=$HOME/.emacs.d/site-lisp/
@@ -79,6 +98,8 @@ echo ""
 
 # -- 2 -- Install all packages ---------------------------------------
 echo "[2/3] Packages installation (please wait)."
+echo "Installing: $PKGS"
+
 $PYPIP install --user $PKGS
 
 if [ $? -ne 0 ]; then
@@ -86,27 +107,31 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+
 # -- 3 -- Install pymacs ---------------------------------------------
-echo "[3/3] Install Pymacs."
+if [ $INSTALL_ROPEMACS = "yes" ]; then
 
-$GIT clone $PYMACSREPO
-cd $(basename "$PYMACS")
-$GIT co $PYMACSVER
-make
+    echo "[3/3] Install Pymacs."
 
-$PYEIN --user . 2>/dev/null || {
-    echo "$PYEIN does not accept '--user' option. "
-    echo "We use '--prefix=$HOME/.local/' as fallback."
-    $PYEIN --prefix=$HOME/.local/ .
-}
+    $GIT clone $PYMACSREPO
+    cd $(basename "$PYMACS")
+    $GIT co $PYMACSVER
+    make
+
+    $PYEIN --user . 2>/dev/null || {
+        echo "$PYEIN does not accept '--user' option. "
+        echo "We use '--prefix=$HOME/.local/' as fallback."
+        $PYEIN --prefix=$HOME/.local/ .
+    }
 
 
-$RM -f $EMACSD/pymacs.el
-$MKDIR -p $SITELISP
-$CP pymacs.el $SITELISP
-cd ..
-$RM -fr $(basename "$PYMACS")
+    $RM -f $EMACSD/pymacs.el
+    $MKDIR -p $SITELISP
+    $CP pymacs.el $SITELISP
+    cd ..
+    $RM -fr $(basename "$PYMACS")
 
+fi
 
 # Back to where we were...
 cd $OLD_PWD
