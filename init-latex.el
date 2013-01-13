@@ -208,6 +208,8 @@ started."
 (if (and (require 'dbus "dbus" t) (executable-find "evince"))
     (progn
 
+      (require 'url-util nil t)
+
       ;;; Inverse search setup (C-leftclick in Evince --> Open in Emacs).
       ;; Adapted from: http://www.mail-archive.com/auctex@gnu.org/msg04175.html
       ;; Changed for Gnome3 according to
