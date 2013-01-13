@@ -18,6 +18,7 @@
 (setq TeX-complete-word '(lambda () ))
 (setq-default TeX-master t)  ;; Do not query for master file, and applies auto-insertion.
 
+(setq font-latex-fontify-sectioning 'color)
 
 ;; Since version 11.86 of AUCTeX the inverse/forward search is
 ;; implemented using source correlation.  Source correlation can be
