@@ -74,6 +74,19 @@
         (funcall default-color-theme-emacs23less))
     (error (format "%s" msg) )))
 
+;; Fix zenburn theme for flyspell/flymake/flycheck
+(when (>= emacs-major-version 24)
+  (custom-theme-set-faces
+   'zenburn
+   ;; flycheck
+   '(flycheck-error-face   ((t (:underline "red"   ))))
+   '(flycheck-warning-face ((t (:underline "yellow" ))))
+   ;; flymake
+   '(flymake-errline  ((t (:underline "red"   ))))
+   '(flymake-warnline ((t (:underline "yellow"))))
+   ;; flyspell
+   '(flyspell-duplicate ((t (:underline "magenta" ))))
+   '(flyspell-incorrect ((t (:underline "magenta" ))))))
 
 
 (when-available 'scroll-bar-mode (scroll-bar-mode -1)) ;; scroll-bar-mode undefined in terminal emacs!

@@ -50,9 +50,11 @@
  '(fci-rule-color "#073642")
  '(flymake-gui-warnings-enabled t)
  '(flymake-max-parallel-syntax-checks 1)
+ '(flymake-number-of-errors-to-display nil)
  '(flymake-run-in-place t)
  '(flyspell-auto-correct-binding "\363")
  '(flyspell-highlight-flag t)
+ '(flyspell-issue-message-flag nil)
  '(flyspell-mode-line-string " Fly")
  '(flyspell-persistent-highlight nil)
  '(flyspell-use-meta-tab nil)
@@ -95,10 +97,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(flymake-errline ((((class color)) (:underline "red"))))
- '(flymake-warnline ((((class color)) (:underline "yellow"))))
- '(flyspell-duplicate ((t (:underline "red"))))
- '(flyspell-incorrect ((t (:underline "red"))))
+ '(flymake-errline ((t (:underline "red"))))
+ '(flymake-warnline ((t (:underline "yellow"))))
+ '(flyspell-duplicate ((t (:underline "magenta"))))
+ '(flyspell-incorrect ((t (:underline "magenta"))))
  '(font-lock-fixme-face ((((class color) (background dark)) (:background "Yellow" :foreground "Red" :underline nil))) t)
  '(writegood-duplicates-face ((t (:underline "DeepPink"))) t)
  '(writegood-passive-voice-face ((t (:underline "DeepPink"))) t)
