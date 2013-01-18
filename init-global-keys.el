@@ -91,8 +91,8 @@
 (global-set-key [f12] 'next-error)
 
 ;; Eval S-EXP
-(global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)
-(global-set-key [remap eval-expression] 'pp-eval-expression)
+;; (global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)
+;; (global-set-key [remap eval-expression] 'pp-eval-expression)
 
 
 (provide 'init-global-keys)
