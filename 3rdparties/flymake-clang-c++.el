@@ -4,7 +4,7 @@
  (local-file (file-relative-name
  temp-file
  (file-name-directory buffer-file-name))))
- (list "clang++" (list "--std=c++11" "-fsyntax-only" "-fno-color-diagnostics" local-file))))
+ (list "clang++" (list "--std=c++11" "-stdlib=libc++" "-fsyntax-only" "-fno-color-diagnostics" local-file))))
 
 (defun flymake-clang-c++-load ()
   (interactive)
