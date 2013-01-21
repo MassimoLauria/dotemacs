@@ -64,9 +64,9 @@ is a workaround."
 (add-to-list 'load-path jedi-python-dir)
 
 (autoload 'jedi:setup "jedi" nil t)
+(autoload 'jedi:ac-setup "jedi" nil t)
 (setq jedi:setup-keys nil)
 (add-hook 'python-mode-hook 'jedi:setup)
-(add-hook 'python-mode-hook 'jedi:ac-setup)
 
 
 ;; Code checker(s) -----------------------------------------------------------------
