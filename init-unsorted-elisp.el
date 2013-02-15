@@ -218,9 +218,6 @@ in the kill-ring and `pos' is the position current-kill"
   )
 
 
-;; Remove trailing whitespaces before saving
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
 ;; Eldoc for lisp
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
