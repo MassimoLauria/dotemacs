@@ -320,6 +320,18 @@ in the kill-ring and `pos' is the position current-kill"
 (add-to-list 'which-func-modes 'org-mode)
 (which-func-mode 1)
 
+;; Trailining whitespace removal
+(defvar-local do-delete-whitespace t
+  "Local variable to decide whether deleting trailing whitespaces
+  when saving.")
+
+(defun delete-trailing-whitespace--conditional ()
+  "Call `delete-trailing-whitespace' unless `do-delete-whitespace' in non `nil'"
+  (when do-delete-whitespace
+    (delete-trailing-whitespace)))
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace--conditional)
+
 ;; Powershell facilities
 (autoload 'powershell-mode "powershell-mode" "A editing mode for Microsoft PowerShell." t)
 (add-to-list 'auto-mode-alist '("\\.ps1\\'" . powershell-mode)) ; PowerShell script
