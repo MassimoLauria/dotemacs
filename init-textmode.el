@@ -49,9 +49,9 @@
   (when (notany (lambda (m) (eq m major-mode))
                 '(LaTeX-mode TeX-mode latex-mode tex-mode))
     ;; Text formatting
-    (setq fill-column 70)
+    (set-default 'fill-column 70)
     (auto-fill-mode 1)
-    (setq default-justification 'full)
+    (set-default default-justification 'full)
     ;; Typography
     (when-available 'typopunct-mode (typopunct-mode 1))
     ))

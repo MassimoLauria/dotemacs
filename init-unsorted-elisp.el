@@ -321,7 +321,7 @@ in the kill-ring and `pos' is the position current-kill"
 (which-func-mode 1)
 
 ;; Trailining whitespace removal
-(defvar-local do-delete-whitespace t
+(defvar do-delete-whitespace t
   "Local variable to decide whether deleting trailing whitespaces
   when saving.")
 

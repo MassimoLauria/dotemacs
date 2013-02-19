@@ -339,18 +339,17 @@ started."
 ;; To help collaboration, in LaTeX file I will only use soft word
 ;; wrapping.  Furthermore the filling is made to an arbitrary large
 ;; value, so that fill-paragraph won't do hard-wrapping by error.
-;; (that is not what my recent collaborators want! Back to 70 columns)
 ;;
 ;; From Emacs 23, the visual-line-mode helps to visualize the file
 ;; properly.
-(add-hook 'LaTeX-mode-hook
-          (lambda ()
-            (setq  default-justification 'left)
-            (setq  fill-column 70)))
+(defun my-setup-of-text-mode-tex()
+  "Setup of text editing in LaTeX."
+  ;; Text formatting
+  (set-default 'fill-column 9999)
+  (set-default default-justification 'left)
+  )
 
-
-(if (fboundp 'visual-line-mode)
-    (add-hook 'LaTeX-mode-hook 'visual-line-mode))
+(add-hook 'LaTeX-mode-hook 'my-setup-of-text-mode-tex)
 
 
 ;; RefTeX setup
