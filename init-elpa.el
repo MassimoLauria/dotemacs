@@ -1,6 +1,6 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Time-stamp: "2013-01-12, 18:19 (CET) Massimo Lauria"
+;; Time-stamp: "2013-02-22, 23:17 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -88,16 +88,21 @@ ARCHIVE is the string name of the package archive.")
 ;; Install missing packages
 ;;------------------------------------------------------------------------------
 
-(require-package 'auto-complete)
-(require-package 'diminish)
-(require-package 'deferred)
-(require-package 'epc)
 
+(require-package 'auto-complete) ;; auto completion
+(require-package 'diminish)      ;; remove names from modeline
+(require-package 'deferred)      ;; 
+(require-package 'epc)           ;; process used for python auto-completion
+
+(require-package 'expand-region)
+(require-package 'multiple-cursors)
+
+;; Color theme 
 (when (< emacs-major-version 24)
   (require-package 'color-theme)
   (require-package 'zenburn))
-
 (when (>= emacs-major-version 24)
   (require-package 'zenburn-theme))
+
 
 (provide 'init-elpa)

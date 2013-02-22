@@ -104,6 +104,15 @@ At least they are considered useful for the author.
       )
     (define-key map (kbd "C-x C-b") 'ibuffer)
 
+    ;; Marking and using multiple cursors
+    (require 'multiple-cursors nil t)
+    (if (fboundp 'mc/mark-all-like-this-dwim)
+        (define-key map (kdb "C-") 'mc/mark-all-like-this-dwim))
+
+    ;; Expand region configuration
+    (require 'expand-region nil t)
+    (if (fboundp 'er/expand-region)
+        (define-key map (kdb "C-SPC") 'er/expand-region))
 
     ;; Register keys
     ;; Register at finger tips from 1 to ... 0!
