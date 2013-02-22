@@ -82,7 +82,7 @@
  '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
  '(require-final-newline (quote t))
  '(ropemacs-guess-project t)
- '(safe-local-variable-values (quote ((auto-fill-mode . t) (do-delete-whitespace) (default-justification . full) (TeX-source-correlate-method-active . source-specials) (ispell-default-dictionary . american) (TeX-PDF-mode . t))))
+ '(safe-local-variable-values (quote ((do-delete-whitespace) (eval quote (auto-fill-mode 1)) (eval quote (visual-line-mode -1)) (eval quote (auto-fill-mode -1)) (collaborations-turn-on-auto-fill . t) (collaborations-delete-whitespace) (default-justification . full) (TeX-source-correlate-method-active . source-specials) (ispell-default-dictionary . american) (TeX-PDF-mode . t))))
  '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/places")
  '(time-stamp-format "%:y-%02m-%02d, %02H:%02M (%Z) %U")
