@@ -337,5 +337,15 @@ in the kill-ring and `pos' is the position current-kill"
 (add-to-list 'auto-mode-alist '("\\.ps1\\'" . powershell-mode)) ; PowerShell script
 (autoload 'powershell "powershell" "Start a interactive shell of PowerShell." t)
 
+
+;; do not show certain modes in the modeline
+(require 'diminish nil t)
+(when (fboundp 'diminish)
+  (diminish 'undo-tree-mode)
+  (diminish 'hs-minor-mode)
+  (diminish 'eldoc-mode)
+  (diminish 'massimo-keyboard-mode " mas"))
+
+
 (provide 'init-unsorted-elisp)
 ;;; init-unsorted-elisp.el ends here

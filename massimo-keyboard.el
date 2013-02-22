@@ -107,7 +107,7 @@ At least they are considered useful for the author.
     ;; Marking and using multiple cursors
     (require 'multiple-cursors nil t)
     (if (fboundp 'mc/mark-all-like-this-dwim)
-        (define-key map (kdb "C-") 'mc/mark-all-like-this-dwim))
+        (define-key map (kdb "C-'") 'mc/mark-all-like-this-dwim))
 
     ;; Expand region configuration
     (require 'expand-region nil t)
