@@ -346,6 +346,12 @@ in the kill-ring and `pos' is the position current-kill"
   (diminish 'eldoc-mode)
   (diminish 'massimo-keyboard-mode " mas"))
 
+(defadvice fundamental-mode (after add-massimo-keyboard-mode ())
+  (when (fboundp 'massimo-keyboard-mode)
+    (massimo-keyboard-mode t)))
+
+(ad-activate 'fundamental-mode)
+
 
 (provide 'init-unsorted-elisp)
 ;;; init-unsorted-elisp.el ends here
