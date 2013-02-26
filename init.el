@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
-;; Time-stamp: "2012-12-25, 20:19 (CET) Massimo Lauria"
+;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
+;; Time-stamp: "2013-02-26, 11:14 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -136,7 +136,6 @@
 (load custom-file 'noerror)
 ;;; Enabled commands
 (put 'narrow-to-region 'disabled nil)
-
 
 ;;; Start server --------------------------------------------------------
 (require 'init-server)

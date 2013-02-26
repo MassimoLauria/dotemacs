@@ -338,20 +338,34 @@ in the kill-ring and `pos' is the position current-kill"
 (autoload 'powershell "powershell" "Start a interactive shell of PowerShell." t)
 
 
-;; do not show certain modes in the mode-line
-(require 'diminish nil t)
-(when (fboundp 'diminish)
-  (diminish 'undo-tree-mode)
-  (diminish 'hs-minor-mode)
-  (diminish 'eldoc-mode)
-  (diminish 'flyspell-mode)
-  (diminish 'massimo-keyboard-mode " mas"))
-
 (defadvice fundamental-mode (after add-massimo-keyboard-mode ())
   (when (fboundp 'massimo-keyboard-mode)
     (massimo-keyboard-mode t)))
 
 (ad-activate 'fundamental-mode)
+
+
+;; do not show certain modes in the mode-line
+(require 'diminish nil t)
+(when (fboundp 'diminish)
+
+  (require 'flyspell)
+  (diminish 'flyspell-mode)
+
+  (require 'undo-tree)
+  (diminish 'undo-tree-mode)
+
+  (require 'hideshow)
+  (diminish 'hs-minor-mode)
+
+  (require 'eldoc)
+  (diminish 'eldoc-mode)
+  
+  (require 'massimo-keyboard)
+  (diminish 'massimo-keyboard-mode " mas"))
+
+
+
 
 
 (provide 'init-unsorted-elisp)
