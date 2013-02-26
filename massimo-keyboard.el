@@ -107,12 +107,12 @@ At least they are considered useful for the author.
     ;; Marking and using multiple cursors
     (require 'multiple-cursors nil t)
     (if (fboundp 'mc/mark-all-like-this-dwim)
-        (define-key map (kdb "C-'") 'mc/mark-all-like-this-dwim))
+        (define-key map (kbd "C-'") 'mc/mark-all-like-this-dwim))
 
     ;; Expand region configuration
     (require 'expand-region nil t)
     (if (fboundp 'er/expand-region)
-        (define-key map (kdb "C-SPC") 'er/expand-region))
+        (define-key map (kbd "C-SPC") 'er/expand-region))
 
     ;; Register keys
     ;; Register at finger tips from 1 to ... 0!
@@ -334,3 +334,4 @@ modified according to the useage pattern of the author."
 
 (provide 'massimo-keyboard)
 ;;; massimo-keyboard.el ends here
+
