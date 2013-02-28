@@ -349,21 +349,33 @@ in the kill-ring and `pos' is the position current-kill"
 (require 'diminish nil t)
 (when (fboundp 'diminish)
 
-  (require 'flyspell)
-  (diminish 'flyspell-mode)
+  (eval-after-load 'flyspell
+    '(diminish 'flyspell-mode))
 
-  (require 'undo-tree)
-  (diminish 'undo-tree-mode)
+  (eval-after-load 'undo-tree
+    '(diminish 'undo-tree-mode))
 
-  (require 'hideshow)
-  (diminish 'hs-minor-mode)
+  (eval-after-load 'hideshow
+    '(diminish 'hs-minor-mode))
 
-  (require 'eldoc)
-  (diminish 'eldoc-mode)
+  (eval-after-load 'eldoc
+    '(diminish 'eldoc-mode))
   
-  (require 'massimo-keyboard)
-  (diminish 'massimo-keyboard-mode " mas"))
+  (eval-after-load 'massimo-keyboard
+    '(diminish 'massimo-keyboard-mode " ⊤"))
 
+  (eval-after-load 'typopunct
+    '(diminish 'typopunct-mode " “"))
+
+  (eval-after-load 'auto-complete
+    '(diminish 'auto-complete-mode " α"))
+
+  (eval-after-load 'autopair
+    '(diminish 'autopair-mode " ♊"))
+
+  (eval-after-load 'yasnippet
+    '(diminish 'yas/minor-mode " ⓨ"))
+  )
 
 
 
