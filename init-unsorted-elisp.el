@@ -282,6 +282,11 @@ in the kill-ring and `pos' is the position current-kill"
 (define-key esc-map "," 'pop-tag-mark)
 (define-key esc-map "*" 'nil)
 
+(eval-after-load 'winner-mode-hook
+  '(progn 
+     (define-key winner-mode-map (kbd "C-c C-j") 'winner-undo)
+     (define-key winner-mode-map (kbd "C-c C-l") 'winner-redo)
+     ))
 
 ;; HideShow mode
 (defun hs-minor-mode-setup (key)
@@ -349,32 +354,17 @@ in the kill-ring and `pos' is the position current-kill"
 (require 'diminish nil t)
 (when (fboundp 'diminish)
 
-  (eval-after-load 'flyspell
-    '(diminish 'flyspell-mode))
-
-  (eval-after-load 'undo-tree
-    '(diminish 'undo-tree-mode))
-
-  (eval-after-load 'hideshow
-    '(diminish 'hs-minor-mode))
-
-  (eval-after-load 'eldoc
-    '(diminish 'eldoc-mode))
-  
-  (eval-after-load 'massimo-keyboard
-    '(diminish 'massimo-keyboard-mode " ⊤"))
-
-  (eval-after-load 'typopunct
-    '(diminish 'typopunct-mode " “"))
-
-  (eval-after-load 'auto-complete
-    '(diminish 'auto-complete-mode " α"))
-
-  (eval-after-load 'autopair
-    '(diminish 'autopair-mode " ♊"))
-
-  (eval-after-load 'yasnippet
-    '(diminish 'yas/minor-mode " ⓨ"))
+  (eval-after-load 'flyspell  '(diminish 'flyspell-mode))
+  (eval-after-load 'undo-tree '(diminish 'undo-tree-mode))
+  (eval-after-load 'hideshow '(diminish 'hs-minor-mode))
+  (eval-after-load 'reftex-mode '(diminish 'reftex-mode))
+  (eval-after-load 'eldoc '(diminish 'eldoc-mode))
+  (eval-after-load 'massimo-keyboard '(diminish 'massimo-keyboard-mode " ⊤"))
+  (eval-after-load 'typopunct '(diminish 'typopunct-mode " “"))
+  (eval-after-load 'auto-complete '(diminish 'auto-complete-mode " α"))
+  (eval-after-load 'autopair '(diminish 'autopair-mode " ♊"))
+  (eval-after-load 'yasnippet '(diminish 'yas/minor-mode " ⓨ"))
+  (eval-after-load 'simple '(diminish 'auto-fill-function " ⓕ"))
   )
 
 

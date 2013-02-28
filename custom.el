@@ -91,7 +91,10 @@
  '(toe-treat-words (quote downcase))
  '(toe-words-per-level 8)
  '(version-control t)
- '(visual-line-mode nil t))
+ '(visual-line-mode nil t)
+ '(winner-boring-buffers (quote ("*Completions*")))
+ '(winner-dont-bind-my-keys t)
+ '(winner-mode t nil (winner)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
