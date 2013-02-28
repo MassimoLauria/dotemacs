@@ -87,7 +87,7 @@ At least they are considered useful for the author.
     (define-key map (kbd "M-r")  'kill-word)
     (define-key map (kbd "M-d")  'backward-delete-char)
     (define-key map (kbd "M-f")  'delete-char)
-    (define-key map (kbd "C-w")  'kill-whole-line)
+    (define-key map (kbd "M-w")  'kill-whole-line)
 
 
     ;; Moving between buffers (M-S)
