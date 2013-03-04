@@ -19,6 +19,8 @@
 (setq message-signature private-email-signature)
 (setq message-auto-save-directory "~/personal/mail/drafts")
 
+;; Try to load mu4e client if installed.
+(require 'mu4e nil t)
 
 ;; Click urls/mails in Mime-View
 (add-hook 'mime-view-mode-hook 'goto-address-mode)
