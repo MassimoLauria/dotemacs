@@ -89,6 +89,7 @@
    '(flyspell-incorrect ((t (:underline "magenta" ))))))
 
 
+;; GUI elements
 (when-available 'scroll-bar-mode (scroll-bar-mode -1)) ;; scroll-bar-mode undefined in terminal emacs!
 (when-available 'tool-bar-mode   (tool-bar-mode -1)  ) ;;   tool-bar-mode undefined in terminal emacs!
 (menu-bar-mode -1)
@@ -109,6 +110,12 @@
 
 (setq x-stretch-cursor t)
 (show-paren-mode 1)
+
+;; powerline is cool
+(when (require 'powerline nil t)
+  (powerline-default-center))
+
+
 
 (defalias 'yes-or-no-p 'y-or-n-p) ; y/n instead of yes/no
 (if running-Aquamacs

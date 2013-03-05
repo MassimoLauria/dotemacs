@@ -1,6 +1,6 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Time-stamp: "2013-02-22, 23:17 (CET) Massimo Lauria"
+;; Time-stamp: "2013-03-05, 17:25 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -17,8 +17,8 @@
 
 (setq package-archives  '(("gnu" . "http://elpa.gnu.org/packages/")
                           ("elpa" . "http://tromey.com/elpa/")
-                          ("marmalade" . "http://marmalade-repo.org/packages/")))
-
+                          ("marmalade" . "http://marmalade-repo.org/packages/")
+                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
 
 

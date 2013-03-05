@@ -58,6 +58,7 @@
  '(flyspell-mode-line-string " Fly")
  '(flyspell-persistent-highlight nil)
  '(flyspell-use-meta-tab nil)
+ '(fringe-mode 0 nil (fringe))
  '(google-translate-default-source-language "auto")
  '(google-translate-default-target-language "en")
  '(google-translate-enable-ido-completion t)
