@@ -102,14 +102,16 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(flymake-errline ((((class color)) (:underline "red"))))
- '(flymake-warnline ((((class color)) (:underline "yellow"))))
- '(flyspell-duplicate ((t (:underline "magenta"))))
- '(flyspell-incorrect ((t (:underline "magenta"))))
+ '(flycheck-error-face ((t (:underline "DodgerBlue1"))))
+ '(flycheck-warning-face ((t (:underline "green"))))
+ '(flymake-errline ((t (:underline "DodgerBlue1"))))
+ '(flymake-warnline ((t (:underline "green"))))
+ '(flyspell-duplicate ((t (:strike-through "red"))))
+ '(flyspell-incorrect ((t (:underline "red"))))
  '(font-lock-fixme-face ((((class color) (background dark)) (:background "Yellow" :foreground "Red" :underline nil))) t)
  '(powerline-active2 ((t (:inherit mode-line :background "grey30"))))
  '(powerline-inactive1 ((t (:inherit mode-line-inactive :background "gray22"))))
  '(powerline-inactive2 ((t (:inherit mode-line-inactive :background "gray22"))))
- '(writegood-duplicates-face ((t (:underline "DeepPink"))) t)
- '(writegood-passive-voice-face ((t (:underline "DeepPink"))) t)
- '(writegood-weasels-face ((((class color) (background dark)) (:underline "DeepPink"))) t))
+ '(writegood-duplicates-face ((t nil)))
+ '(writegood-passive-voice-face ((t (:underline "red"))))
+ '(writegood-weasels-face ((t (:strike-through "red")))))

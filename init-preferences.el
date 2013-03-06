@@ -78,15 +78,13 @@
 (when (>= emacs-major-version 24)
   (custom-theme-set-faces
    'zenburn
-   ;; flycheck
-   '(flycheck-error-face   ((t (:underline "red"   ))))
-   '(flycheck-warning-face ((t (:underline "yellow" ))))
-   ;; flymake
-   '(flymake-errline  ((t (:underline "red"   ))))
-   '(flymake-warnline ((t (:underline "yellow"))))
-   ;; flyspell
-   '(flyspell-duplicate ((t (:underline "magenta" ))))
-   '(flyspell-incorrect ((t (:underline "magenta" ))))))
+   '(flycheck-error-face ((t (:underline "DodgerBlue1"))))
+   '(flycheck-warning-face ((t (:underline "green"))))
+   '(flymake-errline ((t (:underline "DodgerBlue1"))))
+   '(flymake-warnline ((t (:underline "green"))))
+   '(flyspell-duplicate ((t (:strike-through "red"))))
+   '(flyspell-incorrect ((t (:underline "red"))))
+   ))
 
 
 ;; GUI elements
