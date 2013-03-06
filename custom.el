@@ -96,8 +96,7 @@
  '(visual-line-mode nil t)
  '(winner-boring-buffers (quote ("*Completions*")))
  '(winner-dont-bind-my-keys t)
- '(winner-mode t nil (winner))
- '(writeroom-width 71))
+ '(winner-mode t nil (winner)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -108,6 +107,9 @@
  '(flyspell-duplicate ((t (:underline "magenta"))))
  '(flyspell-incorrect ((t (:underline "magenta"))))
  '(font-lock-fixme-face ((((class color) (background dark)) (:background "Yellow" :foreground "Red" :underline nil))) t)
+ '(powerline-active2 ((t (:inherit mode-line :background "grey30"))))
+ '(powerline-inactive1 ((t (:inherit mode-line-inactive :background "gray22"))))
+ '(powerline-inactive2 ((t (:inherit mode-line-inactive :background "gray22"))))
  '(writegood-duplicates-face ((t (:underline "DeepPink"))) t)
  '(writegood-passive-voice-face ((t (:underline "DeepPink"))) t)
  '(writegood-weasels-face ((((class color) (background dark)) (:underline "DeepPink"))) t))
