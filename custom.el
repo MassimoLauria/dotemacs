@@ -96,7 +96,8 @@
  '(visual-line-mode nil t)
  '(winner-boring-buffers (quote ("*Completions*")))
  '(winner-dont-bind-my-keys t)
- '(winner-mode t nil (winner)))
+ '(winner-mode t nil (winner))
+ '(writeroom-width 71))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
