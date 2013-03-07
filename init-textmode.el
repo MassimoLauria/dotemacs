@@ -52,7 +52,7 @@
     ;; Text formatting
     (set-default 'fill-column 70)
     (auto-fill-mode 1)
-    (set-default default-justification 'full)
+    (setq default-justification 'full)
     ;; Typography
     (when-available 'typopunct-mode (typopunct-mode 1))
     ))
