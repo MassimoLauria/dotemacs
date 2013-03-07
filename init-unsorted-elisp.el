@@ -200,18 +200,6 @@ in the kill-ring and `pos' is the position current-kill"
   "Display a warning to the user, using minibuffer"
   (message warning))
 
-
-;; Set faces for flymake
-(custom-set-faces
- '(flymake-errline ((((class color)) (:underline "red"))))
- '(flymake-warnline ((((class color)) (:underline "yellow")))))
-
-;; load flymake
-(when (require 'flymake nil t)
-  (add-hook 'find-file-hook 'flymake-find-file-hook)
-  )
-
-
 ;; All urls/mails are clickable in comments and strings (Not present in Emacs22)
 (when-available 'goto-address-prog-mode
   (add-hook 'find-file-hooks 'goto-address-prog-mode)
@@ -223,9 +211,6 @@ in the kill-ring and `pos' is the position current-kill"
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
 ;;}}}
-
-(require-maybe 'lambda-mode)
-(setq lambda-symbol "λ")
 
 
 ;; CCLookup documentation of C/C++

@@ -3,7 +3,7 @@
 ;; Copyright (C) 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-03-07, 14:51 (CET) Massimo Lauria>
+;; Time-stamp: <2013-03-07, 16:31 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -34,8 +34,7 @@
     (emacs-lisp-mode . "eλ")
     (inferior-emacs-lisp-mode . "ieλ")
     ;; other programming languages
-    (python-mode . "Py")    
-    )
+    (python-mode . "Py"))
   "Alist for `rename-major-mode-alist'.")
 
 (defun rename-major-mode-line ()
@@ -99,15 +98,17 @@ E-W and STATUS report the errors."
     (force-mode-line-update)))
 
 
-(defalias 'flymake-report-status  'flymake-report-status-slim)
-(defalias 'flycheck-report-status 'flycheck-report-status-slim)
+(eval-after-load "flymake"
+  '(defalias 'flymake-report-status  'flymake-report-status-slim))
+(eval-after-load "flycheck"
+  '(defalias 'flycheck-report-status 'flycheck-report-status-slim))
 
 
 
 
 ;; powerline makes mode-line cool
-(when (require 'powerline nil t)
-  (powerline-default-center))
+;; (when (require 'powerline nil t)
+;;   (powerline-default-center))
 
 
 (provide 'init-modeline)
