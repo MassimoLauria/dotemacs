@@ -338,20 +338,39 @@ started."
 
 
 
-;; To help collaboration, in LaTeX file I will only use soft word
-;; wrapping.  Furthermore the filling is made to an arbitrary large
-;; value, so that fill-paragraph won't do hard-wrapping by error.
+;; To help collaboration, in LaTeX file sometimes I need to use soft
+;; word wrapping.  In that case the filling is made to an arbitrary
+;; large value, so that fill-paragraph won't do hard-wrapping by
+;; error.
 ;;
-;; From Emacs 23, the visual-line-mode helps to visualize the file
-;; properly.
-(defun my-setup-of-text-mode-tex()
-  "Setup of text editing in LaTeX."
-  ;; Text formatting
-  (set-default 'fill-column 9999)
-  (set-default default-justification 'left)
-  )
+(defvar my-setup-of-latex-default-format 'hard
+  "Default formatting rules for LaTeX")
 
-(add-hook 'LaTeX-mode-hook 'my-setup-of-text-mode-tex)
+(defun my-setup-of-latex-softformat()
+  "Setup of text editing in LaTeX (soft wrapping)."
+  (interactive)
+  (setq fill-column 9999)
+  (setq default-justification 'left)
+  (auto-fill-mode -1))
+
+(defun my-setup-of-latex-hardformat()
+  "Setup of text editing in LaTeX (soft wrapping)."
+  (interactive)
+  (setq fill-column 70)
+  (setq default-justification 'left)
+  (auto-fill-mode 1))
+
+(defun my-setup-of-latex-format( &optional format)
+  "Setup of text editing in LaTeX (`FORMAT' is either hard or soft)."
+  (interactive)
+  (let ((fmt (or format my-setup-of-latex-default-format)))
+    (cond ((eq fmt 'hard) (my-setup-of-latex-hardformat))
+          ((eq fmt 'soft) (my-setup-of-latex-softformat))
+          (t (my-setup-of-latex-hardformat)) ; default is hard
+          )))
+  
+
+(add-hook 'LaTeX-mode-hook 'my-setup-of-latex-format)
 
 
 ;; RefTeX setup
