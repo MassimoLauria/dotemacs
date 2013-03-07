@@ -43,6 +43,7 @@
  '(default-justification (quote left))
  '(delete-old-versions t)
  '(display-hourglass t)
+ '(display-time-day-and-date t)
  '(ebib-index-display-fields (quote (year author title)))
  '(ebib-print-multiline t)
  '(ebib-sort-order (quote ((year) (author editor) (title))))
@@ -104,8 +105,8 @@
  ;; If there is more than one, they won't work right.
  '(flycheck-error-face ((t (:underline "DodgerBlue1"))))
  '(flycheck-warning-face ((t (:underline "green"))))
- '(flymake-errline ((t (:underline "DodgerBlue1"))))
- '(flymake-warnline ((t (:underline "green"))))
+ '(flymake-errline ((((class color)) (:underline "red"))))
+ '(flymake-warnline ((((class color)) (:underline "yellow"))))
  '(flyspell-duplicate ((t (:strike-through "red"))))
  '(flyspell-incorrect ((t (:underline "red"))))
  '(font-lock-fixme-face ((((class color) (background dark)) (:background "Yellow" :foreground "Red" :underline nil))) t)

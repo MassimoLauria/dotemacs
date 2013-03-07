@@ -350,23 +350,6 @@ in the kill-ring and `pos' is the position current-kill"
 (ad-activate 'fundamental-mode)
 
 
-;; do not show certain modes in the mode-line
-(require 'diminish nil t)
-(when (fboundp 'diminish)
-
-  (eval-after-load 'flyspell  '(diminish 'flyspell-mode))
-  (eval-after-load 'undo-tree '(diminish 'undo-tree-mode))
-  (eval-after-load 'hideshow '(diminish 'hs-minor-mode))
-  (eval-after-load 'reftex-mode '(diminish 'reftex-mode))
-  (eval-after-load 'eldoc '(diminish 'eldoc-mode))
-  (eval-after-load 'massimo-keyboard '(diminish 'massimo-keyboard-mode " ⊤"))
-  (eval-after-load 'typopunct '(diminish 'typopunct-mode " “"))
-  (eval-after-load 'auto-complete '(diminish 'auto-complete-mode " α"))
-  (eval-after-load 'autopair '(diminish 'autopair-mode " ♊"))
-  (eval-after-load 'yasnippet '(diminish 'yas/minor-mode " ⓨ"))
-  (eval-after-load 'simple '(diminish 'auto-fill-function " ⓕ"))
-  )
-
 
 
 

@@ -109,12 +109,6 @@
 (setq x-stretch-cursor t)
 (show-paren-mode 1)
 
-;; powerline is cool
-(when (require 'powerline nil t)
-  (powerline-default-center))
-
-
-
 (defalias 'yes-or-no-p 'y-or-n-p) ; y/n instead of yes/no
 (if running-Aquamacs
     (setq confirm-kill-emacs nil)     ; Aquamacs won't interrupt logging out
