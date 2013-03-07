@@ -40,6 +40,7 @@
 (defun my-setup-of-text-mode-common()
   "Initial setup of Text mode (common to all children modes)"
   (when-available 'flyspell-mode     (flyspell-mode     1))
+  (when-available 'writegood-mode    (writegood-mode    1))
   (when-available 'goto-address-mode (goto-address-mode 1))
   )
 
