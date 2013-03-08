@@ -205,6 +205,59 @@ part of the keyboard.
   (define-key orgtbl-mode-map (kbd "C-M-#") 'org-table-insert-row)
   )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Org Capture template configuration 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; support functions
+
+(defun org-build-note-webpage ()
+  "Define the structure of a capture note for an external link"
+  (let ((title (plist-get org-store-link-plist :description))
+        (link  (plist-get org-store-link-plist :link))
+        (time  (format-time-string "[%Y-%m-%d %a]" (current-time)))
+        (text  (plist-get org-store-link-plist :initial))
+        output)
+    (with-temp-buffer
+      (insert (concat
+               "* “" title "” :webpage:\n"
+               "  "  time "\n\n"
+               "  %?\n\n"
+               "  --- Source: [[" link "][" title "]]" "\n\n  "))
+      ;;(set-fill-prefix)
+      (insert text)
+      (set-fill-column 70)
+      (fill-paragraph 'full)
+      (setq output (buffer-string)))
+    output))
+
+(defun org-build-note-gmail ()
+  "Define the structure of a capture note for an gmail link"
+  (let ((title (plist-get org-store-link-plist :description))
+        (link  (plist-get org-store-link-plist :link))
+        (time  (format-time-string "[%Y-%m-%d %a]" (current-time)))
+        (text  (plist-get org-store-link-plist :initial))
+        msgid
+        output)
+    ;; Get the message ID
+    (setq msgid (save-match-data
+                  (string-match "\/\\([0-9a-f]*\\)\$" link)
+                  (match-string 1 link)))
+    ;; Build the template
+    (with-temp-buffer
+      (insert (concat
+               "* “" title "” :mail:\n"
+               "  "  time "\n\n"
+               "  %?\n\n"
+               "  --- Source: [[gmail:" msgid "][link to message]]" "\n\n  "))
+      ;;(set-fill-prefix)
+      (insert text)
+      (set-fill-column 70)
+      (fill-paragraph 'full)
+      (setq output (buffer-string)))
+    output))
+
+
 ;; Normally my private (and translated) configuration is used.
 (when (not (boundp 'org-capture-templates))
   (setq org-capture-templates
@@ -219,11 +272,9 @@ part of the keyboard.
           ("n" "note" entry (file "notebook.org")
            "* %?\n  %U\n  %i\n  %a\n\n")
           ;; org-capture from the web
-          ("w" "webpage" entry (file "notebook.org")
-         "* “%:description” :webpage:\n  %u\n\n  %?\n\n  ----- Source: %c\n\n  %i")
-          ("g" "gmail" entry (file "agenda.org")
-         "* “%:description” :mail:\n\n  --- [[gmail:%(org-gmail-extract-msgid (current-kill 0))][link to message]]\n\n  %?\n\n  %i")
-          ("y" "ritaglio dal web" entry (file "notebook.org")
+          ("w" "webpage" entry (file "notebook.org") "%(org-build-note-webpage)")
+          ("g" "gmail"   entry (file "agenda.org")     "%(org-build-note-gmail)"  )
+          ("y" "macprotocol" entry (file "notebook.org")
          "* “%:description” :webpage:\n  %u\n\n  %?\n\n  --- Source: %c\n\n  %i")
         )))
 
