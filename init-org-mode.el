@@ -257,6 +257,16 @@ part of the keyboard.
       (setq output (buffer-string)))
     output))
 
+(defun org-build-note-auto ()
+  "Define the structure of a capture note for an gmail link"
+  (let ((link  (plist-get org-store-link-plist :link)))
+    ;; Get the message ID
+    (cond ((string-match "^https?://mail\\.google\\.com/mail" (plist-get org-store-link-plist :link))
+           (org-build-note-gmail))
+          (t 
+           (org-build-note-webpage)))
+     ))
+
 
 ;; Normally my private (and translated) configuration is used.
 (when (not (boundp 'org-capture-templates))
@@ -272,8 +282,7 @@ part of the keyboard.
           ("n" "note" entry (file "notebook.org")
            "* %?\n  %U\n  %i\n  %a\n\n")
           ;; org-capture from the web
-          ("w" "webpage" entry (file "notebook.org") "%(org-build-note-webpage)")
-          ("g" "gmail"   entry (file "agenda.org")     "%(org-build-note-gmail)"  )
+          ("w" "webpage" entry (file "agenda.org") "%(org-build-note-auto)")
           ("y" "macprotocol" entry (file "notebook.org")
          "* “%:description” :webpage:\n  %u\n\n  %?\n\n  --- Source: %c\n\n  %i")
         )))
