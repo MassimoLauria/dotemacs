@@ -283,18 +283,10 @@ part of the keyboard.
            "* %?\n  %U\n  %i\n  %a\n\n")
           ;; org-capture from the web
           ("w" "webpage" entry (file "agenda.org") "%(org-build-note-auto)")
-          ("y" "macprotocol" entry (file "notebook.org")
-         "* “%:description” :webpage:\n  %u\n\n  %?\n\n  --- Source: %c\n\n  %i")
-        )))
-
-(defun org-gmail-extract-msgid (orgurl)
-  "Extract the message ID from a GMail urls"
-  (save-match-data
-    (string-match "\/\\([0-9a-f]*\\)\]" orgurl)
-    (match-string 1 orgurl)))
+          ("y" "macprotocol" entry (file "agenda.org") "%(org-build-note-auto)")
+          )))
 
 (setq org-default-capture-template "w")
-
 
 ;; Url abbreviation (and search engine)
 (setq org-link-abbrev-alist
