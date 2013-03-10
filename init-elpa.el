@@ -1,6 +1,6 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Time-stamp: "2013-03-05, 17:25 (CET) Massimo Lauria"
+;; Time-stamp: "2013-03-10, 01:53 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -28,6 +28,11 @@
 (when (>= emacs-major-version 24)
   (add-to-list 'package-load-list '(color-theme nil) 'append)
   (add-to-list 'package-load-list '(zenburn nil) 'append))
+
+
+;; Flycheck
+(when (< emacs-major-version 24)
+  (add-to-list 'package-load-list '(flycheck nil) 'append))
 
 
 ;; Initialiaze packages
@@ -88,14 +93,21 @@ ARCHIVE is the string name of the package archive.")
 ;; Install missing packages
 ;;------------------------------------------------------------------------------
 
-
+;; various
 (require-package 'auto-complete) ;; auto completion
 (require-package 'diminish)      ;; remove names from modeline
 (require-package 'deferred)      ;; 
 (require-package 'epc)           ;; process used for python auto-completion
+(require-package 'magit)
+(require-package 'elisp-slime-nav)
 
+;; Editing
 (require-package 'expand-region)
 (require-package 'multiple-cursors)
+
+;; Flycheck
+(when (>= emacs-major-version 24)
+  (require-package 'flycheck))
 
 ;; Color theme 
 (when (< emacs-major-version 24)
