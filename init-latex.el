@@ -210,6 +210,9 @@ started."
 (if (and (require 'dbus "dbus" t) (executable-find "evince"))
     (progn
 
+      (defvar auctex-evince-inverse-open-file t
+        "Inverse search will open the target file if it is not.")
+
       (require 'url-util nil t)
 
       ;;; Inverse search setup (C-leftclick in Evince --> Open in Emacs).
@@ -250,8 +253,10 @@ started."
                   (replace-regexp-in-string "%20" " " (dbus-un-urlify url)))))
           (line (car linecol))
           (col (cadr linecol)))
+          (if (and (null buf) auctex-evince-inverse-open-file)
+                  (find-file-existing (dbus-un-urlify url)))
           (if (null buf)
-              (message "Sorry, %s is not opened..." url)
+              (message "Sorry, cannot open %s..." url)
         (switch-to-buffer buf)
         (goto-line (car linecol))
         (unless (= col -1)
