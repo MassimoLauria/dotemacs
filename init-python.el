@@ -1,65 +1,52 @@
 ;;;
 ;;; Python Mode configuration.
 ;;;
-;;;-------------------------------------------------------------------
+;;; If Emacs version >= 24.3 then `python.el' supports ipython (>=
+;;; 0.11) out of the box. For older emacs we stick with canonical
+;;; `python' interpreter.  
+;;;
+;;; This setup avoids downloading external python modes like
+;;; `python-mode.el', and should gracefully suck on older installation
+;;; (that I do not use very often).
+;;; -------------------------------------------------------------------
 
 
-;; Uses Virtual Python Environment if present ----------------------------------------------------
-(defvar python-virtualenv-path (concat (getenv "HOME")
-                                       "/.emacs.d/local-python")
-"Sometimes it is useful to prepare a well defined python environment
-for Emacs (e.g. using the virtualenv utility). This is its default
-path."
-)
+;;; IPython setup
 
-;; Put the virtual env path in front.
-(if (file-executable-p (concat python-virtualenv-path "/bin/python"))
-    (progn (setq exec-path (cons (concat python-virtualenv-path "/bin/")
-                                 exec-path))
-           (setenv "PATH" (concat python-virtualenv-path "/bin/:"
-                                  (getenv "PATH"))))
-  (message "Unable to setup Python vitual environment. I'll rely on the system."))
+(defun setup-ipython-inferior-shell (&optional oldversion)
+  "Setup IPython as inferior python shell.
 
-
-
-
-
-;; Load `python-mode.el' and the ipython `ipython.el' ----------------------------------------
-;;
-;; Notice that `sage-mode' may load `python.el' which is distributed with Emacs.
-;; in such case bad things happen (don't ask me why)
-;;
-;; Even more strange: if I load `python.el' before `python-mode.el' everything is fine.
-
-(require 'python)             ;; we don't like you...
-(require 'python-mode nil t)  ;; ..we like him
-
-;; ipython completion command (for ipython > 0.11)
-(defvar ipython-completion-command-string
-  "print(';'.join(get_ipython().complete('%s', '%s')[1])) #PYTHON-MODE SILENT\n"
-  "The string send to ipython to query for all possible completions")
-
-(when (executable-find "ipython")
-  (require 'ipython nil t))
-
-
-
-(defun setup-ipython-010-completion ()
-  "Ipython.el does not support completion for Ipython 0.10. This
-is a workaround."
-
+If OLDVERSION is non-nil, it will setup completion for ipython
+0.10 or less (which is currently used in Sagemath)."
   (interactive)
-  ;; Initialize the python shell with an appropriate completer to be used with
-  ;; ipython.el
-  (py-execute-string
-   "import readline\n__emacs_complete=readline.get_completer()")
-  ;; Setup of a completion command for ipython.el
-  (set (make-local-variable 'ipython-completion-command-string)
-   "print(';'.join(filter(bool,[__emacs_complete('%s',i,'%s') for i in range(200)]))) #PYTHON-MODE SILENT\n")
-  (end-of-buffer))
+  ;; common values
+  (setq python-shell-interpreter "ipython"
+        python-shell-interpreter-args ""
+        python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+        python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+        python-shell-completion-setup-code
+        "from IPython.core.completerlib import module_completion")
+  ;; completion setup is different for old IPython
+  (if oldversion
+      (setq python-shell-completion-string-code
+            "';'.join(__IP.complete('''%s'''))\n"
+            python-shell-completion-module-string-code "")
+    (setq python-shell-completion-module-string-code
+          "';'.join(module_completion('''%s'''))\n"
+          python-shell-completion-string-code
+          "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")))
 
 
-;; Jedi library for completion -----------------------------------------------------
+;; Only for Emacs >= 24.3
+(when (and (executable-find "ipython") 
+           (>= emacs-major-version 24)
+           (>= emacs-minor-version 3))
+  (setup-ipython-inferior-shell))
+
+
+
+;;; Jedi library for completion
+
 (setq jedi-python-dir (concat default-elisp-3rdparties "/emacs-jedi"))
 (add-to-list 'load-path jedi-python-dir)
 
@@ -69,69 +56,36 @@ is a workaround."
 (add-hook 'python-mode-hook 'jedi:setup)
 
 
-;; Code checker(s) -----------------------------------------------------------------
+;;; Code checker(s)
 
-;; PyChecker and/or PyFlakes for checking on demand.
-(if (executable-find "pyflakes")
-    (progn
-         (setq py-pychecker-command "pyflakes")
-         (setq py-pychecker-command-args "")))
+(add-hook 'python-mode-hook
+          (lambda ()
+            ;; Compile command
+            (flycheck-select-checker 'python-pyflakes)
+            (flycheck-mode 1)
+            (autoload 'tramp-tramp-file-p "tramp") ; needed for pylint
+            (local-set-key (kbd "<f9>") 'pylint)
+            (local-set-key (kbd "<f10>") 'python-shell-send-buffer)))
 
+
+;; additional checkers
 (require 'compile)
-
 (autoload 'python-pylint "python-pylint" "Run pylint checker on the current buffer." t nil)
 (autoload 'pylint "python-pylint" "Run pylint checker on the current buffer." t nil)
 (autoload 'python-pep8 "python-pep8" "Run PEP8 checker on the current buffer." t nil)
 (autoload 'pep8 "python-pep8" "Run PEP8 checker on the current buffer." t nil)
 
 
-(add-hook 'python-mode-hook
-          (lambda ()
-            ;; Compile command
-            (local-set-key (kbd "<f9>") 'pylint)
-            (local-set-key (kbd "<f10>") 'py-execute-import-or-reload)))
 
+;;; Documentation lookup
 
-
-;; Flymake code checker(s) ------------------------------------------python-synta---------------------------
-(setq flymake-python-syntax-checker nil)
-
-(if (and (executable-find "pyflakes") (not flymake-python-syntax-checker))
-    (setq flymake-python-syntax-checker "pyflakes"))
-(if (and (executable-find "pychecker") (not flymake-python-syntax-checker))
-    (setq flymake-python-syntax-checker "pychecker"))
-(if (and (executable-find "pep8") (not flymake-python-syntax-checker))
-    (setq flymake-python-syntax-checker "pep8"))
-(if (and (executable-find "epylint") (not flymake-python-syntax-checker))
-    (setq flymake-python-syntax-checker "epylint"))
-
-
-(when (and flymake-python-syntax-checker (load "flymake" t))
-  (defun flymake-python-init ()
-	(let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-	  (list flymake-python-syntax-checker (list local-file))))
-  (add-to-list 'flymake-allowed-file-name-masks '("\\.py\\'" flymake-python-init)))
-
-
-
-;; PyLookup documentation --------------------------------------------------------------------
-
-;; add pylookup to your loadpath, ex) "~/.lisp/addons/pylookup"
 (setq pylookup-dir (concat default-elisp-3rdparties "/pylookup"))
 (add-to-list 'load-path pylookup-dir)
-;; load pylookup when compile time
-(eval-when-compile (require-maybe 'pylookup))
+(eval-when-compile (require 'pylookup nil t))
 
 ;; set executable file and db file
 (setq pylookup-program (concat pylookup-dir "/pylookup.py"))
 (setq pylookup-db-file "~/.emacs.d/pylookup.db")
-;; (if (not (file-exists-p pylookup-db-file))
-;;     (warn "Pylookup database not yet initialized")
-;;     )
 
 ;; to speedup, just load it on demand
 (autoload 'pylookup-lookup "pylookup"
