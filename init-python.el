@@ -39,9 +39,10 @@ If OLDVERSION is non-nil, it will setup completion for ipython
 
 ;; Only for Emacs >= 24.3
 (when (and (executable-find "ipython") 
-           (>= emacs-major-version 24)
-           (>= emacs-minor-version 3))
-  (setup-ipython-inferior-shell))
+           (or (> emacs-major-version 24)
+               (and (>= emacs-major-version 24)
+                    (>= emacs-minor-version 3)))
+           (setup-ipython-inferior-shell))
 
 
 
