@@ -72,6 +72,12 @@
 ;; Ispell
 (global-set-key (kbd "M-s") 'ispell-word) ; usually overridden by flyspell
 
+;; Font size in Emacs 24
+(when (fboundp 'text-scale-increase)
+  (global-set-key (kbd "C--") 'text-scale-decrease)
+  (global-set-key (kbd "C-=") 'text-scale-increase))
+
+
 ;;; ---- Function keys ----
 
 ;; emacs commands
