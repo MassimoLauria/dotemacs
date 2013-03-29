@@ -1,9 +1,9 @@
 ;;; init-italian-l10n.el --- Italian localization stuff
 
-;; Copyright (C) 2012  Massimo Lauria
+;; Copyright (C) 2012, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2012-02-19, 23:23 (CET) Massimo Lauria>
+;; Time-stamp: <2013-03-29, 18:59 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -85,7 +85,6 @@
 ;; Add important european timezones
 (add-to-list 'parse-time-zoneinfo  '("cet" 3600 t) t)  ;; Central European Time
 (add-to-list 'parse-time-zoneinfo  '("cest" 7200)  t)  ;; Central European Summer Time
-
 
 
 (provide 'init-italian-l10n)

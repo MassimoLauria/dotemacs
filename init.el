@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
-;; Time-stamp: "2013-03-07, 14:52 (CET) Massimo Lauria"
+;; Time-stamp: "2013-03-29, 18:57 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -127,6 +127,7 @@
 ;; ;; Applications
 (require 'init-mail)       ;; Mail + Contacts
 (require 'init-org-mode)   ;; Organizer
+(require 'init-websearch)  ;; Search the Web
 
 ;; Other stuff
 (require 'init-unsorted-elisp)
