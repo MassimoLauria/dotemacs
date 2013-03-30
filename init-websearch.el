@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-03-29, 18:53 (CET) Massimo Lauria>
+;; Time-stamp: <2013-03-30, 02:35 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ search string is appended to the query string."
        ,query
        (url-hexify-string (if mark-active
                               (buffer-substring (region-beginning) (region-end))
-                            (read-string (concat "Search '" ,name "': "))))))))
+                            (read-string (concat ,name ": "))))))))
 
 (def-search-engine "Google"
   "Search with Google search engine."
@@ -65,6 +65,18 @@ search string is appended to the query string."
   "Search in Emacs Wiki"
   ew
   "http://www.google.com/cse?cx=004774160799092323420%3A6-ff2s0o6yi&sa=Search&siteurl=emacswiki.org%2F&q=")
+(def-search-engine "Translate to English"
+  "Translate to English using Google Translate"
+  english
+  "http://translate.google.com/#auto/en/")
+(def-search-engine "Translate to Italian"
+  "Translate to Italian using Google Translate"
+  italian
+  "http://translate.google.com/#auto/it/")
+(def-search-engine "Youtube"
+  "Search on YouTube"
+  yt
+  "http://www.youtube.com/results?search_query=")
 
 
 ;; Dictionary look-up do not follow the general scheme. It must focus
