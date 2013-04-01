@@ -73,9 +73,11 @@
 (global-set-key (kbd "M-s") 'ispell-word) ; usually overridden by flyspell
 
 ;; Font size in Emacs 24
-(when (fboundp 'text-scale-increase)
-  (global-set-key (kbd "C--") 'text-scale-decrease)
-  (global-set-key (kbd "C-=") 'text-scale-increase))
+(when (fboundp 'text-scale-adjust)
+  (global-set-key (kbd "C--") 'text-scale-adjust)
+  (global-set-key (kbd "C-=") 'text-scale-adjust)
+  (global-set-key (kbd "C-+") 'text-scale-adjust)
+  (global-set-key (kbd "C-0") 'text-scale-adjust))
 
 
 ;;; ---- Function keys ----
@@ -96,9 +98,6 @@
 (global-set-key [f11] 'previous-error) ; Does not work with LaTeX!
 (global-set-key [f12] 'next-error)
 
-;; Eval S-EXP
-;; (global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)
-;; (global-set-key [remap eval-expression] 'pp-eval-expression)
 
 
 (provide 'init-global-keys)
