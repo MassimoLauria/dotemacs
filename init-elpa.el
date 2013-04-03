@@ -1,6 +1,6 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Time-stamp: "2013-03-10, 01:53 (CET) Massimo Lauria"
+;; Time-stamp: "2013-04-03, 20:13 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -100,6 +100,7 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'epc)           ;; process used for python auto-completion
 (require-package 'magit)
 (require-package 'elisp-slime-nav)
+(require-package 'smartparens)
 
 ;; Editing
 (require-package 'expand-region)

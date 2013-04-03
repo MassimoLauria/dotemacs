@@ -1,9 +1,9 @@
 ;;; init-autotype.el --- Automatic test insertion configuration
 
-;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2012-08-28, 14:34 (CEST) Massimo Lauria>
+;; Time-stamp: <2013-04-03, 20:16 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -87,6 +87,7 @@
 ;;; Time-Stamp update --- setup in custom.el
 
 ;;; Auto pair configuration -----------------------------------------------------------
+;; Autopair has been disabled to try `smartparens'.
 (setq autopair-blink nil)
 
 ;; Broken on Emacs22 since it uses `region-active-p' which is not
@@ -134,43 +135,45 @@ default handler."
   (set (make-local-variable 'autopair-handle-action-fns)
        (list #'autopair-default-handle-action
              #'autopair-latex-mode-paired-delimiter-action))
-  (autopair-mode t)
+  ;;(autopair-mode t)
   )
 
 
 ;; Activate autopair and also Pair triple quotes in python
-(add-hook 'python-mode-hook
-           #'(lambda ()
-               (set (make-local-variable 'autopair-handle-action-fns)
-                     (list #'autopair-default-handle-action
-                           #'autopair-python-triple-quote-action))
-               (autopair-mode t)
-               ))
+;; (add-hook 'python-mode-hook
+;;            #'(lambda ()
+;;                (set (make-local-variable 'autopair-handle-action-fns)
+;;                      (list #'autopair-default-handle-action
+;;                            #'autopair-python-triple-quote-action))
+;;                (autopair-mode t)
+;;                ))
 
 ;; Activate `autopair-mode' and pair ` ' in comments and strings
-(add-hook 'emacs-lisp-mode-hook
-           #'(lambda ()
-               (push '(?` . ?')
-                     (getf autopair-extra-pairs :comment))
-               (push '(?` . ?')
-                     (getf autopair-extra-pairs :string))
-               (autopair-mode t)
-               ))
+;; (add-hook 'emacs-lisp-mode-hook
+;;            #'(lambda ()
+;;                (push '(?` . ?')
+;;                      (getf autopair-extra-pairs :comment))
+;;                (push '(?` . ?')
+;;                      (getf autopair-extra-pairs :string))
+;;                (autopair-mode t)
+;;                ))
 
 ;; Activate `autopair-mode' in sh-mode
-(add-hook 'sh-mode-hook  #'(lambda () (autopair-mode t) ))
-(add-hook 'c-mode-hook   #'(lambda () (autopair-mode t) ))
-(add-hook 'org-mode-hook #'(lambda () (autopair-mode t) ))
+;; (add-hook 'sh-mode-hook  #'(lambda () (autopair-mode t) ))
+;; (add-hook 'c-mode-hook   #'(lambda () (autopair-mode t) ))
+;; (add-hook 'org-mode-hook #'(lambda () (autopair-mode t) ))
 
 
 ;; In these modes, autopair seems completely broken
-(add-hook 'sldb-mode-hook #'(lambda () (setq autopair-dont-activate t)))
-(add-hook 'xrdb-mode-hook #'(lambda () (setq autopair-dont-activate t)))
-(add-hook 'orgtbl-mode-hook
-          (lambda ()
-            (set (make-local-variable 'autopair-autowrap) nil)  ;; Autowrap fights with Orgtbl-mode
-            (message "Autopair-Autowrap disactivated because it conflicts with OrgTbl-Mode... ")
-            ))
+;; (add-hook 'sldb-mode-hook #'(lambda () (setq autopair-dont-activate t)))
+;; (add-hook 'xrdb-mode-hook #'(lambda () (setq autopair-dont-activate t)))
+;; (add-hook 'orgtbl-mode-hook
+;;           (lambda ()
+;;             (set (make-local-variable 'autopair-autowrap) nil)  ;; Autowrap fights with Orgtbl-mode
+;;             (message "Autopair-Autowrap disactivated because it conflicts with OrgTbl-Mode... ")
+;;             ))
+
+(smartparens-global-mode)
 
 (provide 'init-autotype)
 ;;; init-autotype.el ends here
