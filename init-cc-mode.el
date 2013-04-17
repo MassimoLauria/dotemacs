@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-01-19, 20:25 (CET) Massimo Lauria>
+;; Time-stamp: <2013-04-09, 00:24 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -39,9 +39,10 @@
 (defun clang-include-discover (lang dialect)
   "Discover the include path for Clang"
   (interactive)
-  (let ((pattern "echo ''| clang -v -x %s --std=%s -stdlib=libc++  -E - 2>&1 |grep '<...> search starts' -A 100|grep 'End of search list' -B 100 | grep '^ ' |grep -v Framework")
-        cmdline)
-    (setq cmdline (format pattern lang dialect ))
+  (let* ((clang (executable-find "clang"))
+         (pattern "echo ''| %s -v -x %s --std=%s -stdlib=libc++  -E - 2>&1 |grep '<...> search starts' -A 100|grep 'End of search list' -B 100 | grep '^ ' |grep -v Framework")
+         cmdline)
+    (setq cmdline (format pattern clang lang dialect ))
     (split-string (shell-command-to-string cmdline))))
 
 ;; Auxiliary libraries dedicated to C/C++ support
