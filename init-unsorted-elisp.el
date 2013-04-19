@@ -363,7 +363,8 @@ committed as well. A COMMIT-MESSAGE can be optionally specified."
                          error-buffer)
           (vc-toggle-read-only)))))
 
-(defvar org-capture-commit-message nil)
+(defvar org-capture-commit-message nil
+  "A buffer variable to contain the org-capture header")
 
 (add-hook 'org-capture-before-finalize-hook
            '(lambda ()
