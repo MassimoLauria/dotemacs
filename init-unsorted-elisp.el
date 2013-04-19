@@ -376,7 +376,7 @@ The commit message is the heading of the entry where the commit
 is invoked."
   (interactive)
   (let ((msg (or org-capture-commit-message 
-              (org-get-heading))))
+              (org-get-heading))))  
     (git-commit-file msg)
     (setq org-capture-commit-message nil)))
 
