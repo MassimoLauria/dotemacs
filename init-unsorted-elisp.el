@@ -335,7 +335,36 @@ in the kill-ring and `pos' is the position current-kill"
 (ad-activate 'fundamental-mode)
 
 
+;; Invocation of git
+(defun git-commit-file (&optional commit-message file-name)
+  "Add the file into the local git repository, then commits.
 
+If there are other files staged for commit, those will be
+committed as well. A COMMIT-MESSAGE can be optionally specified."  
+  (interactive)
+  (let ((msg (or commit-message "Automatic commit by emacs"))
+        (fname (or file-name (buffer-file-name)))
+        (error-buffer  "*Messages*")
+        (output-buffer "*Messages*"))
+    (if (file-exists-p (format "%s" fname))
+        (progn 
+          (vc-toggle-read-only) 
+          (shell-command (concat "git add " fname)
+                         output-buffer 
+                         error-buffer)
+          (shell-command (concat "git commit -m '" msg "'")
+                         output-buffer 
+                         error-buffer)
+          (vc-toggle-read-only)))))
+
+(defun org-mode-auto-commit ()
+  "Commit the file in git repository.
+
+The commit message is the heading of the entry where the commit
+is invoked."
+  (interactive)
+  (let ((msg (org-get-heading)))
+    (git-commit-file msg)))
 
 
 (provide 'init-unsorted-elisp)
