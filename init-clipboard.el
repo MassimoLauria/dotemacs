@@ -1,6 +1,6 @@
 ;;; init-clipboard.el --- Setup for the clipboard, less easy than it sounds.
 
-;; Copyright (C) 2010  Massimo Lauria
+;; Copyright (C) 2010, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -55,7 +55,7 @@
 ;; XTerm support
 (xterm-mouse-mode t)
 
-;; Mouse wheel scrool the text.
+;; Mouse wheel scrool the  text.
 (global-set-key [mouse-4] 'scroll-down)
 (global-set-key [mouse-5] 'scroll-up)
 
