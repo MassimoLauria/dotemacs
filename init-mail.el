@@ -19,8 +19,29 @@
 (setq message-signature private-email-signature)
 (setq message-auto-save-directory "~/personal/mail/drafts")
 
+;; Mu4e view in browser
+(defun mu4e-msgv-action-view-in-browser (msg)
+  "View the body of the message in a web browser."
+  (interactive)
+  (let ((html (mu4e-msg-field (mu4e-message-at-point t) :body-html))
+        (tmpfile (format "%s/%d.html" temporary-file-directory (random))))
+    (unless html (error "No html part for this message"))
+    (with-temp-file tmpfile
+      (insert
+       "<html>"
+       "<head><meta http-equiv=\"content-type\""
+       "content=\"text/html;charset=UTF-8\">"
+       html))
+    (browse-url (concat "file://" tmpfile))))
+
+
+
 ;; Try to load mu4e client if installed.
-(require 'mu4e nil t)
+(when (require 'mu4e nil t)
+  (defalias 'mail 'mu4e)
+  (define-key mu4e-main-mode-map "q" 'bury-buffer)
+  (add-to-list 'mu4e-view-actions
+               '("View in browser" . mu4e-msgv-action-view-in-browser) t))
 
 ;; Click urls/mails in Mime-View
 (add-hook 'mime-view-mode-hook 'goto-address-mode)
