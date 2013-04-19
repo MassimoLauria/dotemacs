@@ -348,14 +348,26 @@ committed as well. A COMMIT-MESSAGE can be optionally specified."
         (output-buffer "*Messages*"))
     (if (file-exists-p (format "%s" fname))
         (progn 
-          (vc-toggle-read-only) 
+          (vc-toggle-read-only)
           (shell-command (concat "git add " fname)
                          output-buffer 
                          error-buffer)
-          (shell-command (concat "git commit -m '" msg "'")
+          (shell-command (concat "git commit -m \"" 
+                                 (with-temp-buffer
+                                   (insert msg)
+                                   (replace-string "\"" "\\\"" nil 
+                                                   (point-min) (point-max))
+                                   (buffer-string))
+                                 "\"")
                          output-buffer 
                          error-buffer)
           (vc-toggle-read-only)))))
+
+(defvar org-capture-commit-message nil)
+
+(add-hook 'org-capture-before-finalize-hook
+           '(lambda ()
+             (setq org-capture-commit-message (org-get-heading))))
 
 (defun org-mode-auto-commit ()
   "Commit the file in git repository.
@@ -363,8 +375,10 @@ committed as well. A COMMIT-MESSAGE can be optionally specified."
 The commit message is the heading of the entry where the commit
 is invoked."
   (interactive)
-  (let ((msg (org-get-heading)))
-    (git-commit-file msg)))
+  (let ((msg (or org-capture-commit-message 
+              (org-get-heading))))
+    (git-commit-file msg)
+    (setq org-capture-commit-message nil)))
 
 
 (provide 'init-unsorted-elisp)
