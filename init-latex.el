@@ -516,11 +516,11 @@ It either tries \"lacheck\" or \"chktex\"."
         (loop until (member input-char '(?n ?p ?s ?l ?d ?e)) do
               (setq input-char (read-char "Template: [n]ote, [p]aper, [s]lide, [l]etter, [d]rawing, [e]mpty:")))
         (case input-char
-          ((?n) (insert "latex-note-template"  ) (yas/expand))
-          ((?p) (insert "latex-paper-template" ) (yas/expand))
-          ((?s) (insert "latex-slides-template" ) (yas/expand))
-          ((?l) (insert "latex-letter-template") (yas/expand))
-          ((?d) (insert "latex-pgfpic-template") (yas/expand))
+          ((?n) (insert "latex-note-template"  ) (yas-expand))
+          ((?p) (insert "latex-paper-template" ) (yas-expand))
+          ((?s) (insert "latex-slides-template" ) (yas-expand))
+          ((?l) (insert "latex-letter-template") (yas-expand))
+          ((?d) (insert "latex-pgfpic-template") (yas-expand))
           ((?e) (insert ""))))))
 
 
