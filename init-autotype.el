@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-04-21, 03:48 (CEST) Massimo Lauria>
+;; Time-stamp: <2013-04-21, 14:17 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -160,7 +160,13 @@ default handler."
 ;;             (message "Autopair-Autowrap disactivated because it conflicts with OrgTbl-Mode... ")
 ;;             ))
 
-(smartparens-global-mode)
+(eval-after-load 'smartparens
+  '(progn 
+     (smartparens-global-mode)
+     (require 'smartparens-config nil t)
+     (require 'smartparens-latex nil t)
+     ))
+
 
 (provide 'init-autotype)
 ;;; init-autotype.el ends here
