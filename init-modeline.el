@@ -64,7 +64,7 @@ The renaming table is `rename-major-mode-alist'."
   (eval-after-load 'auto-complete '(diminish 'auto-complete-mode " α"))
   (eval-after-load 'autopair '(diminish 'autopair-mode " ♊"))
   (eval-after-load 'smartparens '(diminish 'smartparens-mode " ♊"))
-  (eval-after-load 'yasnippet '(diminish 'yas/minor-mode " ⓨ"))
+  (eval-after-load 'yasnippet '(diminish 'yas-minor-mode " ⓨ"))
   (eval-after-load 'simple '(diminish 'auto-fill-function " ⓕ"))
   (eval-after-load 'elisp-slime-nav '(diminish 'elisp-slime-nav-mode))
 

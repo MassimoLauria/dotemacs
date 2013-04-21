@@ -96,7 +96,9 @@
  '(visual-line-mode nil t)
  '(winner-boring-buffers (quote ("*Completions*")))
  '(winner-dont-bind-my-keys t)
- '(winner-mode t nil (winner)))
+ '(winner-mode t nil (winner))
+ '(yas-global-mode t nil (yasnippet))
+ '(yas-prompt-functions (quote (yas-ido-prompt yas-completing-prompt))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -104,8 +106,8 @@
  ;; If there is more than one, they won't work right.
  '(flycheck-error-face ((t (:underline "DodgerBlue1"))))
  '(flycheck-warning-face ((t (:underline "green"))))
- '(flymake-errline ((((class color)) (:underline "red"))))
- '(flymake-warnline ((((class color)) (:underline "yellow"))))
+ '(flymake-errline ((((class color)) (:underline "red"))) t)
+ '(flymake-warnline ((((class color)) (:underline "yellow"))) t)
  '(flyspell-duplicate ((t (:strike-through "red"))))
  '(flyspell-incorrect ((t (:underline "red"))))
  '(font-lock-fixme-face ((((class color) (background dark)) (:background "Yellow" :foreground "Red" :underline nil))) t)

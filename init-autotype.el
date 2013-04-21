@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-04-03, 20:16 (CEST) Massimo Lauria>
+;; Time-stamp: <2013-04-21, 03:48 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@
   `(lambda ()
      (goto-char (point-min))
      (insert ,template)
-     (call-interactively 'yas/expand))
+     (call-interactively 'yas-expand))
   )
 
 (define-auto-insert 'sh-mode (apply-yasnippet-function "empty-template"))
@@ -54,26 +54,13 @@
 
 ;;; YaSnippet -------------------------------------------------------------------------
 
-(require-maybe 'yasnippet-bundle)
-(when-available
- 'yas/about
- (progn
-   (setq yas/root-directory nil)
-   (if (file-directory-p "/usr/share/emacs/site-lisp/yasnippet/snippets")
-       (add-to-list 'yas/root-directory "/usr/share/emacs/site-lisp/yasnippet/snippets") ;; Snippet's file folder.
-     )
-   (if (file-directory-p (concat default-elisp-path "/snippets/"))
-       (add-to-list 'yas/root-directory (concat default-elisp-path "/snippets/")) ;; Snippet's file folder.
-     )
-   ;; Map `yas/load-directory' to every element
-   (mapc 'yas/load-directory yas/root-directory)
-   (setq yas/ignore-filenames-as-triggers t)
-   ))
+;; Personal snippets
+(eval-after-load 'yasnippet
+  '(progn (if (file-directory-p (concat default-elisp-path "/snippets/"))
+              (add-to-list 'yas-snippet-dirs 
+                           (concat default-elisp-path "/snippets/")))
+          (delete  "~/.emacs.d/snippets" yas-snippet-dirs)))
 
-
-;; How to prompt for a snippet, e.g. because of `yas/visit-snippet-file'
-(setq yas/prompt-functions '(yas/ido-prompt
-                             yas/completing-prompt))
 
 ;; Avoid automatic insertion of newlines at the end of a snippet recipe.
 (add-hook 'snippet-mode-hook (lambda ()

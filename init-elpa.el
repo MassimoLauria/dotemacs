@@ -1,6 +1,6 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Time-stamp: "2013-04-03, 20:13 (CEST) Massimo Lauria"
+;; Time-stamp: "2013-04-20, 18:48 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -94,7 +94,9 @@ ARCHIVE is the string name of the package archive.")
 ;;------------------------------------------------------------------------------
 
 ;; various
-(require-package 'auto-complete) ;; auto completion
+(require-package 'yasnippet)
+(require-package 'auto-complete)       ;; auto completion
+(require-package 'auto-complete-clang) ;; auto completion for C++ using CLang
 (require-package 'diminish)      ;; remove names from modeline
 (require-package 'deferred)      ;; 
 (require-package 'epc)           ;; process used for python auto-completion
