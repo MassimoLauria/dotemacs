@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-03-30, 02:35 (CET) Massimo Lauria>
+;; Time-stamp: <2013-04-24, 01:20 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -78,6 +78,15 @@ search string is appended to the query string."
   yt
   "http://www.youtube.com/results?search_query=")
 
+;; Math search engines
+(def-search-engine "Wolfram Alpha"
+  "Search on Wolfram Alpha"
+  al
+  "http://www.wolframalpha.com/input/?i=")
+(def-search-engine "OEIS" 
+  "Search in OnLine Encyclopedia of Integer Sequences"
+  oeis
+  "http://oeis.org/search?q=")
 
 ;; Dictionary look-up do not follow the general scheme. It must focus
 ;; on a single word.
