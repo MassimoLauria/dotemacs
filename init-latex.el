@@ -11,7 +11,7 @@
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
 (setq TeX-save-query nil)
-(setq TeX-display-help 'expert)
+(setq TeX-display-help t)
 (setq TeX-electric-sub-and-superscript t)
 (setq reftex-plug-into-AUCTeX t)
 (setq bib-cite-use-reftex-view-crossref t)
