@@ -526,6 +526,115 @@ It either tries \"lacheck\" or \"chktex\"."
 
 ;; (define-auto-insert 'latex-mode 'choose-initial-latex-template)
 
+(defun bugfix-TeX-parse-error (old)
+  "Goto next error.  Pop to OLD buffer if no more errors are found.
+
+ --- Parse error bug fix for Debian and Ubuntu 
+
+ Original `TeX-parse-error' gets confused by TeX version number
+ containing the string (TeX Live 20XX Debian), the result being
+ creating stray files and buffers. 
+
+ Based on http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628790"
+  (let ((regexp
+	 (concat
+	  ;; TeX error
+	  "^\\(!\\|\\(.*?\\):[0-9]+:\\) \\|"
+	  ;; New file
+	  "(\\(\"[^\"]*?\"\\|/*\
+\\(?:\\.+[^()\r\n{} \\/]*\\|[^()\r\n{} .\\/]+\
+\\(?: [^()\r\n{} .\\/]+\\)*\\(?:\\.[-0-9a-zA-Z_.]*\\)?\\)\
+\\(?:[\\/]+\\(?:\\.+[^()\r\n{} \\/]*\\|[^()\r\n{} .\\/]+\
+\\(?: [^()\r\n{} .\\/]+\\)*\\(?:\\.[-0-9a-zA-Z_.]*\\)?\\)?\\)*\\)\
+)*\\(?: \\|\r?$\\)\\|"
+	  ;; End of file
+	  "\\()\\))*\\|"
+	  ;; Hook to change line numbers
+	  " !\\(?:offset(\\([---0-9]+\\))\\|"
+	  ;; Hook to change file name
+	  "name(\\([^)]+\\))\\)\\|"
+	  ;; LaTeX bad box
+	  "^\\(\\(?:Overfull\\|Underfull\\|Tight\\|Loose\\)\
+ \\\\.*?[0-9]+--[0-9]+\\)\\|"
+	  ;; LaTeX warning
+	  "^\\(LaTeX [A-Za-z]*\\|Package [A-Za-z]+ \\)Warning:.*")))
+    (while
+	(cond
+	 ((null
+	   (re-search-forward regexp nil t))
+	  ;; No more errors.
+	  (message "No more errors.")
+	  (beep)
+	  (TeX-pop-to-buffer old)
+	  nil)
+	 ;; TeX error
+	 ((match-beginning 1)
+	  (when (match-beginning 2)
+	    (unless TeX-error-file
+	      (push nil TeX-error-file)
+	      (push nil TeX-error-offset))
+	    (unless (car TeX-error-offset)
+	      (rplaca TeX-error-file (TeX-match-buffer 2))))
+	  (if (looking-at "Preview ")
+	      t
+	    (TeX-error)
+	    nil))
+	 ;; LaTeX bad box
+	 ((match-beginning 7)
+	  (if TeX-debug-bad-boxes
+	      (progn
+		(TeX-warning (TeX-match-buffer 7))
+		nil)
+	    (re-search-forward "\r?\n\
+\\(?:.\\{79\\}\r?\n\
+\\)*.*\r?$")
+	    t))
+	 ;; LaTeX warning
+	 ((match-beginning 8)
+	  (if TeX-debug-warnings
+	      (progn
+		(TeX-warning (TeX-match-buffer 8))
+		nil)
+	    t))
+
+	 ;; New file -- Push on stack
+	 ((match-beginning 3)
+	  (let ((file (TeX-match-buffer 3))
+		(end (match-end 3)))
+	    ;; Strip quotation marks and remove newlines if necessary
+	    (when (or (eq (string-to-char file) ?\")
+		      (string-match "\n" file))
+	      (setq file
+		    (mapconcat 'identity (split-string file "[\"\n]+") "")))
+        (when (not (string-match "^TeX\\ Live\\ 20[0-9][0-9]/\\(Debian\\|Ubuntu\\)$" file))
+	    (push file TeX-error-file)
+	    (push nil TeX-error-offset)
+	    (goto-char end)))
+	  t)
+	 
+	 ;; End of file -- Pop from stack
+	 ((match-beginning 4)
+	  (when (> (length TeX-error-file) 1)
+	    (pop TeX-error-file)
+	    (pop TeX-error-offset))
+	  (goto-char (match-end 4))
+	  t)
+	 
+	 ;; Hook to change line numbers
+	 ((match-beginning 5)
+	  (setq TeX-error-offset
+		(list (string-to-number (TeX-match-buffer 5))))
+	  t)
+	 
+	 ;; Hook to change file name
+	 ((match-beginning 6)
+	  (setq TeX-error-file
+		(list (TeX-match-buffer 6)))
+	  t)))))
+
+;; Use the version with bug fix
+(eval-after-load "tex-buf" '(defalias 'TeX-parse-error 'bugfix-TeX-parse-error))
+
 
 (provide 'init-latex)
 ;; Local Variables:
