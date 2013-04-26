@@ -282,11 +282,12 @@ in the kill-ring and `pos' is the position current-kill"
   )
 (hs-minor-mode-setup (kbd "M-SPC"))
 
-(defadvice goto-line (after expand-after-goto-line
-                            activate compile)
-  "hideshow-expand affected block when using goto-line in a collapsed buffer"
-  (save-excursion
-    (hs-show-block)))
+(eval-after-load 'hs-minor-mode 
+  '(defadvice goto-line (after expand-after-goto-line
+                               activate compile)
+     "hideshow-expand affected block when using goto-line in a collapsed buffer"
+     (save-excursion
+       (hs-show-block))))
 
 (add-hook 'c-mode-common-hook   'hs-minor-mode)
 (add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
