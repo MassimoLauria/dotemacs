@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-04-24, 01:20 (CEST) Massimo Lauria>
+;; Time-stamp: <2013-04-30, 13:45 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -77,6 +77,12 @@ search string is appended to the query string."
   "Search on YouTube"
   yt
   "http://www.youtube.com/results?search_query=")
+(def-search-engine "Google Maps"
+  "Find on map"
+  maps
+  "https://maps.google.it/maps?q=")
+
+
 
 ;; Math search engines
 (def-search-engine "Wolfram Alpha"
