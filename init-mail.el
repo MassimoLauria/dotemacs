@@ -7,10 +7,20 @@
 
 (define-key global-map "\C-cm" 'compose-mail)
 
-;; Setup SEND MAIL (just three lines!!)
-(setq message-send-mail-function 'message-send-mail-with-sendmail)
+;; Setup SEND MAIL
 (setq sendmail-program (executable-find "msmtp"))
-; (setq message-sendmail-extra-arguments '("-a" "gmail"))
+(if sendmail-program
+    (progn ;; send mail using msmtp
+      (setq send-mail-function 'sendmail-send-it)
+      (setq message-send-mail-function 'message-send-mail-with-sendmail))
+  (progn ;; Use emacs smtp client smtpmail
+    (setq send-mail-function 'smtpmail-send-it)
+    (setq message-send-mail-function 'message-smtpmail-send-it)))
+
+(setq smtpmail-smtp-server private-smtp-server)
+(setq smtpmail-smtp-service  private-smtp-port)
+
+
 
 ;; Setup MAIL EDITOR
 (setq compose-mail-user-agent-warnings nil)
