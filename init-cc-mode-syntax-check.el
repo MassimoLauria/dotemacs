@@ -3,7 +3,7 @@
 ;; Copyright (C) 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-05-15, 23:42 (CEST) Massimo Lauria>
+;; Time-stamp: <2013-05-15, 23:49 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -112,6 +112,12 @@ set to a string, pass the string to \"--std=\" option of g++."
   :modes 'c++-mode)
 
 (add-to-list 'flycheck-checkers 'cplusplus-clang)
+
+
+;; Use flycheck in c source
+(add-hook 'c-mode-hook 'flycheck-mode)
+(add-hook 'c++-mode-hook 'flycheck-mode)
+
 
 (provide 'init-cc-mode-syntax-check)
 ;;; init-flycheck-clanguage.el ends here

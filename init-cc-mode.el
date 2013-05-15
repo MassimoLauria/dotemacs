@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-05-15, 20:52 (CEST) Massimo Lauria>
+;; Time-stamp: <2013-05-15, 23:48 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 
 ;; Syntax checker 
 (eval-after-load "flycheck"
-  '(require 'init-flycheck-clanguage nil t))
+  '(require 'init-cc-mode-syntax-check nil t))
 
 
 (require 'auto-complete-clang-async "emacs-clang-complete-async/auto-complete-clang-async.el" t)
@@ -137,11 +137,6 @@
 ;; install the main hooks
 (add-hook 'c-mode-hook   'setup-c-mode)
 (add-hook 'c++-mode-hook 'setup-c++-mode)
-
-;; clang is very good for syntax check
-(when (executable-find "clang")
-  (add-hook 'c-mode-hook 'flymake-clang-c-load)
-  (add-hook 'c++-mode-hook 'flymake-clang-c++-load))
 
 
 (provide 'init-cc-mode)
