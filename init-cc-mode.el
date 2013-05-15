@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-05-15, 18:54 (CEST) Massimo Lauria>
+;; Time-stamp: <2013-05-15, 20:52 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -25,10 +25,12 @@
 ;; Optional dependency
 (require 'gtags nil t)
 (require 'c-eldoc nil t)
-(require 'flycheck nil t)
 
-;; (require 'flymake-clang-c)
-;; (require 'flymake-clang-c++)
+;; Syntax checker 
+(eval-after-load "flycheck"
+  '(require 'init-flycheck-clanguage nil t))
+
+
 (require 'auto-complete-clang-async "emacs-clang-complete-async/auto-complete-clang-async.el" t)
 (require 'auto-complete-clang "auto-complete-clang/auto-complete-clang.el" t)
 
@@ -88,6 +90,8 @@
   ;; Gtags
   (when (boundp 'ac-source-gtags)
     (add-to-list 'ac-sources 'ac-source-gtags))
+  ;; Syntax check
+  (when (fboundp 'flycheck-mode) (flycheck-mode))
   )
 
 

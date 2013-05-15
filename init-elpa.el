@@ -18,7 +18,8 @@
 (setq package-archives  '(("gnu" . "http://elpa.gnu.org/packages/")
                           ("elpa" . "http://tromey.com/elpa/")
                           ("marmalade" . "http://marmalade-repo.org/packages/")
-                          ("melpa" . "http://melpa.milkbox.net/packages/")))
+                          ;;("melpa" . "http://melpa.milkbox.net/packages/")
+                          ))
 
 
 
@@ -109,8 +110,8 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'multiple-cursors)
 
 ;; Flycheck
-(when (>= emacs-major-version 24)
-  (require-package 'flycheck))
+;; (when (>= emacs-major-version 24)
+;;   (require-package 'flycheck))
 
 ;; Color theme 
 (when (< emacs-major-version 24)
