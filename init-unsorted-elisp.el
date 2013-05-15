@@ -262,6 +262,10 @@ in the kill-ring and `pos' is the position current-kill"
              (define-key gtags-mode-map (kbd "M-*") 'nil)
              ))
 
+(eval-after-load 'gtags-mode
+  '(add-hook 'c-mode-common-hook 'gtags-mode))
+
+
 ;; Etags keys
 (define-key esc-map "." 'find-tag)
 (define-key esc-map "," 'pop-tag-mark)
@@ -298,8 +302,7 @@ in the kill-ring and `pos' is the position current-kill"
 (add-hook 'sh-mode-hook         'hs-minor-mode)
 
 
-;; Auto modes for Gtags
-(add-hook 'c-mode-common-hook 'gtags-mode)
+
 
 
 ;; Kill buffers with running processes

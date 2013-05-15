@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-04-09, 00:24 (CEST) Massimo Lauria>
+;; Time-stamp: <2013-05-15, 18:54 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -22,10 +22,13 @@
 
 ;; This is my setup for C/C++ code.
 
-;; Dependency
+;; Optional dependency
+(require 'gtags nil t)
 (require 'c-eldoc nil t)
-(require 'flymake-clang-c)
-(require 'flymake-clang-c++)
+(require 'flycheck nil t)
+
+;; (require 'flymake-clang-c)
+;; (require 'flymake-clang-c++)
 (require 'auto-complete-clang-async "emacs-clang-complete-async/auto-complete-clang-async.el" t)
 (require 'auto-complete-clang "auto-complete-clang/auto-complete-clang.el" t)
 
@@ -70,6 +73,7 @@
 (defun ac-clang-setup ()
   "Setup C/C++ completion using clang"
   (add-to-list 'ac-sources 'ac-source-clang))
+
 
 (defun setup-c-common-completion ()
   "Add gtags/Clang/semantic sources for auto-completion."

@@ -50,6 +50,7 @@
  '(ebib-sort-order (quote ((year) (author editor) (title))))
  '(edit-server-new-frame t)
  '(fci-rule-color "#073642")
+ '(flycheck-highlighting-mode (quote lines))
  '(flymake-gui-warnings-enabled t)
  '(flymake-max-parallel-syntax-checks 1)
  '(flymake-number-of-errors-to-display nil)
