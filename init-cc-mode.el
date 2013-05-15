@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-05-15, 23:48 (CEST) Massimo Lauria>
+;; Time-stamp: <2013-05-15, 23:58 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -90,8 +90,6 @@
   ;; Gtags
   (when (boundp 'ac-source-gtags)
     (add-to-list 'ac-sources 'ac-source-gtags))
-  ;; Syntax check
-  (when (fboundp 'flycheck-mode) (flycheck-mode))
   )
 
 
