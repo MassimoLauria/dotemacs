@@ -68,6 +68,7 @@
 
   ;; citation
   (add-hook 'org-mode-hook    'turn-on-reftex)
+  (init-org-mode--reftex)
 
   ;; org-agenda and calendar in sync
   ;; (add-hook 'calendar-mode-hook 'th-org-agenda-follow-calendar-mode)
@@ -395,8 +396,15 @@ Apapted from the blog \"WebLog Pro Olivier Berger\""
                (format "\\cite{%s}" search)
              (format "\\cite[%s]{%s}" desc search))))))
 
-  
-(org-add-link-type "bibtex" 'my-org-bibtex-open 'my-org-bibtex-export-handler)
+(defun my-local-reftex-cite-format (format)
+  "Setup the default `reftex-cite-format' locally for the buffer"
+  (set (make-local-variable 'reftex-cite-format) format))
+
+(defun init-org-mode--reftex ()
+  "Setup bibtex links with support for LaTeX export and 
+for `reftex-default-bibliography'."
+  (my-local-reftex-cite-format "[[bibtex:::%l]]")  
+  (org-add-link-type "bibtex" 'my-org-bibtex-open 'my-org-bibtex-export-handler))
 
 ;; Patch org-bibtex-store-link to manage Capitalized Fields.
 (defun init-org-mode--patch-org-bibtex ()
