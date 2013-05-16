@@ -85,6 +85,7 @@
  '(org-agenda-time-grid (quote ((daily today) "" (800 1000 1200 1400 1600 1800 2000))))
  '(org-hide-leading-stars t)
  '(org-highlight-latex-fragments-and-specials t)
+ '(org-latex-to-pdf-process (quote ("pdflatex -interaction nonstopmode -output-directory %o %f" "bibtex %b" "pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f")))
  '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
  '(reb-re-syntax (quote string))
  '(require-final-newline (quote t))

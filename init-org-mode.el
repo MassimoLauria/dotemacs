@@ -66,6 +66,9 @@
   (add-hook 'org-capture-mode-hook
             (lambda ()(select-frame-set-input-focus (selected-frame))))
 
+  ;; citation
+  (add-hook 'org-mode-hook    'turn-on-reftex)
+
   ;; org-agenda and calendar in sync
   ;; (add-hook 'calendar-mode-hook 'th-org-agenda-follow-calendar-mode)
 
