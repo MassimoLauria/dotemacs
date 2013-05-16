@@ -364,6 +364,39 @@ buffer."
 (run-with-idle-timer 300 t 'jump-to-org-agenda)
 
 
+;; Patch up org-mode support for bibtex
+
+(defun my-org-bibtex-open (path)
+  "Visit the bibliography entry on PATH.
+  
+If the bibtex entry does not specify a bibtex file in its path,
+then the first file in `reftex-default-bibliography' is used."
+  (let* ((search (when (string-match "::\\(.+\\)\\'" path)
+                   (match-string 1 path)))
+         (path (substring path 0 (match-beginning 0))))
+    (message (concat "This is path: " path))
+    (org-open-file
+     (cond ((not path) (car reftex-default-bibliography))
+           ((= (length path) 0) (car reftex-default-bibliography))
+           (t path))
+     t nil search)))
+
+(defun my-org-bibtex-export-handler (path desc format)
+  "Converts a bibtex org-mode link into a full LaTeX citation.
+
+Apapted from the blog \"WebLog Pro Olivier Berger\""
+  (message "my-org-bibtex-export-handler is called : path = %s, desc = %s, format = %s" path desc format)
+  (let* ((search (when (string-match "::#?\\(.+\\)\\'" path)
+                   (match-string 1 path)))
+         (path (substring path 0 (match-beginning 0))))
+    (cond ((eq format 'latex)
+           (if (or (not desc) 
+                   (equal 0 (search "bibtex:" desc)))
+               (format "\\cite{%s}" search)
+             (format "\\cite[%s]{%s}" desc search))))))
+
+  
+(org-add-link-type "bibtex" 'my-org-bibtex-open 'my-org-bibtex-export-handler)
 
 ;; Patch org-bibtex-store-link to manage Capitalized Fields.
 (defun init-org-mode--patch-org-bibtex ()
