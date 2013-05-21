@@ -109,6 +109,10 @@
 (setq x-stretch-cursor t)
 (show-paren-mode 1)
 
+;; Speedbar
+(setq speedbar-mode-hook '(lambda () (text-scale-decrease 1)))
+
+
 (defalias 'yes-or-no-p 'y-or-n-p) ; y/n instead of yes/no
 (if running-Aquamacs
     (setq confirm-kill-emacs nil)     ; Aquamacs won't interrupt logging out

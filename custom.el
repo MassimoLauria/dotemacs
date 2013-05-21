@@ -102,6 +102,7 @@
  '(toe-starting-time-per-word 5)
  '(toe-treat-words (quote downcase))
  '(toe-words-per-level 8)
+ '(vc-annotate-background nil)
  '(version-control t)
  '(visual-line-mode nil t)
  '(winner-boring-buffers (quote ("*Completions*")))
