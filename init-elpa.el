@@ -1,6 +1,6 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Time-stamp: "2013-04-20, 18:48 (CEST) Massimo Lauria"
+;; Time-stamp: "2013-05-23, 16:01 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -18,8 +18,27 @@
 (setq package-archives  '(("gnu" . "http://elpa.gnu.org/packages/")
                           ("elpa" . "http://tromey.com/elpa/")
                           ("marmalade" . "http://marmalade-repo.org/packages/")
-                          ;;("melpa" . "http://melpa.milkbox.net/packages/")
                           ))
+
+
+(defun package-toggle-melpa-archive ()
+  "Add/remove MELPA package archive to the ELPA subsystem.
+
+MELPA has very recent versions of many packages.  It is very nice
+for trying cutting edge packages and for packages that are not
+present in other archives, but sometimes you may want to stick
+to the released version.
+
+MELPA archive is at  \"http://melpa.milkbox.net/packages/\"
+"
+  (interactive)
+  (let ((melpa-repo '("melpa" . "http://melpa.milkbox.net/packages/"))) 
+    (if (member melpa-repo package-archives)
+        (progn 
+          (setq package-archives (remove melpa-repo package-archives))
+          (message "MELPA archive removed from ELPA."))
+      (add-to-list 'package-archives melpa-repo)
+      (message "MELPA archive added to ELPA."))))
 
 
 
