@@ -111,7 +111,10 @@ E-W and STATUS report the errors."
 
 ;; powerline makes mode-line cool
 (when (require 'powerline nil t)
-  (powerline-default-center))
+  ;; old version has different theme names
+  (if (fboundp 'powerline-default-center)
+      (powerline-default-center))
+  (powerline-center-theme))
 
 
 (provide 'init-modeline)
