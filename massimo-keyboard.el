@@ -104,6 +104,15 @@ At least they are considered useful for the author.
       )
     (define-key map (kbd "C-x C-b") 'ibuffer)
 
+    ;; Default text navigation (usually shadowed by other modes)
+    (define-key map (kbd "M-.") 'org-open-at-point-global) 
+    (define-key map (kbd "M-,") 'pop-global-mark)  
+ 
+    ;; Alternative  pop mark (usually not shadowed)
+    (define-key map (kbd "C-M-,") 'pop-global-mark) 
+    (define-key map (kbd "M-*")   'pop-global-mark)
+    
+
     ;; Marking and using multiple cursors
     (require 'multiple-cursors nil t)
     (if (fboundp 'mc/mark-all-like-this-dwim)

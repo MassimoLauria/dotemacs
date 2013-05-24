@@ -298,21 +298,21 @@ http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
 
 
 ;; Gtags keys
-(add-hook 'gtags-mode-hook
-          '(lambda()
+(eval-after-load 'gtags-mode
+          '(progn
              (define-key gtags-mode-map (kbd "M-.") 'gtags-find-tag)
              (define-key gtags-mode-map (kbd "M-,") 'gtags-pop-stack)
              (define-key gtags-mode-map (kbd "M-*") 'nil)
              ))
 
-(eval-after-load 'gtags-mode
-  '(add-hook 'c-mode-common-hook 'gtags-mode))
+;; Elisp navigation
+(eval-after-load "elisp-slime-nav-autoloads.el"
+          '(progn
+             (add-hook 'lisp-interaction-mode-hook 'elisp-slime-nav-mode)
+             (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode)
+             ))
 
 
-;; Etags keys
-(define-key esc-map "." 'find-tag)
-(define-key esc-map "," 'pop-tag-mark)
-(define-key esc-map "*" 'nil)
 
 (eval-after-load 'winner-mode-hook
   '(progn 
