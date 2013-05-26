@@ -252,7 +252,7 @@ modified according to the useage pattern of the author."
     (define-key map (kbd "M-n") 'comint-next-prompt)
 
     ;; Deletion keys
-    (define-key map (kbd "C-w")  'comint-kill-whole-line)
+    (define-key map (kbd "M-w")  'comint-kill-whole-line)
 
     map)
   "Keymap for massimo-keyboard-mode (for Comint mode).")
