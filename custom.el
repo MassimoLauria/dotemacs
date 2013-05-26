@@ -87,6 +87,7 @@
  '(org-highlight-latex-fragments-and-specials t)
  '(org-latex-to-pdf-process (quote ("pdflatex -interaction nonstopmode -output-directory %o %f" "bibtex %b" "pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f")))
  '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
+ '(quack-programs (quote ("mzscheme" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi")))
  '(reb-re-syntax (quote string))
  '(require-final-newline (quote t))
  '(safe-local-variable-values (quote ((do-delete-whitespace) (eval quote (auto-fill-mode 1)) (eval quote (visual-line-mode -1)) (eval quote (auto-fill-mode -1)) (collaborations-turn-on-auto-fill . t) (collaborations-delete-whitespace) (default-justification . full) (TeX-source-correlate-method-active . source-specials) (ispell-default-dictionary . american) (TeX-PDF-mode . t))))

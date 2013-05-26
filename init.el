@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
-;; Time-stamp: "2013-05-20, 22:42 (CEST) Massimo Lauria"
+;; Time-stamp: "2013-05-26, 23:22 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -88,6 +88,19 @@
 (add-to-list 'exec-path "/usr/local/bin/") ; local
 (add-to-list 'exec-path "/opt/local/bin/") ; macports
 (add-to-list 'exec-path "~/.local/bin")    ; home
+
+;; read paths from files in "/etc/paths.d/" if exist.
+(with-temp-buffer 
+  (condition-case nil
+      (dolist (file (directory-files "/etc/paths.d/" t))
+        (if (not (file-directory-p file))
+            (insert-file-contents file)))
+    (error nil))
+      
+  (dolist (path (split-string (buffer-string) "\n" t))
+    (if (file-directory-p path)
+        (add-to-list 'exec-path path))))
+
 
 
 ;;; Module(s) initialization -------------------------------------------
