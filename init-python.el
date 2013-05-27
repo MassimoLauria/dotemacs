@@ -58,11 +58,11 @@ If OLDVERSION is non-nil, it will setup completion for ipython
 
 
 ;;; Code checker(s)
+(autoload 'flycheck-mode "flycheck" nil t)
 
 (add-hook 'python-mode-hook
           (lambda ()
             ;; Compile command
-            (flycheck-select-checker 'python-pyflakes)
             (flycheck-mode 1)
             (autoload 'tramp-tramp-file-p "tramp") ; needed for pylint
             (local-set-key (kbd "<f9>") 'pylint)
