@@ -253,6 +253,9 @@ modified according to the useage pattern of the author."
 
     ;; Deletion keys
     (define-key map (kbd "M-w")  'comint-kill-whole-line)
+    
+    ;; hide buffer
+    (define-key map (kbd "<M-return>")  'bury-buffer)
 
     map)
   "Keymap for massimo-keyboard-mode (for Comint mode).")
@@ -286,7 +289,9 @@ modified according to the useage pattern of the author."
     (define-key map (kbd "M-n") 'eshell-next-prompt)
 
     ;; Deletion keys
-    (define-key map (kbd "C-w")  'eshell-kill-input)
+    (define-key map (kbd "M-w")  'eshell-kill-input)
+
+    (define-key map (kbd "<M-return>")  'bury-buffer)
 
     map)
   "Keymap for massimo-keyboard-mode (for Eshell mode).")
