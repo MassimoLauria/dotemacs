@@ -54,16 +54,19 @@ If OLDVERSION is non-nil, it will setup completion for ipython
 (autoload 'jedi:setup "jedi" nil t)
 (autoload 'jedi:ac-setup "jedi" nil t)
 (setq jedi:setup-keys nil)
-(add-hook 'python-mode-hook 'jedi:setup)
+
+(eval-after-load "jedi"
+  '(add-hook 'python-mode-hook 'jedi:setup))
 
 
 ;;; Code checker(s)
 (autoload 'flycheck-mode "flycheck" nil t)
+(eval-after-load "flycheck"
+  '(add-hook 'python-mode-hook 'flycheck-mode))
 
 (add-hook 'python-mode-hook
           (lambda ()
             ;; Compile command
-            (flycheck-mode 1)
             (autoload 'tramp-tramp-file-p "tramp") ; needed for pylint
             (local-set-key (kbd "<f9>") 'pylint)
             (local-set-key (kbd "<f10>") 'python-shell-send-buffer)))
