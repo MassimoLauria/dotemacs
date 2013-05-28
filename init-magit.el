@@ -3,7 +3,7 @@
 ;; Mike Barker <mike@thebarkers.com>
 ;; December 23, 2012
 
-;; Copyright (c) 2012 Mike Barker 
+;; Copyright (c) 2012, 2013 Mike Barker 
 
 ;;; MIT License
 
@@ -37,6 +37,8 @@
 
 (when (require 'magit nil t)
 
+  (defalias 'git 'magit-status)
+
   ;;; show full screen magit-status
   (defadvice magit-status (around magit-fullscreen activate)
     (window-configuration-to-register :magit-fullscreen)
@@ -68,6 +70,7 @@
     (magit-refresh))
 
   (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace))
+
 
 (provide 'init-magit)
 
