@@ -57,6 +57,12 @@
       (find-file (pop args)))))
 
 
+(eval-after-load "magit" 
+  '(defun eshell/git (&rest args)
+     "Invoke `magit-status' on the folder."
+     (call-interactively 'magit-status)))
+
+
 (defun eshell-view-file (file)
   "A version of `view-file' which properly respects the eshell prompt."
   (interactive "fView file: ")
