@@ -379,6 +379,9 @@ started."
 
 
 ;; RefTeX setup
+
+(setq reftex-use-external-file-finders t)  ;; Try to read bibtex files in TEXMF.
+
 (add-hook 'reftex-mode-hook
           (lambda ()
             (local-set-key (kbd "C-c l") 'reftex-label)       ;; Label creation
