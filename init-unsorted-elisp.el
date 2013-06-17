@@ -57,18 +57,6 @@
       (global-set-key (kbd "C-S-z") 'redo))) ; 【Ctrl+Shift+z】 to Redo
 
 
-;; Prepare *scratch buffer*
-;; FROM: Morten Welind
-;; http://www.geocrawler.com/archives/3/338/1994/6/0/1877802/
-(save-excursion
-  (set-buffer (get-buffer-create "*scratch*"))
-  (if (boundp 'initial-major-mode)
-      (eval (cons initial-major-mode ()))
-      (lisp-interaction-mode)
-    )
-  (make-local-variable 'kill-buffer-query-functions)
-  (add-hook 'kill-buffer-query-functions 'kill-scratch-buffer))
-
 
 ;; Make buffer names unique
 (require 'uniquify)
@@ -290,7 +278,7 @@ http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
         (goto-char pos))                                           
       (set-marker marker nil nil))))
 
-(eval-after-load 'semantic-mode
+(eval-after-load "semantic"
   '(progn
      (define-key semantic-mode-map (kbd "M-.") 'semantic-goto-definition)
      (define-key semantic-mode-map (kbd "M-,") 'semantic-pop-tag-mark)

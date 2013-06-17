@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
-;; Time-stamp: "2013-05-29, 00:54 (CEST) Massimo Lauria"
+;; Time-stamp: "2013-06-17, 10:39 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -158,6 +158,8 @@
 ;;; Start server --------------------------------------------------------
 (require 'init-server)
 
+;;; Start editing -------------------------------------------------------
+(init-scratch-buffer)
 
 (provide 'init)
 ;; Local Variables:
