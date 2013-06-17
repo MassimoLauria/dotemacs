@@ -4,7 +4,7 @@
 ;; Copyright (C) 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-04-03, 20:18 (CEST) Massimo Lauria>
+;; Time-stamp: <2013-06-17, 10:15 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -111,10 +111,8 @@ E-W and STATUS report the errors."
 
 ;; powerline makes mode-line cool
 (when (require 'powerline nil t)
-  ;; old version has different theme names
-  (if (fboundp 'powerline-default-center)
-      (powerline-default-center))
-  (powerline-center-theme))
+  (powerline-raw mode-line-mule-info nil 'l)
+  (powerline-default-theme))
 
 
 (provide 'init-modeline)
