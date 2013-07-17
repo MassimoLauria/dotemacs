@@ -3,7 +3,7 @@
 ;; Copyright (C) 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-05-15, 23:49 (CEST) Massimo Lauria>
+;; Time-stamp: <2013-07-18, 00:32 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -87,10 +87,10 @@ set to a string, pass the string to \"--std=\" option of g++."
 
 (flycheck-declare-checker c-clang
   "A checker for C syntax (C99) which uses clang compiler."
-  :command '("clang" "--std=c99" "-stdlib=libc++" 
-            "-Wall" "-Wextra" 
-            "-fno-color-diagnostics"
-            "-fsyntax-only" source-inplace)
+  :command '("clang" "--std=c99" 
+             "-Wall" "-Wextra" 
+             "-fno-color-diagnostics"
+             "-fsyntax-only" source-inplace)
   :error-patterns
   '(("^\\(?1:.*?\\):\\(?2:[0-9]+\\):\\(?3:[0-9]+\\): error: \\(?4:.+\\)$" error)
     ("^\\(?1:.*?\\):\\(?2:[0-9]+\\):\\(?3:[0-9]+\\): warning: \\(?4:.+\\)$" warning))
@@ -99,13 +99,25 @@ set to a string, pass the string to \"--std=\" option of g++."
 (add-to-list 'flycheck-checkers 'c-clang)
 
 ;; Clang syntax checker for C++ language
+(flycheck-def-option-var flycheck-clang-stdlib-c++ nil cplusplus-clang
+  "The standard C++ library used for checking with clang.
+
+When nil, use the default standard used by clang compiler.  When
+set to a value, the value is passed \"--stdlib=\" option of clang++."
+  :type '(choice (const :tag "Default" nil)
+                 (const :tag "libc++ from clang project" "libc++")
+                 (const :tag "libstdc++ from GNU project" "libstdc++")
+                 )
+  :safe t)
+
 
 (flycheck-declare-checker cplusplus-clang
   "A checker for C++ syntax (C++11) which uses clang compiler."
-  :command '("clang++" "--std=c++11" "-stdlib=libc++" 
-            "-Wall" "-Wextra" 
-            "-fno-color-diagnostics"
-            "-fsyntax-only" source-inplace)
+  :command '("clang++" "--std=c++11" 
+             (option "-stdlib=" flycheck-clang-stdlib-c++)
+             "-Wall" "-Wextra"
+             "-fno-color-diagnostics"
+             "-fsyntax-only" source-inplace)
   :error-patterns
   '(("^\\(?1:.*?\\):\\(?2:[0-9]+\\):\\(?3:[0-9]+\\): error: \\(?4:.+\\)$" error)
     ("^\\(?1:.*?\\):\\(?2:[0-9]+\\):\\(?3:[0-9]+\\): warning: \\(?4:.+\\)$" warning))
