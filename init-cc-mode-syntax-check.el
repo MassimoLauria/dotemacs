@@ -3,7 +3,7 @@
 ;; Copyright (C) 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-07-18, 23:47 (CEST) Massimo Lauria>
+;; Time-stamp: <2013-07-19, 00:59 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@
   "A checker for C++ syntax (C++11) which uses clang compiler."
   :command '("clang++" 
              (option "--std=" init-cc-clang++-dialect) 
-             (option "-stdlib=" flycheck-clang-stdlib-c++)
+             (option "--stdlib=" init-cc-clang++-stdlib)
              "-Wall" "-Wextra"
              "-fno-color-diagnostics"
              "-fsyntax-only" source-inplace)
