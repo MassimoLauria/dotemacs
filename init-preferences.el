@@ -16,7 +16,7 @@
  font-X11-no-antialias "-misc-fixed-medium-r-normal--18-*-*-*-*-*-iso10646-1"
  font-X11-antialias    "Inconsolata-14"
  ;; font-Mac-antialias    "Monaco-12"
- font-Mac-antialias    "-apple-dejavu sans mono-medium-r-normal--0-0-0-0-m-0-mac-roman"
+ font-Mac-antialias    "-apple-DejaVu_Sans_Mono-medium-normal-normal--20-*-*-*-m-0-iso10646-1"
  font-Win-antialias    "Consolas-14"
  )
 
@@ -26,7 +26,7 @@
    font-X11-no-antialias "-misc-fixed-medium-r-normal--20-*-*-*-*-*-iso10646-1"
    font-X11-antialias    "Inconsolata-14"
    ;; font-Mac-antialias    "Monaco-14"
-   font-Mac-antialias    "-apple-dejavu sans mono-medium-r-normal--20-0-0-0-m-0-mac-roman"
+   font-Mac-antialias    "-apple-DejaVu_Sans_Mono-medium-normal-normal--20-*-*-*-m-0-iso10646-1"
    font-Win-antialias    "Consolas-14"
    ))
 
