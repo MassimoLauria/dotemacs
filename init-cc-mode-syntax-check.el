@@ -3,7 +3,7 @@
 ;; Copyright (C) 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-07-18, 00:32 (CEST) Massimo Lauria>
+;; Time-stamp: <2013-07-19, 00:59 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -22,72 +22,38 @@
 
 (require 'flycheck)
 
+;; This package contains setup for C/C++ compilers
+(require 'init-cc-compiler)
 
 ;;; Code:
 
 
-;; GCC syntax checker for C language
-
-(flycheck-def-option-var flycheck-gcc-standard nil c-gcc
-  "The language standard of C used for checking with GCC.
-
-When nil, use the default standard used by g++ compiler.  When
-set to a string, pass the string to \"--std=\" option of g++."
-  :type '(choice (const :tag "Compiler default" nil)
-                 (const :tag "C'90 (ANSI)" "c90")
-                 (const :tag "C'99" "c99")
-                 (const :tag "C'1x" "c1x")
-                 (const :tag "C'90 with GNU extensions"  "gnu90")
-                 (const :tag "C'99 with GNU extensions"  "gnu99")
-                 (const :tag "C'1x with GNU extensions"  "gnu1x"))
-  :safe t)
-
 (flycheck-declare-checker c-gcc
   "A checker for C syntax which uses vanilla GCC."
   :command '("gcc"
-             (option "-std=" flycheck-gcc-standard)
+             (option "--std=" init-cc-gcc-dialect)
              "-Wall" "-Wextra" "-fsyntax-only" source-inplace)
   :error-patterns
   '(("^\\(?1:.*?\\):\\(?2:[0-9]+\\):\\(?3:[0-9]+\\): error: \\(?4:.+\\)$" error)
     ("^\\(?1:.*?\\):\\(?2:[0-9]+\\):\\(?3:[0-9]+\\): warning: \\(?4:.+\\)$" warning))
   :modes 'c-mode)
 
-(add-to-list 'flycheck-checkers 'c-gcc)
-
-
-;; G++ syntax checker for C++ language
-
-(flycheck-def-option-var flycheck-g++-standard nil cplusplus-g++
-  "The language standard of C++ used for checking with G++.
-
-When nil, use the default standard used by g++ compiler.  When
-set to a string, pass the string to \"--std=\" option of g++."
-  :type '(choice (const :tag "Compiler default" nil)
-                 (const :tag "C++ '98 (ANSI)"  "c++98")
-                 (const :tag "C++ '03" "c++03")
-                 (const :tag "C++ '0X" "c++0x")
-                 (const :tag "C++ '98 with GNU extensions" "gnu++98")
-                 (const :tag "C++ '0X with GNU extensions" "gnu++0x"))
-  :safe t)
 
 (flycheck-declare-checker cplusplus-g++
   "A checker for C++ syntax which uses vanilla G++."
   :command '("g++"
-             (option "-std=" flycheck-g++-standard)
+             (option "--std=" init-cc-g++-dialect)
              "-Wall" "-Wextra" "-fsyntax-only" source-inplace)
   :error-patterns
   '(("^\\(?1:.*?\\):\\(?2:[0-9]+\\):\\(?3:[0-9]+\\): error: \\(?4:.+\\)$" error)
     ("^\\(?1:.*?\\):\\(?2:[0-9]+\\):\\(?3:[0-9]+\\): warning: \\(?4:.+\\)$" warning))
   :modes 'c++-mode)
 
-(add-to-list 'flycheck-checkers 'cplusplus-g++)
-
-
-;; Clang syntax checker for C language
 
 (flycheck-declare-checker c-clang
-  "A checker for C syntax (C99) which uses clang compiler."
-  :command '("clang" "--std=c99" 
+  "A checker for C syntax which uses clang compiler."
+  :command '("clang" 
+             (option "--std=" init-cc-clang-dialect) 
              "-Wall" "-Wextra" 
              "-fno-color-diagnostics"
              "-fsyntax-only" source-inplace)
@@ -96,25 +62,12 @@ set to a string, pass the string to \"--std=\" option of g++."
     ("^\\(?1:.*?\\):\\(?2:[0-9]+\\):\\(?3:[0-9]+\\): warning: \\(?4:.+\\)$" warning))
   :modes 'c-mode)
 
-(add-to-list 'flycheck-checkers 'c-clang)
-
-;; Clang syntax checker for C++ language
-(flycheck-def-option-var flycheck-clang-stdlib-c++ nil cplusplus-clang
-  "The standard C++ library used for checking with clang.
-
-When nil, use the default standard used by clang compiler.  When
-set to a value, the value is passed \"--stdlib=\" option of clang++."
-  :type '(choice (const :tag "Default" nil)
-                 (const :tag "libc++ from clang project" "libc++")
-                 (const :tag "libstdc++ from GNU project" "libstdc++")
-                 )
-  :safe t)
-
 
 (flycheck-declare-checker cplusplus-clang
   "A checker for C++ syntax (C++11) which uses clang compiler."
-  :command '("clang++" "--std=c++11" 
-             (option "-stdlib=" flycheck-clang-stdlib-c++)
+  :command '("clang++" 
+             (option "--std=" init-cc-clang++-dialect) 
+             (option "--stdlib=" init-cc-clang++-stdlib)
              "-Wall" "-Wextra"
              "-fno-color-diagnostics"
              "-fsyntax-only" source-inplace)
@@ -123,10 +76,14 @@ set to a value, the value is passed \"--stdlib=\" option of clang++."
     ("^\\(?1:.*?\\):\\(?2:[0-9]+\\):\\(?3:[0-9]+\\): warning: \\(?4:.+\\)$" warning))
   :modes 'c++-mode)
 
+
+;; Add checkers to flycheck
+(add-to-list 'flycheck-checkers 'c-gcc)
+(add-to-list 'flycheck-checkers 'cplusplus-g++)
+(add-to-list 'flycheck-checkers 'c-clang)
 (add-to-list 'flycheck-checkers 'cplusplus-clang)
 
-
-;; Use flycheck in c source
+;; Use flycheck in c/c++ source
 (add-hook 'c-mode-hook 'flycheck-mode)
 (add-hook 'c++-mode-hook 'flycheck-mode)
 
