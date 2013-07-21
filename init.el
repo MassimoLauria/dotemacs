@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
-;; Time-stamp: "2013-06-17, 10:39 (CEST) Massimo Lauria"
+;; Time-stamp: "2013-07-21, 22:15 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -63,8 +63,9 @@
 ;; specific system.
 ;;
 (setq additional-elisp-paths (list
-                              "~/Library/site-lisp/" ;; macosx user site-lisp
-                              "~/.emacs.d/site-lisp/"     ;; standard user path
+                              "~/Library/site-lisp/"   ;; macosx user site-lisp
+                              "~/.emacs.d/site-lisp/"  ;; standard user path
+                              "~/.local/share/emacs/site-lisp/" ;; local fs hierarchy
                               ))
 
 (setq additional-elisp-packages (list
