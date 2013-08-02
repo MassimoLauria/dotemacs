@@ -10,13 +10,13 @@
 ;; Multifile support, completition, style, reverse search support, ...
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
+(setq-default TeX-master t)  ;; Do not query for master file.
 (setq TeX-save-query nil)
 (setq TeX-display-help t)
 (setq TeX-electric-sub-and-superscript t)
 (setq reftex-plug-into-AUCTeX t)
 (setq bib-cite-use-reftex-view-crossref t)
 (setq TeX-complete-word '(lambda () ))
-(setq-default TeX-master t)  ;; Do not query for master file, and applies auto-insertion.
 
 (setq font-latex-fontify-sectioning 'color)
 
@@ -88,14 +88,13 @@ source-specials/synctex toggle."
         TeX-byproduct-files ))
 
 
-;; Basic LaTeX-mode-hook setup  -- start by resetting the hook list
-;; (setq LaTeX-mode-hook nil)
-;; (setq TeX-mode-hook nil)
-
+;; Basic LaTeX-mode-hook setup 
+(add-hook 'TeX-mode-hook 'TeX-PDF-mode)
 (add-hook 'TeX-mode-hook 'flycheck-mode)
 (add-hook 'TeX-mode-hook 'turn-on-reftex)
 (add-hook 'TeX-mode-hook 'turn-on-flyspell)
 (add-hook 'TeX-mode-hook 'autopair-latex-setup)
+
 (when-available 'aquamacs-latex-viewer-support
       (add-hook 'TeX-mode-hook 'aquamacs-latex-viewer-support 'append)) ;; load reftex first
 
@@ -511,9 +510,14 @@ It either tries \"lacheck\" or \"chktex\"."
 
 ;; Latex autoinsertion
 (defun choose-initial-latex-template ()
-  "Query the user to choose a template for a new latex file"
+  "Query the user to choose a template for a new latex file. 
+
+Do that only if the file do not exists already."
   (interactive)
-  (if (or (not (string-equal (buffer-name) "_region_.tex"))
+  (message "Choosing latex template")
+  (if (or (and (not (string-equal (buffer-name) "_region_.tex")) ;; non generated files _region_.tex 
+               (not (file-exists-p (buffer-file-name)))          ;; non saved file  
+               (= (- (point-max) (point-min)) 0))                ;; empty buffer
           (called-interactively-p))
       (let ((input-char ?0))
         (loop until (member input-char '(?n ?p ?s ?l ?d ?e)) do
@@ -524,10 +528,11 @@ It either tries \"lacheck\" or \"chktex\"."
           ((?s) (insert "latex-slides-template" ) (yas-expand))
           ((?l) (insert "latex-letter-template") (yas-expand))
           ((?d) (insert "latex-pgfpic-template") (yas-expand))
-          ((?e) (insert ""))))))
+          ((?e) (insert ""))))
+    ))
 
+(add-hook 'LaTeX-mode-hook 'choose-initial-latex-template)
 
-;; (define-auto-insert 'latex-mode 'choose-initial-latex-template)
 
 (defun bugfix-TeX-parse-error (old)
   "Goto next error.  Pop to OLD buffer if no more errors are found.

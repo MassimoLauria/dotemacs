@@ -7,6 +7,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-item-indent 0)
+ '(TeX-master t)
  '(ac-auto-show-menu 0.3)
  '(ac-delay 0.1)
  '(ac-disable-on-comment nil)
@@ -122,8 +123,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(flycheck-error-face ((t (:underline "DodgerBlue1"))))
- '(flycheck-warning-face ((t (:underline "green"))))
+ '(flycheck-error ((t (:underline "DodgerBlue1"))))
+ '(flycheck-error-face ((t (:underline "DodgerBlue1"))) t)
+ '(flycheck-warning ((t (:underline "green"))))
+ '(flycheck-warning-face ((t (:underline "green"))) t)
  '(flymake-errline ((((class color)) (:underline "red"))) t)
  '(flymake-warnline ((((class color)) (:underline "yellow"))) t)
  '(flyspell-duplicate ((t (:strike-through "red"))))
