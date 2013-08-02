@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-07-19, 00:24 (CEST) Massimo Lauria>
+;; Time-stamp: <2013-07-29, 17:11 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -29,9 +29,14 @@
 ;; Load configuration for C/C++ compilers
 (require 'init-cc-compiler)
 
+
 ;; Syntax checker 
 (eval-after-load "flycheck"
   '(require 'init-cc-mode-syntax-check nil t))
+
+;; test with cppunit
+(require 'compile)
+(add-to-list 'compilation-error-regexp-alist-alist (list 'cppunit "\\(!!!FAILURES!!!\nTest Results:\nRun: [^\n]*\n\n\n\\)?\\([0-9]+\\)) test: \\([^(]+\\)(F) line: \\([0-9]+\\) \\([^ \n]+\\)" 5 4))
 
 
 (require 'auto-complete-clang-async "emacs-clang-complete-async/auto-complete-clang-async.el" t)
