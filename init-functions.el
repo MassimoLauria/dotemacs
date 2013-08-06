@@ -196,6 +196,11 @@ Emacs buffers are those whose name starts with *."
 
 ;;;------ Text processing -------------------------------------------
 
+(defun unfill-paragraph ()
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-paragraph nil)))
+
 (defun join-all-lines (start end)
   "Produce a single line, joining all lines in the selected region."
   (interactive "r")
