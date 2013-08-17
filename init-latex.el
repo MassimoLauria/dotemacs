@@ -537,7 +537,7 @@ Do that only if the file do not exists already."
 (defun bugfix-TeX-parse-error (old)
   "Goto next error.  Pop to OLD buffer if no more errors are found.
 
- --- Parse error bug fix for Debian and Ubuntu 
+ --- Parse error bug fix for Debian and Ubuntu and other TeX Live
 
  Original `TeX-parse-error' gets confused by TeX version number
  containing the string (TeX Live 20XX Debian), the result being
@@ -614,7 +614,7 @@ Do that only if the file do not exists already."
 		      (string-match "\n" file))
 	      (setq file
 		    (mapconcat 'identity (split-string file "[\"\n]+") "")))
-        (when (not (string-match "^TeX\\ Live\\ 20[0-9][0-9]/\\(Debian\\|Ubuntu\\)$" file))
+        (when (not (string-match "^TeX\\ Live\\ 20[0-9][0-9]/\\(Debian\\|Ubuntu\\)?$" file))
 	    (push file TeX-error-file)
 	    (push nil TeX-error-offset)
 	    (goto-char end)))
@@ -642,6 +642,7 @@ Do that only if the file do not exists already."
 
 ;; Use the version with bug fix
 (eval-after-load "tex-buf" '(defalias 'TeX-parse-error 'bugfix-TeX-parse-error))
+(eval-after-load "tex" '(require 'tex-buf))
 
 
 (provide 'init-latex)
