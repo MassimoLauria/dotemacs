@@ -212,6 +212,16 @@ Emacs buffers are those whose name starts with *."
     )
   )
 
+(defun kill-whitespace ()
+  "Kill the whitespace between two non-whitespace characters"
+  (interactive "*")
+  (save-excursion
+    (save-restriction
+      (save-match-data
+        (progn
+          (re-search-backward "[^ \t\r\n]" nil t)
+          (re-search-forward "[ \t\r\n]+" nil t)
+          (replace-match "" nil nil))))))
 
 (defun format-author-string (start end)
   "Replace all “and”s but last one, to commas. This is very
@@ -238,6 +248,7 @@ Emacs buffers are those whose name starts with *."
     (normalize-space-punctuation (point-min) (point-max))
     )
   )
+
 
 (defun normalize-space-punctuation (start end)
   "Remove un-necessary spaces in text.
