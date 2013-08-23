@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
-;; Time-stamp: "2013-07-21, 22:15 (CEST) Massimo Lauria"
+;; Time-stamp: "2013-08-23, 14:18 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -127,7 +127,7 @@
 ;; Keyboard settings
 (require 'massimo-keyboard)       ; basic keyboard settings
 (require 'init-global-keys)       ; global keys
-(require 'init-open-link)         ; keys for opening links
+(require 'init-hyperlink)         ; keys for opening links
 
 ;; Programming
 (require 'init-magit)
