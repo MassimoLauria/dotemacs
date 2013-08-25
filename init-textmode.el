@@ -1,6 +1,6 @@
 ;;; init-textmode.el --- Preferences for Text editing
 
-;; Copyright (C) 2010, 2011  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: files, wp
@@ -40,7 +40,6 @@
 (defun my-setup-of-text-mode-common()
   "Initial setup of Text mode (common to all children modes)"
   (when-available 'flyspell-mode     (flyspell-mode     1))
-  (when-available 'writegood-mode    (writegood-mode    1))
   (when-available 'goto-address-mode (goto-address-mode 1))
   )
 
