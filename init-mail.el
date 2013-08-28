@@ -50,6 +50,8 @@
 (when (require 'mu4e nil t)
   (defalias 'mail 'mu4e)
   (define-key mu4e-main-mode-map "q" 'bury-buffer)
+  (if (not (boundp 'mu4e-view-actions)) 
+      (setq mu4e-view-actions nil))
   (add-to-list 'mu4e-view-actions
                '("View in browser" . mu4e-msgv-action-view-in-browser) t))
 
