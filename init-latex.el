@@ -10,7 +10,7 @@
 ;; Multifile support, completition, style, reverse search support, ...
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
-(setq-default TeX-master t)  ;; Do not query for master file.
+(setq TeX-master t)  ;; Do not query for master file.
 (setq TeX-save-query nil)
 (setq TeX-display-help t)
 (setq TeX-electric-sub-and-superscript t)
@@ -474,7 +474,7 @@ It either tries \"lacheck\" or \"chktex\"."
 
 (defun guess-TeX-master (filename)
   "Guess the master file for FILENAME from currently open .tex files."
-  (let ((candidate nil)
+  (let ((candidate t)
         (filename (file-name-nondirectory filename)))
     (save-excursion
       (dolist (buffer (buffer-list))
@@ -490,7 +490,7 @@ It either tries \"lacheck\" or \"chktex\"."
                       (setq candidate file))))))))
     (if candidate
         (message "TeX master document: %s" (file-name-nondirectory candidate)))
-        candidate))
+    candidate))
 
 ;; Rubber is a nice tool which is basically a make-like system for
 ;; LaTeX documents
