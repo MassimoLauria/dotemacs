@@ -4,6 +4,8 @@
 ;;;
 ;;;-----------------------------------------------------------------
 
+;;; Themes and Fonts
+
 ;; Color theme
 (setq
  default-color-theme-emacs24     'zenburn
@@ -14,55 +16,34 @@
 ;; Regular fonts
 (setq
  font-X11-no-antialias "-misc-fixed-medium-r-normal--18-*-*-*-*-*-iso10646-1"
- font-X11-antialias    "Inconsolata-14"
- ;; font-Mac-antialias    "Monaco-12"
- font-Mac-antialias    "-apple-DejaVu_Sans_Mono-medium-normal-normal--20-*-*-*-m-0-iso10646-1"
- font-Win-antialias    "Consolas-14"
- )
+ font-X11   "Inconsolata 14"
+ font-Mac   "DejaVu Sans Mono 20"
+ font-Win   "Consolas 14" )
 
 ;; Bigger fonts
 (when (and (boundp 'prefs-activate-bigfont) prefs-activate-bigfont)
   (setq
    font-X11-no-antialias "-misc-fixed-medium-r-normal--20-*-*-*-*-*-iso10646-1"
-   font-X11-antialias    "Inconsolata-14"
-   ;; font-Mac-antialias    "Monaco-14"
-   font-Mac-antialias    "-apple-DejaVu_Sans_Mono-medium-normal-normal--20-*-*-*-m-0-iso10646-1"
-   font-Win-antialias    "Consolas-14"
-   ))
-
-;; Meta usage in MacOSX requires some thought
-(when running-NSCocoa-process
-  (if (boundp 'ns-right-alternate-modifier)
-      (progn
-        (setq ns-alternate-modifier 'meta)
-        (setq ns-right-alternate-modifier 'nil))
-    (setq ns-alternate-modifier 'nil)
-    )
-)
+   font-X11   "Inconsolata 14"
+   font-Mac   "DejaVu Sans Mono 20"
+   font-Win   "Consolas 14" ))
 
 
-;;; Font setup
-;; Linux (GNUEmacs >=23)
-(when (and running-GNULinux running-GNUEmacs23+ )
-  (set-default-font font-X11-antialias)
-  (add-to-list 'default-frame-alist `(font . ,font-X11-antialias))
-  )
-;; Linux (GNUEmacs 22)
+;;; Setup of theme and fonts 
+
+;; GNUEmacs 22 on Linux
 (when (and running-GNULinux running-GNUEmacs22)
   (set-default-font font-X11-no-antialias)
-  (add-to-list 'default-frame-alist `(font . ,font-X11-no-antialias))
-  )
-;; MacOSX
-(when (and running-MacOSX running-GNUEmacs23+)
-  (set-default-font font-Mac-antialias)
-  (add-to-list 'default-frame-alist `(font . ,font-Mac-antialias))
-  )
-;; Windows
-(when (and running-Windows running-GNUEmacs23+)
- (set-default-font font-Win-antialias)
- (add-to-list 'default-frame-alist `(font . ,font-Win-antialias))
- )
+  (add-to-list 'default-frame-alist `(font . ,font-X11-no-antialias)))
 
+;; GNUEmacs >=23
+(when running-GNUEmacs23+ 
+  (set-face-attribute 'default nil :font 
+                      (cond
+                       (running-MacOSX   font-Mac)
+                       (running-GNULinux font-X11)
+                       (running-Windows  font-Win)
+                       )))
 
 ;; Load color theme
 (when (or  ;; enough colors? (meaningless in server-mode)
@@ -85,6 +66,15 @@
    '(flyspell-duplicate ((t (:strike-through "red"))))
    '(flyspell-incorrect ((t (:underline "red"))))
    ))
+
+
+;; Meta usage in MacOSX requires some thought
+(when running-NSCocoa-process
+  (if (boundp 'ns-right-alternate-modifier)
+      (progn
+        (setq ns-alternate-modifier 'meta)
+        (setq ns-right-alternate-modifier 'nil))
+    (setq ns-alternate-modifier 'nil)))
 
 
 ;; GUI elements
