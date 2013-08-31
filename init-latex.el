@@ -447,7 +447,7 @@ It either tries \"lacheck\" or \"chktex\"."
 
 
 ;; Drag and Drop on Mac
-(when-running-Aquamacs
+(when running-Aquamacs
  (add-hook
   'LaTeX-mode-hook
   (lambda ()
@@ -464,8 +464,7 @@ It either tries \"lacheck\" or \"chktex\"."
        ("\\.mov\\'" .
         "\\includemovie[\n\tposter,\n\trepeat=1,\n\ttext=(%r)\n\t]{}{}{%r}\n")
        ("\\.avi\\'" .
-        "\\includemovie[\n\tposter,\n\trepeat=1,\n\ttext=(%r)\n\t]{}{}{%r}\n")))))
- )
+        "\\includemovie[\n\tposter,\n\trepeat=1,\n\ttext=(%r)\n\t]{}{}{%r}\n"))))))
 
 ;; Guess master file
 (add-hook

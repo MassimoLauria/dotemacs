@@ -1,7 +1,7 @@
 ;;; init-discover-runtime.el --- Find out running OS, Emacsen, and setup accordingly
 
 ;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
-;; Time-stamp: "2013-08-31, 12:21 (CEST) Massimo Lauria"
+;; Time-stamp: "2013-08-31, 12:28 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -59,12 +59,12 @@
 ;; Graphical capabilities (MacOS interface, or X11)
 
 ;; window system of the frame
-(defvar running-NSCocoa-frame (eq window-system 'ns))  ;; MacOS
-(defvar running-X11-frame     (eq window-system 'x))  ;; X11
-(defvar running-Windows-frame (eq window-system 'w32)) ;; Windows
+;; (defvar running-NSCocoa-frame (eq window-system 'ns))  ;; MacOS
+;; (defvar running-X11-frame     (eq window-system 'x))  ;; X11
+;; (defvar running-Windows-frame (eq window-system 'w32)) ;; Windows
 
 ;; window system of the initial process
-(if(boundp 'initial-window-system) ;; Does not exist on GNU Emacs 22.
+(if (boundp 'initial-window-system) ;; Does not exist on GNU Emacs 22.
     (progn
       (defvar running-NSCocoa-process  (eq initial-window-system 'ns))  ;; MacOS
       (defvar running-X11-process      (eq initial-window-system 'x))   ;; X11
@@ -77,25 +77,6 @@
     )
   )
 
-
-;; Conditional running of code, based on OS
-(defmacro when-running-GNULinux (&rest body) (list 'if (string-match "linux" (prin1-to-string system-type))  (cons 'progn body)))
-(defmacro when-running-MacOSX   (&rest body) (list 'if (string-match "darwin" (prin1-to-string system-type)) (cons 'progn body)))
-(defmacro when-running-Windows  (&rest body) (list 'if (string-match "windows" (prin1-to-string system-type))(cons 'progn body)))
-
-
-;; Conditional running of code, based on Emacs type
-(defmacro when-running-GNUEmacs (&rest body) (list 'if (string-match "GNU Emacs" (version))  (cons 'progn body)))
-(defmacro when-running-XEmacs (&rest body)   (list 'if (string-match "XEmacs" (version))     (cons 'progn body)))
-
-;; Conditional running of code, based on Emacs version
-(defmacro when-running-GNUEmacs22 (&rest body) (list 'if (string-match "GNUEmacs 22" (version)) (cons 'progn body)))
-(defmacro when-running-GNUEmacs23 (&rest body) (list 'if (string-match "GNUEmacs 23" (version)) (cons 'progn body)))
-(defmacro when-running-GNUEmacs24 (&rest body) (list 'if (string-match "GNUEmacs 24" (version)) (cons 'progn body)))
-(defmacro when-running-GNUEmacs25 (&rest body) (list 'if (string-match "GNUEmacs 25" (version)) (cons 'progn body)))
-(defmacro when-running-GNUEmacs26 (&rest body) (list 'if (string-match "GNUEmacs 26" (version)) (cons 'progn body)))
-
-(defmacro when-running-Aquamacs   (&rest body) (list 'if (boundp 'aquamacs-version) (cons 'progn body)))
 
 ;; Conditional running of code, based on graphical system of the selected frame
 (defmacro when-running-NSCocoa-frame (&rest body) (list 'if (eq window-system 'ns)     (cons 'progn body)))
