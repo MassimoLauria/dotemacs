@@ -12,38 +12,25 @@
  default-color-theme-emacs23less 'color-theme-zenburn
  default-color-number 256)
 
-
 ;; Regular fonts
 (setq
- font-X11-no-antialias "-misc-fixed-medium-r-normal--18-*-*-*-*-*-iso10646-1"
- font-X11   "Inconsolata 14"
- font-Mac   "DejaVu Sans Mono 20"
- font-Win   "Consolas 14" )
+ font-X11   "Inconsolata 12"
+ font-Mac   "DejaVu Sans Mono 16"
+ font-Win   "Consolas 12" )
 
 ;; Bigger fonts
 (when (and (boundp 'prefs-activate-bigfont) prefs-activate-bigfont)
   (setq
-   font-X11-no-antialias "-misc-fixed-medium-r-normal--20-*-*-*-*-*-iso10646-1"
    font-X11   "Inconsolata 14"
    font-Mac   "DejaVu Sans Mono 20"
    font-Win   "Consolas 14" ))
 
-
-;;; Setup of theme and fonts 
-
-;; GNUEmacs 22 on Linux
-(when (and running-GNULinux running-GNUEmacs22)
-  (set-default-font font-X11-no-antialias)
-  (add-to-list 'default-frame-alist `(font . ,font-X11-no-antialias)))
-
-;; GNUEmacs >=23
-(when running-GNUEmacs23+ 
-  (set-face-attribute 'default nil :font 
-                      (cond
-                       (running-MacOSX   font-Mac)
-                       (running-GNULinux font-X11)
-                       (running-Windows  font-Win)
-                       )))
+(set-face-attribute 'default nil :font 
+                    (cond
+                     (running-MacOSX   font-Mac)
+                     (running-GNULinux font-X11)
+                     (running-Windows  font-Win)
+                     ))
 
 ;; Load color theme
 (when (or  ;; enough colors? (meaningless in server-mode)

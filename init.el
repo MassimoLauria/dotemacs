@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
-;; Time-stamp: "2013-08-23, 14:18 (CEST) Massimo Lauria"
+;; Time-stamp: "2013-08-31, 12:17 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -38,16 +38,14 @@
 (require 'init-discover-runtime) ; Discover emacs version and runtime
 
 
-(setq compat-elisp-emacs24 (concat default-elisp-path "/compat24"))  ;; For compatibility with Emacs 24
-(setq compat-elisp-emacs23 (concat default-elisp-path "/compat23"))  ;; For compatibility with Emacs 23
-(setq compat-elisp-emacs22 (concat default-elisp-path "/compat22"))  ;; For compatibility with Emacs 22
+;; Try to fix missing bits from older versions of Emacs
+;; so far we support only emacs >= 23.
+
+(setq compat-elisp-emacs24 (concat default-elisp-path "/compat24"))
 
 (when (< emacs-major-version 24)
-  (setq load-path (cons compat-elisp-emacs24 load-path)))
-(when (< emacs-major-version 23)
-  (setq load-path (cons compat-elisp-emacs23 load-path)))
-(when (< emacs-major-version 22)
-  (setq load-path (cons compat-elisp-emacs22 load-path)))
+  (setq load-path (cons compat-elisp-emacs24 load-path))
+  (require 'backport24 nil t))
 
 
 (require 'init-functions)        ; Utility functions for configuration
@@ -121,7 +119,7 @@
 (require 'init-eshell)            ; Emacs shell
 (require 'init-clipboard)         ; Clipboard managing
 (require 'init-autotype)          ; Automatic file filling
-(require 'init-auto-complete)     ; Completion configuration
+;;(require 'init-auto-complete)     ; Completion configuration
 (require 'init-spellcheck)        ; Spellchecking
 
 ;; Keyboard settings
@@ -133,7 +131,7 @@
 (require 'init-magit)
 (require 'init-cc-mode)
 (require 'init-python)
-;; (require 'init-java-mode)
+(require 'init-java-mode)
 
 ;; Math packages
 (require 'init-latex)        ;; AucTeX
@@ -142,7 +140,7 @@
 (require 'init-singular)     ;; Singular (not from SageMath!)
 
 ;; ;; Applications
-(require 'init-mail)       ;; Mail + Contacts
+;; (require 'init-mail)       ;; Mail + Contacts
 (require 'init-org-mode)   ;; Organizer
 (require 'init-websearch)  ;; Search the Web
 

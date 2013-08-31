@@ -1,7 +1,7 @@
 ;;; init-discover-runtime.el --- Find out running OS, Emacsen, and setup accordingly
 
-;; Copyright (C) 2010, 2011, 2012  Massimo Lauria
-;; Time-stamp: "2012-12-25, 19:35 (CET) Massimo Lauria"
+;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
+;; Time-stamp: "2013-08-31, 12:21 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -43,13 +43,17 @@
 (defvar running-XEmacs   (string-match "XEmacs" (version)))
 
 
-;; GNU Emacs version, try from 22 to 24.
+;; GNU Emacs version, try from 22 to 26.
 (defvar running-GNUEmacs22   (= emacs-major-version 22))
 (defvar running-GNUEmacs23   (= emacs-major-version 23))
 (defvar running-GNUEmacs24   (= emacs-major-version 24))
+(defvar running-GNUEmacs25   (= emacs-major-version 25))
+(defvar running-GNUEmacs26   (= emacs-major-version 26))
 (defvar running-GNUEmacs22+  (>= emacs-major-version 22))
 (defvar running-GNUEmacs23+  (>= emacs-major-version 23))
 (defvar running-GNUEmacs24+  (>= emacs-major-version 24))
+(defvar running-GNUEmacs25+  (>= emacs-major-version 25))
+(defvar running-GNUEmacs26+  (>= emacs-major-version 26))
 (defvar running-Aquamacs     (boundp 'aquamacs-version))
 
 ;; Graphical capabilities (MacOS interface, or X11)
@@ -88,6 +92,9 @@
 (defmacro when-running-GNUEmacs22 (&rest body) (list 'if (string-match "GNUEmacs 22" (version)) (cons 'progn body)))
 (defmacro when-running-GNUEmacs23 (&rest body) (list 'if (string-match "GNUEmacs 23" (version)) (cons 'progn body)))
 (defmacro when-running-GNUEmacs24 (&rest body) (list 'if (string-match "GNUEmacs 24" (version)) (cons 'progn body)))
+(defmacro when-running-GNUEmacs25 (&rest body) (list 'if (string-match "GNUEmacs 25" (version)) (cons 'progn body)))
+(defmacro when-running-GNUEmacs26 (&rest body) (list 'if (string-match "GNUEmacs 26" (version)) (cons 'progn body)))
+
 (defmacro when-running-Aquamacs   (&rest body) (list 'if (boundp 'aquamacs-version) (cons 'progn body)))
 
 ;; Conditional running of code, based on graphical system of the selected frame
