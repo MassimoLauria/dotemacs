@@ -1,7 +1,7 @@
 ;;; init-discover-runtime.el --- Find out running OS, Emacsen, and setup accordingly
 
 ;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
-;; Time-stamp: "2013-08-31, 12:28 (CEST) Massimo Lauria"
+;; Time-stamp: "2013-08-31, 12:35 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -56,41 +56,19 @@
 (defvar running-GNUEmacs26+  (>= emacs-major-version 26))
 (defvar running-Aquamacs     (boundp 'aquamacs-version))
 
-;; Graphical capabilities (MacOS interface, or X11)
+
+;;; Graphical capabilities (MacOS interface, or X11)
+
+;; window system of the initial process (maybe different from the frame)
+(defvar running-NSCocoa-process  (eq initial-window-system 'ns))
+(defvar running-X11-process      (eq initial-window-system 'x))
+(defvar running-Windows-process  (eq initial-window-system 'w32)) 
+
 
 ;; window system of the frame
-;; (defvar running-NSCocoa-frame (eq window-system 'ns))  ;; MacOS
-;; (defvar running-X11-frame     (eq window-system 'x))  ;; X11
-;; (defvar running-Windows-frame (eq window-system 'w32)) ;; Windows
-
-;; window system of the initial process
-(if (boundp 'initial-window-system) ;; Does not exist on GNU Emacs 22.
-    (progn
-      (defvar running-NSCocoa-process  (eq initial-window-system 'ns))  ;; MacOS
-      (defvar running-X11-process      (eq initial-window-system 'x))   ;; X11
-      (defvar running-Windows-process  (eq initial-window-system 'w32)) ;; Windows
-      )
-  (progn
-    (defvar running-NSCocoa-process  running-NSCocoa-frame)  ;; MacOS
-    (defvar running-X11-process      running-X11-frame)      ;; X11
-    (defvar running-Windows-process  running-Windows-frame) ;; Windows
-    )
-  )
-
-
-;; Conditional running of code, based on graphical system of the selected frame
-(defmacro when-running-NSCocoa-frame (&rest body) (list 'if (eq window-system 'ns)     (cons 'progn body)))
-(defmacro when-running-X11-frame     (&rest body) (list 'if (eq window-system 'x )     (cons 'progn body)))
-(defmacro when-running-Windows-frame (&rest body) (list 'if (eq window-system 'w32)     (cons 'progn body)))
-
-;; Conditional running of code, based on graphical system of the process initial frame
-(defmacro when-running-NSCocoa-process (&rest body) (list 'if running-NSCocoa-process    (cons 'progn body)))
-(defmacro when-running-X11-process     (&rest body) (list 'if running-X11-process        (cons 'progn body)))
-(defmacro when-running-Windows-process (&rest body) (list 'if running-Windows-frame      (cons 'progn body)))
-
-
-(message "0 Discovering runtime environment...Done")
-
+(defmacro this-is-NSCocoa-frame () '(eq window-system 'ns))  ;; MacOS
+(defmacro this-is-X11-frame     () '(eq window-system 'x))  ;; X11
+(defmacro this-is-Windows-frame () '(eq window-system 'w32)) ;; Windows
 
 (provide 'init-discover-runtime)
 ;;; init-discover-runtime.el ends here
