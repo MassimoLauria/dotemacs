@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
-;; Time-stamp: "2013-08-31, 12:36 (CEST) Massimo Lauria"
+;; Time-stamp: "2013-09-01, 15:46 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -123,7 +123,7 @@
 (require 'init-eshell)            ; Emacs shell
 (require 'init-clipboard)         ; Clipboard managing
 (require 'init-autotype)          ; Automatic file filling
-;;(require 'init-auto-complete)     ; Completion configuration
+(require 'init-auto-complete)     ; Completion configuration
 (require 'init-spellcheck)        ; Spellchecking
 
 ;; Keyboard settings
@@ -144,7 +144,7 @@
 (require 'init-singular)     ;; Singular (not from SageMath!)
 
 ;; ;; Applications
-;; (require 'init-mail)       ;; Mail + Contacts
+(require 'init-mail)       ;; Mail + Contacts
 (require 'init-org-mode)   ;; Organizer
 (require 'init-websearch)  ;; Search the Web
 
