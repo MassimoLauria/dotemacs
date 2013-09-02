@@ -14,23 +14,26 @@
 
 ;; Regular fonts
 (setq
- font-X11   "Inconsolata 12"
- font-Mac   "DejaVu Sans Mono 16"
+ font-X11   "DejaVu Sans Mono 12"
+ font-Mac   "DejaVu Sans Mono 12"
  font-Win   "Consolas 12" )
 
 ;; Bigger fonts
 (when (and (boundp 'prefs-activate-bigfont) prefs-activate-bigfont)
   (setq
-   font-X11   "Inconsolata 14"
+   font-X11   "DejaVu Sans Mono 14"
    font-Mac   "DejaVu Sans Mono 20"
    font-Win   "Consolas 14" ))
 
-(set-face-attribute 'default nil :font 
-                    (cond
-                     (running-MacOSX   font-Mac)
-                     (running-GNULinux font-X11)
-                     (running-Windows  font-Win)
-                     ))
+(add-hook 'after-make-frame-functions
+    (lambda (frame)
+      (if window-system 
+          (set-face-attribute 'default nil :font 
+                              (cond
+                               (running-MacOSX   font-Mac)
+                               (running-GNULinux font-X11)
+                               (running-Windows  font-Win)
+                               )))))
 
 ;; Load color theme
 (when (or  ;; enough colors? (meaningless in server-mode)
