@@ -25,15 +25,20 @@
    font-Mac   "DejaVu Sans Mono 20"
    font-Win   "Consolas 14" ))
 
+(defun set-myfont-preference () 
+  (if window-system 
+      (set-face-attribute 'default nil :font 
+                          (cond
+                           (running-MacOSX   font-Mac)
+                           (running-GNULinux font-X11)
+                           (running-Windows  font-Win)
+                           ))))
+
+(set-myfont-preference)
+
 (add-hook 'after-make-frame-functions
-    (lambda (frame)
-      (if window-system 
-          (set-face-attribute 'default nil :font 
-                              (cond
-                               (running-MacOSX   font-Mac)
-                               (running-GNULinux font-X11)
-                               (running-Windows  font-Win)
-                               )))))
+    (lambda (frame) 
+      (set-font-preference)))
 
 ;; Load color theme
 (when (or  ;; enough colors? (meaningless in server-mode)
