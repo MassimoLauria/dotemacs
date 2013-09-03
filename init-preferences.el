@@ -26,19 +26,20 @@
    font-Win   "Consolas 14" ))
 
 (defun set-myfont-preference () 
-  (if window-system 
-      (set-face-attribute 'default nil :font 
-                          (cond
-                           (running-MacOSX   font-Mac)
-                           (running-GNULinux font-X11)
-                           (running-Windows  font-Win)
-                           ))))
+  "Setup the font preferences"
+  (let ((fontspec (cond
+                   (running-MacOSX   font-Mac)
+                   (running-GNULinux font-X11)
+                   (running-Windows  font-Win)
+                   )))
+    (set-default-font fontspec)
+    (add-to-list 'default-frame-alist `(font . ,fontspec))))
 
 (set-myfont-preference)
 
-(add-hook 'after-make-frame-functions
-    (lambda (frame) 
-      (set-font-preference)))
+;; (add-hook 'after-make-frame-functions
+;;     (lambda (frame) 
+;;       (set-font-preference)))
 
 ;; Load color theme
 (when (or  ;; enough colors? (meaningless in server-mode)
