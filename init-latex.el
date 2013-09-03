@@ -66,9 +66,9 @@ source-specials/synctex toggle."
     (let ((version (string-to-number AUCTeX-version)))
       (cond
        ((>= version 11.86)
-        (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard-or-function nil t)))
+        (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard-or-function nil t :help "Run Viewer (no  confirmation)")))
        (t
-        (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t)))
+        (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t :help "Run Viewer (no confirmation)")))
        ))))
 
 (eval-after-load "tex-site" '(init-latex--forward-search-setup))
@@ -108,6 +108,7 @@ source-specials/synctex toggle."
                        (make-local-variable 'compilation-exit-message-function)
                        (setq compilation-exit-message-function 'nil)
                        (add-to-list 'LaTeX-verbatim-environments "comment")
+                       (message "call viewer fix.")
                        (init-latex--fix-viewer-invocation)
                        )))
 
@@ -145,7 +146,7 @@ Var `style' can be either one of the symbols `compile' and `auctex'.
    ;; if region is pinned, call master command on region
    (TeX-command-region-begin
         (init-latex--error-keys 'auctex)
-        (TeX-command-region t))
+        (TeX-command-region nil))
    ;; is there a 'Makefile' in the folder? use that
    ((file-exists-p "Makefile")
         (set (make-local-variable 'compile-command)
@@ -469,11 +470,13 @@ It either tries \"lacheck\" or \"chktex\"."
 ;; Guess master file
 (add-hook
  'LaTeX-mode-hook
- (lambda () (setq TeX-master (guess-TeX-master (buffer-file-name)))))
+ (lambda () (setq TeX-master (or 
+                              (guess-TeX-master (buffer-file-name))
+                              t))))
 
 (defun guess-TeX-master (filename)
   "Guess the master file for FILENAME from currently open .tex files."
-  (let ((candidate t)
+  (let ((candidate nil)
         (filename (file-name-nondirectory filename)))
     (save-excursion
       (dolist (buffer (buffer-list))

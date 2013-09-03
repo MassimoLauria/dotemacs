@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
-;; Time-stamp: "2013-09-01, 15:46 (CEST) Massimo Lauria"
+;; Time-stamp: "2013-09-03, 10:50 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -27,6 +27,7 @@
 ;; ...)
 
 
+(add-hook 'after-init-hook '(lambda () (setq debug-on-error t)))
 
 ;;; Setup Emacs environment --------------------------------------------
 
@@ -163,6 +164,8 @@
 
 ;;; Start editing -------------------------------------------------------
 (init-scratch-buffer)
+
+
 
 (provide 'init)
 ;; Local Variables:
