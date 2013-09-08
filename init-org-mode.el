@@ -362,7 +362,7 @@ buffer."
   ;;    (org-agenda-goto-calendar)))
   )
 
-(run-with-idle-timer 300 t 'jump-to-org-agenda)
+(run-with-idle-timer 6000 t 'jump-to-org-agenda)
 
 
 ;; Patch up org-mode support for bibtex
