@@ -47,6 +47,11 @@
 
 
 ;; Try to load mu4e client if installed.
+(setq mu4e-headers-toggle-skip-duplicates t)
+(setq mu4e-headers-toggle-include-related t)
+(setq mu4e-headers-toggle-full-search nil)
+(setq mu4e-use-fancy-chars t)
+
 (when (require 'mu4e nil t)
   (defalias 'mail 'mu4e)
   (define-key mu4e-main-mode-map "q" 'bury-buffer)
