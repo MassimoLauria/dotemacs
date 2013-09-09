@@ -50,7 +50,7 @@
 (setq mu4e-headers-toggle-skip-duplicates t)
 (setq mu4e-headers-toggle-include-related t)
 (setq mu4e-headers-toggle-full-search nil)
-(setq mu4e-use-fancy-chars t)
+(setq mu4e-use-fancy-chars nil)
 
 (when (require 'mu4e nil t)
   (defalias 'mail 'mu4e)
