@@ -28,6 +28,7 @@
 (setq message-default-mail-headers "Cc: \nBcc: \n")
 (setq message-signature private-email-signature)
 (setq message-auto-save-directory "~/personal/mail/drafts")
+(setq message-kill-buffer-on-exit t)
 
 ;; Mu4e view in browser
 (defun mu4e-msgv-action-view-in-browser (msg)
