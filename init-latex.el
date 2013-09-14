@@ -73,8 +73,8 @@ source-specials/synctex toggle."
 
 (eval-after-load "tex-site" '(init-latex--forward-search-setup))
 
-
-
+;; Smart parenthesis
+(require 'smartparens-latex nil t)
 
 
 ;; These are the files that are produced by LaTeX processes.  It is annoying
@@ -200,8 +200,10 @@ started."
 ;; Install LaTeX improved `up-list' command
 (add-hook 'LaTeX-mode-hook
           (lambda()
-            (if (boundp 'massimo-keyboard-mode-map)
-                (define-key massimo-keyboard-mode-map (kbd "M-p") 'LaTeX-up-list))))
+            (if (and 
+                 (boundp 'massimo-keyboard-mode-map)
+                 (fboundp 'sp-up-sexp))
+                (define-key massimo-keyboard-mode-map (kbd "M-p") 'sp-up-sexp))))
 
 
 ;; Setup DBUS communication between Evince and AUCTeX using SyncTeX

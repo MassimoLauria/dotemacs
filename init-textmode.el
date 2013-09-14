@@ -31,12 +31,6 @@
 (setq default-major-mode 'text-mode)
 
 
-;; Smart quotes setup. Like “this and that”.
-(if (require 'typopunct "typopunct" t)
-    (setq-default typopunct-buffer-language 'english)
-  )
-
-
 (defun my-setup-of-text-mode-common()
   "Initial setup of Text mode (common to all children modes)"
   (when-available 'flyspell-mode     (flyspell-mode     1))
@@ -51,10 +45,22 @@
     ;; Text formatting
     (set-default 'fill-column 70)
     (auto-fill-mode 1)
-    (setq default-justification 'full)
-    ;; Typography
-    (when-available 'typopunct-mode (typopunct-mode 1))
-    ))
+    (setq default-justification 'full)))
+
+;; Nice quotes
+(defun my-replace-straight-quotes (pair action context)
+  (when (eq action 'insert)
+    (delete-char 1)
+    (delete-char -1)
+    (insert "“") 
+    (insert "”")
+    (backward-char 1)))
+
+;; Nice quotes and smartparens
+(when (require 'smartparens nil t)
+  (sp-local-pair 'text-mode "“" "”")  ;; add so you can jump back and forth and out and in the pair!
+  (sp-local-pair 'text-mode "\"" nil :post-handlers '(my-replace-straight-quotes))
+  (sp-local-tag  'text-mode "\"" "“" "”" :actions '(wrap)))
 
 
 ;; Reset the text-mode hook

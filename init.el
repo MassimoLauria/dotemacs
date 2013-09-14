@@ -29,7 +29,7 @@
 
 ;; Stop for errors during init loading.
 (setq debug-on-error t)
-(add-hook 'after-init-hook '(lambda () (setq debug-on-error nil)))
+;;(add-hook 'after-init-hook '(lambda () (setq debug-on-error nil)))
 
 
 ;;; Setup Emacs environment --------------------------------------------
