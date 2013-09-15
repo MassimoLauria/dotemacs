@@ -61,6 +61,7 @@
   (add-hook 'orgtbl-mode-hook 'orgtbl-mode/setup-keys/gb)
   (add-hook 'org-agenda-mode-hook  'org-agenda-mode-setup-local-keys)
   (define-key calendar-mode-map (kbd "RET") 'th-calendar-open-agenda)
+  (define-key org-mode-map (kbd "<f9>") 'org-export-as-pdf-and-open)
 
   ;; org-capture
   (add-hook 'org-capture-mode-hook
@@ -368,7 +369,9 @@ buffer."
 (when (require 'smartparens nil t)
   (sp-local-pair 'org-mode "“" "”")  ;; add so you can jump back and forth and out and in the pair!
   (sp-local-pair 'org-mode "\"" nil :post-handlers '(my-replace-straight-quotes))
-  (sp-local-tag  'org-mode "\"" "“" "”" :actions '(wrap)))
+  (sp-local-tag  'org-mode "\"" "“" "”" :actions '(wrap))
+  (sp-local-pair 'org-mode "$" "$") 
+  (sp-local-tag  'org-mode "$" "$" "$" :actions '(wrap)))
 
 
 ;; Patch up org-mode support for bibtex
