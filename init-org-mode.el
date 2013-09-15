@@ -371,8 +371,20 @@ buffer."
   (sp-local-pair 'org-mode "\"" nil :post-handlers '(my-replace-straight-quotes))
   (sp-local-tag  'org-mode "\"" "“" "”" :actions '(wrap))
   (sp-local-pair 'org-mode "$" "$") 
-  (sp-local-tag  'org-mode "$" "$" "$" :actions '(wrap)))
+  (sp-local-tag  'org-mode "$" "$" "$" :actions '(wrap))
+  (sp-local-pair 'org-mode "/" "/") 
+  (sp-local-tag  'org-mode "/" "/" "/" :actions '(wrap))
+  (sp-local-tag  'org-mode "*" "*" "*" :actions '(wrap))
+  (sp-local-tag  'org-mode "=" "=" "=" :actions '(wrap)))
 
+;; Remove annoying auto-completion sources
+(defun org-mode/setup-auto-complete ()
+  "Set the `ac-sources', in particular remove some annoying ones."
+  (interactive)
+  (dolist (badSource
+           '(ac-source-files-in-current-dir ac-source-filename) 
+           ac-sources)
+    (setq ac-sources (remove badSource ac-sources))))
 
 ;; Patch up org-mode support for bibtex
 
