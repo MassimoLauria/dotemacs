@@ -45,7 +45,11 @@
     ;; Text formatting
     (set-default 'fill-column 70)
     (auto-fill-mode 1)
-    (setq default-justification 'full)))
+    (setq default-justification 'full)
+    ;; Citation
+    (turn-on-reftex)
+    (set (make-local-variable 'reftex-cite-punctuation) '(", " " & " " et al."))
+    (set (make-local-variable 'reftex-cite-format) "(%2a, %y)")))
 
 ;; Nice quotes
 (defun my-replace-straight-quotes (pair action context)

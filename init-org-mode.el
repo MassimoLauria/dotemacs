@@ -67,8 +67,7 @@
             (lambda ()(select-frame-set-input-focus (selected-frame))))
 
   ;; citation
-  (add-hook 'org-mode-hook    'turn-on-reftex)
-  (init-org-mode--reftex)
+  (add-hook 'org-mode-hook 'org-mode/setup-citations)
 
   ;; org-agenda and calendar in sync
   ;; (add-hook 'calendar-mode-hook 'th-org-agenda-follow-calendar-mode)
@@ -365,6 +364,13 @@ buffer."
 (run-with-idle-timer 6000 t 'jump-to-org-agenda)
 
 
+;; Nice quotes and smartparens
+(when (require 'smartparens nil t)
+  (sp-local-pair 'org-mode "“" "”")  ;; add so you can jump back and forth and out and in the pair!
+  (sp-local-pair 'org-mode "\"" nil :post-handlers '(my-replace-straight-quotes))
+  (sp-local-tag  'org-mode "\"" "“" "”" :actions '(wrap)))
+
+
 ;; Patch up org-mode support for bibtex
 
 (defun my-org-bibtex-open (path)
@@ -396,14 +402,16 @@ Apapted from the blog \"WebLog Pro Olivier Berger\""
                (format "\\cite{%s}" search)
              (format "\\cite[%s]{%s}" desc search))))))
 
-(defun my-local-reftex-cite-format (format)
-  "Setup the default `reftex-cite-format' locally for the buffer"
-  (set (make-local-variable 'reftex-cite-format) format))
+(defvar my-org-mode-cite-format "[[bibtex:::%l][%2a, %y]]"
+  "This is the format of BibTeX entries in org-mode files.")
 
-(defun init-org-mode--reftex ()
+(defun org-mode/setup-citations ()
   "Setup bibtex links with support for LaTeX export and 
 for `reftex-default-bibliography'."
-  (my-local-reftex-cite-format "[[bibtex:::%l]]")  
+  (interactive)
+  (turn-on-reftex)
+  (set (make-local-variable 'reftex-cite-punctuation) '(", " " & " " et al."))
+  (set (make-local-variable 'reftex-cite-format) my-org-mode-cite-format)
   (org-add-link-type "bibtex" 'my-org-bibtex-open 'my-org-bibtex-export-handler))
 
 ;; Patch org-bibtex-store-link to manage Capitalized Fields.
