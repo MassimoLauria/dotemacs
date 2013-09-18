@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
-;; Time-stamp: "2013-09-08, 14:19 (CEST) Massimo Lauria"
+;; Time-stamp: "2013-09-19, 00:45 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -29,7 +29,7 @@
 
 ;; Stop for errors during init loading.
 (setq debug-on-error t)
-;;(add-hook 'after-init-hook '(lambda () (setq debug-on-error nil)))
+(add-hook 'after-init-hook '(lambda () (setq debug-on-error nil)))
 
 
 ;;; Setup Emacs environment --------------------------------------------
