@@ -85,6 +85,7 @@
 
 (blink-cursor-mode nil)
 (setq visible-bell nil)
+(setq mouse-highlight nil)
 
 (setq search-highlight t)
 (setq query-replace-highlight t)
