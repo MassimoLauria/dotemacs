@@ -75,6 +75,14 @@ source-specials/synctex toggle."
 
 ;; Smart parenthesis
 (require 'smartparens-latex nil t)
+(sp-with-modes '(
+                 tex-mode
+                 plain-tex-mode
+                 latex-mode
+                 )
+  ;; Put a space between $ $ on insertions. Otherwise latex and emacs
+  ;; could get confused with the $$ $$ pair.
+  (sp-local-pair "$" "$" :post-handlers '(sp-latex-insert-spaces-inside-pair)))
 
 
 ;; These are the files that are produced by LaTeX processes.  It is annoying

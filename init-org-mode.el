@@ -370,7 +370,7 @@ buffer."
   (sp-local-pair 'org-mode "“" "”")  ;; add so you can jump back and forth and out and in the pair!
   (sp-local-pair 'org-mode "\"" nil :post-handlers '(my-replace-straight-quotes))
   (sp-local-tag  'org-mode "\"" "“" "”" :actions '(wrap))
-  (sp-local-pair 'org-mode "$" "$") 
+  (sp-local-pair 'org-mode "$" "$" ) 
   (sp-local-tag  'org-mode "$" "$" "$" :actions '(wrap))
   (sp-local-pair 'org-mode "/" "/") 
   (sp-local-tag  'org-mode "/" "/" "/" :actions '(wrap))
