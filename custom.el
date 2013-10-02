@@ -11,6 +11,7 @@
  '(ac-auto-show-menu 0.3)
  '(ac-delay 0.1)
  '(ac-disable-on-comment nil)
+ '(ac-ignore-case nil)
  '(ac-quick-help-delay 0.5)
  '(ac-quick-help-prefer-pos-tip nil)
  '(ac-sources (quote (ac-source-yasnippet ac-source-imenu ac-source-abbrev ac-source-words-in-buffer ac-source-files-in-current-dir ac-source-filename)) t)
