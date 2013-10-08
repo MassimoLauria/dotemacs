@@ -415,7 +415,13 @@ Apapted from the blog \"WebLog Pro Olivier Berger\""
            (if (or (not desc) 
                    (equal 0 (search "bibtex:" desc)))
                (format "\\cite{%s}" search)
-             (format "\\cite[%s]{%s}" desc search))))))
+             (format "\\cite[%s]{%s}" desc search)))
+          (t
+           (if (or (not desc) 
+                   (equal 0 (search "bibtex:" desc)))
+               (format "[%s]" search)
+             (format "(%s)" desc search)))
+          )))
 
 (defvar my-org-mode-cite-format "[[bibtex:::%l][%2a, %y]]"
   "This is the format of BibTeX entries in org-mode files.")
