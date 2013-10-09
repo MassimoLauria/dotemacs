@@ -73,6 +73,11 @@
 
   (add-hook 'magit-mode-hook 'magit-load-config-extensions))
 
+(when (require 'magit-svn nil t)
+  (add-hook 'magit-mode-hook (lambda ()
+                               (if (magit-svn-get-ref-info)
+                                   (magit-svn-mode)))))
+
 
 (provide 'init-magit)
 
