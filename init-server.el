@@ -1,6 +1,6 @@
 ;;; init-server.el --- setup Emacs as a server.
 
-;; Copyright (C) 2012  Massimo Lauria
+;; Copyright (C) 2012, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -34,6 +34,12 @@
 
 
 ;; Edit text area on Google Chrome
+
+(autoload 'edit-server-maybe-dehtmlize-buffer "edit-server-htmlize" "edit-server-htmlize" t)
+(autoload 'edit-server-maybe-htmlize-buffer   "edit-server-htmlize" "edit-server-htmlize" t)
+(add-hook 'edit-server-start-hook 'edit-server-maybe-dehtmlize-buffer)
+(add-hook 'edit-server-done-hook  'edit-server-maybe-htmlize-buffer)
+
 (when (and (fboundp 'server-running-p)
            (server-running-p)
            (locate-library "edit-server"))
