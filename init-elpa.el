@@ -1,6 +1,6 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Time-stamp: "2013-05-23, 16:01 (CEST) Massimo Lauria"
+;; Time-stamp: "2013-10-25, 21:54 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -123,6 +123,7 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'magit)
 (require-package 'elisp-slime-nav)
 (require-package 'smartparens)
+(require-package 'no-easy-keys)
 
 ;; Editing
 (require-package 'expand-region)

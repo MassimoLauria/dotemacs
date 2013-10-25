@@ -85,6 +85,7 @@
  '(massimo-keyboard-eshell-active t)
  '(massimo-keyboard-folding-meta-g-override-p t)
  '(massimo-keyboard-global-mode t)
+ '(no-easy-keys t)
  '(ns-right-alternate-modifier nil)
  '(ns-tool-bar-display-mode (quote both) t)
  '(ns-tool-bar-size-mode (quote regular) t)
