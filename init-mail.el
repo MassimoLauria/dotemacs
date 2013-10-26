@@ -53,6 +53,7 @@
 
 (when (require 'mu4e nil t)
   (defalias 'mail 'mu4e)
+  (setq mail-user-agent 'mu4e-user-agent)
   (define-key mu4e-main-mode-map "q" 'bury-buffer)
   (if (not (boundp 'mu4e-view-actions)) 
       (setq mu4e-view-actions nil))
