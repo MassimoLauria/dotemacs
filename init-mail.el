@@ -48,8 +48,6 @@
 
 
 ;; Try to load mu4e client if installed.
-(setq mu4e-headers-toggle-skip-duplicates t)
-(setq mu4e-headers-toggle-include-related t)
 (setq mu4e-headers-toggle-full-search nil)
 (setq mu4e-use-fancy-chars nil)
 
@@ -66,13 +64,7 @@
 (add-hook 'message-mode-hook
           (lambda () (define-key message-mode-map [f2] 'ispell-message)))
 
-
-;; Use with Mutt
-(add-to-list 'auto-mode-alist '(".*mutt.*" . message-mode))
-(setq mail-header-separator "")
-
 ;; (Insidious) Big Brother DataBase, collects mail addresses.
-
 
 ;; Load bbdb
 (and
