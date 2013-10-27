@@ -86,6 +86,9 @@
  '(massimo-keyboard-eshell-active t)
  '(massimo-keyboard-folding-meta-g-override-p t)
  '(massimo-keyboard-global-mode t)
+ '(message-citation-line-format "%N wrote:
+")
+ '(message-citation-line-function (quote message-insert-formatted-citation-line))
  '(mu4e-headers-include-related t)
  '(mu4e-headers-skip-duplicates t)
  '(mu4e-split-view nil)
