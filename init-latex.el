@@ -656,6 +656,17 @@ Do that only if the file do not exists already."
 (eval-after-load "tex-buf" '(defalias 'TeX-parse-error 'bugfix-TeX-parse-error))
 (eval-after-load "tex" '(require 'tex-buf))
 
+(eval-after-load "smartparens-latex" 
+  '(sp-with-modes '(
+                 tex-mode
+                 plain-tex-mode
+                 latex-mode
+                 )
+     (sp-local-pair "\\lceil" "\\rceil" :post-handlers '(sp-latex-insert-spaces-inside-pair))
+     (sp-local-pair "\\lfloor" "\\rfloor" :post-handlers '(sp-latex-insert-spaces-inside-pair)))
+  )
+
+
 
 (provide 'init-latex)
 ;; Local Variables:
