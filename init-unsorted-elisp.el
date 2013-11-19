@@ -139,6 +139,8 @@ in the kill-ring and `pos' is the position current-kill"
             ))
 
 (ido-mode t)
+(when (require 'flx-ido nil t)
+  (flx-ido-mode))
 
 (setq ido-enable-flex-matching t ; fuzzy matching is a must have
       ido-max-prospects 5        ; minibuffer is not saturated
