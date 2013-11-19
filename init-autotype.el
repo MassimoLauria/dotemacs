@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-08-02, 18:05 (CEST) Massimo Lauria>
+;; Time-stamp: <2013-11-19, 17:26 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -117,15 +117,15 @@ default handler."
       (goto-char (process-mark proc)))))
 
 
-;; Manage `` typed as "
-(defun autopair-latex-setup ()
-  "Install AutoPair in LaTex, with all the needed workarounds"
-  (interactive)
-  (set (make-local-variable 'autopair-handle-action-fns)
-       (list #'autopair-default-handle-action
-             #'autopair-latex-mode-paired-delimiter-action))
-  ;;(autopair-mode t)
-  )
+;; ;; Manage `` typed as "
+;; (defun autopair-latex-setup ()
+;;   "Install AutoPair in LaTex, with all the needed workarounds"
+;;   (interactive)
+;;   (set (make-local-variable 'autopair-handle-action-fns)
+;;        (list #'autopair-default-handle-action
+;;              #'autopair-latex-mode-paired-delimiter-action))
+;;   ;;(autopair-mode t)
+;;   )
 
 
 ;; Activate autopair and also Pair triple quotes in python
