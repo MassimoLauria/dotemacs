@@ -326,17 +326,6 @@ http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
      (save-excursion
        (hs-show-block))))
 
-(add-hook 'c-mode-common-hook   'hs-minor-mode)
-(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
-(add-hook 'java-mode-hook       'hs-minor-mode)
-(add-hook 'lisp-mode-hook       'hs-minor-mode)
-(add-hook 'perl-mode-hook       'hs-minor-mode)
-(add-hook 'python-mode-hook     'hs-minor-mode)
-(add-hook 'sh-mode-hook         'hs-minor-mode)
-
-
-
-
 
 ;; Kill buffers with running processes
 (setq kill-buffer-query-functions
