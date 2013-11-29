@@ -73,18 +73,6 @@ source-specials/synctex toggle."
 
 (eval-after-load "tex-site" '(init-latex--forward-search-setup))
 
-;; Smart parenthesis
-(require 'smartparens-latex nil t)
-(sp-with-modes '(
-                 tex-mode
-                 plain-tex-mode
-                 latex-mode
-                 )
-  ;; Put a space between $ $ on insertions. Otherwise latex and emacs
-  ;; could get confused with the $$ $$ pair.
-  (sp-local-pair "$" "$" :post-handlers '(sp-latex-insert-spaces-inside-pair)))
-
-
 ;; These are the files that are produced by LaTeX processes.  It is annoying
 ;; that they show up while I'm trying to open a proper TeX file (or any other
 ;; text file).  IDO-mode can be instructed how to ignore such files.
@@ -655,15 +643,18 @@ Do that only if the file do not exists already."
 (eval-after-load "tex-buf" '(defalias 'TeX-parse-error 'bugfix-TeX-parse-error))
 (eval-after-load "tex" '(require 'tex-buf))
 
+
+;; Smart parenthesis
+(require 'smartparens-latex nil t)
 (eval-after-load "smartparens-latex" 
   '(sp-with-modes '(
                  tex-mode
                  plain-tex-mode
                  latex-mode
                  )
+     (sp-local-pair "$" "$" :post-handlers '(sp-latex-insert-spaces-inside-pair))
      (sp-local-pair "\\lceil" "\\rceil" :post-handlers '(sp-latex-insert-spaces-inside-pair))
-     (sp-local-pair "\\lfloor" "\\rfloor" :post-handlers '(sp-latex-insert-spaces-inside-pair)))
-  )
+     (sp-local-pair "\\lfloor" "\\rfloor" :post-handlers '(sp-latex-insert-spaces-inside-pair))))
 
 
 
