@@ -22,7 +22,7 @@
 (when (and (boundp 'prefs-activate-bigfont) prefs-activate-bigfont)
   (setq
    font-X11   "DejaVu Sans Mono 14"
-   font-Mac   "DejaVu Sans Mono 20"
+   font-Mac   "DejaVu Sans Mono 16"
    font-Win   "Consolas 14" ))
 
 (defun set-myfont-preference () 
