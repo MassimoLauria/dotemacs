@@ -80,12 +80,6 @@
   (add-hook hook 'ac-emacs-lisp-mode-setup))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Haskell mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Keywords.
-(add-hook 'haskell-mode-hook '(lambda ()
-                                (add-to-list 'ac-sources 'ac-source-haskell)))
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; Mail-mode + BBDB ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defvar ac-bbdb-header-list '("to" "from" "cc" "bcc"))
 
