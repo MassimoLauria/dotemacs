@@ -3,9 +3,6 @@
 ;;;
 ;;;-----------------------------------------------------------------
 
-;; On Mac OSX LaTeX may be installed in some non canonical path.
-(when (file-directory-p "/usr/texbin/")
-  (add-to-list 'exec-path "/usr/texbin/" 'append))
 
 ;; Multifile support, completition, style, reverse search support, ...
 (setq TeX-auto-save t)

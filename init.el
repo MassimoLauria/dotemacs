@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
-;; Time-stamp: "2013-10-09, 01:03 (CEST) Massimo Lauria"
+;; Time-stamp: "2013-12-17, 11:02 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -40,6 +40,7 @@
 (setq load-path (cons 	default-elisp-3rdparties  load-path))
 
 (require 'init-discover-runtime) ; Discover emacs version and runtime
+(require 'init-environment)      ; setup running environment
 
 
 ;; Try to fix missing bits from older versions of Emacs
@@ -88,26 +89,6 @@
     (let ((pp (concat path package)))
       (if (file-directory-p pp)
               (setq load-path (cons pp load-path))))))
-
-
-;; Set paths, since sometime Mac OSX has weird paths and Emacs.app
-;; doesn't pick them up.
-(add-to-list 'exec-path "/usr/local/bin/") ; local
-(add-to-list 'exec-path "/opt/local/bin/") ; macports
-(add-to-list 'exec-path "~/.local/bin")    ; home
-
-;; read paths from files in "/etc/paths.d/" if exist.
-(with-temp-buffer 
-  (condition-case nil
-      (dolist (file (directory-files "/etc/paths.d/" t))
-        (if (not (file-directory-p file))
-            (insert-file-contents file)))
-    (error nil))
-      
-  (dolist (path (split-string (buffer-string) "\n" t))
-    (if (file-directory-p path)
-        (add-to-list 'exec-path path))))
-
 
 
 ;;; Module(s) initialization -------------------------------------------
