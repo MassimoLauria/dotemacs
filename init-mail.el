@@ -58,7 +58,9 @@
   (if (not (boundp 'mu4e-view-actions)) 
       (setq mu4e-view-actions nil))
   (add-to-list 'mu4e-view-actions
-               '("View in browser" . mu4e-msgv-action-view-in-browser) t))
+               '("View in browser" . mu4e-msgv-action-view-in-browser) t)
+  (defun mu4e-message (frm &rest args)) ;; hack to avoid the annoying massages 
+  )
 
 ;; Click urls/mails in Mime-View
 (add-hook 'mime-view-mode-hook 'goto-address-mode)
