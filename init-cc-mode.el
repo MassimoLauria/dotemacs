@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012, 2013  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-07-29, 17:11 (CEST) Massimo Lauria>
+;; Time-stamp: <2013-12-30, 17:51 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -22,13 +22,9 @@
 
 ;; This is my setup for C/C++ code.
 
-;; Optional dependency
-(require 'gtags nil t)
-(require 'c-eldoc nil t)
 
-;; Load configuration for C/C++ compilers
-(require 'init-cc-compiler)
 
+(require 'init-cc-compiler) ;; Load configuration for C/C++ compilers
 
 ;; Syntax checker 
 (eval-after-load "flycheck"
@@ -115,7 +111,7 @@
 
 
 (defun setup-c-common-completion ()
-  "Add gtags/Clang/semantic sources for auto-completion."
+  "Add sources for auto-completion."
   (interactive)
   (unless (boundp 'ac-sources) (setq 'ac-sources nil))
   ;; Yasnippet
@@ -123,11 +119,7 @@
     (add-to-list 'ac-sources 'ac-source-yasnippet))
   ;; Clang
   (when (executable-find "clang")
-    (ac-clang-setup))
-  ;; Gtags
-  (when (boundp 'ac-source-gtags)
-    (add-to-list 'ac-sources 'ac-source-gtags))
-  )
+    (ac-clang-setup)))
 
 
 
@@ -143,7 +135,6 @@
 
   ;; Minor modes
   (when (fboundp 'doxygen-mode)  (doxygen-mode  t))
-  (when (fboundp 'c-turn-on-eldoc-mode) (c-turn-on-eldoc-mode))
   (when (fboundp 'flyspell-prog-mode) (flyspell-prog-mode))
 
   ;; Clang
@@ -161,7 +152,6 @@
 
   ;; Minor modes
   (when (fboundp 'doxygen-mode)  (doxygen-mode  t))
-  (when (fboundp 'c-turn-on-eldoc-mode) (c-turn-on-eldoc-mode))
   (when (fboundp 'flyspell-prog-mode) (flyspell-prog-mode))
 
   ;; Clang
