@@ -3,7 +3,7 @@
 ;; Copyright (C) 2013 Massimo Lauria <lauria.massimo@gmail.com>
 
 ;; Created : "2013-12-10, Tuesday 01:41 (CET) Massimo Lauria"
-;; Time-stamp: "2013-12-10, 01:48 (CET) Massimo Lauria"
+;; Time-stamp: "2013-12-30, 16:37 (CET) Massimo Lauria"
 
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -26,6 +26,9 @@
 
 ;;; Code:
 ;;
+
+ 
+(add-to-list 'exec-path "~/.cabal/bin")    ; Cabal install binaries here
 
 
 
