@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
-;; Time-stamp: "2013-12-17, 11:02 (CET) Massimo Lauria"
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014  Massimo Lauria
+;; Time-stamp: "2014-01-24, 17:31 (MST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -155,3 +155,4 @@
 ;; Local Variables:
 ;; mode: emacs-lisp
 ;; End:
+(put 'upcase-region 'disabled nil)
