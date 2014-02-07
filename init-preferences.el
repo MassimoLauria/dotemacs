@@ -100,6 +100,9 @@
 (setq speedbar-mode-hook '(lambda () (text-scale-decrease 1)))
 
 
+;; don't let the cursor go into minibuffer prompt
+(setq minibuffer-prompt-properties (quote (read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
+
 (defalias 'yes-or-no-p 'y-or-n-p) ; y/n instead of yes/no
 (if running-Aquamacs
     (setq confirm-kill-emacs nil)     ; Aquamacs won't interrupt logging out
