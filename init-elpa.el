@@ -1,6 +1,6 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Time-stamp: "2014-05-20, 01:22 (CEST) Massimo Lauria"
+;; Time-stamp: "2014-05-20, 01:24 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -18,11 +18,11 @@
 (setq package-archives  '(
                           ("gnu" . "http://elpa.gnu.org/packages/")
                           ("elpa" . "http://tromey.com/elpa/")
-                          ;; ("marmalade" . "http://marmalade-repo.org/packages/") ;; often broken
                           ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
-                          ;; ("melpa" . "http://melpa.milkbox.net/packages/"))     ;; unstable snapshots
                           )) ;; end of package list
 
+;; "marmalade" repository at  "http://marmalade-repo.org/packages/" is often broken.
+;; "melpa" repository at "http://melpa.milkbox.net/packages/" has unstable versions.
 
 
 ;; Color theme manager depends on the version
