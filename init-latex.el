@@ -610,7 +610,7 @@ Do that only if the file do not exists already."
 		      (string-match "\n" file))
 	      (setq file
 		    (mapconcat 'identity (split-string file "[\"\n]+") "")))
-        (when (not (string-match "^TeX\\ Live\\ 20[0-9][0-9]\\(\ Debian\\|\ Ubuntu\\)?$" file))
+        (when (not (string-match "^TeX\\ Live\\ 20[0-9][0-9]\\/?\\ ?\\(\ Debian\\|\ Ubuntu\\)?$" file))
 	    (push file TeX-error-file)
 	    (push nil TeX-error-offset)
 	    (goto-char end)))
