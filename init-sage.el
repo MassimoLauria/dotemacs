@@ -18,7 +18,11 @@
 (when sagemath-root-directory
   (add-to-list 'load-path (concat sagemath-root-directory "/data/emacs"))
   (setq sage-command (concat sagemath-root-directory "/sage"))
-)
+  (if (fboundp 'environment-variable-add-to-list)
+    (environment-variable-add-to-list 
+     "TEXMFHOME" 
+     (concat sagemath-root-directory "/local/share/texmf"))))
+
 
 ;; ;; Load of the package (disabled unless sage-mode 0.8 is installed)
 ;; (when sagemath-root-directory

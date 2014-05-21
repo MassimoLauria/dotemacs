@@ -3,7 +3,7 @@
 ;; Copyright (C) 2013, 2014 Massimo Lauria <lauria.massimo@gmail.com>
 
 ;; Created : "2013-12-17, Tuesday 10:43 (CET) Massimo Lauria"
-;; Time-stamp: "2014-05-21, 15:57 (CEST) Massimo Lauria"
+;; Time-stamp: "2014-05-21, 16:19 (CEST) Massimo Lauria"
 
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -33,37 +33,6 @@
 
 ;;; Code:
 ;;
-
-;; Apparently OSX Maverick starts emacs in root. This has been fixed,
-;; but not yet in the released version 24.3.
-(if running-MacOSX 
-    (setq default-directory (getenv "HOME"))) 
-
-
-;; Set paths, since sometime Mac OSX has weird paths and Emacs.app
-;; doesn't pick them up.
-(add-to-list 'exec-path "/usr/local/bin/") ; local
-(add-to-list 'exec-path "/opt/local/bin/") ; macports
-(add-to-list 'exec-path "~/.local/bin")    ; home
-
-
-;; read paths from files in "/etc/paths.d/" if exist.
-(with-temp-buffer 
-  (condition-case nil
-      (dolist (file (directory-files "/etc/paths.d/" t))
-        (if (not (file-directory-p file))
-            (insert-file-contents file)))
-    (error nil))
-      
-  (dolist (path (split-string (buffer-string) "\n" t))
-    (if (file-directory-p path)
-        (add-to-list 'exec-path path))))
-
-
-;; Path for LaTeX distrubution TeX-live, on Mac.
-(when (file-directory-p "/usr/texbin/")
-  (add-to-list 'exec-path "/usr/texbin/" 'append))
-
 
 
 (defun environment-variable-add-to-list (varname element)
@@ -99,6 +68,39 @@ list."
                        (getenv varname)
                        separator)))
     (setenv varname (mapconcat 'identity (remove element tmplist) ":"))))
+
+
+
+;;; Setup the needed paths
+
+;; Maverick starts Emacs in root (fixed after 24.3)
+(if running-MacOSX 
+    (setq default-directory (getenv "HOME"))) 
+
+
+;; Set paths, since sometime Mac OSX has weird paths and Emacs.app
+;; doesn't pick them up.
+(add-to-list 'exec-path "/usr/local/bin/") ; local
+(add-to-list 'exec-path "/opt/local/bin/") ; macports
+(add-to-list 'exec-path "~/.local/bin")    ; home
+
+
+;; read paths from files in "/etc/paths.d/" if exist.
+(with-temp-buffer 
+  (condition-case nil
+      (dolist (file (directory-files "/etc/paths.d/" t))
+        (if (not (file-directory-p file))
+            (insert-file-contents file)))
+    (error nil))
+      
+  (dolist (path (split-string (buffer-string) "\n" t))
+    (if (file-directory-p path)
+        (add-to-list 'exec-path path))))
+
+
+;; Path for LaTeX distrubution TeX-live, on Mac.
+(when (file-directory-p "/usr/texbin/")
+  (add-to-list 'exec-path "/usr/texbin/" 'append))
 
 
 (provide 'init-environment)
