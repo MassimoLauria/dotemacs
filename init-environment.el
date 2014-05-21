@@ -1,9 +1,9 @@
 ;;; init-environment.el --- fix and setup the running environment
 
-;; Copyright (C) 2013 Massimo Lauria <lauria.massimo@gmail.com>
+;; Copyright (C) 2013, 2014 Massimo Lauria <lauria.massimo@gmail.com>
 
 ;; Created : "2013-12-17, Tuesday 10:43 (CET) Massimo Lauria"
-;; Time-stamp: "2013-12-17, 10:59 (CET) Massimo Lauria"
+;; Time-stamp: "2014-05-21, 15:57 (CEST) Massimo Lauria"
 
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -64,6 +64,41 @@
 (when (file-directory-p "/usr/texbin/")
   (add-to-list 'exec-path "/usr/texbin/" 'append))
 
+
+
+(defun environment-variable-add-to-list (varname element)
+  "Add ELEMENT from the list in the enviroment variable VARNAME.
+
+VARNAME is considered as a list of elements like \"aa:bb:cc\". If
+VARNAME is undefined of empty, it defines it. If ELEMENT is
+already in the list, the function won't do anything.
+
+There is no guarantee on the actual order of the elements in the
+list."  
+  (let ((separator (if (eq system-type 'windows-nt) ";" ":"))
+        tmplist)
+    (if (getenv varname)
+        (setq tmplist (split-string 
+                       (getenv varname) 
+                       separator)))
+    (add-to-list 'tmplist element 'append 'string-equal)
+    (setenv varname (mapconcat 'identity tmplist ":"))))
+
+(defun environment-variable-rm-from-list (varname element)
+  "Remove ELEMENT from the list in the enviroment variable VARNAME.
+
+VARNAME is considered as a list of elements like \"aa:bb:cc\". If
+ELEMENT is not in the list, the function won't do anything.
+
+There is no guarantee on the actual order of the elements in the
+list."  
+  (let ((separator (if (eq system-type 'windows-nt) ";" ":"))
+        tmplist)
+    (if (getenv varname)
+        (setq tmplist (split-string 
+                       (getenv varname)
+                       separator)))
+    (setenv varname (mapconcat 'identity (remove element tmplist) ":"))))
 
 
 (provide 'init-environment)

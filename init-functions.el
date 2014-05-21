@@ -85,20 +85,6 @@ It will not work properly if it is not bound to a key.
 ;;------ Useful functions --------------------------------------------------------------------
 
 
-(require 'cl-lib)
-(defun environment-add-to-paths (varname path)
-  "Add a PATH to an enviroment variables VARNAME that encodes a
-  list of paths."
-  (let (pathlist (varvalue (getenv varname)))
-    (setq pathlist (if varvalue
-                       (split-string varvalue ":")
-                     ()))
-    (add-to-list 'pathlist path 'append)
-    (setenv varname (reduce '(lambda (s1 s2) (concat s1 ":" s2)) pathlist))))
-
-
-
-
 (defun decorate-formula (F sexp-arg)
   "Given an S-exp, it descend in all subtrees to apply function F
 to the leaves of a formula (i.e.\ tokens).
