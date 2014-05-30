@@ -108,26 +108,30 @@ source-specials/synctex toggle."
 ;; Keyboard shortcut
 (add-hook 'TeX-mode-hook
           '(lambda ()
-             (define-key TeX-mode-map (kbd "<f9>") 'init-latex--make)
-             (define-key TeX-mode-map (kbd "<f10>") 'TeX-view)))
+             (define-key TeX-mode-map (kbd "<f9>")  'init-latex--make)
+             (define-key TeX-mode-map (kbd "<f10>") 'TeX-view)
+             (define-key TeX-mode-map (kbd "<f11>") 'TeX-pin-region)
+             (define-key TeX-mode-map (kbd "<f12>") 'TeX-next-error)
+             (define-key TeX-mode-map (kbd "M-<f11>") 'previous-error)
+             (define-key TeX-mode-map (kbd "M-<f12>") 'next-error)))
 
-(defun init-latex--error-keys (style)
-  "There ar edifferent ways to navigate through compilatiol
-errors, depending on what system has been used to compile.
+;; (defun init-latex--error-keys (style)
+;;   "There ar edifferent ways to navigate through compilatiol
+;; errors, depending on what system has been used to compile.
 
-Var `style' can be either one of the symbols `compile' and `auctex'.
-"
-  (cond
-   ((equal style 'compile)
-      (local-set-key (kbd "<f11>") 'previous-error)
-      (local-set-key (kbd "<f12>") 'next-error)
-      (local-set-key [M-prior] 'previous-error)
-      (local-set-key [M-next]  'next-error))
-   ((equal style 'auctex)
-      (local-set-key (kbd "<f11>")  'TeX-previous-error)
-      (local-set-key (kbd "<f12>") 'TeX-next-error)
-      (local-set-key [M-prior] 'TeX-previous-error)
-      (local-set-key [M-next]  'TeX-next-error))))
+;; Var `style' can be either one of the symbols `compile' and `auctex'.
+;; "
+;;   (cond
+;;    ((equal style 'compile)
+;;       (local-set-key (kbd "<f11>") 'previous-error)
+;;       (local-set-key (kbd "<f12>") 'next-error)
+;;       (local-set-key [M-prior] 'previous-error)
+;;       (local-set-key [M-next]  'next-error))
+;;    ((equal style 'auctex)
+;;       (local-set-key (kbd "<f11>")  'TeX-previous-error)
+;;       (local-set-key (kbd "<f12>") 'TeX-next-error)
+;;       (local-set-key [M-prior] 'TeX-previous-error)
+;;       (local-set-key [M-next]  'TeX-next-error))))
 
 
 (defun init-latex--make ()
@@ -137,7 +141,7 @@ Var `style' can be either one of the symbols `compile' and `auctex'.
 
    ;; if region is pinned, call master command on region
    (TeX-command-region-begin
-        (init-latex--error-keys 'auctex)
+        ;; (init-latex--error-keys 'auctex)
         (TeX-command-region nil))
    ;; is there a 'Makefile' in the folder? use that
    ((file-exists-p "Makefile")
@@ -145,12 +149,12 @@ Var `style' can be either one of the symbols `compile' and `auctex'.
              "make -k")
         (set (make-local-variable 'compilation-read-command)
              nil)
-        (init-latex--error-keys 'compile)
+        ;; (init-latex--error-keys 'compile)
         (call-interactively 'compile)
         (TeX-view))
    ;; or use the TeX-texify function
    ((fboundp 'TeX-texify)
-        (init-latex--error-keys 'auctex)
+        ;; (init-latex--error-keys 'auctex)
         (call-interactively 'TeX-texify))
    ;; otherwise build the document with rubber. I would prefer this to
    ;; TeX-texify, but it does not support source correlation. Also it
@@ -162,12 +166,12 @@ Var `style' can be either one of the symbols `compile' and `auctex'.
                      (file-name-nondirectory (buffer-file-name))))
         (set (make-local-variable 'compilation-read-command)
              nil)
-        (init-latex--error-keys 'compile)
+        ;; (init-latex--error-keys 'compile)
         (call-interactively 'compile)
         (TeX-view))
    ;; auctex default
    (t
-        (init-latex--error-keys 'auctex)
+        ;; (init-latex--error-keys 'auctex)
         (call-interactively 'TeX-command-master))))
 
 
