@@ -118,7 +118,7 @@
 (setq vc-follow-symlinks nil)
 
 ;; Go to the first error
-(setq compilation-auto-jump-to-first-error t)
+(setq compilation-auto-jump-to-first-error nil)
 
 ;; Scroll preferences
 (setq scroll-preserve-screen-position 1)
