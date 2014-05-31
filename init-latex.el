@@ -653,7 +653,7 @@ Do that only if the file do not exists already."
                  plain-tex-mode
                  latex-mode
                  )
-     (sp-local-pair "$" "$" :post-handlers '(sp-latex-insert-spaces-inside-pair))
+     ;;(sp-local-pair "$" "$" :post-handlers '(sp-latex-insert-spaces-inside-pair))
      (sp-local-pair "\\lceil" "\\rceil" :post-handlers '(sp-latex-insert-spaces-inside-pair))
      (sp-local-pair "\\lfloor" "\\rfloor" :post-handlers '(sp-latex-insert-spaces-inside-pair))))
 
