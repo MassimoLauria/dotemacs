@@ -115,6 +115,7 @@
  '(ns-tool-bar-size-mode (quote regular) t)
  '(org-agenda-current-time-string #("——————————————⌚⌚⌚—————————————" 0 30 (org-heading t)))
  '(org-agenda-search-headline-for-time nil)
+ '(org-agenda-sorting-strategy (quote ((agenda todo-state-up habit-down time-up priority-down category-keep) (todo priority-down category-keep) (tags priority-down category-keep) (search category-keep))))
  '(org-agenda-time-grid (quote ((daily today) "" (800 1000 1200 1400 1600 1800 2000))))
  '(org-hide-leading-stars t)
  '(org-highlight-latex-fragments-and-specials t)
