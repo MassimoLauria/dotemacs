@@ -139,7 +139,7 @@
  '(smartparens-global-mode t)
  '(sp-autoinsert-if-followed-by-same 3)
  '(sp-highlight-pair-overlay nil)
- '(sp-navigate-consider-stringlike-sexp (quote (latex-mode LaTeX-mode org-mode)))
+ '(sp-navigate-consider-stringlike-sexp nil)
  '(sp-wrap-repeat-last 2)
  '(time-stamp-format "%:y-%02m-%02d, %02H:%02M (%Z) %U")
  '(toe-max-length 10)
