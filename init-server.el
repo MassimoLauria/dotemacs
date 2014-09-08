@@ -33,11 +33,7 @@
       (server-start)))
 
 
-;; Opening a file from emacsclient makes the Emacs popup.
-(add-hook 'server-switch-hook 'raise-frame)
-
-
-;; Edit text area on Google Chrome
+;; ;; Edit text area on Google Chrome
 (autoload 'edit-server-maybe-dehtmlize-buffer "edit-server-htmlize" "edit-server-htmlize" t)
 (autoload 'edit-server-maybe-htmlize-buffer   "edit-server-htmlize" "edit-server-htmlize" t)
 (add-hook 'edit-server-start-hook 'edit-server-maybe-dehtmlize-buffer)
@@ -48,26 +44,6 @@
            (locate-library "edit-server"))
   (require 'edit-server)
   (edit-server-start))
-
-
-
-;; This fixes a bug and make the Emacs frace to raise, no matter which
-;; desktop is in. If instead of option "-a" we use option "-R" then
-;; the windows is moved to the current desktop. It may be actually
-;; useful. We will see.
-;;
-;; http://stackoverflow.com/questions/14689471/how-to-give-focus-to-emacsclient-window-when-opening-org-protocol
-;; 
-;; "Work around some bug? in raise-frame/Emacs/GTK/Metacity/something.
-;; Katsumi Yamaoka posted this in 
-;; http://article.gmane.org/gmane.emacs.devel:39702"
-
-
-(when (and running-GNULinux (executable-find "wmctrl"))
-  (defadvice raise-frame (after make-it-work (&optional frame) activate)
-    (call-process
-     "wmctrl" nil nil nil "-i" "-R"
-     (frame-parameter (or frame (selected-frame)) 'outer-window-id))))
 
 
 ;;
