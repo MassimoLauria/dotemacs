@@ -62,12 +62,53 @@
 ;; Katsumi Yamaoka posted this in 
 ;; http://article.gmane.org/gmane.emacs.devel:39702"
 
-(when running-GNULinux
+
+(when (and running-GNULinux (executable-find "wmctrl"))
   (defadvice raise-frame (after make-it-work (&optional frame) activate)
-    (if (executable-find "wmctrl")
-        (call-process
-         "wmctrl" nil nil nil "-i" "-R"
-         (frame-parameter (or frame (selected-frame)) 'outer-window-id)))))
+    (call-process
+     "wmctrl" nil nil nil "-i" "-R"
+     (frame-parameter (or frame (selected-frame)) 'outer-window-id))))
+
+
+;;
+;; This is a convoluted way to go back to the previous window after
+;; emacsclient session ends. The window id of the callee can be saved
+;; to `init-server--cache-win-id' using `save-window-id'
+;; function. Then the frame can be restored using
+;; `jumpback-window-id'.
+;;
+;; an example of usage is the following:
+;; 
+;; $ emacsclient -e '(save-window-id)'; emacsclient <file_to_edit>; emacsclient -e '(jumpback-window-id)'
+
+(defvar init-server--cache-win-id nil
+  "The window ID saved by `save-window-id'.")
+  
+(defun save-window-id ()
+  "Save the current active window ID. Useful to be called using
+emacsclient."
+  (setq init-server--cache-win-id
+        (with-temp-buffer 
+          (call-process "xprop" nil (buffer-name) nil "-root")
+          (goto-char (point-min))
+          (search-forward "_NET_ACTIVE_WINDOW") ; find the active window line
+          (search-forward "0x")
+          (backward-char 2)
+          (current-word))))
+
+(defun jumpback-window-id ()
+    (call-process
+     "wmctrl" nil nil nil "-i" "-a" init-server--cache-win-id))
 
 (provide 'init-server)
 ;;; init-clipboard.el ends here
+
+
+
+
+
+
+
+
+
+
