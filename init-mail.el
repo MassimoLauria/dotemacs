@@ -30,6 +30,8 @@
 (setq message-auto-save-directory "~/personal/mail/drafts")
 (setq message-kill-buffer-on-exit t)
 
+(add-to-list 'auto-mode-alist '("mutt*" . message-mode))
+
 ;; Mu4e view in browser
 (defun mu4e-msgv-action-view-in-browser (msg)
   "View the body of the message in a web browser."

@@ -38,6 +38,13 @@
 (autoload 'edit-server-maybe-htmlize-buffer   "edit-server-htmlize" "edit-server-htmlize" t)
 (add-hook 'edit-server-start-hook 'edit-server-maybe-dehtmlize-buffer)
 (add-hook 'edit-server-done-hook  'edit-server-maybe-htmlize-buffer)
+(add-hook 'edit-server-start-hook 'edit-server-textarea-setup)
+
+(defun edit-server-textarea-setup ()
+  "Setup the modes for editing textareas in webpages, using edit
+server."
+  (auto-fill-mode -1)
+  (visual-line-mode))
 
 (when (and (fboundp 'server-running-p)
            (server-running-p)
