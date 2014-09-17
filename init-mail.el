@@ -60,7 +60,6 @@
   '(progn
      (add-hook 'message-mode-hook  'turn-on-ac-bbdb)
      (add-hook 'post-mode-hook     'turn-on-ac-bbdb)
-     (add-hook 'wl-draft-mode-hook 'turn-on-ac-bbdb)
      (add-hook 'mml-mode-hook      'turn-on-ac-bbdb)
      (add-hook 'mail-mode-hook     'turn-on-ac-bbdb)))
 
