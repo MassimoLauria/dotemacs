@@ -29,40 +29,9 @@
 (setq message-signature private-email-signature)
 (setq message-auto-save-directory "~/personal/mail/drafts")
 (setq message-kill-buffer-on-exit t)
-
+(setq mail-header-separator "")
 (add-to-list 'auto-mode-alist '("mutt*" . message-mode))
 
-;; Mu4e view in browser
-(defun mu4e-msgv-action-view-in-browser (msg)
-  "View the body of the message in a web browser."
-  (interactive)
-  (let ((html (mu4e-msg-field (mu4e-message-at-point t) :body-html))
-        (tmpfile (format "%s/%d.html" temporary-file-directory (random))))
-    (unless html (error "No html part for this message"))
-    (with-temp-file tmpfile
-      (insert
-       "<html>"
-       "<head><meta http-equiv=\"content-type\""
-       "content=\"text/html;charset=UTF-8\">"
-       html))
-    (browse-url (concat "file://" tmpfile))))
-
-
-
-;; Try to load mu4e client if installed.
-(setq mu4e-headers-toggle-full-search nil)
-(setq mu4e-use-fancy-chars nil)
-
-(when (require 'mu4e nil t)
-  (defalias 'mail 'mu4e)
-  (setq mail-user-agent 'mu4e-user-agent)
-  (define-key mu4e-main-mode-map "q" 'bury-buffer)
-  (if (not (boundp 'mu4e-view-actions)) 
-      (setq mu4e-view-actions nil))
-  (add-to-list 'mu4e-view-actions
-               '("View in browser" . mu4e-msgv-action-view-in-browser) t)
-  (defun mu4e-message (frm &rest args)) ;; hack to avoid the annoying massages 
-  )
 
 ;; Click urls/mails in Mime-View
 (add-hook 'mime-view-mode-hook 'goto-address-mode)
