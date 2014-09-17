@@ -1,46 +1,73 @@
 ;;;
-;;; Mail: MailMode + BBDB + vCard
-;;;
-;;; These setting only involves writing mail. Mail reading is not done
-;;; in Emacs (old wanderlust settings are commented out or deleted).
+;;; These setting only involves writing/sending mail. Mail reading is not done
+;;; in Emacs.
 ;;;------------------------------------------------------------------
 
-(define-key global-map "\C-cm" 'compose-mail)
 
-;; Setup SEND MAIL
-(setq sendmail-program (executable-find "msmtp"))
-(if sendmail-program
-    (progn ;; send mail using msmtp
-      (setq send-mail-function 'sendmail-send-it)
-      (setq message-send-mail-function 'message-send-mail-with-sendmail))
-  (progn ;; Use emacs smtp client smtpmail
-    (setq send-mail-function 'smtpmail-send-it)
-    (setq message-send-mail-function 'message-smtpmail-send-it)))
+;;
+;; Sending emails
+;;
 
 (setq smtpmail-smtp-server private-smtp-server)
 (setq smtpmail-smtp-service  private-smtp-port)
+(setq sendmail-program (executable-find "msmtp"))
+
+(if sendmail-program
+    (progn ;; msmtp
+      (setq send-mail-function 'sendmail-send-it)
+      (setq message-send-mail-function 'message-send-mail-with-sendmail))
+  (progn ;; emacs smtpmail
+    (setq send-mail-function 'smtpmail-send-it)
+    (setq message-send-mail-function 'message-smtpmail-send-it)))
 
 
 
-;; Setup MAIL EDITOR
+;;
+;; Composing emails
+;;
+
+(define-key global-map "\C-cm" 'compose-mail)
+
 (setq compose-mail-user-agent-warnings nil)
 (setq mail-user-agent 'message-user-agent)
 (setq message-default-mail-headers "Cc: \nBcc: \n")
 (setq message-signature private-email-signature)
 (setq message-auto-save-directory "~/personal/mail/drafts")
 (setq message-kill-buffer-on-exit t)
-(setq mail-header-separator "")
-(add-to-list 'auto-mode-alist '("mutt*" . message-mode))
 
+(defun setup-message-mode ()
+  "Setup editor for emails"
+  (interactive)
+  (auto-fill-mode 1)
+  (set-fill-column 70)
+  (define-key message-mode-map [f2] 'ispell-message))
 
-;; Click urls/mails in Mime-View
-(add-hook 'mime-view-mode-hook 'goto-address-mode)
-(add-hook 'message-mode-hook
-          (lambda () (define-key message-mode-map [f2] 'ispell-message)))
+(add-hook 'message-mode-hook 'setup-message-mode)
 
-;; (Insidious) Big Brother DataBase, collects mail addresses.
+(require 'post) ; setup emacs to edit for mutt.
 
-;; Load bbdb
+(defun setup-post-mode ()
+  "Setup editor for post-mode"
+  (interactive)
+  (set (make-local-variable 'mail-header-separator) "")
+  (set-fill-column 70)
+  (define-key post-mode-map [f2] 'ispell-message))
+
+(add-hook 'post-mode-hook 'setup-post-mode)
+
+;; BBDB auto-completion
+(eval-after-load "bbdb" 
+  '(progn
+     (add-hook 'message-mode-hook  'turn-on-ac-bbdb)
+     (add-hook 'post-mode-hook     'turn-on-ac-bbdb)
+     (add-hook 'wl-draft-mode-hook 'turn-on-ac-bbdb)
+     (add-hook 'mml-mode-hook      'turn-on-ac-bbdb)
+     (add-hook 'mail-mode-hook     'turn-on-ac-bbdb)))
+
+;;
+;; Email contacts
+;;
+
 (and
  (require 'bbdb nil t)
  (bbdb-initialize)
@@ -53,13 +80,6 @@
 ;; automatically add mailing list fields
 (add-hook 'bbdb-notice-hook 'bbdb-auto-notes-hook)
 (setq bbdb-auto-notes-alist '(("X-ML-Name" (".*$" ML 0))))
-
-
-;; Save address from outgoing mails
-;; (require-maybe 'moy-bbdb-modified)
-;; (when-available 'bbdb/send-hook
-;;                 (add-hook 'message-send-hook 'bbdb/send-hook)
-;;                 )
 
 (setq
 

@@ -120,11 +120,6 @@
   (add-to-list 'ac-sources 'ac-source-bbdb)
   (auto-complete-mode 1))
 
-;;; Activate BBDB completion on various message modes, using auto-complete.
-(add-hook 'wl-draft-mode-hook 'turn-on-ac-bbdb)
-(add-hook 'message-mode-hook  'turn-on-ac-bbdb)
-(add-hook 'mml-mode-hook      'turn-on-ac-bbdb)
-(add-hook 'mail-mode-hook     'turn-on-ac-bbdb)
 
 (provide 'init-auto-complete)
 

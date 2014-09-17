@@ -127,6 +127,8 @@
  '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
  '(org-todo-keyword-faces (quote (("TODO" :foreground "red" :background "black" :weight bold) ("UNSOLVED" :foreground "blue" :background "white" :weight bold) ("READ" :foreground "blue" :background "white" :weight bold) ("SKIM" :foreground "blue" :background "white" :weight bold) ("FEEDBACK" :foreground "yellow" :weight bold) ("WAIT" :foreground "yellow" :weight bold) ("DELEGATED" :foreground "cyan" :weight bold) ("EVENTUALLY" :foreground "cyan" :weight bold) ("CANCELED" :foreground "lightgreen" :strike-through t :weight bold) ("DONE" :foreground "lightgreen" :weight bold) ("SOLVED" :foreground "lightgreen" :weight bold) ("FREETIME" :foreground "blue" :background "lightgreen" :weight bold) ("REVIEW" . "(:foreground \"blue\" :background \"lightgreen\" :weight bold)") ("REVIEWAGAIN" . "(:foreground \"blue\" :background \"lightgreen\" :weight bold)"))))
  '(org-todo-keywords (quote ((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED") (sequence "SKIM" "READ" "|" "DONE" "EVENTUALLY") (sequence "UNSOLVED" "|" "SOLVED") (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))))
+ '(post-attachment-regexp "\\(attach\\|alleg\\)")
+ '(post-rename-buffer nil)
  '(quack-pretty-lambda-p t)
  '(quack-programs (quote ("mzscheme" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi")))
  '(reb-re-syntax (quote string))
