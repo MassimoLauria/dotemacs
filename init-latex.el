@@ -377,8 +377,14 @@ started."
 
 
 ;; RefTeX setup
+;;
+;; this was previously setup as true, but it would fight with some
+;; setting when I am working using BSTINPUTS BIBINPUTS TEXINPUTS
+;; variables. Since TEXMFHOME is set appropriately also inside emacs,
+;; this setting is not necessary anymore.
+;;
+(setq reftex-use-external-file-finders nil)
 
-(setq reftex-use-external-file-finders t)  ;; Try to read bibtex files in TEXMF.
 
 (add-hook 'reftex-mode-hook
           (lambda ()
