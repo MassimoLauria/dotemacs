@@ -113,6 +113,13 @@ the result of (F t)
     (message "%3d lines, %3d words, %3d chars" (count-lines start end) n (- end start))))
 
 
+(defun my-chomp (str)
+      "Chomp leading and tailing whitespace from STR."
+      (replace-regexp-in-string (rx (or (: bos (* (any " \t\n")))
+                                        (: (* (any " \t\n")) eos)))
+                                ""
+                                str))
+
 ;;;- Previous/Next user/emacs buffer ----- and extension alike ErgoEmacs ----------------------
 
 ; Those are DNFs, lists of lists. External list is an OR of rules, internal is an AND.

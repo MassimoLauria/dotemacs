@@ -376,14 +376,9 @@ started."
 (add-hook 'LaTeX-mode-hook 'my-setup-of-latex-format)
 
 
-;; RefTeX setup
-;;
-;; this was previously setup as true, but it would fight with some
-;; setting when I am working using BSTINPUTS BIBINPUTS TEXINPUTS
-;; variables. Since TEXMFHOME is set appropriately also inside emacs,
-;; this setting is not necessary anymore.
-;;
-(setq reftex-use-external-file-finders nil)
+;; RefTeX setup has to use `kpsewhich' to find stuff, so that it
+;; respects TEXINPUTS, BIBINPUTS and BSTINPUTS settings.
+(setq reftex-use-external-file-finders t)
 
 
 (add-hook 'reftex-mode-hook
