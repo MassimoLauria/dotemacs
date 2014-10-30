@@ -363,15 +363,15 @@ buffer."
   )
 
 (defface org-block-begin-line
-  '((t (:underline "#A7A6AA" :foreground "#656555" :background "#2B2B2B")))
+  '((t (:foreground "#7F9F7F" :background "#4F4F4F")))
   "Face used for the line delimiting the begin of source blocks.")
 
 (defface org-block-background
-  '((t (:background "#383838")))
+  '((t (:background "#000000")))
   "Face used for the source block background.")
 
 (defface org-block-end-line
-  '((t (:overline "#A7A6AA" :foreground "#656555" :background "#2B2B2B")))
+  '((t (:foreground "#7F9F7F" :background "#4F4F4F")))
   "Face used for the line delimiting the end of source blocks.")
 
 
