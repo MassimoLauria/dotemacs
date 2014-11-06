@@ -14,7 +14,6 @@
 ;; up the LaTeX since updating auctex with elpa is very easy.
 ;;
 
-
 ;; Multifile support, completition, style, reverse search support, ...
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
@@ -26,29 +25,38 @@
 (setq bib-cite-use-reftex-view-crossref t)
 (setq TeX-complete-word '(lambda () ))
 
-(setq font-latex-fontify-sectioning 'color)
 
-;; (defun init-latex--fix-viewer-invocation ()
-;;   "Fix viewer invocation by not asking for an annoying confirmation.
-;;       - avoid confirmation or editing of view command
-;;       - allows for function to be used as viewer (AucTeX >= 11.86)"
-;;   (interactive)
-;;   (when (not running-Aquamacs)
-;;     (let ((version (string-to-number AUCTeX-version)))
-;;       (cond
-;;        ((>= version 11.86)
-;;         (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard-or-function nil t :help "Run Viewer (no  confirmation)")))
-;;        (t
-;;         (add-to-list 'TeX-command-list '("View" "%V" TeX-run-discard nil t :help "Run Viewer (no confirmation)")))
-;;        ))))
 
-;; (eval-after-load "tex-site" '(init-latex--forward-search-setup))
+;; View command fixes 
+;;
+;; 1 - use `displayline' command under MacOSX (from Skim.app)
+;; 2 - do not ask for confirmation with the View command.
+;;
+(defun init-latex--viewer-setup ()
+  "Set the \"View\" function saner defaults"
+
+  (add-to-list 'TeX-command-list '("View" "%V" 
+                                   TeX-run-discard-or-function nil t 
+                                   :help "Run Viewer")) ; no questions
+
+  (when (eq system-type 'darwin)
+    (add-to-list 'TeX-view-program-list
+                 '("displayline" 
+                   "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o %b"))
+    (add-to-list 'TeX-view-program-selection 
+                 '(output-pdf "displayline"))))
+
+(eval-after-load "tex" '(init-latex--viewer-setup))
+
+
+
+
 
 ;; These are the files that are produced by LaTeX processes.  It is annoying
 ;; that they show up while I'm trying to open a proper TeX file (or any other
 ;; text file).  IDO-mode can be instructed how to ignore such files.
 (setq TeX-byproduct-files
-'(".aux" ".log" ".brf" ".bbl" ".dvi" ".ps" ".pdf" "spl" "out" ".ps.gz" ".synctex.gz"))
+      '(".aux" ".log" ".brf" ".bbl" ".dvi" ".ps" ".pdf" "spl" "out" ".ps.gz" ".synctex.gz"))
 (setq ido-ignore-files
       (if (boundp 'ido-ignore-files)
           (append ido-ignore-files TeX-byproduct-files)
@@ -62,10 +70,6 @@
 (add-hook 'TeX-mode-hook 'turn-on-flyspell)
 (add-hook 'TeX-mode-hook 'TeX-source-specials-mode)
 
-(when-available 'aquamacs-latex-viewer-support
-      (add-hook 'TeX-mode-hook 'aquamacs-latex-viewer-support 'append)) ;; load reftex first
-
-
 ;; All TeX made with a single keystroke (BibTeX must run at least once).
 (require-maybe 'TeX-texify)
 
@@ -75,7 +79,6 @@
                        (make-local-variable 'compilation-exit-message-function)
                        (setq compilation-exit-message-function 'nil)
                        (add-to-list 'LaTeX-verbatim-environments "comment")
-                       (init-latex--fix-viewer-invocation)
                        )))
 
 
@@ -113,40 +116,22 @@
   (interactive)
   (cond
 
-   ;; if region is pinned, call master command on region
-   (TeX-command-region-begin
-        ;; (init-latex--error-keys 'auctex)
-        (TeX-command-region nil))
-   ;; is there a 'Makefile' in the folder? use that
-   ((file-exists-p "Makefile")
-        (set (make-local-variable 'compile-command)
-             "make -k")
-        (set (make-local-variable 'compilation-read-command)
-             nil)
-        ;; (init-latex--error-keys 'compile)
-        (call-interactively 'compile)
-        (TeX-view))
-   ;; or use the TeX-texify function
-   ((fboundp 'TeX-texify)
-        ;; (init-latex--error-keys 'auctex)
-        (call-interactively 'TeX-texify))
-   ;; otherwise build the document with rubber. I would prefer this to
-   ;; TeX-texify, but it does not support source correlation. Also it
-   ;; is broken for paths with spaces in it.
-   ((executable-find "rubber")
-        (set (make-local-variable 'compile-command)
-             (concat "rubber "
-                     (if TeX-PDF-mode "--pdf " "")
-                     (file-name-nondirectory (buffer-file-name))))
-        (set (make-local-variable 'compilation-read-command)
-             nil)
-        ;; (init-latex--error-keys 'compile)
-        (call-interactively 'compile)
-        (TeX-view))
-   ;; auctex default
-   (t
-        ;; (init-latex--error-keys 'auctex)
-        (call-interactively 'TeX-command-master))))
+   (TeX-command-region-begin            ; region pinned
+    (TeX-command-region nil))
+   
+   ((file-exists-p "Makefile")          ; Makefile exists
+    (set (make-local-variable 'compile-command)
+         "make -k")
+    (set (make-local-variable 'compilation-read-command)
+         nil)
+    (call-interactively 'compile)
+    (TeX-view))
+   
+   ((fboundp 'TeX-texify)          ; TeX-texify loaded
+    (call-interactively 'TeX-texify))
+   
+   (t                                   ; default
+    (call-interactively 'TeX-command-master))))
 
 
 
@@ -176,28 +161,6 @@ started."
                 (define-key massimo-keyboard-mode-map (kbd "M-p") 'sp-up-sexp))))
 
 
-
-;; For MacOSX I tend to use Skim viewer for PDFs. Skim is already set
-;; up in Aquamacs, but it is useful in Emacs.app
-(defun skim-make-url () (concat
-        (TeX-current-line)
-        " "
-        (expand-file-name (funcall file (TeX-output-extension) t)
-            (file-name-directory (TeX-master-file)))
-        " "
-        (buffer-file-name)))
-
-(when (and running-MacOSX (not running-Aquamacs))
-  (eval-after-load "tex"
-    '(progn
-       (add-to-list 'TeX-expand-list '("%q" skim-make-url))
-       (add-to-list 'TeX-view-program-list
-                    '("Skim" "/Applications/Skim.app/Contents/SharedSupport/displayline %q"))
-       (add-to-list 'TeX-view-program-list
-                    '("Preview" "open -a Preview.app %o"))
-       (add-to-list 'TeX-view-program-selection '(output-pdf "Skim"))
-       (TeX-global-PDF-mode t)
-       )))
 
 
 
@@ -352,21 +315,6 @@ It either tries \"lacheck\" or \"chktex\"."
     (if candidate
         (message "TeX master document: %s" (file-name-nondirectory candidate)))
     candidate))
-
-;; Rubber is a nice tool which is basically a make-like system for
-;; LaTeX documents
-(eval-after-load "tex"
-  '(progn
-     (add-to-list 'TeX-expand-list
-                  '("%(RubberPDF)"
-                    (lambda ()
-                      (if
-                          (not TeX-PDF-mode)
-                          ""
-                        "--pdf"))))
-     (add-to-list 'TeX-command-list
-                  '("Rubber" "rubber %(RubberPDF) %t" TeX-run-shell t t) t)))
-
 
 
 ;; Latex autoinsertion
