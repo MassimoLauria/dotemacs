@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014  Massimo Lauria
-;; Time-stamp: "2014-01-24, 17:31 (MST) Massimo Lauria"
+;; Time-stamp: "2014-11-07, 11:47 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -128,7 +128,7 @@
 (require 'init-imaxima)      ;; Imaxima and Imath (from SageMath)
 (require 'init-singular)     ;; Singular (not from SageMath!)
 
-;; ;; Applications
+;; Applications
 (require 'init-mail)       ;; Mail + Contacts
 (require 'init-org-mode)   ;; Organizer
 (require 'init-websearch)  ;; Search the Web
@@ -142,6 +142,7 @@
 (load custom-file 'noerror)
 ;;; Enabled commands
 (put 'narrow-to-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
 
 ;;; Start server --------------------------------------------------------
 (require 'init-server)
@@ -155,4 +156,3 @@
 ;; Local Variables:
 ;; mode: emacs-lisp
 ;; End:
-(put 'upcase-region 'disabled nil)

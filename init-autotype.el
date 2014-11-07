@@ -1,9 +1,9 @@
 ;;; init-autotype.el --- Automatic test insertion configuration
 
-;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-11-19, 17:26 (CET) Massimo Lauria>
+;; Time-stamp: <2014-11-07, 11:44 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -168,6 +168,19 @@ default handler."
      (require 'smartparens-config nil t)
      (require 'smartparens-latex nil t)
      ))
+
+;; work around for smartparens
+(unless (fboundp 'cua-replace-region)
+  (defun cua-replace-region ()
+    "Replace the active region with the character you type."
+    (interactive)
+    (let ((not-empty (and cua-delete-selection (cua-delete-region))))
+      (unless (eq this-original-command this-command)
+        (let ((overwrite-mode
+               (and overwrite-mode
+                    not-empty
+                    (not (eq this-original-command 'self-insert-command)))))
+          (cua--fallback))))))
 
 
 (provide 'init-autotype)
