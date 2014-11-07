@@ -8,7 +8,7 @@
 ;;
 ;; Usage:
 ;;
-;; $ emacs -q -l ~/config/emacs/init-minimal.el
+;; $ emacs -q -l ~/config/emacs/minimal-init.el
 ;; 
 
 
@@ -35,7 +35,7 @@
 (tool-bar-mode -1)
 (line-number-mode)
 (column-number-mode)
-(when (require 'massimo-keyboard nil t)	; 
+(when (require 'massimo-keyboard nil t)	; some shortcuts are broken in this minimal setup.
   (massimo-keyboard-global-mode))
 (condition-case msg
     (load-theme 'zenburn t)
