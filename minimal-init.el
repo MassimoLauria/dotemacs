@@ -8,7 +8,8 @@
 ;;
 ;; - compatible with older Emacs
 ;; - self contained
-;;
+;; - still quite usable
+;; 
 ;; Usage:
 ;;
 ;; $ emacs -q -l ~/config/emacs/minimal-init.el
@@ -32,13 +33,13 @@
 
 
 ;; Usability setup
-(when (fboundp 'cua-mode)           (cua-mode))
-(when (fboundp 'show-paren-mode)    (show-paren-mode))
-(when (fboundp 'scroll-bar-mode)    (scroll-bar-mode -1))
-(when (fboundp 'menu-bar-mode)      (menu-bar-mode -1))
-(when (fboundp 'tool-bar-mode)      (tool-bar-mode -1))
-(when (fboundp 'line-number-mode)   (line-number-mode))
-(when (fboundp 'column-number-mode) (column-number-mode))
+(when (fboundp 'cua-mode)           (cua-mode            t))
+(when (fboundp 'show-paren-mode)    (show-paren-mode     t))
+(when (fboundp 'scroll-bar-mode)    (scroll-bar-mode    -1))
+(when (fboundp 'menu-bar-mode)      (menu-bar-mode      -1))
+(when (fboundp 'tool-bar-mode)      (tool-bar-mode      -1))
+(when (fboundp 'line-number-mode)   (line-number-mode    t))
+(when (fboundp 'column-number-mode) (column-number-mode  t))
 
 ;; Keyboard
 (defvar minimo-keyboard-mode-map
@@ -75,9 +76,28 @@
   minimo-keyboard-mode turn-on-minimo-keyboard)
 (minimo-keyboard-global-mode)
 
+;; Fix XTerm issues
+(when (and (>= emacs-major-version 23)
+           (member (tty-type) '("xterm" 
+				"xterm-256color"
+				"screen"
+				"screen-256-color")))
+  (define-key input-decode-map "\e[1;2A" [S-up])
+  (define-key input-decode-map "\e[1;2B" [S-down])
+  (define-key input-decode-map "\e[1;2C" [S-right])
+  (define-key input-decode-map "\e[1;2D" [S-left])
+  (define-key input-decode-map "\e[1;4A" [M-S-up])
+  (define-key input-decode-map "\e[1;4B" [M-S-down])
+  (define-key input-decode-map "\e[1;4C" [M-S-right])
+  (define-key input-decode-map "\e[1;4D" [M-S-left])
+  (define-key input-decode-map "\e[1;7A" [C-M-up])
+  (define-key input-decode-map "\e[1;7B" [C-M-down])
+  (define-key input-decode-map "\e[1;7C" [C-M-S-right])
+  (define-key input-decode-map "\e[1;7D" [C-M-left]))
+
 ;; Color theme
 (condition-case msg
     (load-theme 'zenburn t)
     (error (format "%s" msg) ))
 
-;; add TEST CODE DOWN HERE -------------------------------------------
+;; ADD TEST CODE DOWN HERE -------------------------------------------
