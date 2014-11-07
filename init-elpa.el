@@ -18,11 +18,11 @@
 (setq package-archives  '(
                           ("gnu" . "http://elpa.gnu.org/packages/")
                           ("elpa" . "http://tromey.com/elpa/")
-                          ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
+                          ("melpa-stable" . "http://stable.melpa.org/packages/")
                           )) ;; end of package list
 
 ;; "marmalade" repository at  "http://marmalade-repo.org/packages/" is often broken.
-;; "melpa" repository at "http://melpa.milkbox.net/packages/" has unstable versions.
+;; "melpa" repository at "http://melpa.org/packages/" has unstable versions.
 
 
 ;; Color theme manager depends on the version
