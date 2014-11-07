@@ -1,7 +1,7 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014  Massimo Lauria
-;; Time-stamp: "2014-11-07, 11:47 (CET) Massimo Lauria"
+;; Time-stamp: "2014-11-07, 13:46 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -42,15 +42,6 @@
 (require 'init-discover-runtime) ; Discover emacs version and runtime
 (require 'init-environment)      ; setup running environment
 
-
-;; Try to fix missing bits from older versions of Emacs
-;; so far we support only emacs >= 23.
-
-(setq compat-elisp-emacs24 (concat default-elisp-path "/compat24"))
-
-(when (< emacs-major-version 24)
-  (setq load-path (cons compat-elisp-emacs24 load-path))
-  (require 'backport24 nil t))
 
 
 (require 'init-functions)        ; Utility functions for configuration
