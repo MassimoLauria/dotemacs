@@ -12,7 +12,7 @@
 ;; 
 ;; Usage:
 ;;
-;; $ emacs -q -l ~/config/emacs/minimal-init.el
+;; $ emacs -q -l ~/config/emacs/init-minimal.el
 ;; 
 
 
@@ -100,4 +100,5 @@
     (load-theme 'zenburn t)
     (error (format "%s" msg) ))
 
-;; ADD TEST CODE DOWN HERE -------------------------------------------
+;; -------------------------------------------------------------------
+(provide 'init-minimal)
