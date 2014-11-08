@@ -20,6 +20,7 @@
 ;; Basic
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
+(setq debug-on-error t)
 (setq load-path (cons "~/config/emacs/" load-path))
 
 ;; Emacs packages
