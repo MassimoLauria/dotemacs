@@ -101,7 +101,7 @@ buffer, we need to send actual strings to the subprocess. So
 override these emacs primitives to do so, then call the usual
 default handler."
   (let ((proc (get-buffer-process (current-buffer))))
-    (flet ((insert (&rest args)
+    (letf ((insert (&rest args)
                    (mapc #'(lambda (arg)
                              (if (stringp arg)
                                  (term-send-raw-string arg)

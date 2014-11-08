@@ -45,24 +45,23 @@
          file)))
 
 ;; Load Eclim
-(when (require 'eclim nil t)
-  (setq eclim-auto-save t)
-  (global-eclim-mode t)
-  (setq eclim-executable
-      (or
-       (executable-find "eclim")
-       (eclim-executable-find)
-       (local-eclim-executable-find))))
-
+(eval-after-load "eclim"
+  '(progn
+     (setq eclim-auto-save t)
+     (global-eclim-mode t)
+     (setq eclim-executable
+	   (or
+	    (executable-find "eclim")
+	    (eclim-executable-find)
+	    (local-eclim-executable-find)))))
 
 (defun setup-java-mode-completion ()
   "Add auto-completion support for Java."
 
   ;; Eclipse/Eclim completion
+  (require 'eclim nil t)
   (when (require 'ac-emacs-eclim-source nil t)
-    (add-hook 'eclim-mode-hook (lambda () (add-to-list 'ac-sources 'ac-source-emacs-eclim)))
-    )
-)
+    (add-hook 'eclim-mode-hook (lambda () (add-to-list 'ac-sources 'ac-source-emacs-eclim)))))
 
 
 

@@ -1,4 +1,3 @@
-
 ;;; init-modeline.el --- Setup the modeline
 
 ;; Copyright (C) 2013, 2014  Massimo Lauria
@@ -111,7 +110,7 @@ E-W and STATUS report the errors."
 
 
 
-;; powerline makes mode-line cool
+;; ;; powerline makes mode-line cool
 (when (require 'powerline nil t)
   (powerline-raw mode-line-mule-info nil 'l)
   (powerline-default-theme))
