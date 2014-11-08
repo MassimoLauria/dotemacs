@@ -361,52 +361,6 @@ http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
 (ad-activate 'fundamental-mode)
 
 
-;; Invocation of git
-(defun git-commit-file (&optional commit-message file-name)
-  "Add the file into the local git repository, then commits.
-
-If there are other files staged for commit, those will be
-committed as well. A COMMIT-MESSAGE can be optionally specified."  
-  (interactive)
-  (let ((msg (or commit-message "Automatic commit by emacs"))
-        (fname (or file-name (buffer-file-name)))
-        (error-buffer  "*Messages*")
-        (output-buffer "*Messages*"))
-    (if (file-exists-p (format "%s" fname))
-        (progn 
-          (vc-toggle-read-only)
-          (shell-command (concat "git add " fname)
-                         output-buffer 
-                         error-buffer)
-          (shell-command (concat "git commit -m \"" 
-                                 (with-temp-buffer
-                                   (insert msg)
-                                   (replace-string "\"" "\\\"" nil 
-                                                   (point-min) (point-max))
-                                   (buffer-string))
-                                 "\"")
-                         output-buffer 
-                         error-buffer)
-          (vc-toggle-read-only)))))
-
-(defvar org-capture-commit-message nil
-  "A buffer variable to contain the org-capture header")
-
-(add-hook 'org-capture-before-finalize-hook
-           '(lambda ()
-             (setq org-capture-commit-message (org-get-heading))))
-
-(defun org-mode-auto-commit ()
-  "Commit the file in git repository.
-
-The commit message is the heading of the entry where the commit
-is invoked."
-  (interactive)
-  (let ((msg (or org-capture-commit-message 
-              (org-get-heading))))  
-    (git-commit-file msg)
-    (setq org-capture-commit-message nil)))
-
 
 (provide 'init-unsorted-elisp)
 ;;; init-unsorted-elisp.el ends here
