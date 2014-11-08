@@ -25,12 +25,6 @@
 
 ;;; Code:
 
-;; Launch server in MacOSX (on Linux I use Xsession)
-(require 'server nil t)
-(when (fboundp 'server-running-p) ; not defined in emacs 22
-  (if (and running-MacOSX
-           (not (server-running-p)))
-      (server-start)))
 
 
 ;; ;; Edit text area on Google Chrome
@@ -46,45 +40,23 @@ server."
   (auto-fill-mode -1)
   (visual-line-mode))
 
-(when (and (fboundp 'server-running-p)
-           (server-running-p)
-           (locate-library "edit-server"))
-  (require 'edit-server)
-  (edit-server-start))
 
 
-;;
-;; This is a convoluted way to go back to the previous window after
-;; emacsclient session ends. The window id of the callee can be saved
-;; to `init-server--cache-win-id' using `save-window-id'
-;; function. Then the frame can be restored using
-;; `jumpback-window-id'.
-;;
-;; an example of usage is the following:
-;; 
-;; $ emacsclient -e '(save-window-id)'; emacsclient <file_to_edit>; emacsclient -e '(jumpback-window-id)'
+;; Launch server in MacOSX 
+(and (require 'server nil t)
+     (eq system-type 'darwin)
+     (not (server-running-p))
+     (server-start))
 
-(defvar init-server--cache-win-id nil
-  "The window ID saved by `save-window-id'.")
-  
-(defun save-window-id ()
-  "Save the current active window ID. Useful to be called using
-emacsclient."
-  (setq init-server--cache-win-id
-        (with-temp-buffer 
-          (call-process "xprop" nil (buffer-name) nil "-root")
-          (goto-char (point-min))
-          (search-forward "_NET_ACTIVE_WINDOW") ; find the active window line
-          (search-forward "0x")
-          (backward-char 2)
-          (current-word))))
+;; Launch edit server
+(and (server-running-p)
+     (require 'edit-server nil t)
+     (edit-server-start))
 
-(defun jumpback-window-id ()
-    (call-process
-     "wmctrl" nil nil nil "-i" "-a" init-server--cache-win-id))
+
 
 (provide 'init-server)
-;;; init-clipboard.el ends here
+;;; init-server.el ends here
 
 
 
