@@ -3,7 +3,7 @@
 ;; Copyright (C) 2013, 2014  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2014-11-09, 14:15 (CET) Massimo Lauria>
+;; Time-stamp: <2014-11-10, 10:42 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -75,39 +75,33 @@ The renaming table is `rename-major-mode-alist'."
   )
 
 
-;; Flymake/Flycheck syntax checker abbreviations.
-(defun flymake-report-status-slim  (e-w &optional status)
-  "Show \"slim\" flymake status in mode line.
+(defun flycheck-mode-line-status-text-slim (&optional status)
+  "Get a text describing STATUS for use in the mode line.
 
-E-W and STATUS report the errors."
-  (when e-w
-    (setq flymake-mode-line-e-w e-w))
-  (when status
-    (setq flymake-mode-line-status status))
-  (let* (mode-line)
-    (if (> (length flymake-mode-line-e-w) 0)
-        (setq mode-line (concat mode-line " ✗:" flymake-mode-line-e-w))
-      (setq mode-line " ✓"))
-    (setq mode-line (concat mode-line flymake-mode-line-status))
-    (setq flymake-mode-line mode-line)
-    (force-mode-line-update)))
+STATUS defaults to `flycheck-last-status-change' if omitted or
+nil."
+  (let ((text (pcase (or status flycheck-last-status-change)
+                (`not-checked "")
+                (`no-checker "")
+                (`running "")
+                (`errored "✗")
+                (`finished
+                 (if flycheck-current-errors
+                     (let ((error-counts (flycheck-count-errors
+                                          flycheck-current-errors)))
+                       (format "✗:%s/%s"
+                               (or (cdr (assq 'error error-counts)) 0)
+                               (or (cdr (assq 'warning error-counts)) 0)))
+                   "✓"))
+                (`interrupted "")
+                (`suspicious "?"))))
+    (concat " " text)))
 
-(defun flycheck-report-status-slim (status)
-  "Report flycheck STATUS."
-  (let* (mode-line)
-    (if (> (length status) 0)
-        (setq mode-line (concat " ✗" status))
-      (setq mode-line " ✓"))
-    (setq flycheck-mode-line mode-line)
-    (force-mode-line-update)))
-
-
-(eval-after-load "flymake"
-  '(defalias 'flymake-report-status  'flymake-report-status-slim))
 (eval-after-load "flycheck"
-  '(defalias 'flycheck-report-status 'flycheck-report-status-slim))
-
-
+  '(defalias
+     'flycheck-mode-line-status-text
+     'flycheck-mode-line-status-text-slim
+     ))
 
 
 ;; ;; powerline makes mode-line cool
