@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014  Massimo Lauria
-;; Time-stamp: "2014-11-08, 13:43 (CET) Massimo Lauria"
+;; Time-stamp: "2014-11-11, 02:31 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -145,7 +145,6 @@
 
 ;;; Start editing -------------------------------------------------------
 (init-scratch-buffer)
-
 
 
 (provide 'init-start)

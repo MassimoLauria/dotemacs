@@ -1,6 +1,6 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Time-stamp: "2014-11-07, 13:35 (CET) Massimo Lauria"
+;; Time-stamp: "2014-11-11, 01:25 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -56,6 +56,7 @@
 (require-package 'deferred)      ;; 
 (require-package 'epc)           ;; process used for python auto-completion
 (require-package 'magit)
+(require-package 'magit-svn)
 (require-package 'elisp-slime-nav)
 (require-package 'zenburn-theme)
 (require-package 'flycheck)
