@@ -1,9 +1,9 @@
 ;;; init-websearch.el --- Search Engines
 
-;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-04-30, 13:45 (CEST) Massimo Lauria>
+;; Time-stamp: <2014-11-14, 10:37 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@
 
 ;;; Commentary:
 
-;; This is the part of my init files devoted Google services.  Right
-;; now it is just google search on region, but it may support Google
-;; Contacts, Google Maps, and Google Translation soon.
+;; This is the part of my init files devoted queries to web services.
+;; It allows to query search engines and dictionaries for words and
+;; text in the buffer.
 
 ;;; Code:
 (require 'url-util)
@@ -45,6 +45,30 @@ search string is appended to the query string."
                               (buffer-substring (region-beginning) (region-end))
                             (read-string (concat ,name ": "))))))))
 
+(defmacro def-dictionary-lookup (name docstring func query)
+  "Define a dictionary lookup function for word at point.
+
+NAME is a human readable dictionary name.  DOCSTRING is the
+documentation string for the dictionary.  FUNC is the name of
+the lookup function, QUERY is the url of the query string: the
+word queried is appended to the query string."
+  `(defun ,func (&optional word)
+     ,(concat docstring "\n\nLook up either for WORD, or for the word under cursor, or query an argument if none of them applies")
+     (interactive)
+     (browse-url
+      (concat
+       ,query
+       (url-hexify-string (or
+                           word
+                           (current-word t nil)
+                           (read-string (concat ,name ": "))
+                           ))))))
+
+
+
+;;
+;; Google engines
+;;
 (def-search-engine "Google"
   "Search with Google search engine."
   google
@@ -53,18 +77,6 @@ search string is appended to the query string."
   "Search with Google Scholar, and academic search engine."
   scholar
   "http://scholar.google.com/scholar?hl=it&q=")
-(def-search-engine "Wikipedia"
-  "Search in the free enciclopedia Wikipedia."
-  wiki
-  "http://en.wikipedia.org/w/index.php?search=")
-(def-search-engine "Wikipedia Italia"
-  "Search in the Italian version of free enciclopedia Wikipedia."
-  iwiki
-  "http://it.wikipedia.org/w/index.php?search=")
-(def-search-engine "Emacs Wiki"
-  "Search in Emacs Wiki"
-  ew
-  "http://www.google.com/cse?cx=004774160799092323420%3A6-ff2s0o6yi&sa=Search&siteurl=emacswiki.org%2F&q=")
 (def-search-engine "Translate to English"
   "Translate to English using Google Translate"
   english
@@ -83,8 +95,32 @@ search string is appended to the query string."
   "https://maps.google.it/maps?q=")
 
 
+;;
+;; Wikipedia
+;;
+(def-search-engine "Wikipedia"
+  "Search in the free enciclopedia Wikipedia."
+  wiki
+  "http://en.wikipedia.org/w/index.php?search=")
+(def-search-engine "Wikipedia Italia"
+  "Search in the Italian version of free enciclopedia Wikipedia."
+  iwiki
+  "http://it.wikipedia.org/w/index.php?search=")
 
+
+
+;;
+;; Emacs
+;;
+(def-search-engine "Emacs Wiki"
+  "Search in Emacs Wiki"
+  ew
+  "http://www.google.com/cse?cx=004774160799092323420%3A6-ff2s0o6yi&sa=Search&siteurl=emacswiki.org%2F&q=")
+
+
+;;
 ;; Math search engines
+;;
 (def-search-engine "Wolfram Alpha"
   "Search on Wolfram Alpha"
   al
@@ -94,17 +130,25 @@ search string is appended to the query string."
   oeis
   "http://oeis.org/search?q=")
 
-;; Dictionary look-up do not follow the general scheme. It must focus
-;; on a single word.
-(defun dict (&optional word)
-     "Look-up the WORD under cursor in an internet dictionary."
-     (interactive)
-     (browse-url
-      (concat
-       "http://www.thefreedictionary.com/_/search.aspx?pid=osearch&word="
-       (url-hexify-string (if word
-                              word
-                            (current-word))))))
+
+;;
+;; Dictionary and thesaurus lookup
+;;
+(def-dictionary-lookup "The Free Dictionary"
+  "Look up for a word in The Free Dictionary."
+  freedict
+  "http://www.thefreedictionary.com/_/search.aspx?pid=osearch&word=")
+
+(def-dictionary-lookup "Dictionary.com"
+  "Look up for a word in Dictionary.com."
+  dict
+  "http://www.dictionary.com/browse/")
+
+(def-dictionary-lookup "Thesaurus.com"
+  "Look up for a word in Thesaurus.com."
+  thes
+  "http://www.thesaurus.com/browse/")
+
 
 
 (provide 'init-websearch)
