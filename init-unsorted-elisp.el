@@ -1,6 +1,6 @@
 ;;; init-unsorted-elisp.el --- Contains small chunks of elisp code in no particular order
 
-;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -352,6 +352,13 @@ http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
 (autoload 'powershell-mode "powershell-mode" "A editing mode for Microsoft PowerShell." t)
 (add-to-list 'auto-mode-alist '("\\.ps1\\'" . powershell-mode)) ; PowerShell script
 (autoload 'powershell "powershell" "Start a interactive shell of PowerShell." t)
+
+
+(defun kill-fascists ()
+  "This elisp code kills fascists"
+  (message "This elisp code kills fascists."))
+
+
 
 
 (defadvice fundamental-mode (after add-massimo-keyboard-mode ())
