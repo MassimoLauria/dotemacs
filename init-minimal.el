@@ -1,10 +1,10 @@
 ;;; init-minimal.el --- Miminal conf file -*- coding: utf-8 -*-
 ;;
 ;; This configuration file could a starting point to test features and
-;; packages.  Unfortunately it seems that my usual setup is so complex
-;; and full of workarounds that when I do some serious upgrade or
-;; install new packages, something breaks because of some lisp code
-;; that was a good idea a some time but not anymore.
+;; packages.  Unfortunately my usual setup is so complex and full of
+;; workarounds that something breaks when I do some serious upgrade or
+;; install new packages. Most of the times this is because of some
+;; code that was a good idea at some point but it is not anymore.
 ;;
 ;; - compatible with older Emacs
 ;; - self contained
@@ -92,7 +92,7 @@
   (define-key input-decode-map "\e[1;4D" [M-S-left])
   (define-key input-decode-map "\e[1;7A" [C-M-up])
   (define-key input-decode-map "\e[1;7B" [C-M-down])
-  (define-key input-decode-map "\e[1;7C" [C-M-S-right])
+  (define-key input-decode-map "\e[1;7C" [C-M-right])
   (define-key input-decode-map "\e[1;7D" [C-M-left]))
 
 ;; Color theme
