@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014  Massimo Lauria
-;; Time-stamp: "2014-11-11, 02:31 (CET) Massimo Lauria"
+;; Time-stamp: "2014-11-30, 13:47 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -136,9 +136,10 @@
 ;;; Customized settings -------------------------------------------------
 (setq custom-file "~/config/emacs/custom.el")
 (load custom-file 'noerror)
-;;; Enabled commands
+;;; Enabled/Disabled commands
 (put 'narrow-to-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
+(put 'iconify-or-deiconify-frame 'disabled t)
 
 ;;; Start server --------------------------------------------------------
 (require 'init-server)

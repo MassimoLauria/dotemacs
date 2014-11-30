@@ -1,4 +1,4 @@
-;;; init-minimal.el --- Miminal conf file -*- coding: utf-8 -*-
+;;; init-minimal.el --- Minimal conf file -*- coding: utf-8 -*-
 ;;
 ;; This configuration file could a starting point to test features and
 ;; packages.  Unfortunately my usual setup is so complex and full of
@@ -99,6 +99,12 @@
 (condition-case msg
     (load-theme 'zenburn t)
     (error (format "%s" msg) ))
+
+
+;;; Enabled/Disabled commands
+(put 'narrow-to-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'iconify-or-deiconify-frame 'disabled t)
 
 ;; -------------------------------------------------------------------
 (provide 'init-minimal)
