@@ -516,6 +516,8 @@
  '(comint-move-point-for-output (quote this))
  '(comint-prompt-read-only nil)
  '(comint-scroll-to-bottom-on-input (quote this))
+ '(company-idle-delay 0.15)
+ '(company-require-match nil)
  '(compilation-scroll-output (quote first-error))
  '(copyright-query nil)
  '(cua-enable-cua-keys t)
@@ -526,7 +528,7 @@
  '(cua-read-only-cursor-color (quote hbar))
  '(custom-safe-themes
    (quote
-    ("e5377626af4d9c413b309267384647f42a8cfd047e0a0b57c3b703a3c170d86b" "9f443833deb3412a34d2d2c912247349d4bd1b09e0f5eaba11a3ea7872892000" "d2622a2a2966905a5237b54f35996ca6fda2f79a9253d44793cfe31079e3c92b" "501caa208affa1145ccbb4b74b6cd66c3091e41c5bb66c677feda9def5eab19c" "5e1d1564b6a2435a2054aa345e81c89539a72c4cad8536cfe02583e0b7d5e2fa" "71b172ea4aad108801421cc5251edb6c792f3adbaecfa1c52e94e3d99634dee7" default)))
+    ("de538b2d1282b23ca41ac5d8b69c033b911521fe27b5e1f59783d2eb20384e1f" "e5377626af4d9c413b309267384647f42a8cfd047e0a0b57c3b703a3c170d86b" "9f443833deb3412a34d2d2c912247349d4bd1b09e0f5eaba11a3ea7872892000" "d2622a2a2966905a5237b54f35996ca6fda2f79a9253d44793cfe31079e3c92b" "501caa208affa1145ccbb4b74b6cd66c3091e41c5bb66c677feda9def5eab19c" "5e1d1564b6a2435a2054aa345e81c89539a72c4cad8536cfe02583e0b7d5e2fa" "71b172ea4aad108801421cc5251edb6c792f3adbaecfa1c52e94e3d99634dee7" default)))
  '(default-input-method "TeX")
  '(default-justification (quote left))
  '(delete-old-versions t)
@@ -572,6 +574,7 @@
      ("reflem" "{")
      ("refth" "{"))))
  '(fringe-mode 0 nil (fringe))
+ '(global-company-mode t)
  '(global-semantic-idle-scheduler-mode t)
  '(global-semantic-idle-summary-mode t)
  '(google-translate-default-source-language "auto")

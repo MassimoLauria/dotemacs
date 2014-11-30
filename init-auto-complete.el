@@ -2,6 +2,27 @@
 
 ;; Filename: init-auto-complete.el
 
+
+;; Company keyboard setup
+;;
+;; `company-complete' is the aggressive completion: complete and execute the action.
+;; `ac-expand' just expand the common part or go to the next candidate.
+;; By default RET = `company-complete'
+;;            TAB = nil
+;;
+(with-eval-after-load "company"
+  ;; Menu movement
+  (define-key company-active-map (kbd "M-j") #'company-select-previous)
+  (define-key company-active-map (kbd "M-l") #'company-select-next)
+  (define-key company-active-map (kbd "M-i") #'company-select-previous)
+  (define-key company-active-map (kbd "M-k") #'company-select-next)
+  (define-key company-active-map (kbd "M-u") #'company-abort)
+  (define-key company-active-map (kbd "M-o") #'company-complete-common)
+  (define-key company-active-map "\r"        nil)
+  (define-key company-active-map [return]    nil)
+  (define-key company-active-map "\t"  'company-complete-selection)
+  (define-key company-active-map [tab] 'company-complete-selection))
+
 ;;; Require
 (setq default-ac-dir   (concat default-elisp-3rdparties "/auto-complete"))
 (add-to-list 'load-path default-ac-dir)
