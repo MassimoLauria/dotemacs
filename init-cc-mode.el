@@ -1,9 +1,9 @@
 ;;; init-cc-mode.el --- Setup for C/C++ programming modes
 
-;; Copyright (C) 2012, 2013  Massimo Lauria
+;; Copyright (C) 2012, 2013, 2014  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-12-30, 17:51 (CET) Massimo Lauria>
+;; Time-stamp: <2014-12-01, 01:16 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -35,14 +35,13 @@
 (add-to-list 'compilation-error-regexp-alist-alist (list 'cppunit "\\(!!!FAILURES!!!\nTest Results:\nRun: [^\n]*\n\n\n\\)?\\([0-9]+\\)) test: \\([^(]+\\)(F) line: \\([0-9]+\\) \\([^ \n]+\\)" 5 4))
 
 
-(require 'auto-complete-clang-async "emacs-clang-complete-async/auto-complete-clang-async.el" t)
-(require 'auto-complete-clang "auto-complete-clang/auto-complete-clang.el" t)
+;; (require 'auto-complete-clang-async "emacs-clang-complete-async/auto-complete-clang-async.el" t)
+;; (require 'auto-complete-clang "auto-complete-clang/auto-complete-clang.el" t)
 
 (defvar clang-executable (executable-find "clang")
   "Executable compiler")
 (defvar clang-include-path '("." "./src" "./include"))
 
-(setq ac-clang-executable clang-executable)
 (setq clang-completion-suppress-error 't)
 
 (defun clang-include-discover (lang)
@@ -98,28 +97,6 @@
  
 
 
-(defun ac-clang-async-setup ()
-  "Setup C/C++ completion using clang, async server"
-  (setq ac-clang-complete-executable "~/.emacs.d/clang-complete")
-  (when (executable-find ac-clang-complete-executable)
-    (add-to-list 'ac-sources 'ac-source-clang-async)
-    (ac-clang-launch-completion-process)))
-
-(defun ac-clang-setup ()
-  "Setup C/C++ completion using clang"
-  (add-to-list 'ac-sources 'ac-source-clang))
-
-
-(defun setup-c-common-completion ()
-  "Add sources for auto-completion."
-  (interactive)
-  (unless (boundp 'ac-sources) (setq 'ac-sources nil))
-  ;; Yasnippet
-  (when (boundp 'ac-source-yasnippet)
-    (add-to-list 'ac-sources 'ac-source-yasnippet))
-  ;; Clang
-  (when (executable-find "clang")
-    (ac-clang-setup)))
 
 
 
@@ -138,8 +115,7 @@
   (when (fboundp 'flyspell-prog-mode) (flyspell-prog-mode))
 
   ;; Clang
-  (setup-clang "c")
-  (setup-c-common-completion))
+  (setup-clang "c"))
 
 (defun setup-c++-mode ()
   "My setup for C++ mode"
@@ -155,8 +131,7 @@
   (when (fboundp 'flyspell-prog-mode) (flyspell-prog-mode))
 
   ;; Clang
-  (setup-clang "c++")
-  (setup-c-common-completion))
+  (setup-clang "c++"))
 
 
 ;; install the main hooks

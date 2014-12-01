@@ -3,7 +3,7 @@
 ;; Copyright (C) 2013, 2014  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2014-11-10, 10:42 (CET) Massimo Lauria>
+;; Time-stamp: <2014-12-01, 01:17 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -61,6 +61,7 @@ The renaming table is `rename-major-mode-alist'."
   (eval-after-load 'massimo-keyboard '(diminish 'massimo-keyboard-mode " ⊤"))
   (eval-after-load 'typopunct '(diminish 'typopunct-mode " “"))
   (eval-after-load 'auto-complete '(diminish 'auto-complete-mode " α"))
+  (eval-after-load 'company '(diminish 'company-mode " α"))
   (eval-after-load 'autopair '(diminish 'autopair-mode " ♊"))
   (eval-after-load 'smartparens '(diminish 'smartparens-mode " ♊"))
   (eval-after-load 'yasnippet '(diminish 'yas-minor-mode " ⓨ"))

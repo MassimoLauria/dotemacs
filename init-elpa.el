@@ -1,6 +1,6 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Time-stamp: "2014-11-11, 01:25 (CET) Massimo Lauria"
+;; Time-stamp: "2014-12-01, 01:16 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -51,7 +51,7 @@
 
 
 (require-package 'yasnippet)
-(require-package 'auto-complete) ;; auto completion
+(require-package 'company) ;; auto completion
 (require-package 'diminish)      ;; remove names from modeline
 (require-package 'deferred)      ;; 
 (require-package 'epc)           ;; process used for python auto-completion
@@ -62,9 +62,9 @@
 (require-package 'flycheck)
 
 ;; from Melpa-unstable
-(require-package 'auto-complete-clang)
 (require-package 'smartparens)
 (require-package 'edit-server-htmlize)
+(require-package 'bbdb)
 
 ;; Editing
 (require-package 'expand-region)

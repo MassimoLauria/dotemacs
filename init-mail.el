@@ -56,12 +56,12 @@
 (add-hook 'post-mode-hook 'setup-post-mode)
 
 ;; BBDB auto-completion
-(eval-after-load "bbdb" 
-  '(progn
-     (add-hook 'message-mode-hook  'turn-on-ac-bbdb)
-     (add-hook 'post-mode-hook     'turn-on-ac-bbdb)
-     (add-hook 'mml-mode-hook      'turn-on-ac-bbdb)
-     (add-hook 'mail-mode-hook     'turn-on-ac-bbdb)))
+;; (eval-after-load "bbdb" 
+;;   '(progn
+;;      (add-hook 'message-mode-hook  'turn-on-ac-bbdb)
+;;      (add-hook 'post-mode-hook     'turn-on-ac-bbdb)
+;;      (add-hook 'mml-mode-hook      'turn-on-ac-bbdb)
+;;      (add-hook 'mail-mode-hook     'turn-on-ac-bbdb)))
 
 ;;
 ;; Email contacts

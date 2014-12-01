@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014  Massimo Lauria
-;; Time-stamp: "2014-11-30, 13:47 (CET) Massimo Lauria"
+;; Time-stamp: "2014-12-01, 01:17 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -74,8 +74,8 @@
 (setq additional-elisp-packages (list
                               ""
                               "mu4e"
-                              "bbdb/lisp"        ;; main bbdb
-                              "bbdb/bits"        ;; bbdb contributed utilities
+                              ;; "bbdb/lisp"        ;; main bbdb in Melpa
+                              ;; "bbdb/bits"        ;; bbdb contributed utilities
                               "org/lisp"         ;; main org-mode
                               "org/contrib/lisp" ;; org-mode contributed utilities
                               ))
