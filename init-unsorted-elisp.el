@@ -369,5 +369,7 @@ http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
 
 
 
+(setq dired-use-ls-dired (memq system-type '(gnu/linux cygwin)))
+
 (provide 'init-unsorted-elisp)
 ;;; init-unsorted-elisp.el ends here
