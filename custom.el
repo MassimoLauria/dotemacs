@@ -7,7 +7,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-item-indent 0)
- '(TeX-master t)
+ '(TeX-master t t)
  '(ac-auto-show-menu 0.3)
  '(ac-delay 0.1)
  '(ac-disable-on-comment nil)
@@ -516,6 +516,7 @@
  '(comint-move-point-for-output (quote this))
  '(comint-prompt-read-only nil)
  '(comint-scroll-to-bottom-on-input (quote this))
+ '(company-bbdb-modes (quote (message-mode post-mode)))
  '(company-idle-delay 0.15)
  '(company-require-match nil)
  '(compilation-scroll-output (quote first-error))
@@ -643,7 +644,7 @@
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
- '(org-src-fontify-natively t t)
+ '(org-src-fontify-natively t)
  '(org-todo-keyword-faces
    (quote
     (("TODO" :foreground "red" :background "black" :weight bold)
@@ -665,7 +666,7 @@
     ((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")
      (sequence "SKIM" "READ" "|" "DONE" "EVENTUALLY")
      (sequence "UNSOLVED" "|" "SOLVED")
-     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))) t)
+     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))))
  '(org-use-sub-superscripts (quote {}))
  '(post-attachment-regexp "\\(attach\\|alleg\\)")
  '(post-rename-buffer nil)

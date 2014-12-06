@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012, 2013, 2014  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2014-12-01, 01:16 (CET) Massimo Lauria>
+;; Time-stamp: <2014-12-06, 17:29 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,20 +23,11 @@
 ;; This is my setup for C/C++ code.
 
 
-
-(require 'init-cc-compiler) ;; Load configuration for C/C++ compilers
-
-;; Syntax checker 
-(eval-after-load "flycheck"
-  '(require 'init-cc-mode-syntax-check nil t))
-
-;; test with cppunit
+;; Testing with CPPunit
 (require 'compile)
-(add-to-list 'compilation-error-regexp-alist-alist (list 'cppunit "\\(!!!FAILURES!!!\nTest Results:\nRun: [^\n]*\n\n\n\\)?\\([0-9]+\\)) test: \\([^(]+\\)(F) line: \\([0-9]+\\) \\([^ \n]+\\)" 5 4))
+(add-to-list 'compilation-error-regexp-alist-alist
+             (list 'cppunit "\\(!!!FAILURES!!!\nTest Results:\nRun: [^\n]*\n\n\n\\)?\\([0-9]+\\)) test: \\([^(]+\\)(F) line: \\([0-9]+\\) \\([^ \n]+\\)" 5 4))
 
-
-;; (require 'auto-complete-clang-async "emacs-clang-complete-async/auto-complete-clang-async.el" t)
-;; (require 'auto-complete-clang "auto-complete-clang/auto-complete-clang.el" t)
 
 (defvar clang-executable (executable-find "clang")
   "Executable compiler")
@@ -137,6 +128,11 @@
 ;; install the main hooks
 (add-hook 'c-mode-hook   'setup-c-mode)
 (add-hook 'c++-mode-hook 'setup-c++-mode)
+
+
+;; Use flycheck in c/c++ source
+(add-hook 'c-mode-hook 'flycheck-mode)
+(add-hook 'c++-mode-hook 'flycheck-mode)
 
 
 (provide 'init-cc-mode)
