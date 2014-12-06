@@ -516,7 +516,7 @@
  '(comint-move-point-for-output (quote this))
  '(comint-prompt-read-only nil)
  '(comint-scroll-to-bottom-on-input (quote this))
- '(company-bbdb-modes (quote (message-mode post-mode)))
+ '(company-bbdb-modes (quote (message-mode post-mode mail-mode)))
  '(company-idle-delay 0.15)
  '(company-require-match nil)
  '(compilation-scroll-output (quote first-error))
@@ -644,7 +644,7 @@
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
- '(org-src-fontify-natively t)
+ '(org-src-fontify-natively t t)
  '(org-todo-keyword-faces
    (quote
     (("TODO" :foreground "red" :background "black" :weight bold)
@@ -666,7 +666,7 @@
     ((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")
      (sequence "SKIM" "READ" "|" "DONE" "EVENTUALLY")
      (sequence "UNSOLVED" "|" "SOLVED")
-     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))))
+     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))) t)
  '(org-use-sub-superscripts (quote {}))
  '(post-attachment-regexp "\\(attach\\|alleg\\)")
  '(post-rename-buffer nil)
