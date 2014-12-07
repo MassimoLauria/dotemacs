@@ -11,14 +11,12 @@
 ;;; -------------------------------------------------------------------
 
 
-;;; IPython setup
+;;; IPython as inferior shell
 
 (defun setup-ipython-inferior-shell (&optional oldversion)
-  "Setup IPython as inferior python shell.
-
-If OLDVERSION is non-nil, it will setup completion for ipython
-0.10 or less (which is currently used in Sagemath)."
+  "Setup IPython as inferior python shell."
   (interactive)
+  
   ;; common values
   (setq python-shell-interpreter "ipython"
         python-shell-interpreter-args ""
@@ -26,76 +24,46 @@ If OLDVERSION is non-nil, it will setup completion for ipython
         python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
         python-shell-completion-setup-code
         "from IPython.core.completerlib import module_completion")
-  ;; completion setup is different for old IPython
-  (if oldversion
-      (setq python-shell-completion-string-code
-            "';'.join(__IP.complete('''%s'''))\n"
-            python-shell-completion-module-string-code "")
-    (setq python-shell-completion-module-string-code
-          "';'.join(module_completion('''%s'''))\n"
-          python-shell-completion-string-code
-          "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")))
+
+  ;; auto completion under ipython
+  (setq python-shell-completion-module-string-code
+        "';'.join(module_completion('''%s'''))\n"
+        python-shell-completion-string-code
+        "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))
 
 
-;; Only for Emacs >= 24.3
+;; Emacs >= 24.3 supports IPython out of the box. 
 (when (and (executable-find "ipython") 
            (or (> emacs-major-version 24)
                (and (>= emacs-major-version 24)
                     (>= emacs-minor-version 3))))
-           (setup-ipython-inferior-shell))
+  (setup-ipython-inferior-shell))
 
 
-
-;;; Jedi library for completion
-
-(setq jedi-python-dir (concat default-elisp-3rdparties "/emacs-jedi"))
-(add-to-list 'load-path jedi-python-dir)
-
-(autoload 'jedi:setup "jedi" nil t)
-(autoload 'jedi:ac-setup "jedi" nil t)
-(setq jedi:setup-keys nil)
-
-(eval-after-load "jedi"
-  '(add-hook 'python-mode-hook 'jedi:setup))
+;; Code editing support
+(when (boundp 'anaconda-mode)
+  (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'python-mode-hook 'eldoc-mode))
 
 
-;;; Code checker(s)
-(autoload 'flycheck-mode "flycheck" nil t)
-(eval-after-load "flycheck"
-  '(add-hook 'python-mode-hook 'flycheck-mode))
+;; Syntax checker
+(with-eval-after-load 'flycheck
+  (add-hook 'python-mode-hook 'flycheck-mode))
 
+
+;; Code checkers
+(autoload 'pylint "pylint")
+(add-hook 'python-mode-hook 'pylint-add-menu-items)
+(add-hook 'python-mode-hook 'pylint-add-key-bindings)
+
+
+;; Basic keybidings
 (add-hook 'python-mode-hook
           (lambda ()
             ;; Compile command
             (autoload 'tramp-tramp-file-p "tramp") ; needed for pylint
             (local-set-key (kbd "<f9>") 'pylint)
             (local-set-key (kbd "<f10>") 'python-shell-send-buffer)))
-
-
-;; additional checkers
-(require 'compile)
-(autoload 'python-pylint "python-pylint" "Run pylint checker on the current buffer." t nil)
-(autoload 'pylint "python-pylint" "Run pylint checker on the current buffer." t nil)
-(autoload 'python-pep8 "python-pep8" "Run PEP8 checker on the current buffer." t nil)
-(autoload 'pep8 "python-pep8" "Run PEP8 checker on the current buffer." t nil)
-
-
-
-;;; Documentation lookup
-
-(setq pylookup-dir (concat default-elisp-3rdparties "/pylookup"))
-(add-to-list 'load-path pylookup-dir)
-(eval-when-compile (require 'pylookup nil t))
-
-;; set executable file and db file
-(setq pylookup-program (concat pylookup-dir "/pylookup.py"))
-(setq pylookup-db-file "~/.emacs.d/pylookup.db")
-
-;; to speedup, just load it on demand
-(autoload 'pylookup-lookup "pylookup"
-  "Lookup SEARCH-TERM in the Python HTML indexes." t)
-(autoload 'pylookup-update "pylookup"
-  "Run pylookup-update and create the database at `pylookup-db-file'." t)
 
 
 (provide 'init-python)

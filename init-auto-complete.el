@@ -32,10 +32,16 @@
 
 
 
-;; LaTeX auto-completion
+;; Setup various auto-completion backends
 ;;
 (when (fboundp #'company-auctex-init)
   (add-hook 'LaTeX-mode-hook #'company-auctex-init))
+
+(when (boundp 'company-anaconda)
+  (add-to-list 'company-backends 'company-anaconda))  ; python
+
+(when (boundp 'company-irony)
+  (add-to-list 'company-backends 'company-irony))     ; c/c++
 
 
 ;; UNICODE annotations slow down on MacOSX
