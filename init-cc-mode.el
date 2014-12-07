@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012, 2013, 2014  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2014-12-06, 17:29 (CET) Massimo Lauria>
+;; Time-stamp: <2014-12-07, 03:42 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -21,77 +21,29 @@
 ;;; Commentary:
 
 ;; This is my setup for C/C++ code.
+;;
+;; Syntax check
+;;
+;; Syntax is checked by `flycheck-mode'. Of course it is necessary to
+;; setup the correct C/C++ dialect, and various project dependant
+;; paramenters. In the end the best is to use either `.dir-locals.el'
+;; files or file local variables.
+;;
+;; Auto completion
+;; 
+;; We use `irony-mode' and `company-irony', assuming clang compiler is
+;; installed. Apparently `irony-mode' does its best autodetect include
+;; and library paths. Nevertheless `.dir-locals.el' files or file
+;; local variables are your friends.
+;;
+;; `irony-mode' needs the `irony-server' binary installed in the
+;; proper path (by default that is ".emacs.d/irony/bin/irony/server").
+;; Compile it on MacOSX with XCode is an horrible experience, so I
+;; included a documented scripts.
 
 
-;; Testing with CPPunit
-(require 'compile)
-(add-to-list 'compilation-error-regexp-alist-alist
-             (list 'cppunit "\\(!!!FAILURES!!!\nTest Results:\nRun: [^\n]*\n\n\n\\)?\\([0-9]+\\)) test: \\([^(]+\\)(F) line: \\([0-9]+\\) \\([^ \n]+\\)" 5 4))
-
-
-(defvar clang-executable (executable-find "clang")
-  "Executable compiler")
-(defvar clang-include-path '("." "./src" "./include"))
-
-(setq clang-completion-suppress-error 't)
-
-(defun clang-include-discover (lang)
-  "Discover the include path for Clang"
-  (interactive)
-  (let* (clang
-         (pattern "echo ''| %s -v -x %s %s %s  -E - 2>&1 |grep '<...> search starts' -A 100|grep 'End of search list' -B 100 | grep '^ ' |grep -v Framework")
-         (dialect "")
-         (stdlib  "")
-         cmdline)
-    ;; find language dialect
-    (when  (and (string= lang "c")
-                init-cc-clang-dialect)
-      (setq dialect (concat "--std=" init-cc-clang-dialect)))
-    
-    (when  (and (string= lang "c++")
-                init-cc-clang++-dialect)
-      (setq dialect (concat "--std=" init-cc-clang++-dialect)))
-    
-    ;; C++ standard library implementation
-    (when  (and (string= lang "c++")
-                init-cc-clang++-stdlib)
-      (setq stdlib (concat "--stdlib=" init-cc-clang++-stdlib)))
-    
-    ;; Clang executable
-    (cond ((string= lang "c") (setq clang (executable-find "clang")))
-          ((string= lang "c++") (setq clang (executable-find "clang++")))
-          )
-
-    (setq cmdline (format pattern clang lang dialect stdlib))
-
-    (split-string (shell-command-to-string cmdline))))
-
-;; Auxiliary libraries dedicated to C/C++ support
-(defun setup-clang (lang)
-  "Setup clang variables."
-  (interactive)
-
-  ;; Header paths in command line
-  (let ((tmp (clang-include-discover lang)))
-    (setq ac-clang-flags
-          (mapcar (lambda (item)(concat "-I" item))
-                  (append tmp clang-include-path))))
-
-  (setq dialect)
-  (when  (and (string= lang "c")
-              init-cc-clang-dialect)
-    (add-to-list 'ac-clang-flags (concat "--std=" init-cc-clang-dialect)))
-  
-  (when  (and (string= lang "c++")
-              init-cc-clang++-dialect)
-    (add-to-list 'ac-clang-flags (concat "--std=" init-cc-clang++-dialect))))
- 
-
-
-
-
-
-(defun setup-c-mode ()
+;; Basic setup for C/C++
+(defun setup-cc-mode ()
   "Setup for C mode"
   (interactive)
 
@@ -103,36 +55,33 @@
 
   ;; Minor modes
   (when (fboundp 'doxygen-mode)  (doxygen-mode  t))
-  (when (fboundp 'flyspell-prog-mode) (flyspell-prog-mode))
+  (when (fboundp 'flyspell-prog-mode) (flyspell-prog-mode)))
 
-  ;; Clang
-  (setup-clang "c"))
-
-(defun setup-c++-mode ()
-  "My setup for C++ mode"
-  (interactive)
-
-  ;; editing facilities
-  (local-set-key (kbd "RET")   'newline-and-indent)
-  (local-set-key (kbd "M-SPC") 'ff-find-related-file)
-  (setq fill-column 70)
-
-  ;; Minor modes
-  (when (fboundp 'doxygen-mode)  (doxygen-mode  t))
-  (when (fboundp 'flyspell-prog-mode) (flyspell-prog-mode))
-
-  ;; Clang
-  (setup-clang "c++"))
+(add-hook 'c-mode-hook   'setup-cc-mode)
+(add-hook 'c++-mode-hook 'setup-cc-mode)
 
 
-;; install the main hooks
-(add-hook 'c-mode-hook   'setup-c-mode)
-(add-hook 'c++-mode-hook 'setup-c++-mode)
-
-
-;; Use flycheck in c/c++ source
+;; Syntax checker
 (add-hook 'c-mode-hook 'flycheck-mode)
 (add-hook 'c++-mode-hook 'flycheck-mode)
+
+;; Auto completion
+(require 'irony nil t)
+(require 'company-irony nil t)
+
+(when (and (featurep 'irony)
+           (featurep 'company-irony))
+  (add-to-list 'company-backends 'company-irony)
+  (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'c++-mode-hook 'irony-mode))
+
+
+;; Testing with CPPunit
+(require 'compile)
+(add-to-list 'compilation-error-regexp-alist-alist
+             (list 'cppunit "\\(!!!FAILURES!!!\nTest Results:\nRun: [^\n]*\n\n\n\\)?\\([0-9]+\\)) test: \\([^(]+\\)(F) line: \\([0-9]+\\) \\([^ \n]+\\)" 5 4))
+
 
 
 (provide 'init-cc-mode)
