@@ -36,8 +36,12 @@
 ;;
 (when (fboundp #'company-auctex-init)
   (add-hook 'LaTeX-mode-hook #'company-auctex-init))
-;; no UNICODE annotations because they slow down.
-(defun company-auctex-symbol-annotation (candidate) "" "")
+
+
+;; UNICODE annotations slow down on MacOSX
+(with-eval-after-load 'company-auctex
+  (if (eq system-type 'darwin)
+      (defun company-auctex-symbol-annotation (candidate) "" "")))
 
 
 (provide 'init-auto-complete)
