@@ -1,6 +1,6 @@
 ;;; init.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Time-stamp: "2014-12-01, 01:16 (CET) Massimo Lauria"
+;; Time-stamp: "2014-12-07, 11:50 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -51,7 +51,10 @@
 
 
 (require-package 'yasnippet)
-(require-package 'company) ;; auto completion
+
+(require-package 'company)       ;; auto completion
+(require-package 'company-irony) ;; auto completion C/C++
+
 (require-package 'diminish)      ;; remove names from modeline
 (require-package 'deferred)      ;; 
 (require-package 'epc)           ;; process used for python auto-completion

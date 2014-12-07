@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012, 2013, 2014  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2014-12-07, 03:42 (CET) Massimo Lauria>
+;; Time-stamp: <2014-12-07, 11:54 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -66,15 +66,14 @@
 (add-hook 'c++-mode-hook 'flycheck-mode)
 
 ;; Auto completion
-(require 'irony nil t)
-(require 'company-irony nil t)
-
-(when (and (featurep 'irony)
-           (featurep 'company-irony))
-  (add-to-list 'company-backends 'company-irony)
-  (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
+(when (fboundp 'irony-mode)
   (add-hook 'c-mode-hook 'irony-mode)
   (add-hook 'c++-mode-hook 'irony-mode))
+
+(with-eval-after-load 'irony
+  (require 'company-irony nil t)
+  (add-to-list 'company-backends 'company-irony)
+  (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands))
 
 
 ;; Testing with CPPunit
