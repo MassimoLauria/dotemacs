@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # In order to compile irony-server (the clang completion engine for
 # emacs) we need to use a version of libclang that matched the clang
@@ -9,11 +9,19 @@ IRONYSERVER_SRC=`ls -d $HOME/.emacs.d/elpa/irony-*/|tail -1`server
 IRONYSERVER_INSTALL_PATH=$HOME/.emacs.d/irony/
 
 # build in a safe place
-TEMPDIR=`mktemp -d -t irony`
+if [ `uname` == "Darwin" ]; then 
+    TEMPDIR=`mktemp -d -t irony`
+else
+    TEMPDIR=`mktemp -d -p /tmp`
+fi
 pushd $TEMPDIR >/dev/null
 
 # We need the libclang location...
-LIBCLANG_LIBRARY=`xcode-select --print-path`/Toolchains/XcodeDefault.xctoolchain/usr/lib/libclang.dylib
+if [ `uname` == "Darwin" ]; then 
+    LIBCLANG_LIBRARY=`xcode-select --print-path`/Toolchains/XcodeDefault.xctoolchain/usr/lib/libclang.dylib
+else
+    LIBCLANG_LIBRARY=~/.local/lib/libclang.so
+fi
 echo "LIBCLANG: library found at $LIBCLANG_LIBRARY"
 
 # and the headers that (AAARGH!!) Xcode does not ship. The headers are
