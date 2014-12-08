@@ -37,10 +37,10 @@
 (when (fboundp #'company-auctex-init)
   (add-hook 'LaTeX-mode-hook #'company-auctex-init))
 
-(when (boundp 'company-anaconda)
+(when (fboundp 'company-anaconda)
   (add-to-list 'company-backends 'company-anaconda))  ; python
 
-(when (boundp 'company-irony)
+(when (fboundp 'company-irony)
   (add-to-list 'company-backends 'company-irony))     ; c/c++
 
 
