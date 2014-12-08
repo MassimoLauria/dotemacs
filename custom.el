@@ -698,7 +698,7 @@
  '(save-place-file "~/.emacs.d/places")
  '(semantic-idle-scheduler-idle-time 0.4)
  '(semantic-idle-summary-function (quote semantic-format-tag-summarize-with-file))
- '(semantic-mode t)
+ '(semantic-mode nil)
  '(show-smartparens-global-mode t)
  '(smartparens-global-mode t)
  '(sp-autoinsert-if-followed-by-same 3)
