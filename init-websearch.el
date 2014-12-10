@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2014-11-14, 10:37 (CET) Massimo Lauria>
+;; Time-stamp: <2014-12-09, 16:16 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -149,6 +149,22 @@ word queried is appended to the query string."
   thes
   "http://www.thesaurus.com/browse/")
 
+
+;; Programming languages references
+(def-dictionary-lookup "C++ Reference"
+  "Search in cppreference.com."
+  cpphelp
+  "http://en.cppreference.com/mwiki/index.php?search=")
+
+(def-dictionary-lookup "Python 2 help"
+  "Search in Python 2 documentation."
+  pyhelp
+"https://docs.python.org/2/search.html?q=")
+
+(def-dictionary-lookup "Python 3 help"
+  "Search in Python 3 documentation."
+  py3help
+"https://docs.python.org/3/search.html?q=")
 
 
 (provide 'init-websearch)

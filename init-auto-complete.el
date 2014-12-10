@@ -37,11 +37,13 @@
 (when (fboundp #'company-auctex-init)
   (add-hook 'LaTeX-mode-hook #'company-auctex-init))
 
-(when (fboundp 'company-anaconda)
-  (add-to-list 'company-backends 'company-anaconda))  ; python
+(with-eval-after-load 'company
+  (when (fboundp 'company-anaconda)
+    (add-to-list 'company-backends 'company-anaconda))  ; python
 
-(when (fboundp 'company-irony)
-  (add-to-list 'company-backends 'company-irony))     ; c/c++
+  (when (fboundp 'company-irony)
+    (add-to-list 'company-backends 'company-irony))     ; c/c++
+  )
 
 
 ;; UNICODE annotations slow down on MacOSX
