@@ -42,8 +42,7 @@
     (add-to-list 'company-backends 'company-anaconda))  ; python
 
   (when (fboundp 'company-irony)
-    (add-to-list 'company-backends 'company-irony))     ; c/c++
-  )
+    (add-to-list 'company-backends 'company-irony)))     ; c/c++
 
 
 ;; UNICODE annotations slow down on MacOSX
