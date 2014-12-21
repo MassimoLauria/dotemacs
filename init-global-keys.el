@@ -94,6 +94,7 @@
 (global-set-key [f8]  'spellcheck-language-cycle)
 ;; devel (adapted to each mode)
 (global-set-key [f9]  'recompile)
+(global-set-key (kbd "M-<f9>")  'compile)
 (global-set-key [f10] 'gdb)
 (global-set-key [f11] 'previous-error) ; Does not work with LaTeX!
 (global-set-key [f12] 'next-error)
