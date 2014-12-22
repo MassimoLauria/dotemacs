@@ -382,6 +382,17 @@ according to this default."
         (modify-syntax-entry ?\" ".")))
     "Generic mode for Vim configuration files.")
 
+(defun url-unhex-region (start end)
+  "Remove the URL encoding from a region of text."
+  (interactive "r")
+  (when mark-active
+    (insert (url-unhex-string (delete-and-extract-region start end)))))
+
+(defun url-hexify-region (start end)
+  "Remove the URL encoding from a region of text."
+  (interactive "r")
+  (when mark-active
+    (insert (url-hexify-string (delete-and-extract-region start end)))))
 
 (provide 'init-functions)
 ;; Local Variables:
