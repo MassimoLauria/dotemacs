@@ -104,6 +104,21 @@ in the kill-ring and `pos' is the position current-kill"
 (eval-after-load "tramp"
   '(add-to-list 'tramp-remote-path 'tramp-own-remote-path))
 
+;; Two settings to speed up tramp. tramp-verbose defaults to 3. Only
+;; set it higher for debugging.
+
+(setq tramp-verbose 3)
+
+;; As far as I know, I don't want emacs doing anything with version
+;; control. I certaily don't want tramp running extra commands to
+;; check on the version control status of files.
+
+(setq vc-ignore-dir-regexp
+      (format "\\(%s\\)\\|\\(%s\\)"
+              vc-ignore-dir-regexp
+              tramp-file-name-regexp))
+
+
 ;; Save histories across sessions. Not buffers
 (savehist-mode 1)
 
