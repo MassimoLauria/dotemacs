@@ -386,5 +386,17 @@ http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
 
 (setq dired-use-ls-dired (memq system-type '(gnu/linux cygwin)))
 
+
+;; SDCV is a command line client for StarDict dictionaries.
+;; it is handy to have support of OFFLINE dictionaries.
+(autoload 'sdcv-search      "sdcv-mode" "Prompt for a word to search through sdcv." t)
+(autoload 'sdcv-search-word "sdcv-mode" "Search WORD through the command-line tool sdcv." nil)
+(defun sdcv-query-word (&optional word)
+  "Lookup the WORD using the `sdcv' dictionary program."
+  (interactive)
+  (sdcv-search-word (or word (current-word))))
+
+
+
 (provide 'init-unsorted-elisp)
 ;;; init-unsorted-elisp.el ends here
