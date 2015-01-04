@@ -1,9 +1,9 @@
 ;;; init-cc-mode.el --- Setup for C/C++ programming modes
 
-;; Copyright (C) 2012, 2013, 2014  Massimo Lauria
+;; Copyright (C) 2012, 2013, 2014, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2014-12-07, 23:51 (CET) Massimo Lauria>
+;; Time-stamp: <2015-01-04, 01:18 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -32,9 +32,9 @@
 ;; Auto completion
 ;; 
 ;; We use `irony-mode' and `company-irony', assuming clang compiler is
-;; installed. Apparently `irony-mode' does its best autodetect include
-;; and library paths. Nevertheless `.dir-locals.el' files or file
-;; local variables are your friends.
+;; installed. Apparently `irony-mode' does its best to autodetect
+;; include and library paths. Nevertheless `.dir-locals.el' files or
+;; file local variables are your friends.
 ;;
 ;; `irony-mode' needs the `irony-server' binary installed in the
 ;; proper path (by default that is ".emacs.d/irony/bin/irony/server").
@@ -55,7 +55,8 @@
 
   ;; Minor modes
   (when (fboundp 'doxygen-mode)  (doxygen-mode  t))
-  (when (fboundp 'flyspell-prog-mode) (flyspell-prog-mode)))
+  (when (fboundp 'flyspell-prog-mode) (flyspell-prog-mode))
+  (when (fboundp 'semantic-mode)))
 
 (add-hook 'c-mode-hook   'setup-cc-mode)
 (add-hook 'c++-mode-hook 'setup-cc-mode)
