@@ -1,6 +1,6 @@
-;;; init.el --- Main configuration file -*- coding: utf-8 -*-
+;;; init-elpa.el --- Bootstrap package system -*- coding: utf-8 -*-
 
-;; Time-stamp: "2014-12-07, 23:51 (CET) Massimo Lauria"
+;; Time-stamp: "2015-01-13, 17:42 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -9,9 +9,8 @@
 
 ;; This setup requires Emacs 24
 
-;;; Code
+;;; Initialize package system
 (require 'package)
-
 (setq package-archives  '(
                           ("gnu"          . "http://elpa.gnu.org/packages/")
                           ("elpa"         . "http://tromey.com/elpa/")
@@ -19,10 +18,14 @@
                           ("melpa"        . "http://melpa.org/packages/")
                           ;; ("marmalade"    . "http://marmalade-repo.org/packages/")
                           )) ;; end of package list
-
-
-;; Initialiaze packages
 (package-initialize)
+
+;; Bootstrap `use-package' to configure packages
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
+
 
 ;;------------------------------------------------------------------------------
 ;; On-demand installation of packages
@@ -50,7 +53,12 @@
 (require-package 'org)
 
 
-(require-package 'yasnippet)
+;; (require-package 'yasnippet)
+(use-package yasnippet
+  :ensure t
+  :defer t
+  :pin melpa-stable
+  :idle (yas-global-mode))
 
 
 (require-package 'company)          ;; auto completion...

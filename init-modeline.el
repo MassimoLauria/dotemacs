@@ -1,9 +1,9 @@
 ;;; init-modeline.el --- Setup the modeline
 
-;; Copyright (C) 2013, 2014  Massimo Lauria
+;; Copyright (C) 2013, 2014, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2014-12-08, 00:36 (CET) Massimo Lauria>
+;; Time-stamp: <2015-01-13, 17:42 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
