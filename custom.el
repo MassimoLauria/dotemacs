@@ -576,8 +576,10 @@
      ("refth" "{"))))
  '(fringe-mode 0 nil (fringe))
  '(global-company-mode t)
+ '(global-semantic-decoration-mode t)
  '(global-semantic-idle-scheduler-mode t)
  '(global-semantic-idle-summary-mode t)
+ '(global-semanticdb-minor-mode t)
  '(google-translate-default-source-language "auto")
  '(google-translate-default-target-language "en")
  '(google-translate-enable-ido-completion t)
@@ -644,7 +646,7 @@
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
- '(org-src-fontify-natively t t)
+ '(org-src-fontify-natively t)
  '(org-todo-keyword-faces
    (quote
     (("TODO" :foreground "red" :background "black" :weight bold)
@@ -666,7 +668,7 @@
     ((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")
      (sequence "SKIM" "READ" "|" "DONE" "EVENTUALLY")
      (sequence "UNSOLVED" "|" "SOLVED")
-     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))) t)
+     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))))
  '(org-use-sub-superscripts (quote {}))
  '(post-attachment-regexp "\\(attach\\|alleg\\)")
  '(post-rename-buffer nil)
@@ -707,7 +709,7 @@
     (global-semantic-decoration-mode global-semantic-idle-scheduler-mode global-semanticdb-minor-mode global-semantic-idle-summary-mode)))
  '(semantic-idle-scheduler-idle-time 0.4)
  '(semantic-idle-summary-function (quote semantic-format-tag-summarize-with-file))
- '(semantic-mode t)
+ '(semantic-mode nil)
  '(semantic-stickyfunc-show-only-functions-p t)
  '(show-smartparens-global-mode t)
  '(smartparens-global-mode t)

@@ -1,6 +1,6 @@
 ;;; init-elpa.el --- Bootstrap package system -*- coding: utf-8 -*-
 
-;; Time-stamp: "2015-01-14, 11:00 (CET) Massimo Lauria"
+;; Time-stamp: "2015-01-14, 12:20 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -10,6 +10,7 @@
 ;; This setup requires Emacs 24
 
 ;;; Initialize package system
+(setq package-enable-at-startup nil)
 (require 'package)
 (setq package-archives  '(
                           ("gnu"          . "http://elpa.gnu.org/packages/")
@@ -18,7 +19,6 @@
                           ("melpa"        . "http://melpa.org/packages/")
                           ;; ("marmalade"    . "http://marmalade-repo.org/packages/")
                           )) ;; end of package list
-(setq package-enable-at-startup nil)
 (package-initialize)
 
 
@@ -63,6 +63,11 @@
   :idle (yas-global-mode))
 
 
+(use-package semantic
+  :ensure t
+  :defer t
+  :commands semantic-mode)
+
 (require-package 'company)          ;; auto completion...
 
 (require-package 'irony)            
@@ -83,11 +88,18 @@
 ;; from Melpa-unstable
 (require-package 'smartparens)
 (require-package 'edit-server-htmlize)
-(require-package 'bbdb)
 
 ;; Editing
-(require-package 'expand-region)
-(require-package 'multiple-cursors)
+(use-package expand-region
+  :defer t
+  :ensure t
+  :pin melpa-stable
+  :commands er/expand-region)
 
+(use-package multiple-cursors
+  :defer t
+  :ensure t
+  :pin melpa-stable
+  :commands mc/mark-all-like-this-dwim)
 
 (provide 'init-elpa)

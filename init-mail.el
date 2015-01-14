@@ -44,8 +44,8 @@
 
 (add-hook 'message-mode-hook 'setup-message-mode)
 
-(require 'post) ; setup emacs to edit for mutt.
 
+; setup emacs to edit for mutt.
 (defun setup-post-mode ()
   "Setup editor for post-mode"
   (interactive)
@@ -53,24 +53,23 @@
   (set-fill-column 70)
   (define-key post-mode-map [f2] 'ispell-message))
 
-(add-hook 'post-mode-hook 'setup-post-mode)
+(use-package post
+  :mode ("mutt-[a-z0-9]+-[0-9]+-[0-9]+.*\\'" . post-mode)
+  :config
+  (add-hook 'post-mode-hook 'setup-post-mode))
 
-;; BBDB auto-completion
-;; (eval-after-load "bbdb" 
-;;   '(progn
-;;      (add-hook 'message-mode-hook  'turn-on-ac-bbdb)
-;;      (add-hook 'post-mode-hook     'turn-on-ac-bbdb)
-;;      (add-hook 'mml-mode-hook      'turn-on-ac-bbdb)
-;;      (add-hook 'mail-mode-hook     'turn-on-ac-bbdb)))
+
 
 ;;
-;; Email contacts
+;; BBDB
 ;;
 
-(and
- (require 'bbdb nil t)
- (bbdb-initialize)
-)
+(use-package bbdb
+  :ensure t
+  :pin gnu
+  :commands (bbdb bbdb-complete-mail bbdb-complete-name)
+  :config
+  (bbdb-initialize))
 
 ;; Say NO! to auto collection
 (setq bbdb/mail-auto-create-p nil)

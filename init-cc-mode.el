@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012, 2013, 2014, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2015-01-04, 01:18 (CET) Massimo Lauria>
+;; Time-stamp: <2015-01-14, 12:16 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@
   ;; Minor modes
   (when (fboundp 'doxygen-mode)  (doxygen-mode  t))
   (when (fboundp 'flyspell-prog-mode) (flyspell-prog-mode))
-  (when (fboundp 'semantic-mode)))
+  (semantic-mode))
 
 (add-hook 'c-mode-hook   'setup-cc-mode)
 (add-hook 'c++-mode-hook 'setup-cc-mode)

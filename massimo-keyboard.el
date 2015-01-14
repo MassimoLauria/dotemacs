@@ -1,6 +1,6 @@
 ;;; massimo-keyboard.el --- Keybindings specific for the author habits -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: convenience
@@ -114,14 +114,10 @@ At least they are considered useful for the author.
     
 
     ;; Marking and using multiple cursors
-    (require 'multiple-cursors nil t)
-    (if (fboundp 'mc/mark-all-like-this-dwim)
-        (define-key map (kbd "C-'") 'mc/mark-all-like-this-dwim))
+    (define-key map (kbd "C-'") 'mc/mark-all-like-this-dwim)
 
     ;; Expand region configuration
-    (require 'expand-region nil t)
-    (if (fboundp 'er/expand-region)
-        (define-key map (kbd "C-SPC") 'er/expand-region))
+    (define-key map (kbd "C-SPC") 'er/expand-region)
 
     ;; Register keys
     ;; Register at finger tips from 1 to ... 0!
