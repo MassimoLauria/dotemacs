@@ -3,7 +3,7 @@
 ;;;
 ;;; In some terminals the keybindings may not work properly.
 ;;;
-;;; No support for Org-Mode <= 6.36
+;;; No support for Org-Mode < 7
 ;;;------------------------------------------------------------------
 
 
@@ -68,12 +68,7 @@
             (lambda ()(select-frame-set-input-focus (selected-frame))))
 
   ;; citation
-  (add-hook 'org-mode-hook 'org-mode/setup-citations)
-
-  ;; org-agenda and calendar in sync
-  ;; (add-hook 'calendar-mode-hook 'th-org-agenda-follow-calendar-mode)
-
-  (message "Setup of org-mode"))
+  (add-hook 'org-mode-hook 'org-mode/setup-citations))
 
 
 ;; Setup of different org-mode auxiliary layout.
@@ -321,21 +316,7 @@ part of the keyboard.
                                          (third calendar-date))))
          (calendar-buffer (current-buffer)))
     (org-agenda-list nil day 1)
-    (select-window (get-buffer-window calendar-buffer))
-    (th-org-agenda-follow-calendar-mode t)
-    ))
-
-
-(define-minor-mode th-org-agenda-follow-calendar-mode
-  "If enabled, each calendar movement will refresh the org agenda
-buffer."
-  :lighter " OrgAgendaFollow"
-  (if (not (eq major-mode 'calendar-mode))
-      (message "Cannot activate th-org-agenda-follow-calendar-mode in %s." major-mode)
-    (if th-org-agenda-follow-calendar-mode
-        (add-hook 'calendar-move-hook 'th-calendar-open-agenda)
-      (remove-hook 'calendar-move-hook 'th-calendar-open-agenda))))
-
+    (select-window (get-buffer-window calendar-buffer))))
 
 
 (defun jump-to-org-agenda ()
@@ -495,28 +476,29 @@ for `reftex-default-bibliography'."
 
 
 (defun init-org-mode--babel-setup ()
-  "Org-babel configuration. Code in org-mode files!
-Requires Org-mode 7.0"
-  (when (>= (string-to-number org-version) 7)
+  "Org-babel configuration. Code in org-mode files!"
 
-    ;; Activate languages (it could be a security RISK!!)
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '(
-       (emacs-lisp . t)
-       (sh .t)
-       (python . t)
-       (C . t)
-       (latex . t)
-       (dot . t)
-       (gnuplot . t)
-       (ditaa . t)
-       ))))
+  ;; Activate languages (it could be a security RISK!!)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(
+     (emacs-lisp . t)
+     (sh .t)
+     (python . t)
+     (C . t)
+     (latex . t)
+     (dot . t)
+     (gnuplot . t)
+     (ditaa . t)
+     )))
 
 ;;;------------------------- Load -----------------------------------
-(if (and running-GNUEmacs23+
-         (require 'org-install nil t))
-    (eval-after-load "org" '(init-org-mode--setup)))
+(use-package org
+  :ensure t
+  :mode ("\\.org\\'" . org-mode)
+  :pin gnu 
+  :config
+  (init-org-mode--setup))
 
 
 (provide 'init-org-mode)

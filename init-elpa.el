@@ -1,6 +1,6 @@
 ;;; init-elpa.el --- Bootstrap package system -*- coding: utf-8 -*-
 
-;; Time-stamp: "2015-01-13, 17:42 (CET) Massimo Lauria"
+;; Time-stamp: "2015-01-14, 11:00 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -18,7 +18,9 @@
                           ("melpa"        . "http://melpa.org/packages/")
                           ;; ("marmalade"    . "http://marmalade-repo.org/packages/")
                           )) ;; end of package list
+(setq package-enable-at-startup nil)
 (package-initialize)
+
 
 ;; Bootstrap `use-package' to configure packages
 (unless (package-installed-p 'use-package)
@@ -50,7 +52,7 @@
 
 ;; various
 (require-package 'auctex)
-(require-package 'org)
+;; (require-package 'org)
 
 
 ;; (require-package 'yasnippet)
