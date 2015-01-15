@@ -38,6 +38,7 @@
 (defun setup-message-mode ()
   "Setup editor for emails"
   (interactive)
+  (require 'bbdb-com nil t)
   (auto-fill-mode 1)
   (set-fill-column 70)
   (define-key message-mode-map [f2] 'ispell-message))
@@ -49,6 +50,7 @@
 (defun setup-post-mode ()
   "Setup editor for post-mode"
   (interactive)
+  (require 'bbdb-com nil t)
   (set (make-local-variable 'mail-header-separator) "")
   (set-fill-column 70)
   (define-key post-mode-map [f2] 'ispell-message))
