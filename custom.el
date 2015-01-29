@@ -529,7 +529,7 @@
  '(cua-read-only-cursor-color (quote hbar))
  '(custom-safe-themes
    (quote
-    ("de538b2d1282b23ca41ac5d8b69c033b911521fe27b5e1f59783d2eb20384e1f" "e5377626af4d9c413b309267384647f42a8cfd047e0a0b57c3b703a3c170d86b" "9f443833deb3412a34d2d2c912247349d4bd1b09e0f5eaba11a3ea7872892000" "d2622a2a2966905a5237b54f35996ca6fda2f79a9253d44793cfe31079e3c92b" "501caa208affa1145ccbb4b74b6cd66c3091e41c5bb66c677feda9def5eab19c" "5e1d1564b6a2435a2054aa345e81c89539a72c4cad8536cfe02583e0b7d5e2fa" "71b172ea4aad108801421cc5251edb6c792f3adbaecfa1c52e94e3d99634dee7" default)))
+    ("2b4a4d1155e279aadd8ebcabf4b0eb8f9bb64ebbd9141fcf61c7655276b587b8" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "c5a044ba03d43a725bd79700087dea813abcb6beb6be08c7eb3303ed90782482" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "de538b2d1282b23ca41ac5d8b69c033b911521fe27b5e1f59783d2eb20384e1f" "e5377626af4d9c413b309267384647f42a8cfd047e0a0b57c3b703a3c170d86b" "9f443833deb3412a34d2d2c912247349d4bd1b09e0f5eaba11a3ea7872892000" "d2622a2a2966905a5237b54f35996ca6fda2f79a9253d44793cfe31079e3c92b" "501caa208affa1145ccbb4b74b6cd66c3091e41c5bb66c677feda9def5eab19c" "5e1d1564b6a2435a2054aa345e81c89539a72c4cad8536cfe02583e0b7d5e2fa" "71b172ea4aad108801421cc5251edb6c792f3adbaecfa1c52e94e3d99634dee7" default)))
  '(default-input-method "TeX")
  '(default-justification (quote left))
  '(delete-old-versions t)
@@ -646,7 +646,7 @@
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
- '(org-src-fontify-natively t)
+ '(org-src-fontify-natively t t)
  '(org-todo-keyword-faces
    (quote
     (("TODO" :foreground "red" :background "black" :weight bold)
@@ -668,11 +668,11 @@
     ((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")
      (sequence "SKIM" "READ" "|" "DONE" "EVENTUALLY")
      (sequence "UNSOLVED" "|" "SOLVED")
-     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))))
+     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))) t)
  '(org-use-sub-superscripts (quote {}))
  '(post-attachment-regexp "\\(attach\\|alleg\\)")
  '(post-rename-buffer nil)
- '(powerline-default-separator nil)
+ '(powerline-default-separator (quote arrow))
  '(powerline-text-scale-factor nil)
  '(quack-pretty-lambda-p t)
  '(quack-programs
