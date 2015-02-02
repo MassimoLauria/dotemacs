@@ -1,6 +1,6 @@
 ;;; init-unsorted-elisp.el --- Contains small chunks of elisp code in no particular order
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -396,7 +396,9 @@ http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
   (interactive)
   (sdcv-search-word (or word (current-word))))
 
-
+(when (eq system-type 'darwin)
+  (setq scheme-program-name "/Applications/MITScheme.app/Contents/Resources/mit-scheme"))
+(require 'xscheme)
 
 (provide 'init-unsorted-elisp)
 ;;; init-unsorted-elisp.el ends here
