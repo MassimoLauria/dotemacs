@@ -675,6 +675,7 @@
  '(post-rename-buffer nil)
  '(powerline-default-separator (quote arrow))
  '(powerline-text-scale-factor nil)
+ '(pulse-flag nil)
  '(quack-pretty-lambda-p t)
  '(quack-programs
    (quote
@@ -757,6 +758,7 @@
  '(post-quoted-text-face ((t (:inherit gnus-cite-1))))
  '(post-signature-text-face ((t (:foreground "gray60"))))
  '(post-url-face ((t (:inherit link))))
+ '(pulse-highlight-start-face ((t (:background "dim gray"))))
  '(writegood-duplicates-face ((t nil)) t)
  '(writegood-passive-voice-face ((t (:underline "red"))) t)
  '(writegood-weasels-face ((t (:strike-through "red"))) t))

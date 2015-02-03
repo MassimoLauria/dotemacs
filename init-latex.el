@@ -56,7 +56,7 @@
   (defadvice TeX-source-correlate-sync-source (after ad-TeX-correlate-center)
     "Center and highlight point after AUCTeX inverse-search."
     (raise-client-frame)
-    (recenter-top-bottom)
+    (recenter)
     (pulse-momentary-highlight-one-line (point))))
 
 
