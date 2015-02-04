@@ -1,6 +1,6 @@
 ;;; init-elpa.el --- Bootstrap package system -*- coding: utf-8 -*-
 
-;; Time-stamp: "2015-01-14, 12:20 (CET) Massimo Lauria"
+;; Time-stamp: "2015-02-04, 11:39 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -10,7 +10,7 @@
 ;; This setup requires Emacs 24
 
 ;;; Initialize package system
-(setq package-enable-at-startup nil)
+(setq package-enable-at-startup t)
 (require 'package)
 (setq package-archives  '(
                           ("gnu"          . "http://elpa.gnu.org/packages/")
