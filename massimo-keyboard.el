@@ -174,10 +174,11 @@ otherwise cua-repeat-replace-region. An ugly hack to solve key conflicts..."
 (defun massimo-keyboard/org-mode-active ()
   "Check if org-mode is active. Workaround to compatibility."
   (interactive)
-  (let ((org-predicate (and (fboundp 'org-mode-p) (org-mode-p))) ; Org 6.xx
-        (org-variable  (and (boundp 'org-mode) org-mode))        ; Org 7.xx
-        )
-    (or org-predicate org-variable)
+  (let ((org-6  (and (fboundp 'org-mode-p) (org-mode-p)))           ; Org 6.xx
+        (org-7  (and    (boundp 'org-mode) org-mode))               ; Org 7.xx
+        (org-8  (and    (featurep 'org) (eq major-mode 'org-mode))) ; Org 8.xx
+        ) 
+    (or org-6 org-7 org-8)
     ))
 
 (define-minor-mode massimo-keyboard-mode
