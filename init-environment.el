@@ -1,9 +1,9 @@
 ;;; init-environment.el --- fix and setup the running environment
 
-;; Copyright (C) 2013, 2014 Massimo Lauria <lauria.massimo@gmail.com>
+;; Copyright (C) 2013, 2014, 2015 Massimo Lauria <lauria.massimo@gmail.com>
 
 ;; Created : "2013-12-17, Tuesday 10:43 (CET) Massimo Lauria"
-;; Time-stamp: "2014-05-21, 16:19 (CEST) Massimo Lauria"
+;; Time-stamp: "2015-02-07, 11:32 (CET) Massimo Lauria"
 
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -101,6 +101,12 @@ list."
 ;; Path for LaTeX distrubution TeX-live, on Mac.
 (when (file-directory-p "/usr/texbin/")
   (add-to-list 'exec-path "/usr/texbin/" 'append))
+
+;; Path for Cask
+(let ((cask-path (concat (getenv "HOME") "/.cask/bin/")))
+  (when (file-directory-p cask-path)
+    (add-to-list 'exec-path cask-path 'append)))
+
 
 
 (provide 'init-environment)
