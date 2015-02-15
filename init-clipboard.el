@@ -1,6 +1,6 @@
 ;;; init-clipboard.el --- Setup for the clipboard, less easy than it sounds.
 
-;; Copyright (C) 2010, 2013  Massimo Lauria
+;; Copyright (C) 2010, 2013, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -37,6 +37,10 @@
 
 (setq x-select-enable-clipboard t)	; makes killing/yanking interact
                                     ; with clipboard X11 selection
+
+(setq save-interprogram-paste-before-kill t) ; Save clipboard strings
+                                             ; into kill ring before
+                                             ; replacing them.
 
 (setq mouse-yank-at-point t)        ; paste at cursor, not at click point.
 

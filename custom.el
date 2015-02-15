@@ -8,7 +8,7 @@
  ;; If there is more than one, they won't work right.
  '(LaTeX-item-indent 0)
  '(TeX-electric-math (quote ("$" . "$")))
- '(TeX-master t)
+ '(TeX-master t t)
  '(ac-auto-show-menu 0.3)
  '(ac-delay 0.1)
  '(ac-disable-on-comment nil)
@@ -21,6 +21,7 @@
  '(ac-stop-flymake-on-completing t)
  '(ansi-color-names-vector
    [solarized-bg red green yellow blue magenta cyan solarized-fg])
+ '(apropos-do-all t)
  '(aquamacs-additional-fontsets nil t)
  '(aquamacs-autoface-mode nil)
  '(aquamacs-customization-version-id 215 t)
@@ -699,6 +700,7 @@
      (TeX-source-correlate-method-active . source-specials)
      (ispell-default-dictionary . american)
      (TeX-PDF-mode . t))))
+ '(save-interprogram-paste-before-kill t)
  '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/places")
  '(semantic-decoration-styles
