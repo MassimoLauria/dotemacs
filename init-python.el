@@ -1,9 +1,9 @@
 ;;;
 ;;; Python Mode configuration.
 ;;;
-;;; If Emacs version >= 24.3 then `python.el' supports ipython (>=
-;;; 0.11) out of the box. For older emacs we stick with canonical
-;;; `python' interpreter.  
+;;; If Emacs version >= 24.3 then `python.el' supports ipython out of
+;;; the box. For older emacs we stick with canonical `python'
+;;; interpreter.
 ;;;
 ;;; This setup avoids downloading external python modes like
 ;;; `python-mode.el', and should gracefully suck on older installation
@@ -11,81 +11,58 @@
 ;;; -------------------------------------------------------------------
 
 
-;; Support for Virtual python environment using
-;; virtualenvwrapper.el
+;; Emacs >= 24.3 supports ipython inferior shell
+(when (and (executable-find "ipython") 
+           (version<= "24.3" emacs-version))
 
-(when (require 'virtualenvwrapper nil t)
-
-  ;; (venv-initialize-interactive-shells) ;; not enabled 
-
-  (venv-initialize-eshell) ;; eshell support
-  (setq venv-location (concat (getenv "HOME") "/.virtualenvs/") )
-
-  ;; setup each  virtual env
-  (add-hook 'venv-postmkvirtualenv-hook
-            (lambda () (shell-command "pip install nose flake8 jedi pylint")))
-
-  ;; automatic activate virtual env
-  (add-hook 'python-mode-hook (lambda ()
-                              (hack-local-variables)
-                              (when (boundp 'python-project-venv-name)
-                                (venv-workon python-project-venv-name)))))
-
-
-;;; IPython as inferior shell (non active)
-
-(defun setup-ipython-inferior-shell (&optional oldversion)
-  "Setup IPython as inferior python shell."
-  (interactive)
-  
-  ;; common values
   (setq python-shell-interpreter "ipython"
         python-shell-interpreter-args ""
         python-shell-prompt-regexp "In \\[[0-9]+\\]: "
-        python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
-        python-shell-completion-setup-code
-        "from IPython.core.completerlib import module_completion")
-
-  ;; auto completion under ipython
-  (setq python-shell-completion-module-string-code
-        "';'.join(module_completion('''%s'''))\n"
-        python-shell-completion-string-code
-        "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))
+        python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "))
 
 
-;; Emacs >= 24.3 supports IPython out of the box. 
-;; (when (and (executable-find "ipython") 
-;;            (or (> emacs-major-version 24)
-;;                (and (>= emacs-major-version 24)
-;;                     (>= emacs-minor-version 3))))
-;;   (setup-ipython-inferior-shell))
+;; Code analysis
+(use-package anaconda-mode
+  :diminish t
+  :commands anaconda-mode
+  :init '(add-hook 'python-mode-hook 'anaconda-mode))
 
-
-;; Code editing support
-(when (fboundp 'anaconda-mode)
-  (add-hook 'python-mode-hook 'anaconda-mode)
-  (add-hook 'python-mode-hook 'eldoc-mode))
-
+;; Auto completion
+(use-package company-anaconda
+  :defer t
+  :commands company-anaconda)
 
 ;; Syntax checker
-(with-eval-after-load 'flycheck
-  (add-hook 'python-mode-hook 'flycheck-mode))
+(use-package pylint
+  :commands pylint
+  :init (autoload 'tramp-tramp-file-p "tramp")) ;; needs `tramp-tramp-file-p'
+
+;; Keys
+(with-eval-after-load "python"
+  (define-key python-mode-map (kbd "<f9>") 'pylint)
+  (define-key python-mode-map (kbd "<f10>") 'python-shell-send-buffer))
+
+;; Minor modes
+(add-hook 'python-mode-hook 'anaconda-mode)
+(add-hook 'python-mode-hook 'eldoc-mode)
+(add-hook 'python-mode-hook 'flycheck-mode)
 
 
-;; Code checkers
-(autoload 'pylint "pylint")
-(add-hook 'python-mode-hook 'pylint-add-menu-items)
-(add-hook 'python-mode-hook 'pylint-add-key-bindings)
 
+;;; Virtual Environments -----------------------------------------------
 
-;; Basic keybidings
-(add-hook 'python-mode-hook
-          (lambda ()
-            ;; Compile command
-            (autoload 'tramp-tramp-file-p "tramp") ; needed for pylint
-            (local-set-key (kbd "<f9>") 'pylint)
-            (local-set-key (kbd "<f10>") 'python-shell-send-buffer)))
-
+(use-package virtualenvwrapper
+  :ensure t
+  :init (setq venv-location (concat (getenv "HOME") "/.virtualenvs/"))
+  :commands (venv-workon venv-mkvirtualenv)
+  :config (venv-initialize-eshell))
+       
+;; if buffer or dir local variable `python-project-venv-name' is set
+;; to a string, the corresponding virtual environment is activated.
+(add-hook 'python-mode-hook (lambda ()
+                              (hack-local-variables)
+                              (when (boundp 'python-project-venv-name)
+                                (venv-workon python-project-venv-name))))
 
 (provide 'init-python)
 ;; Local Variables:

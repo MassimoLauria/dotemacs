@@ -687,8 +687,7 @@
  '(require-final-newline (quote t))
  '(safe-local-variable-values
    (quote
-    ((python-project-venv-name . "cnfgen-env")
-     (python-project-venv . "cnfgen-env")
+    ((python-project-venv-name . "cnfgen-dev")
      (do-delete-whitespace)
      (eval quote
            (auto-fill-mode 1))

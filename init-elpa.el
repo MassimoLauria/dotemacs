@@ -1,6 +1,6 @@
 ;;; init-elpa.el --- Bootstrap package system -*- coding: utf-8 -*-
 
-;; Time-stamp: "2015-02-04, 11:39 (CET) Massimo Lauria"
+;; Time-stamp: "2015-02-25, 18:03 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -72,10 +72,6 @@
 
 (require-package 'irony)            
 (require-package 'company-irony)    ;; ...for C/C++
-
-(require-package 'anaconda-mode)
-(require-package 'company-anaconda) ;; ...for Python
-
 
 (require-package 'diminish)      ;; remove names from modeline
 (require-package 'deferred)      ;; 
