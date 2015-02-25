@@ -11,7 +11,28 @@
 ;;; -------------------------------------------------------------------
 
 
-;;; IPython as inferior shell
+;; Support for Virtual python environment using
+;; virtualenvwrapper.el
+
+(when (require 'virtualenvwrapper nil t)
+
+  ;; (venv-initialize-interactive-shells) ;; not enabled 
+
+  (venv-initialize-eshell) ;; eshell support
+  (setq venv-location (concat (getenv "HOME") "/.virtualenvs/") )
+
+  ;; setup each  virtual env
+  (add-hook 'venv-postmkvirtualenv-hook
+            (lambda () (shell-command "pip install nose flake8 jedi pylint")))
+
+  ;; automatic activate virtual env
+  (add-hook 'python-mode-hook (lambda ()
+                              (hack-local-variables)
+                              (when (boundp 'python-project-venv-name)
+                                (venv-workon python-project-venv-name)))))
+
+
+;;; IPython as inferior shell (non active)
 
 (defun setup-ipython-inferior-shell (&optional oldversion)
   "Setup IPython as inferior python shell."
@@ -33,11 +54,11 @@
 
 
 ;; Emacs >= 24.3 supports IPython out of the box. 
-(when (and (executable-find "ipython") 
-           (or (> emacs-major-version 24)
-               (and (>= emacs-major-version 24)
-                    (>= emacs-minor-version 3))))
-  (setup-ipython-inferior-shell))
+;; (when (and (executable-find "ipython") 
+;;            (or (> emacs-major-version 24)
+;;                (and (>= emacs-major-version 24)
+;;                     (>= emacs-minor-version 3))))
+;;   (setup-ipython-inferior-shell))
 
 
 ;; Code editing support
