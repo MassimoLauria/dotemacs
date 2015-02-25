@@ -605,6 +605,7 @@
  '(kept-old-versions 5)
  '(large-file-warning-threshold nil)
  '(linum-format " %2d│")
+ '(magit-auto-revert-mode-lighter "")
  '(make-backup-files t)
  '(massimo-keyboard-comint-modes
    (quote
