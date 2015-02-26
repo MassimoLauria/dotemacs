@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2015-02-26, 15:28 (CET) Massimo Lauria>
+;; Time-stamp: <2015-02-26, 15:31 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -93,6 +93,11 @@
 
 ;;; File templates (using `auto-insert' and `yasnippet') -----------------------
 
+(require 'autoinsert)
+(setq auto-insert-query nil)
+(setq auto-insert-alist nil)  ;; Reset auto-insert rules.
+
+
 (defun template-file-create ()
     "Create a file according to the appropriate template.
 
@@ -102,11 +107,6 @@ choice is offered."
     (call-interactively 'find-file)
     (yas-minor-mode 1)
     (call-interactively 'auto-insert))
-
-
-(require 'autoinsert)
-(setq auto-insert-query nil)
-(setq auto-insert-alist nil)  ;; Reset auto-insert rules.
 
 
 (defun define-template-rule (rule template)
