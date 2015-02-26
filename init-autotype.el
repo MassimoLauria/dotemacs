@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2015-02-26, 11:01 (CET) Massimo Lauria>
+;; Time-stamp: <2015-02-26, 11:11 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@
 
 ;;; Time-Stamp update --- setup in custom.el
 
-;;; Auto pair configuration -----------------------------------------------------------
+;;; Parenthesis support ----------------------------------------------------------
 
 (eval-after-load 'smartparens
   '(progn 
@@ -96,6 +96,16 @@
                     not-empty
                     (not (eq this-original-command 'self-insert-command)))))
           (cua--fallback))))))
+
+;; Project templates (using `skeletor' package)
+
+(defalias 'template-project-create        'skeletor-create-project)
+(defalias 'template-project-create-at-dir 'skeletor-create-project-at)
+
+(use-package skeletor
+  :init (setq skeletor-user-directory (concat (getenv "HOME") "/lavori/templates/")
+              skeletor-project-directory (concat (getenv "HOME") "/lavori/hacks/"))
+  :commands (skeletor-create-project skeletor-create-project-at))
 
 
 (provide 'init-autotype)
