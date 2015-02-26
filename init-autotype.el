@@ -1,9 +1,9 @@
 ;;; init-autotype.el --- Automatic test insertion configuration
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2014-11-07, 11:44 (CET) Massimo Lauria>
+;; Time-stamp: <2015-02-26, 11:01 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -76,91 +76,6 @@
 ;;; Time-Stamp update --- setup in custom.el
 
 ;;; Auto pair configuration -----------------------------------------------------------
-;; Autopair has been disabled to try `smartparens'.
-(setq autopair-blink nil)
-
-;; Broken on Emacs22 since it uses `region-active-p' which is not
-;; present here
-(setq autopair-autowrap (fboundp 'region-active-p))
-
-(require 'autopair)
-
-;; AutoPair seems to mess with Emacs in several Major-modes, so I will
-;; activate on single mode basis... Furthermore several modes require
-;; a workaround.
-;;
-;; (autopair-global-mode t)
-
-
-;; Auto pair work-around for term-mode
-(defun autopair-term-mode-handle-action (action pair pos-before)
-  "Trick autopair to working with the `term-mode' nonsense.
-
-`insert' and friends don't really do anything in a term-mode
-buffer, we need to send actual strings to the subprocess. So
-override these emacs primitives to do so, then call the usual
-default handler."
-  (let ((proc (get-buffer-process (current-buffer))))
-    (letf ((insert (&rest args)
-                   (mapc #'(lambda (arg)
-                             (if (stringp arg)
-                                 (term-send-raw-string arg)
-                               (term-send-raw-string (char-to-string arg))))
-                         args))
-           (delete-char (howmany)
-                        (dotimes (i howmany)
-                          (term-send-del)))
-           (backward-char (howmany)
-                          (dotimes (i howmany)
-                            (term-send-left))))
-      (autopair-default-handle-action action pair pos-before)
-      (goto-char (process-mark proc)))))
-
-
-;; ;; Manage `` typed as "
-;; (defun autopair-latex-setup ()
-;;   "Install AutoPair in LaTex, with all the needed workarounds"
-;;   (interactive)
-;;   (set (make-local-variable 'autopair-handle-action-fns)
-;;        (list #'autopair-default-handle-action
-;;              #'autopair-latex-mode-paired-delimiter-action))
-;;   ;;(autopair-mode t)
-;;   )
-
-
-;; Activate autopair and also Pair triple quotes in python
-;; (add-hook 'python-mode-hook
-;;            #'(lambda ()
-;;                (set (make-local-variable 'autopair-handle-action-fns)
-;;                      (list #'autopair-default-handle-action
-;;                            #'autopair-python-triple-quote-action))
-;;                (autopair-mode t)
-;;                ))
-
-;; Activate `autopair-mode' and pair ` ' in comments and strings
-;; (add-hook 'emacs-lisp-mode-hook
-;;            #'(lambda ()
-;;                (push '(?` . ?')
-;;                      (getf autopair-extra-pairs :comment))
-;;                (push '(?` . ?')
-;;                      (getf autopair-extra-pairs :string))
-;;                (autopair-mode t)
-;;                ))
-
-;; Activate `autopair-mode' in sh-mode
-;; (add-hook 'sh-mode-hook  #'(lambda () (autopair-mode t) ))
-;; (add-hook 'c-mode-hook   #'(lambda () (autopair-mode t) ))
-;; (add-hook 'org-mode-hook #'(lambda () (autopair-mode t) ))
-
-
-;; In these modes, autopair seems completely broken
-;; (add-hook 'sldb-mode-hook #'(lambda () (setq autopair-dont-activate t)))
-;; (add-hook 'xrdb-mode-hook #'(lambda () (setq autopair-dont-activate t)))
-;; (add-hook 'orgtbl-mode-hook
-;;           (lambda ()
-;;             (set (make-local-variable 'autopair-autowrap) nil)  ;; Autowrap fights with Orgtbl-mode
-;;             (message "Autopair-Autowrap disactivated because it conflicts with OrgTbl-Mode... ")
-;;             ))
 
 (eval-after-load 'smartparens
   '(progn 
