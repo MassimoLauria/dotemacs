@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2015-02-26, 14:24 (CET) Massimo Lauria>
+;; Time-stamp: <2015-02-26, 15:12 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -35,8 +35,8 @@
   :defer t
   :diminish " ⓨ"
   :pin melpa-stable
+  :commands (yas-expand yas-minor-mode yas-global-mode)
   :idle (yas-global-mode)
-  :commands (yas-expand yas-minor-mode)
   :config (progn
             (add-to-list 'yas-snippet-dirs (concat default-elisp-path "/snippets/"))
             (setq yas-snippet-dirs
@@ -99,12 +99,14 @@ If the newly created filetype has more that one templates, then a
 choice is offered."
     (interactive)
     (call-interactively 'find-file)
+    (yas-minor-mode 1)
     (call-interactively 'auto-insert))
 
 
 (require 'autoinsert)
 (setq auto-insert-query nil)
 (setq auto-insert-alist nil)  ;; Reset auto-insert rules.
+
 
 (defun define-template-rule (rule template)
   "Setup a rule for the template application
@@ -131,8 +133,6 @@ a string or a list of strings. Each string must be a valid
 (define-template-rule "\\.h\\'"              "empty-h-template")
 (define-template-rule "\\.\\(C\\|cc\\|cpp\\)\\'" "empty-cc-template-snippet")
 (define-template-rule "\\.\\(H\\|hh\\|hpp\\)\\'" "empty-hh-template-snippet")
-(define-template-rule "\\.tex\\'" 'choose-latex-template)
-
 
 (defun choose-latex-template ()
   "Query the user to choose a template for a new latex file."
@@ -156,7 +156,11 @@ a string or a list of strings. Each string must be a valid
            (insert "latex-pgfpic-template"))
           ))
   (yas-expand))
- 
+
+;; Function `choose-latex-template' must ber defined before calling
+;; `define-template-rule'.
+(define-template-rule "\\.tex\\'" 'choose-latex-template)
+
 
 (provide 'init-autotype)
 ;;; init-autotype.el ends here
