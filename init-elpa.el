@@ -1,6 +1,6 @@
 ;;; init-elpa.el --- Bootstrap package system -*- coding: utf-8 -*-
 
-;; Time-stamp: "2015-02-26, 11:49 (CET) Massimo Lauria"
+;; Time-stamp: "2015-02-26, 13:15 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience

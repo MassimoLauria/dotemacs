@@ -331,32 +331,6 @@ It either tries \"lacheck\" or \"chktex\"."
     candidate))
 
 
-;; Latex autoinsertion
-(defun choose-initial-latex-template ()
-  "Query the user to choose a template for a new latex file. 
-
-Do that only if the file do not exists already."
-  (interactive)
-  (message "Choosing latex template")
-  (if (or (and (not (string-equal (buffer-name) "_region_.tex")) ;; non generated files _region_.tex 
-               (not (file-exists-p (buffer-file-name)))          ;; non saved file  
-               (= (- (point-max) (point-min)) 0))                ;; empty buffer
-          (called-interactively-p))
-      (let ((input-char ?0))
-        (loop until (member input-char '(?n ?p ?s ?l ?d ?e)) do
-              (setq input-char (read-char "Template: [n]ote, [p]aper, [s]lide, [l]etter, [d]rawing, [e]mpty:")))
-        (case input-char
-          ((?n) (insert "latex-note-template"  ) (yas-expand))
-          ((?p) (insert "latex-paper-template" ) (yas-expand))
-          ((?s) (insert "latex-slides-template" ) (yas-expand))
-          ((?l) (insert "latex-letter-template") (yas-expand))
-          ((?d) (insert "latex-pgfpic-template") (yas-expand))
-          ((?e) (insert ""))))
-    ))
-
-(add-hook 'LaTeX-mode-hook 'choose-initial-latex-template)
-
-
 ;; Smart parenthesis
 (require 'smartparens-latex nil t)
 (eval-after-load "smartparens-latex" 

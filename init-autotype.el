@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2015-02-26, 11:54 (CET) Massimo Lauria>
+;; Time-stamp: <2015-02-26, 14:24 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -28,32 +28,6 @@
 (setq template-time-format      "%Y-%02m-%02d, %A %02H:%02M (%Z)")  ;; Time format similar with time-stamp one.
 
 
-;;; Auto Insert: ----------------------------------------------------------------------
-
-(require 'autoinsert)
-(add-hook 'find-file-hook 'auto-insert)  ;;; Adds hook to find-files-hook
-(setq auto-insert-query nil)
-(setq auto-insert-alist nil)  ;; Reset auto-insert rules.
-;; Auto Insert rules:
-
-;; Use yasnippet to implement templates.
-(defun apply-yasnippet-function (template)
-  "It produces a function which insert a yasnipper template"
-  `(lambda ()
-     (goto-char (point-min))
-     (insert ,template)
-     (call-interactively 'yas-expand))
-  )
-
-(define-auto-insert 'sh-mode (apply-yasnippet-function "empty-template"))
-(define-auto-insert 'makefile-bsdmake-mode (apply-yasnippet-function "empty-template"))
-(define-auto-insert 'makefile-gmake-mode (apply-yasnippet-function "empty-template"))
-(define-auto-insert 'emacs-lisp-mode (apply-yasnippet-function "empty-template"))
-(define-auto-insert "\\.c\\'" (apply-yasnippet-function "empty-c-template"))
-(define-auto-insert "\\.h\\'" (apply-yasnippet-function "empty-h-template"))
-(define-auto-insert "\\.\\(C\\|cc\\|cpp\\)\\'" (apply-yasnippet-function "empty-cc-template-x"))
-(define-auto-insert "\\.\\(H\\|hh\\|hpp\\)\\'" (apply-yasnippet-function "empty-hh-template-x"))
-
 ;;; Snippets -----------------------------------------------------------------
 
 (use-package yasnippet
@@ -62,9 +36,11 @@
   :diminish " ⓨ"
   :pin melpa-stable
   :idle (yas-global-mode)
-  :config '(progn
-             (add-to-list 'yas-snippet-dirs (concat default-elisp-path "/snippets/"))
-             (delete  "~/.emacs.d/snippets" yas-snippet-dirs)))
+  :commands (yas-expand yas-minor-mode)
+  :config (progn
+            (add-to-list 'yas-snippet-dirs (concat default-elisp-path "/snippets/"))
+            (setq yas-snippet-dirs
+                  (delete  "~/.emacs.d/snippets" yas-snippet-dirs))))
 
 
 ;; Avoid automatic insertion of newlines at the end of a snippet recipe.
@@ -103,7 +79,7 @@
                     (not (eq this-original-command 'self-insert-command)))))
           (cua--fallback))))))
 
-;; Project templates (using `skeletor' package)
+;;; Project templates (using `skeletor' package) -------------------------------
 
 (defalias 'template-project-create        'skeletor-create-project)
 (defalias 'template-project-create-at-dir 'skeletor-create-project-at)
@@ -113,6 +89,74 @@
               skeletor-project-directory (concat (getenv "HOME") "/lavori/hacks/"))
   :commands (skeletor-create-project skeletor-create-project-at))
 
+
+;;; File templates (using `auto-insert' and `yasnippet') -----------------------
+
+(defun template-file-create ()
+    "Create a file according to the appropriate template.
+
+If the newly created filetype has more that one templates, then a
+choice is offered."
+    (interactive)
+    (call-interactively 'find-file)
+    (call-interactively 'auto-insert))
+
+
+(require 'autoinsert)
+(setq auto-insert-query nil)
+(setq auto-insert-alist nil)  ;; Reset auto-insert rules.
+
+(defun define-template-rule (rule template)
+  "Setup a rule for the template application
+
+RULE is either a mode symbol as `sh-mode' and TEMPLATE is either
+a string or a list of strings. Each string must be a valid
+`yasnippet' template for the mode."
+  (cond ((stringp template)
+         (define-auto-insert rule
+           `(lambda ()
+              (goto-char (point-min))
+              (insert ,template)
+              (call-interactively 'yas-expand))))
+        ((functionp template)
+         (define-auto-insert rule template))))
+
+
+;; Templates are nothing else that snippets for the respective mode,
+(define-template-rule 'sh-mode               "empty-template")
+(define-template-rule 'makefile-bsdmake-mode "empty-template")
+(define-template-rule 'makefile-gmake-mode   "empty-template")
+(define-template-rule 'emacs-lisp-mode       "empty-template")
+(define-template-rule "\\.c\\'"              "empty-c-template")
+(define-template-rule "\\.h\\'"              "empty-h-template")
+(define-template-rule "\\.\\(C\\|cc\\|cpp\\)\\'" "empty-cc-template-snippet")
+(define-template-rule "\\.\\(H\\|hh\\|hpp\\)\\'" "empty-hh-template-snippet")
+(define-template-rule "\\.tex\\'" 'choose-latex-template)
+
+
+(defun choose-latex-template ()
+  "Query the user to choose a template for a new latex file."
+  (interactive)
+  (let ((type (ido-completing-read "Document type: "
+                                   '("Letter"
+                                     "Paper"
+                                     "Note"
+                                     "Slides"
+                                     "Picture (Tikz)"
+                                     "Empty"))))
+    (cond ((string-equal "Letter" type)
+           (insert "latex-letter-template"))
+          ((string-equal "Paper" type)
+           (insert "latex-paper-template"))
+          ((string-equal "Note" type)
+           (insert "latex-note-template"))
+          ((string-equal "Slides" type)
+           (insert "latex-slides-template"))
+          ((string-equal "Picture (Tikz)" type)
+           (insert "latex-pgfpic-template"))
+          ))
+  (yas-expand))
+ 
 
 (provide 'init-autotype)
 ;;; init-autotype.el ends here
