@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2015-02-26, 15:12 (CET) Massimo Lauria>
+;; Time-stamp: <2015-02-26, 15:28 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -33,14 +33,15 @@
 (use-package yasnippet
   :ensure t
   :defer t
-  :diminish " ⓨ"
+  :diminish yas-minor-mode
   :pin melpa-stable
   :commands (yas-expand yas-minor-mode yas-global-mode)
   :idle (yas-global-mode)
   :config (progn
             (add-to-list 'yas-snippet-dirs (concat default-elisp-path "/snippets/"))
             (setq yas-snippet-dirs
-                  (delete  "~/.emacs.d/snippets" yas-snippet-dirs))))
+                  (delete  "~/.emacs.d/snippets" yas-snippet-dirs))
+            (yas-reload-all)))
 
 
 ;; Avoid automatic insertion of newlines at the end of a snippet recipe.
