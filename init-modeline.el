@@ -3,7 +3,7 @@
 ;; Copyright (C) 2013, 2014, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2015-01-13, 17:42 (CET) Massimo Lauria>
+;; Time-stamp: <2015-02-26, 11:56 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -60,9 +60,6 @@ The renaming table is `rename-major-mode-alist'."
   (eval-after-load 'eldoc '(diminish 'eldoc-mode))
   (eval-after-load 'massimo-keyboard '(diminish 'massimo-keyboard-mode " ⊤"))
   (eval-after-load 'company '(diminish 'company-mode " α"))
-  (eval-after-load 'autopair '(diminish 'autopair-mode " ♊"))
-  (eval-after-load 'smartparens '(diminish 'smartparens-mode " ♊"))
-  (eval-after-load 'yasnippet '(diminish 'yas-minor-mode " ⓨ"))
   (eval-after-load 'simple '(diminish 'auto-fill-function " ⓕ"))
   (eval-after-load 'projectile '(diminish 'projectile-mode))
   (eval-after-load 'elisp-slime-nav '(diminish 'elisp-slime-nav-mode))

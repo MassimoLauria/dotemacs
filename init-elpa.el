@@ -1,6 +1,6 @@
 ;;; init-elpa.el --- Bootstrap package system -*- coding: utf-8 -*-
 
-;; Time-stamp: "2015-02-25, 18:03 (CET) Massimo Lauria"
+;; Time-stamp: "2015-02-26, 11:49 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -53,15 +53,6 @@
 ;; various
 (require-package 'auctex)
 ;; (require-package 'org)
-
-
-;; (require-package 'yasnippet)
-(use-package yasnippet
-  :ensure t
-  :defer t
-  :pin melpa-stable
-  :idle (yas-global-mode))
-
 
 (use-package semantic
   :ensure t
