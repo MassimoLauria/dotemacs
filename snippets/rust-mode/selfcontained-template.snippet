@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# name: Self contained Rust source
+# key: selfcontained
+# expand-env: ((time-format "%Y-%02m-%02d, %A %02H:%02M (%Z)") (source-name-sans-ext (file-name-base (buffer-file-name))) (source-name-with-ext (file-name-nondirectory (buffer-file-name))))
+# --
+// Copyright (C) `(substring (current-time-string) -4)` `user-full-name` <`user-mail-address`>
+//
+// Created: "`(format-time-string time-format (current-time))` `user-full-name`"
+// Time-stamp: " "
+
+
+// Main code
+
+$0
+
+// Test code:
+
+
+
+
+// Local Variables:
+// mode: `"rust"`
+// compile-command: "rustc `source-name-with-ext` --test -o `source-name-sans-ext` && ./`source-name-sans-ext`"
+// End:
