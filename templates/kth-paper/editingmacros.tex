@@ -1,0 +1,112 @@
+%
+% MACROS SPECIFIC TO "META FORMATTING" OF CURRENT PAPER
+%=======================================================
+%
+
+%
+% HOW TO REFER TO THE AUTHORS
+%
+
+\newcommand{\theauthorML}{the first author\xspace}
+\newcommand{\TheauthorML}{The first author\xspace}
+
+\newcommand{\theauthorMM}{the second author\xspace}
+\newcommand{\TheauthorMM}{The second author\xspace}
+
+\newcommand{\theauthorJN}{the third author\xspace}
+\newcommand{\TheauthorJN}{The third author\xspace}
+
+\newcommand{\theauthorMV}{the fourth author\xspace}
+\newcommand{\TheauthorMV}{The fourth author\xspace}
+
+%
+% SWITCHING BETWEEN APPENDIX AND SECTION REFERENCES
+%
+% \refsecapp is defined to make it easy to change appendix references in
+% the submission into section references in the full paper.
+%
+
+\ifthenelse{\boolean{conferenceversion}}
+{
+  \newcommand{\mysubsection}[1]{\paragraph{#1}}
+  \renewcommand{\mysubsection}[1]{\textbf{\textit{#1}}}
+  \renewcommand{\mysubsection}[1]{\paragraph{\textbf{#1}}}
+
+  % Version of commands for extended abstract with appendices
+  \newcommand{\refsecapp}[1]{Appendix~\ref{#1}}
+  \newcommand{\Refsecapp}[1]{Appendix~\ref{#1}}
+  \newcommand{\reftwosecapps}[2]{Appendices~\ref{#1} and~\ref{#2}}
+  \newcommand{\Reftwosecapps}[2]{Appendices~\ref{#1} and~\ref{#2}}
+  \newcommand{\Sectionappendixtext}{Appendix\xspace}
+  \newcommand{\sectionappendixtext}{appendix\xspace}
+  \newcommand{\Sectionsappendicestext}{Appendices\xspace}
+  \newcommand{\sectionsappendicestext}{appendices\xspace}
+}
+{
+  \newcommand{\mysubsection}[1]{\subsection{#1}}
+
+  % Version of commands for full-length paper
+ \newcommand{\refsecapp}[1]{Section~\ref{#1}}
+ \newcommand{\Refsecapp}[1]{Section~\ref{#1}}
+ \newcommand{\reftwosecapps}[2]{Sections~\ref{#1} and~\ref{#2}}
+ \newcommand{\Reftwosecapps}[2]{Sections~\ref{#1} and~\ref{#2}}
+ \newcommand{\Sectionappendixtext}{Section\xspace}
+ \newcommand{\sectionappendixtext}{section\xspace}
+ \newcommand{\Sectionsappendicestext}{Sections\xspace}
+ \newcommand{\sectionsappendicestext}{sections\xspace}
+}
+
+%
+% "META COMMENTS" TO BE TOGGLED ON OR OFF (FOR COMMENTS DURING WRITE-UP)
+%
+
+\ifthenelse{\boolean{conferenceversion}}
+{}
+{
+\newtheoremstyle{metacommenttheoremstyle}% name
+    {3pt}%      Space above
+    {3pt}%      Space below
+    {\sffamily \itshape \scriptsize
+      % or  \footnotesize or \small
+    }%         Body font
+    {}%         Indent amount (empty = no indent, \parindent = para indent)
+    {\bfseries \scshape \footnotesize }% Thm head font
+    {:}%        Punctuation after thm head
+    { }%     Space after thm head: " " = normal interword space;
+    %       \newline = linebreak
+    {}%         Thm head spec (can be left empty, meaning `normal')
+
+\theoremstyle{metacommenttheoremstyle}
+}
+\newtheorem{jncommentcontainer}{Jakob's comment}
+\newtheorem{mlcommentcontainer}{Massimo's comment}
+\newtheorem{mmcommentcontainer}{Mladen's comment}
+\newtheorem{mvcommentcontainer}{Marc's comment}
+
+
+\ifthenelse{\isundefined{\DONOTINSERTCOMMENTS}}
+{ % Turn comments ON
+%      \usepackage{color}
+  \usepackage[usenames,dvipsnames]{xcolor}
+
+  \newcommand{\jncomment}[1]%
+  {\begin{jncommentcontainer} \textcolor{blue}{#1} \end{jncommentcontainer}}
+
+  \newcommand{\mlcomment}[1]%
+  {\begin{mlcommentcontainer} \textcolor{OliveGreen}{#1} \end{mlcommentcontainer}}
+
+  \newcommand{\mmcomment}[1]%
+  {\begin{mmcommentcontainer} \textcolor{magenta}{#1} \end{mmcommentcontainer}}
+
+  \newcommand{\mvcomment}[1]%
+  {\begin{mvcommentcontainer} \textcolor{orange}{#1} \end{mvcommentcontainer}}
+
+}
+{ % Turn comments OFF
+  \newcommand{\jncomment}[1]{}
+  \newcommand{\mlcomment}[1]{}
+  \newcommand{\mmcomment}[1]{}
+  \newcommand{\mvcomment}[1]{}
+}
+
+

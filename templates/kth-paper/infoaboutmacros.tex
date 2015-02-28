@@ -1,0 +1,432 @@
+
+\section{Some Information About Macros}
+\label{sec:info}
+
+\emph{The information below is adapted from scribing instructions, which
+explains the somewhat wiseacre tone in places\ldots}
+
+\emph{Hopefully, though, there should be some useful information here about
+the available macros, which will hopefully help to produce a
+consistently formatted write-up.}
+
+\subsection{Theorem Environments, Labels, and References}
+\label{sec:env-label-ref}
+
+You can label sections by using labels
+\verb+\label{sec:info}+
+and
+\verb+\label{sec:env-label-ref}+
+and then refer to
+\refsec{sec:info}
+and
+\refsec{sec:env-label-ref}
+conveniently 
+by using the macros 
+\verb+\refsec{sec:info}+
+and
+\verb+\refsec{sec:env-label-ref}+.
+
+
+\begin{theorem}[Optional name of theorem and/or reference]
+  \label{th:template-theorem}
+  This is a theorem.
+\end{theorem}
+
+Stating a result with a reference can be done as follows.
+
+\begin{lemma}[\cite{Cook71ComplexityTheoremProving}]
+  \label{lem:template-lemma}
+  This is a lemma with a fictional citation  
+  \verb+\cite{Cook71ComplexityTheoremProving}.+
+\end{lemma}
+
+A definition with both a name and a reference can be formatted like this.
+
+\begin{definition}[Propositional proof system \cite{CR79Relative}]
+  \label{def:template-def}
+  Use emphasis to highlight new concepts that are being defined. For
+  instance, a
+  \emph{propositional proof system}
+  is something that we completely fail to define here, regardless of
+  the heading.
+\end{definition}
+
+\begin{proposition}
+  \label{pr:template-proposition}
+  This is a proposition.
+\end{proposition}
+
+\begin{proof}
+  This is a proof of
+  \refpr{pr:template-proposition}.
+\end{proof}
+
+Just a ``proof'' is assumed to prove the latest theorem-like
+statement.  If you are proving some previous statement, you can
+specify which in the following way.
+
+\begin{proof}[Proof of \reflem{lem:template-lemma}]
+  This is a proof of some previously stated result, e.g.,
+  \reflem{lem:template-lemma}. 
+
+  Note that a default QED box is added at the end of each proof.
+  If you do not get it where you want, e.g., if the proof ends with a
+  list,  you can force placement of the box by issuing the command
+  \verb+\qedhere+ (but this is not needed here).
+\end{proof}
+
+\begin{observation}
+  \label{obs:template-observation}
+  This is an observation.
+\end{observation}
+
+\begin{proof}[Proof sketch]
+  This is not a full proof, but a proof sketch.
+\end{proof}
+
+You can use
+\verb+\refth{th:template-theorem}+
+to refer to
+\refth{th:template-theorem}.
+
+You can use
+\verb+\reflem{lem:template-lemma}+
+to refer to
+\reflem{lem:template-lemma}.
+
+You can use
+\verb+\refpr{pr:template-proposition}+
+to refer to
+\refpr{pr:template-proposition}.
+
+You can use
+\verb+\refobs{obs:template-observation}+
+to refer to
+\refobs{obs:template-observation}.
+
+You can use
+\verb+\refdef{def:template-def}+
+to refer to
+\refdef{def:template-def}.
+
+\subsection{General Math Editing Info}
+
+Following principles in the AMS math packages,
+many typesetting commands with delimiters are available in three
+versions:
+\verb+\command+ with small delimiters,
+\verb+\Command+ with somewhat larger ones, and
+\verb+\COMMAND+ with very large delimiters (use only in displayed
+math).
+
+For instance:
+\begin{itemize}
+\item 
+\verb+$\bigoh{n}$+ 
+yields
+$\bigoh{n}$
+and
+\verb+$\Bigoh{n^k}$+
+yields
+$\Bigoh{n^k}$
+with slightly larger parantheses.
+\item 
+\verb+$\bigomega{\log n}$+ 
+yields
+$\bigomega{\log n}$
+and
+\verb+$\Bigomega{\frac{1}{n}}$+
+yields
+$\Bigomega{\frac{1}{n}}$.
+
+\item
+  \verb+$\bigtheta{n}$+ becomes
+  $\bigtheta{n}$
+  while
+  \verb+$\Bigtheta{\frac{n}{\log n}}$+
+  turns into
+  $\Bigtheta{\frac{n}{\log n}}$.
+  
+\item
+  \verb+$\abs{x}$+ 
+  becomes
+  $\abs{x}$
+  and
+  \verb+$\Abs{x^y}$+
+  becomes
+  $\Abs{x^y}$.
+\end{itemize}
+
+Other commands that work the same way (i.e., have
+versions with delimiters of adaptable sizes) are:
+\begin{enumerate}
+\item 
+  \verb+\set+ denoting a set:
+  $\set{1,2,3,\ldots}$.
+\item 
+  \verb+\setdescr+
+  denoting a set described by some parameter
+  (use
+  \verb+\Setdescr+
+  for this example 
+  to get a nicer look):
+  $\Setdescr{2^i}{i \in \Nplus}$.
+\item 
+  \verb+\setsize+
+  denoting the size of a set:
+  $\setsize{\vertices{G}} = n$.
+\item 
+  \verb+\maxofset+ 
+  and
+  \verb+\minofset+ 
+  taking the maximum and minimum over a set as in, for instance, 
+  $\minofset[\mid]{\clspaceof{\pi}}{\derivof{\pi}{F}{\emptycl}}$.
+\item 
+  \verb+\maxofexpr+
+  and
+  \verb+\minofexpr+
+  taking the maximum/minimum over an ``expression'' as in, for instance,
+  $\maxofexpr[D \in \pi]{\widthofarg{D}}$.
+\end{enumerate}
+
+Here is the preferred way to display mathematics without a getting a
+numbered equation to reference
+using
+\verb+\begin{equation*}+:
+\begin{equation*}
+  x^2 - x = 0
+\end{equation*}
+and
+here is the preferred way to display mathematics with a number
+using
+\verb+\begin{equation}+:
+\begin{equation}
+  \label{eq:example-equation}
+  x + \olnot{x} - 1 = 0
+\end{equation}
+You can use
+\verb+\refeq{eq:example-equation}+
+to refer to this equation, which will give a reference that looks like
+\refeq{eq:example-equation}.
+
+\subsection{Proof Complexity Notation}
+
+
+Sometimes we want to specify in a subscript the proof system in question when
+discussing, e.g., proof complexity measures. In such a case one can write
+\verb+\resnot+
+to denote general resolution
+$\resnot$,
+\verb+\treeresnot+
+to denote tree-like resolution
+$\treeresnot$,
+\verb+\cpnot+
+to denote cutting planes
+$\cpnot$,
+\verb+\pcnot+
+to denote polynomial calculus
+$\pcnot$,
+and
+\verb+\pcrnot+
+to denote polynomial calculus resolution
+$\pcrnot$.
+These macros do not look very pretty in running text, however---here
+CP, PC and PCR seem better.
+
+For monomial space in PC and PCR, we can code, for instance:
+\begin{itemize}
+\item 
+$\mspaceof{\pi}$
+(\verb+\mspaceof{\pi}+).
+
+\item
+$\mspaceref[\pcnot]{F}$
+(\verb+\mspaceref[\pcnot]{F}+).
+
+\item
+$\Mspaceref[\pcrnot]{\ephpnot{m}{n}}$
+(\verb+\Mspaceref[\pcrnot]{\ephpnot{m}{n}}+).
+
+\item
+$\Mspacederiv[\pcrnot]{\ephpnot{m}{n}}{\pconf}$
+(\verb+\Mspacederiv[\pcrnot]{\ephpnot{m}{n}}{\pconf}+).
+
+\end{itemize}
+
+
+
+For degree, we can write
+\begin{itemize}
+\item 
+$\mdegreeof{\pi}$
+(\verb+\mdegreeof{\pi}+).
+
+\item
+$\mdegreeref[\pcnot]{F}$
+(\verb+\mdegreeref[\pcnot]{F}+).
+
+\item
+$\Mdegreeref[\pcrnot]{\ephpnot{m}{n}}$
+(\verb+\Mdegreeref[\pcrnot]{\ephpnot{m}{n}}+).
+
+\item
+$\Mdegreederiv[\pcrnot]{\ephpnot{m}{n}}{\pconf}$
+(\verb+\Mdegreederiv[\pcrnot]{\ephpnot{m}{n}}{\pconf}+).
+\end{itemize}
+
+For size, we can write
+\begin{itemize}
+\item 
+$\sizeofarg{\pi}$
+(\verb+\sizeofarg{\pi}+).
+
+\item
+$\sizeref[\pcnot]{F}$
+(\verb+\sizeref[\pcnot]{F}+).
+
+\item
+$\Sizeref[\pcrnot]{\ephpnot{m}{n}}$
+(\verb+\Sizeref[\pcrnot]{\ephpnot{m}{n}}+).
+
+\item
+$\Sizederiv[\pcrnot]{\ephpnot{m}{n}}{\pconf}$
+(\verb+\Sizederiv[\pcrnot]{\ephpnot{m}{n}}{\pconf}+).
+
+\end{itemize}
+
+
+
+To denote the length of refuting a CNF formula $F$ in general
+resolution we can use the macro
+\verb+$\lengthref[\resnot]{F}$+
+which looks like
+$\lengthref[\resnot]{F}$.
+The length of refuting a CNF formula $F$ in tree-like resolution is denoted
+by the macro
+\verb+$\lengthref[\treeresnot]{F}$+
+which looks like
+$\lengthref[\treeresnot]{F}$.
+
+The width of refuting $\fstd$ (in general resolution, although for
+this particular measure it does not matter) is written
+\verb+$\widthref[\resnot]{F}$+
+and looks like
+$\widthref[\resnot]{F}$,
+the clause space is written
+\verb+$\clspaceref[\resnot]{F}$+
+and looks like
+$\clspaceref[\resnot]{F}$,
+and for the total space we can write
+\verb+$\totspaceref[\resnot]{F}$+
+which looks like
+$\totspaceref[\resnot]{F}$.
+
+When the proof system under discussion is perfectly clear from
+context, however, we might skip the optional argument in brackets and
+just write
+\verb+$\widthref{F}$+
+for
+$\widthref{F}$
+instead.
+
+
+When measuring a concrete proof $\pi$, the proof system is
+presumably fixed and so it does not make too much sense to specify the
+proof system one extra time. But the same optional argument in
+brackets is supported if we want to do so.
+Thus, we can use the macros
+\verb+$\lengthofarg{\pi}$+,
+i.e., 
+$\lengthofarg{\pi}$,
+and
+\verb+$\widthofarg{\pi}$+,
+i.e., $\widthofarg{\pi}$,
+with the extra suffix
+\verb+arg+
+appended
+because of unfortunate naming collisions with standard \LaTeX{} packages, and
+\verb+$\clspaceof{\pi}$+,
+i.e., $\clspaceof{\pi}$,
+\verb+$\totspaceof{\pi}$+,
+i.e., $\totspaceof{\pi}$.
+%    ,
+%    but we can also write, for instance
+%    \verb+$\clspaceof[\resnot]{\pi}$+
+%    to get
+%    $\clspaceof[\resnot]{\pi}$
+%    or
+%    \verb+$\totspaceof[\resnot]{\pi}$+
+%    to get
+%    $\totspaceof[\resnot]{\pi}$.
+%    
+
+\subsection{Some Symbols}
+
+Here is a list of some symbols (please tell me afterwards if there was something you
+really missed here and I will add it):
+\begin{itemize}
+\item 
+  $\sum_{i=1}^{n}$ coded as \verb+$\sum_{i=1}^{n}$+
+\item 
+  $\prod_{i=1}^{n}$ coded as \verb+$\prod_{i=1}^{n}$+
+\item 
+  $\to \infty$ coded as \verb+$\to \infty$+
+\item 
+  $\impl$ coded as \verb+$\impl$+
+  and
+  $\nimpl$ coded as \verb+$\nimpl$+
+\end{itemize}
+
+\subsection{Inference Rules and Derivations}
+
+Please typeset any inference rules and derivations as
+follows below, using the
+\LaTeX{} tools by Sam Buss.
+
+Just one resolution inference can be done like this:
+\begin{equation}
+  \AxiomC{$C_1$}
+  \AxiomC{$C_2$}
+  \BinaryInfC{$C_3$}
+  \DisplayProof  
+\end{equation}
+
+A couple of resolution inferences ``in parallel'' can be coded like
+this:
+\begin{gather}
+  \AxiomC{$C_1$}
+  \AxiomC{$C_2$}
+  \BinaryInfC{$C_3$}
+  \DisplayProof  
+  \\
+  \AxiomC{$D_1$}
+  \AxiomC{$D_2$}
+  \BinaryInfC{$D_3$}
+  \DisplayProof  
+  \\
+  \AxiomC{$E_1$}
+  \AxiomC{$E_2$}
+  \BinaryInfC{$E_3$}
+  \DisplayProof  
+\end{gather}
+    
+And finally, 
+to code a derivation with more structure, do like this:
+\begin{equation}
+  \AxiomC{$C_1$}
+  \AxiomC{$C_2$}
+  \BinaryInfC{$C_3$}
+  \AxiomC{$C_4$}
+  \BinaryInfC{$C_5$}
+  \AxiomC{$C_6$}
+  \BinaryInfC{$C_7$}
+  \noLine
+  \UnaryInfC{$\vdots$}
+  \noLine
+  \UnaryInfC{$C_{n-2}$}
+  \AxiomC{$C_{n-1}$}
+  \BinaryInfC{$C_n$}
+  \DisplayProof  
+\end{equation}
+
+

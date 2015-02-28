@@ -3,7 +3,7 @@
 ;; Copyright (C) 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2015-02-28, 02:12 (CET) Massimo Lauria>
+;; Time-stamp: <2015-02-28, 12:09 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -43,14 +43,14 @@
 ;; __DESCRIPTION__
 ;;
 ;;
+
+
 ;; Project dependant substitution
 ;; __PYTHON-BIN__
-
 (skeletor-define-template "python-project"
   :title "Python Project"
   :requires-executables '(("make" . "http://www.gnu.org/software/make/")
-                          ("pip".   "https://pypi.python.org/pypi/pip")
-                          ("virtualenv" . "http://www.virtualenv.org"))
+                          ("easy_install"."https://pypi.python.org/pypi/setuptools"))
   :substitutions '(("__PYTHON-BIN__" . skeletor-py--read-python-bin)
                    ("__DESCRIPTION__"
                     . (lambda ()
@@ -64,9 +64,14 @@
 
 
 
-
-
-
+;; Project dependant substitution
+;; __TITLE__
+(skeletor-define-template "kth-paper"
+  :title "KTH Paper (default)"
+  :no-license? t
+  :substitutions '(("__TITLE__"
+                    . (lambda ()
+                        (read-string "Title: ")))))
 
 
 
