@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2015-02-28, 02:14 (CET) Massimo Lauria>
+;; Time-stamp: <2015-02-28, 18:12 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -88,7 +88,7 @@
 (setq auto-insert-alist nil)  ;; Reset auto-insert rules.
 
 
-(defun template-file-create ()
+(defun template-file ()
     "Create a file according to the appropriate template.
 
 If the newly created filetype has more that one templates, then a
@@ -96,7 +96,7 @@ choice is offered."
     (interactive)
     (call-interactively 'find-file)
     (yas-minor-mode 1)
-    (call-interactively 'auto-insert))
+    (auto-insert))
 
 
 (defun define-template-rule (rule template)

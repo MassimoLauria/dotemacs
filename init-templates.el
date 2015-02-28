@@ -3,7 +3,7 @@
 ;; Copyright (C) 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2015-02-28, 12:55 (CET) Massimo Lauria>
+;; Time-stamp: <2015-02-28, 18:08 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -21,14 +21,14 @@
 
 ;;; Project templates (using `skeletor' package) -------------------------------
 
-(defalias 'template-project-create        'skeletor-create-project)
-(defalias 'template-project-create-at-dir 'skeletor-create-project-at)
+(defalias 'template-project        'skeletor-create-project)
+(defalias 'template-project-at-dir 'skeletor-create-project-at)
 (setq skeletor-user-organisation user-organisation)
 
 (use-package skeletor
   :init (setq skeletor-user-directory    (concat (getenv "HOME") "/lavori/templates/")
               skeletor-project-directory (concat (getenv "HOME") "/lavori/hacks/"))
-  :commands (skeletor-create-project skeletor-create-project-at))
+  :commands (skeletor-project skeletor-project-at skeletor-define-template))
 
 
 ;; Defaults substitutions are
@@ -44,7 +44,6 @@
 ;; __DESCRIPTION__
 ;;
 ;;
-
 
 ;; Project dependant substitution
 ;; __PYTHON-BIN__
