@@ -3,7 +3,7 @@
 ;; Copyright (C) 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2015-02-28, 12:09 (CET) Massimo Lauria>
+;; Time-stamp: <2015-02-28, 12:42 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 
 (defalias 'template-project-create        'skeletor-create-project)
 (defalias 'template-project-create-at-dir 'skeletor-create-project-at)
+(setq skeletor-user-organisation user-organisation)
 
 (use-package skeletor
   :init (setq skeletor-user-directory (concat default-elisp-path "/templates/")
@@ -67,23 +68,11 @@
 ;; Project dependant substitution
 ;; __TITLE__
 (skeletor-define-template "kth-paper"
-  :title "KTH Paper (default)"
+  :title "KTH Paper"
   :no-license? t
   :substitutions '(("__TITLE__"
                     . (lambda ()
                         (read-string "Title: ")))))
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 (provide 'init-templates)

@@ -8,10 +8,9 @@
 /*flycheck*
 figcache/
 /Makefile
-/ReversiblePebbling.out
 /__PROJECT-NAME__Conf.pdf
-/__PROJECT-NAME__.ps
 /__PROJECT-NAME__.pdf
+/__PROJECT-NAME__.out
 /TMP.tex
 /.dir-locals.el
 auto/

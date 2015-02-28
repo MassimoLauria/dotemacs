@@ -7,17 +7,17 @@
 % HOW TO REFER TO THE AUTHORS
 %
 
-\newcommand{\theauthorML}{the first author\xspace}
-\newcommand{\TheauthorML}{The first author\xspace}
+\newcommand{\theauthorAA}{the first author\xspace}
+\newcommand{\TheauthorAA}{The first author\xspace}
 
-\newcommand{\theauthorMM}{the second author\xspace}
-\newcommand{\TheauthorMM}{The second author\xspace}
+\newcommand{\theauthorBB}{the second author\xspace}
+\newcommand{\TheauthorBB}{The second author\xspace}
 
-\newcommand{\theauthorJN}{the third author\xspace}
-\newcommand{\TheauthorJN}{The third author\xspace}
+\newcommand{\theauthorCC}{the third author\xspace}
+\newcommand{\TheauthorCC}{The third author\xspace}
 
-\newcommand{\theauthorMV}{the fourth author\xspace}
-\newcommand{\TheauthorMV}{The fourth author\xspace}
+\newcommand{\theauthorDD}{the fourth author\xspace}
+\newcommand{\TheauthorDD}{The fourth author\xspace}
 
 %
 % SWITCHING BETWEEN APPENDIX AND SECTION REFERENCES
@@ -78,10 +78,10 @@
 
 \theoremstyle{metacommenttheoremstyle}
 }
-\newtheorem{jncommentcontainer}{Jakob's comment}
-\newtheorem{mlcommentcontainer}{Massimo's comment}
-\newtheorem{mmcommentcontainer}{Mladen's comment}
-\newtheorem{mvcommentcontainer}{Marc's comment}
+\newtheorem{aacommentcontainer}{AA's comment}
+\newtheorem{bblcommentcontainer}{BB's comment}
+\newtheorem{cccommentcontainer}{CC's comment}
+\newtheorem{ddcommentcontainer}{DD's comment}
 
 
 \ifthenelse{\isundefined{\DONOTINSERTCOMMENTS}}
@@ -89,24 +89,24 @@
 %      \usepackage{color}
   \usepackage[usenames,dvipsnames]{xcolor}
 
-  \newcommand{\jncomment}[1]%
-  {\begin{jncommentcontainer} \textcolor{blue}{#1} \end{jncommentcontainer}}
+  \newcommand{\aacomment}[1]%
+  {\begin{aacommentcontainer} \textcolor{blue}{#1} \end{aacommentcontainer}}
 
-  \newcommand{\mlcomment}[1]%
-  {\begin{mlcommentcontainer} \textcolor{OliveGreen}{#1} \end{mlcommentcontainer}}
+  \newcommand{\bblcomment}[1]%
+  {\begin{bblcommentcontainer} \textcolor{OliveGreen}{#1} \end{bbcommentcontainer}}
 
-  \newcommand{\mmcomment}[1]%
-  {\begin{mmcommentcontainer} \textcolor{magenta}{#1} \end{mmcommentcontainer}}
+  \newcommand{\cccomment}[1]%
+  {\begin{cccommentcontainer} \textcolor{magenta}{#1} \end{cccommentcontainer}}
 
-  \newcommand{\mvcomment}[1]%
-  {\begin{mvcommentcontainer} \textcolor{orange}{#1} \end{mvcommentcontainer}}
+  \newcommand{\ddcomment}[1]%
+  {\begin{ddcommentcontainer} \textcolor{orange}{#1} \end{ddcommentcontainer}}
 
 }
 { % Turn comments OFF
-  \newcommand{\jncomment}[1]{}
-  \newcommand{\mlcomment}[1]{}
-  \newcommand{\mmcomment}[1]{}
-  \newcommand{\mvcomment}[1]{}
+  \newcommand{\aacomment}[1]{}
+  \newcommand{\bbcomment}[1]{}
+  \newcommand{\cccomment}[1]{}
+  \newcommand{\ddcomment}[1]{}
 }
 
 
