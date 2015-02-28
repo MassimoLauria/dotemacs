@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014  Massimo Lauria
-;; Time-stamp: "2014-12-01, 01:17 (CET) Massimo Lauria"
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
+;; Time-stamp: "2015-02-28, 02:13 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -104,6 +104,7 @@
 (require 'init-eshell)            ; Emacs shell
 (require 'init-clipboard)         ; Clipboard managing
 (require 'init-autotype)          ; Automatic file filling
+(require 'init-templates)         ; Templates
 (require 'init-auto-complete)     ; Completion configuration -- check for speed
 (require 'init-spellcheck)        ; Spellchecking -- check for speed
 

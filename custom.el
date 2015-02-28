@@ -649,7 +649,7 @@
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
- '(org-src-fontify-natively t t)
+ '(org-src-fontify-natively t)
  '(org-todo-keyword-faces
    (quote
     (("TODO" :foreground "red" :background "black" :weight bold)
@@ -671,7 +671,7 @@
     ((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")
      (sequence "SKIM" "READ" "|" "DONE" "EVENTUALLY")
      (sequence "UNSOLVED" "|" "SOLVED")
-     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))) t)
+     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))))
  '(org-use-sub-superscripts (quote {}))
  '(post-attachment-regexp "\\(attach\\|alleg\\)")
  '(post-rename-buffer nil)
@@ -688,7 +688,8 @@
  '(require-final-newline (quote t))
  '(safe-local-variable-values
    (quote
-    ((python-project-venv-name . "cnfgen-dev")
+    ((python-project-venv-name . "cnfgen-venv")
+     (python-project-venv-name . "cnfgen-dev")
      (do-delete-whitespace)
      (eval quote
            (auto-fill-mode 1))
@@ -719,7 +720,7 @@
  '(semantic-mode nil)
  '(semantic-stickyfunc-show-only-functions-p t)
  '(show-smartparens-global-mode t)
- '(skeletor-project-directory "~/lavori/hacks")
+ '(skeletor-project-directory "~/lavori/hacks" t)
  '(smartparens-global-mode t)
  '(sp-autoinsert-if-followed-by-same 3)
  '(sp-highlight-pair-overlay nil)

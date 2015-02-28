@@ -1,0 +1,6 @@
+include Makefile
+include README.md
+include CONTRIBUTING.md
+include requirements.txt
+include COPYING
+include LICENSE
