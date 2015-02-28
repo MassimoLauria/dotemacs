@@ -1,4 +1,5 @@
 PROJECT=__PROJECT-NAME__
+PYTHON_BIN=__PYTHON-BIN__
 VIRTUALENV = ~/.virtualenvs/$(PROJECT)-venv
 
 

@@ -3,7 +3,7 @@
 ;; Copyright (C) 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2015-02-28, 12:42 (CET) Massimo Lauria>
+;; Time-stamp: <2015-02-28, 12:55 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 (setq skeletor-user-organisation user-organisation)
 
 (use-package skeletor
-  :init (setq skeletor-user-directory (concat default-elisp-path "/templates/")
+  :init (setq skeletor-user-directory    (concat (getenv "HOME") "/lavori/templates/")
               skeletor-project-directory (concat (getenv "HOME") "/lavori/hacks/"))
   :commands (skeletor-create-project skeletor-create-project-at))
 
@@ -49,7 +49,7 @@
 ;; Project dependant substitution
 ;; __PYTHON-BIN__
 (skeletor-define-template "python-project"
-  :title "Python Project"
+  :title "Python Library"
   :requires-executables '(("make" . "http://www.gnu.org/software/make/")
                           ("easy_install"."https://pypi.python.org/pypi/setuptools"))
   :substitutions '(("__PYTHON-BIN__" . skeletor-py--read-python-bin)
