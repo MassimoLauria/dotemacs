@@ -10,14 +10,14 @@
 ;; English
 (defvar spellcheck-english-regexp "\\<\\(of\\|the\\|and\\|or\\|how\\)\\>"
   "If a buffer match this REGEXP it is supposed to be in english.")
-(defvar spellcheck-english-names '("american" "english" "british" "en_GB" "en_US" "en" )
+(defvar spellcheck-english-names '("american" "english" "british" "en_GB" "en_US" )
   "Possible names for an ENGLISH dictionary.")
 
 
 ;; Italian
 (defvar spellcheck-italian-regexp "\\<\\(un\\|uno\\|una\\|il\\|lo\\|la\\|gli\\|le|\\|per\\|in\\)\\>"
   "If a buffer match this REGEXP it is supposed to be in italian.")
-(defvar spellcheck-italian-names '("italiano" "italian" "it" "it_IT")
+(defvar spellcheck-italian-names '("italiano" "italian" "it_IT")
   "Possible names for an ITALIAN dictionary.")
 
 
@@ -44,14 +44,10 @@ would happen for an empty document.")
 
 ;; Setup ----------------------------------------------------------------------------------------
 
-(cond ((executable-find "hunspell")
-       (setq ispell-program-name "hunspell"))
-      ((executable-find "aspell")
-       (setq ispell-program-name "aspell")
-       ;; (setq ispell-list-command "list")
-       )
-      (t
-       (setq ispell-program-name "ispell")))
+
+(setq ispell-program-name
+      (or (executable-find "hunspell")
+          (executable-find "aspell")))
 
 (setq ispell-process-directory (expand-file-name "~/"))
 
