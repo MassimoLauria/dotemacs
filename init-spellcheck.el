@@ -21,7 +21,7 @@
   "Possible names for an ITALIAN dictionary.")
 
 
-;; Variables automatically initialised  -------------------------------------------------------------
+;; Variables automatically initialized  -------------------------------------------------------------
 
 (defvar spellcheck-languages nil
   "All languages which are available to the spellchecking facilities like:
@@ -48,7 +48,10 @@ would happen for an empty document.")
        (setq ispell-program-name "hunspell"))
       ((executable-find "aspell")
        (setq ispell-program-name "aspell")
-       (setq ispell-list-command "list")))
+       ;; (setq ispell-list-command "list")
+       )
+      (t
+       (setq ispell-program-name "ispell")))
 
 (setq ispell-process-directory (expand-file-name "~/"))
 
