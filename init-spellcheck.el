@@ -44,10 +44,11 @@ would happen for an empty document.")
 
 ;; Setup ----------------------------------------------------------------------------------------
 
-(when (executable-find "aspell")
-    (setq ispell-program-name "aspell")
-    (setq ispell-list-command "list"))
-
+(cond ((executable-find "hunspell")
+       (setq ispell-program-name "hunspell"))
+      ((executable-find "aspell")
+       (setq ispell-program-name "aspell")
+       (setq ispell-list-command "list")))
 
 (setq ispell-process-directory (expand-file-name "~/"))
 
