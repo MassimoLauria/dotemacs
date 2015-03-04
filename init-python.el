@@ -59,10 +59,12 @@
        
 ;; if buffer or dir local variable `python-project-venv-name' is set
 ;; to a string, the corresponding virtual environment is activated.
-(add-hook 'python-mode-hook (lambda ()
-                              (hack-local-variables)
-                              (when (boundp 'python-project-venv-name)
-                                (venv-workon python-project-venv-name))))
+(defun ml/automatic-virtualenv-activation ()
+  (hack-local-variables)
+  (when (boundp 'python-project-venv-name)
+    (venv-workon python-project-venv-name)))
+
+(add-hook 'python-mode-hook 'ml/automatic-virtualenv-activation 'append)
 
 (provide 'init-python)
 ;; Local Variables:
