@@ -49,6 +49,25 @@
 
 
 
+;; use `rst-mode' in the docstrings 
+(use-package mmm-mode
+  :ensure t
+  :config (progn
+              (setq mmm-global-mode 'maybe)
+              (mmm-add-classes
+               '((python-rst
+                  :submode rst-mode
+                  :front "^ *[ru]?\"\"\"[^\"]*$"
+                  :back "^ *\"\"\""
+                  :include-front t
+                  :include-back t
+                  :end-not-begin t)))
+              (mmm-add-mode-ext-class 'python-mode nil 'python-rst)))
+
+
+
+
+
 ;;; Virtual Environments -----------------------------------------------
 
 (use-package virtualenvwrapper
