@@ -51,7 +51,6 @@
 
 ;; use `rst-mode' in the docstrings 
 (use-package mmm-mode
-  :ensure t
   :config (progn
               (setq mmm-global-mode 'maybe)
               (mmm-add-classes
