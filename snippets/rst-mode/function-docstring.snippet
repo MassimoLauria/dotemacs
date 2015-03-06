@@ -1,0 +1,54 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Python doc string [Functions]
+# key: function-docstring
+# binding: direct-keybinding
+# --
+${0:One line description.} of 
+
+More  information   about  the  functions,  maybe   spanning  multiple
+lines. Let's still stick to 70 columns anyway.
+
+
+Parameters
+----------
+arg1 : type1
+   Descritpion of arg1.
+arg2 : type1, optional
+   Description of arg2.
+
+Returns
+-------
+result : result_type
+   Desccrition of the return valua.
+
+Raises
+------
+Exception1
+   When event1 happens.
+Exception2
+   When event2 happens.
+
+
+See Also
+--------
+a_related_symbol
+another_related_symbol
+
+Notes
+-----
+Uses so and so algorithm [1]_, see this reference [2]_ and download [3]_.
+
+References
+----------
+.. [1] Name, "Title",
+   Venue (YYYY), PAG-PAG.
+.. [2] Name, "Title",
+   Venue (YYYY), PAG-PAG.
+.. [3] http://en.wikipedia.org/wiki/Eulerian_path
+
+Examples
+--------
+>>> 2+2
+4
+>>> [2]+[2]
+[2, 2]
