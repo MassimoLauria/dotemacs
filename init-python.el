@@ -39,32 +39,13 @@
 
 ;; Keys
 (with-eval-after-load "python"
-  (define-key python-mode-map (kbd "<f9>") 'pylint)
-  (define-key python-mode-map (kbd "<f10>") 'python-shell-send-buffer))
+  (define-key python-mode-map (kbd "<f10>") 'python-shell-switch-to-shell)
+  (define-key inferior-python-mode-map (kbd "<f10>") 'delete-window))
 
 ;; Minor modes
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'eldoc-mode)
 (add-hook 'python-mode-hook 'flycheck-mode)
-
-
-
-;; use `rst-mode' in the docstrings 
-(use-package mmm-mode
-  :config (progn
-              (setq mmm-global-mode 'maybe)
-              (mmm-add-classes
-               '((python-rst
-                  :submode rst-mode
-                  :front "^ *[ru]?\"\"\"[^\"]*$"
-                  :back "^ *\"\"\""
-                  :include-front t
-                  :include-back t
-                  :end-not-begin t)))
-              (mmm-add-mode-ext-class 'python-mode nil 'python-rst)))
-
-
-
 
 
 ;;; Virtual Environments -----------------------------------------------

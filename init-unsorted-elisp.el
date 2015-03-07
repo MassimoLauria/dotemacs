@@ -375,6 +375,23 @@ http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
 
 
 
+;; Indirect narrow to region
+(defun edit-function ()
+      (interactive)
+      (clone-indirect-buffer-other-window (which-function) 'pop-to-buffer)
+      (mark-defun) ; works not only in emacs-lisp, but C++, Python, ...
+      (narrow-to-region (mark) (point))
+      (pop-mark)
+      (other-window 1))
+
+(defun edit-region (start end)
+  "Restrict editing in this buffer to the current region, indirectly."
+  (interactive "r")
+  (deactivate-mark)
+  (let ((buf (clone-indirect-buffer nil nil)))
+    (with-current-buffer buf
+      (narrow-to-region start end))
+    (switch-to-buffer buf)))
 
 (defadvice fundamental-mode (after add-massimo-keyboard-mode ())
   (when (fboundp 'massimo-keyboard-mode)
