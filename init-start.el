@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
-;; Time-stamp: "2015-02-28, 02:13 (CET) Massimo Lauria"
+;; Time-stamp: "2015-03-10, 00:12 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -124,6 +124,7 @@
 (require 'init-sage)         ; SageMath
 (require 'init-imaxima)      ; Imaxima and Imath (from SageMath)
 (require 'init-singular)     ; Singular (not from SageMath!)
+(require 'init-mathematica)  ; Worlfram Mathematica
 
 ;; Applications
 (require 'init-mail)       ; Mail + Contacts
