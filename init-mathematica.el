@@ -4,9 +4,15 @@
 ;;;------------------------------------------------------------------
 
 
+(setq wolfram-program
+      (or
+       (executable-find "math")
+       (executable-find "/usr/local/bin/math")
+       (executable-find "/Applications/Mathematica.app/Contents/MacOS/MathKernel")
+       (executable-find "/pkg/mathematica/10.0.2/os/bin/MathKernel")))
+
 (use-package wolfram-mode
   :commands (run-wolfram wolfram-mode)
-  :init (setq wolfram-program "/Applications/Mathematica.app/Contents/MacOS/MathKernel")
   :mode ("\\.m$" . wolfram-mode))
 
 
