@@ -59,6 +59,9 @@ would happen for an empty document.")
             (ispell-change-dictionary dict)
             (throw 'break-on-good-dict dict)))))
 
+;; Default dictionary (otherwise flyspell would complain)
+(setq-default ispell-dictionary
+              (spellcheck-first-valid-dictionary (append spellcheck-english-names spellcheck-italian-names)))
 
 ;; Setup of guessing rules
 (let (
