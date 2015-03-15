@@ -1,6 +1,6 @@
 ;;;
 ;;; Spellcheck facilities, functions and settings.
-;;;
+;;; 
 ;;;-----------------------------------------------------------------
 
 
@@ -8,7 +8,7 @@
 
 
 ;; English
-(defvar spellcheck-english-regexp "\\<\\(of\\|the\\|and\\|or\\|how\\)\\>"
+(defvar spellcheck-english-regexp "\\<\\(of\\|if\\|it\\|is\\|the\\|and\\|or\\|how\\)\\>"
   "If a buffer match this REGEXP it is supposed to be in english.")
 (defvar spellcheck-english-names '("american" "english" "british" "en_GB" "en_US" )
   "Possible names for an ENGLISH dictionary.")
@@ -94,7 +94,10 @@ would happen for an empty document.")
   (save-excursion
     (goto-char (point-min))
     (let ((count (map 'list (lambda (x)
-                              (cons (count-matches (cdr x)) (car x)))
+                              (cons (count-matches (cdr x)
+                                                   (point-min)
+                                                   (+ (point-min) 1000)
+                                                   ) (car x)))
                       spellcheck-guessing-rules)))
       (cdr (assoc (car (sort (map 'list 'car count) '>))
                   count)))))
