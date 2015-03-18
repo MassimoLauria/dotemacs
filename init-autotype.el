@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2015-02-28, 18:12 (CET) Massimo Lauria>
+;; Time-stamp: <2015-03-18, 01:36 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -62,9 +62,9 @@
 (use-package smartparens
   :commands (smartparents-mode smartparens-global-mode)
   :diminish " ♊"
-  :config '(progn 
-             (require 'smartparens-config nil t)
-             (require 'smartparens-latex nil t)))
+  :config (progn 
+            (require 'smartparens-config nil t)
+            (require 'smartparens-latex nil t)))
 
 
 ;; work around for smartparens
