@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2015-03-18, 01:36 (CET) Massimo Lauria>
+;; Time-stamp: <2015-03-18, 18:38 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@
 
 (use-package autopair
   :demand t               ;; FIXME: something breaks if package not loaded.
-  :commands (autopair-mode autopair-global-mode)
+  (:commands autopair-mode) autopair-global-mode
   :diminish " ♊")
 
 
@@ -64,7 +64,15 @@
   :diminish " ♊"
   :config (progn 
             (require 'smartparens-config nil t)
-            (require 'smartparens-latex nil t)))
+            (require 'smartparens-latex nil t)
+            (define-key smartparens-mode-map (kbd "C-M-i") 'sp-up-sexp)
+            (define-key smartparens-mode-map (kbd "C-M-k") 'sp-down-sexp)
+            (define-key smartparens-mode-map (kbd "C-M-j") 'sp-backward-sexp)
+            (define-key smartparens-mode-map (kbd "C-M-l") 'sp-forward-sexp)
+            (define-key smartparens-mode-map (kbd "C-M-u") 'sp-forward-barf-sexp)
+            (define-key smartparens-mode-map (kbd "C-M-o") 'sp-forward-slurp-sexp)))
+
+
 
 
 ;; work around for smartparens
