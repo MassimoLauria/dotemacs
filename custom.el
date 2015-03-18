@@ -594,6 +594,7 @@
                                     (quote ac-sources)
                                     (quote ac-source-haskell))))))
  '(haskell-program-name "ghci")
+ '(highlight-symbol-idle-delay 0.5)
  '(init-cc-clang++-dialect "c++11")
  '(init-cc-clang-dialect "c99")
  '(init-cc-g++-dialect "c++11")
@@ -649,7 +650,7 @@
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
- '(org-src-fontify-natively t)
+ '(org-src-fontify-natively t t)
  '(org-todo-keyword-faces
    (quote
     (("TODO" :foreground "red" :background "black" :weight bold)
@@ -671,12 +672,12 @@
     ((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")
      (sequence "SKIM" "READ" "|" "DONE" "EVENTUALLY")
      (sequence "UNSOLVED" "|" "SOLVED")
-     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))))
+     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))) t)
  '(org-use-sub-superscripts (quote {}))
  '(post-attachment-regexp "\\(attach\\|alleg\\)")
  '(post-rename-buffer nil)
  '(powerline-default-separator (quote arrow))
- '(powerline-text-scale-factor nil)
+ '(powerline-text-scale-factor 0.5)
  '(processing-location "/usr/bin/processing-java")
  '(pulse-flag nil)
  '(quack-pretty-lambda-p t)
@@ -688,7 +689,18 @@
  '(require-final-newline (quote t))
  '(safe-local-variable-values
    (quote
-    ((python-project-venv-name . "cnfgen-venv")
+    ((eval font-lock-add-keywords nil
+           (\`
+            (((\,
+               (concat "("
+                       (regexp-opt
+                        (quote
+                         ("sp-do-move-op" "sp-do-move-cl" "sp-do-put-op" "sp-do-put-cl" "sp-do-del-op" "sp-do-del-cl"))
+                        t)
+                       "\\_>"))
+              1
+              (quote font-lock-variable-name-face)))))
+     (python-project-venv-name . "cnfgen-venv")
      (python-project-venv-name . "cnfgen-dev")
      (do-delete-whitespace)
      (eval quote

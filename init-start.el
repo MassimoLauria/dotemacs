@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
-;; Time-stamp: "2015-03-10, 00:12 (CET) Massimo Lauria"
+;; Time-stamp: "2015-03-18, 02:05 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -97,16 +97,20 @@
 (require 'init-modeline)          ; modeline preferences -- check for speed
 (require 'init-backup)            ; Autosaves and backups behaviour
 
+;; Writing
+(require 'init-textmode)          ; Preferences for text editing
+(require 'init-spellcheck)        ; Spellchecking -- check for speed
 
 ;; Editor behaviour customization
-(require 'init-textmode)          ; Preferences for text editing
 (require 'init-terminal-fix)      ; Fix some keys combinations in terminals
 (require 'init-eshell)            ; Emacs shell
 (require 'init-clipboard)         ; Clipboard managing
+
+;; Coding
 (require 'init-autotype)          ; Automatic file filling
+(require 'init-highlight)         ; Preferences for code highlighting
 (require 'init-templates)         ; Templates
 (require 'init-auto-complete)     ; Completion configuration -- check for speed
-(require 'init-spellcheck)        ; Spellchecking -- check for speed
 
 ;; Keyboard settings
 (require 'massimo-keyboard)       ; basic keyboard settings
