@@ -3,6 +3,9 @@
 ;;; 
 ;;;-----------------------------------------------------------------
 
+(require 'cl) ;; used for loop macro
+
+
 
 ;; User variables initialised  -------------------------------------------------------------
 
@@ -43,7 +46,6 @@ That will be the language returned when no REGEXP matches, as
 would happen for an empty document.")
 
 ;; Setup ----------------------------------------------------------------------------------------
-
 
 (setq ispell-program-name
       (or (executable-find "hunspell")

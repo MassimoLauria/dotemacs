@@ -28,7 +28,7 @@
 ;; nested delimiters of matching colors
 (use-package rainbow-delimiters
   :ensure t
-  :init (setq rainbow-delimiters-max-face-count 6)
+  :init (setq rainbow-delimiters-max-face-count 4)
   :commands rainbow-delimiters-mode)
 
 ;; a color for each identifier
@@ -56,3 +56,4 @@
   :ensure t
   :commands highlight-defined-mode)
 
+(provide 'init-highlight)
