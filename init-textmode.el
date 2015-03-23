@@ -31,11 +31,16 @@
 (setq default-major-mode 'text-mode)
 
 
+;; Sentences. Identifying and breaking up.
+(setq sentence-end-double-space nil)
+(add-hook 'fill-nobreak-predicate 'fill-single-char-nobreak-p)
+(add-hook 'fill-nobreak-predicate 'fill-single-word-nobreak-p)
+
+
 (defun my-setup-of-text-mode-common()
   "Initial setup of Text mode (common to all children modes)"
-  (when-available 'flyspell-mode     (flyspell-mode     1))
-  (when-available 'goto-address-mode (goto-address-mode 1))
-  )
+  (when-available 'flyspell-mode (flyspell-mode 1))
+  (when-available 'goto-address-mode (goto-address-mode 1)))
 
 
 (defun my-setup-of-text-mode-nontex()
