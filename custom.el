@@ -8,7 +8,7 @@
  ;; If there is more than one, they won't work right.
  '(LaTeX-item-indent 0)
  '(TeX-electric-math (quote ("$" . "$")))
- '(TeX-master t)
+ '(TeX-master t t)
  '(ac-auto-show-menu 0.3)
  '(ac-delay 0.1)
  '(ac-disable-on-comment nil)
@@ -680,6 +680,7 @@
  '(powerline-text-scale-factor 0.5)
  '(processing-location "/usr/bin/processing-java")
  '(pulse-flag nil)
+ '(pulse-iterations 4)
  '(quack-pretty-lambda-p t)
  '(quack-programs
    (quote
@@ -778,7 +779,7 @@
  '(post-quoted-text-face ((t (:inherit gnus-cite-1))))
  '(post-signature-text-face ((t (:foreground "gray60"))))
  '(post-url-face ((t (:inherit link))))
- '(pulse-highlight-start-face ((t (:background "dim gray"))))
+ '(pulse-highlight-start-face ((t (:background "yellow4"))))
  '(writegood-duplicates-face ((t nil)) t)
  '(writegood-passive-voice-face ((t (:underline "red"))) t)
  '(writegood-weasels-face ((t (:strike-through "red"))) t))

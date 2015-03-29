@@ -8,8 +8,7 @@
 
 ;; Color theme
 (setq
- default-color-theme-emacs24     'zenburn
- default-color-theme-emacs23less 'color-theme-zenburn
+ default-color-theme  'zenburn
  default-color-number 256)
 
 ;; Regular fonts
@@ -46,22 +45,19 @@
        (>= (display-color-cells) default-color-number)
        (if (fboundp 'daemonp) (daemonp)))
   (condition-case msg
-      (if (>= emacs-major-version 24)
-          (load-theme default-color-theme-emacs24 t)
-        (funcall default-color-theme-emacs23less))
+      (load-theme default-color-theme t)
     (error (format "%s" msg) )))
 
 ;; Fix zenburn theme for flyspell/flymake/flycheck
-(when (>= emacs-major-version 24)
-  (custom-theme-set-faces
-   'zenburn
-   '(flycheck-error-face ((t (:underline "DodgerBlue1"))))
-   '(flycheck-warning-face ((t (:underline "green"))))
-   '(flymake-errline ((t (:underline "DodgerBlue1"))))
-   '(flymake-warnline ((t (:underline "green"))))
-   '(flyspell-duplicate ((t (:strike-through "red"))))
-   '(flyspell-incorrect ((t (:underline "red"))))
-   ))
+(custom-theme-set-faces
+ 'zenburn
+ '(flycheck-error-face ((t (:underline "DodgerBlue1"))))
+ '(flycheck-warning-face ((t (:underline "green"))))
+ '(flymake-errline ((t (:underline "DodgerBlue1"))))
+ '(flymake-warnline ((t (:underline "green"))))
+ '(flyspell-duplicate ((t (:strike-through "red"))))
+ '(flyspell-incorrect ((t (:underline "red"))))
+ )
 
 
 ;; Meta usage in MacOSX requires some thought
@@ -125,6 +121,12 @@
 (setq scroll-preserve-screen-position 1)
 (setq scroll-margin 0)
 (setq scroll-conservatively 1000)
+
+;; Recenter sequence
+(setq recenter-positions '(top middle bottom))
+(defadvice recenter-top-bottom (after ad-recenter-show)
+    "Highlight point after recentering."
+    (pulse-momentary-highlight-one-line (point)))
 
 ;; Canonical behaviour of modern interfaces. Not the default in Emacs22
 ;; Cut (C-x)  Copy(C-c) Paste(C-v) Undo(C-z)
