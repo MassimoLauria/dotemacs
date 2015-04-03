@@ -369,14 +369,17 @@ according to this default."
 
 ;;----- Additional modes -—-------------------------------------------------
 (define-generic-mode 'vimrc-mode
-    '("\"")
+    '(("\"" . nil))
     '("set" "syntax" "noremap" "inoremap" "map")
     '(("^[\t ]*:?\\(!\\|ab\\|map\\|unmap\\)[^\r\n\"]*\"[^\r\n\"]*\\(\"[^\r\n\"]*\"[^\r\n\"]*\\)*$"
        (0 font-lock-warning-face))
-      ("\\(^\\|[\t ]\\)\\(\".*\\)$"
-      (2 font-lock-comment-face))
-      ("\"\\([^\n\r\"\\]\\|\\.\\)*\""
-       (0 font-lock-string-face)))
+      ;; Line comment
+      ("^[\t ]*\\(\"\\)\\(.*\\)$"
+       (1 font-lock-comment-delimiter-face)
+       (2 font-lock-comment-face))
+      ;; String start:
+      ("\\(\"[^\n\r\"]*\"\\)\\|\\('[^\n\r]*'\\)"
+       (0 font-lock-string-face))) ;; String end;
     '("/vimrc\\'" "\\.vim\\(rc\\)?\\'")
     '((lambda ()
         (modify-syntax-entry ?\" ".")))
