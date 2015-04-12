@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
-;; Time-stamp: "2015-04-12, 01:16 (CEST) Massimo Lauria"
+;; Time-stamp: "2015-04-12, 15:16 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -121,6 +121,7 @@
 (require 'init-magit)
 (require 'init-cc-mode)
 (require 'init-python)
+(require 'init-scheme)
 (require 'init-java-mode)
 
 ;; Math packages

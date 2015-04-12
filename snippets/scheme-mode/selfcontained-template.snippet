@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# name: Self contained Scheme source
+# key: selfcontained
+# expand-env: ((time-format "%Y-%02m-%02d, %A %02H:%02M (%Z)"))
+# --
+;; Copyright (C) `(substring (current-time-string) -4)` `user-full-name` <`user-mail-address`>
+;;
+;; Created: "`(format-time-string time-format (current-time))` `user-full-name`"
+;; Time-stamp: " "
+;;
+;; run-scheme: starts the scheme inferior mode
+;;
+;; to send code to the inferior shell use one of the following
+;;
+;; "C-x C-e" (previous expression) 
+;; "xscheme-send-buffer" (buffer)
+;; "xscheme-send-region" (active region)
+
+;; Main code
+
+$0
+
+;; Test code:
+
+
+;; Local Variables:
+;; mode: `"scheme"`
+;; compile-command: "mit-scheme --quiet < `(file-name-nondirectory (buffer-file-name))`"
+;; End:

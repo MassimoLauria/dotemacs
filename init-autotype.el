@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2015-03-21, 11:40 (CET) Massimo Lauria>
+;; Time-stamp: <2015-04-12, 15:17 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -133,6 +133,7 @@ a string or a list of strings. Each string must be a valid
 (define-template-rule "\\.\\(C\\|cc\\|cpp\\)\\'" "empty-cc-template-snippet")
 (define-template-rule "\\.\\(H\\|hh\\|hpp\\)\\'" "empty-hh-template-snippet")
 (define-template-rule 'rust-mode             "selfcontained")
+(define-template-rule 'scheme-mode           "selfcontained")
 
 (defun choose-latex-template ()
   "Query the user to choose a template for a new latex file."

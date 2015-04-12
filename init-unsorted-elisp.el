@@ -413,9 +413,5 @@ http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
   (interactive)
   (sdcv-search-word (or word (current-word))))
 
-(when (eq system-type 'darwin)
-  (setq scheme-program-name "/Applications/MITScheme.app/Contents/Resources/mit-scheme"))
-(require 'xscheme)
-
 (provide 'init-unsorted-elisp)
 ;;; init-unsorted-elisp.el ends here
