@@ -1,6 +1,6 @@
 ;;; init-server.el --- setup Emacs as a server.
 
-;; Copyright (C) 2012, 2013, 2014  Massimo Lauria
+;; Copyright (C) 2012, 2013, 2014, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -20,39 +20,15 @@
 
 ;;; Commentary:
 
-;; Contains the code for starting server. Both for emacs client and
-;; for Google Chrome "Edit with emacs"
+;; Contains the code for starting server.
 
 ;;; Code:
 
-
-
-;; ;; Edit text area on Google Chrome
-;; (autoload 'edit-server-maybe-dehtmlize-buffer "edit-server-htmlize" "edit-server-htmlize" t)
-;; (autoload 'edit-server-maybe-htmlize-buffer   "edit-server-htmlize" "edit-server-htmlize" t)
-;; (add-hook 'edit-server-start-hook 'edit-server-maybe-dehtmlize-buffer)
-;; (add-hook 'edit-server-done-hook  'edit-server-maybe-htmlize-buffer)
-;; (add-hook 'edit-server-start-hook 'edit-server-textarea-setup)
-
-(defun edit-server-textarea-setup ()
-  "Setup the modes for editing textareas in webpages, using edit
-server."
-  (auto-fill-mode -1)
-  (visual-line-mode))
-
-
-
 ;; Launch server in MacOSX 
-(and (require 'server nil t)
-     (eq system-type 'darwin)
-     (not (server-running-p))
-     (server-start))
-
-;; Launch edit server
-(and (server-running-p)
-     (require 'edit-server nil t)
-     (edit-server-start))
-
+(use-package server
+  :if (eq system-type 'darwin)
+  :idle
+  :config (or (server-running-p) (server-start)))
 
 
 (provide 'init-server)
