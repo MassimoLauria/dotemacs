@@ -319,12 +319,6 @@ http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
 
 
 
-(eval-after-load 'winner-mode-hook
-  '(progn 
-     (define-key winner-mode-map (kbd "C-c C-j") 'winner-undo)
-     (define-key winner-mode-map (kbd "C-c C-l") 'winner-redo)
-     ))
-
 ;; HideShow mode
 (defun hs-minor-mode-setup (key)
   "Setup keys for hs-mode."

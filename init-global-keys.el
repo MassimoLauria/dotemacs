@@ -39,30 +39,6 @@
 (global-set-key [M-up] 'backward-sexp)
 (global-set-key [M-down] 'forward-sexp)
 
-;; Managing windows [C-M]
-; Moving
-(global-set-key [M-C-right] 'windmove-right)
-(global-set-key [M-C-left] 'windmove-left)
-(global-set-key [M-C-up] 'windmove-up)
-(global-set-key [M-C-down] 'windmove-down)
-; Scrolling "other window"
-(global-set-key [M-C-prior] 'scroll-other-window-down)
-(global-set-key [M-C-next] 'scroll-other-window)
-; Create and destroy windows
-(global-set-key (kbd "M-C--") 'split-window-vertically)
-(global-set-key (kbd "M-C-.") 'split-window-horizontally)
-;; Make a window to be sticky.
-(global-set-key [pause] 'toggle-current-window-sticky)
-
-
-
-;; Broken on Xterm
-(global-set-key (kbd "M-C-<backspace>") 'delete-window)
-(global-set-key (kbd "<C-M-backspace>") 'delete-window)
-(global-set-key (kbd "M-C-<return>") 'delete-other-windows)
-;; Cheap Xterm substitutions
-(global-set-key (kbd "ESC C-h") 'delete-window)
-(global-set-key (kbd "ESC <C-return>") 'delete-other-windows)
 
 
 ;; Next/Prev item after Compiling
