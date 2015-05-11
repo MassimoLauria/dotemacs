@@ -40,6 +40,8 @@
 (force-window-at-bottom (rx bos "*Help*" eos))
 (force-window-at-bottom (rx bos "*Apropos*" eos))
 (force-window-at-bottom (rx bos "*Metahelp*" eos))
+(force-window-at-bottom (rx bos "*Tex errors*" eos))
+(force-window-at-bottom (rx bos "*Tex Help*" eos))
 
 
 (eval-after-load 'winner-mode-hook
