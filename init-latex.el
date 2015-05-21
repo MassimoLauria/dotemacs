@@ -340,8 +340,14 @@ It either tries \"lacheck\" or \"chktex\"."
                  latex-mode
                  )
      ;;(sp-local-pair "$" "$" :post-handlers '(sp-latex-insert-spaces-inside-pair))
-     (sp-local-pair "\\lceil" "\\rceil" :post-handlers '(sp-latex-insert-spaces-inside-pair))
-     (sp-local-pair "\\lfloor" "\\rfloor" :post-handlers '(sp-latex-insert-spaces-inside-pair))))
+     (sp-local-pair "\\lceil" "\\rceil"
+                    :post-handlers '(sp-latex-insert-spaces-inside-pair))
+     (sp-local-pair "\\lfloor" "\\rfloor"
+                    :post-handlers '(sp-latex-insert-spaces-inside-pair))
+     ;; disable the default wrapping by `bi' and `be'
+     (sp-local-tag "bi" nil nil :actions nil)
+     (sp-local-tag "be" nil nil :actions nil)
+     ))
 
 
 
