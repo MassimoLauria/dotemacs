@@ -8,7 +8,7 @@
  ;; If there is more than one, they won't work right.
  '(LaTeX-item-indent 0)
  '(TeX-electric-math (quote ("$" . "$")))
- '(TeX-master t t)
+ '(TeX-master t)
  '(ac-auto-show-menu 0.3)
  '(ac-delay 0.1)
  '(ac-disable-on-comment nil)
@@ -729,7 +729,8 @@
  '(semantic-idle-summary-function (quote semantic-format-tag-summarize-with-file))
  '(semantic-mode nil)
  '(semantic-stickyfunc-show-only-functions-p t)
- '(show-smartparens-global-mode t)
+ '(show-paren-mode t)
+ '(show-smartparens-global-mode nil)
  '(skeletor-project-directory "~/lavori/hacks")
  '(smartparens-global-mode t)
  '(sp-autoinsert-if-followed-by-same 3)
