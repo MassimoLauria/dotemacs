@@ -687,7 +687,9 @@
  '(require-final-newline (quote t))
  '(safe-local-variable-values
    (quote
-    ((eval font-lock-add-keywords nil
+    ((org-html-postamble)
+     (org-html-preamble)
+     (eval font-lock-add-keywords nil
            (\`
             (((\,
                (concat "("
