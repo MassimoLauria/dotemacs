@@ -687,7 +687,8 @@
  '(require-final-newline (quote t))
  '(safe-local-variable-values
    (quote
-    ((org-html-postamble)
+    ((org-html-toplevel-hlevel . 3)
+     (org-html-postamble)
      (org-html-preamble)
      (eval font-lock-add-keywords nil
            (\`

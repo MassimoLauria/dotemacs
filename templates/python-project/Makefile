@@ -7,7 +7,7 @@ all : test
 
 
 
-.PHONY: test install devbuild venv basic-tools editor-tools
+.PHONY: test install devbuild venv editor-tools doc-tools
 
 
 # Build, test, install, clean
@@ -39,6 +39,11 @@ editor-tools : venv
 	pip install six
 	pip install service_factory
 
+# Install documentation tools.
+doc-tools : venv
+	. $(VIRTUALENV)/bin/activate
+	pip install sphinx
+	pip install sphinx-autobuild
 
 # Configure virtualenv
 venv: $(VIRTUALENV)/bin/activate
