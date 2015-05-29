@@ -9,17 +9,19 @@
            aw-background t))
 
 
-;; Force the some buffers to be displayed in "side" windows, i.e.
-;; windows that are locked and reusable.
+;; Force the some buffers to be displayed the "bottom" window, i.e.
+;; windows that is reusable (but not locked).
 (defun force-window-at-bottom (regexp)
   (add-to-list 'display-buffer-alist
                `(,regexp
                  (display-buffer-reuse-window
-                  display-buffer-in-side-window)
+                  display-buffer-at-bottom)
                  (reusable-frames . visible)
                  (side            . bottom)
                  (window-height   . 0.3))))
 
+;; Force the some buffers to be displayed in a "side" window, i.e.
+;; a window that is locked and reusable.
 (defun force-window-at-right (regexp)
   (add-to-list 'display-buffer-alist
                `(,regexp
@@ -37,6 +39,7 @@
 
 
 (force-window-at-bottom (rx bos "*Flycheck errors*" eos))
+(force-window-at-bottom (rx bos "*Flycheck error messages*" eos))
 (force-window-at-bottom (rx bos "*Help*" eos))
 (force-window-at-bottom (rx bos "*Apropos*" eos))
 (force-window-at-bottom (rx bos "*Metahelp*" eos))
