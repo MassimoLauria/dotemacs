@@ -26,6 +26,7 @@
 (setq skeletor-user-organisation user-organisation)
 
 (use-package skeletor
+  :ensure t
   :init (setq skeletor-user-directory    (concat (getenv "HOME") "/lavori/templates/")
               skeletor-project-directory (concat (getenv "HOME") "/lavori/hacks/"))
   :commands (skeletor-project skeletor-project-at skeletor-define-template))

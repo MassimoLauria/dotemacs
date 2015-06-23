@@ -53,8 +53,7 @@
 ;;; Parenthesis support ----------------------------------------------------------
 
 (use-package autopair
-  :demand t               ;; FIXME: something breaks if package not loaded.
-  (:commands autopair-mode) autopair-global-mode
+  :commands (autopair-mode autopair-global-mode)
   :diminish " ♊")
 
 
