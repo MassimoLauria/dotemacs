@@ -27,7 +27,6 @@
 ;; Launch server in MacOSX 
 (use-package server
   :if (eq system-type 'darwin)
-  :idle
   :config (or (server-running-p) (server-start)))
 
 

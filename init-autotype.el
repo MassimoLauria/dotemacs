@@ -36,7 +36,6 @@
   :diminish yas-minor-mode
   :pin melpa-stable
   :commands (yas-expand yas-minor-mode yas-global-mode)
-  :idle (yas-global-mode)
   :config (progn
             (add-to-list 'yas-snippet-dirs (concat default-elisp-path "/snippets/"))
             (setq yas-snippet-dirs
