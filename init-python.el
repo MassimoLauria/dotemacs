@@ -23,13 +23,14 @@
 
 ;; Code analysis
 (use-package anaconda-mode
+  :ensure t
   :diminish t
   :commands anaconda-mode
   :init '(add-hook 'python-mode-hook 'anaconda-mode))
 
 ;; Auto completion
 (use-package company-anaconda
-  :defer t
+  :ensure t
   :commands company-anaconda)
 
 ;; Syntax checker
