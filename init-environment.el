@@ -3,7 +3,7 @@
 ;; Copyright (C) 2013, 2014, 2015 Massimo Lauria <lauria.massimo@gmail.com>
 
 ;; Created : "2013-12-17, Tuesday 10:43 (CET) Massimo Lauria"
-;; Time-stamp: "2015-02-07, 11:32 (CET) Massimo Lauria"
+;; Time-stamp: "2015-07-02, 00:53 (CEST) Massimo Lauria"
 
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -35,7 +35,7 @@
 ;;
 
 
-(defun environment-variable-add-to-list (varname element)
+(defun environment-variable-add-to-list (varname element &optional append)
   "Add ELEMENT from the list in the enviroment variable VARNAME.
 
 VARNAME is considered as a list of elements like \"aa:bb:cc\". If
@@ -50,7 +50,7 @@ list."
         (setq tmplist (split-string 
                        (getenv varname) 
                        separator)))
-    (add-to-list 'tmplist element 'append 'string-equal)
+    (add-to-list 'tmplist element append 'string-equal)
     (setenv varname (mapconcat 'identity tmplist ":"))))
 
 (defun environment-variable-rm-from-list (varname element)
@@ -69,6 +69,14 @@ list."
                        separator)))
     (setenv varname (mapconcat 'identity (remove element tmplist) ":"))))
 
+(defun environment-add-path (newpath &optional append)
+  "Add NEWPATH to the PATH environment variable and to exec-path,
+
+Ignore if the path does not exists."
+  (when (file-directory-p newpath)
+    (add-to-list 'exec-path newpath append 'string-equal)
+    (environment-variable-add-to-list "PATH" newpath append)))
+
 
 
 ;;; Setup the needed paths
@@ -78,35 +86,26 @@ list."
     (setq default-directory (getenv "HOME"))) 
 
 
-;; Set paths, since sometime Mac OSX has weird paths and Emacs.app
-;; doesn't pick them up.
-(add-to-list 'exec-path "/usr/local/bin/") ; local
-(add-to-list 'exec-path "/opt/local/bin/") ; macports
-(add-to-list 'exec-path "~/.local/bin")    ; home
+;; Set paths, since sometime Mac OSX sucks
+(environment-add-path "/usr/local/bin") ; homebrew
+(environment-add-path "/opt/local/bin") ; macports
+(environment-add-path "/usr/textbin")   ; TexLive
+
+;; Local paths
+(environment-add-path (concat (getenv "HOME") "/.cask/bin"))
+(environment-add-path (concat (getenv "HOME") "/.local/bin"))
 
 
 ;; read paths from files in "/etc/paths.d/" if exist.
 (with-temp-buffer 
-  (condition-case nil
-      (dolist (file (directory-files "/etc/paths.d/" t))
+  (condition-case nil 
+      (dolist (file (cons "/etc/paths" (directory-files "/etc/paths.d/" t)))
         (if (not (file-directory-p file))
             (insert-file-contents file)))
     (error nil))
       
   (dolist (path (split-string (buffer-string) "\n" t))
     (if (file-directory-p path)
-        (add-to-list 'exec-path path))))
-
-
-;; Path for LaTeX distrubution TeX-live, on Mac.
-(when (file-directory-p "/usr/texbin/")
-  (add-to-list 'exec-path "/usr/texbin/" 'append))
-
-;; Path for Cask
-(let ((cask-path (concat (getenv "HOME") "/.cask/bin/")))
-  (when (file-directory-p cask-path)
-    (add-to-list 'exec-path cask-path 'append)))
-
-
+        (environment-add-path path))))
 
 (provide 'init-environment)
