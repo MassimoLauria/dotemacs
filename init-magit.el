@@ -3,7 +3,7 @@
 ;; Mike Barker <mike@thebarkers.com>
 ;; December 23, 2012
 
-;; Copyright (c) 2012, 2013 Mike Barker 
+;; Copyright (c) 2012, 2013, 2015 Mike Barker 
 
 ;;; MIT License
 
@@ -36,6 +36,9 @@
 ;;   http://whattheemacsd.com/setup-magit.el-02.html
 
 (defalias 'git 'magit-status)
+
+(setq magit-auto-revert-mode t)
+(setq magit-last-seen-setup-instructions "1.4.0")
 
 
 (eval-after-load "magit"
