@@ -13,16 +13,9 @@
 
 ;; Regular fonts
 (setq
- font-X11   "DejaVu Sans Mono 12"
- font-Mac   "DejaVu Sans Mono 12"
- font-Win   "Consolas 12" )
-
-;; Bigger fonts
-(when (and (boundp 'prefs-activate-bigfont) prefs-activate-bigfont)
-  (setq
-   font-X11   "DejaVu Sans Mono 14"
-   font-Mac   "DejaVu Sans Mono 16"
-   font-Win   "Consolas 14" ))
+ font-X11   "DejaVu Sans Mono 14"
+ font-Mac   "DejaVu Sans Mono 14"
+ font-Win   "Consolas 14" )
 
 (defun set-myfont-preference () 
   "Setup the font preferences"
