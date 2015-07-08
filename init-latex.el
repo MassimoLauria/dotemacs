@@ -21,6 +21,7 @@
 (setq TeX-save-query nil)
 (setq TeX-display-help t)
 (setq TeX-electric-sub-and-superscript t)
+(setq TeX-electric-math nil)
 (setq reftex-plug-into-AUCTeX t)
 (setq bib-cite-use-reftex-view-crossref t)
 (setq TeX-complete-word '(lambda () ))
@@ -331,9 +332,9 @@ It either tries \"lacheck\" or \"chktex\"."
     candidate))
 
 
-;; Smart parenthesis
+;; Smart parenthesis 
 (require 'smartparens-latex nil t)
-(eval-after-load "smartparens-latex" 
+(eval-after-load "smartparens-latex"
   '(sp-with-modes '(
                  tex-mode
                  plain-tex-mode
