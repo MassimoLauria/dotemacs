@@ -76,6 +76,10 @@
 (global-set-key [f11] 'previous-error) ; Does not work with LaTeX!
 (global-set-key [f12] 'next-error)
 
+;; Other fallback command
+(when (fboundp 'text-citation-from-reftex)
+  (global-set-key (kbd "C-c b") 'text-citation-from-reftex))
+
 
 
 (provide 'init-global-keys)

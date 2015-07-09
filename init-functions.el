@@ -339,6 +339,14 @@ according to this default."
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
 
 
+;;----- RefTeX -----------------------------------------------------------
+(defun text-citation-from-reftex ()
+  "Insert RefTeX citation as explicit text form."
+  (interactive)
+  (let ((reftex-cite-format "%a\n%t\n%j%b (%y)")
+        (reftex-cite-punctuation '(", " " and " " et al.")))
+    (reftex-citation)))
+
 ;;----- Fix compile modes ------------------------------------------------
 
 ;; Helper for compilation. Close the compilation window if
