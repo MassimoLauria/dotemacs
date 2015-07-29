@@ -1,6 +1,6 @@
 ;;; init-elpa.el --- Bootstrap package system -*- coding: utf-8 -*-
 
-;; Time-stamp: "2015-02-26, 13:15 (CET) Massimo Lauria"
+;; Time-stamp: "2015-07-29, 18:56 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -56,7 +56,6 @@
 
 (use-package semantic
   :ensure t
-  :defer t
   :commands semantic-mode)
 
 (require-package 'company)          ;; auto completion...
@@ -66,8 +65,6 @@
 
 (require-package 'diminish)      ;; remove names from modeline
 (require-package 'deferred)      ;; 
-(require-package 'magit)
-(require-package 'magit-svn)
 (require-package 'elisp-slime-nav)
 (require-package 'zenburn-theme)
 (require-package 'flycheck)
