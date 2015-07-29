@@ -3,6 +3,9 @@
 
 (defalias 'git 'magit-status)
 
+(setq magit-push-always-verify nil)
+
+
 (use-package magit
   :ensure t
   :commands (magit-status magit-blame magit-mode)
@@ -24,6 +27,7 @@
 
 (use-package magit-svn
   :ensure t
+  :diminish magit-svn-mode
   :commands (magit-svn-mode))
 
 
