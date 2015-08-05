@@ -3,14 +3,14 @@
 
 (defalias 'git 'magit-status)
 
-(setq magit-push-always-verify nil)
-
 
 (use-package magit
   :ensure t
   :commands (magit-status magit-blame magit-mode)
   
   :config
+  (add-to-list 'magit-no-confirm 'stage-all-changes)
+  (setq magit-push-always-verify nil)
   ;; show full screen magit-status
   (defadvice magit-status (around magit-fullscreen activate)
     (window-configuration-to-register :magit-fullscreen)
