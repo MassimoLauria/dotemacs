@@ -333,6 +333,11 @@ It either tries \"lacheck\" or \"chktex\"."
 
 
 ;; Smart parenthesis 
+
+(add-hook  ; Workaround for `TeX-insert-quote' conflict with `smartparens' 
+ 'LaTeX-mode-hook
+ (lambda () (local-unset-key "\"")))
+
 (require 'smartparens-latex nil t)
 (eval-after-load "smartparens-latex"
   '(sp-with-modes '(
