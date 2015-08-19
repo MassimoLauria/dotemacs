@@ -355,7 +355,10 @@ It either tries \"lacheck\" or \"chktex\"."
      (sp-local-tag "be" nil nil :actions nil)
      ))
 
-
+;; Yasnippet in LaTeX
+(add-hook  
+   'LaTeX-mode-hook
+   (lambda () (yas-minor-mode-on)))
 
 (provide 'init-latex)
 ;; Local Variables:

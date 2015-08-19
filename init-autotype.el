@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2015-05-19, 12:02 (CEST) Massimo Lauria>
+;; Time-stamp: <2015-08-19, 10:44 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@
   :defer t
   :diminish yas-minor-mode
   :pin melpa-stable
-  :commands (yas-expand yas-minor-mode yas-global-mode)
+  :commands (yas-expand yas-minor-mode yas-minor-mode-on yas-global-mode)
   :config (progn
             (add-to-list 'yas-snippet-dirs (concat default-elisp-path "/snippets/"))
             (setq yas-snippet-dirs
