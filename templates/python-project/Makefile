@@ -5,15 +5,7 @@ VIRTUALENV = ~/.virtualenvs/$(PROJECT)-venv
 
 all : test
 
-
-
-.PHONY: test install devbuild venv editor-tools doc-tools
-
-
-# Build, test, install, clean
-devbuild: venv
-	. $(VIRTUALENV)/bin/activate && \
-	python setup.py install
+.PHONY: test install package upload devinstall docbuild editor-tools doc-tools venv
 
 test: venv
 	. $(VIRTUALENV)/bin/activate && \
@@ -23,28 +15,53 @@ install:
 	python setup.py --user install
 
 clean:
-	rm -fr *.pyc
 	rm -fr build
 	rm -fr dist
 	rm -fr *.egg-info
+	rm -fr docs/_build
+	find . -name '*.pyc' -delete
+	find . -name 'flycheck*.py' -delete
+
+package: clean
+	python setup.py sdist bdist_wheel
+
+upload: package
+	twine upload dist/*
 
 
-# Install editor tools.
+
+#
+# Develop
+# 
+devinstall: venv
+	. $(VIRTUALENV)/bin/activate && \
+	python setup.py install
+
+docbuild: devinstall
+	. $(VIRTUALENV)/bin/activate && \
+	sphinx-apidoc -o docs cnfformula && \
+	$(MAKE) -C docs html
+
+#
+# Install tools
+#
 editor-tools : venv
 	. $(VIRTUALENV)/bin/activate && \
 	pip install jedi epc pylint nose six service_factory
 
-# Install documentation tools.
 doc-tools : venv
 	. $(VIRTUALENV)/bin/activate && \
-	pip install sphinx sphinx-autobuild
+	pip install sphinx sphinx-autobuild numpydoc sphinx_rtd_theme
 
-# Configure virtualenv
+
+#
+# virtualenv setup
+#
 venv: $(VIRTUALENV)/bin/activate
 
 $(VIRTUALENV)/bin/activate: requirements.txt
-	@type pip >/dev/null || easy_install --user pip
-	@type virtualenv>/dev/null || easy_install --user virtualenv
+	type pip >/dev/null || easy_install --user pip
+	type virtualenv>/dev/null || easy_install --user virtualenv
 	test -d $(VIRTUALENV) || virtualenv -p $(PYTHON_BIN) $(VIRTUALENV)
 	. $@ && pip install -Ur requirements.txt
 	touch $@
