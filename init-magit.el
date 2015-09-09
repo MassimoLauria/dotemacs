@@ -23,13 +23,17 @@
     (kill-buffer)
     (jump-to-register :magit-fullscreen))
   (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
-  (add-hook 'magit-mode-hook 'magit-svn-mode))
+  (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 
 (use-package magit-svn
   :ensure t
   :diminish magit-svn-mode
-  :commands (magit-svn-mode))
+  :commands (magit-svn-mode turn-on-magit-svn))
 
+(use-package magit-gh-pulls
+  :ensure t
+  :diminish magit-gh-pulls-mode
+  :commands (magit-gh-pulls-mode turn-on-magit-gh-pulls))
 
 (provide 'init-magit)
 
