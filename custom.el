@@ -7,7 +7,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-item-indent 0)
- '(TeX-master t)
+ '(TeX-master t t)
  '(ac-auto-show-menu 0.3)
  '(ac-delay 0.1)
  '(ac-disable-on-comment nil)
@@ -535,7 +535,13 @@
  '(default-justification (quote left))
  '(delete-old-versions t)
  '(display-hourglass t)
+ '(display-time-24hr-format t)
  '(display-time-day-and-date t)
+ '(display-time-world-list
+   (quote
+    (("Europe/Rome" "Rome")
+     ("Asia/Tokyo" "Tokyo")
+     ("Europe/Stockholm" "Stockholm"))))
  '(ebib-index-display-fields (quote (year author title)))
  '(ebib-print-multiline t)
  '(ebib-sort-order (quote ((year) (author editor) (title))))
@@ -646,7 +652,7 @@
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
- '(org-src-fontify-natively t)
+ '(org-src-fontify-natively t t)
  '(org-todo-keyword-faces
    (quote
     (("TODO" :foreground "red" :background "black" :weight bold)
@@ -668,7 +674,7 @@
     ((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")
      (sequence "SKIM" "READ" "|" "DONE" "EVENTUALLY")
      (sequence "UNSOLVED" "|" "SOLVED")
-     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))))
+     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))) t)
  '(org-use-sub-superscripts (quote {}))
  '(post-attachment-regexp "\\(attach\\|alleg\\)")
  '(post-rename-buffer nil)
