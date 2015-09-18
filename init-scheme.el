@@ -11,6 +11,7 @@
        (executable-find "mit-scheme")
        (executable-find "/usr/local/bin/mit-scheme")
        (executable-find "/Applications/MITScheme.app/Contents/Resources/mit-scheme")
+       "scheme"
        ))
 (if (file-name-directory scheme-program-name)
     (add-to-list 'exec-path (file-name-directory scheme-program-name) 'append)
