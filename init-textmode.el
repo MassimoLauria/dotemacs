@@ -37,13 +37,13 @@
 (add-hook 'fill-nobreak-predicate 'fill-single-word-nobreak-p)
 
 
-(defun my-setup-of-text-mode-common()
+(defun MassimoLauria/text-mode-setup()
   "Initial setup of Text mode (common to all children modes)"
   (when-available 'flyspell-mode (flyspell-mode 1))
   (when-available 'goto-address-mode (goto-address-mode 1)))
 
 
-(defun my-setup-of-text-mode-nontex()
+(defun MassimoLauria/text-mode-nontex()
   "Setup of text modes which are not for LaTeX."
   (when (notany (lambda (m) (eq m major-mode))
                 '(LaTeX-mode TeX-mode latex-mode tex-mode))
@@ -56,8 +56,19 @@
     (set (make-local-variable 'reftex-cite-punctuation) '(", " " & " " et al."))
     (set (make-local-variable 'reftex-cite-format) "(%2a, %y)")))
 
+
+(defun MassimoLauria/rst-mode-setup()
+  "Initial setup of Text mode (common to all children modes)"
+  (turn-on-reftex)
+  (set (make-local-variable 'reftex-cite-punctuation) '(", " " & " " et al."))
+  (set (make-local-variable 'reftex-cite-format) ".. [%l]\n   %a\n   %t\n   %j%b (%y)")
+  (when-available 'flyspell-mode (flyspell-mode 1))
+  (when-available 'goto-address-mode (goto-address-mode 1)))
+
+
+
 ;; Nice quotes
-(defun my-replace-straight-quotes (pair action context)
+(defun MassimoLauria/replace-straight-quotes (pair action context)
   (when (eq action 'insert)
     (delete-char 1)
     (delete-char -1)
@@ -68,14 +79,15 @@
 ;; Nice quotes and smartparens
 (when (require 'smartparens nil t)
   (sp-local-pair 'text-mode "“" "”")  ;; add so you can jump back and forth and out and in the pair!
-  (sp-local-pair 'text-mode "\"" nil :post-handlers '(my-replace-straight-quotes))
+  (sp-local-pair 'text-mode "\"" nil :post-handlers '(MassimoLauria/replace-straight-quotes))
   (sp-local-tag  'text-mode "\"" "“" "”" :actions '(wrap)))
 
 
 ;; Reset the text-mode hook
 (setq text-mode-hook nil)
-(add-hook 'text-mode-hook 'my-setup-of-text-mode-common)
-(add-hook 'text-mode-hook 'my-setup-of-text-mode-nontex)
+(add-hook 'text-mode-hook 'MassimoLauria/text-mode-setup)
+(add-hook 'text-mode-hook 'MassimoLauria/text-mode-nontex)
+(add-hook 'rst-mode-hook 'MassimoLauria/rst-mode-setup)
 
 
 (provide 'init-textmode)
