@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
-;; Time-stamp: "2015-08-07, 00:52 (CEST) Massimo Lauria"
+;; Time-stamp: "2015-09-25, 02:19 (JST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -156,8 +156,10 @@
 (require 'init-server)
 
 ;;; Start editing -------------------------------------------------------
-(init-scratch-buffer)
 
+(init-scratch-buffer)
+(org-agenda nil "n")
+(delete-other-windows)
 
 (provide 'init-start)
 ;; Local Variables:
