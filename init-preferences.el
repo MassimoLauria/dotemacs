@@ -99,6 +99,10 @@
   (setq confirm-kill-emacs 'y-or-n-p) ; In other cases daemon is just killed.
   )
 
+
+(setq echo-keystrokes 0.1)
+
+
 ;;  Tab expansion
 (setq-default indent-tabs-mode nil) ;; Expand tabs as spaces
 (setq default-tab-width 4)
