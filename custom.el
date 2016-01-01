@@ -7,7 +7,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-item-indent 0)
- '(TeX-master t)
+ '(TeX-master t t)
  '(ac-auto-show-menu 0.3)
  '(ac-delay 0.1)
  '(ac-disable-on-comment nil)
@@ -644,6 +644,13 @@
     ((daily today)
      ""
      (800 1000 1200 1400 1600 1800 2000))))
+ '(org-file-apps
+   (quote
+    ((auto-mode . emacs)
+     ("\\.mm\\'" . default)
+     ("\\.x?html?\\'" . default)
+     ("\\.pdf\\'" . default)
+     ("jpg" . "open %s"))))
  '(org-hide-leading-stars t)
  '(org-highlight-latex-fragments-and-specials t)
  '(org-latex-to-pdf-process
@@ -796,7 +803,7 @@
  '(flyspell-duplicate ((t (:strike-through nil :underline (:color "red" :style wave)))))
  '(flyspell-incorrect ((t (:underline (:color "red" :style wave)))))
  '(font-lock-fixme-face ((((class color) (background dark)) (:background "Yellow" :foreground "Red" :underline nil))) t)
- '(linum ((t (:inherit (shadow default) :background "#3f3f3f" :foreground "gray13"))) t)
+ '(linum ((t (:inherit (shadow default) :background "#3f3f3f" :foreground "gray13"))))
  '(mmm-default-submode-face ((t (:background "gray15"))))
  '(post-double-quoted-text-face ((t (:inherit gnus-cite-8))))
  '(post-email-address-text-face ((t (:box (:line-width 1 :color "grey75")))))
