@@ -669,6 +669,7 @@
      ("FEEDBACK" :foreground "yellow" :weight bold)
      ("WAIT" :foreground "yellow" :weight bold)
      ("DELEGATED" :foreground "cyan" :weight bold)
+     ("HASNEWERENTRY" :foreground "cyan" :weight bold)
      ("EVENTUALLY" :foreground "cyan" :weight bold)
      ("CANCELED" :foreground "lightgreen" :strike-through t :weight bold)
      ("DONE" :foreground "lightgreen" :weight bold)
@@ -678,7 +679,7 @@
      ("REVIEWAGAIN" . "(:foreground \"blue\" :background \"lightgreen\" :weight bold)"))))
  '(org-todo-keywords
    (quote
-    ((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")
+    ((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED" "HASNEWERENTRY")
      (sequence "SKIM" "READ" "|" "DONE" "EVENTUALLY")
      (sequence "UNSOLVED" "|" "SOLVED")
      (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))))
