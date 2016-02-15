@@ -807,7 +807,7 @@
  '(flyspell-duplicate ((t (:strike-through nil :underline (:color "red" :style wave)))))
  '(flyspell-incorrect ((t (:underline (:color "red" :style wave)))))
  '(font-lock-fixme-face ((((class color) (background dark)) (:background "Yellow" :foreground "Red" :underline nil))) t)
- '(linum ((t (:inherit (shadow default) :background "#383838" :foreground "DarkSeaGreen4"))))
+ '(linum ((t (:inherit (shadow default) :background "#303030" :foreground "dark gray"))))
  '(linum-highlight-face ((t (:foreground "Yellow"))))
  '(mmm-default-submode-face ((t (:background "gray15"))))
  '(post-double-quoted-text-face ((t (:inherit gnus-cite-8))))
