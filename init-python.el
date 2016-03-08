@@ -54,6 +54,7 @@
 (use-package virtualenvwrapper
   :ensure t
   :init (setq venv-location (concat (getenv "HOME") "/.virtualenvs/"))
+        (put 'python-project-venv-name 'safe-local-variable #'stringp)
   :commands (venv-workon venv-mkvirtualenv)
   :config (venv-initialize-eshell))
        

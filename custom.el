@@ -717,8 +717,6 @@
                        "\\_>"))
               1
               (quote font-lock-variable-name-face)))))
-     (python-project-venv-name . "cnfgen-venv")
-     (python-project-venv-name . "cnfgen-dev")
      (do-delete-whitespace)
      (eval quote
            (auto-fill-mode 1))
