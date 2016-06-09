@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2016-06-09, 14:48 (CEST) Massimo Lauria"
+# Time-stamp: "2016-06-09, 18:39 (CEST) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -68,6 +68,8 @@ uninstall:
 	@rm -fr ~/.emacs.d/init.el
 	@rm -fr ~/.emacs.d/Cask
 	@rm -fr ~/.emacs.d/.cask/
+	@rm -fr ~/.emacs.d/anaconda-mode/
+	@rm -fr ~/.emacs.d/irony/
 
 
 
