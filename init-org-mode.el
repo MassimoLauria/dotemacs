@@ -52,10 +52,6 @@
   ;; Org-mode communicating with external applications.
   (require 'org-protocol nil t)
 
-  ;; Wordpress blogging in Org-mode! (with Math!)
-  (add-to-list 'load-path (concat default-elisp-3rdparties "/org2blog"))
-  (require 'org2blog-autoloads nil t)
-
   ;; Setup keyboard
   (add-hook 'org-mode-hook    'org-mode/setup-keys/gb)
   (add-hook 'orgtbl-mode-hook 'orgtbl-mode/setup-keys/gb)
@@ -68,7 +64,9 @@
             (lambda ()(select-frame-set-input-focus (selected-frame))))
 
   ;; citation
-  (add-hook 'org-mode-hook 'org-mode/setup-citations))
+  (add-hook 'org-mode-hook 'org-mode/setup-citations)
+
+  )
 
 
 ;; Setup of different org-mode auxiliary layout.
