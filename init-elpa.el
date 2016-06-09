@@ -1,6 +1,6 @@
 ;;; init-elpa.el --- Bootstrap package system -*- coding: utf-8 -*-
 
-;; Time-stamp: "2015-07-29, 18:56 (CEST) Massimo Lauria"
+;; Time-stamp: "2016-06-09, 13:19 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -15,9 +15,7 @@
 (setq package-archives  '(
                           ("gnu"          . "http://elpa.gnu.org/packages/")
                           ("elpa"         . "http://tromey.com/elpa/")
-                          ("melpa-stable" . "http://stable.melpa.org/packages/")
                           ("melpa"        . "http://melpa.org/packages/")
-                          ;; ("marmalade"    . "http://marmalade-repo.org/packages/")
                           )) ;; end of package list
 (package-initialize)
 
