@@ -38,60 +38,21 @@
 
 
 ;;; Setup Emacs environment --------------------------------------------
+(require 'cask "~/.cask/cask.el")
+(cask-initialize)
 
 (setq default-elisp-path        "~/config/emacs")             ;; configuration files
 (setq default-elisp-3rdparties  "~/config/emacs/3rdparties")  ;; 3rd parties conf. packages
 (setq load-path (cons 	default-elisp-path        load-path))
 (setq load-path (cons 	default-elisp-3rdparties  load-path))
 
-(require 'cask "~/.cask/cask.el")
-(cask-initialize)
 ;; (require 'pallet)
 ;; (pallet-mode t)
 
 
 (require 'init-discover-runtime) ; Discover emacs version and runtime
 (require 'init-environment)      ; setup running environment
-
-
-
 (require 'init-functions)        ; Utility functions for configuration
-(require 'init-elpa)
-
-;; Sometimes the system does not contains important packages as Org or
-;; BBDB, which cannot be installed using ELPA (either because Emacs <
-;; 24 or because BBDB is not on ELPA).
-;;
-;; If there is an user installation of those packages, those will be
-;; found first. I guess ELPA will overload them. Anyway everything
-;; lives in the user local installation which can be tuned for the
-;; specific system.
-;;
-(setq additional-elisp-paths (list
-                              "~/Library/site-lisp/"   ;; macosx user site-lisp
-                              "~/.emacs.d/site-lisp/"  ;; standard user path
-                              "~/.local/share/emacs/site-lisp/" ;; local fs hierarchy
-                              ;; non local paths
-                              "/usr/share/emacs/site-lisp/"
-                              "/usr/local/share/emacs/site-lisp/"
-                              "/opt/local/share/emacs/site-lisp/"
-                              ))
-
-(setq additional-elisp-packages (list
-                              ""
-                              "mu4e"
-                              ;; "bbdb/lisp"        ;; main bbdb in Melpa
-                              ;; "bbdb/bits"        ;; bbdb contributed utilities
-                              "org/lisp"         ;; main org-mode
-                              "org/contrib/lisp" ;; org-mode contributed utilities
-                              ))
-
-(dolist (path additional-elisp-paths)
-  (dolist (package additional-elisp-packages)
-    (let ((pp (concat path package)))
-      (if (file-directory-p pp)
-              (setq load-path (cons pp load-path))))))
-
 
 (add-to-list 'Info-directory-list (concat default-elisp-path "/info"))
 
