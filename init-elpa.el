@@ -67,7 +67,6 @@
 (require-package 'zenburn-theme)
 (require-package 'flycheck)
 
-;; from Melpa-unstable
 (require-package 'smartparens)
 (require-package 'edit-server-htmlize)
 
@@ -75,13 +74,11 @@
 (use-package expand-region
   :defer t
   :ensure t
-  :pin melpa-stable
   :commands er/expand-region)
 
 (use-package multiple-cursors
   :defer t
   :ensure t
-  :pin melpa-stable
   :commands mc/mark-all-like-this-dwim)
 
 (provide 'init-elpa)
