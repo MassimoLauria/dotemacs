@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
-;; Time-stamp: "2015-09-25, 02:19 (JST) Massimo Lauria"
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016  Massimo Lauria
+;; Time-stamp: "2016-06-09, 14:36 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -43,6 +43,12 @@
 (setq default-elisp-3rdparties  "~/config/emacs/3rdparties")  ;; 3rd parties conf. packages
 (setq load-path (cons 	default-elisp-path        load-path))
 (setq load-path (cons 	default-elisp-3rdparties  load-path))
+
+(require 'cask "~/.cask/cask.el")
+(cask-initialize)
+;; (require 'pallet)
+;; (pallet-mode t)
+
 
 (require 'init-discover-runtime) ; Discover emacs version and runtime
 (require 'init-environment)      ; setup running environment
@@ -158,8 +164,6 @@
 ;;; Start editing -------------------------------------------------------
 
 (init-scratch-buffer)
-(org-agenda nil "n")
-(delete-other-windows)
 
 (provide 'init-start)
 ;; Local Variables:

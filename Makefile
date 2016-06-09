@@ -1,13 +1,10 @@
-# Copyright (C) 2015 by Massimo Lauria <lauria.massimo@gmail.com>
+# Copyright (C) 2015, 2016 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2015-06-24, 01:46 (CEST) Massimo Lauria"
+# Time-stamp: "2016-06-09, 14:48 (CEST) Massimo Lauria"
 #
 
-
-
-
-## Binary
+## Emacs binary
 
 EMACS=emacs
 
@@ -15,26 +12,38 @@ ifeq ($(shell uname -s),Darwin)
 EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
 endif
 
-
 ## Init files
 
 INIT=$(abspath init.el)
 INITFULL=$(abspath init-start.el)
+INITMINI=$(abspath init-minimal.el)
+
+## Cask files
+
+CASK=$(abspath Cask)
+CASKEL=${HOME}/.cask/cask.el
+CASKBIN=${HOME}/.cask/bin/cask
 
 
 
+.PHONY: clean test profile install-cask minisetup
 
-.PHONY: clean test profile
+all: install-cask
+	@echo "Setup Emacs editor (override any previous configuration)."
+	@mkdir -p ~/.emacs.d
+	@rm -f ~/.emacs.d/init.el
+	@rm -f ~/.emacs.d/Cask
+	@ln -s ${INIT} ~/.emacs.d
+	@ln -s ${CASK} ~/.emacs.d
+	@echo "Install required packages."
+	${CASKBIN} install --path ${HOME}/.emacs.d
+	@echo "Done."
 
-all:
-	@echo "Install config file."
-	mkdir -p ~/.emacs.d
-	rm ~/.emacs.d/init.el
-	ln -s ${INIT} ~/.emacs.d
-	@echo "First launch to test/install required packages."
-	@${EMACS} -q --eval '(condition-case err (progn (load "${INIT}") (kill-emacs 0)) (error (kill-emacs 1)))' \
-		&& (echo "Successful installation."; exit 0) \
-		|| (echo "Error during first run. $$?"; exit 1)
+minisetup:
+	@echo "Minimal setup of Emacs (override previous ones)."
+	@mkdir -p ~/.emacs.d
+	@rm -f ~/.emacs.d/init.el
+	@cp ${INITMINI} ~/.emacs.d/init.el
 
 profile:
 	${EMACS} -Q -l utils/profile-dotemacs.el \
@@ -43,9 +52,23 @@ profile:
 
 
 test:
+	@echo "Run emacs to test the configuration."
 	@${EMACS} -q --eval '(condition-case err (progn (load "${INIT}") (kill-emacs 0)) (error (kill-emacs 1)))' \
 	&& (echo "No error on load"; exit 0) \
 	|| (echo "Test failed: errors on load. $$?"; exit 1)
+
+
+# --------- Setup ---------------------------------
+install-cask:
+	@-curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
+
+
+
+uninstall:
+	@rm -fr ~/.emacs.d/init.el
+	@rm -fr ~/.emacs.d/Cask
+	@rm -fr ~/.emacs.d/.cask/
+
 
 
 # --------- Default rules -------------------------

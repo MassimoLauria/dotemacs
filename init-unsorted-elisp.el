@@ -1,6 +1,6 @@
 ;;; init-unsorted-elisp.el --- Contains small chunks of elisp code in no particular order
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -46,6 +46,23 @@
 
 (autoload 'muttrc-mode "muttrc-mode"
   "Mode to edit mutt configuration files")
+
+
+(use-package semantic
+  :ensure t
+  :commands semantic-mode)
+
+
+;; Editing
+(use-package expand-region
+  :defer t
+  :ensure t
+  :commands er/expand-region)
+
+(use-package multiple-cursors
+  :defer t
+  :ensure t
+  :commands mc/mark-all-like-this-dwim)
 
 
 ;; Undo-Tree, much better than default.
