@@ -66,12 +66,15 @@
 
 
 ;; Undo-Tree, much better than default.
-(if (require 'undo-tree)
-    (progn
-      (global-undo-tree-mode 1)
-      (defalias 'redo 'undo-tree-redo)
-      (defalias 'undo 'undo-tree-undo)
-      (global-set-key (kbd "C-S-z") 'redo))) ; 【Ctrl+Shift+z】 to Redo
+(use-package undo-tree
+  :defer nil
+  :diminish undo-tree-mode
+  :commands (global-undo-tree-mode
+             undo-tree-mode
+             undo-tree-undo
+             undo-tree-redo)
+  :bind (( "C-S-z" . undo-tree-redo ))
+  :init (global-undo-tree-mode))
 
 
 

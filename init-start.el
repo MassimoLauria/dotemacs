@@ -46,17 +46,19 @@
 (setq load-path (cons 	default-elisp-path        load-path))
 (setq load-path (cons 	default-elisp-3rdparties  load-path))
 
-;; (require 'pallet)
-;; (pallet-mode t)
+(require 'pallet)
+(pallet-mode t)
 
 
-(require 'init-discover-runtime) ; Discover emacs version and runtime
-(require 'init-environment)      ; setup running environment
-(require 'init-functions)        ; Utility functions for configuration
 
 (add-to-list 'Info-directory-list (concat default-elisp-path "/info"))
 
 ;;; Module(s) initialization -------------------------------------------
+
+;; Bootstrap
+(require 'init-discover-runtime) ; Discover emacs version and runtime
+(require 'init-environment)      ; setup running environment
+(require 'init-functions)        ; Utility functions for configuration
 
 ;; Work environment customization
 (require 'init-coding)
