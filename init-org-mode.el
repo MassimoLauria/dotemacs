@@ -46,8 +46,6 @@
 
   ;; org-babel-setup
   (init-org-mode--babel-setup)
-  ;; org-bibtex patch
-  (init-org-mode--patch-org-bibtex)
 
   ;; Org-mode communicating with external applications.
   (require 'org-protocol nil t)
@@ -280,7 +278,6 @@ part of the keyboard.
            "* %?\n  %U\n  %i\n  %a\n\n")
           ;; org-capture from the web
           ("w" "webpage" entry (file "agenda.org") "%(org-build-note-auto)")
-          ("y" "macprotocol" entry (file "agenda.org") "%(org-build-note-auto)")
           )))
 
 (setq org-default-capture-template "w")
@@ -423,54 +420,6 @@ for `reftex-default-bibliography'."
   (set (make-local-variable 'reftex-cite-punctuation) '(", " " & " " et al."))
   (set (make-local-variable 'reftex-cite-format) my-org-mode-cite-format)
   (org-add-link-type "bibtex" 'my-org-bibtex-open 'my-org-bibtex-export-handler))
-
-;; Patch org-bibtex-store-link to manage Capitalized Fields.
-(defun init-org-mode--patch-org-bibtex ()
-  "The original `org-bibtex-store-link' does not accept capitalized fields."
-  (if (member 'org-bibtex-store-link org-store-link-functions)
-      (progn
-        (remove-hook 'org-store-link-functions 'org-bibtex-store-link)
-        (add-hook 'org-store-link-functions 'org-bibtex-store-link-patched))))
-
-(defun org-bibtex-store-link-patched ()
-  "Store a link to a BibTeX entry."
-  (when (eq major-mode 'bibtex-mode)
-    (let* ((search (org-create-file-search-in-bibtex))
-	   (link (concat "file:" (abbreviate-file-name buffer-file-name)
-			 "::" search))
-	   (entry (mapcar ; repair strings enclosed in "..." or {...}
-		   (lambda(c)
-		     (if (string-match
-			  "^\\(?:{\\|\"\\)\\(.*\\)\\(?:}\\|\"\\)$" (cdr c))
-			 (cons (car c) (match-string 1 (cdr c))) c))
-		   (save-excursion
-		     (bibtex-beginning-of-entry)
-		     (mapcar '(lambda (pair) (cons (downcase (car pair)) (cdr pair)))
-               (bibtex-parse-entry))
-             ))))
-      (org-store-link-props
-       :key (cdr (assoc "=key=" entry))
-       :author (or (cdr (assoc "author" entry)) "[no author]")
-       :editor (or (cdr (assoc "editor" entry)) "[no editor]")
-       :title (or (cdr (assoc "title" entry)) "[no title]")
-       :booktitle (or (cdr (assoc "booktitle" entry)) "[no booktitle]")
-       :journal (or (cdr (assoc "journal" entry)) "[no journal]")
-       :publisher (or (cdr (assoc "publisher" entry)) "[no publisher]")
-       :pages (or (cdr (assoc "pages" entry)) "[no pages]")
-       :url (or (cdr (assoc "url" entry)) "[no url]")
-       :year (or (cdr (assoc "year" entry)) "[no year]")
-       :month (or (cdr (assoc "month" entry)) "[no month]")
-       :address (or (cdr (assoc "address" entry)) "[no address]")
-       :volume (or (cdr (assoc "volume" entry)) "[no volume]")
-       :number (or (cdr (assoc "number" entry)) "[no number]")
-       :annote (or (cdr (assoc "annote" entry)) "[no annotation]")
-       :series (or (cdr (assoc "series" entry)) "[no series]")
-       :abstract (or (cdr (assoc "abstract" entry)) "[no abstract]")
-       :btype (or (cdr (assoc "=type=" entry)) "[no type]")
-       :type "bibtex"
-       :link link
-       :description description))))
-
 
 
 (defun init-org-mode--babel-setup ()
