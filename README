@@ -1,8 +1,10 @@
 
-This is the Emacs config of Massimo Lauria (C) 2009, 2010, 2011.
+This is the Emacs config of Massimo Lauria (C) 2009-2016.
 
 This file is under massive and continue change, and things break every
-day.
-
-I just  put it online  so you  can cut &  paste whatever you  may find
+day. I just put it online so you can cut & paste whatever you may find
 useful.
+
+This configuration assume  a modern Emacs installation,  and uses Cask
+pacakge  system.  If  your  Emacs   is  less  recent  than  that,  the
+configuration will revert to a minimal version.

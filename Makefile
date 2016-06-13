@@ -1,15 +1,17 @@
 # Copyright (C) 2015, 2016 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2016-06-09, 18:39 (CEST) Massimo Lauria"
+# Time-stamp: "2016-06-13, 11:30 (CEST) Massimo Lauria"
 #
 
 ## Emacs binary
 
 EMACS=emacs
+EMACSCLIENT=emacsclient
 
 ifeq ($(shell uname -s),Darwin)
 EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
+EMACSCLIENT=/Applications/Emacs.app/Contents/MacOS/bin/emacsclient
 endif
 
 ## Init files
@@ -21,14 +23,13 @@ INITMINI=$(abspath init-minimal.el)
 ## Cask files
 
 CASK=$(abspath Cask)
-CASKEL=${HOME}/.cask/cask.el
 CASKBIN=${HOME}/.cask/bin/cask
 
 
 
-.PHONY: clean test profile install-cask minisetup
+.PHONY: clean test profile minisetup start stop
 
-all: install-cask
+all: ${CASKBIN}
 	@echo "Setup Emacs editor (override any previous configuration)."
 	@mkdir -p ~/.emacs.d
 	@rm -f ~/.emacs.d/init.el
@@ -40,7 +41,7 @@ all: install-cask
 	@echo "Done."
 
 minisetup:
-	@echo "Minimal setup of Emacs (override previous ones)."
+	@echo "Minimal setup of Emacs (override any previous configuration)."
 	@mkdir -p ~/.emacs.d
 	@rm -f ~/.emacs.d/init.el
 	@cp ${INITMINI} ~/.emacs.d/init.el
@@ -70,6 +71,14 @@ uninstall:
 	@rm -fr ~/.emacs.d/.cask/
 	@rm -fr ~/.emacs.d/anaconda-mode/
 	@rm -fr ~/.emacs.d/irony/
+	@rm -fr ~/.cask/
+
+# -------- Daemon ---------------------------------
+start:
+	${EMACS} --daemon --chdir ${HOME}
+
+stop:
+	${EMACSCLIENT} -e '(kill-emacs)'
 
 
 

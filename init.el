@@ -2,7 +2,8 @@
 ;;
 ;; 
 ;;  Full Emacs configuration requires version >= 24, but in case of
-;;  older emacs, a bare minimal configuration is used. 
+;;  older emacs, we revert to a bare minimal configuration that still
+;;  does not make me cringe.
 ;;
 
 ;; -------------------------------------------------------------------
