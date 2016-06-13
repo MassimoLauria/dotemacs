@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2016-06-13, 11:30 (CEST) Massimo Lauria"
+# Time-stamp: "2016-06-13, 11:46 (CEST) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -60,7 +60,7 @@ test:
 
 
 # --------- Setup ---------------------------------
-install-cask:
+${CASKBIN}:
 	@-curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 
 
