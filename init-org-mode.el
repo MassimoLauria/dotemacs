@@ -206,7 +206,7 @@ part of the keyboard.
 
 ;; support functions
 
-(defun org-build-note-webpage ()
+(defun org-capture-URL-data ()
   "Define the structure of a capture note for an external link"
   (let ((title (plist-get org-store-link-plist :description))
         (link  (plist-get org-store-link-plist :link))
@@ -215,9 +215,9 @@ part of the keyboard.
         output)
     (with-temp-buffer
       (insert (concat
-               "* “" title "” :webpage:\n"
+               "* “" title "”%?\n"
                "  "  time "\n\n"
-               "  %?\n\n"
+               "  \n\n"
                "  --- Source: [[" link "][" title "]]" "\n\n  "))
       ;;(set-fill-prefix)
       (insert text)
@@ -226,68 +226,17 @@ part of the keyboard.
       (setq output (buffer-string)))
     output))
 
-(defun org-build-note-gmail ()
-  "Define the structure of a capture note for an gmail link"
-  (let ((title (plist-get org-store-link-plist :description))
-        (link  (plist-get org-store-link-plist :link))
-        (time  (format-time-string "[%Y-%m-%d %a]" (current-time)))
-        (text  (plist-get org-store-link-plist :initial))
-        msgid
-        output)
-    ;; Get the message ID
-    (setq msgid (save-match-data
-                  (string-match "\/\\([0-9a-f]*\\)\$" link)
-                  (match-string 1 link)))
-    ;; Build the template
-    (with-temp-buffer
-      (insert (concat
-               "* “" title "” :mail:\n"
-               "  "  time "\n\n"
-               "  %?\n\n"
-               "  --- Source: [[gmail:" msgid "][link to message]]" "\n\n  "))
-      ;;(set-fill-prefix)
-      (insert text)
-      (set-fill-column 70)
-      (fill-paragraph 'full)
-      (setq output (buffer-string)))
-    output))
-
-(defun org-build-note-auto ()
-  "Define the structure of a capture note for an gmail link"
-  (let ((link  (plist-get org-store-link-plist :link)))
-    ;; Get the message ID
-    (cond ((string-match "^https?://mail\\.google\\.com/mail" (plist-get org-store-link-plist :link))
-           (org-build-note-gmail))
-          (t 
-           (org-build-note-webpage)))
-     ))
-
-
-;; Normally my private (and translated) configuration is used.
-(when (not (boundp 'org-capture-templates))
-  (setq org-capture-templates
-        '(
-          ;; task
-          ("t" "task" entry (file "agenda.org")
-           "* TODO ⌚ %?\n  %U\n\n  %i\n\n")
-          ;; meeting and events
-          ("e" "event" entry (file "agenda.org")
-           "* %?\n  WHEN %^t\n  %i\n\n")
-          ;; notebook
-          ("n" "note" entry (file "notebook.org")
-           "* %?\n  %U\n  %i\n  %a\n\n")
-          ;; org-capture from the web
-          ("w" "webpage" entry (file "agenda.org") "%(org-build-note-auto)")
-          )))
+(setq org-capture-templates
+      '(("t" "Task" entry (file "agenda.org")          "* TODO ⌚ %?\n  %U\n\n  %i\n\n")
+        ("d" "Deadline" entry (file "agenda.org")      "* TODO ⌚ %?\n  DEADLINE: %^t\n  %U\n\n  %i\n\n")
+        ("e" "Event/Meeting" entry (file "agenda.org") "* %?\n  WHEN %^t\n  %i\n\n" "agenda.org")
+        ("n" "Note" entry (file "notebook.org")        "* %?\n  %U\n  %i\n  %a\n\n")
+        ("j" "Journal Entry" entry (file+datetree "journal.org") "* inserito il %U\n\n  %?\n\n%i\n\n")
+        ;; ("Q" "File a notebook" entry (file "notebook.org")
+        ;;  "* New notebook %? :notebook:%^g\n  %U\n\n  %^{ID}p%^{Formato}p%^{Fogli}p%^{Nome}p\n\n")
+        ("w" "External URL" entry (file "agenda.org")  "%(org-capture-URL-data)")))
 
 (setq org-default-capture-template "w")
-
-;; Url abbreviation (and search engine)
-(setq org-link-abbrev-alist
-      '(("gmail"   . "https://mail.google.com/mail/u/0/#all/%s")
-        ("google"  . "http://www.google.com/search?q=%s")
-        ("map"     . "http://maps.google.com/maps?q=%s")
-        ))
 
 
 ;; Aquamacs misses some org-agenda keybindings!
