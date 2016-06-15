@@ -16,8 +16,6 @@
 (depends-on "dash")
 (depends-on "deferred")
 (depends-on "diminish")
-(depends-on "edit-server")
-(depends-on "edit-server-htmlize")
 (depends-on "elisp-slime-nav")
 (depends-on "epl")
 (depends-on "expand-region")
