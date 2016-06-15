@@ -45,23 +45,6 @@
 
 (add-hook 'message-mode-hook 'setup-message-mode)
 
-
-; setup emacs to edit for mutt.
-(defun setup-post-mode ()
-  "Setup editor for post-mode"
-  (interactive)
-  (require 'bbdb-com nil t)
-  (set (make-local-variable 'mail-header-separator) "")
-  (set-fill-column 70)
-  (define-key post-mode-map [f2] 'ispell-message))
-
-(use-package post
-  :mode ("mutt-[a-z0-9]+-[0-9]+-[0-9]+.*\\'" . post-mode)
-  :config
-  (add-hook 'post-mode-hook 'setup-post-mode))
-
-
-
 ;;
 ;; BBDB
 ;;
