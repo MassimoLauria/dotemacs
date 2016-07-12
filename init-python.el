@@ -45,7 +45,7 @@
 
 ;; Minor modes
 (add-hook 'python-mode-hook 'anaconda-mode)
-(add-hook 'python-mode-hook 'eldoc-mode)
+(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 (add-hook 'python-mode-hook 'flycheck-mode)
 
 
