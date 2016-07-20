@@ -41,6 +41,8 @@
 (depends-on "magit-svn")
 (depends-on "metaweblog")
 (depends-on "multiple-cursors")
+(depends-on "notmuch")
+(depends-on "notmuch-labeler")
 (depends-on "org2blog")
 (depends-on "package-build")
 (depends-on "pallet")
