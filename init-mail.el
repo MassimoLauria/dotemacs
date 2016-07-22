@@ -1,7 +1,17 @@
 ;;;
-;;; These setting only involves writing/sending mail. Mail reading is not done
-;;; in Emacs.
+;;; Sending:  msmtp (if installed)
+;;; Writing:  message-mode
+;;; Contacts: bbdb
+;;; Reading:  notmuch (and offlineimap)
 ;;;------------------------------------------------------------------
+
+;; Load private mail infos
+
+(setq prefs-mail-file-name "~/personal/mail/config/config.emacs")
+
+(when (file-readable-p prefs-mail-file-name)
+  (load-file prefs-mail-file-name)
+)
 
 
 ;;
@@ -50,8 +60,6 @@
 ;;
 
 (use-package bbdb
-  :ensure t
-  :pin gnu
   :commands (bbdb bbdb-complete-mail bbdb-complete-name)
   :config
   (bbdb-initialize))
@@ -93,6 +101,9 @@
 
     bbdb-send-mail-style 'message
 )
+
+
+;;; 
 
 
 (provide 'init-mail)
