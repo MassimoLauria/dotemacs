@@ -160,6 +160,13 @@
      (:name "[a]ll messages" :query "*" :key "a")
      (:name "[A]ttachment" :query "tag:attachment" :key "A"))))
  '(notmuch-search-oldest-first nil)
+ '(notmuch-search-result-format
+   (quote
+    (("date" . "%12s ")
+     ("count" . "%-7s ")
+     ("authors" . "%-20s ")
+     ("tags" . "%s ")
+     ("subject" . "  %-60s"))))
  '(ns-right-alternate-modifier nil)
  '(ns-tool-bar-display-mode (quote both) t)
  '(ns-tool-bar-size-mode (quote regular) t)
