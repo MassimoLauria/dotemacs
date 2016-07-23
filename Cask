@@ -52,6 +52,7 @@
 (depends-on "pythonic")
 (depends-on "rainbow-delimiters")
 (depends-on "rainbow-identifiers")
+(depends-on "rainbow-mode")
 (depends-on "s")
 (depends-on "seq")
 (depends-on "shut-up")
