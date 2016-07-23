@@ -110,11 +110,11 @@
   (require 'notmuch-labeler)
   (define-key notmuch-common-keymap "g" 'notmuch-jump-search) ;; as gmail does
   (define-key notmuch-common-keymap "j" 'nil)
-  )
 
-(defun mail ()
-  (interactive)
-  (notmuch))
+  (defun mail ()
+    (interactive)
+    (notmuch)))
+
 
 (provide 'init-mail)
 ;; Local Variables:
