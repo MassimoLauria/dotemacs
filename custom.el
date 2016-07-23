@@ -150,6 +150,16 @@
  '(mu4e-view-show-images t)
  '(nlinum-format "%2d│")
  '(no-easy-keys t)
+ '(notmuch-labeler-hide-known-labels t)
+ '(notmuch-mua-cite-function (quote message-cite-original-without-signature))
+ '(notmuch-saved-searches
+   (quote
+    ((:name "[i]nbox" :query "tag:inbox" :key "i" :sort-order nil)
+     (:name "[s]tarred" :query "tag:special" :key "s")
+     (:name "sen[t]" :query "tag:sent" :key "t")
+     (:name "[a]ll messages" :query "*" :key "a")
+     (:name "[A]ttachment" :query "tag:attachment" :key "A"))))
+ '(notmuch-search-oldest-first nil)
  '(ns-right-alternate-modifier nil)
  '(ns-tool-bar-display-mode (quote both) t)
  '(ns-tool-bar-size-mode (quote regular) t)
@@ -181,7 +191,7 @@
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
- '(org-src-fontify-natively t t)
+ '(org-src-fontify-natively t)
  '(org-todo-keyword-faces
    (quote
     (("TODO" :foreground "red" :background "black" :weight bold)
@@ -204,7 +214,7 @@
     ((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED" "HASNEWERENTRY")
      (sequence "SKIM" "READ" "|" "DONE" "EVENTUALLY")
      (sequence "UNSOLVED" "|" "SOLVED")
-     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))) t)
+     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))))
  '(org-use-sub-superscripts (quote {}))
  '(post-attachment-regexp "\\(attach\\|alleg\\)")
  '(post-rename-buffer nil)
