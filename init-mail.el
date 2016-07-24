@@ -110,7 +110,7 @@
   (require 'notmuch-labeler)
   (define-key notmuch-common-keymap "g" 'notmuch-jump-search) ;; as gmail does
   (define-key notmuch-common-keymap "j" 'nil)
-
+  :config
   (defun mail ()
     (interactive)
     (notmuch)))

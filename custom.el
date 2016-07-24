@@ -152,13 +152,6 @@
  '(no-easy-keys t)
  '(notmuch-labeler-hide-known-labels t)
  '(notmuch-mua-cite-function (quote message-cite-original-without-signature))
- '(notmuch-saved-searches
-   (quote
-    ((:name "[i]nbox" :query "tag:inbox" :key "i" :sort-order nil)
-     (:name "[s]tarred" :query "tag:special" :key "s")
-     (:name "sen[t]" :query "tag:sent" :key "t")
-     (:name "[a]ll messages" :query "*" :key "a")
-     (:name "[A]ttachment" :query "tag:attachment" :key "A"))))
  '(notmuch-search-oldest-first nil)
  '(notmuch-search-result-format
    (quote
