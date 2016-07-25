@@ -5,7 +5,6 @@
 
 
 (use-package magit
-  :ensure t
   :commands (magit-status magit-blame magit-mode)
   
   :config
@@ -26,12 +25,10 @@
   (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 
 (use-package magit-svn
-  :ensure t
   :diminish magit-svn-mode
   :commands (magit-svn-mode turn-on-magit-svn))
 
 (use-package magit-gh-pulls
-  :ensure t
   :diminish magit-gh-pulls-mode
   :commands (magit-gh-pulls-mode turn-on-magit-gh-pulls))
 
