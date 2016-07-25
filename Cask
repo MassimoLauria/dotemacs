@@ -1,6 +1,7 @@
 (source "elpa" "http://tromey.com/elpa/")
 (source "gnu" "http://elpa.gnu.org/packages/")
 (source "melpa" "http://melpa.org/packages/")
+(source org)
 
 (depends-on "ace-window")
 (depends-on "anaconda-mode")
@@ -43,6 +44,7 @@
 (depends-on "multiple-cursors")
 (depends-on "notmuch")
 (depends-on "notmuch-labeler")
+(depends-on "org-plus-contrib")
 (depends-on "org2blog")
 (depends-on "package-build")
 (depends-on "pallet")
