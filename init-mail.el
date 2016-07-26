@@ -56,6 +56,20 @@
 (add-hook 'message-mode-hook 'setup-message-mode)
 
 ;;
+;; Use gnus-alias for sender identities
+;;
+(use-package gnus-alias
+  :commands (gnus-alias-init gnus-alias-select-identity)
+  :config
+  (setq gnus-alias-override-user-mail-address t)
+  :init
+  (add-hook 'message-load-hook 'gnus-alias-init))
+
+
+      
+
+
+;;
 ;; BBDB
 ;;
 

@@ -23,6 +23,7 @@
 (depends-on "f")
 (depends-on "flycheck")
 (depends-on "git-commit")
+(depends-on "gnus-alias")
 (depends-on "graphviz-dot-mode")
 (depends-on "helm")
 (depends-on "helm-core")
