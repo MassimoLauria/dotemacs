@@ -7,7 +7,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-item-indent 0)
- '(TeX-master t t)
+ '(TeX-master t)
  '(ac-auto-show-menu 0.3)
  '(ac-delay 0.1)
  '(ac-disable-on-comment nil)
@@ -184,6 +184,7 @@
      ("\\.pdf\\'" . default)
      ("jpg" . "open %s"))))
  '(org-hide-leading-stars t)
+ '(org-highlight-latex-and-related (quote (latex script entities)))
  '(org-highlight-latex-fragments-and-specials t)
  '(org-latex-to-pdf-process
    (quote
