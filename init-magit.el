@@ -22,7 +22,7 @@
     (kill-buffer)
     (jump-to-register :magit-fullscreen))
   (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
-  ;;(add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
+  (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
   )
 
 (use-package magit-svn

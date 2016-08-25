@@ -22,6 +22,7 @@
 (depends-on "expand-region")
 (depends-on "f")
 (depends-on "flycheck")
+(depends-on "gh")
 (depends-on "git-commit")
 (depends-on "gnus-alias")
 (depends-on "graphviz-dot-mode")
