@@ -64,6 +64,8 @@
   ;; citation
   (add-hook 'org-mode-hook 'org-mode/setup-citations)
 
+  ;; Latex fragments scaling
+  (add-hook 'text-scale-mode-hook 'update-org-latex-fragments)
   )
 
 
@@ -370,6 +372,12 @@ for `reftex-default-bibliography'."
   (set (make-local-variable 'reftex-cite-format) my-org-mode-cite-format)
   (org-add-link-type "bibtex" 'my-org-bibtex-open 'my-org-bibtex-export-handler))
 
+
+(defun update-org-latex-fragments ()
+  (org-toggle-latex-fragment '(16))
+  (let ((text-scale-factor (expt text-scale-mode-step text-scale-mode-amount)))
+    (plist-put org-format-latex-options :scale (* 1.5 text-scale-factor))) 
+  (org-toggle-latex-fragment '(16)))
 
 (defun init-org-mode--babel-setup ()
   "Org-babel configuration. Code in org-mode files!"

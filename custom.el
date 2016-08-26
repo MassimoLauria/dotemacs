@@ -7,7 +7,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-item-indent 0)
- '(TeX-master t)
+ '(TeX-master t t)
  '(ac-auto-show-menu 0.3)
  '(ac-delay 0.1)
  '(ac-disable-on-comment nil)
@@ -183,6 +183,10 @@
      ("\\.x?html?\\'" . default)
      ("\\.pdf\\'" . default)
      ("jpg" . "open %s"))))
+ '(org-format-latex-options
+   (quote
+    (:foreground "White" :background default :scale 1.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+                 ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(org-hide-leading-stars t)
  '(org-highlight-latex-and-related (quote (latex script entities)))
  '(org-highlight-latex-fragments-and-specials t)
