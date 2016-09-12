@@ -372,8 +372,7 @@ It either tries \"lacheck\" or \"chktex\"."
         magic-latex-enable-inline-image    nil
         magic-latex-enable-minibuffer-echo nil)
   :init 
-  (add-hook 'LaTeX-mode-hook 'magic-latex-buffer)
-  (add-hook 'org-mode-hook 'magic-latex-buffer))
+  (add-hook 'LaTeX-mode-hook 'magic-latex-buffer))
 
 
 
