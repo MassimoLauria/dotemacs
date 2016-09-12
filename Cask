@@ -37,6 +37,7 @@
 (depends-on "irony-eldoc")
 (depends-on "let-alist")
 (depends-on "logito")
+(depends-on "magic-latex-buffer")
 (depends-on "magit")
 (depends-on "magit-popup")
 (depends-on "magit-svn")

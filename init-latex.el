@@ -84,6 +84,7 @@
 (add-hook 'TeX-mode-hook 'turn-on-reftex)
 (add-hook 'TeX-mode-hook 'turn-on-flyspell)
 (add-hook 'TeX-mode-hook 'TeX-source-specials-mode)
+(add-hook 'TeX-mode-hook 'TeX-source-specials-mode)
 
 ;; All TeX made with a single keystroke (BibTeX must run at least once).
 (require-maybe 'TeX-texify)
@@ -360,6 +361,21 @@ It either tries \"lacheck\" or \"chktex\"."
 (add-hook  
    'LaTeX-mode-hook
    (lambda () (yas-minor-mode-on)))
+
+
+(use-package magic-latex-buffer
+  :config 
+  (setq magic-latex-enable-block-highlight nil
+        magic-latex-enable-suscript        t
+        magic-latex-enable-pretty-symbols  t
+        magic-latex-enable-block-align     nil
+        magic-latex-enable-inline-image    nil
+        magic-latex-enable-minibuffer-echo nil)
+  :init 
+  (add-hook 'LaTeX-mode-hook 'magic-latex-buffer)
+  (add-hook 'org-mode-hook 'magic-latex-buffer))
+
+
 
 (provide 'init-latex)
 ;; Local Variables:
