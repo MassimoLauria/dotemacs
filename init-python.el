@@ -12,13 +12,13 @@
 
 
 ;; Emacs >= 24.3 supports ipython inferior shell
-(when (and (executable-find "ipython") 
-           (version<= "24.3" emacs-version))
+;; (when (and (executable-find "ipython") 
+;;            (version<= "24.3" emacs-version))
 
-  (setq python-shell-interpreter "ipython"
-        python-shell-interpreter-args ""
-        python-shell-prompt-regexp "In \\[[0-9]+\\]: "
-        python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "))
+;;   (setq python-shell-interpreter "ipython"
+;;         python-shell-interpreter-args ""
+;;         python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+;;         python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "))
 
 
 ;; Code analysis
