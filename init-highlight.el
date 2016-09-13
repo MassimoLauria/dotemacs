@@ -1,6 +1,6 @@
 ;;; init-highlight.el --- Setup forms of syntax highlight
 
-;; Copyright (C) 2015  Massimo Lauria
+;; Copyright (C) 2015, 2016  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -34,7 +34,7 @@
 ;; a color for each identifier
 (use-package rainbow-identifiers
   :ensure t
-  :commands rainbow-identifies-mode)
+  :commands rainbow-identifiers-mode)
 
 ;; a background color for each nested block
 (use-package highlight-blocks
