@@ -1,6 +1,6 @@
 ;;; massimo-keyboard.el --- Keybindings specific for the author habits -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2015  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2015, 2016  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: convenience
@@ -102,7 +102,9 @@ At least they are considered useful for the author.
       (define-key map [M-S-up] 'previous-buffer)
       (define-key map [M-S-down] 'next-buffer)
       )
-    (define-key map (kbd "C-x C-b") 'ibuffer)
+    (define-key map (kbd "C-x C-b") 'helm-mini)
+    (define-key map (kbd "C-x b") 'helm-mini)
+    (define-key map (kbd "C-x r") 'helm-mini)
 
     ;; Default text navigation (usually shadowed by other modes)
     (define-key map (kbd "M-.") 'org-open-at-point-global) 
