@@ -103,15 +103,16 @@ At least they are considered useful for the author.
       (define-key map [M-S-down] 'next-buffer)
       )
     (define-key map (kbd "C-x C-b") 'helm-mini)
-    (define-key map (kbd "C-x b") 'helm-mini)
-    (define-key map (kbd "C-x r") 'helm-mini)
+    (define-key map (kbd "C-x b")   'helm-mini)
+    (define-key map (kbd "C-x C-r") 'helm-mini)
+    (define-key map (kbd "C-x C-f") 'helm-find-files)
 
     ;; Default text navigation (usually shadowed by other modes)
     (define-key map (kbd "M-.") 'org-open-at-point-global) 
     (define-key map (kbd "M-,") 'pop-global-mark)  
  
     ;; Alternative  pop mark (usually not shadowed)
-    (define-key map (kbd "C-M-,") 'pop-global-mark) 
+    (define-key map (kbd "C-M-,") 'pop-global-mark)
     (define-key map (kbd "M-*")   'pop-global-mark)
     
 
