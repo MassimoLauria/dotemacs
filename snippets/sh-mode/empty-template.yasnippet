@@ -15,6 +15,11 @@
 # ${1:Put your file descrition here}
 #
 
+# Make shell more robust
+# (see http://redsymbol.net/articles/unofficial-bash-strict-mode/#sourcing-nonconforming-document)
+set -euo pipefail
+IFS=$'\n\t'
+
 # Code::
 
 $0
