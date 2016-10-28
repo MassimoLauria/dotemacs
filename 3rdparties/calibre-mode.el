@@ -178,19 +178,14 @@
 
 ;; define the result handlers here in the form of (hotkey description handler-function)
 ;; where handler-function takes 1 alist argument containing the result record
-(setq calibre-handler-alist '(("o" "open"
+(setq calibre-handler-alist '(("o" "open with default viewer"
+                               (lambda (res)
+                                 (start-process "shell-process" "*Messages*" calibre-default-opener (getattr res :file-path))))
+                              ("O" "open"
                                (lambda (res) (find-file-other-window (getattr res :file-path))))
-                              ("O" "open other frame"
-                               (lambda (res) (find-file-other-frame (getattr res :file-path))))
                               ("v" "open with default viewer"
                                (lambda (res)
                                  (start-process "shell-process" "*Messages*" calibre-default-opener (getattr res :file-path))))
-                              ("x" "open with xournal"
-                               (lambda (res) (start-process "xournal-process" "*Messages*" "xournal"
-                                                            (let ((xoj-file-path (concat calibre-root-dir "/" (getattr res :book-dir) "/" (getattr res :book-name) ".xoj")))
-                                                              (if (file-exists-p xoj-file-path)
-                                                                  xoj-file-path
-                                                                (getattr res :file-path))))))
                               ("s" "insert calibre search string"
                                (lambda (res) (mark-aware-copy-insert (concat "title:\"" (getattr res :book-title) "\""))))
                               ("c" "insert citekey"
@@ -245,9 +240,10 @@
   (if (file-exists-p (getattr calibre-item :file-path))
       (let ((opr (char-to-string (read-char
                                   ;; render menu text here
-                                  (concat (format "(%s) [%s] found, what do?\n"
+                                  (concat (format "(%s) [%s / %s] found, what do?\n"
                                                   (getattr calibre-item :book-format)
-                                                  (getattr calibre-item :book-name))
+                                                  (getattr calibre-item :book-title)
+                                                  (getattr calibre-item :author-sort))
                                           (mapconcat #'(lambda (handler-list)
                                                          (let ((hotkey      (elt handler-list 0))
                                                                (description (elt handler-list 1))
@@ -265,20 +261,22 @@
                 (assoc opr calibre-handler-alist)) 2) calibre-item))
     (message "didn't find that file")))
 
-(defun calibre-format-selector-menu (calibre-item-list)
+(defun calibre-entry-selector-menu (calibre-item-list)
   (let* ((chosen-number
           (char-to-string
            (read-char
             ;; render menu text here
             (let ((num-result (length calibre-item-list)))
-              (concat (format "%d matches for '%s'. pick target format?\n"
-                              num-result
-                              (getattr (car calibre-item-list) :book-title))
+              (concat (format "%d matches. Pick target and action.\n"
+                              num-result)
                       (mapconcat #'(lambda (idx)
                                      (let ((item (nth idx calibre-item-list)))
-                                       (format "   (%s) %s"
+                                       (format "   (%s:%s) %s / %s"
                                                (1+ idx)
-                                               (getattr item :book-format))))
+                                               (getattr item :book-format)
+                                               (getattr item :book-title)
+                                               (getattr item :author-sort)
+                                               )))
                                  (number-sequence 0 (1- num-result))
                                  "\n"))))))
          (chosen-item (nth (1- (string-to-int chosen-number)) calibre-item-list)))
@@ -299,7 +297,7 @@
       (let ((res-list (mapcar '(lambda (line) (calibre-query-to-alist line)) line-list)))
         (if (= 1 (length res-list))
             (calibre-file-interaction-menu (car res-list))
-          (calibre-format-selector-menu res-list))))))
+          (calibre-entry-selector-menu res-list))))))
 
 (global-set-key "\C-cK" 'calibre-open-citekey)
 
