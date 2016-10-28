@@ -18,7 +18,9 @@
            (version<= "24.3" emacs-version))
   
   (setq python-shell-interpreter "ipython"
-        python-shell-interpreter-args "--simple-prompt --pprint"))
+        python-shell-interpreter-args "--simple-prompt --pprint"
+        python-shell-completion-native-enable nil
+        ))
 
 
 ;; Code analysis

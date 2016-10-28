@@ -429,3 +429,11 @@ http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
 
 (provide 'init-unsorted-elisp)
 ;;; init-unsorted-elisp.el ends here
+
+(use-package calibre-mode
+  :commands calibre-find
+  :config
+  (setq calibre-root-dir (expand-file-name "~/Documents/Calibre"))
+  (setq calibre-db (concat calibre-root-dir "/metadata.db"))
+  (setq sql-sqlite-program "/usr/bin/sqlite3")
+  )

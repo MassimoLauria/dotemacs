@@ -106,7 +106,7 @@ At least they are considered useful for the author.
     (define-key map (kbd "C-x b")   'helm-mini)
     (define-key map (kbd "C-x C-r") 'helm-mini)
     (define-key map (kbd "C-x C-f") 'helm-find-files)
-
+    (define-key map (kbd "C-x k")   'kill-this-buffer)
     ;; Default text navigation (usually shadowed by other modes)
     (define-key map (kbd "M-.") 'org-open-at-point-global) 
     (define-key map (kbd "M-,") 'pop-global-mark)  
