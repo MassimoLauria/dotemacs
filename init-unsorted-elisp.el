@@ -437,3 +437,9 @@ http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
   (setq calibre-db (concat calibre-root-dir "/metadata.db"))
   (setq sql-sqlite-program "/usr/bin/sqlite3")
   )
+
+(use-package ivy
+  :diminish (ivy-mode)
+  :init
+  (ivy-mode)
+  (setq ivy-use-virtual-buffers t))

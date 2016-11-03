@@ -102,10 +102,14 @@ At least they are considered useful for the author.
       (define-key map [M-S-up] 'previous-buffer)
       (define-key map [M-S-down] 'next-buffer)
       )
-    (define-key map (kbd "C-x C-b") 'helm-mini)
-    (define-key map (kbd "C-x b")   'helm-mini)
-    (define-key map (kbd "C-x C-r") 'helm-mini)
-    (define-key map (kbd "C-x C-f") 'helm-find-files)
+
+    (define-key map (kbd "C-x C-b") 'ivy-switch-buffer)
+    (define-key map (kbd "C-x b")   'ivy-switch-buffer)
+    (define-key map (kbd "C-x C-r") 'ivy-switch-buffer)
+    (define-key map (kbd "C-x C-f") 'counsel-find-file)
+    (define-key map (kbd "M-x")     'counsel-M-x)
+    (define-key map (kbd "C-s")     'swiper)
+
     (define-key map (kbd "C-x k")   'kill-this-buffer)
     ;; Default text navigation (usually shadowed by other modes)
     (define-key map (kbd "M-.") 'org-open-at-point-global) 
