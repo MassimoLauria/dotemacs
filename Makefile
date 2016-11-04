@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2016-06-13, 11:46 (CEST) Massimo Lauria"
+# Time-stamp: "2016-11-04, 18:27 (CET) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -26,8 +26,17 @@ CASK=$(abspath Cask)
 CASKBIN=${HOME}/.cask/bin/cask
 
 
+# FONT
+FONTPATH=~/.fonts
+ifeq ($(shell uname -s),Darwin)
+FONTPATH=~/Library/Fonts
+endif
 
-.PHONY: clean test profile minisetup start stop
+FONTNAME=dejavu-fonts-ttf-2.37
+FONTURL=http://sourceforge.net/projects/dejavu/files/dejavu/2.37/${FONTNAME}.zip
+
+
+.PHONY: clean test profile minisetup start stop install-fonts
 
 all: ${CASKBIN}
 	@echo "Setup Emacs editor (override any previous configuration)."
@@ -38,6 +47,7 @@ all: ${CASKBIN}
 	@ln -s ${CASK} ~/.emacs.d
 	@echo "Install required packages."
 	${CASKBIN} install --path ${HOME}/.emacs.d
+	${MAKE}	install-fonts
 	@echo "Done."
 
 minisetup:
@@ -58,6 +68,14 @@ test:
 	&& (echo "No error on load"; exit 0) \
 	|| (echo "Test failed: errors on load. $$?"; exit 1)
 
+
+install-fonts:
+	@echo "Install DejaVu Sans Mono fonts"
+	@-curl -fSL ${FONTURL} -o ${FONTNAME}.zip
+	@unzip -q ${FONTNAME}.zip
+	@mkdir -p ${FONTPATH}
+	@mv ${FONTNAME}/ttf/*.ttf ${FONTPATH}
+	@rm -fr ${FONTNAME} ${FONTNAME}.zip
 
 # --------- Setup ---------------------------------
 ${CASKBIN}:
