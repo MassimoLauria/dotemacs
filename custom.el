@@ -224,7 +224,7 @@
  '(org-use-sub-superscripts (quote {}))
  '(package-selected-packages
    (quote
-    (wgrep wgrep-ag ag iedit notmuch try smex counsel zenburn-theme yasnippet virtualenvwrapper use-package undo-tree swiper smartparens skeletor rainbow-mode rainbow-identifiers rainbow-delimiters pallet org2blog org-plus-contrib notmuch-labeler magit-svn magit-gh-pulls magic-latex-buffer irony-eldoc highlight-symbol highlight-quoted highlight-defined highlight-blocks graphviz-dot-mode gnus-alias flycheck expand-region elisp-slime-nav elfeed deferred company-irony company-anaconda bbdb auctex ace-window)))
+    (visual-fill-column writeroom-mode wgrep wgrep-ag ag iedit notmuch try smex counsel zenburn-theme yasnippet virtualenvwrapper use-package undo-tree swiper smartparens skeletor rainbow-mode rainbow-identifiers rainbow-delimiters pallet org2blog org-plus-contrib notmuch-labeler magit-svn magit-gh-pulls magic-latex-buffer irony-eldoc highlight-symbol highlight-quoted highlight-defined highlight-blocks graphviz-dot-mode gnus-alias flycheck expand-region elisp-slime-nav elfeed deferred company-irony company-anaconda bbdb auctex ace-window)))
  '(post-attachment-regexp "\\(attach\\|alleg\\)")
  '(post-rename-buffer nil)
  '(powerline-default-separator (quote arrow))

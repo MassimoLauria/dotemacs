@@ -1,9 +1,9 @@
 ;;; init-autotype.el --- Automatic test insertion configuration
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2015-08-19, 10:44 (CEST) Massimo Lauria>
+;; Time-stamp: <2016-11-04, 17:48 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -31,16 +31,19 @@
 ;;; Snippets -----------------------------------------------------------------
 
 (use-package yasnippet
-  :ensure t
-  :defer t
   :diminish yas-minor-mode
   :pin gnu
   :commands (yas-expand yas-minor-mode yas-minor-mode-on yas-global-mode)
-  :config (progn
-            (add-to-list 'yas-snippet-dirs (concat default-elisp-path "/snippets/"))
-            (setq yas-snippet-dirs
-                  (delete  "~/.emacs.d/snippets" yas-snippet-dirs))
-            (yas-reload-all)))
+  :config
+  (progn
+    (add-to-list 'yas-snippet-dirs (concat default-elisp-path "/snippets/"))
+    (setq yas-snippet-dirs
+          (delete  "~/.emacs.d/snippets" yas-snippet-dirs))
+    (yas-reload-all))
+  (yas-global-mode))
+
+
+
 
 
 ;; Avoid automatic insertion of newlines at the end of a snippet recipe.

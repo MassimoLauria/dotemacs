@@ -31,7 +31,6 @@
 
 ;; Auto-mode
 (setq auto-mode-alist (cons '("\\.zsh" . sh-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.dot" . graphviz-dot-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.yasnippet" . snippet-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.snippet" . snippet-mode) auto-mode-alist))
 
@@ -41,22 +40,21 @@
 
 
 
-(autoload 'graphviz-dot-mode
-  "graphviz-dot-mode" "Edit/View Graphviz's dot files" t)
+
+
+(use-package graphviz-dot-mode
+  :mode ("\\.dot" . graphviz-dot-mode))
 
 (autoload 'muttrc-mode "muttrc-mode"
   "Mode to edit mutt configuration files")
 
 
 (use-package semantic
-  :ensure t
   :commands semantic-mode)
 
 
 ;; Editing
 (use-package expand-region
-  :defer t
-  :ensure t
   :commands er/expand-region)
 
 
@@ -420,3 +418,14 @@ is already narrowed."
   (ivy-mode)
   (setq counsel-find-file-ignore-regexp "\\`\\.")
   (setq ivy-use-virtual-buffers t))
+
+
+(use-package visual-fill-column
+  :bind (("C-c t v" . visual-fill-column-mode))
+  :config
+  (setq-default visual-fill-column-center-text t
+                        visual-fill-column-fringes-outside-margins nil)
+  (advice-add 'text-scale-adjust :after
+              #'visual-fill-column-adjust)
+  )
+
