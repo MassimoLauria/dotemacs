@@ -41,6 +41,7 @@
  '(company-require-match nil)
  '(compilation-scroll-output (quote first-error))
  '(copyright-query nil)
+ '(counsel-prompt-function (quote counsel-prompt-function-dir))
  '(cua-enable-cua-keys t)
  '(cua-enable-cursor-indications t)
  '(cua-enable-modeline-indications t)

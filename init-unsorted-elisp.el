@@ -418,4 +418,5 @@ is already narrowed."
   :diminish (ivy-mode)
   :init
   (ivy-mode)
+  (setq counsel-find-file-ignore-regexp "\\`\\.")
   (setq ivy-use-virtual-buffers t))
