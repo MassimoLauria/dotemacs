@@ -120,8 +120,9 @@ At least they are considered useful for the author.
     (define-key map (kbd "M-*")   'pop-global-mark)
     
 
-    ;; Marking and using multiple cursors
-    (define-key map (kbd "C-'") 'mc/mark-all-like-this-dwim)
+    ;; Edit power features
+    (define-key map (kbd "C-'") 'narrow-or-widen-dwim)
+    (define-key map (kbd "C-;") 'iedit-mode)
 
     ;; Expand region configuration
     (define-key map (kbd "C-SPC") 'er/expand-region)

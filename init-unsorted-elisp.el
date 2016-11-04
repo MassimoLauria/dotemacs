@@ -59,11 +59,6 @@
   :ensure t
   :commands er/expand-region)
 
-(use-package multiple-cursors
-  :defer t
-  :ensure t
-  :commands mc/mark-all-like-this-dwim)
-
 
 ;; Undo-Tree, much better than default.
 (use-package undo-tree
@@ -387,6 +382,32 @@ http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
   "This elisp code kills fascists"
   (message "This elisp code kills fascists."))
 
+
+(defun narrow-or-widen-dwim (p)
+  "Widen if buffer is narrowed, narrow-dwim otherwise.
+Dwim means: region, org-src-block, org-subtree, or
+defun, whichever applies first. Narrowing to
+org-src-block actually calls `org-edit-src-code'.
+
+With prefix P, don't widen, just narrow even if buffer
+is already narrowed."
+  (interactive "P")
+  (declare (interactive-only))
+  (cond ((and (buffer-narrowed-p) (not p)) (widen))
+        ((region-active-p)
+         (narrow-to-region (region-beginning)
+                           (region-end)))
+        ((derived-mode-p 'org-mode)
+         ;; `org-edit-src-code' is not a real narrowing
+         ;; command. Remove this first conditional if
+         ;; you don't want it.
+         (cond ((ignore-errors (org-edit-src-code) t)
+                (delete-other-windows))
+               ((ignore-errors (org-narrow-to-block) t))
+               (t (org-narrow-to-subtree))))
+        ((derived-mode-p 'latex-mode)
+         (LaTeX-narrow-to-environment))
+        (t (narrow-to-defun))))
 
 
 ;; Indirect narrow to region
