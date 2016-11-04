@@ -364,14 +364,14 @@ It either tries \"lacheck\" or \"chktex\"."
 
 
 (use-package magic-latex-buffer
-  :config 
+  :init 
   (setq magic-latex-enable-block-highlight nil
         magic-latex-enable-suscript        t
         magic-latex-enable-pretty-symbols  t
         magic-latex-enable-block-align     nil
         magic-latex-enable-inline-image    nil
         magic-latex-enable-minibuffer-echo nil)
-  :init 
+  :config 
   (add-hook 'LaTeX-mode-hook 'magic-latex-buffer))
 
 

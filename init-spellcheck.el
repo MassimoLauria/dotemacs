@@ -156,7 +156,7 @@ would happen for an empty document.")
 ;; Flyspell
 (use-package flyspell
   :commands (flyspell-mode flyspell-prog-mode)
-  :config (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+  :init (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 
 
 (provide 'init-spellcheck)

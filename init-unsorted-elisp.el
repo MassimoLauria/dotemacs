@@ -69,7 +69,7 @@
              undo-tree-undo
              undo-tree-redo)
   :bind (( "C-S-z" . undo-tree-redo ))
-  :init (global-undo-tree-mode))
+  :config (global-undo-tree-mode))
 
 
 
@@ -416,7 +416,7 @@ is already narrowed."
 
 (use-package ivy
   :diminish (ivy-mode)
-  :init
+  :config
   (ivy-mode)
   (setq counsel-find-file-ignore-regexp "\\`\\.")
   (setq ivy-use-virtual-buffers t))

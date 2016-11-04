@@ -25,7 +25,8 @@
                    (running-Windows  font-Win)
                    )))
     (set-default-font fontspec)
-    (add-to-list 'default-frame-alist `(font . ,fontspec))))
+    (add-to-list 'default-frame-alist `(font . ,fontspec))
+    ))
 
 (set-myfont-preference)
 

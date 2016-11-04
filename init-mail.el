@@ -60,9 +60,9 @@
 ;;
 (use-package gnus-alias
   :commands (gnus-alias-init gnus-alias-select-identity)
-  :config
-  (setq gnus-alias-override-user-mail-address t)
   :init
+  (setq gnus-alias-override-user-mail-address t)
+  :config
   (add-hook 'message-load-hook 'gnus-alias-init))
 
 
@@ -118,16 +118,18 @@
 
 
 ;;; Notmuch for reading email
+  ;;(require 'notmuch-labeler)
+;;  
 (use-package notmuch
-  :commands (notmuch)
+  :commands notmuch
   :init
+  (defun mail()
+    (interactive) (notmuch))
+  :config
   (require 'notmuch-labeler)
   (define-key notmuch-common-keymap "g" 'notmuch-jump-search) ;; as gmail does
   (define-key notmuch-common-keymap "j" 'nil)
-  :config
-  (defun mail ()
-    (interactive)
-    (notmuch)))
+  )
 
 
 (provide 'init-mail)
