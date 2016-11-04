@@ -155,59 +155,14 @@ in the kill-ring and `pos' is the position current-kill"
           )
 
 
-;; IDO mode for selection of file and buffers. VERY GOOD
-(require 'ido)
-
-(add-hook 'ido-setup-hook
-          (lambda ()
-            (define-key ido-completion-map (kbd "<tab>")   'ido-complete)
-            (define-key ido-completion-map (kbd "M-<tab>") 'ido-next-match)
-            (define-key ido-completion-map (kbd "M-j") 'ido-prev-match)
-            (define-key ido-completion-map (kbd "M-l") 'ido-next-match)
-            (define-key ido-completion-map (kbd "M-i") 'ido-prev-match)
-            (define-key ido-completion-map (kbd "M-k") 'ido-next-match)
-            ))
-
-(ido-mode t)
-(when (require 'flx-ido nil t)
-  (flx-ido-mode))
-
-(setq ido-enable-flex-matching t ; fuzzy matching is a must have
-      ido-max-prospects 5        ; minibuffer is not saturated
-      ido-ignore-buffers ;; ignore these guys
-       '("\\` " "^\*Mess" "^\*Back" "^\*scratch" ".*Completion" "^\*Ido")
-      ido-everywhere t            ; use for many file dialogs
-      ido-case-fold  t            ; be case-insensitive
-      ido-auto-merge-werk-directories-length nil) ; all failed, no more digging
-
-;; Recentf with ido-completio.
 (require-maybe 'recentf)
 ; 50 files ought to be enough.
 (setq recentf-max-saved-items 50)
 
-(defun ido-recentf-open ()
-  "Use `ido-completing-read' to \\[find-file] a recently opened file"
-  (interactive)
-  (let* ((file-assoc-list
-	  (mapcar (lambda (x)
-		    (cons (file-name-nondirectory x)
-			  x))
-		  recentf-list))
-	 (filename-list
-	  (remove-duplicates (mapcar #'car file-assoc-list)
-			     :test #'string=))
-	 (filename (ido-completing-read "Recent file: "
-					filename-list
-					nil
-					t)))
-    (when filename
-      (find-file (cdr (assoc filename
-			     file-assoc-list))))))
 
 ;; get rid of `find-file-read-only' and replace it with something
 ;; more useful.
 (when-available 'recentf-mode (recentf-mode t))
-(when-available 'recentf-mode (global-set-key (kbd "C-x C-r") 'ido-recentf-open))
 
 ;; Moving between windows with (M-C-<arrow>)
 (require 'windmove)               ; to load the package
