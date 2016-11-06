@@ -47,7 +47,7 @@ docbuild: devinstall
 #
 editor-tools : venv
 	. $(VIRTUALENV)/bin/activate && \
-	pip install jedi epc pylint nose six service_factory
+	pip install pylint nose
 
 doc-tools : venv
 	. $(VIRTUALENV)/bin/activate && \
