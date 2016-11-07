@@ -66,6 +66,9 @@
 
   ;; Latex fragments scaling
   (add-hook 'text-scale-mode-hook 'update-org-latex-fragments)
+
+  ;; Getting out of org-src editing
+  (define-key org-src-mode-map (kbd "C-'") 'org-edit-src-exit)
   )
 
 
@@ -376,7 +379,7 @@ for `reftex-default-bibliography'."
 (defun update-org-latex-fragments ()
   (org-toggle-latex-fragment '(16))
   (let ((text-scale-factor (expt text-scale-mode-step text-scale-mode-amount)))
-    (plist-put org-format-latex-options :scale (* 1.5 text-scale-factor))) 
+    (plist-put org-format-latex-options :scale text-scale-factor)) 
   (org-toggle-latex-fragment '(16)))
 
 (defun init-org-mode--babel-setup ()
