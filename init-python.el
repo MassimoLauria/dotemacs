@@ -28,7 +28,12 @@
   :ensure t
   :diminish t
   :commands anaconda-mode
-  :init '(add-hook 'python-mode-hook 'anaconda-mode))
+  :init '(add-hook 'python-mode-hook 'anaconda-mode)
+  :config
+  (define-key anaconda-mode-map  (kbd "M-/") 'anaconda-mode-show-doc)
+  (define-key anaconda-mode-map  (kbd "M-.") 'anaconda-mode-find-definitions)
+  (define-key anaconda-mode-map  (kbd "M-,") 'anaconda-mode-go-back)
+  (define-key anaconda-mode-map  (kbd "M-r") nil))
 
 ;; Auto completion
 (use-package company-anaconda
