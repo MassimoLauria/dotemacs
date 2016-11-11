@@ -7,7 +7,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-item-indent 0)
- '(TeX-master t)
+ '(TeX-master t t)
  '(ac-auto-show-menu 0.3)
  '(ac-delay 0.1)
  '(ac-disable-on-comment nil)
@@ -38,6 +38,7 @@
  '(comint-scroll-to-bottom-on-input (quote this))
  '(company-bbdb-modes (quote (message-mode post-mode mail-mode)))
  '(company-idle-delay 0.15)
+ '(company-quickhelp-delay 0.1)
  '(company-require-match nil)
  '(compilation-scroll-output (quote first-error))
  '(copyright-query nil)
@@ -186,7 +187,7 @@
      ("jpg" . "open %s"))))
  '(org-format-latex-options
    (quote
-    (:foreground "White" :background default :scale 1.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+    (:foreground "White" :background default :scale 1.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(org-hide-leading-stars t)
  '(org-highlight-latex-and-related (quote (latex script entities)))
@@ -197,7 +198,8 @@
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
- '(org-src-fontify-natively t)
+ '(org-preview-latex-default-process (quote dvisvgm))
+ '(org-src-fontify-natively t t)
  '(org-todo-keyword-faces
    (quote
     (("TODO" :foreground "red" :background "black" :weight bold)
@@ -220,11 +222,11 @@
     ((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED" "HASNEWERENTRY")
      (sequence "SKIM" "READ" "|" "DONE" "EVENTUALLY")
      (sequence "UNSOLVED" "|" "SOLVED")
-     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))))
+     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))) t)
  '(org-use-sub-superscripts (quote {}))
  '(package-selected-packages
    (quote
-    (company-irony-c-headers flycheck-irony visual-fill-column writeroom-mode wgrep wgrep-ag ag iedit notmuch try smex counsel zenburn-theme yasnippet virtualenvwrapper use-package undo-tree swiper smartparens skeletor rainbow-mode rainbow-identifiers rainbow-delimiters pallet org2blog org-plus-contrib notmuch-labeler magit-svn magit-gh-pulls magic-latex-buffer irony-eldoc highlight-symbol highlight-quoted highlight-defined highlight-blocks graphviz-dot-mode gnus-alias flycheck expand-region elisp-slime-nav elfeed deferred company-irony company-anaconda bbdb auctex ace-window)))
+    (py-autopep8 company-irony-c-headers flycheck-irony visual-fill-column writeroom-mode wgrep wgrep-ag ag iedit notmuch try smex counsel zenburn-theme yasnippet virtualenvwrapper use-package undo-tree swiper smartparens skeletor rainbow-mode rainbow-identifiers rainbow-delimiters pallet org2blog org-plus-contrib notmuch-labeler magit-svn magit-gh-pulls magic-latex-buffer irony-eldoc highlight-symbol highlight-quoted highlight-defined highlight-blocks graphviz-dot-mode gnus-alias flycheck expand-region elisp-slime-nav elfeed deferred company-irony company-anaconda bbdb auctex ace-window)))
  '(post-attachment-regexp "\\(attach\\|alleg\\)")
  '(post-rename-buffer nil)
  '(powerline-default-separator (quote arrow))

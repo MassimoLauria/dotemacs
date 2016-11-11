@@ -53,6 +53,7 @@
 (depends-on "pallet")
 (depends-on "pcache")
 (depends-on "pkg-info")
+(depends-on "py-autopep8")
 (depends-on "pythonic")
 (depends-on "rainbow-delimiters")
 (depends-on "rainbow-identifiers")

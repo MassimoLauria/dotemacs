@@ -6,6 +6,13 @@
 (add-hook 'after-init-hook 'global-company-mode)
 
 
+;; Set backends macro
+(defmacro set-company-backends (mode list)
+  `(add-hook ',mode
+             (lambda ()
+               (set (make-local-variable 'company-backends) ,list))))
+
+
 ;; Company keyboard setup
 ;;
 ;; `company-complete' is the aggressive completion: complete and
@@ -32,6 +39,8 @@
 
 
 
+
+
 ;; Setup various auto-completion backends
 ;;
 (when (fboundp #'company-auctex-init)
@@ -49,6 +58,22 @@
 (with-eval-after-load 'company-auctex
   (if (eq system-type 'darwin)
       (defun company-auctex-symbol-annotation (candidate) "" "")))
+
+;; Yasnippet
+(defvar company-mode/enable-yas t
+  "Enable yasnippet for all backends.")
+
+;; Add yasnippet support for all company backends
+;; https://github.com/syl20bnr/spacemacs/pull/179
+(defun company-mode/backend-with-yas (backend)
+  (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+      backend
+    (append (if (consp backend) backend (list backend))
+            '(:with company-yasnippet))))
+
+(use-package company
+  :config
+  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
 
 
 (provide 'init-auto-complete)

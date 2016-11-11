@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2016-11-04, 17:48 (CET) Massimo Lauria>
+;; Time-stamp: <2016-11-11, 01:03 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -39,10 +39,7 @@
     (add-to-list 'yas-snippet-dirs (concat default-elisp-path "/snippets/"))
     (setq yas-snippet-dirs
           (delete  "~/.emacs.d/snippets" yas-snippet-dirs))
-    (yas-reload-all))
-  (yas-global-mode))
-
-
+    (yas-reload-all)))
 
 
 
