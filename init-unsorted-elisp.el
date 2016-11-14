@@ -401,8 +401,6 @@ is already narrowed."
   (interactive)
   (sdcv-search-word (or word (current-word))))
 
-(provide 'init-unsorted-elisp)
-;;; init-unsorted-elisp.el ends here
 
 (use-package calibre-mode
   :commands calibre-find
@@ -420,6 +418,13 @@ is already narrowed."
   (setq ivy-use-virtual-buffers t))
 
 
+(use-package counsel
+  :bind
+  (("M-y" . counsel-yank-pop)
+   :map ivy-minibuffer-map
+   ("M-y" . ivy-next-line)))
+
+
 (use-package visual-fill-column
   :bind (("C-c t v" . visual-fill-column-mode))
   :config
@@ -429,3 +434,5 @@ is already narrowed."
               #'visual-fill-column-adjust)
   )
 
+(provide 'init-unsorted-elisp)
+;;; init-unsorted-elisp.el ends here
