@@ -63,6 +63,7 @@
 (depends-on "shut-up")
 (depends-on "skeletor")
 (depends-on "smartparens")
+(depends-on "ssh-config-mode")
 (depends-on "swiper")
 (depends-on "try")
 (depends-on "undo-tree")
