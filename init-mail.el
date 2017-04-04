@@ -41,7 +41,8 @@
 (setq compose-mail-user-agent-warnings nil)
 (setq mail-user-agent 'message-user-agent)
 (setq message-default-mail-headers "Cc: \nBcc: \n")
-(setq message-signature private-email-signature)
+(setq message-signature t
+      message-signature-file "~/personal/mail/signatures/default")
 (setq message-auto-save-directory "~/personal/mail/drafts")
 (setq message-kill-buffer-on-exit t)
 
@@ -63,10 +64,7 @@
   :init
   (setq gnus-alias-override-user-mail-address t)
   :config
-  (add-hook 'message-load-hook 'gnus-alias-init))
-
-
-      
+  (add-hook 'message-mode-hook 'gnus-alias-init))
 
 
 ;;
