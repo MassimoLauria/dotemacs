@@ -108,40 +108,14 @@
              (define-key TeX-mode-map (kbd "M-<f11>") 'previous-error)
              (define-key TeX-mode-map (kbd "M-<f12>") 'next-error)))
 
-;; (defun init-latex--error-keys (style)
-;;   "There ar edifferent ways to navigate through compilatiol
-;; errors, depending on what system has been used to compile.
-
-;; Var `style' can be either one of the symbols `compile' and `auctex'.
-;; "
-;;   (cond
-;;    ((equal style 'compile)
-;;       (local-set-key (kbd "<f11>") 'previous-error)
-;;       (local-set-key (kbd "<f12>") 'next-error)
-;;       (local-set-key [M-prior] 'previous-error)
-;;       (local-set-key [M-next]  'next-error))
-;;    ((equal style 'auctex)
-;;       (local-set-key (kbd "<f11>")  'TeX-previous-error)
-;;       (local-set-key (kbd "<f12>") 'TeX-next-error)
-;;       (local-set-key [M-prior] 'TeX-previous-error)
-;;       (local-set-key [M-next]  'TeX-next-error))))
-
 
 (defun init-latex--make ()
-  "Produce the document, by trying several bould commands"
+  "Produce the document, by trying several build commands"
   (interactive)
   (cond
 
    (TeX-command-region-begin            ; region pinned
     (TeX-command-region nil))
-   
-   ((file-exists-p "Makefile")          ; Makefile exists
-    (set (make-local-variable 'compile-command)
-         "make -k")
-    (set (make-local-variable 'compilation-read-command)
-         nil)
-    (call-interactively 'compile)
-    (TeX-view))
    
    ((fboundp 'TeX-texify)          ; TeX-texify loaded
     (call-interactively 'TeX-texify))
@@ -250,6 +224,8 @@ started."
 
         ("open.problem" ?o "open:"   "~\\ref{%s}" nil ("problem") -3)
         ("problem"      ?p "prob:"   "~\\ref{%s}" nil ("problem") -3)
+
+        ("equation" ?e "eq:"   "~\\eqref{%s}" nil ("equation" "Eqn." "Eq.") -3)
 
         ))
 
