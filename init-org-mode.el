@@ -35,6 +35,7 @@
  org-src-fontify-natively t
  org-src-tab-acts-natively t
  org-confirm-babel-evaluate t
+ org-M-RET-may-split-line nil
  ;; org-babel-no-eval-on-ctrl-c-ctrl-c t
  )
 
