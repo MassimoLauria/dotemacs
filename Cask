@@ -34,6 +34,7 @@
 (depends-on "highlight-defined")
 (depends-on "highlight-quoted")
 (depends-on "highlight-symbol")
+(depends-on "htmlize")
 (depends-on "iedit")
 (depends-on "irony")
 (depends-on "irony-eldoc")
