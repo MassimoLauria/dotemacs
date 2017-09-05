@@ -293,8 +293,13 @@ Emacs buffers are those whose name starts with *."
   (let ((password-gen "pwgen")
         (password-length 12)
         (password-options "-cys"))
-    (shell-command (format "%s %s %d " password-gen password-options password-length) t)))
- 
+    (insert
+     (string-remove-suffix "\n"
+                           (shell-command-to-string
+                            (format "%s %s %d "
+                                    password-gen
+                                    password-options
+                                    password-length))))))
 
 
 ;;;---- Recreate *scratch* buffer as soon as it's killed ------------------
