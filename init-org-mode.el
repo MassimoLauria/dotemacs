@@ -56,7 +56,8 @@
   (add-hook 'orgtbl-mode-hook 'orgtbl-mode/setup-keys/gb)
   (add-hook 'org-agenda-mode-hook  'org-agenda-mode-setup-local-keys)
   (define-key calendar-mode-map (kbd "RET") 'th-calendar-open-agenda)
-  (define-key org-mode-map (kbd "<f9>") 'org-export-dispatch)
+  (define-key org-mode-map (kbd "M-<f9>") 'org-export-dispatch)
+  (define-key org-mode-map (kbd "<f9>")   '(lambda () (interactive) (org-export-dispatch t)))
 
   ;; org-capture
   (add-hook 'org-capture-mode-hook

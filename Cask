@@ -48,6 +48,7 @@
 (depends-on "metaweblog")
 (depends-on "notmuch")
 (depends-on "notmuch-labeler")
+(depends-on "ob-ipython")
 (depends-on "org-plus-contrib")
 (depends-on "org2blog")
 (depends-on "package-build")
