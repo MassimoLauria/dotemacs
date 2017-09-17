@@ -28,7 +28,7 @@
  org-log-done t
  org-CUA-compatible t
  org-support-shift-select t
- org-cycle-emulate-tab nil
+ org-cycle-emulate-tab t
  org-cycle-global-at-bob t
  org-popup-calendar-for-date-prompt t
  org-read-date-display-live t
@@ -78,11 +78,6 @@
 (defun org-mode/setup-keys/clean-default ()
   "Remove the auxiliary keys which fight with other modes."
 
-  ;; Free tab for completion
-  (local-unset-key "\t")
-  (local-unset-key [tab])
-  (local-unset-key [(tab)])
-
   ;; Disable the defaults to support CUA-mode.
   (local-unset-key (kbd "<S-up>")    )
   (local-unset-key (kbd "<S-down>")  )
@@ -110,10 +105,6 @@ translated to an escape sequence.
   (interactive)
 
   (org-mode/setup-keys/clean-default)
-
-  ;; Alternative `org-cycle' keys
-  (local-set-key (kbd "M-<tab>")    'org-cycle)
-  (local-set-key (kbd "M-SPC")      'org-cycle)
 
   ;; X window
   (local-set-key (kbd "C-]") 'org-shiftup    )
@@ -147,10 +138,6 @@ part of the keyboard.
   (interactive)
 
   (org-mode/setup-keys/clean-default)
-
-  ;; Alternative `org-cycle' keys
-  (local-set-key (kbd "M-<tab>")    'org-cycle)
-  (local-set-key (kbd "M-SPC")      'org-cycle)
 
   ;; X window
   (local-set-key (kbd "C-è") 'org-shiftup    )
