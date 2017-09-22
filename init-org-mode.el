@@ -371,6 +371,33 @@ for `reftex-default-bibliography'."
     (plist-put org-format-latex-options :scale text-scale-factor)) 
   (org-toggle-latex-fragment '(16)))
 
+;; Org babel setup
+(defun org-babel-python-strip-session-chars ()
+  "Remove >>> and ... from a Python session output."
+  (when (and (string=
+              "python"
+              (org-element-property :language (org-element-at-point)))
+             (string-match
+              ":session"
+              (org-element-property :parameters (org-element-at-point))))
+
+    (save-excursion
+      (when (org-babel-where-is-src-block-result)
+        (goto-char (org-babel-where-is-src-block-result))
+        (end-of-line 1)
+        ;(while (looking-at "[\n\r\t\f ]") (forward-char 1))
+        (while (re-search-forward
+                "\\(>>> \\|\\.\\.\\. \\|: $\\|: >>>$\\)"
+                (org-element-property :end (org-element-at-point))
+                t)
+          (replace-match "")
+          ;; this enables us to get rid of blank lines and blank : >>>
+          (beginning-of-line)
+          (when (looking-at "^$")
+            (kill-line)))))))
+
+
+
 (defun init-org-mode--babel-setup ()
   "Org-babel configuration. Code in org-mode files!"
 
@@ -386,7 +413,19 @@ for `reftex-default-bibliography'."
      (dot . t)
      (gnuplot . t)
      (ditaa . t)
-     )))
+     ))
+
+  (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
+  (add-hook 'org-babel-after-execute-hook 'org-babel-python-strip-session-chars))
+
+
+
+
+
+
+
+
+
 
 ;;;------------------------- Load -----------------------------------
 (use-package org

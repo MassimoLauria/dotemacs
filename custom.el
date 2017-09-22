@@ -243,7 +243,8 @@
  '(require-final-newline (quote t))
  '(safe-local-variable-values
    (quote
-    ((org-latex-listings quote listing)
+    ((org-confirm-babel-evaluate)
+     (org-latex-listings quote listing)
      (org-html-toplevel-hlevel . 3)
      (org-html-postamble)
      (org-html-preamble)
