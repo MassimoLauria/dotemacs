@@ -243,7 +243,11 @@
  '(require-final-newline (quote t))
  '(safe-local-variable-values
    (quote
-    ((org-confirm-babel-evaluate)
+    ((org-babel-default-header-args:python
+      (:results . "replace output code"))
+     (org-latex-listings-options
+      ("numbers" "right"))
+     (org-confirm-babel-evaluate)
      (org-latex-listings quote listing)
      (org-html-toplevel-hlevel . 3)
      (org-html-postamble)
@@ -271,7 +275,8 @@
      (default-justification . full)
      (TeX-source-correlate-method-active . source-specials)
      (ispell-default-dictionary . american)
-     (TeX-PDF-mode . t))))
+     (TeX-PDF-mode . t)
+     (org-babel-python-command . "python3"))))
  '(save-interprogram-paste-before-kill t)
  '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/places")
