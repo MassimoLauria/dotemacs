@@ -75,6 +75,7 @@
 
 (blink-cursor-mode nil)
 (setq visible-bell nil)
+(setq ring-bell-function 'ignore)
 (setq mouse-highlight nil)
 
 (setq search-highlight t)
