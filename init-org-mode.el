@@ -416,13 +416,15 @@ for `reftex-default-bibliography'."
      ))
 
   (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
-  (add-hook 'org-babel-after-execute-hook 'org-babel-python-strip-session-chars))
+  (add-hook 'org-babel-after-execute-hook 'org-babel-python-strip-session-chars)
 
-
-
-
-
-
+  ;; Easy templates for lecture notes.
+  (add-to-list 'org-structure-template-alist
+               '("p" "#+BEGIN_SRC python :exports both :results output\n?\n#+END_SRC"))
+  (add-to-list 'org-structure-template-alist
+               '("P" "#+BEGIN_SRC python :session true :exports both :results output\n?\n#+END_SRC"))
+  (add-to-list 'org-structure-template-alist
+             '("n" "*** \n    :PROPERTIES:\n    :BEAMER_env: note\n    :END:\n\n    ?")))
 
 
 
