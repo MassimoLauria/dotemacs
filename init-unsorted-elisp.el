@@ -1,6 +1,6 @@
 ;;; init-unsorted-elisp.el --- Contains small chunks of elisp code in no particular order
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -421,9 +421,20 @@ is already narrowed."
 (use-package counsel
   :bind
   (("M-y" . counsel-yank-pop)
-   :map ivy-minibuffer-map
-   ("M-y" . ivy-next-line)))
+   :map ivy-minibuffer-map)
+  :config
+  (my-ivy-setup))
 
+
+(defun my-ivy-setup ()
+  (define-key ivy-minibuffer-map (kbd "<left>") 'counsel-up-directory)
+  (define-key ivy-minibuffer-map (kbd "<right>") 'ivy-alt-done)
+  (define-key ivy-minibuffer-map (kbd "M-i") 'ivy-previous-line)
+  (define-key ivy-minibuffer-map (kbd "M-k") 'ivy-next-line)
+  (define-key ivy-minibuffer-map (kbd "M-j") 'counsel-up-directory)
+  (define-key ivy-minibuffer-map (kbd "M-l") 'ivy-alt-done)
+  (define-key ivy-minibuffer-map (kbd "M-u") 'ivy-previous-history-element)
+  (define-key ivy-minibuffer-map (kbd "M-o") 'ivy-next-history-element))
 
 (use-package visual-fill-column
   :bind (("C-c t v" . visual-fill-column-mode))

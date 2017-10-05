@@ -7,7 +7,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-item-indent 0)
- '(TeX-master t)
+ '(TeX-master t t)
  '(ac-auto-show-menu 0.3)
  '(ac-delay 0.1)
  '(ac-disable-on-comment nil)
@@ -243,7 +243,8 @@
  '(require-final-newline (quote t))
  '(safe-local-variable-values
    (quote
-    ((org-babel-default-header-args:python
+    ((flycheck-python-pycompile-executable . "python3")
+     (org-babel-default-header-args:python
       (:results . "replace output code"))
      (org-latex-listings-options
       ("numbers" "right"))
