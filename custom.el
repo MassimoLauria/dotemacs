@@ -67,6 +67,7 @@
  '(ebib-print-multiline t)
  '(ebib-sort-order (quote ((year) (author editor) (title))))
  '(eldoc-idle-delay 0.3)
+ '(epa-pinentry-mode (quote loopback))
  '(fci-rule-color "#073642")
  '(fixme-highlighted-words (quote ("FIXME" "TODO" "BUG" "HACK" "REVIEW" "OPTIMIZE")))
  '(fixme-modes
