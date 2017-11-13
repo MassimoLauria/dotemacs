@@ -424,6 +424,10 @@ for `reftex-default-bibliography'."
   (add-to-list 'org-structure-template-alist
                '("P" "#+BEGIN_SRC python :session true :exports both :results output\n?\n#+END_SRC"))
   (add-to-list 'org-structure-template-alist
+               '("t" "#+begin_theorem\n?\n#+end_theorem\n#+begin_proof\n\n#+end_proof"))
+  (add-to-list 'org-structure-template-alist
+               '("=" "\begin{equation}\n?\n\end{equation}"))
+  (add-to-list 'org-structure-template-alist
              '("n" "*** \n    :PROPERTIES:\n    :BEAMER_env: note\n    :END:\n\n    ?")))
 
 
