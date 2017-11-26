@@ -127,6 +127,13 @@ At least they are considered useful for the author.
     ;; Expand region configuration
     (define-key map (kbd "C-SPC") 'er/expand-region)
 
+    ;; Zoom in/out
+    (define-key map (kbd "C--") 'zoom-frm-out)
+    (define-key map (kbd "C-=") 'zoom-frm-in)
+    (define-key map (kbd "C-0") 'zoom-frm-unzoom)
+    
+
+    
     ;; Register keys
     ;; Register at finger tips from 1 to ... 0!
     ;; (define-key map (kbd "M-r M-r") 'pop-to-mark-command) ;; Pop mark-ring

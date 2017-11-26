@@ -38,6 +38,7 @@
 (depends-on "iedit")
 (depends-on "irony")
 (depends-on "irony-eldoc")
+(depends-on "latex-preview-pane")
 (depends-on "let-alist")
 (depends-on "logito")
 (depends-on "magic-latex-buffer")
@@ -79,3 +80,4 @@
 (depends-on "xml-rpc")
 (depends-on "yasnippet")
 (depends-on "zenburn-theme")
+(depends-on "zoom-frm")
