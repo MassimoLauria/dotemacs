@@ -408,6 +408,7 @@ for `reftex-default-bibliography'."
      (emacs-lisp . t)
      (sh .t)
      (python . t)
+     (sqlite . t)
      (C . t)
      (latex . t)
      (dot . t)
@@ -419,6 +420,8 @@ for `reftex-default-bibliography'."
   (add-hook 'org-babel-after-execute-hook 'org-babel-python-strip-session-chars)
 
   ;; Easy templates for lecture notes.
+  (add-to-list 'org-structure-template-alist
+               '("S" "#+header: :db {{{DEFAULTDB}}}\n#+header: :colnames yes :nullvalue NULL\n#+BEGIN_SRC sqlite :exports both\n?\n#+END_SRC"))
   (add-to-list 'org-structure-template-alist
                '("p" "#+BEGIN_SRC python :exports both :results output\n?\n#+END_SRC"))
   (add-to-list 'org-structure-template-alist
