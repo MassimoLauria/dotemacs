@@ -292,7 +292,7 @@ Emacs buffers are those whose name starts with *."
   (interactive)
   (let ((password-gen "pwgen")
         (password-length 12)
-        (password-options "-cys"))
+        (password-options "-cs"))
     (insert
      (string-remove-suffix "\n"
                            (shell-command-to-string
