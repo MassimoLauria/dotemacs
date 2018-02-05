@@ -7,6 +7,7 @@
 (depends-on "ag")
 (depends-on "anaconda-mode")
 (depends-on "async")
+(depends-on "atomic-chrome")
 (depends-on "auctex")
 (depends-on "avy")
 (depends-on "bbdb")

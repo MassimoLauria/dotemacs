@@ -26,6 +26,7 @@
  '(aquamacs-customization-version-id 215 t)
  '(aquamacs-save-options-on-quit t)
  '(aquamacs-tool-bar-user-customization nil t)
+ '(atomic-chrome-buffer-open-style (quote frame))
  '(backup-by-copying t)
  '(backup-by-copying-when-linked t)
  '(before-save-hook (quote (copyright-update time-stamp)))
@@ -227,7 +228,7 @@
  '(org-use-sub-superscripts (quote {}))
  '(package-selected-packages
    (quote
-    (zoom-frm latex-preview-pane ob-ipython htmlize ssh-config-mode py-autopep8 company-irony-c-headers flycheck-irony visual-fill-column writeroom-mode wgrep wgrep-ag ag iedit notmuch try smex counsel zenburn-theme yasnippet virtualenvwrapper use-package undo-tree swiper smartparens skeletor rainbow-mode rainbow-identifiers rainbow-delimiters pallet org2blog org-plus-contrib notmuch-labeler magit-svn magit-gh-pulls magic-latex-buffer irony-eldoc highlight-symbol highlight-quoted highlight-defined highlight-blocks graphviz-dot-mode gnus-alias flycheck expand-region elisp-slime-nav elfeed deferred company-irony company-anaconda bbdb auctex ace-window)))
+    (atomic-chrome zoom-frm latex-preview-pane ob-ipython htmlize ssh-config-mode py-autopep8 company-irony-c-headers flycheck-irony visual-fill-column writeroom-mode wgrep wgrep-ag ag iedit notmuch try smex counsel zenburn-theme yasnippet virtualenvwrapper use-package undo-tree swiper smartparens skeletor rainbow-mode rainbow-identifiers rainbow-delimiters pallet org2blog org-plus-contrib notmuch-labeler magit-svn magit-gh-pulls magic-latex-buffer irony-eldoc highlight-symbol highlight-quoted highlight-defined highlight-blocks graphviz-dot-mode gnus-alias flycheck expand-region elisp-slime-nav elfeed deferred company-irony company-anaconda bbdb auctex ace-window)))
  '(post-attachment-regexp "\\(attach\\|alleg\\)")
  '(post-rename-buffer nil)
  '(powerline-default-separator (quote arrow))
