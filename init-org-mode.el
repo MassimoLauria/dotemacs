@@ -71,10 +71,6 @@
 
   ;; Getting out of org-src editing
   (define-key org-src-mode-map (kbd "C-'") 'org-edit-src-exit)
-
-
-  (add-to-list 'org-beamer-environments-extra
-               '("onlyenv" "O" "\\begin{onlyenv}%a" "\\end{onlyenv}"))
   )
 
 

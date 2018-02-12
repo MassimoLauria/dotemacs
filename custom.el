@@ -7,7 +7,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-item-indent 0)
- '(TeX-master t)
+ '(TeX-master t t)
  '(ac-auto-show-menu 0.3)
  '(ac-delay 0.1)
  '(ac-disable-on-comment nil)
@@ -180,6 +180,9 @@
     ((daily today)
      ""
      (800 1000 1200 1400 1600 1800 2000))))
+ '(org-beamer-environments-extra
+   (quote
+    (("onlyenv" "O" "\\\\begin{onlyenv}%a" "\\\\end{onlyenv}"))))
  '(org-file-apps
    (quote
     ((auto-mode . emacs)
