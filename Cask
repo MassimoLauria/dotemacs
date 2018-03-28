@@ -81,4 +81,3 @@
 (depends-on "xml-rpc")
 (depends-on "yasnippet")
 (depends-on "zenburn-theme")
-(depends-on "zoom-frm")
