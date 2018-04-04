@@ -32,7 +32,6 @@
 
 (use-package yasnippet
   :diminish yas-minor-mode
-  :pin gnu
   :commands (yas-expand yas-minor-mode yas-minor-mode-on yas-global-mode)
   :config
   (progn
