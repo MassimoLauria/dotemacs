@@ -1,6 +1,6 @@
 ;;; massimo-keyboard.el --- Keybindings specific for the author habits -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2015, 2016  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2015, 2016, 2018  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: convenience
@@ -128,9 +128,9 @@ At least they are considered useful for the author.
     (define-key map (kbd "C-SPC") 'er/expand-region)
 
     ;; Zoom in/out
-    (define-key map (kbd "C--") 'zoom-frm-out)
-    (define-key map (kbd "C-=") 'zoom-frm-in)
-    (define-key map (kbd "C-0") 'zoom-frm-unzoom)
+    (define-key map (kbd "C--") 'text-scale-decrease)
+    (define-key map (kbd "C-=") 'text-scale-increase)
+    (define-key map (kbd "C-0") 'text-scale-adjust)
     
 
     
