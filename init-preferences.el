@@ -77,6 +77,8 @@
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
 (setq mouse-highlight nil)
+(setq use-file-dialog nil)
+(setq use-dialog-box  nil)
 
 (setq search-highlight t)
 (setq query-replace-highlight t)
