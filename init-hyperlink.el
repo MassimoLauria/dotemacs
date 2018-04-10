@@ -43,10 +43,6 @@
 (defvar massimo-keyboard-open-link-key2 (kbd "C-c C-o")
   "Secondary key sequence used to open links in text files.")
 
-(defvar massimo-keyboard-fallback-browser "google-chrome"
-  "What browser to use if none is configured.")
-
-
 ;; Xah Lee function for opening links in dired-mode
 ;; http://xahlee.org/emacs/emacs_dired_open_file_in_ext_apps.html
 (defun open-in-external-app ()
