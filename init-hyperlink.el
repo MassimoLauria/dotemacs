@@ -1,6 +1,6 @@
 ;;; init-hyperlink.el --- Keybindings for inserting/opening/saving links in various modes
 
-;; Copyright (C) 2011, 2012, 2013  Massimo Lauria
+;; Copyright (C) 2011, 2012, 2013, 2018  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: convenience
@@ -25,7 +25,7 @@
 ;; of functions.
 ;; 
 ;; To insert URL and links I will always use `org-insert-link' which
-;; can be customized to insert the like in the appropriate format.
+;; can be customized to insert the link in the appropriate format.
 ;;
 ;; To save URL and links I will always use `org-store-link'
 
@@ -46,14 +46,6 @@
 (defvar massimo-keyboard-fallback-browser "google-chrome"
   "What browser to use if none is configured.")
 
-
-;; Setup default browser
-(when running-GNULinux
-  (let ((browser
-         (or (getenv "BROWSER")
-             massimo-keyboard-fallback-browser)))
-    (setq browse-url-browser-function 'browse-url-generic
-          browse-url-generic-program browser)))
 
 ;; Xah Lee function for opening links in dired-mode
 ;; http://xahlee.org/emacs/emacs_dired_open_file_in_ext_apps.html
