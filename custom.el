@@ -26,7 +26,7 @@
  '(aquamacs-customization-version-id 215 t)
  '(aquamacs-save-options-on-quit t)
  '(aquamacs-tool-bar-user-customization nil t)
- '(atomic-chrome-buffer-open-style (quote frame))
+ '(atomic-chrome-buffer-open-style (quote full))
  '(backup-by-copying t)
  '(backup-by-copying-when-linked t)
  '(before-save-hook (quote (copyright-update time-stamp)))
@@ -169,17 +169,6 @@
  '(ns-tool-bar-size-mode (quote regular) t)
  '(org-agenda-current-time-string #("——————————————⌚⌚⌚—————————————" 0 30 (org-heading t)))
  '(org-agenda-search-headline-for-time nil)
- '(org-agenda-sorting-strategy
-   (quote
-    ((agenda todo-state-up habit-down time-up priority-down category-keep)
-     (todo priority-down category-keep)
-     (tags priority-down category-keep)
-     (search category-keep))))
- '(org-agenda-time-grid
-   (quote
-    ((daily today)
-     ""
-     (800 1000 1200 1400 1600 1800 2000))))
  '(org-beamer-environments-extra
    (quote
     (("onlyenv" "O" "\\\\begin{onlyenv}%a" "\\\\end{onlyenv}"))))
@@ -204,7 +193,7 @@
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
  '(org-preview-latex-default-process (quote dvisvgm))
- '(org-src-fontify-natively t)
+ '(org-src-fontify-natively t t)
  '(org-todo-keyword-faces
    (quote
     (("TODO" :foreground "red" :background "black" :weight bold)
@@ -227,7 +216,7 @@
     ((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED" "HASNEWERENTRY")
      (sequence "SKIM" "READ" "|" "DONE" "EVENTUALLY")
      (sequence "UNSOLVED" "|" "SOLVED")
-     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))))
+     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))) t)
  '(org-use-sub-superscripts (quote {}))
  '(package-selected-packages
    (quote
