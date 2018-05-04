@@ -42,7 +42,7 @@
 (setq mail-user-agent 'message-user-agent)
 (setq message-default-mail-headers "Cc: \nBcc: \n")
 (setq message-signature t
-      message-signature-file "~/personal/mail/signatures/default")
+      message-signature-file "~/personal/mail/signature")
 (setq message-auto-save-directory "~/personal/mail/drafts")
 (setq message-kill-buffer-on-exit t)
 
