@@ -41,10 +41,15 @@
 (setq compose-mail-user-agent-warnings nil)
 (setq mail-user-agent 'message-user-agent)
 (setq message-default-mail-headers "Cc: \nBcc: \n")
+(setq message-citation-line-format "%N wrote:\n"
+      message-citation-line-function 'message-insert-formatted-citation-line
+      message-cite-function          'message-cite-original-without-signature)
+
 (setq message-signature t
       message-signature-file "~/personal/mail/signature")
 (setq message-auto-save-directory "~/personal/mail/drafts")
 (setq message-kill-buffer-on-exit t)
+
 
 (defun setup-message-mode ()
   "Setup editor for emails"
@@ -127,9 +132,14 @@
   (require 'notmuch-labeler)
   (define-key notmuch-common-keymap "g" 'notmuch-jump-search) ;; as gmail does
   (define-key notmuch-common-keymap "j" 'nil)
-  )
-
-
+  (setq notmuch-search-oldest-first       nil
+        notmuch-search-result-format '(("date" . "%12s ")
+                                       ("count" . "%-7s ")
+                                       ("authors" . "%-20s ")
+                                       ("tags" . "%s ")
+                                       ("subject" . "  %-60s"))
+        ))
+        
 (provide 'init-mail)
 ;; Local Variables:
 ;; mode: emacs-lisp

@@ -142,9 +142,6 @@
  '(massimo-keyboard-folding-meta-g-override-p t)
  '(massimo-keyboard-global-mode t)
  '(menu-bar-mode nil)
- '(message-citation-line-format "%N wrote:
-")
- '(message-citation-line-function (quote message-insert-formatted-citation-line))
  '(mu4e-headers-include-related t)
  '(mu4e-headers-skip-duplicates t)
  '(mu4e-split-view nil)
@@ -154,16 +151,6 @@
  '(mu4e-view-show-images t)
  '(nlinum-format "%2d│")
  '(no-easy-keys t)
- '(notmuch-labeler-hide-known-labels t)
- '(notmuch-mua-cite-function (quote message-cite-original-without-signature))
- '(notmuch-search-oldest-first nil)
- '(notmuch-search-result-format
-   (quote
-    (("date" . "%12s ")
-     ("count" . "%-7s ")
-     ("authors" . "%-20s ")
-     ("tags" . "%s ")
-     ("subject" . "  %-60s"))))
  '(ns-right-alternate-modifier nil)
  '(ns-tool-bar-display-mode (quote both) t)
  '(ns-tool-bar-size-mode (quote regular) t)
