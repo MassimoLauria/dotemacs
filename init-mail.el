@@ -2,7 +2,8 @@
 ;;; Sending:  msmtp (if installed)
 ;;; Writing:  message-mode
 ;;; Contacts: bbdb
-;;; Reading:  notmuch (and offlineimap)
+;;; Reading:  notmuch
+;;; Fetching: gmaileer
 ;;;------------------------------------------------------------------
 
 ;; Load private mail infos
@@ -132,7 +133,8 @@
   (require 'notmuch-labeler)
   (define-key notmuch-common-keymap "g" 'notmuch-jump-search) ;; as gmail does
   (define-key notmuch-common-keymap "j" 'nil)
-  (setq notmuch-search-oldest-first       nil
+  (setq notmuch-fcc-dirs nil
+        notmuch-search-oldest-first       nil
         notmuch-search-result-format '(("date" . "%12s ")
                                        ("count" . "%-7s ")
                                        ("authors" . "%-20s ")
