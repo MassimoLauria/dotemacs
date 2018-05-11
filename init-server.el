@@ -26,7 +26,7 @@
 
 ;; Launch server in MacOSX 
 (use-package server
-  :config (or (server-running-p) (server-start)))
+  :config (or (daemonp) (server-running-p) (server-start)))
 
 
 (provide 'init-server)
