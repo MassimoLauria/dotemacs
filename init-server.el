@@ -1,6 +1,6 @@
 ;;; init-server.el --- setup Emacs as a server.
 
-;; Copyright (C) 2012, 2013, 2014, 2015  Massimo Lauria
+;; Copyright (C) 2012, 2013, 2014, 2015, 2018  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -26,7 +26,6 @@
 
 ;; Launch server in MacOSX 
 (use-package server
-  :if (eq system-type 'darwin)
   :config (or (server-running-p) (server-start)))
 
 
