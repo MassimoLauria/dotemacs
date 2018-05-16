@@ -125,10 +125,17 @@
 
 ;; Recenter sequence
 (setq recenter-positions '(top middle bottom))
-(defadvice recenter-top-bottom (after ad-recenter-show)
-    "Highlight point after recentering."
-    (pulse-momentary-highlight-one-line (point)))
-(ad-activate 'recenter-top-bottom)
+
+
+;; Cursor position helpers
+(global-hl-line-mode nil)
+  
+(use-package beacon ; flashes the cursor's line when you scroll
+  :ensure t
+  :config
+  (beacon-mode 1))
+  
+
 
 ;; Canonical behaviour of modern interfaces. Not the default in Emacs22
 ;; Cut (C-x)  Copy(C-c) Paste(C-v) Undo(C-z)

@@ -49,22 +49,6 @@
 
 (eval-after-load "tex" '(init-latex--viewer-setup))
 
-(when (eq system-type 'gnu/linux)
-  (defun raise-client-frame ()
-    (let ((wmctrl (executable-find "wmctrl")))
-      (if wmctrl
-          (start-process "wmctrl" nil wmctrl "-R" (frame-parameter nil 'name)))))
-  (defadvice TeX-source-correlate-sync-source (after ad-TeX-correlate-center)
-    "Center and highlight point after AUCTeX inverse-search."
-    (raise-client-frame)
-    (recenter)
-    (pulse-momentary-highlight-one-line (point))))
-
-
-
-
-
-
 
 
 ;; These are the files that are produced by LaTeX processes.  It is annoying

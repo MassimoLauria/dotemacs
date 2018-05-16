@@ -1,6 +1,6 @@
 ;;; init-unsorted-elisp.el --- Contains small chunks of elisp code in no particular order
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -444,6 +444,7 @@ is already narrowed."
   (advice-add 'text-scale-adjust :after
               #'visual-fill-column-adjust)
   )
+
 
 (provide 'init-unsorted-elisp)
 ;;; init-unsorted-elisp.el ends here
