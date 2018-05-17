@@ -25,8 +25,8 @@
 (setq reftex-plug-into-AUCTeX t)
 (setq bib-cite-use-reftex-view-crossref t)
 (setq TeX-complete-word '(lambda () ))
-
-
+(setq TeX-view-evince-keep-focus t)
+(add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
 
 ;; View command fixes 
 ;;
@@ -36,16 +36,29 @@
 (defun init-latex--viewer-setup ()
   "Set the \"View\" function saner defaults"
 
+  ;; No question asked when viewing documents 
   (add-to-list 'TeX-command-list '("View" "%V" 
                                    TeX-run-discard-or-function nil t 
-                                   :help "Run Viewer")) ; no questions
+                                   :help "Run Viewer"))
 
+  ;; View PDFs within emacs using `pdf-tools' package
+  (add-to-list 'TeX-view-program-selection '(output-pdf "PDF Tools"))
+ 
+  ;; On MacOSX we could use Skim PDF viewer
   (when (eq system-type 'darwin)
     (add-to-list 'TeX-view-program-list
                  '("displayline" 
                    "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o %b"))
     (add-to-list 'TeX-view-program-selection 
                  '(output-pdf "displayline"))))
+
+
+;; Load PDF tools if AucTeX wants to open a PDF
+(use-package pdf-tools
+  :config
+  (pdf-tools-install)
+  (setq-default pdf-view-display-size 'fit-page))
+
 
 (eval-after-load "tex" '(init-latex--viewer-setup))
 

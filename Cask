@@ -11,6 +11,7 @@
 (depends-on "auctex")
 (depends-on "avy")
 (depends-on "bbdb")
+(depends-on "beacon")
 (depends-on "bind-key")
 (depends-on "cask")
 (depends-on "company")
