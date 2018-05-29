@@ -3,11 +3,17 @@
 ;;;
 ;;; In some terminals the keybindings may not work properly.
 ;;;
-;;; No support for Org-Mode < 7
+;;; No support for Org-Mode < 8
 ;;;------------------------------------------------------------------
 
 
 ;;;------------ File locations ---------------------------------------
+(setq org-agenda-files (list
+                        "~/personal/agenda/agenda.org"    ;; deadlines / appointments /events
+                        "~/personal/agenda/notebook.org"  ;; notebook / ideas / projects
+                        "~/personal/agenda/journal.org"   ;; daily events and notes
+                        ))
+
 (setq org-directory "~/personal/agenda/")
 (setq org-default-notes-file (concat org-directory "notes.org"))
 (setq org-default-journal-file (concat org-directory "journal.org"))
@@ -227,14 +233,14 @@ part of the keyboard.
     output))
 
 (setq org-capture-templates
-      '(("t" "Task" entry (file "agenda.org")          "* TODO ⌚ %?\n  %U\n\n  %i\n\n")
-        ("d" "Deadline" entry (file "agenda.org")      "* TODO ⌚ %?\n  DEADLINE: %^t\n  %U\n\n  %i\n\n")
-        ("e" "Event/Meeting" entry (file "agenda.org") "* %?\n  WHEN %^t\n  %i\n\n" "agenda.org")
-        ("n" "Note" entry (file "notebook.org")        "* %?\n  %U\n  %i\n  %a\n\n")
-        ("j" "Journal Entry" entry (file+datetree "journal.org") "* inserito il %U\n\n  %?\n\n%i\n\n")
+      '(("t" "Task"              entry (file "notebook.org")    "* TODO ⌚ %?\n  %U\n\n  %i\n\n")
+        ("n" "Note"              entry (file "notebook.org")    "* %?\n  %U\n  %i\n  %a\n\n")
+        ("d" "Deadline"          entry (file "agenda.org")      "* TODO ⌚ %?\n  DEADLINE: %^t\n  %U\n\n  %i\n\n")
+        ("e" "Event/Appointment" entry (file "agenda.org")      "* %?\n  WHEN  ⌚ %^t\n  %i\n\n" "agenda.org")
+        ("j" "Journal Entry"     entry (file+datetree "journal.org") "* inserito il %U\n\n  %?\n\n%i\n\n")
         ;; ("Q" "File a notebook" entry (file "notebook.org")
         ;;  "* New notebook %? :notebook:%^g\n  %U\n\n  %^{ID}p%^{Formato}p%^{Fogli}p%^{Nome}p\n\n")
-        ("w" "External URL" entry (file "agenda.org")  "%(org-capture-URL-data)")))
+        ("w" "External URL" entry (file "notebook.org")  "%(org-capture-URL-data)")))
 
 (setq org-default-capture-template "w")
 
