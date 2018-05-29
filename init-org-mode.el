@@ -209,12 +209,18 @@ part of the keyboard.
         output)
     (with-temp-buffer
       (insert (concat
-               "* “" title "”%?\n"
+               "* “" title "”\n"
                "  "  time "\n\n"
-               "  \n\n"
-               "  --- Source: [[" link "][" title "]]" "\n\n  "))
-      ;;(set-fill-prefix)
-      (insert text)
+               "  %?\n\n"))
+      (insert
+       (if (= (length text) 0)
+           (concat "  --- Link: [[" link "][" title "]]"
+                   "\n\n  ")
+         (concat       "#+BEGIN_QUOTE\n"
+                       text
+                       "\n#+END_QUOTE\n\n"
+                       "--- Source: [[" link "][" title "]]"
+                       )))
       (set-fill-column 70)
       (fill-paragraph 'full)
       (setq output (buffer-string)))
