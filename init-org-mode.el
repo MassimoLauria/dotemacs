@@ -8,19 +8,15 @@
 
 
 ;;;------------ File locations ---------------------------------------
-(setq org-agenda-files (list
-                        "~/personal/agenda/agenda.org"    ;; deadlines / appointments /events
-                        "~/personal/agenda/notebook.org"  ;; notebook / ideas / projects
-                        "~/personal/agenda/journal.org"   ;; daily events and notes
-                        ))
-
 (setq org-directory "~/personal/agenda/")
 (setq org-default-notes-file (concat org-directory "notes.org"))
 (setq org-default-journal-file (concat org-directory "journal.org"))
 (when (not (boundp 'org-agenda-files))
-  (setq org-agenda-files (list org-directory))) ;May be already
-                                                ;defined in personal
-                                                ;conf file.
+  (setq org-agenda-files (list
+                        "~/personal/agenda/agenda.org"    ;; deadlines / appointments /events
+                        "~/personal/agenda/notebook.org"  ;; notebook / ideas / projects
+                        "~/personal/agenda/journal.org"   ;; daily events and notes
+                        )))
 
 
 ;;;---------------- TODO states --------------------------------------
@@ -43,8 +39,57 @@
  org-confirm-babel-evaluate t
  org-M-RET-may-split-line nil
  ;; org-babel-no-eval-on-ctrl-c-ctrl-c t
+ org-agenda-show-future-repeats 'next 
  )
 
+;;;---------------- Agenda setup --------------------------------------
+(setq org-agenda-time-grid
+      '((daily today)
+        (800 1000 1200 1400 1600 1800 2000)
+        "    "
+        "----------------"))
+
+(setq org-agenda-custom-commands
+      '(("n" "My agenda setting"
+         ((agenda "" ((org-agenda-overriding-header "           TODAY\n")
+                      (org-agenda-span 1)))
+                      ;; limits the agenda display to a single day)
+          (agenda ""  
+                  ((org-agenda-overriding-header "           DEADLINES in 3 months\n")
+                   (org-agenda-span 1)
+                   (org-agenda-time-grid nil)
+                   (org-deadline-warning-days 90)        ;; [1]
+                   (org-agenda-entry-types '(:deadline))  ;; [2]
+                   ))
+          (alltodo ""
+                   ((org-agenda-overriding-header "           TODO LIST\n")
+                    (org-agenda-sorting-strategy '(priority-down))
+                    ))
+          (agenda "" ;; Birthdays in this week
+                  ((org-agenda-overriding-header "           BIRTHDAYS IN 7 DAYS\n")
+                   (org-agenda-span 7)
+                   (org-agenda-show-all-dates nil)
+                   (org-agenda-start-on-weekday nil)
+                   (org-agenda-time-grid nil)
+                   (org-agenda-show-future-repeats 'next)
+                   (org-agenda-entry-types '(:sexp))))
+          ))))
+
+
+;; Set a key for the agenda view
+(defun my-org-agenda-show (&optional arg)
+  "Show my custom agenda. 
+
+It shows the full view of my custom agenda. With prefix argument
+execs the default `org-agenda' command, which allows more
+interactive options."
+  (interactive "P")
+  (if arg
+      (org-agenda)
+    (org-agenda arg "n")))
+(global-set-key [f6]  'my-org-agenda-show)
+
+(define-key org-mode-map (kbd "<f8>") 'org-agenda-show-unscheduled)
 
 (defun init-org-mode--setup ()
   "Setup for org-mode"
