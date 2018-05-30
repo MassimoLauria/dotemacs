@@ -6,40 +6,18 @@
 
 ;;; Themes and Fonts
 
-;; Color theme
-(setq
- default-color-theme  'zenburn
- default-color-number 256)
 
-;; Regular fonts
-(setq
- font-X11   "DejaVu Sans Mono 14"
- font-Mac   "DejaVu Sans Mono 14"
- font-Win   "Consolas 14" )
-
-(defun set-myfont-preference () 
-  "Setup the font preferences"
-  (let ((fontspec (cond
-                   (running-MacOSX   font-Mac)
-                   (running-GNULinux font-X11)
-                   (running-Windows  font-Win)
-                   )))
-    (set-default-font fontspec)
-    (add-to-list 'default-frame-alist `(font . ,fontspec))
-    ))
-
-(set-myfont-preference)
-
-;; (add-hook 'after-make-frame-functions
-;;     (lambda (frame) 
-;;       (set-font-preference)))
-
-;; Load color theme
-(when (or  ;; enough colors? (meaningless in server-mode)
-       (>= (display-color-cells) default-color-number)
-       (if (fboundp 'daemonp) (daemonp)))
+;; Set fonts
+(if (eq system-type 'windows-nt)
+    (set-default-font "Consolas 14" nil t)
+  (set-default-font "DejaVu Sans Mono 14" nil t))
+  
+;; Set theme to zenburn
+(when (or 
+       (>= (display-color-cells) 256)
+       (if (fboundp 'daemonp) (daemonp))) ;; can't count colors as a daemon 
   (condition-case msg
-      (load-theme default-color-theme t)
+      (load-theme 'zenburn t)
     (error (format "%s" msg) )))
 
 ;; Fix zenburn theme for flyspell/flymake/flycheck
@@ -55,12 +33,11 @@
 
 
 ;; Meta usage in MacOSX requires some thought
-(when running-NSCocoa-process
-  (if (boundp 'ns-right-alternate-modifier)
-      (progn
-        (setq ns-alternate-modifier 'meta)
-        (setq ns-right-alternate-modifier 'nil))
-    (setq ns-alternate-modifier 'nil)))
+(if (boundp 'ns-right-alternate-modifier)
+    (progn
+      (setq ns-alternate-modifier 'meta)
+      (setq ns-right-alternate-modifier 'nil))
+  (setq ns-alternate-modifier 'nil))
 
 
 ;; GUI elements
@@ -98,10 +75,7 @@
 (setq minibuffer-prompt-properties (quote (read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
 
 (defalias 'yes-or-no-p 'y-or-n-p) ; y/n instead of yes/no
-(if running-Aquamacs
-    (setq confirm-kill-emacs nil)     ; Aquamacs won't interrupt logging out
-  (setq confirm-kill-emacs 'y-or-n-p) ; In other cases daemon is just killed.
-  )
+(setq confirm-kill-emacs nil)     ; exit without questions
 
 
 (setq echo-keystrokes 0.1)

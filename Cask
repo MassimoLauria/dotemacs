@@ -55,7 +55,6 @@
 (depends-on "olivetti")
 (depends-on "org-pdfview")
 (depends-on "org-plus-contrib")
-(depends-on "org2blog")
 (depends-on "package-build")
 (depends-on "pallet")
 (depends-on "pcache")

@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016  Massimo Lauria
-;; Time-stamp: "2016-11-04, 17:11 (CET) Massimo Lauria"
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018  Massimo Lauria
+;; Time-stamp: "2018-05-30, 17:41 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -56,7 +56,6 @@
 ;;; Module(s) initialization -------------------------------------------
 
 ;; Bootstrap
-(require 'init-discover-runtime) ; Discover emacs version and runtime
 (require 'init-environment)      ; setup running environment
 (require 'init-functions)        ; Utility functions for configuration
 
@@ -84,7 +83,6 @@
 (require 'init-auto-complete)     ; Completion configuration -- check for speed
 
 ;; Keyboard settings
-(require 'massimo-keyboard)       ; basic keyboard settings
 (require 'init-global-keys)       ; global keys
 (require 'init-hyperlink)         ; keys for opening links
 (require 'init-windows)           ; windows layout
@@ -112,10 +110,15 @@
 ;; Other stuff
 (require 'init-unsorted-elisp)  ; various setups -- check for speed
 
+;; My keyboard configuration
+(use-package massimo-keyboard
+  :commands (massimo-keyboard-mode massimo-keyboard-global-mode))
+(massimo-keyboard-global-mode)
 
 ;;; Customized settings -------------------------------------------------
 (setq custom-file "~/config/emacs/custom.el")
 (load custom-file 'noerror)
+
 ;;; Enabled/Disabled commands
 (put 'narrow-to-region 'disabled nil)
 (put 'upcase-region 'disabled nil)

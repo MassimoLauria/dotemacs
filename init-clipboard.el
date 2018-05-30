@@ -1,6 +1,6 @@
 ;;; init-clipboard.el --- Setup for the clipboard, less easy than it sounds.
 
-;; Copyright (C) 2010, 2013, 2015  Massimo Lauria
+;; Copyright (C) 2010, 2013, 2015, 2018  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -44,7 +44,8 @@
 
 (setq mouse-yank-at-point t)        ; paste at cursor, not at click point.
 
-(when running-X11-process
+(when (eq initial-window-system 'x) ;; running on X11
+  
   (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
   (setq select-active-regions t)                 ; active region sets primary X11 selection (This corrupt Aquamacs clipboard)
   (global-set-key [mouse-2] 'mouse-yank-primary) ; middle-click only pastes from primary X11 selection.

@@ -249,25 +249,6 @@ It either tries \"lacheck\" or \"chktex\"."
 (add-hook 'post-command-hook 'my-flymake-show-help)
 
 
-;; Drag and Drop on Mac
-(when running-Aquamacs
- (add-hook
-  'LaTeX-mode-hook
-  (lambda ()
-    (smart-dnd-setup
-     '(
-       ("\\.tex\\'" . "\\input{%r}\n")
-       ("\\.cls\\'" . "\\documentclass{%f}\n")
-       ("\\.sty\\'" . "\\usepackage{%f}\n")
-       ("\\.eps\\'" . "\\includegraphics[]{%r}\n")
-       ("\\.ps\\'"  . "\\includegraphics[]{%r}\n")
-       ("\\.pdf\\'" . "\\includegraphics[]{%r}\n")
-       ("\\.jpg\\'" . "\\includegraphics[]{%r}\n")
-       ("\\.png\\'" . "\\includegraphics[]{%n}\n")
-       ("\\.mov\\'" .
-        "\\includemovie[\n\tposter,\n\trepeat=1,\n\ttext=(%r)\n\t]{}{}{%r}\n")
-       ("\\.avi\\'" .
-        "\\includemovie[\n\tposter,\n\trepeat=1,\n\ttext=(%r)\n\t]{}{}{%r}\n"))))))
 
 ;; Guess master file
 (add-hook

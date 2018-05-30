@@ -1,9 +1,9 @@
 ;;; init-environment.el --- fix and setup the running environment
 
-;; Copyright (C) 2013, 2014, 2015 Massimo Lauria <lauria.massimo@gmail.com>
+;; Copyright (C) 2013, 2014, 2015, 2018 Massimo Lauria <lauria.massimo@gmail.com>
 
 ;; Created : "2013-12-17, Tuesday 10:43 (CET) Massimo Lauria"
-;; Time-stamp: "2015-07-02, 00:53 (CEST) Massimo Lauria"
+;; Time-stamp: "2018-05-30, 17:18 (CEST) Massimo Lauria"
 
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -80,20 +80,9 @@ Ignore if the path does not exists."
 
 
 ;;; Setup the needed paths
-
-;; Maverick starts Emacs in root (fixed after 24.3)
-(if running-MacOSX 
-    (setq default-directory (getenv "HOME"))) 
-
-
-;; Set paths, since sometime Mac OSX sucks
-(environment-add-path "/usr/local/bin") ; homebrew
-(environment-add-path "/opt/local/bin") ; macports
-(environment-add-path "/usr/textbin")   ; TexLive
-
-;; Local paths
-(environment-add-path (concat (getenv "HOME") "/.cask/bin"))
-(environment-add-path (concat (getenv "HOME") "/.local/bin"))
+(environment-add-path "/usr/local/bin")                        ;; Homebrew
+(environment-add-path (concat (getenv "HOME") "/.cask/bin"))   ;; Cask
+(environment-add-path (concat (getenv "HOME") "/.local/bin"))  ;; Local/bin
 
 
 ;; read paths from files in "/etc/paths.d/" if exist.

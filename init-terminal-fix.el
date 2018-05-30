@@ -1,6 +1,6 @@
 ;;; init-terminal-fix.el --- Fix various terminal issues with keyboad. -*- coding: utf-8 -*-
 
-;; Copyright (C) 2012  Massimo Lauria
+;; Copyright (C) 2012, 2018  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 
@@ -37,56 +37,52 @@
   (tty-set-up-initial-frame-faces))
 
 
-;; tty-type and input-decode-map are not defined in Emacs < 23.
-(when running-GNUEmacs23+
-
-  (defun myfix-xterm  ()
-    "Some key combinations would not work on `xterm' (e.g. shift-up mapped to <select>). This will fix it."
-    (interactive)
-    (define-key input-decode-map "\e[1;2A" [S-up]))
+(defun myfix-xterm  ()
+  "Some key combinations would not work on `xterm' (e.g. shift-up mapped to <select>). This will fix it."
+  (interactive)
+  (define-key input-decode-map "\e[1;2A" [S-up]))
 
 
-  (defun myfix-screen ()
-    "Some key combinations would not work in `screen'. This will fix it."
-    (interactive)
-    (define-key input-decode-map "\e[1;2A" [S-up])
-    (define-key input-decode-map "\e[1;2B" [S-down])
-    (define-key input-decode-map "\e[1;2C" [S-right])
-    (define-key input-decode-map "\e[1;2D" [S-left])
-    (define-key input-decode-map "\e[1;4A" [M-S-up])
-    (define-key input-decode-map "\e[1;4B" [M-S-down])
-    (define-key input-decode-map "\e[1;4C" [M-S-right])
-    (define-key input-decode-map "\e[1;4D" [M-S-left])
-    (define-key input-decode-map "\e[1;7A" [C-M-up])
-    (define-key input-decode-map "\e[1;7B" [C-M-down])
-    (define-key input-decode-map "\e[1;7C" [C-M-S-right])
-    (define-key input-decode-map "\e[1;7D" [C-M-left])
-    )
+(defun myfix-screen ()
+  "Some key combinations would not work in `screen'. This will fix it."
+  (interactive)
+  (define-key input-decode-map "\e[1;2A" [S-up])
+  (define-key input-decode-map "\e[1;2B" [S-down])
+  (define-key input-decode-map "\e[1;2C" [S-right])
+  (define-key input-decode-map "\e[1;2D" [S-left])
+  (define-key input-decode-map "\e[1;4A" [M-S-up])
+  (define-key input-decode-map "\e[1;4B" [M-S-down])
+  (define-key input-decode-map "\e[1;4C" [M-S-right])
+  (define-key input-decode-map "\e[1;4D" [M-S-left])
+  (define-key input-decode-map "\e[1;7A" [C-M-up])
+  (define-key input-decode-map "\e[1;7B" [C-M-down])
+  (define-key input-decode-map "\e[1;7C" [C-M-S-right])
+  (define-key input-decode-map "\e[1;7D" [C-M-left])
+  )
 
 
 ;;; Run the appropriate fix if emacs is run directly from terminal.
-  (cond
-   ((equal "xterm" (tty-type)) (myfix-xterm))
-   ((equal "xterm-256color" (tty-type)) (myfix-xterm))
-   ((equal "screen" (tty-type)) (myfix-screen))
-   ((equal "screen-256color" (tty-type)) (myfix-screen))
-   ((equal "screen-256color-bce" (tty-type)) (myfix-screen))
-   )
+(cond
+ ((equal "xterm" (tty-type)) (myfix-xterm))
+ ((equal "xterm-256color" (tty-type)) (myfix-xterm))
+ ((equal "screen" (tty-type)) (myfix-screen))
+ ((equal "screen-256color" (tty-type)) (myfix-screen))
+ ((equal "screen-256color-bce" (tty-type)) (myfix-screen))
+ )
 
 ;;; Run the appropriate fix if emacs is a multi-tty instance. The fix
 ;;; is run by emacs itself after tty initialization.
 
-  ;; xterm
-  (defadvice terminal-init-xterm (after myfix-xterm activate)
-    "Map some terminal escape sequences to the correct keys"
-    (myfix-xterm))
-  ;; screen
-  (defadvice terminal-init-screen (after myfix-screen activate)
-    "Map some terminal escape sequences to the correct keys"
-    (myfix-screen))
+;; xterm
+(defadvice terminal-init-xterm (after myfix-xterm activate)
+  "Map some terminal escape sequences to the correct keys"
+  (myfix-xterm))
+;; screen
+(defadvice terminal-init-screen (after myfix-screen activate)
+  "Map some terminal escape sequences to the correct keys"
+  (myfix-screen))
 
 
-  ) ;; (when-running-GNUEmacs23+ ...
 
 (provide 'init-terminal-fix)
 ;;; init-terminal-fix.el ends here
