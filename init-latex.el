@@ -55,24 +55,15 @@
 
 ;; Load PDF tools if AucTeX wants to open a PDF
 (use-package pdf-tools
+  :mode  ("\\.pdf" . pdf-view-mode)
+  :init
+  (setq pdf-view-use-unicode-ligther nil)  ;; make loading faster
   :config
   (pdf-tools-install)
   (setq-default pdf-view-display-size 'fit-page))
 
 
 (eval-after-load "tex" '(init-latex--viewer-setup))
-
-
-
-;; These are the files that are produced by LaTeX processes.  It is annoying
-;; that they show up while I'm trying to open a proper TeX file (or any other
-;; text file).  IDO-mode can be instructed how to ignore such files.
-(setq TeX-byproduct-files
-      '(".aux" ".log" ".brf" ".bbl" ".dvi" ".ps" ".pdf" "spl" "out" ".ps.gz" ".synctex.gz"))
-(setq ido-ignore-files
-      (if (boundp 'ido-ignore-files)
-          (append ido-ignore-files TeX-byproduct-files)
-        TeX-byproduct-files ))
 
 
 ;; Basic LaTeX-mode-hook setup 
