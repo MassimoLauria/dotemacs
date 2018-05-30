@@ -45,7 +45,7 @@
 ;;;---------------- Agenda setup --------------------------------------
 (setq org-agenda-time-grid
       '((daily today)
-        (800 1000 1200 1400 1600 1800 2000)
+        (600 800 1000 1200 1400 1600 1800 2000 2200)
         "    "
         "----------------"))
 
@@ -63,7 +63,8 @@
                    ))
           (alltodo ""
                    ((org-agenda-overriding-header "           TODO LIST\n")
-                    (org-agenda-sorting-strategy '(priority-down))
+                    (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline))
+                    (org-agenda-sorting-strategy '(tag-up priority-down))
                     ))
           (agenda "" ;; Birthdays in this week
                   ((org-agenda-overriding-header "           BIRTHDAYS IN 7 DAYS\n")
@@ -71,22 +72,16 @@
                    (org-agenda-show-all-dates nil)
                    (org-agenda-start-on-weekday nil)
                    (org-agenda-time-grid nil)
-                   (org-agenda-show-future-repeats 'next)
                    (org-agenda-entry-types '(:sexp))))
           ))))
-
 
 ;; Set a key for the agenda view
 (defun my-org-agenda-show (&optional arg)
   "Show my custom agenda. 
 
-It shows the full view of my custom agenda. With prefix argument
-execs the default `org-agenda' command, which allows more
-interactive options."
+It shows the full view of my custom agenda."
   (interactive "P")
-  (if arg
-      (org-agenda)
-    (org-agenda arg "n")))
+  (org-agenda arg "n"))
 (global-set-key [f6]  'my-org-agenda-show)
 
 (defun init-org-mode--setup ()
