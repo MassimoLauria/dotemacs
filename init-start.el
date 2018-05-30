@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018  Massimo Lauria
-;; Time-stamp: "2018-05-30, 17:41 (CEST) Massimo Lauria"
+;; Time-stamp: "2018-05-30, 22:58 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -32,9 +32,13 @@
 (when (< emacs-major-version 24)
   (error "Emacs <24 not supported by default configuration. Use fallback one"))
 
-;; Stop on errors.
+;; Init file loaded with less aggressive garbage collector and with
+;; debug support on errors
 (setq debug-on-error t)
-(add-hook 'after-init-hook '(lambda () (setq debug-on-error nil)))
+(setq gc-cons-threshold (* 50 1000 1000))
+(add-hook 'after-init-hook '(lambda ()
+                              (setq debug-on-error nil)
+                              (setq gc-cons-threshold (* 2 1000 1000))))
 
 
 ;;; Setup Emacs environment --------------------------------------------
