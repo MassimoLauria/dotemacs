@@ -89,8 +89,6 @@ interactive options."
     (org-agenda arg "n")))
 (global-set-key [f6]  'my-org-agenda-show)
 
-(define-key org-mode-map (kbd "<f8>") 'org-agenda-show-unscheduled)
-
 (defun init-org-mode--setup ()
   "Setup for org-mode"
   (interactive)
