@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016, 2018 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2018-05-31, 10:28 (CEST) Massimo Lauria"
+# Time-stamp: "2018-05-31, 10:35 (CEST) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -28,13 +28,12 @@ CASKBIN=${HOME}/.cask/bin/cask
 
 ## Font files
 
+FONT=dejavu-fonts-ttf-2.37
+
 FONTPATH=~/.fonts
 ifeq ($(shell uname -s),Darwin)
 FONTPATH=~/Library/Fonts
 endif
-
-FONTNAME=dejavu-fonts-ttf-2.37
-FONTURL=http://sourceforge.net/projects/dejavu/files/dejavu/2.37/${FONTNAME}.zip
 
 
 .PHONY: clean test profile minisetup start stop install-fonts
@@ -75,17 +74,16 @@ uninstall:
 
 # --------- Install tools, fonts and packages -----------
 install-pkgs: ${CASKBIN}
-	@echo "Install the required packages."
+	@echo "Install the required emacs packages"
 	$(shell EMACS=${EMACS} ${CASKBIN} install --verbose --path ${HOME}/.emacs.d)
 
 
 install-fonts:
-	@echo "Install DejaVu Sans Mono fonts"
-	@-curl -fSL ${FONTURL} -o ${FONTNAME}.zip
-	@unzip -q ${FONTNAME}.zip
+	@echo "Install fonts: ${FONT}"
+	@unzip -q fonts/${FONT}.zip -d fonts/
 	@mkdir -p ${FONTPATH}
-	@mv ${FONTNAME}/ttf/*.ttf ${FONTPATH}
-	@rm -fr ${FONTNAME} ${FONTNAME}.zip
+	@mv fonts/${FONT}/ttf/*.ttf ${FONTPATH}
+	@rm -fr fonts/${FONT}/
 
 ${CASKBIN}:
 	@-curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
