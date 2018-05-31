@@ -32,6 +32,7 @@
 (depends-on "git-commit")
 (depends-on "gnus-alias")
 (depends-on "graphviz-dot-mode")
+(depends-on "guess-language")
 (depends-on "highlight-blocks")
 (depends-on "highlight-defined")
 (depends-on "highlight-quoted")

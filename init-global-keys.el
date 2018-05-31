@@ -60,20 +60,20 @@
 
 ;; emacs commands
 (global-set-key [f1]  'help)
-(global-set-key [f2]  'ispell-buffer)
-(global-set-key (kbd "M-<f2>") 'spellcheck-language-cycle)
-
+;; (global-set-key [f2] 'ispell-buffer)  ;; Set in init-spellcheck 
 (global-set-key [f3]  'kmacro-start-macro-or-insert-counter)
 (global-set-key [f4]  'kmacro-end-or-call-macro)
+
 ;; daily life
 (global-set-key [f5]  'org-capture)  ;; Taking notes
 ;; (global-set-key [f6]  'org-agenda)    ;; Set in init-org-mode
 (global-set-key [f7]  'bbdb)          ;; Query Contacts
+
 ;; devel (adapted to each mode)
 (global-set-key [f9]  'recompile)
 (global-set-key (kbd "M-<f9>")  'compile)
 (global-set-key [f10] 'gdb)
-(global-set-key [f11] 'previous-error) ; Does not work with LaTeX!
+(global-set-key [f11] 'previous-error)
 (global-set-key [f12] 'next-error)
 
 ;; Other fallback command
