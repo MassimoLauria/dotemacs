@@ -45,9 +45,6 @@
 (global-set-key [M-prior] 'previous-error) ; Does not work with LaTeX!
 (global-set-key [M-next] 'next-error)
 
-;; Ispell
-(global-set-key (kbd "M-s") 'ispell-word) ; usually overridden by flyspell
-
 ;; Font size in Emacs 24
 (when (fboundp 'text-scale-adjust)
   (global-set-key (kbd "C--") 'text-scale-adjust)

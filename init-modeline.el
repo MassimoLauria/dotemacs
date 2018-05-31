@@ -1,9 +1,9 @@
 ;;; init-modeline.el --- Setup the modeline
 
-;; Copyright (C) 2013, 2014, 2015, 2016  Massimo Lauria
+;; Copyright (C) 2013, 2014, 2015, 2016, 2018  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2016-06-09, 18:05 (CEST) Massimo Lauria>
+;; Time-stamp: <2018-05-31, 16:26 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -65,7 +65,6 @@ The renaming table is `rename-major-mode-alist'."
   (eval-after-load 'fixme-mode '(diminish 'fixme-mode))
 
   ;; Spell checkers
-  (eval-after-load 'flyspell  '(diminish 'flyspell-mode))
   (eval-after-load 'writegood-mode '(diminish 'writegood-mode))
   )
 

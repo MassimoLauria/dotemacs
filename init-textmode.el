@@ -1,6 +1,6 @@
 ;;; init-textmode.el --- Preferences for Text editing
 
-;; Copyright (C) 2010, 2011, 2013, 2015  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2013, 2015, 2018  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: files, wp
@@ -39,7 +39,6 @@
 
 (defun MassimoLauria/text-mode-setup()
   "Initial setup of Text mode (common to all children modes)"
-  (when-available 'flyspell-mode (flyspell-mode 1))
   (when-available 'goto-address-mode (goto-address-mode 1)))
 
 
@@ -62,7 +61,6 @@
   (turn-on-reftex)
   (set (make-local-variable 'reftex-cite-punctuation) '(", " " & " " et al."))
   (set (make-local-variable 'reftex-cite-format) ".. [%l]\n   %a\n   %t\n   %j%b (%y)")
-  (when-available 'flyspell-mode (flyspell-mode 1))
   (when-available 'goto-address-mode (goto-address-mode 1)))
 
 

@@ -7,6 +7,11 @@
 ;; Spellcheck the whole text
 (global-set-key [f2]  'ispell-buffer)  
 
+;; Spellcheck word (usually overridden vt flyspell)
+(global-set-key (kbd "M-s") 'ispell-word)
+
+
+
 ;; Switch among the chosen languages
 (global-set-key (kbd "M-<f2>") 'spellcheck-language-cycle)
 
