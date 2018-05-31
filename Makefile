@@ -1,7 +1,7 @@
-# Copyright (C) 2015, 2016 by Massimo Lauria <lauria.massimo@gmail.com>
+# Copyright (C) 2015, 2016, 2018 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2016-11-04, 18:27 (CET) Massimo Lauria"
+# Time-stamp: "2018-05-31, 10:16 (CEST) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -26,7 +26,8 @@ CASK=$(abspath Cask)
 CASKBIN=${HOME}/.cask/bin/cask
 
 
-# FONT
+## Font files
+
 FONTPATH=~/.fonts
 ifeq ($(shell uname -s),Darwin)
 FONTPATH=~/Library/Fonts
@@ -38,6 +39,7 @@ FONTURL=http://sourceforge.net/projects/dejavu/files/dejavu/2.37/${FONTNAME}.zip
 
 .PHONY: clean test profile minisetup start stop install-fonts
 
+# --------- Setup Emacs ---------------------------------
 all: ${CASKBIN}
 	@echo "Setup Emacs editor (override any previous configuration)."
 	@mkdir -p ~/.emacs.d
@@ -45,8 +47,7 @@ all: ${CASKBIN}
 	@rm -f ~/.emacs.d/Cask
 	@ln -s ${INIT} ~/.emacs.d
 	@ln -s ${CASK} ~/.emacs.d
-	@echo "Install required packages."
-	${CASKBIN} install --path ${HOME}/.emacs.d
+	${MAKE} install-pkgs
 	${MAKE}	install-fonts
 	@echo "Done."
 
@@ -55,18 +56,23 @@ minisetup:
 	@mkdir -p ~/.emacs.d
 	@rm -f ~/.emacs.d/init.el
 	@cp ${INITMINI} ~/.emacs.d/init.el
-
-profile:
-	${EMACS} -Q -l utils/profile-dotemacs.el \
-	--eval '(setq profile-dotemacs-file (setq load-file-name "${INITFULL}"))' \
-    -f profile-dotemacs
+	@echo "Done."
 
 
-test:
-	@echo "Run emacs to test the configuration."
-	@${EMACS} -q --eval '(condition-case err (progn (load "${INIT}") (kill-emacs 0)) (error (kill-emacs 1)))' \
-	&& (echo "No error on load"; exit 0) \
-	|| (echo "Test failed: errors on load. $$?"; exit 1)
+uninstall:
+	@echo "Completely erase Emacs configuration."
+	@rm -fr ~/.emacs.d/init.el
+	@rm -fr ~/.emacs.d/Cask
+	@rm -fr ~/.emacs.d/.cask/
+	@rm -fr ~/.emacs.d/anaconda-mode/
+	@rm -fr ~/.emacs.d/irony/
+	@rm -fr ~/.cask/
+
+
+# --------- Install tools, fonts and packages -----------
+install-pkgs: ${CASKBIN}
+	@echo "Install the required packages."
+	$(shell EMACS=${EMACS} ${CASKBIN} install --verbose --path ${HOME}/.emacs.d)
 
 
 install-fonts:
@@ -77,25 +83,29 @@ install-fonts:
 	@mv ${FONTNAME}/ttf/*.ttf ${FONTPATH}
 	@rm -fr ${FONTNAME} ${FONTNAME}.zip
 
-# --------- Setup ---------------------------------
 ${CASKBIN}:
 	@-curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 
 
+# --------- Measure setup quality -----------------------
+profile:
+	@echo "Profile the init file."
+	${EMACS} -Q -l utils/profile-dotemacs.el \
+	--eval '(setq profile-dotemacs-file (setq load-file-name "${INITFULL}"))' \
+    -f profile-dotemacs
 
-uninstall:
-	@rm -fr ~/.emacs.d/init.el
-	@rm -fr ~/.emacs.d/Cask
-	@rm -fr ~/.emacs.d/.cask/
-	@rm -fr ~/.emacs.d/anaconda-mode/
-	@rm -fr ~/.emacs.d/irony/
-	@rm -fr ~/.cask/
+
+test:
+	@echo "Test whether the configuration loads correctly."
+	@${EMACS} -q --eval '(condition-case err (progn (load "${INIT}") (kill-emacs 0)) (error (kill-emacs 1)))' \
+	&& (echo "No error on load"; exit 0) \
+	|| (echo "Test failed: errors on load. $$?"; exit 1)
 
 # -------- Daemon ---------------------------------
-start:
+startdaemon:
 	${EMACS} --daemon --chdir ${HOME}
 
-stop:
+stopdaemon:
 	${EMACSCLIENT} -e '(kill-emacs)'
 
 
