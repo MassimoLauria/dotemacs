@@ -456,7 +456,7 @@ for `reftex-default-bibliography'."
    'org-babel-load-languages
    '(
      (emacs-lisp . t)
-     (sh .t)
+     (shell .t)
      (python . t)
      (sqlite . t)
      (C . t)
