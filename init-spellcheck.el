@@ -3,17 +3,14 @@
 ;;; 
 ;;;-----------------------------------------------------------------
 
-
 ;; Spellcheck the whole text
 (global-set-key [f2]  'ispell-buffer)  
 
-;; Spellcheck word (usually overridden vt flyspell)
+;; Spellcheck word (usually overridden by flyspell)
 (global-set-key (kbd "M-s") 'ispell-word)
 
-
-
 ;; Switch among the chosen languages
-(global-set-key (kbd "M-<f2>") 'spellcheck-language-cycle)
+(global-set-key (kbd "M-<f2>") 'spellcheck-cycle-language)
 
 
 ;; Flyspell -- spell checking on the fly.
@@ -23,21 +20,20 @@
   (setq ispell-program-name (executable-find "hunspell"))
   (if (not ispell-program-name)
       (message "Spell checking disabled: impossible to find correctly installed 'Hunspell'."))
-  :init
-  (add-hook 'text-mode-hook 'flyspell-mode)
-  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-  :diminish t)
+  :hook ((text-mode .flyspell-mode)
+         (prog-mode .flyspell-prog-mode))
+  :diminish nil)
 
 ; Automatically detect language for Flyspell
 (use-package guess-language         
   :commands (guess-language-mode guess-language spellcheck-cycle-language)
-  :init (add-hook 'flyspell-mode-hook #'guess-language-mode)
+  :hook flyspell-mode
   :config
   (setq guess-language-langcodes '((en . ("american" "American"))
                                    (it . ("italiano" "Italian")))
         guess-language-languages '(en it)
         guess-language-min-paragraph-length 45)
-  :diminish t)
+  :diminish nil)
 
 
 (defun spellcheck-cycle-language ()
