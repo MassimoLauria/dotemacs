@@ -20,7 +20,8 @@
       (message "Spell checking disabled: impossible to find correctly installed 'Hunspell'."))
   :init
   (add-hook 'text-mode-hook 'flyspell-mode)
-  (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+  :diminish t)
 
 ; Automatically detect language for Flyspell
 (use-package guess-language         
@@ -30,7 +31,8 @@
   (setq guess-language-langcodes '((en . ("american" "American"))
                                    (it . ("italiano" "Italian")))
         guess-language-languages '(en it)
-        guess-language-min-paragraph-length 45))
+        guess-language-min-paragraph-length 45)
+  :diminish t)
 
 
 (defun spellcheck-cycle-language ()
