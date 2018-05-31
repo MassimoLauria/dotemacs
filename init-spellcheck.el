@@ -20,8 +20,8 @@
   (setq ispell-program-name (executable-find "hunspell"))
   (if (not ispell-program-name)
       (message "Spell checking disabled: impossible to find correctly installed 'Hunspell'."))
-  :hook ((text-mode .flyspell-mode)
-         (prog-mode .flyspell-prog-mode))
+  :hook ((text-mode . flyspell-mode)
+         (prog-mode . flyspell-prog-mode))
   :diminish nil)
 
 ; Automatically detect language for Flyspell
