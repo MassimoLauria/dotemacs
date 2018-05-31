@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016, 2018 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2018-05-31, 10:16 (CEST) Massimo Lauria"
+# Time-stamp: "2018-05-31, 10:28 (CEST) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -57,6 +57,10 @@ minisetup:
 	@rm -f ~/.emacs.d/init.el
 	@cp ${INITMINI} ~/.emacs.d/init.el
 	@echo "Done."
+
+emacs-changed:
+	@echo "Setup a new emacs while preserving the current configuration."
+	${MAKE} install-pkgs
 
 
 uninstall:
