@@ -281,9 +281,9 @@ http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
       (remove 'process-kill-buffer-query-function kill-buffer-query-functions))
 
 ;; This is just nice
-(require 'which-func)
-(add-to-list 'which-func-modes 'org-mode)
-(which-func-mode 1)
+(use-package which-func
+  :commands (which-func-mode))
+
 
 ;; Trailining whitespace removal
 (defvar do-delete-whitespace t
