@@ -220,9 +220,9 @@ started."
 
 ;; TeX asks for Flyspell and American dictionary.
 (add-hook 'TeX-language-en-hook
-	  (lambda () (ispell-change-dictionary "english")))
+	  (lambda () (ispell-change-dictionary "american")))
 (add-hook 'TeX-language-it-hook
-	  (lambda () (ispell-change-dictionary "italian")))
+	  (lambda () (ispell-change-dictionary "italiano")))
 
 
 
