@@ -9,8 +9,8 @@
 
 ;; Set fonts
 (if (eq system-type 'windows-nt)
-    (set-default-font "Consolas 14" nil t)
-  (set-default-font "DejaVu Sans Mono 14" nil t))
+    (set-frame-font "Consolas 14" nil t)
+  (set-frame-font "DejaVu Sans Mono 14" nil t))
   
 ;; Set theme to zenburn
 (when (or 
