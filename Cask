@@ -41,6 +41,7 @@
 (depends-on "iedit")
 (depends-on "irony")
 (depends-on "irony-eldoc")
+(depends-on "ivy-bibtex")
 (depends-on "latex-preview-pane")
 (depends-on "let-alist")
 (depends-on "logito")
