@@ -8,10 +8,13 @@
 
 
 ;; Set fonts
+(defvar default-font "DejaVu Sans Mono 14" "The font I use by default")
 (if (eq system-type 'windows-nt)
-    (set-frame-font "Consolas 14" nil t)
-  (set-frame-font "DejaVu Sans Mono 14" nil t))
-  
+    (setq default-font "Consolas 14"))
+(set-frame-font default-font nil t)
+(setq default-frame-alist `((font . ,default-font)))
+
+
 ;; Set theme to zenburn
 (when (or 
        (>= (display-color-cells) 256)
