@@ -387,7 +387,8 @@ is already narrowed."
   :config
   (ivy-mode)
   (setq counsel-find-file-ignore-regexp "\\`\\.")
-  (setq ivy-use-virtual-buffers t))
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-use-selectable-prompt t))
 
 
 (use-package counsel
