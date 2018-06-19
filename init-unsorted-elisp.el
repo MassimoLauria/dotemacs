@@ -401,14 +401,14 @@ is already narrowed."
 
 (defun my-ivy-setup ()
   (define-key ivy-minibuffer-map (kbd "<left>") 'counsel-up-directory)
-  (define-key ivy-minibuffer-map (kbd "<right>") 'ivy-alt-done)
+  (define-key ivy-minibuffer-map (kbd "<right>") 'ivy-partial-or-done)
   (define-key ivy-minibuffer-map (kbd "M-i") 'ivy-previous-line)
   (define-key ivy-minibuffer-map (kbd "M-k") 'ivy-next-line)
   (define-key ivy-minibuffer-map (kbd "M-j") 'counsel-up-directory)
-  (define-key ivy-minibuffer-map (kbd "M-l") 'ivy-alt-done)
+  (define-key ivy-minibuffer-map (kbd "M-l") 'ivy-partial-or-done)
   (define-key ivy-minibuffer-map (kbd "M-u") 'ivy-previous-history-element)
-  (define-key ivy-minibuffer-map (kbd "M-o") 'ivy-next-history-element))
-
+  (define-key ivy-minibuffer-map (kbd "M-o") 'ivy-next-history-element)
+  (define-key ivy-minibuffer-map (kbd "M-SPC") 'ivy-dispatching-done))
 
 (provide 'init-unsorted-elisp)
 ;;; init-unsorted-elisp.el ends here
