@@ -1,34 +1,25 @@
 ;;;
 ;;; Python Mode configuration.
 ;;;
-;;; If Emacs version >= 24.3 then `python.el' supports ipython out of
-;;; the box. For older emacs we stick with canonical `python'
-;;; interpreter.
-;;;
-;;; This setup avoids downloading external python modes like
-;;; `python-mode.el', and should gracefully suck on older installation
-;;; (that I do not use very often).
+;;; - uses default `python.el'
+;;; - be sure anaconda-mode, pythonic, company-anaconda are in sync
+;;; - makes use of pyenv 
+;;; - avoid using ipython as a shell. Too many problem if it is not
+;;;   well configured
+;;; 
 ;;; -------------------------------------------------------------------
 
 
-;; Emacs >= 24.3 supports ipython inferior shell out of the box but
-;; IPython >=5.0.0 has a new prompt technology that screws with Emacs.
-;; We fix it temporarily using its simple interface.
-(when (and (executable-find "ipython") 
-           (version<= "24.3" emacs-version))
-  
-  (setq python-shell-interpreter "ipython"
-        python-shell-interpreter-args "--simple-prompt --pprint"
-        python-shell-completion-native-enable nil
-        ))
-
+;; Use pyenv binaries if available
+(add-to-list 'exec-path "~/.pyenv/shims")
 
 ;; Code analysis
 (use-package anaconda-mode
-  :ensure t
   :diminish t
   :commands anaconda-mode
-  :init '(add-hook 'python-mode-hook 'anaconda-mode)
+  :init
+  (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
   :config
   (define-key anaconda-mode-map  (kbd "M-/") 'anaconda-mode-show-doc)
   (define-key anaconda-mode-map  (kbd "M-.") 'anaconda-mode-find-definitions)
@@ -37,7 +28,6 @@
 
 ;; Auto completion
 (use-package company-anaconda
-  :ensure t
   :commands company-anaconda)
 
 ;; Syntax checker
@@ -51,28 +41,18 @@
   (define-key inferior-python-mode-map (kbd "<f10>") 'delete-window))
 
 ;; Minor modes
-(add-hook 'python-mode-hook 'anaconda-mode)
-(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 (add-hook 'python-mode-hook 'flycheck-mode)
 
 
 ;;; Virtual Environments -----------------------------------------------
 
-(use-package virtualenvwrapper
-  :ensure t
-  :init (setq venv-location (concat (getenv "HOME") "/.virtualenvs/"))
-        (put 'python-project-venv-name 'safe-local-variable #'stringp)
-  :commands (venv-workon venv-mkvirtualenv)
-  :config (venv-initialize-eshell))
-       
-;; if buffer or dir local variable `python-project-venv-name' is set
-;; to a string, the corresponding virtual environment is activated.
-(defun ml/automatic-virtualenv-activation ()
-  (hack-local-variables)
-  (when (boundp 'python-project-venv-name)
-    (venv-workon python-project-venv-name)))
+(use-package pyenv-mode
+  :commands (pyenv-mode-set pyenv-mode-unset pyenv-mode))
 
-(add-hook 'python-mode-hook 'ml/automatic-virtualenv-activation 'append)
+(use-package pyenv-mode-auto
+  :commands pyenv-mode-auto-hook
+  :init (add-hook 'find-file-hook #'pyenv-mode-auto-hook)
+  :config (pyenv-mode))
 
 (provide 'init-python)
 ;; Local Variables:
