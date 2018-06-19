@@ -16,12 +16,9 @@
 
 
 ;; Set theme to zenburn
-(when (or 
-       (>= (display-color-cells) 256)
-       (if (fboundp 'daemonp) (daemonp))) ;; can't count colors as a daemon 
-  (condition-case msg
-      (load-theme 'zenburn t)
-    (error (format "%s" msg) )))
+(use-package zenburn-theme
+  :config
+  (load-theme 'zenburn t))
 
 ;; Fix zenburn theme for flyspell/flymake/flycheck
 (custom-theme-set-faces

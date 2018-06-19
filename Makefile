@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016, 2018 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2018-05-31, 10:35 (CEST) Massimo Lauria"
+# Time-stamp: "2018-06-20, 00:43 (CEST) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -76,6 +76,10 @@ uninstall:
 install-pkgs: ${CASKBIN}
 	@echo "Install the required emacs packages"
 	$(shell EMACS=${EMACS} ${CASKBIN} install --verbose --path ${HOME}/.emacs.d)
+
+update-pkgs: ${CASKBIN} install-pkgs
+	@echo "Update emacs packages"
+	$(shell EMACS=${EMACS} ${CASKBIN} update --verbose --path ${HOME}/.emacs.d)
 
 
 install-fonts:

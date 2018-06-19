@@ -302,39 +302,6 @@ Emacs buffers are those whose name starts with *."
                                     password-length))))))
 
 
-;;;---- Recreate *scratch* buffer as soon as it's killed ------------------
-
-;; If the *scratch* buffer is killed, recreate it automatically
-(defun reinit-scratch-buffer ()
-  "Kill scratch buffer and recreate it according to may preferences."
-  ;; The next line is just in case someone calls this manually
-  (set-buffer (get-buffer-create "*scratch*"))
-  ;; Kill the current (*scratch*) buffer
-  (remove-hook 'kill-buffer-query-functions 'reinit-scratch-buffer)
-  (kill-buffer (current-buffer))
-  ;; Make a brand new *scratch* buffer
-  (init-scratch-buffer)
-  ;; Since we killed it, don't let caller do that.
-  nil)
-
-;; Prepare *scratch buffer*
-;; FROM: Morten Welind
-;; http://www.geocrawler.com/archives/3/338/1994/6/0/1877802/
-(defun init-scratch-buffer ()
-  "Setup the *scratch* buffer according to may preferences.
-
-In particular every time the buffer is killed, it is recreated
-according to this default."
-  (interactive)
-  (save-excursion
-    (set-buffer (get-buffer-create "*scratch*"))
-    (lisp-interaction-mode)
-    (make-local-variable 'kill-buffer-query-functions)
-    (add-hook 'kill-buffer-query-functions 'reinit-scratch-buffer)))
-
-
-
-
 ;; Fake fullscreen
 (defun toggle-fullscreen ()
   "Toggle full screen"

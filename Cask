@@ -40,6 +40,7 @@
 (depends-on "highlight-symbol")
 (depends-on "htmlize")
 (depends-on "iedit")
+(depends-on "immortal-scratch")
 (depends-on "irony")
 (depends-on "irony-eldoc")
 (depends-on "ivy-bibtex")
