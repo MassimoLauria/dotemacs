@@ -8,11 +8,13 @@
 
 
 ;; Set fonts
+;;   - on linux we use Xresources instead
 (defvar default-font "DejaVu Sans Mono 14" "The font I use by default")
 (if (eq system-type 'windows-nt)
     (setq default-font "Consolas 14"))
-(set-frame-font default-font nil t)
-(setq default-frame-alist `((font . ,default-font)))
+
+(if (not (eq system-type 'gnu/linux))
+    (setq default-frame-alist `((font . ,default-font))))
 
 
 ;; Set theme to zenburn
@@ -40,12 +42,13 @@
   (setq ns-alternate-modifier 'nil))
 
 
-;; GUI elements
-(when-available 'scroll-bar-mode (scroll-bar-mode -1)) ;; scroll-bar-mode undefined in terminal emacs!
-(when-available 'tool-bar-mode   (tool-bar-mode -1)  ) ;;   tool-bar-mode undefined in terminal emacs!
-(menu-bar-mode -1)
-(when-available 'tabbar-mode     (tabbar-mode -1)    ) ;;     tabbar-mode defined only in Aquamacs
-
+;; GUI elements off
+(when scroll-bar-mode
+  (scroll-bar-mode -1))
+(when tool-bar-mode
+  (tool-bar-mode -1))
+(when menu-bar-mode 
+  (menu-bar-mode -1))
 
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
