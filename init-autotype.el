@@ -1,9 +1,9 @@
 ;;; init-autotype.el --- Automatic test insertion configuration
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2016-11-11, 01:03 (CET) Massimo Lauria>
+;; Time-stamp: <2018-06-23, 17:11 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -29,18 +29,20 @@
 
 
 ;;; Snippets -----------------------------------------------------------------
-
 (use-package yasnippet
-  :diminish yas-minor-mode
-  :commands (yas-expand yas-minor-mode yas-minor-mode-on yas-global-mode)
+  :commands (yas-minor-mode yas-global-mode yas-expand)
+  :hook (prog-mode . yas-minor-mode)
+  :diminish (yas-minor-mode . " Ⓨ")
+  
+  ;; edit the snippets
+  :mode  ("\\.yasnippet" . snippet-mode)
+  :mode  ("\\.snippet" . snippet-mode)
+  
   :config
+  (add-to-list 'yas-snippet-dirs (concat default-elisp-path "/snippets/") )
+  (require 'yasnippet-snippets nil t)
   (progn
-    (add-to-list 'yas-snippet-dirs (concat default-elisp-path "/snippets/"))
-    (setq yas-snippet-dirs
-          (delete  "~/.emacs.d/snippets" yas-snippet-dirs))
     (yas-reload-all)))
-
-
 
 ;; Avoid automatic insertion of newlines at the end of a snippet recipe.
 (add-hook 'snippet-mode-hook (lambda ()

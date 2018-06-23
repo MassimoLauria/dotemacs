@@ -3,7 +3,7 @@
 ;; Copyright (C) 2013, 2014, 2015, 2016, 2018  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2018-05-31, 16:26 (CEST) Massimo Lauria>
+;; Time-stamp: <2018-06-23, 17:25 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by

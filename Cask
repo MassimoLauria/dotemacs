@@ -40,7 +40,6 @@
 (depends-on "highlight-symbol")
 (depends-on "htmlize")
 (depends-on "iedit")
-(depends-on "immortal-scratch")
 (depends-on "irony")
 (depends-on "irony-eldoc")
 (depends-on "ivy-bibtex")
@@ -89,4 +88,5 @@
 (depends-on "writeroom-mode")
 (depends-on "xml-rpc")
 (depends-on "yasnippet")
+(depends-on "yasnippet-snippets")
 (depends-on "zenburn-theme")

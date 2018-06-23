@@ -31,8 +31,6 @@
 
 ;; Auto-mode
 (setq auto-mode-alist (cons '("\\.zsh" . sh-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.yasnippet" . snippet-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.snippet" . snippet-mode) auto-mode-alist))
 
 ;; Command line editing
 (setq auto-mode-alist (cons '("zshec[0-9]*" . sh-mode) auto-mode-alist))
