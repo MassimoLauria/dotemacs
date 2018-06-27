@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2018-06-23, 17:11 (CEST) Massimo Lauria>
+;; Time-stamp: <2018-06-27, 16:12 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
 (use-package yasnippet
   :commands (yas-minor-mode yas-global-mode yas-expand)
   :hook (prog-mode . yas-minor-mode)
-  :diminish (yas-minor-mode . " Ⓨ")
+  :diminish (yas-minor-mode . " 🅨")
   
   ;; edit the snippets
   :mode  ("\\.yasnippet" . snippet-mode)

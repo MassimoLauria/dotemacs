@@ -109,6 +109,7 @@
   
 (use-package beacon ; flashes the cursor's line when you scroll
   :ensure t
+  :diminish t
   :config
   (beacon-mode 1))
   
