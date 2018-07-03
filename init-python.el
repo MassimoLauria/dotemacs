@@ -11,11 +11,12 @@
 
 
 ;; Use pyenv binaries if available
-(add-to-list 'exec-path "~/.pyenv/shims")
+(add-to-list 'exec-path (concat (getenv "HOME") "/.pyenv/shims"))
+(environment-add-path (concat (getenv "HOME") "/.pyenv/bin"))  ;; Pyenv 
 
 ;; Code analysis
 (use-package anaconda-mode
-  :diminish t
+  :diminish nil
   :commands anaconda-mode
   :init
   (add-hook 'python-mode-hook 'anaconda-mode)
@@ -23,7 +24,7 @@
   :config
   (define-key anaconda-mode-map  (kbd "M-/") 'anaconda-mode-show-doc)
   (define-key anaconda-mode-map  (kbd "M-.") 'anaconda-mode-find-definitions)
-  (define-key anaconda-mode-map  (kbd "M-,") 'anaconda-mode-go-back)
+  (define-key anaconda-mode-map  (kbd "M-,") 'pop-tag-mark)
   (define-key anaconda-mode-map  (kbd "M-r") nil))
 
 ;; Auto completion
