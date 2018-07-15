@@ -288,6 +288,7 @@ Emacs buffers are those whose name starts with *."
 
 
 ;;; Create passwords using 'pwgen command'
+(require 'subr-x)
 (defun create-password ()
   (interactive)
   (let ((password-gen "pwgen")
