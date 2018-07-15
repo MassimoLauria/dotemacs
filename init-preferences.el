@@ -43,8 +43,7 @@
 
 
 ;; GUI elements off
-(when scroll-bar-mode
-  (scroll-bar-mode -1))
+(scroll-bar-mode -1)
 (when tool-bar-mode
   (tool-bar-mode -1))
 (when menu-bar-mode 
