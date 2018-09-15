@@ -9,6 +9,7 @@
 
 ;;;------------ File locations ---------------------------------------
 (setq org-directory "~/personal/agenda/")
+(setq org-archive-location "~/personal/agenda/archives/%s_archive::")
 (setq org-default-notes-file (concat org-directory "notes.org"))
 (setq org-default-journal-file (concat org-directory "journal.org"))
 (when (not (boundp 'org-agenda-files))
