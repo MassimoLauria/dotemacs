@@ -1,9 +1,9 @@
 ;;; init-italian-l10n.el --- Italian localization stuff
 
-;; Copyright (C) 2012, 2013  Massimo Lauria
+;; Copyright (C) 2012, 2013, 2018  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2013-03-29, 18:59 (CET) Massimo Lauria>
+;; Time-stamp: <2018-09-16, 00:22 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -33,7 +33,31 @@
                                  "Ottobre" "Novembre" "Dicembre"])
 
 
+;; Feste laiche
+(setq holiday-general-holidays
+      '((holiday-fixed 1 1 "Capodanno")
+        (holiday-fixed 5 1 "Festa dei Lavoratori")
+        (holiday-fixed 4 25 "Liberazione dal Nazifascismo")
+        (holiday-fixed 6 2 "Festa della Repubblica")
+))
 
+;; Feste cattoliche
+(setq holiday-christian-holidays
+     '((holiday-fixed 12 8 "Immacolata Concezione")
+       (holiday-fixed 12 25 "Natale")
+       (holiday-fixed 12 26 "Santo Stefano")
+       (holiday-fixed 1 6 "Epifania")
+       (holiday-easter-etc -52 "Giovedì grasso")
+       (holiday-easter-etc -47 "Martedì grasso")
+       (holiday-easter-etc   0 "Pasqua")
+       (holiday-easter-etc  +1 "Pasquetta")
+       (holiday-fixed 8 15 "Ferragosto")
+       (holiday-fixed 11 1 "Ognissanti")
+))
+
+(setq holiday-bahai-holidays nil)
+(setq holiday-hebrew-holidays nil)
+(setq holiday-islamic-holidays nil)
 
 
 ;;; variables from `parse-time.el'
