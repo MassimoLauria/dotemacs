@@ -29,7 +29,9 @@
 
 ;; Auto completion
 (use-package company-anaconda
-  :commands company-anaconda)
+  :after (anaconda-mode company)
+  :commands company-anaconda
+  :config (add-to-list 'company-backends 'company-anaconda))
 
 ;; Syntax checker
 (use-package pylint

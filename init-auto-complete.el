@@ -75,7 +75,10 @@
 (use-package company-box
   :after company
   :diminish
-  :hook (company-mode . company-box-mode))
+  :hook (company-mode . company-box-mode)
+  :config
+  (setq company-box-enable-icon nil))
+
 
 
 
