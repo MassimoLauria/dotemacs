@@ -68,7 +68,6 @@
 (setq x-stretch-cursor t)
 ; (show-paren-mode 1)                     ; We use sp-show-paren-mode from smartparen
 
-xref
 ;; Speedbar
 (setq speedbar-mode-hook '(lambda () (text-scale-decrease 1)))
 
