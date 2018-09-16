@@ -72,12 +72,11 @@
   :config
   (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
 
-(use-package company-box
-  :after company
-  :diminish
-  :hook (company-mode . company-box-mode)
-  :config
-  (setq company-box-enable-icon nil))
+;; (use-package company-box
+;;   :after company
+;;   :diminish
+;;   :hook (company-mode . company-box-mode))
+
 
 
 
