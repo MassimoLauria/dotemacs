@@ -112,18 +112,14 @@ At least they are considered useful for the author.
 
     (define-key map (kbd "C-x k")   'kill-this-buffer)
     ;; Default text navigation (usually shadowed by other modes)
-    (define-key map (kbd "M-.") 'org-open-at-point-global) 
-    (define-key map (kbd "M-,") 'pop-global-mark)  
- 
-    ;; Alternative  pop mark (usually not shadowed)
-    (define-key map (kbd "C-M-,") 'pop-global-mark)
-    (define-key map (kbd "M-*")   'pop-global-mark)
-    
+    (define-key map (kbd "M-.") 'xref-find-definitions) 
+    (define-key map (kbd "M-,") 'xref-pop-marker-stack)
 
     ;; Edit power features
     (define-key map (kbd "C-'") 'narrow-or-widen-dwim)
     (define-key map (kbd "C-;") 'iedit-mode)
 
+    
     ;; Expand region configuration
     (define-key map (kbd "C-SPC") 'er/expand-region)
 
@@ -132,33 +128,6 @@ At least they are considered useful for the author.
     (define-key map (kbd "C-=") 'text-scale-increase)
     (define-key map (kbd "C-0") 'text-scale-adjust)
     
-
-    
-    ;; Register keys
-    ;; Register at finger tips from 1 to ... 0!
-    ;; (define-key map (kbd "M-r M-r") 'pop-to-mark-command) ;; Pop mark-ring
-
-    ;; Load registers position
-    ;; (define-key map (kbd "M-1") '(lambda () (interactive) (register-to-point 1) )  )
-    ;; (define-key map (kbd "M-2") '(lambda () (interactive) (register-to-point 2) )  )
-    ;; (define-key map (kbd "M-3") '(lambda () (interactive) (register-to-point 3) )  )
-    ;; (define-key map (kbd "M-4") '(lambda () (interactive) (register-to-point 4) )  )
-    ;; (define-key map (kbd "M-5") '(lambda () (interactive) (register-to-point 5) )  )
-    ;; (define-key map (kbd "M-6") '(lambda () (interactive) (register-to-point 6) )  )
-    ;; (define-key map (kbd "M-7") '(lambda () (interactive) (register-to-point 7) )  )
-    ;; (define-key map (kbd "M-9") '(lambda () (interactive) (register-to-point 9) )  )
-    ;; ;; Save register position
-    ;; (define-key map (kbd "M-r 0") '(lambda () (interactive) (point-to-register 0) )  )
-    ;; (define-key map (kbd "M-r 1") '(lambda () (interactive) (point-to-register 1) )  )
-    ;; (define-key map (kbd "M-r 2") '(lambda () (interactive) (point-to-register 2) )  )
-    ;; (define-key map (kbd "M-r 3") '(lambda () (interactive) (point-to-register 3) )  )
-    ;; (define-key map (kbd "M-r 4") '(lambda () (interactive) (point-to-register 4) )  )
-    ;; (define-key map (kbd "M-r 5") '(lambda () (interactive) (point-to-register 5) )  )
-    ;; (define-key map (kbd "M-r 6") '(lambda () (interactive) (point-to-register 6) )  )
-    ;; (define-key map (kbd "M-r 7") '(lambda () (interactive) (point-to-register 7) )  )
-    ;; (define-key map (kbd "M-r 9") '(lambda () (interactive) (point-to-register 9) )  )
-    ;; (define-key map (kbd "M-r 0") '(lambda () (interactive) (point-to-register 0) )  )
-
     map)
   "Keymap for massimo-keyboard-mode.")
 

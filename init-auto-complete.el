@@ -38,9 +38,6 @@
   (define-key company-active-map [tab] 'company-complete-selection))
 
 
-
-
-
 ;; Setup various auto-completion backends
 ;;
 (when (fboundp #'company-auctex-init)
@@ -74,6 +71,12 @@
 (use-package company
   :config
   (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
+
+(use-package company-box
+  :after company
+  :diminish
+  :hook (company-mode . company-box-mode))
+
 
 
 (provide 'init-auto-complete)

@@ -16,6 +16,7 @@
 (depends-on "cask")
 (depends-on "company")
 (depends-on "company-anaconda")
+(depends-on "company-box")
 (depends-on "company-irony")
 (depends-on "company-irony-c-headers")
 (depends-on "counsel")
