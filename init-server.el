@@ -28,6 +28,11 @@
 (use-package server
   :config (or (daemonp) (server-running-p) (server-start)))
 
+;; (use-package org-protocol
+;;   :commands (org-protocol-capture))
+
+
+
 
 (provide 'init-server)
 ;;; init-server.el ends here

@@ -276,7 +276,7 @@ part of the keyboard.
         ("n" "Note"              entry (file "notebook.org")    "* %?\n  %U\n  %i\n  %a\n\n")
         ("d" "Deadline"          entry (file "agenda.org")      "* TODO ⌚ %?\n  DEADLINE: %^t\n  %U\n\n  %i\n\n")
         ("e" "Event/Appointment" entry (file "agenda.org")      "* %?\n  WHEN  ⌚ %^t\n  %i\n\n")
-        ("j" "Journal Entry"     entry (file+datetree "journal.org") "* inserito il %U\n\n  %?\n\n%i\n\n")
+        ("j" "Journal Entry"     entry (file+olp+datetree "journal.org") "* inserito il %U\n\n  %?\n\n%i\n\n")
         ;; ("Q" "File a notebook" entry (file "notebook.org")
         ;;  "* New notebook %? :notebook:%^g\n  %U\n\n  %^{ID}p%^{Formato}p%^{Fogli}p%^{Nome}p\n\n")
         ("w" "External URL" entry (file "notebook.org")  "%(org-capture-URL-data)")))
