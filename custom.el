@@ -148,7 +148,7 @@
      ("jpg" . "open %s"))))
  '(org-format-latex-options
    (quote
-    (:foreground "White" :background default :scale 1.2 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+    (:foreground "White" :background default :scale 1.7279999999999998 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(org-hide-leading-stars t)
  '(org-highlight-latex-and-related (quote (latex script entities)))
@@ -187,7 +187,7 @@
  '(org-use-sub-superscripts (quote {}))
  '(package-selected-packages
    (quote
-    (company-box ivy-rich which-key yasnippet-snippets magit pythonic esup pyenv-mode-auto ivy-bibtex guess-language org-static-blog pdf-tools wc-mode atomic-chrome zoom-frm latex-preview-pane ob-ipython htmlize ssh-config-mode py-autopep8 company-irony-c-headers flycheck-irony visual-fill-column writeroom-mode wgrep wgrep-ag ag iedit notmuch try smex counsel zenburn-theme yasnippet virtualenvwrapper use-package undo-tree swiper smartparens skeletor rainbow-mode rainbow-identifiers rainbow-delimiters pallet org-plus-contrib notmuch-labeler magit-svn magit-gh-pulls magic-latex-buffer irony-eldoc highlight-symbol highlight-quoted highlight-defined highlight-blocks graphviz-dot-mode gnus-alias flycheck expand-region elisp-slime-nav elfeed deferred company-irony bbdb auctex ace-window)))
+    (org-bullets company-box ivy-rich which-key yasnippet-snippets magit pythonic esup pyenv-mode-auto ivy-bibtex guess-language org-static-blog pdf-tools wc-mode atomic-chrome zoom-frm latex-preview-pane ob-ipython htmlize ssh-config-mode py-autopep8 company-irony-c-headers flycheck-irony visual-fill-column writeroom-mode wgrep wgrep-ag ag iedit notmuch try smex counsel zenburn-theme yasnippet virtualenvwrapper use-package undo-tree swiper smartparens skeletor rainbow-mode rainbow-identifiers rainbow-delimiters pallet org-plus-contrib notmuch-labeler magit-svn magit-gh-pulls magic-latex-buffer irony-eldoc highlight-symbol highlight-quoted highlight-defined highlight-blocks graphviz-dot-mode gnus-alias flycheck expand-region elisp-slime-nav elfeed deferred company-irony bbdb auctex ace-window)))
  '(post-attachment-regexp "\\(attach\\|alleg\\)")
  '(post-rename-buffer nil)
  '(powerline-default-separator (quote arrow))

@@ -486,14 +486,17 @@ for `reftex-default-bibliography'."
 
 
 
-
 ;;;------------------------- Load -----------------------------------
 (use-package org
-  :ensure t
   :mode ("\\.org\\'" . org-mode)
   :pin gnu 
   :config
   (init-org-mode--setup))
+
+
+(use-package org-bullets
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 
 (provide 'init-org-mode)

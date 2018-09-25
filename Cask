@@ -56,6 +56,7 @@
 (depends-on "notmuch-labeler")
 (depends-on "ob-ipython")
 (depends-on "olivetti")
+(depends-on "org-bullets")
 (depends-on "org-pdfview")
 (depends-on "org-plus-contrib")
 (depends-on "package-build")

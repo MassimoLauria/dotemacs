@@ -106,11 +106,14 @@
 (global-hl-line-mode nil)
   
 (use-package beacon ; flashes the cursor's line when you scroll
-  :ensure t
   :diminish ""
   :config
   (beacon-mode 1))
   
+(use-package which-key
+  :diminish ""      
+  :config
+  (which-key-mode))
 
 
 ;; Canonical behaviour of modern interfaces. Not the default in Emacs22
