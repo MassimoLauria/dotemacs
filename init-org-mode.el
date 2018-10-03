@@ -37,6 +37,8 @@
  org-read-date-display-live t
  org-src-fontify-natively t
  org-src-tab-acts-natively t
+ org-src-preserve-indentation t
+ org-edit-src-content-indentation 0
  org-confirm-babel-evaluate t
  org-M-RET-may-split-line nil
  ;; org-babel-no-eval-on-ctrl-c-ctrl-c t
