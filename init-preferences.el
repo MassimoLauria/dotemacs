@@ -43,7 +43,8 @@
 
 
 ;; GUI elements off
-(scroll-bar-mode -1)
+(when (fboundp 'scroll-bar-mode)
+      (scroll-bar-mode -1))
 (when tool-bar-mode
   (tool-bar-mode -1))
 (when menu-bar-mode 
