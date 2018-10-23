@@ -63,3 +63,5 @@
 
     (message (concat (bibtex-generate-autokey) ") - " fulltitle ".pdf"))
     ))
+
+(provide 'init-bibliography)

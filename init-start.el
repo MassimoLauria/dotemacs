@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018  Massimo Lauria
-;; Time-stamp: "2018-10-23, 16:01 (CEST) Massimo Lauria"
+;; Time-stamp: "2018-10-23, 22:17 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -58,6 +58,7 @@
 (add-to-list 'Info-directory-list (concat default-elisp-path "/info"))
 
 ;;; Module(s) initialization -------------------------------------------
+(require 'cl)
 
 ;; Bootstrap
 (require 'init-environment)      ; setup running environment
@@ -96,13 +97,13 @@
 (require 'init-cc-mode)
 (require 'init-python)
 (require 'init-scheme)
-;; (require 'init-java-mode)
+;;(require 'init-java-mode)
 
 ;; Writing science
 (require 'init-latex)        ; AucTeX
 (require 'init-bibliography) ; bibtex and org-ref
 
-
+(require 'cl)
 ;; (require 'init-sage)         ; SageMath
 ;; (require 'init-imaxima)      ; Imaxima and Imath (from SageMath)
 ;; (require 'init-singular)     ; Singular (not from SageMath!)
