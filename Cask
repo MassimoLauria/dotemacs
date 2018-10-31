@@ -60,6 +60,7 @@
 (depends-on "org-bullets")
 (depends-on "org-pdfview")
 (depends-on "org-plus-contrib")
+(depends-on "org-ref")
 (depends-on "package-build")
 (depends-on "pallet")
 (depends-on "pcache")
