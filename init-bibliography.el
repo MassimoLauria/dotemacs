@@ -11,9 +11,9 @@
 (setq reftex-default-bibliography '("~/lavori/latex/bibliographies/theoryofcomputing.bib"))
 
 ;; For org-ref
-(setq org-ref-bibliography-notes "~/lavori/latex/bibliographies/notes.org"
-      org-ref-default-bibliography '("~/lavori/latex/bibliographies/theoryofcomputing.bib")
-      org-ref-pdf-directory "~/Dropbox/Library/articles/")
+;; (setq org-ref-bibliography-notes "~/lavori/latex/bibliographies/notes.org"
+;;       org-ref-default-bibliography '("~/lavori/latex/bibliographies/theoryofcomputing.bib")
+;;       org-ref-pdf-directory "~/Dropbox/Library/articles/")
 
 (setq bibtex-completion-bibliography "~/lavori/latex/bibliographies/theoryofcomputing.bib"
       bibtex-completion-library-path "~/Dropbox/Library/articles/"
@@ -80,27 +80,27 @@
     ))
 
 
-;; Open PDF files
-(defun my/org-ref-open-pdf-at-point ()
-  "Open the pdf for bibtex key under point if it exists."
-  (interactive)
-  (let* ((results (org-ref-get-bibtex-key-and-file))
-         (key (car results))
-	 (pdf-file (car (bibtex-completion-find-pdf key))))
-    (if (file-exists-p pdf-file)
-	(org-open-file pdf-file)
-      (message "No PDF found for %s" key))))
+;; ;; Open PDF files
+;; (defun my/org-ref-open-pdf-at-point ()
+;;   "Open the pdf for bibtex key under point if it exists."
+;;   (interactive)
+;;   (let* ((results (org-ref-get-bibtex-key-and-file))
+;;          (key (car results))
+;; 	 (pdf-file (car (bibtex-completion-find-pdf key))))
+;;     (if (file-exists-p pdf-file)
+;; 	(org-open-file pdf-file)
+;;       (message "No PDF found for %s" key))))
 
-(setq org-ref-open-pdf-function 'my/org-ref-open-pdf-at-point)
-
-
+;; (setq org-ref-open-pdf-function 'my/org-ref-open-pdf-at-point)
 
 
-(setq doi-utils-open-pdf-after-download t)
-(use-package org-ref
-  :commands (org-ref doi-utils)
-  :init
-  (setq org-ref-get-pdf-filename-function 'bibtex-generate-filename)
-  )
+
+
+;; (setq doi-utils-open-pdf-after-download t)
+;; (use-package org-ref
+;;   :commands (org-ref doi-utils)
+;;   :init
+;;   (setq org-ref-get-pdf-filename-function 'bibtex-generate-filename)
+;;   )
 
 (provide 'init-bibliography)
