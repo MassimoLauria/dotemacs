@@ -92,7 +92,9 @@
                             whitespace
                             inherit-booktitle
                             last-comma
-                            realign)
+                            realign
+                            unify-case
+                            sort-fields)
       )
 
 
@@ -204,7 +206,7 @@ Optional argument NODELIM see `bibtex-make-field'."
                                                           ":"
                                                           (upcase ext)))))
 
-(defun mybibtex-dnd-add-file (event)
+(defun mybibtex-dnd-add-file-mac (event)
   "Attach a the file to a Bibtex entry it is dragged on"
   (interactive "e")
   (let* ((window (posn-window (event-start event)))
@@ -219,10 +221,21 @@ Optional argument NODELIM see `bibtex-make-field'."
       (error "Can not read %s" uri))))
 
 
+(defun mybibtex-dnd-add-file-linux (uri _action)
+  "Attach a the file to a Bibtex entry it is dragged on"
+  (let* ((f (dnd-get-local-file-name uri t)))
+    (if (and f (file-readable-p f))
+	(mybibtex-add-file-to-library f)
+      (error "Can not read %s" uri))))
+
+(defun mybibtex-dnd-setup () 
+  (setq-local dnd-protocol-alist '(("^file:" . mybibtex-dnd-add-file-linux))))
+
+
 (use-package bibtex
   :bind (:map bibtex-mode-map
               ("M-q" . bibtex-fill-entry)
-              ("<drag-n-drop>" . mybibtex-dnd-add-file))
+              ("<drag-n-drop>" . mybibtex-dnd-add-file-mac))
   
   :config
   (setq bibtex-autokey-name-case-convert 'capitalize
@@ -232,7 +245,8 @@ Optional argument NODELIM see `bibtex-make-field'."
   (add-hook 'bibtex-clean-entry-hook 'mybibtex-clean-pages-dashes)
   (add-hook 'bibtex-clean-entry-hook 'bibtex-fill-entry 'append)
   (add-hook 'bibtex-mode-hook
-            (lambda () (setq fill-column 999999))))
+            (lambda () (setq fill-column 999999)))
+  (add-hook 'bibtex-mode-hook 'mybibtex-dnd-setup))
 
 
 (provide 'init-bibliography)
