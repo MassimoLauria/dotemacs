@@ -125,9 +125,10 @@ It shows the full view of my custom agenda."
   (interactive)
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
-  ;; org-babel-setup
+  ;; org-babel and export
   (init-org-mode--babel-setup)
-
+  (init-org-mode--latex-export-setup)
+  
   ;; Org-mode communicating with external applications.
   (require 'org-protocol nil t)
 
@@ -458,11 +459,24 @@ for `reftex-default-bibliography'."
     (plist-put org-format-latex-options :scale text-scale-factor)) 
   (org-toggle-latex-fragment '(16)))
 
-(setq org-latex-to-pdf-process
-      '("pdflatex -interaction nonstopmode -output-directory %o %f"
-        "bibtex %b"
-        "pdflatex -interaction nonstopmode -output-directory %o %f"
-        "pdflatex -interaction nonstopmode -output-directory %o %f"))
+
+
+
+;; Setup for PDF/Latex exports
+(defun init-org-mode--latex-export-setup ()
+  "Setup minted package for code listing
+   
+   Better than default because it manages UTF-8 characters but
+   requires pygments installed and -shell-escape option in the
+   pdflatex call"
+
+  (add-to-list 'org-latex-packages-alist '("" "minted"))
+  (setq org-latex-listings 'minted)
+  (setq org-latex-pdf-process
+        '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+          "bibtex %b"
+          "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+          "%latex -shell-escape -interaction nonstopmode -output-directory %o %f")))
 
 ;; Org babel setup
 (defun org-babel-python-strip-session-chars ()
