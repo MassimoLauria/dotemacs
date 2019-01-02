@@ -9,9 +9,15 @@
 
 ;;;------------ File locations ---------------------------------------
 (setq org-directory "~/personal/agenda/")
-(setq org-archive-location "~/personal/agenda/archives/%s_archive::")
-(setq org-default-notes-file (concat org-directory "notes.org"))
-(setq org-default-journal-file (concat org-directory "journal.org"))
+(setq org-default-notes-file (concat org-directory "agenda.org"))      ;; default capture file
+(setq org-default-journal-file (concat org-directory "journal.org")) 
+
+(setq org-archive-location (concat org-directory
+                                   "ZZ_archived.org"                   ;; archive file
+                                   "::"
+                                   "* Archived from original file %s"  ;; archive header
+                                   ))
+
 (when (not (boundp 'org-agenda-files))
   (setq org-agenda-files (list
                         "~/personal/agenda/agenda.org"    ;; deadlines / appointments /events
@@ -21,8 +27,31 @@
 
 
 ;;;---------------- TODO states --------------------------------------
+(setq org-todo-keyword-faces
+   (quote
+    (;; Basic
+     ("TODO" :foreground "red" :background "black" :weight bold)
+     ("FEEDBACK" :foreground "yellow" :weight bold)
+     ("WAIT" :foreground "yellow" :weight bold)
+     ("DONE" :foreground "lightgreen" :weight bold)
+     ("CANCELED" :foreground "lightgreen" :strike-through t :weight bold)
+     ("DELEGATED" :foreground "cyan" :weight bold)
+     ("HASNEWERENTRY" :foreground "cyan" :weight bold)
+     ;; Open problems
+     ("UNSOLVED" :foreground "blue" :background "white" :weight bold)
+     ("SOLVED" :foreground "lightgreen" :weight bold)
+     ;; Reading
+     ("TOREAD" :foreground "blue" :background "white" :weight bold)
+     ("READ" :foreground "lightgreen" :weight bold)
+     ;; Review the entry
+     ("REVIEWENTRY" . (:foreground "blue" :background "lightgreen" :weight bold)))))
+
 (setq org-todo-keywords
-            '((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")))
+   (quote
+    ((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED" "HASNEWERENTRY")
+     (sequence "TOREAD" "|" "READ" "CANCELED")
+     (sequence "UNSOLVED" "|" "SOLVED")
+     (sequence "REVIEWENTRY" "|"))))
 
 
 ;;;---------------- Basic setup --------------------------------------
@@ -274,14 +303,15 @@ part of the keyboard.
     output))
 
 (setq org-capture-templates
-      '(("t" "Task"              entry (file "notebook.org")    "* TODO ⌚ %?\n  %U\n\n  %i\n\n")
-        ("n" "Note"              entry (file "notebook.org")    "* %?\n  %U\n  %i\n  %a\n\n")
+      '(
+        ("n" "Notebook note"     entry (file "notebook.org")    "* REVIEWENTRY %?\n  %U\n  %i\n  %a\n\n")
+        ("t" "Task"              entry (file "agenda.org"  )    "* TODO ⌚ %?\n  %U\n\n  %i\n\n")
         ("d" "Deadline"          entry (file "agenda.org")      "* TODO ⌚ %?\n  DEADLINE: %^t\n  %U\n\n  %i\n\n")
         ("e" "Event/Appointment" entry (file "agenda.org")      "* %?\n  WHEN  ⌚ %^t\n  %i\n\n")
         ("j" "Journal Entry"     entry (file+olp+datetree "journal.org") "* inserito il %U\n\n  %?\n\n%i\n\n")
-        ;; ("Q" "File a notebook" entry (file "notebook.org")
+        ;; ("Q" "File a notebook" entry (file+olp "notebook.org" "PHYSICAL NOTEBOOKS")
         ;;  "* New notebook %? :notebook:%^g\n  %U\n\n  %^{ID}p%^{Formato}p%^{Fogli}p%^{Nome}p\n\n")
-        ("w" "External URL" entry (file "notebook.org")  "%(org-capture-URL-data)")))
+        ("w" "External URL" entry (file+olp "notebook.org" "CAPTURED URLS")  "%(org-capture-URL-data)")))
 
 (setq org-default-capture-template "w")
 
