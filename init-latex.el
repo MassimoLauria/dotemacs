@@ -24,7 +24,6 @@
 (setq TeX-electric-math nil)
 (setq reftex-plug-into-AUCTeX t)
 (setq bib-cite-use-reftex-view-crossref t)
-(setq TeX-complete-word '(lambda () ))
 (setq TeX-view-evince-keep-focus t)
 (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
 

@@ -40,21 +40,12 @@
 
 ;; Setup various auto-completion backends
 ;;
-(when (fboundp #'company-auctex-init)
-  (add-hook 'LaTeX-mode-hook #'company-auctex-init))
-
 (with-eval-after-load 'company
   (when (fboundp 'company-anaconda)
     (add-to-list 'company-backends 'company-anaconda))  ; python
 
   (when (fboundp 'company-irony)
     (add-to-list 'company-backends 'company-irony)))     ; c/c++
-
-
-;; UNICODE annotations slow down on MacOSX
-(with-eval-after-load 'company-auctex
-  (if (eq system-type 'darwin)
-      (defun company-auctex-symbol-annotation (candidate) "" "")))
 
 ;; Yasnippet
 (defvar company-mode/enable-yas t
