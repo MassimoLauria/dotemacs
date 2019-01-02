@@ -150,41 +150,10 @@
    (quote
     (:foreground "White" :background default :scale 1.7279999999999998 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
- '(org-hide-leading-stars t)
- '(org-highlight-latex-and-related (quote (latex script entities)))
- '(org-highlight-latex-fragments-and-specials t)
- '(org-latex-to-pdf-process
-   (quote
-    ("pdflatex -interaction nonstopmode -output-directory %o %f" "bibtex %b" "pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f")))
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
  '(org-preview-latex-default-process (quote dvisvgm))
- '(org-src-fontify-natively t t)
- '(org-todo-keyword-faces
-   (quote
-    (("TODO" :foreground "red" :background "black" :weight bold)
-     ("UNSOLVED" :foreground "blue" :background "white" :weight bold)
-     ("READ" :foreground "blue" :background "white" :weight bold)
-     ("SKIM" :foreground "blue" :background "white" :weight bold)
-     ("FEEDBACK" :foreground "yellow" :weight bold)
-     ("WAIT" :foreground "yellow" :weight bold)
-     ("DELEGATED" :foreground "cyan" :weight bold)
-     ("HASNEWERENTRY" :foreground "cyan" :weight bold)
-     ("EVENTUALLY" :foreground "cyan" :weight bold)
-     ("CANCELED" :foreground "lightgreen" :strike-through t :weight bold)
-     ("DONE" :foreground "lightgreen" :weight bold)
-     ("SOLVED" :foreground "lightgreen" :weight bold)
-     ("FREETIME" :foreground "blue" :background "lightgreen" :weight bold)
-     ("REVIEW" . "(:foreground \"blue\" :background \"lightgreen\" :weight bold)")
-     ("REVIEWAGAIN" . "(:foreground \"blue\" :background \"lightgreen\" :weight bold)"))))
- '(org-todo-keywords
-   (quote
-    ((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED" "HASNEWERENTRY")
-     (sequence "SKIM" "READ" "|" "DONE" "EVENTUALLY")
-     (sequence "UNSOLVED" "|" "SOLVED")
-     (sequence "FREETIME" "REVIEW" "|" "REVIEWAGAIN" "DONE"))) t)
- '(org-use-sub-superscripts (quote {}))
  '(package-selected-packages
    (quote
     (gscholar-bibtex org-bullets company-box ivy-rich which-key yasnippet-snippets magit pythonic esup pyenv-mode-auto ivy-bibtex guess-language org-static-blog pdf-tools wc-mode atomic-chrome zoom-frm latex-preview-pane ob-ipython htmlize ssh-config-mode py-autopep8 company-irony-c-headers flycheck-irony visual-fill-column writeroom-mode wgrep wgrep-ag ag iedit notmuch try smex counsel zenburn-theme yasnippet virtualenvwrapper use-package undo-tree swiper smartparens skeletor rainbow-mode rainbow-identifiers rainbow-delimiters pallet org-plus-contrib notmuch-labeler magit-svn magit-gh-pulls magic-latex-buffer irony-eldoc highlight-symbol highlight-quoted highlight-defined highlight-blocks graphviz-dot-mode gnus-alias flycheck expand-region elisp-slime-nav elfeed deferred company-irony bbdb auctex ace-window)))

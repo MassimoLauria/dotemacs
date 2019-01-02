@@ -69,9 +69,13 @@
  org-src-preserve-indentation t
  org-edit-src-content-indentation 0
  org-confirm-babel-evaluate t
+ org-use-sub-superscripts (quote {})
  org-M-RET-may-split-line nil
  ;; org-babel-no-eval-on-ctrl-c-ctrl-c t
- org-agenda-show-future-repeats 'next 
+ org-agenda-show-future-repeats 'next
+ org-hide-leading-stars t
+ org-highlight-latex-and-related '(latex script entities)
+ org-highlight-latex-fragments-and-specials t
  )
 
 ;;;---------------- Agenda setup --------------------------------------
@@ -453,6 +457,12 @@ for `reftex-default-bibliography'."
   (let ((text-scale-factor (expt text-scale-mode-step text-scale-mode-amount)))
     (plist-put org-format-latex-options :scale text-scale-factor)) 
   (org-toggle-latex-fragment '(16)))
+
+(setq org-latex-to-pdf-process
+      '("pdflatex -interaction nonstopmode -output-directory %o %f"
+        "bibtex %b"
+        "pdflatex -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -interaction nonstopmode -output-directory %o %f"))
 
 ;; Org babel setup
 (defun org-babel-python-strip-session-chars ()
