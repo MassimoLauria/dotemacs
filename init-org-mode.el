@@ -474,7 +474,7 @@ for `reftex-default-bibliography'."
   (setq org-latex-listings 'minted)
   (setq org-latex-pdf-process
         '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
-          "bibtex %b"
+          "%bib %b"
           "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
           "%latex -shell-escape -interaction nonstopmode -output-directory %o %f")))
 
