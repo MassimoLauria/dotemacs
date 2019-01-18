@@ -1,26 +1,24 @@
 ;;;
 ;;; Sending:  msmtp (if installed)
-;;; Writing:  message-mode
+;;; Fetching: mbsync
 ;;; Contacts: bbdb
-;;; Reading:  notmuch
-;;; Fetching: gmaileer
+;;; Reading/Writing:  mu4e
 ;;;------------------------------------------------------------------
 
-;; Load private mail infos
+;; Personal email infos
 
-(setq prefs-mail-file-name "~/personal/mail/config/config.emacs")
-
-(when (file-readable-p prefs-mail-file-name)
-  (load-file prefs-mail-file-name)
-)
-
+;; Email addresses
+(setq
+ email-address-personal "lauria.massimo@gmail.com"
+ email-address-academic "massimo.lauria@uniroma1.it"
+ signature-file-personal "~/personal/mail/personal.sign"
+ signature-file-academic "~/personal/mail/work.sign")
 
 ;;
-;; Sending emails
+;; Sending emails (settings for gmail)
 ;;
-
-(setq smtpmail-smtp-server private-smtp-server)
-(setq smtpmail-smtp-service  private-smtp-port)
+(setq smtpmail-smtp-server  "smtp.gmail.com")
+(setq smtpmail-smtp-service 587)
 (setq sendmail-program (executable-find "msmtp"))
 
 (if sendmail-program
@@ -32,25 +30,38 @@
     (setq message-send-mail-function 'message-smtpmail-send-it)))
 
 
-
 ;;
-;; Composing emails
+;; Composing emails with mu4e (and message-mode)
 ;;
-
 (define-key global-map "\C-cm" 'compose-mail)
+(setq mu4e-compose-complete-only-personal t)
+(setq mu4e-compose-dont-reply-to-self t)
 
-(setq compose-mail-user-agent-warnings nil)
-(setq mail-user-agent 'message-user-agent)
-(setq message-default-mail-headers "Cc: \nBcc: \n")
-(setq message-citation-line-format "%N wrote:\n"
-      message-citation-line-function 'message-insert-formatted-citation-line
-      message-cite-function          'message-cite-original-without-signature)
-
-(setq message-signature t
-      message-signature-file "~/personal/mail/signature")
 (setq message-auto-save-directory "~/personal/mail/drafts")
 (setq message-kill-buffer-on-exit t)
+(setq mu4e-sent-messages-behavior 'delete)  ;; for gmail
 
+
+;; Pick the identity
+;; 1) messages to work email should be replied from work email and signature
+;; 2) messages to personal email should be replied from personal email and signature
+;; 3) default is work email
+(add-hook 'mu4e-compose-pre-hook
+  (defun my-set-from-address ()
+    "Set the From address based on the To address of the original."
+    (let ((msg mu4e-compose-parent-message)) ;; msg is shorter...
+      (when msg
+        (setq user-mail-address
+          (cond
+            ((mu4e-message-contact-field-matches msg :to email-address-academic) email-address-academic)
+            ((mu4e-message-contact-field-matches msg :to email-address-personal) email-address-personal)
+            (t email-address-academic)))
+        (setq message-signature-file
+          (cond
+            ((mu4e-message-contact-field-matches msg :to email-address-academic) signature-file-academic)
+            ((mu4e-message-contact-field-matches msg :to email-address-personal) signature-file-personal)
+            (t signature-file-academic)))
+        ))))
 
 (defun setup-message-mode ()
   "Setup editor for emails"
@@ -62,16 +73,48 @@
 
 (add-hook 'message-mode-hook 'setup-message-mode)
 
-;;
-;; Use gnus-alias for sender identities
-;;
-(use-package gnus-alias
-  :commands (gnus-alias-init gnus-alias-select-identity)
+;;; Reading email with mu4e
+(use-package mu4e
+  :load-path "/usr/share/emacs/site-lisp/mu4e/"
+  :commands (mu4e)
   :init
-  (setq gnus-alias-override-user-mail-address t)
-  :config
-  (add-hook 'message-mode-hook 'gnus-alias-init))
+  ;; addresses
+  (setq mu4e-user-mail-address-list (list email-address-academic
+                                          email-address-personal))
+  ;; maildirs
+  (setq mu4e-maildir (expand-file-name "~/personal/mail/gmail-mirror")
+        mu4e-drafts-folder "/drafts"
+        mu4e-sent-folder  "/sent"
+        mu4e-trash-folder "/trash"
+        mu4e-refile-folder "/archive"
+        ;; attachments go here
+        mu4e-attachment-dir  "~/Downloads")
 
+  ;; shotcuts
+  (setq mu4e-maildir-shortcuts
+      '( ("/inbox"    . ?i)
+         ("/sent"     . ?s)
+         ("/archive"  . ?a)
+         ("/special"  . ?t)))
+  
+  ;; Tuning
+  (setq mu4e-show-images t)
+  (setq mu4e-view-show-addresses t)
+  (setq mu4e-get-mail-command "mbsync gmail")
+  (setq mu4e-change-filenames-when-moving t)
+  (setq mu4e-headers-skip-duplicates t)
+  :config
+  (setq mail-user-agent 'mu4e-user-agent)
+  )
+
+
+(use-package mu4e-maildirs-extension
+  :after mu4e
+  :init
+  (setq mu4e-maildirs-extension-use-bookmarks t)
+  (setq mu4e-maildirs-extension-use-maildirs  nil)
+  :config
+  (mu4e-maildirs-extension))
 
 ;;
 ;; BBDB
@@ -120,28 +163,7 @@
     bbdb-send-mail-style 'message
 )
 
-
-;;; Notmuch for reading email
-  ;;(require 'notmuch-labeler)
-;;  
-(use-package notmuch
-  :commands notmuch
-  :init
-  (defun mail()
-    (interactive) (notmuch))
-  :config
-  (require 'notmuch-labeler)
-  (define-key notmuch-common-keymap "g" 'notmuch-jump-search) ;; as gmail does
-  (define-key notmuch-common-keymap "j" 'nil)
-  (setq notmuch-fcc-dirs nil
-        notmuch-search-oldest-first       nil
-        notmuch-search-result-format '(("date" . "%12s ")
-                                       ("count" . "%-7s ")
-                                       ("authors" . "%-20s ")
-                                       ("tags" . "%s ")
-                                       ("subject" . "  %-60s"))
-        ))
-        
+       
 (provide 'init-mail)
 ;; Local Variables:
 ;; mode: emacs-lisp
