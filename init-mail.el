@@ -116,6 +116,11 @@
   :config
   (mu4e-maildirs-extension))
 
+(use-package mu4e-conversation
+  :after mu4e
+  :config
+  (global-mu4e-conversation-mode))
+
 ;;
 ;; BBDB
 ;;
