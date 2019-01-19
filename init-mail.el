@@ -105,9 +105,10 @@
   (setq mu4e-get-mail-command "mbsync gmail")
   (setq mu4e-change-filenames-when-moving t)
   (setq mu4e-headers-skip-duplicates t)
+  (setq mu4e-headers-show-threads t)
+  (setq mu4e-headers-include-related t)  
   :config
-  (setq mail-user-agent 'mu4e-user-agent)
-  )
+  (setq mail-user-agent 'mu4e-user-agent))
 
 
 (use-package mu4e-maildirs-extension
