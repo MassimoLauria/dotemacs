@@ -74,8 +74,10 @@
 (add-hook 'message-mode-hook 'setup-message-mode)
 
 ;;; Reading email with mu4e
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e/")
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e/")
+
 (use-package mu4e
-  :load-path "/usr/share/emacs/site-lisp/mu4e/"
   :commands (mu4e)
   :init
   ;; addresses
@@ -116,10 +118,6 @@
   :config
   (mu4e-maildirs-extension))
 
-(use-package mu4e-conversation
-  :after mu4e
-  :config
-  (global-mu4e-conversation-mode))
 
 ;;
 ;; BBDB

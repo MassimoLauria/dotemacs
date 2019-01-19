@@ -53,7 +53,6 @@
 (depends-on "magit-popup")
 (depends-on "magit-svn")
 (depends-on "metaweblog")
-(depends-on "mu4e-conversation")
 (depends-on "mu4e-maildirs-extension")
 (depends-on "notmuch")
 (depends-on "notmuch-labeler")
