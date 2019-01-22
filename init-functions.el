@@ -320,6 +320,18 @@ Emacs buffers are those whose name starts with *."
         (reftex-cite-punctuation '(", " " and " " et al.")))
     (reftex-citation)))
 
+
+(defun refresh-xmodmap ()
+  "Refresh the xmodmap settings
+
+Unfortunately on new X11 with modern keyboard settings the
+  Xmodmap paradigm is obsolete and for some reason the settings
+  get lost. This command will refresh them from inside emacs, so
+  that I don't have to open a terminal for that."
+  (interactive)
+  (shell-command "xmodmap ~/.Xmodmap" nil nil))
+
+
 ;;----- Fix compile modes ------------------------------------------------
 
 ;; Helper for compilation. Close the compilation window if
