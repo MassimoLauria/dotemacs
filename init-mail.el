@@ -90,7 +90,7 @@
   (setq mu4e-headers-include-related t)
 
   (setq mu4e-compose-complete-addresses t)
-  (setq mu4e-compose-complete-only-personal t)
+  (setq mu4e-compose-complete-only-personal nil)
   (setq mu4e-compose-complete-only-after "2012-01-01")
 
   :config
@@ -134,6 +134,11 @@
   (setq mu4e-context-policy 'pick-first)
   (setq mu4e-compose-context-policy 'pick-first)
 
+  (add-to-list 'mu4e-headers-actions
+               '("org-contact-add" . mu4e-action-add-org-contact) t)
+  (add-to-list 'mu4e-view-actions
+               '("org-contact-add" . mu4e-action-add-org-contact) t)
+
   (setq mu4e-contexts
         `( ,(make-mu4e-context
              :name "Academic"
@@ -154,51 +159,16 @@
                       ( mu4e-compose-signature . ,signature-personal))))))
 
 ;;
-;; BBDB
+;; Contacts
 ;;
 
-(use-package bbdb
-  :commands (bbdb bbdb-complete-mail bbdb-complete-name)
-  :config
-  (bbdb-initialize))
-
-;; Say NO! to auto collection
-(setq bbdb/mail-auto-create-p nil)
-(setq bbdb-north-american-phone-numbers-p nil)
-
-;; automatically add mailing list fields
-(add-hook 'bbdb-notice-hook 'bbdb-auto-notes-hook)
-(setq bbdb-auto-notes-alist '(("X-ML-Name" (".*$" ML 0))))
-
-(setq
-
-    bbdb-file "~/personal/agenda/contacts.bbdb"
-
-    bbdb-offer-save 1                        ;; 1 means save-without-asking
-
-    bbdb-use-pop-up nil                      ;; allow popups for addresses
-    bbdb-electric-p t                        ;; be disposable with SPC
-    bbdb-popup-target-lines  1               ;; very small
-
-    bbdb-dwim-net-address-allow-redundancy t ;; always use full name
-    bbdb-quiet-about-name-mismatches t       ;; show name-mismatches 2 secs
-
-    bbdb-always-add-address t                ;; add new addresses to existing...
-                                             ;; ...contacts automatically
-    bbdb-canonicalize-redundant-nets-p nil   ;; x@foo.bar.cx => x@bar.cx
-
-    bbdb-completion-type nil                 ;; complete on anything
-
-    bbdb-complete-name-allow-cycling t       ;; cycle through matches
-                                             ;; this only works partially
-
-    bbbd-message-caching-enabled t           ;; be fast
-    bbdb-use-alternate-names t               ;; use AKA
-
-    bbdb-elided-display t                    ;; single-line addresses
-
-    bbdb-send-mail-style 'message
-)
+(use-package org-contacts
+  :commands (org-contacts org-contacts-anniversaries)
+  :init
+  ;; addresses
+  (setq org-contacts-files '("~/personal/agenda/contacts.org"))
+  (setq mu4e-org-contacts-file  (car org-contacts-files)))
+  
 
 
 (provide 'init-mail)
