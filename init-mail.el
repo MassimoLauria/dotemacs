@@ -11,8 +11,14 @@
 (setq
  email-address-personal "lauria.massimo@gmail.com"
  email-address-academic "massimo.lauria@uniroma1.it"
- signature-file-personal "~/personal/mail/personal.sign"
- signature-file-academic "~/personal/mail/work.sign")
+
+ signature-personal (with-temp-buffer
+                      (insert-file-contents "~/personal/mail/personal.sign")
+                      (buffer-string))
+
+ signature-academic (with-temp-buffer
+                      (insert-file-contents "~/personal/mail/work.sign")
+                      (buffer-string)))
 
 ;;
 ;; Sending emails (settings for gmail)
@@ -41,27 +47,6 @@
 (setq message-kill-buffer-on-exit t)
 (setq mu4e-sent-messages-behavior 'delete)  ;; for gmail
 
-
-;; Pick the identity
-;; 1) messages to work email should be replied from work email and signature
-;; 2) messages to personal email should be replied from personal email and signature
-;; 3) default is work email
-(add-hook 'mu4e-compose-pre-hook
-  (defun my-set-from-address ()
-    "Set the From address based on the To address of the original."
-    (let ((msg mu4e-compose-parent-message)) ;; msg is shorter...
-      (when msg
-        (setq user-mail-address
-          (cond
-            ((mu4e-message-contact-field-matches msg :to email-address-academic) email-address-academic)
-            ((mu4e-message-contact-field-matches msg :to email-address-personal) email-address-personal)
-            (t email-address-academic)))
-        (setq message-signature-file
-          (cond
-            ((mu4e-message-contact-field-matches msg :to email-address-academic) signature-file-academic)
-            ((mu4e-message-contact-field-matches msg :to email-address-personal) signature-file-personal)
-            (t signature-file-academic)))
-        ))))
 
 (defun setup-message-mode ()
   "Setup editor for emails"
@@ -94,10 +79,26 @@
 
   ;; no shotcuts (uses bookmarks instead)
   (setq mu4e-maildir-shortcuts nil)
-      ;; '( ("/inbox"    . ?i)
-      ;;    ("/sent"     . ?s)
-      ;;    ("/archive"  . ?a)
-      ;;    ("/special"  . ?t)))
+
+  ;; Tuning
+  (setq mu4e-show-images t)
+  (setq mu4e-view-show-addresses t)
+  (setq mu4e-get-mail-command "mbsync gmail")
+  (setq mu4e-change-filenames-when-moving t)
+  (setq mu4e-headers-skip-duplicates t)
+  (setq mu4e-headers-show-threads t)
+  (setq mu4e-headers-include-related t)
+
+  (setq mu4e-compose-complete-addresses t)
+  (setq mu4e-compose-complete-only-personal t)
+  (setq mu4e-compose-complete-only-after "2012-01-01")
+
+  :config
+  (setq mail-user-agent 'mu4e-user-agent)
+
+  (add-to-list 'mu4e-view-actions
+  '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+
 
   (setq mu4e-bookmarks (list
                         (make-mu4e-bookmark
@@ -110,34 +111,47 @@
                          :key ?s)
                         (make-mu4e-bookmark
                          :name "📧 Tutti i messaggi"
-                         :query "maildir:/archived"
+                         :query "maildir:/archive"
                          :key ?a)
                         (make-mu4e-bookmark
                          :name "☆ Speciali"
                          :query "maildir:/special"
                          :key ?t)
                         (make-mu4e-bookmark
-                         :name "☆ Bozze"
+                         :name "🗋 Bozze"
                          :query "maildir:/drafts"
                          :key ?d)
                         (make-mu4e-bookmark
                          :name "📎 Con allegato"
                          :query "flag:attach"
-                         :key ?A)))
+                         :key ?A)
+                        (make-mu4e-bookmark
+                         :name "📆 Ultima settimana"
+                         :query "date:7d..now"
+                         :key ?w)))
 
-  (add-to-list 'mu4e-view-actions
-  '("ViewInBrowser" . mu4e-action-view-in-browser) t)
-  
-  ;; Tuning
-  (setq mu4e-show-images t)
-  (setq mu4e-view-show-addresses t)
-  (setq mu4e-get-mail-command "mbsync gmail")
-  (setq mu4e-change-filenames-when-moving t)
-  (setq mu4e-headers-skip-duplicates t)
-  (setq mu4e-headers-show-threads t)
-  (setq mu4e-headers-include-related t)  
-  :config
-  (setq mail-user-agent 'mu4e-user-agent))
+
+  (setq mu4e-context-policy 'pick-first)
+  (setq mu4e-compose-context-policy 'pick-first)
+
+  (setq mu4e-contexts
+        `( ,(make-mu4e-context
+             :name "Academic"
+             :match-func (lambda (msg)
+                           (when msg
+                             (mu4e-message-contact-field-matches msg
+                                                                 :to email-address-academic)))
+             :vars `( ( user-mail-address      . ,email-address-academic  )
+                      ( mu4e-compose-signature . ,signature-academic)))
+
+           ,(make-mu4e-context
+             :name "Personal"
+             :match-func (lambda (msg)
+                           (when msg
+                             (mu4e-message-contact-field-matches msg
+                                                                 :to email-address-personal)))
+             :vars `( ( user-mail-address      . ,email-address-personal  )
+                      ( mu4e-compose-signature . ,signature-personal))))))
 
 ;;
 ;; BBDB
@@ -186,7 +200,7 @@
     bbdb-send-mail-style 'message
 )
 
-       
+
 (provide 'init-mail)
 ;; Local Variables:
 ;; mode: emacs-lisp
