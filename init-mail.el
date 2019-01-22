@@ -92,12 +92,41 @@
         ;; attachments go here
         mu4e-attachment-dir  "~/Downloads")
 
-  ;; shotcuts
-  (setq mu4e-maildir-shortcuts
-      '( ("/inbox"    . ?i)
-         ("/sent"     . ?s)
-         ("/archive"  . ?a)
-         ("/special"  . ?t)))
+  ;; no shotcuts (uses bookmarks instead)
+  (setq mu4e-maildir-shortcuts nil)
+      ;; '( ("/inbox"    . ?i)
+      ;;    ("/sent"     . ?s)
+      ;;    ("/archive"  . ?a)
+      ;;    ("/special"  . ?t)))
+
+  (setq mu4e-bookmarks (list
+                        (make-mu4e-bookmark
+                         :name "📬 Posta in arrivo"
+                         :query "maildir:/inbox"
+                         :key ?i)
+                        (make-mu4e-bookmark
+                         :name "→ Inviati"
+                         :query "maildir:/sent"
+                         :key ?s)
+                        (make-mu4e-bookmark
+                         :name "📧 Tutti i messaggi"
+                         :query "maildir:/archived"
+                         :key ?a)
+                        (make-mu4e-bookmark
+                         :name "☆ Speciali"
+                         :query "maildir:/special"
+                         :key ?t)
+                        (make-mu4e-bookmark
+                         :name "☆ Bozze"
+                         :query "maildir:/drafts"
+                         :key ?d)
+                        (make-mu4e-bookmark
+                         :name "📎 Con allegato"
+                         :query "flag:attach"
+                         :key ?A)))
+
+  (add-to-list 'mu4e-view-actions
+  '("ViewInBrowser" . mu4e-action-view-in-browser) t)
   
   ;; Tuning
   (setq mu4e-show-images t)
@@ -109,16 +138,6 @@
   (setq mu4e-headers-include-related t)  
   :config
   (setq mail-user-agent 'mu4e-user-agent))
-
-
-(use-package mu4e-maildirs-extension
-  :after mu4e
-  :init
-  (setq mu4e-maildirs-extension-use-bookmarks t)
-  (setq mu4e-maildirs-extension-use-maildirs  nil)
-  :config
-  (mu4e-maildirs-extension))
-
 
 ;;
 ;; BBDB
