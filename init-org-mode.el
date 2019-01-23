@@ -103,7 +103,7 @@
                     (org-agenda-sorting-strategy '(tag-up priority-down))
                     ))
           (agenda "" ;; Birthdays in this week
-                  ((org-agenda-overriding-header "           BIRTHDAYS IN 7 DAYS\n")
+                  ((org-agenda-overriding-header "           ANNIVERSARIES IN 7 DAYS\n")
                    (org-agenda-span 7)
                    (org-agenda-show-all-dates nil)
                    (org-agenda-start-on-weekday nil)
