@@ -104,10 +104,9 @@
   :config
   (setq mail-user-agent 'mu4e-user-agent)
 
-  (add-to-list 'mu4e-view-actions
-  '("ViewInBrowser" . mu4e-action-view-in-browser) t)
-
-
+  ;; ---------------------------
+  ;; Setup the list of maildirs
+  ;; ---------------------------
   (setq mu4e-bookmarks (list
                         (make-mu4e-bookmark
                          :name "———————————————————————————"
@@ -163,15 +162,24 @@
                 :key ?})
                'append)
 
-  
 
-  (setq mu4e-context-policy 'pick-first)
-  (setq mu4e-compose-context-policy 'pick-first)
+  ;; ----------------------------------
+  ;; Actions in view and headers panes
+  ;; ----------------------------------
+  (add-to-list 'mu4e-view-actions
+  '("ViewInBrowser" . mu4e-action-view-in-browser) t)
 
   (add-to-list 'mu4e-headers-actions
                '("org-contact-add" . mu4e-action-add-org-contact) t)
   (add-to-list 'mu4e-view-actions
                '("org-contact-add" . mu4e-action-add-org-contact) t)
+
+
+  ;; -----------------
+  ;; Setup identities
+  ;; -----------------
+  (setq mu4e-context-policy 'pick-first)
+  (setq mu4e-compose-context-policy 'pick-first)
 
   (setq mu4e-contexts
         `( ,(make-mu4e-context
