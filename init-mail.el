@@ -106,12 +106,12 @@
                          :query "maildir:/inbox"
                          :key ?i)
                         (make-mu4e-bookmark
-                         :name "→ Inviati"
-                         :query "maildir:/sent"
+                         :name "→ Inviati (ultimo mese)"
+                         :query "maildir:/sent AND date:1m..now"
                          :key ?s)
                         (make-mu4e-bookmark
-                         :name "📧 Tutti i messaggi"
-                         :query "maildir:/archive"
+                         :name "📧 Tutti i messaggi (ultimo mese)"
+                         :query "maildir:/archive AND date:1m..now"
                          :key ?a)
                         (make-mu4e-bookmark
                          :name "☆ Speciali"
@@ -124,11 +124,7 @@
                         (make-mu4e-bookmark
                          :name "📎 Con allegato"
                          :query "flag:attach"
-                         :key ?A)
-                        (make-mu4e-bookmark
-                         :name "📆 Ultima settimana"
-                         :query "date:7d..now"
-                         :key ?w)))
+                         :key ?A)))
 
 
   (setq mu4e-context-policy 'pick-first)
