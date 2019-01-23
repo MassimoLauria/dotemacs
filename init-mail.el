@@ -20,6 +20,7 @@
                       (insert-file-contents "~/personal/mail/work.sign")
                       (buffer-string)))
 
+
 ;;
 ;; Sending emails (settings for gmail)
 ;;
@@ -62,6 +63,8 @@
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e/")
 (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e/")
 
+
+
 (use-package mu4e
   :commands (mu4e)
   :init
@@ -77,6 +80,11 @@
         ;; attachments go here
         mu4e-attachment-dir  "~/Downloads")
 
+  (setq mu4e-other-folders
+        (cl-set-difference (directory-files mu4e-maildir)
+                           '("." ".." "inbox" "archive" "drafts" "sent" "spam" "trash" "special") :test 'equal))
+
+  
   ;; no shotcuts (uses bookmarks instead)
   (setq mu4e-maildir-shortcuts nil)
 
@@ -102,6 +110,10 @@
 
   (setq mu4e-bookmarks (list
                         (make-mu4e-bookmark
+                         :name "———————————————————————————"
+                         :query "date:2999"
+                         :key ?{)
+                        (make-mu4e-bookmark
                          :name "📬 Posta in arrivo"
                          :query "maildir:/inbox"
                          :key ?i)
@@ -124,8 +136,34 @@
                         (make-mu4e-bookmark
                          :name "📎 Con allegato"
                          :query "flag:attach"
-                         :key ?A)))
+                         :key ?A)
+                        (make-mu4e-bookmark
+                         :name "———————————————————————————"
+                         :query "date:2999"
+                         :key ?-)))
 
+  ;; Put in the bookmarks all the user folders with increasing
+  ;; bookmark shortcut (won't work with more than 9 bookmarks)
+  (loop for label in mu4e-other-folders
+        with i = 1
+        do
+        (add-to-list 'mu4e-bookmarks
+                        (make-mu4e-bookmark
+                         :name  (concat "🏷 " label)
+                         :query (concat "maildir:/" label)
+                         :key (string-to-char (number-to-string i)))
+                        'append)
+        (setq i (+ i 1)))
+
+  ;; 
+  (add-to-list 'mu4e-bookmarks
+               (make-mu4e-bookmark
+                :name "———————————————————————————"
+                :query "date:2999"
+                :key ?})
+               'append)
+
+  
 
   (setq mu4e-context-policy 'pick-first)
   (setq mu4e-compose-context-policy 'pick-first)
