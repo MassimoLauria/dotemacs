@@ -64,6 +64,11 @@
 (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e/")
 
 
+(defun icon-on-linux (icon name)
+  "Apply the icon only on linux."
+  (concat
+   (or (and (eq system-type 'gnu/linux) icon) "")
+   name))
 
 (use-package mu4e
   :commands (mu4e)
@@ -113,27 +118,27 @@
                          :query "date:2999"
                          :key ?{)
                         (make-mu4e-bookmark
-                         :name "📬 Posta in arrivo"
+                         :name (icon-on-linux "📬 " "Posta in arrivo")
                          :query "maildir:/inbox"
                          :key ?i)
                         (make-mu4e-bookmark
-                         :name "→ Inviati (ultimo mese)"
+                         :name (icon-on-linux "→ " "Inviati (ultimo mese)")
                          :query "maildir:/sent AND date:1m..now"
                          :key ?s)
                         (make-mu4e-bookmark
-                         :name "📧 Tutti i messaggi (ultimo mese)"
+                         :name (icon-on-linux "📧 " "Tutti i messaggi (ultimo mese)")
                          :query "maildir:/archive AND date:1m..now"
                          :key ?a)
                         (make-mu4e-bookmark
-                         :name "☆ Speciali"
+                         :name (icon-on-linux "☆ " "Speciali")
                          :query "maildir:/special"
                          :key ?t)
                         (make-mu4e-bookmark
-                         :name "🗋 Bozze"
+                         :name (icon-on-linux "🗋 " "Bozze")
                          :query "maildir:/drafts"
                          :key ?d)
                         (make-mu4e-bookmark
-                         :name "📎 Con allegato"
+                         :name (icon-on-linux "📎" "Con allegato")
                          :query "flag:attach"
                          :key ?A)
                         (make-mu4e-bookmark
@@ -148,7 +153,7 @@
         do
         (add-to-list 'mu4e-bookmarks
                         (make-mu4e-bookmark
-                         :name  (concat "🏷 " label)
+                         :name  (icon-on-linux "🏷 " label)
                          :query (concat "maildir:/" label)
                          :key (string-to-char (number-to-string i)))
                         'append)
