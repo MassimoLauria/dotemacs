@@ -24,17 +24,28 @@
 ;;
 ;; Sending emails (settings for gmail)
 ;;
-(setq smtpmail-smtp-server  "smtp.gmail.com")
-(setq smtpmail-smtp-service 587)
+(setq smtp-password (string-trim
+                     (shell-command-to-string "python -c \"import keyring; print(keyring.get_password('smtp.gmail.com','lauria.massimo@gmail.com'))\"")))
+
+(setq smtpmail-default-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-user    "lauria.massimo@gmail.com"
+      smtpmail-smtp-server  "smtp.gmail.com"
+      smtpmail-smtp-service 587
+      smtpmail-debug-info t 
+      starttls-use-gnutls t
+      smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil)))
+
 (setq sendmail-program (executable-find "msmtp"))
 
 (if sendmail-program
     (progn ;; msmtp
       (setq send-mail-function 'sendmail-send-it)
       (setq message-send-mail-function 'message-send-mail-with-sendmail))
-  (progn ;; emacs smtpmail
-    (setq send-mail-function 'smtpmail-send-it)
-    (setq message-send-mail-function 'message-smtpmail-send-it)))
+  (progn ;; emacs smtpmail (and queueing)
+    (setq send-mail-function 'smtpmail-send-it
+          message-send-mail-function 'message-smtpmail-send-it
+          smtpmail-queue-dir "~/personal/mail/queue/cur/"
+          smtpmail-queue-mail nil)))
 
 
 ;;
@@ -88,6 +99,11 @@
   (setq mu4e-other-folders
         (cl-set-difference (directory-files mu4e-maildir)
                            '("." ".." "inbox" "archive" "drafts" "sent" "spam" "trash" "special") :test 'equal))
+
+  ;; Update in the background, silently
+  (setq mu4e-hide-index-messages t)
+  (setq mu4e-update-interval 100)
+
 
   
   ;; no shotcuts (uses bookmarks instead)
