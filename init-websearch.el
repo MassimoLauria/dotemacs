@@ -1,9 +1,9 @@
 ;;; init-websearch.el --- Search Engines
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2019  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2014-12-09, 16:16 (CET) Massimo Lauria>
+;; Time-stamp: <2019-01-30, 00:11 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -139,15 +139,15 @@ word queried is appended to the query string."
   freedict
   "http://www.thefreedictionary.com/_/search.aspx?pid=osearch&word=")
 
-(def-dictionary-lookup "Dictionary.com"
-  "Look up for a word in Dictionary.com."
+(def-dictionary-lookup "Oxford Dictionary"
+  "Look up for a word in Oxford Dictionary Online"
   dict
-  "http://www.dictionary.com/browse/")
+  "https://en.oxforddictionaries.com/search?filter=dictionary&query=")
 
-(def-dictionary-lookup "Thesaurus.com"
+(def-dictionary-lookup "Oxford Dictionary (Thesaurus)"
   "Look up for a word in Thesaurus.com."
   thes
-  "http://www.thesaurus.com/browse/")
+  "https://en.oxforddictionaries.com/search?filter=thesaurus&query=")
 
 
 ;; Programming languages references
@@ -158,12 +158,12 @@ word queried is appended to the query string."
 
 (def-dictionary-lookup "Python 2 help"
   "Search in Python 2 documentation."
-  pyhelp
+  py2help
 "https://docs.python.org/2/search.html?q=")
 
 (def-dictionary-lookup "Python 3 help"
   "Search in Python 3 documentation."
-  py3help
+  pyhelp
 "https://docs.python.org/3/search.html?q=")
 
 
