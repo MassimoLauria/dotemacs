@@ -122,6 +122,8 @@
   (setq mu4e-compose-complete-only-personal nil)
   (setq mu4e-compose-complete-only-after "2012-01-01")
 
+  (setq mu4e-confirm-quit nil)
+
   :config
   (setq mail-user-agent 'mu4e-user-agent)
 
