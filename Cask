@@ -70,6 +70,7 @@
 (depends-on "rainbow-identifiers")
 (depends-on "rainbow-mode")
 (depends-on "s")
+(depends-on "sdcv")
 (depends-on "seq")
 (depends-on "shut-up")
 (depends-on "skeletor")

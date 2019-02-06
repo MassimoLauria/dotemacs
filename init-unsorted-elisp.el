@@ -1,6 +1,6 @@
 ;;; init-unsorted-elisp.el --- Contains small chunks of elisp code in no particular order
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -364,8 +364,12 @@ is already narrowed."
 
 ;; SDCV is a command line client for StarDict dictionaries.
 ;; it is handy to have support of OFFLINE dictionaries.
-(autoload 'sdcv-search      "sdcv-mode" "Prompt for a word to search through sdcv." t)
-(autoload 'sdcv-search-word "sdcv-mode" "Search WORD through the command-line tool sdcv." nil)
+(use-package sdcv
+  :commands (sdcv-search-input sdcv-search-pointer))
+
+
+(autoload 'sdcv-search      "sdcv" "Prompt for a word to search through sdcv." t)
+(autoload 'sdcv-search-word "sdcv" "Search WORD through the command-line tool sdcv." nil)
 (defun sdcv-query-word (&optional word)
   "Lookup the WORD using the `sdcv' dictionary program."
   (interactive)
