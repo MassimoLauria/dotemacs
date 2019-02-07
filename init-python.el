@@ -14,6 +14,8 @@
 (add-to-list 'exec-path (concat (getenv "HOME") "/.pyenv/shims"))
 (environment-add-path (concat (getenv "HOME") "/.pyenv/shims"))  ;; Pyenv 
 
+(setq python-indent-offset 4)
+
 ;; Code analysis
 (use-package anaconda-mode
   :diminish nil

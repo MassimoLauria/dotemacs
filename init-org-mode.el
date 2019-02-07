@@ -128,7 +128,8 @@ It shows the full view of my custom agenda."
   ;; org-babel and export
   (init-org-mode--babel-setup)
   (init-org-mode--latex-export-setup)
-  
+  (init-org-setup-template)
+
   ;; Org-mode communicating with external applications.
   (require 'org-protocol nil t)
 
@@ -524,22 +525,65 @@ for `reftex-default-bibliography'."
      ))
 
   (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
-  (add-hook 'org-babel-after-execute-hook 'org-babel-python-strip-session-chars)
+  (add-hook 'org-babel-after-execute-hook 'org-babel-python-strip-session-chars))
 
-  ;; Easy templates for lecture notes.
-  (add-to-list 'org-structure-template-alist
-               '("S" "#+header: :db {{{DEFAULTDB}}}\n#+header: :colnames yes :nullvalue NULL\n#+BEGIN_SRC sqlite :exports both\n?\n#+END_SRC"))
-  (add-to-list 'org-structure-template-alist
-               '("p" "#+BEGIN_SRC python :exports both :results output\n?\n#+END_SRC"))
-  (add-to-list 'org-structure-template-alist
-               '("P" "#+BEGIN_SRC python :session true :exports both :results output\n?\n#+END_SRC"))
-  (add-to-list 'org-structure-template-alist
-               '("t" "#+begin_theorem\n?\n#+end_theorem\n#+begin_proof\n\n#+end_proof"))
-  (add-to-list 'org-structure-template-alist
-               '("E" "\\begin{equation}\n?\n\\end{equation}"))
-  (add-to-list 'org-structure-template-alist
-             '("n" "*** \n    :PROPERTIES:\n    :BEAMER_env: note\n    :END:\n\n    ?")))
 
+(defun init-org-setup-template ()
+  "Setup templates in org 9.2
+
+This is a workaround to get the old templates in org 9.2
+"
+  (require 'org-tempo)
+  (setq org-structure-template-alist nil)
+  (setq org-tempo-keywords-alist nil)
+  (setq org-tempo-tags nil)
+  (tempo-define-template "sqlite"
+                         '("#+header: :db {{{DEFAULTDB}}}" n
+                           "#+header: :colnames yes :nullvalue NULL" n
+                           "#+BEGIN_SRC sqlite :exports both" n
+                           p n
+                           "#+END_SRC" n)
+                         "<S"
+                         "Insert an SQLite code"
+                         )
+   
+  (tempo-define-template "python"
+                         '("#+BEGIN_SRC python :exports both :results output" n
+                           p n
+                           "#+END_SRC" n)
+                         "<p"
+                         "Python code"
+                         )
+   
+  (tempo-define-template "python session"
+                         '("#+BEGIN_SRC python :session :exports both :results output" n
+                           p n
+                           "#+END_SRC" n)
+                         "<P"
+                         "Python code in a session")
+   
+  (tempo-define-template "theorem"
+                         '("#+begin_theorem" n
+                           p n
+                           "#+end_thorem" n
+                           "#+begin_proof" n
+                           n
+                           "#+end_proof" n)
+                         "<t"
+                         "Theorem with proof")
+             
+  (tempo-define-template "equation"
+                         '("\\begin{equation}" n p n "\\end{equation}")
+                         "<E"
+                         "Math equation")
+   
+  (tempo-define-template "slidenode"
+                         '("*** " n>
+                           ":PROPERTIES:" n>
+                           ":BEAMER_env: note" n>
+                           ":END:" n p >)
+                         "<n"
+                         "Notes for the slide"))
 
 
 ;;;------------------------- Load -----------------------------------
