@@ -24,7 +24,7 @@
 (setq load-path (cons "~/config/emacs/" load-path))
 
 ;; Emacs packages
-(setq package-user-dir "~/.emacs.d/elpa-minimal/")
+(setq package-user-dir "~/.emacs.d/elpa/minimal/")
 (setq package-archives  '(("gnu" . "http://elpa.gnu.org/packages/")
                           ("elpa" . "http://tromey.com/elpa/")
                           ("melpa"        . "http://melpa.org/packages/")

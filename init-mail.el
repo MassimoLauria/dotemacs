@@ -82,7 +82,7 @@
    name))
 
 (use-package mu4e
-  :commands (mu4e)
+  :commands mu4e
   :init
   ;; addresses
   (setq mu4e-user-mail-address-list (list email-address-academic

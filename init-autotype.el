@@ -39,7 +39,7 @@
   :mode  ("\\.snippet" . snippet-mode)
   
   :config
-  (add-to-list 'yas-snippet-dirs (concat default-elisp-path "/snippets/") )
+  (add-to-list 'yas-snippet-dirs (concat base-config-path "/snippets/") )
   (require 'yasnippet-snippets nil t)
   (progn
     (yas-reload-all)))

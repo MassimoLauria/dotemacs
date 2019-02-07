@@ -172,28 +172,6 @@ in the kill-ring and `pos' is the position current-kill"
 ;;}}}
 
 
-;; CCLookup documentation of C/C++
-
-;; add pylookup to your loadpath, ex) "~/.lisp/addons/pylookup"
-(setq cclookup-dir (concat default-elisp-3rdparties "/cclookup"))
-(add-to-list 'load-path cclookup-dir)
-;; load pylookup when compile time
-(eval-when-compile (require-maybe 'cclookup))
-
-;; set executable file and db file
-(setq cclookup-program (concat cclookup-dir "/cclookup.py"))
-(setq cclookup-db-file "~/.emacs.d/cclookup.db")
-(if (not (file-exists-p cclookup-db-file))
-    (message "CClookup database not yet initialized")
-    )
-
-;; to speedup, just load it on demand
-(autoload 'cclookup-lookup "cclookup"
-  "Lookup SEARCH-TERM in the C++ reference indexes." t)
-(autoload 'cclookup-update "cclookup"
-  "Run cclookup-update and create the database at `cclookup-db-file'." t)
-
-
 ;; Comint keys
 (use-package comint
   :defer t

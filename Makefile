@@ -1,7 +1,7 @@
-# Copyright (C) 2015, 2016, 2018 by Massimo Lauria <lauria.massimo@gmail.com>
+# Copyright (C) 2015, 2016, 2018, 2019 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2018-06-20, 10:34 (CEST) Massimo Lauria"
+# Time-stamp: "2019-02-07, 00:39 (CET) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -20,15 +20,9 @@ INIT=$(abspath init.el)
 INITFULL=$(abspath init-start.el)
 INITMINI=$(abspath init-minimal.el)
 
-## Cask files
-
-CASK=$(abspath Cask)
-CASKBIN=${HOME}/.cask/bin/cask
-
-
 ## Font files
 
-FONT=dejavu-fonts-ttf-2.37
+FONTS=dejavu-fonts-ttf-2.37 iosevska-fonts-ttf-2.1.0
 
 FONTPATH=~/.fonts
 ifeq ($(shell uname -s),Darwin)
@@ -39,13 +33,11 @@ endif
 .PHONY: clean test profile minisetup start stop install-fonts
 
 # --------- Setup Emacs ---------------------------------
-all: ${CASKBIN}
+all:
 	@echo "Setup Emacs editor (override any previous configuration)."
 	@mkdir -p ~/.emacs.d
 	@rm -f ~/.emacs.d/init.el
-	@rm -f ~/.emacs.d/Cask
 	@ln -s ${INIT} ~/.emacs.d
-	@ln -s ${CASK} ~/.emacs.d
 	${MAKE} install-pkgs
 	${MAKE}	install-fonts
 	@echo "Done."
@@ -65,42 +57,30 @@ emacs-changed:
 uninstall:
 	@echo "Completely erase Emacs configuration."
 	@rm -fr ~/.emacs.d/init.el
-	@rm -fr ~/.emacs.d/Cask
-	@rm -fr ~/.emacs.d/.cask/
 	@rm -fr ~/.emacs.d/anaconda-mode/
 	@rm -fr ~/.emacs.d/irony/
-	@rm -fr ~/.cask/
 
 
 # --------- Install tools, fonts and packages -----------
-install-pkgs: ${CASKBIN}
+install-pkgs:
 	@echo "Install the required emacs packages"
-	EMACS=${EMACS} ${CASKBIN} install --verbose --path ${HOME}/.emacs.d
+	${EMACS} -batch -l bootstrap.el -f install-pkgs
 
-update-pkgs: ${CASKBIN} install-pkgs
+update-pkgs:
 	@echo "Update emacs packages"
-	EMACS=${EMACS} ${CASKBIN} update --verbose --path ${HOME}/.emacs.d
+	${EMACS} -batch -l bootstrap.el -f update-pkgs
 
 
 install-fonts:
-	@echo "Install fonts: ${FONT}"
-	@unzip -q fonts/${FONT}.zip -d fonts/
+	@echo "Install fonts: ${FONTS}"
 	@mkdir -p ${FONTPATH}
-	@mv fonts/${FONT}/ttf/*.ttf ${FONTPATH}
-	@rm -fr fonts/${FONT}/
-
-${CASKBIN}:
-	@-curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
-
+	@for font in ${FONTS}                       ;\
+	     do unzip fonts/$$font.zip -d fonts/    ;\
+             mv fonts/$$font/ttf/*.ttf ${FONTPATH}  ;\
+	     rm -fr fonts/$$font/                   ;\
+	done
 
 # --------- Measure setup quality -----------------------
-profile:
-	@echo "Profile the init file."
-	${EMACS} -Q -l utils/profile-dotemacs.el \
-	--eval '(setq profile-dotemacs-file (setq load-file-name "${INITFULL}"))' \
-    -f profile-dotemacs
-
-
 test:
 	@echo "Test whether the configuration loads correctly."
 	@${EMACS} -q --eval '(condition-case err (progn (load "${INIT}") (kill-emacs 0)) (error (kill-emacs 1)))' \
@@ -112,8 +92,7 @@ startdaemon:
 	${EMACS} --daemon --chdir ${HOME}
 
 stopdaemon:
-	${EMACSCLIENT} -e '(kill-emacs)'
-
+	${EMACSCLIENT} -e '(save-buffers-kill-emacs)'
 
 
 # --------- Default rules -------------------------

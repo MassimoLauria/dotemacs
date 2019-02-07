@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018  Massimo Lauria
-;; Time-stamp: "2018-10-23, 22:17 (CEST) Massimo Lauria"
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019  Massimo Lauria
+;; Time-stamp: "2019-02-07, 01:01 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -42,20 +42,16 @@
 
 
 ;;; Setup Emacs environment --------------------------------------------
-(require 'cask "~/.cask/cask.el")
-(cask-initialize)
+(require 'bootstrap)    ;; package system
 
-(setq default-elisp-path        "~/config/emacs")             ;; configuration files
-(setq default-elisp-3rdparties  "~/config/emacs/3rdparties")  ;; 3rd parties conf. packages
-(setq load-path (cons 	default-elisp-path        load-path))
-(setq load-path (cons 	default-elisp-3rdparties  load-path))
+(setq base-config-path "~/config/emacs/")
 
-(require 'pallet)
-(pallet-mode t)
+(mapc (apply-partially 'add-to-list 'load-path)
+      '("~/config/emacs"
+        "~/config/emacs/3rdparties/"))
 
+(add-to-list 'Info-directory-list (concat base-config-path "/info"))
 
-
-(add-to-list 'Info-directory-list (concat default-elisp-path "/info"))
 
 ;;; Module(s) initialization -------------------------------------------
 (require 'cl)

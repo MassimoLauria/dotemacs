@@ -29,6 +29,7 @@
   :config (or (daemonp) (server-running-p) (server-start)))
 
 
+
 ;; Autoload org-protocol in case org-mode is not already loaded
 ;; code from https://github.com/alezost/emacs-config/
 
