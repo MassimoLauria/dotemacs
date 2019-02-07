@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016, 2018, 2019 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2019-02-07, 12:27 (CET) Massimo Lauria"
+# Time-stamp: "2019-02-07, 19:10 (CET) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -66,9 +66,9 @@ install-pkgs:
 	@echo "Install the required emacs packages"
 	${EMACS} -batch -l bootstrap.el -f install-pkgs
 
-update-pkgs:
+upgrade-pkgs:
 	@echo "Update emacs packages"
-	${EMACS} -batch -l bootstrap.el -f update-pkgs
+	${EMACS} -batch -l bootstrap.el -f upgrade-pkgs
 
 
 install-fonts:
