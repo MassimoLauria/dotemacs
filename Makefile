@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016, 2018, 2019 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2019-02-07, 00:39 (CET) Massimo Lauria"
+# Time-stamp: "2019-02-07, 12:27 (CET) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -22,7 +22,7 @@ INITMINI=$(abspath init-minimal.el)
 
 ## Font files
 
-FONTS=dejavu-fonts-ttf-2.37 iosevska-fonts-ttf-2.1.0
+FONTS=dejavu-fonts-ttf-2.37 iosevska-fonts-ttf-2.1.0 baskerville-font
 
 FONTPATH=~/.fonts
 ifeq ($(shell uname -s),Darwin)
