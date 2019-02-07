@@ -13,12 +13,10 @@
                            ag 
                            anaconda-mode 
                            async 
-                           atomic-chrome 
                            auctex 
                            avy 
                            beacon 
                            bind-key 
-                           cask 
                            company 
                            company-anaconda 
                            company-irony 
@@ -57,7 +55,8 @@
                            magit-gh-pulls 
                            magit-popup 
                            magit-svn 
-                           metaweblog 
+                           metaweblog
+                           moe-theme
                            ob-ipython 
                            olivetti 
                            org-bullets 
@@ -67,7 +66,8 @@
                            pallet 
                            pcache 
                            pdf-tools 
-                           pkg-info 
+                           pkg-info
+                           poet-theme
                            py-autopep8 
                            pyenv-mode 
                            pyenv-mode-auto 
@@ -80,7 +80,8 @@
                            seq 
                            shut-up 
                            skeletor 
-                           smartparens 
+                           smartparens
+                           solarized-theme
                            ssh-config-mode 
                            swiper 
                            try 
@@ -93,7 +94,8 @@
                            which-key 
                            with-editor 
                            writeroom-mode 
-                           xml-rpc 
+                           xml-rpc
+                           xscheme
                            yasnippet 
                            yasnippet-snippets 
                            zenburn-theme))

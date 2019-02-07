@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019  Massimo Lauria
-;; Time-stamp: "2019-02-07, 01:01 (CET) Massimo Lauria"
+;; Time-stamp: "2019-02-07, 18:24 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -93,11 +93,10 @@
 (require 'init-cc-mode)
 (require 'init-python)
 (require 'init-scheme)
-;;(require 'init-java-mode)
 
 ;; Writing science
 (require 'init-latex)        ; AucTeX
-(require 'init-bibliography) ; bibtex and org-ref
+(require 'init-bibliography) ; Bibliography
 
 (require 'cl)
 ;; (require 'init-sage)         ; SageMath
