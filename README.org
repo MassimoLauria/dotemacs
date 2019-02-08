@@ -1,0 +1,28 @@
+#+title: Massimo's Emacs configuration
+#+author: Massimo Lauria <lauria.massimo@gmail.com>
+
+
+This is the Emacs config of Massimo Lauria (C) 2009-2019.
+
+This configuration  is under massive  and continue change,  and things
+break every day. I just put it  online so you can cut & paste whatever
+you may find useful.
+
+This configuration assume a modern  Emacs installation (>=24). If your
+Emacs  is less  recent than  that,  the configuration  will revert  to
+a minimal version.
+
+*Literate configuration*: this Emacs configuration is on the way to be
+a /literate configuration/  developed as an =org-mode=  file. The plan
+is that the very  document you are reading right now  will be the main
+part of the  configuration itself. At this point this  is not true but
+I am  putting in place the  infrastructure for it. I  will slowly move
+part of the main config inside this =README.org= file.
+
+To test this feature I will  add some Emacs Lisp code which translates
+into configuration code.
+
+#+BEGIN_SRC emacs-lisp
+(message "Inside the main org-file")
+#+END_SRC
+

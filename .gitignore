@@ -1,21 +1,8 @@
-
-# We put 3rd parties packages under version control but we want to ignore their
-# own Git/Hg/SVN information to avoid mess.  Since such information is useful
-# for updating purposes, we keep it.
-3rdparties/*/.git
-3rdparties/*/.cvs
-3rdparties/*/.hg
-3rdparties/*/.svn
-3rdparties/*/*.elc
-
-# Ignore  auto-complete-latex   folder,  which  is   obtained  from  a
-# Mercurial repository.
-3rdparties/auto-complete-latex/
+# The main tangled file obtained from README.org should not be
+# committed
+README.el
 
 # Ignore backup files and precompiled files.
-
 *~
 *.elc
 *.pyc
-# Exceptions
-# None

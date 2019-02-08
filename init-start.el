@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019  Massimo Lauria
-;; Time-stamp: "2019-02-07, 18:24 (CET) Massimo Lauria"
+;; Time-stamp: "2019-02-08, 17:34 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -52,6 +52,8 @@
 
 (add-to-list 'Info-directory-list (concat base-config-path "/info"))
 
+
+(org-babel-load-file (concat base-config-path "README.org"))
 
 ;;; Module(s) initialization -------------------------------------------
 (require 'cl)
