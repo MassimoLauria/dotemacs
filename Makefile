@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016, 2018, 2019 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2019-02-07, 19:10 (CET) Massimo Lauria"
+# Time-stamp: "2019-02-08, 17:42 (CET) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -92,14 +92,13 @@ startdaemon:
 	${EMACS} --daemon --chdir ${HOME}
 
 stopdaemon:
-	${EMACSCLIENT} -e '(save-buffers-kill-emacs)'
+	${EMACSCLIENT} -e '(kill-emacs)'
 
 
 # --------- Default rules -------------------------
 clean:
 	@-rm -f  *.elc
 	@-rm -f  3rdparties/*.elc
-	@-rm -f  utils/*.elc
 
 
 
