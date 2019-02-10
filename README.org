@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#+STARTUP: collapsed
 #+title: Massimo's Emacs configuration
 #+author: Massimo Lauria <lauria.massimo@gmail.com>
 
@@ -19,7 +20,6 @@ is that the very  document you are reading right now  will be the main
 part of the  configuration itself. At this point this  is not true but
 I am  putting in place the  infrastructure for it. I  will slowly move
 part of the main config inside this =README.org= file.
-
 
 * Bootstrapping the setup
 
@@ -103,7 +103,9 @@ Ignore if the path does not exists."
     (environment-variable-add-to-list "PATH" newpath append)))
 #+END_SRC
 
-   Some useful paths to add to the environment.
+   Some useful  paths to add  to the environment. In  particular tools
+   like =Cask=,  =cabal=, =cargo=, install their  executables files in
+   a corresponding hidden folder inside =$HOME=. 
 
 #+BEGIN_SRC emacs-lisp
 (environment-add-path "/usr/local/bin")                        ;; Homebrew  (MacOS)
@@ -130,8 +132,22 @@ Ignore if the path does not exists."
 
 
 
-* Generic preferences
+** Private configuration
 
+   A part  of the  setup is not  for the public  eye therefore  is not
+   included in this repository. I  keep it in another position (inside
+   a private =git= repository).
+
+#+BEGIN_SRC emacs-lisp
+(let ((private "~/personal/conf/emacs.el"))
+  (when (file-readable-p private)
+    (load-file private)))
+
+#+END_SRC
+
+
+* Localization/Internationalization
+  
 ** Text encoding is always UTF-8
 
    I work  mostly with UTF-8 file,  Hence UTF-8 is the  default coding
@@ -164,7 +180,168 @@ Ignore if the path does not exists."
 #+END_SRC
 
 
+** Italians holidays, timezones and calendar names
+
+   For  me it  is  useful to  have  the agenda  to  remind of  italian
+   holidays,  especially   if  they  corresponds  to   vacation  days.
+   I actually override the original  values of these variables because
+   I don't care to know about holidays that do not affect me.
+
+#+BEGIN_SRC emacs-lisp
+
+;; Non-religious holidays
+(setq holi   day-general-holidays
+      '((holiday-fixed 1 1 "Capodanno")
+        (holiday-fixed 5 1 "Festa dei Lavoratori")
+        (holiday-fixed 4 25 "Liberazione dal Nazifascismo")
+        (holiday-fixed 6 2 "Festa della Repubblica")))
+
+;; Catholics holidays that induce vacations
+(setq holiday-christian-holidays
+     '((holiday-fixed 12 8 "Immacolata Concezione")
+       (holiday-fixed 12 25 "Natale")
+       (holiday-fixed 12 26 "Santo Stefano")
+       (holiday-fixed 1 6 "Epifania")
+       (holiday-easter-etc -52 "Giovedì grasso")
+       (holiday-easter-etc -47 "Martedì grasso")
+       (holiday-easter-etc   0 "Pasqua")
+       (holiday-easter-etc  +1 "Pasquetta")
+       (holiday-fixed 8 15 "Ferragosto")
+       (holiday-fixed 11 1 "Ognissanti")))
+
+;; No other religious holidays induce vacation days in Italy.
+(setq holiday-bahai-holidays nil)
+(setq holiday-hebrew-holidays nil)
+(setq holiday-islamic-holidays nil)
+#+END_SRC
+
+   In  Italy the  weekly  calendar  starts from  Monday,  hence I  set
+   =calendar-week-start-day= accordingly. It is  also nice to have the
+   names of months and weekdays translated.
+
+#+BEGIN_SRC emacs-lisp
+(setq calendar-week-start-day 1
+      calendar-day-name-array ["Domenica" "Lunedì" "Martedì" "Mercoledì"
+                               "Giovedì" "Venerdì" "Sabato"]
+      calendar-month-name-array ["Gennaio" "Febbraio" "Marzo" "Aprile" "Maggio"
+                                 "Giugno" "Luglio" "Agosto" "Settembre"
+                                 "Ottobre" "Novembre" "Dicembre"])
+#+END_SRC
+
+   Several packages (e.g.  Org-mode) need to recognize  what a weekday
+   name  or  a  month  name is.  Package  =parse-time=  provides  this
+   functionality, but it only knows about English words. I can add the
+   Italian ones to  ~parse-time-weekdays~ and ~parse-time-months~ when
+   package =parse-time= is loaded. I also add the timezones.
+ 
+#+BEGIN_SRC emacs-lisp
+(defconst parse-time-weekdays-ita
+  '(("dom" . 0) ("lun" . 1) ("mar" . 2) ("mer" . 3) ("gio" . 4) ("ven" . 5) ("sab" . 6)
+    ("domenica" . 0) ("lunedì" .  1) ("martedì" . 2) ("mercoledì" . 3)
+    ("giovedì" .  4) ("venerdì" . 5) ("sabato" .  6))
+  "Italian weekdays to add to `parse-time-weekdays'.")
+
+
+(defconst parse-time-months-ita
+  '(("gen" . 1) ("feb" . 2) ("mar" . 3) ("apr" .  4) ("mag" .  5) ("giu" .  6)
+    ("lug" . 7) ("ago" . 8) ("set" . 9) ("ott" . 10) ("nov" . 11) ("dic" . 12)
+    ("gennaio" . 1)   ("febbraio" . 2) ("marzo" . 3)     ("aprile" . 4)
+    ("maggio" . 5)    ("giugno" . 6)   ("luglio" . 7)    ("agosto" . 8)
+    ("settembre" . 9) ("ottobre" . 10) ("novembre" . 11) ("dicembre" . 12))
+  "Italian manths to add to `parse-time-months'.")
+
+(use-package parse-time
+  :config
+  (add-to-list 'parse-time-months   parse-time-months-ita)
+  (add-to-list 'parse-time-weekdays parse-time-weekdays-ita)
+  (add-to-list 'parse-time-zoneinfo  '("cet" 3600 t) t)  ;; Central European Time
+  (add-to-list 'parse-time-zoneinfo  '("cest" 7200)  t)  ;; Central European Summer Time
+  )
+#+END_SRC
+
+
+
+
 * Programming
+
+** Syntax highlighting
+
+   Of  course   every  mode   include  syntax  highlighting   for  the
+   corresponding  type of  file.  There are  more  "semantic" ways  to
+   highlight pieces of codes. Many of these syntax highlight packages are described in
+   
+   - [[http://www.wilfred.me.uk/blog/2014/09/27/the-definitive-guide-to-syntax-highlighting/][The Definitive Guide To Syntax Highlighting]]
+
+
+   The first package color parenthesis  with dirrerent colors, so that
+   matching  parenthesis have  the same  color. Of  course after  some
+   nesting the colors repeat.
+
+#+BEGIN_SRC emacs-lisp
+(use-package rainbow-delimiters
+  :init (setq rainbow-delimiters-max-face-count 4)
+  :commands rainbow-delimiters-mode)
+#+END_SRC
+ 
+   The next package colors each identifier, so that the occurrences of
+   that identifier have the same color than the definition.
+
+#+BEGIN_SRC emacs-lisp
+(use-package rainbow-identifiers
+  :commands rainbow-identifiers-mode)
+#+END_SRC
+
+
 
 
 * Math packages
+
+  I don't use very often math packages, and I should probably use them
+  way more. Anyway there is some support for them in Emacs, so why not
+  having a basic setup?
+
+  Interestingly enough  Mathematica, Octave  and Matlab all  use files
+  with  =.m= extension,  which is  the same  extension of  Objective-C
+  files. Well I do not use either very much, so I don't need to fiddle
+  with =auto-mode-alist=.
+
+** Matlab
+
+   There is =run-octave= so I guess =run=matlab= should exists.
+ 
+#+BEGIN_SRC emacs-lisp
+(use-package matlab
+  :init
+  (setq matlab-shell-command
+        (or
+         (executable-find "matlab")
+         (executable-find "/usr/local/bin/matlab")
+         (executable-find "/Applications/Matlab.app/bin/matlab")))
+  (setq matlab-indent-function-body t)
+  :commands (matlab-mode matlab-shell))
+
+
+(defalias 'run-matlab 'matlab-shell)
+#+END_SRC
+   
+
+** Mathematica
+
+   Nowadays Mathematica is a super-cool  packages that works mostly on
+   the network  and has  great AI. I  guess it is  nicer when  used on
+   the web.
+
+#+BEGIN_SRC emacs-lisp
+(use-package wolfram-mode
+  :init
+  (setq wolfram-program
+      (or
+       (executable-find "math")
+       (executable-find "/usr/local/bin/math")
+       (executable-find "/Applications/Mathematica.app/Contents/MacOS/MathKernel")))
+  :commands (run-wolfram wolfram-mode))
+
+(defalias 'run-mathematica 'run-wolfram)
+#+END_SRC
+
+   

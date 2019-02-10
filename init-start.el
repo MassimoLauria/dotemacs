@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019  Massimo Lauria
-;; Time-stamp: "2019-02-10, 19:11 (CET) Massimo Lauria"
+;; Time-stamp: "2019-02-11, 00:40 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -58,8 +58,6 @@
 (require 'init-functions)        ; Utility functions for configuration
 
 ;; Work environment customization
-(require 'init-italian-l10n)
-(require 'init-local-preferences) ; Host based and personal configuration
 (require 'init-preferences)       ; Basic editor preferences -- check for speed
 (require 'init-modeline)          ; modeline preferences -- check for speed
 (require 'init-backup)            ; Autosaves and backups behaviour
@@ -94,12 +92,6 @@
 (require 'init-latex)        ; AucTeX
 (require 'init-bibliography) ; Bibliography
 
-(require 'cl)
-;; (require 'init-sage)         ; SageMath
-;; (require 'init-imaxima)      ; Imaxima and Imath (from SageMath)
-;; (require 'init-singular)     ; Singular (not from SageMath!)
-;; (require 'init-mathematica)  ; Wolfram Mathematica
-;; (require 'init-matlab)       ; Mathworks MATLAB
 
 ;; Applications
 (require 'init-mail)       ; Mail + Contacts

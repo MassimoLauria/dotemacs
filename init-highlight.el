@@ -1,6 +1,6 @@
 ;;; init-highlight.el --- Setup forms of syntax highlight
 
-;; Copyright (C) 2015, 2016  Massimo Lauria
+;; Copyright (C) 2015, 2016, 2019  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -25,16 +25,6 @@
 ;;
 
 
-;; nested delimiters of matching colors
-(use-package rainbow-delimiters
-  :ensure t
-  :init (setq rainbow-delimiters-max-face-count 4)
-  :commands rainbow-delimiters-mode)
-
-;; a color for each identifier
-(use-package rainbow-identifiers
-  :ensure t
-  :commands rainbow-identifiers-mode)
 
 ;; a background color for each nested block
 (use-package highlight-blocks
