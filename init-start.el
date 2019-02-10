@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019  Massimo Lauria
-;; Time-stamp: "2019-02-10, 18:26 (CET) Massimo Lauria"
+;; Time-stamp: "2019-02-10, 19:11 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -58,7 +58,6 @@
 (require 'init-functions)        ; Utility functions for configuration
 
 ;; Work environment customization
-(require 'init-coding)
 (require 'init-italian-l10n)
 (require 'init-local-preferences) ; Host based and personal configuration
 (require 'init-preferences)       ; Basic editor preferences -- check for speed

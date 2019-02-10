@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #+title: Massimo's Emacs configuration
 #+author: Massimo Lauria <lauria.massimo@gmail.com>
 
@@ -20,7 +21,7 @@ I am  putting in place the  infrastructure for it. I  will slowly move
 part of the main config inside this =README.org= file.
 
 
-* Location of the setup
+* Bootstrapping the setup
 
   The   variable  =base-config-path=   keeps   the   path  where   the
   configuration is  installed. I add  that to the =load-path=,  and we
@@ -127,3 +128,43 @@ Ignore if the path does not exists."
         (environment-add-path path))))
 #+END_SRC
 
+
+
+* Generic preferences
+
+** Text encoding is always UTF-8
+
+   I work  mostly with UTF-8 file,  Hence UTF-8 is the  default coding
+   for buffers.
+
+#+BEGIN_SRC emacs-lisp
+(prefer-coding-system       'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(setq default-buffer-file-coding-system 'utf-8)
+#+END_SRC
+
+   The same setting seems to be needed for the clipboard.
+
+#+BEGIN_SRC emacs-lisp
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+(set-clipboard-coding-system 'utf-8)
+#+END_SRC
+
+   I often need to write greek or  math symbols (e.g. α, ⊕), and since
+   I know LaTeX it is convenient to use the same markup to insert them
+   in regular text. Nevertheless it is inconvenient to have that on by
+   default.    I    activate    it   when    needed    typing    =C-\=
+   (=toggle-input-method=).
+
+#+BEGIN_SRC emacs-lisp
+(setq default-input-method 'TeX)
+(set-input-method nil)
+#+END_SRC
+
+
+* Programming
+
+
+* Math packages
