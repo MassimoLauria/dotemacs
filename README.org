@@ -19,10 +19,111 @@ part of the  configuration itself. At this point this  is not true but
 I am  putting in place the  infrastructure for it. I  will slowly move
 part of the main config inside this =README.org= file.
 
-To test this feature I will  add some Emacs Lisp code which translates
-into configuration code.
+
+* Location of the setup
+
+  The   variable  =base-config-path=   keeps   the   path  where   the
+  configuration is  installed. I add  that to the =load-path=,  and we
+  also add the path of 3rd parties packages, which are packages I keep
+  in the repository because they are not on =melpa= (yet).
 
 #+BEGIN_SRC emacs-lisp
-(message "Inside the main org-file")
+(setq 3rdparties-packages-path (concat base-config-path "3rdparties/"))
+
+(add-to-list 'load-path base-config-path)
+(add-to-list 'load-path 3rdparties-packages-path)
+#+END_SRC
+
+  I have local  info files, for example  "Structure and Interpretation
+  of Computer Programs".
+ 
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'Info-directory-list (concat base-config-path "/info"))
+#+END_SRC
+ 
+** Adjust =PATH= environment variables 
+  
+   When Emacs is  lauched as an app  (on MacOSX) or from  a gui command
+   (in linux)  there is often  the chance that the  running environment
+   does not contain some environment variables  or does not set them up
+   appropriately. These  functions allow me  to care of such  issues as
+   long as they arise in my setup. I don't claim any generality here.
+
+   First  I have  two functions  to manage  variables for  the runtime
+   environment where Emacs has been executed from.
+
+#+BEGIN_SRC emacs-lisp
+(defun environment-variable-add-to-list (varname element &optional append)
+  "Add ELEMENT from the list in the enviroment variable VARNAME.
+
+VARNAME is considered as a list of elements like \"aa:bb:cc\". If
+VARNAME is undefined of empty, it defines it. If ELEMENT is
+already in the list, the function won't do anything.
+
+There is no guarantee on the actual order of the elements in the
+list."  
+  (let ((separator (if (eq system-type 'windows-nt) ";" ":"))
+        tmplist)
+    (if (getenv varname)
+        (setq tmplist (split-string 
+                       (getenv varname) 
+                       separator)))
+    (add-to-list 'tmplist element append 'string-equal)
+    (setenv varname (mapconcat 'identity tmplist ":"))))
+
+(defun environment-variable-rm-from-list (varname element)
+  "Remove ELEMENT from the list in the enviroment variable VARNAME.
+
+VARNAME is considered as a list of elements like \"aa:bb:cc\". If
+ELEMENT is not in the list, the function won't do anything.
+
+There is no guarantee on the actual order of the elements in the
+list."  
+  (let ((separator (if (eq system-type 'windows-nt) ";" ":"))
+        tmplist)
+    (if (getenv varname)
+        (setq tmplist (split-string 
+                       (getenv varname)
+                       separator)))
+    (setenv varname (mapconcat 'identity (remove element tmplist) ":"))))
+
+
+#+END_SRC
+
+   I use this functions primarily to fix =PATH=.
+
+#+BEGIN_SRC emacs-lisp
+(defun environment-add-path (newpath &optional append)
+  "Add NEWPATH to the PATH environment variable and to exec-path,
+
+Ignore if the path does not exists."
+  (when (file-directory-p newpath)
+    (add-to-list 'exec-path newpath append 'string-equal)
+    (environment-variable-add-to-list "PATH" newpath append)))
+#+END_SRC
+
+   Some useful paths to add to the environment.
+
+#+BEGIN_SRC emacs-lisp
+(environment-add-path "/usr/local/bin")                        ;; Homebrew  (MacOS)
+(environment-add-path (concat (getenv "HOME") "/.cask/bin"))   ;; Cask      (for Elisp)
+(environment-add-path (concat (getenv "HOME") "/.local/bin"))  ;; Local/bin (GNU/Linux)
+#+END_SRC
+
+
+  Actually the  right way to set  system-wide exec-paths on Mac  is to
+  use `/etc/paths.d' files. I pick up these paths as well.
+
+#+BEGIN_SRC emacs-lisp
+(with-temp-buffer 
+  (condition-case nil 
+      (dolist (file (cons "/etc/paths" (directory-files "/etc/paths.d/" t)))
+        (if (not (file-directory-p file))
+            (insert-file-contents file)))
+    (error nil))
+      
+  (dolist (path (split-string (buffer-string) "\n" t))
+    (if (file-directory-p path)
+        (environment-add-path path))))
 #+END_SRC
 

@@ -555,6 +555,14 @@ This is a workaround to get the old templates in org 9.2
                          "Python code"
                          )
    
+  (tempo-define-template "elisp"
+                         '("#+BEGIN_SRC emacs-lisp" n
+                           p n
+                           "#+END_SRC" n)
+                         "<l"
+                         "Emacs Lisp code"
+                         )
+  
   (tempo-define-template "python session"
                          '("#+BEGIN_SRC python :session :exports both :results output" n
                            p n
