@@ -4,40 +4,7 @@
 ;;;------------------------------------------------------------------
 
 
-;;; Some functions maybe absent in Emacs 22.
 
-;; Define `string-match-p' if it does not exists
-(unless (fboundp 'string-match-p)
-(defun string-match-p (pattern text)
-  "It is a substitution of the one present only in Emacs 23 and above.
-This function is equivalent to `string-match' but preserves match
-data"
-  (save-match-data
-    (string-match pattern text) ) )
-)
-
-;; Define `region-active-p' if it does not exists
-(unless (fboundp 'region-active-p)
-(defun region-active-p ()
-  "It is a substitution of the one present only in Emacs 23 and above."
-  (and transient-mark-mode mark-active))
-)
-
-
-;;; Older versions of `called-interactively-p' do not take the
-;;; optional argument.
-
-(condition-case nil (called-interactively-p 'interactive)
-  (error
-   ; Save reference to called-interactively-p in
-   ; inglorion-system-called-interactively-p
-   (fset 'inglorion-system-called-interactively-p
-         (symbol-function 'called-interactively-p))
-   ; Define called-interactively-p so that it discards
-   ; its arguments and calls inglorion-system-called-interactively-p
-   (fset 'called-interactively-p
-         (lambda (&rest args)
-           (inglorion-system-called-interactively-p)))))
 
 ;;;-------------------------------------------------------------------
 
