@@ -190,7 +190,7 @@ Ignore if the path does not exists."
 #+BEGIN_SRC emacs-lisp
 
 ;; Non-religious holidays
-(setq holi   day-general-holidays
+(setq holiday-general-holidays
       '((holiday-fixed 1 1 "Capodanno")
         (holiday-fixed 5 1 "Festa dei Lavoratori")
         (holiday-fixed 4 25 "Liberazione dal Nazifascismo")
