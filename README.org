@@ -234,8 +234,8 @@ Ignore if the path does not exists."
    Italian ones to  ~parse-time-weekdays~ and ~parse-time-months~ when
    package =parse-time= is loaded. I also add the timezones.
  
-#+BEGIN_SRC emacs-lisp
-(defconst parse-time-weekdays-ita
+#+BEGIN_SRC emacs-lisp :tangle no
+(defconst parse-time-weekdays
   '(("dom" . 0) ("lun" . 1) ("mar" . 2) ("mer" . 3) ("gio" . 4) ("ven" . 5) ("sab" . 6)
     ("domenica" . 0) ("lunedì" .  1) ("martedì" . 2) ("mercoledì" . 3)
     ("giovedì" .  4) ("venerdì" . 5) ("sabato" .  6))
@@ -252,8 +252,8 @@ Ignore if the path does not exists."
 
 (use-package parse-time
   :config
-  (add-to-list 'parse-time-months   parse-time-months-ita)
-  (add-to-list 'parse-time-weekdays parse-time-weekdays-ita)
+  (setq parse-time-months   (append parse-time-months parse-time-months-ita))
+  (setq parse-time-weekdays (append parse-time-weekdays parse-time-weekdays-ita))
   (add-to-list 'parse-time-zoneinfo  '("cet" 3600 t) t)  ;; Central European Time
   (add-to-list 'parse-time-zoneinfo  '("cest" 7200)  t)  ;; Central European Summer Time
   )
