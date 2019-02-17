@@ -562,6 +562,14 @@ This is a workaround to get the old templates in org 9.2
                          "<l"
                          "Emacs Lisp code"
                          )
+
+  (tempo-define-template "latex"
+                         '("#+BEGIN_SRC latex" n
+                           p n
+                           "#+END_SRC" n>)
+                         "<L"
+                         "Latex code"
+                         )
   
   (tempo-define-template "python session"
                          '("#+BEGIN_SRC python :session :exports both :results output" n
@@ -573,7 +581,7 @@ This is a workaround to get the old templates in org 9.2
   (tempo-define-template "theorem"
                          '("#+begin_theorem" n
                            p n
-                           "#+end_thorem" n
+                           "#+end_theorem" n
                            "#+begin_proof" n
                            n
                            "#+end_proof" n)
@@ -591,7 +599,15 @@ This is a workaround to get the old templates in org 9.2
                            ":BEAMER_env: note" n>
                            ":END:" n p >)
                          "<n"
-                         "Notes for the slide"))
+                         "Notes for the slide")
+  (tempo-define-template "org-mode center"
+                         '("#+BEGIN_CENTER" n
+                           p n
+                           "#+END_CENTER" n)
+                         "<c"
+                         "Centered section")
+
+  )
 
 
 ;;;------------------------- Load -----------------------------------

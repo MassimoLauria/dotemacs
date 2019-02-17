@@ -249,4 +249,13 @@ Optional argument NODELIM see `bibtex-make-field'."
   (add-hook 'bibtex-mode-hook 'mybibtex-dnd-setup))
 
 
+(use-package ivy-bibtex
+  :commands (ivy-bibtex)
+  :config
+  (setf (cdr (assoc 'org-mode
+                    bibtex-completion-format-citation-functions))
+        'bibtex-completion-format-citation-cite)
+  (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
+  (setq bibtex-completion-cite-prompt-for-optional-arguments nil))
+
 (provide 'init-bibliography)
