@@ -538,72 +538,83 @@ This is a workaround to get the old templates in org 9.2
   (setq org-tempo-keywords-alist nil)
   (setq org-tempo-tags nil)
   (tempo-define-template "sqlite"
-                         '("#+header: :db {{{DEFAULTDB}}}" n
-                           "#+header: :colnames yes :nullvalue NULL" n
-                           "#+BEGIN_SRC sqlite :exports both" n
-                           p n
-                           "#+END_SRC" n)
+                         '("#+header: :db {{{DEFAULTDB}}}" n>
+                           "#+header: :colnames yes :nullvalue NULL" n>
+                           "#+BEGIN_SRC sqlite :exports both" n>
+                           p n>
+                           "#+END_SRC" n>)
                          "<S"
                          "Insert an SQLite code"
                          )
    
   (tempo-define-template "python"
-                         '("#+BEGIN_SRC python :exports both :results output" n
-                           p n
-                           "#+END_SRC" n)
+                         '("#+BEGIN_SRC python :exports both :results output" n>
+                           p n>
+                           "#+END_SRC" n>)
                          "<p"
                          "Python code"
                          )
    
   (tempo-define-template "elisp"
-                         '("#+BEGIN_SRC emacs-lisp" n
-                           p n
-                           "#+END_SRC" n)
+                         '("#+BEGIN_SRC emacs-lisp" n>
+                           p n>
+                           "#+END_SRC" n>)
                          "<l"
                          "Emacs Lisp code"
                          )
 
   (tempo-define-template "latex"
-                         '("#+BEGIN_SRC latex" n
-                           p n
+                         '("#+BEGIN_SRC latex" n>
+                           p n>
                            "#+END_SRC" n>)
                          "<L"
                          "Latex code"
                          )
   
   (tempo-define-template "python session"
-                         '("#+BEGIN_SRC python :session :exports both :results output" n
-                           p n
-                           "#+END_SRC" n)
+                         '("#+BEGIN_SRC python :session :exports both :results output" n>
+                           p n>
+                           "#+END_SRC" n>)
                          "<P"
                          "Python code in a session")
    
   (tempo-define-template "theorem"
-                         '("#+begin_theorem" n
-                           p n
-                           "#+end_theorem" n
-                           "#+begin_proof" n
-                           n
-                           "#+end_proof" n)
+                         '("#+begin_theorem" n>
+                           p n>
+                           "#+end_theorem" n>
+                           "#+begin_proof" n>
+                           n>
+                           "#+end_proof" n>)
                          "<t"
                          "Theorem with proof")
              
   (tempo-define-template "equation"
-                         '("\\begin{equation}" n p n "\\end{equation}")
+                         '("\\begin{equation}" n>
+                           p n>
+                           "\\end{equation}" n>)
                          "<E"
                          "Math equation")
    
   (tempo-define-template "slidenode"
-                         '("*** " n>
+                         '(n
+                           "*** " n>
                            ":PROPERTIES:" n>
                            ":BEAMER_env: note" n>
-                           ":END:" n p >)
+                           ":END:" n> p)
                          "<n"
                          "Notes for the slide")
-  (tempo-define-template "org-mode center"
-                         '("#+BEGIN_CENTER" n
-                           p n
-                           "#+END_CENTER" n)
+  (tempo-define-template "column"
+                         '(n
+                           "*** " n>
+                           ":PROPERTIES:" n>
+                           ":BEAMER_col: 0.5" n>
+                           ":END:" n> p)
+                         "<2"
+                         "Column block")
+   (tempo-define-template "org-mode center"
+                         '("#+BEGIN_CENTER" n>
+                           p n>
+                           "#+END_CENTER" n>)
                          "<c"
                          "Centered section")
 
