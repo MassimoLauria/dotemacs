@@ -390,5 +390,12 @@ is already narrowed."
   (define-key ivy-minibuffer-map (kbd "M-o") 'ivy-next-history-element)
   (define-key ivy-minibuffer-map (kbd "M-SPC") 'ivy-dispatching-done))
 
+
+
+;; Fill/unfill paragraph
+(use-package unfill
+  :bind ([remap fill-paragraph] . unfill-toggle))
+
+
 (provide 'init-unsorted-elisp)
 ;;; init-unsorted-elisp.el ends here

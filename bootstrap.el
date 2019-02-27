@@ -85,7 +85,8 @@
                            ssh-config-mode 
                            swiper 
                            try 
-                           undo-tree 
+                           undo-tree
+                           unfill
                            use-package 
                            virtualenvwrapper 
                            visual-fill-column 
