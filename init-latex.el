@@ -185,7 +185,6 @@ started."
           (lambda ()
             (local-set-key (kbd "C-c l") 'reftex-label)       ;; Label creation
             (local-set-key (kbd "C-c r") 'reftex-reference)   ;; Label selection
-            (local-set-key (kbd "C-c b") 'ivy-bibtex)  ;; Citation creation
             (local-set-key (kbd "M-,") 'reftex-view-crossref) ;; View crossref
             (local-set-key (kbd "M-.") 'delete-other-windows-vertically)))
 

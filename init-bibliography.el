@@ -251,6 +251,7 @@ Optional argument NODELIM see `bibtex-make-field'."
 
 (use-package ivy-bibtex
   :commands (ivy-bibtex)
+  :bind ("C-c b" . ivy-bibtex)
   :config
   (setf (cdr (assoc 'org-mode
                     bibtex-completion-format-citation-functions))
