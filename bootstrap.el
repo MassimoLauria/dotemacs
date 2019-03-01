@@ -58,7 +58,8 @@
                            metaweblog
                            moe-theme
                            ob-ipython 
-                           olivetti 
+                           olivetti
+                           org
                            org-bullets 
                            org-pdfview 
                            org-plus-contrib 
