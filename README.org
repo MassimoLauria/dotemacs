@@ -345,3 +345,41 @@ Ignore if the path does not exists."
 #+END_SRC
 
    
+
+* Various features
+
+** Backup and autosave of files
+
+   Emacs  manages  multiple  backups  for files,  and  furthermore  it
+   remembers  to save  stuff  from time  to time.  I'd  rather put  my
+   all backups and saves in a specific folder.
+
+   First setup the autosave feature
+
+#+BEGIN_SRC emacs-lisp
+(defvar autosave-dir "~/.emacs.d/autosaves/")
+(make-directory autosave-dir t)
+(setq tramp-auto-save-directory nil)
+#+END_SRC
+
+   Then we setup the backup features, where copies of old versions are
+   kept for local files.
+
+#+BEGIN_SRC emacs-lisp
+(defvar   backup-dir "~/.emacs.d/backups/")
+(make-directory backup-dir t)
+
+(setq version-control nil)
+   
+(setq delete-old-versions t) ;; silently delete old versions
+(setq kept-new-versions 3)   ;; number of newest versions to keep
+(setq kept-old-versions 2)   ;; number of oldest versions to keep
+(setq backup-by-copying t)
+(setq backup-by-copying-when-linked t)
+
+(setq backup-directory-alist 
+      `(("." . "~/.emacs.d/backups/")
+        (,tramp-file-name-regexp .  nil))) ;; where to save
+
+#+END_SRC
+
