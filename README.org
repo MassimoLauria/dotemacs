@@ -35,8 +35,11 @@ part of the main config inside this =README.org= file.
 (add-to-list 'load-path 3rdparties-packages-path)
 #+END_SRC
 
-  I have local  info files, for example  "Structure and Interpretation
-  of Computer Programs".
+  The best way to  read Info files is in emacs.  The client merges all
+  info /dir/  files in  a single index.  Therefore among  other things
+  I  make  the  index  to  show  my  local  info  documents  as  well.
+  For example  my copy  of "Structure  and Interpretation  of Computer
+  Programs".
  
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'Info-directory-list (concat base-config-path "/info"))
@@ -134,9 +137,8 @@ Ignore if the path does not exists."
 
 ** Private configuration
 
-   A part  of the  setup is not  for the public  eye therefore  is not
-   included in this repository. I  keep it in another position (inside
-   a private =git= repository).
+   Part of my setup  is not for the public eye and  is not included in
+   the repository.
 
 #+BEGIN_SRC emacs-lisp
 (let ((private "~/personal/conf/emacs.el"))
@@ -184,14 +186,15 @@ Ignore if the path does not exists."
 
    For  me it  is  useful to  have  the agenda  to  remind of  italian
    holidays,  especially   if  they  corresponds  to   vacation  days.
-   I actually override the original  values of these variables because
-   I don't care to know about holidays that do not affect me.
+   I override the  original values of these variables  because I don't
+   care to know about holidays that do not affect me.
 
 #+BEGIN_SRC emacs-lisp
 
 ;; Non-religious holidays
 (setq holiday-general-holidays
       '((holiday-fixed 1 1 "Capodanno")
+        (holiday-fixed 3 8 "Giornata internazionale della donna")
         (holiday-fixed 5 1 "Festa dei Lavoratori")
         (holiday-fixed 4 25 "Liberazione dal Nazifascismo")
         (holiday-fixed 6 2 "Festa della Repubblica")))
@@ -327,9 +330,9 @@ Ignore if the path does not exists."
 
 ** Mathematica
 
-   Nowadays Mathematica is a super-cool  packages that works mostly on
-   the network  and has  great AI. I  guess it is  nicer when  used on
-   the web.
+   Nowadays Mathematica is a super-cool  software that works mostly on
+   the network and  has great AI. I  guess it is nicer to  use via the
+   appropriate GUI or on the web. Still emacs rocks.
 
 #+BEGIN_SRC emacs-lisp
 (use-package wolfram-mode
@@ -351,10 +354,10 @@ Ignore if the path does not exists."
 ** Backup and autosave of files
 
    Emacs  manages  multiple  backups  for files,  and  furthermore  it
-   remembers  to save  stuff  from time  to time.  I'd  rather put  my
-   all backups and saves in a specific folder.
+   remembers to  save stuff from time  to time. I'd rather  put all my
+   backups and autosaves in a specific folder.
 
-   First setup the autosave feature
+   First I setup the autosave feature
 
 #+BEGIN_SRC emacs-lisp
 (defvar autosave-dir "~/.emacs.d/autosaves/")
@@ -362,8 +365,8 @@ Ignore if the path does not exists."
 (setq tramp-auto-save-directory nil)
 #+END_SRC
 
-   Then we setup the backup features, where copies of old versions are
-   kept for local files.
+   then I setup the backup features, where copies of old versions are
+   kept. Disable backups for remote files.
 
 #+BEGIN_SRC emacs-lisp
 (defvar   backup-dir "~/.emacs.d/backups/")
@@ -378,8 +381,8 @@ Ignore if the path does not exists."
 (setq backup-by-copying-when-linked t)
 
 (setq backup-directory-alist 
-      `(("." . "~/.emacs.d/backups/")
-        (,tramp-file-name-regexp .  nil))) ;; where to save
+      `(("." . "~/.emacs.d/backups/")      ;; location for local files
+        (,tramp-file-name-regexp .  nil))) ;; disable for remove files
 
 #+END_SRC
 
