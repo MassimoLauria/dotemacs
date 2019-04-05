@@ -229,6 +229,7 @@
 
 (use-package org-contacts
   :commands (org-contacts org-contacts-anniversaries)
+  :bind ([f7] . org-contacts)
   :init
   ;; addresses
   (setq org-contacts-files '("~/personal/agenda/contacts.org"))

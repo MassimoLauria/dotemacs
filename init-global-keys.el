@@ -61,10 +61,6 @@
 (global-set-key [f3]  'kmacro-start-macro-or-insert-counter)
 (global-set-key [f4]  'kmacro-end-or-call-macro)
 
-;; daily life
-(global-set-key [f5]  'org-capture)  ;; Taking notes
-;; (global-set-key [f6]  'org-agenda)    ;; Set in init-org-mode
-(global-set-key [f7]  'bbdb)          ;; Query Contacts
 
 ;; devel (adapted to each mode)
 (global-set-key [f9]  'recompile)
