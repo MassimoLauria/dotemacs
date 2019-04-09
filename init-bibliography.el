@@ -10,13 +10,8 @@
 ;; For reftex
 (setq reftex-default-bibliography '("~/lavori/latex/bibliographies/theoryofcomputing.bib"))
 
-;; For org-ref
-;; (setq org-ref-bibliography-notes "~/lavori/latex/bibliographies/notes.org"
-;;       org-ref-default-bibliography '("~/lavori/latex/bibliographies/theoryofcomputing.bib")
-;;       org-ref-pdf-directory "~/Dropbox/Library/articles/")
-
 (setq bibtex-completion-bibliography "~/lavori/latex/bibliographies/theoryofcomputing.bib"
-      bibtex-completion-library-path "~/Dropbox/Library/articles/"
+      bibtex-completion-library-path "~/cloud/Papers/"
       bibtex-completion-notes-path "~/lavori/latex/bibliographies/notes.org"
       bibtex-completion-pdf-field "file"
       )
