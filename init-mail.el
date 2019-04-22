@@ -229,12 +229,13 @@
 
 (use-package org-contacts
   :commands (org-contacts org-contacts-anniversaries)
-  :bind ([f7] . org-contacts)
   :init
   ;; addresses
   (setq org-contacts-files '("~/personal/agenda/contacts.org"))
   (setq mu4e-org-contacts-file  (car org-contacts-files)))
-  
+
+(use-package helm-org-contacts
+  :bind ([f7] . helm-org-contacts))
 
 
 (provide 'init-mail)
