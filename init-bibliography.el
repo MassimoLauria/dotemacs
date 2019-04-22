@@ -244,14 +244,20 @@ Optional argument NODELIM see `bibtex-make-field'."
   (add-hook 'bibtex-mode-hook 'mybibtex-dnd-setup))
 
 
-(use-package ivy-bibtex
-  :commands (ivy-bibtex)
-  :bind ("C-c b" . ivy-bibtex)
+(use-package helm-bibtex
+  :commands (helm-bibtex)
+  :bind ("C-c b" . helm-bibtex)
   :config
+  ;; Use latex citation in org files
   (setf (cdr (assoc 'org-mode
                     bibtex-completion-format-citation-functions))
         'bibtex-completion-format-citation-cite)
-  (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
-  (setq bibtex-completion-cite-prompt-for-optional-arguments nil))
+  (setq bibtex-completion-cite-prompt-for-optional-arguments nil)
+  ;; Make 'Insert citation' the first (and thus the default) action
+  (helm-delete-action-from-source  "Insert citation" helm-source-bibtex)
+  (helm-add-action-to-source       "Insert citation" 'helm-bibtex-insert-citation helm-source-bibtex 0)
+  ;; Default height for helm-bibtex window
+  (setq helm-bibtex-full-frame nil))
+
 
 (provide 'init-bibliography)

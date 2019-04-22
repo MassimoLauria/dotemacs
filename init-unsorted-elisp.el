@@ -362,21 +362,25 @@ is already narrowed."
   (setq sql-sqlite-program "/usr/bin/sqlite3")
   )
 
-(use-package ivy
-  :diminish (ivy-mode)
-  :config
-  (ivy-mode)
-  (setq counsel-find-file-ignore-regexp "\\`\\.")
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-use-selectable-prompt t))
-
-
 (use-package counsel
   :bind
   (("M-y" . counsel-yank-pop)
    :map ivy-minibuffer-map)
   :config
   (my-ivy-setup))
+
+(use-package swiper
+  :bind ("C-s" . swiper))
+
+(use-package helm
+  :bind (( "C-x C-b" . helm-mini)
+         ( "C-x b"   . helm-mini)
+         ( "C-x C-r" . helm-mini)
+         ( "C-x C-f" . helm-find-files)
+         ( "M-x"     . helm-M-x)
+         ( "M-y"     . helm-show-kill-ring))
+  :config
+  (setq helm-ff-skip-boring-files t))
 
 
 (defun my-ivy-setup ()

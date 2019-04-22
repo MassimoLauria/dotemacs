@@ -13,15 +13,14 @@
                            ag 
                            anaconda-mode 
                            async 
-                           auctex 
-                           avy 
+                           auctex
+                           avy
                            beacon 
                            bind-key 
                            company 
                            company-anaconda 
                            company-irony 
                            company-irony-c-headers 
-                           counsel 
                            dash 
                            deferred 
                            diminish 
@@ -36,8 +35,9 @@
                            git-commit 
                            gnus-alias 
                            graphviz-dot-mode 
-                           gscholar-bibtex 
-                           guess-language 
+                           guess-language
+                           helm
+                           helm-bibtex
                            highlight-blocks 
                            highlight-defined 
                            highlight-quoted 
@@ -46,7 +46,6 @@
                            iedit 
                            irony 
                            irony-eldoc 
-                           ivy-bibtex 
                            latex-preview-pane 
                            let-alist 
                            logito 
