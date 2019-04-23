@@ -117,6 +117,7 @@
 
 (defun install-pkgs ()
   "Install all packages in `requested-packages'"
+  (package-refresh-contents)
   (dolist (package requested-packages)
     (unless (package-installed-p package)
       (package-install package))))
