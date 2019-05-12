@@ -184,8 +184,7 @@ Optional argument NODELIM see `bibtex-make-field'."
                    (completing-read "Add pdf to: " path nil t)
                  (car path)))
          (ext (file-name-extension file))
-         (pdf (expand-file-name (completing-read "Rename pdf to: "
-                                                 (list (concat newname "." ext)))
+         (pdf (expand-file-name (concat newname "." ext)
                                 path))
          (filefieldcontent (bibtex-autokey-get-field bibtex-completion-pdf-field))
          (filefieldcontent (if (string-empty-p filefieldcontent)
@@ -193,13 +192,14 @@ Optional argument NODELIM see `bibtex-make-field'."
                              (concat filefieldcontent ";"))))
     ;; Copy the file in the right location
     (condition-case nil
-        (copy-file file pdf 1)
-      (error (message ("Error copying " file " to " pdf))))
-    (bibtex-set-field bibtex-completion-pdf-field (concat filefieldcontent
-                                                          ":"
-                                                          (file-name-nondirectory pdf)
-                                                          ":"
-                                                          (upcase ext)))))
+        (when (yes-or-no-p (concat "Attach paper " pdf))
+          (copy-file file pdf 1)
+          (bibtex-set-field bibtex-completion-pdf-field (concat filefieldcontent
+                                                                ":"
+                                                                (file-name-nondirectory pdf)
+                                                                ":"
+                                                                (upcase ext))))
+      (error (message ("Error copying " file " to " pdf))))))
 
 (defun mybibtex-dnd-add-file-mac (event)
   "Attach a the file to a Bibtex entry it is dragged on"
