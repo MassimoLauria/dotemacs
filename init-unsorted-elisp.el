@@ -281,6 +281,7 @@ http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
 
 (defun kill-fascists ()
   "This elisp code kills fascists"
+  (interactive)
   (message "This elisp code kills fascists."))
 
 
@@ -362,15 +363,16 @@ is already narrowed."
   (setq sql-sqlite-program "/usr/bin/sqlite3")
   )
 
-(use-package counsel
-  :bind
-  (("M-y" . counsel-yank-pop)
-   :map ivy-minibuffer-map)
-  :config
-  (my-ivy-setup))
-
 (use-package swiper
   :bind ("C-s" . swiper))
+
+
+;; Helm always at bottom
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*helm" (* not-newline) "*" eos)
+               (display-buffer-in-side-window)
+               (inhibit-same-window . t)
+               (window-height . 0.4)))
 
 (use-package helm
   :bind (( "C-x C-b" . helm-mini)
@@ -380,21 +382,8 @@ is already narrowed."
          ( "M-x"     . helm-M-x)
          ( "M-y"     . helm-show-kill-ring))
   :config
-  (setq helm-ff-skip-boring-files t))
-
-
-(defun my-ivy-setup ()
-  (define-key ivy-minibuffer-map (kbd "<left>") 'counsel-up-directory)
-  (define-key ivy-minibuffer-map (kbd "<right>") 'ivy-partial-or-done)
-  (define-key ivy-minibuffer-map (kbd "M-i") 'ivy-previous-line)
-  (define-key ivy-minibuffer-map (kbd "M-k") 'ivy-next-line)
-  (define-key ivy-minibuffer-map (kbd "M-j") 'counsel-up-directory)
-  (define-key ivy-minibuffer-map (kbd "M-l") 'ivy-partial-or-done)
-  (define-key ivy-minibuffer-map (kbd "M-u") 'ivy-previous-history-element)
-  (define-key ivy-minibuffer-map (kbd "M-o") 'ivy-next-history-element)
-  (define-key ivy-minibuffer-map (kbd "M-SPC") 'ivy-dispatching-done))
-
-
+  (setq helm-ff-skip-boring-files t)
+  (setq helm-display-header-line t))
 
 ;; Fill/unfill paragraph
 (use-package unfill
