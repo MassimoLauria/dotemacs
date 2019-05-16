@@ -1,6 +1,6 @@
 ;;; init-hyperlink.el --- Keybindings for inserting/opening/saving links in various modes
 
-;; Copyright (C) 2011, 2012, 2013, 2018  Massimo Lauria
+;; Copyright (C) 2011, 2012, 2013, 2018, 2019  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: convenience
@@ -43,33 +43,24 @@
 (defvar massimo-keyboard-open-link-key2 (kbd "C-c C-o")
   "Secondary key sequence used to open links in text files.")
 
-;; Xah Lee function for opening links in dired-mode
-;; http://xahlee.org/emacs/emacs_dired_open_file_in_ext_apps.html
+
 (defun open-in-external-app ()
   "Open the current file or dired marked files in external app.
-Works in Microsoft Windows, Mac OS X, Linux."
-  (interactive)
+Works in Microsoft Windows, Mac OS X, Linux.
 
-  (let ( doIt
-         (myFileList
+
+(Copyright note.) Code stolen from Xah Lee and Helm project."
+  (interactive)
+  (require 'helm-utils)
+  (let ( (myFileList
           (cond
            ((string-equal major-mode "dired-mode") (dired-get-marked-files))
            (t (list (buffer-file-name))) ) ) )
 
-    (setq doIt (if (<= (length myFileList) 5)
-                   t
-                 (y-or-n-p "Open more than 5 files?") ) )
-
-    (when doIt
-      (cond
-       ((string-equal system-type "windows-nt")
-        (mapc (lambda (fPath) (w32-shell-execute "open" (replace-regexp-in-string "/" "\\" fPath t t)) ) myFileList)
-        )
-       ((string-equal system-type "darwin")
-        (mapc (lambda (fPath) (shell-command (format "open \"%s\" &" fPath)) )  myFileList) )
-       ((string-equal system-type "gnu/linux")
-        (mapc (lambda (fPath) (shell-command (format "xdg-open \"%s\" &" fPath)) ) myFileList) ) ) ) ) )
-
+    (when (or (<= (length myFileList) 5) (y-or-n-p "Open more than 5 files?") )
+      (mapc (lambda (fPath)
+              (helm-open-file-with-default-tool fPath))
+            myFileList))))
 
 
 ;; Setup for `goto-address-mode' and `goto-address-prog-mode'
