@@ -344,13 +344,19 @@ is already narrowed."
 ;; SDCV is a command line client for StarDict dictionaries.
 ;; it is handy to have support of OFFLINE dictionaries.
 (use-package sdcv
-  :bind (( "C-c d" . sdcv-search-pointer)
-         ( "C-c C-d" . sdcv-search-pointer))
+  :bind ("C-c d" . sdcv)
+         
   :init
-  (defalias 'sdcv  'sdcv-search-input)
-  (defalias 'dizionario  'sdcv-search-input)
-  (defalias 'dicionary  'sdcv-search-input)
-  :commands (sdcv-search-input sdcv-search-pointer))
+  ;; the only entry point for the package
+  (defun sdcv (&optional word)
+    "Get current word (if any) or prompt input.
+And display complete translations in other buffer."
+    (interactive)
+    ;; Display details translate result.
+    (sdcv-search-detail (or word
+                            (sdcv-region-or-word)
+                            (sdcv-prompt-input)))))
+
 
 (use-package calibre-mode
   :commands calibre-find
