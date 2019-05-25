@@ -308,13 +308,24 @@ part of the keyboard.
       (setq output (buffer-string)))
     output))
 
+
+(setq my/org-contacts-template "* %(org-contacts-template-name)
+:PROPERTIES:
+:ADDRESS: %^{Indirizzo , XXXXX CITTÀ, ITALY}
+:BIRTHDAY: %^{yyyy-mm-dd}
+:PHONE: %^{+NN-NNN-NNN-NNN}
+:EMAIL: %(org-contacts-template-email)
+:END:")
+
 (setq org-capture-templates
-      '(
+      `(
         ("n" "Notebook note"     entry (file "notebook.org")    "* REVIEWENTRY %?\n  %U\n  %i\n  %a\n\n")
         ("t" "Task"              entry (file "agenda.org"  )    "* TODO ⌚ %?\n  %U\n\n  %i\n\n")
         ("d" "Deadline"          entry (file "agenda.org")      "* TODO ⌚ %?\n  DEADLINE: %^t\n  %U\n\n  %i\n\n")
         ("e" "Event/Appointment" entry (file "agenda.org")      "* %?\n  WHEN  ⌚ %^t\n  %i\n\n")
+        ("c" "New contact"       entry (file+olp "contacts.org" "UNCATEGORIZED") ,my/org-contacts-template :empty-lines 1)
         ("j" "Journal Entry"     entry (file+olp+datetree "journal.org") "* inserito il %U\n\n  %?\n\n%i\n\n")
+      
         ;; ("Q" "File a notebook" entry (file+olp "notebook.org" "PHYSICAL NOTEBOOKS")
         ;;  "* New notebook %? :notebook:%^g\n  %U\n\n  %^{ID}p%^{Formato}p%^{Fogli}p%^{Nome}p\n\n")
         ("w" "External URL" entry (file+olp "notebook.org" "CAPTURED URLS")  "%(org-capture-URL-data)")))

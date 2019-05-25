@@ -234,8 +234,30 @@
   (setq org-contacts-files '("~/personal/agenda/contacts.org"))
   (setq mu4e-org-contacts-file  (car org-contacts-files)))
 
+
+
+
+;; Helm client for org-contacts allows to tag addresses, phone numbers
+;; and email address with indicators like (WORK) (HOME) (CELL) (FAX)
+;; that qualify the entries. These tags are represented with icons
+;; and help choosing the right variant of an entry.
+
+;; See https://github.com/tmalsburg/helm-org-contacts
 (use-package helm-org-contacts
-  :bind ([f7] . helm-org-contacts))
+  :bind ([f7] . helm-org-contacts)
+  :config
+  ;; Reorder actions
+  (helm-delete-action-from-source  "Insert address" helm-source-org-contacts)
+  (helm-delete-action-from-source  "Insert plain email address" helm-source-org-contacts)
+  (helm-delete-action-from-source  "Insert email address with name" helm-source-org-contacts)
+  (helm-delete-action-from-source  "Insert phone number" helm-source-org-contacts)
+  (helm-delete-action-from-source  "Show entry" helm-source-org-contacts)
+  ;; Add actions in the right order (first one on top) 
+  (helm-add-action-to-source       "Insert email address (with name)" 'helm-org-contacts-insert-email-with-name helm-source-org-contacts)
+  (helm-add-action-to-source       "Insert email address (no name)"   'helm-org-contacts-insert-plain-email     helm-source-org-contacts)
+  (helm-add-action-to-source       "Insert phone"                     'helm-org-contacts-insert-phone-number    helm-source-org-contacts)
+  (helm-add-action-to-source       "Insert posta address"             'helm-org-contacts-insert-address         helm-source-org-contacts)
+  (helm-add-action-to-source       "Edit entry"                       'helm-org-contacts-edit-entry             helm-source-org-contacts))
 
 
 (provide 'init-mail)
