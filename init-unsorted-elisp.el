@@ -346,7 +346,7 @@ is already narrowed."
 (use-package sdcv
   :bind ("C-c d" . sdcv)
          
-  :init
+  :config
   ;; the only entry point for the package
   (defun sdcv (&optional word)
     "Get current word (if any) or prompt input.
