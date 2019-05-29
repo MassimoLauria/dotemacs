@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019  Massimo Lauria
-;; Time-stamp: "2019-03-14, 15:20 (CET) Massimo Lauria"
+;; Time-stamp: "2019-05-29, 17:14 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -53,6 +53,7 @@
 
 ;;; Module(s) initialization -------------------------------------------
 (require 'cl)
+(require 'iso-transl)
 
 ;; Bootstrap
 (require 'init-functions)        ; Utility functions for configuration

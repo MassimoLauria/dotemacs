@@ -43,6 +43,7 @@
 (when (fboundp 'column-number-mode) (column-number-mode  t))
 
 ;; Keyboard
+(require 'iso-transl)
 (defvar minimo-keyboard-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "M-j") 'backward-char)
