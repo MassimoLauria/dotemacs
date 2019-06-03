@@ -310,12 +310,14 @@ part of the keyboard.
 
 
 (setq my/org-contacts-template "* %(org-contacts-template-name)
-:PROPERTIES:
-:ADDRESS: %^{Indirizzo , XXXXX CITTÀ, ITALY}
-:BIRTHDAY: %^{yyyy-mm-dd}
-:PHONE: %^{+NN-NNN-NNN-NNN}
-:EMAIL: %(org-contacts-template-email)
-:END:")
+  :PROPERTIES:
+  :EMAIL: %(org-contacts-template-email)
+  :END:
+  
+  %?
+  %^{ADDRESS}p 
+  %^{BIRTHDAY}p
+  %^{PHONE}p")
 
 (setq org-capture-templates
       `(
