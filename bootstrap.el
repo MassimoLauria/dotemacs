@@ -28,10 +28,10 @@
                            epl 
                            esup 
                            expand-region 
-                           f 
+                           f
                            flycheck 
                            flycheck-irony 
-                           gh 
+                           forge
                            git-commit 
                            gnus-alias 
                            graphviz-dot-mode 
@@ -51,7 +51,6 @@
                            logito 
                            magic-latex-buffer 
                            magit 
-                           magit-gh-pulls 
                            magit-popup 
                            magit-svn 
                            metaweblog
