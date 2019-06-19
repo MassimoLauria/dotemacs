@@ -13,6 +13,11 @@
 (if (eq system-type 'windows-nt)
     (setq default-font "Consolas 14"))
 
+(when (eq system-type 'gnu/linux)
+  (require 'unicode-fonts)
+  (unicode-fonts-setup)
+  (set-frame-font default-font))
+
 (if (not (eq system-type 'gnu/linux))
     (setq default-frame-alist `((font . ,default-font))))
 

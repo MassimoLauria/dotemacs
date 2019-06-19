@@ -86,6 +86,7 @@
                            try 
                            undo-tree
                            unfill
+                           unicode-fonts
                            use-package 
                            virtualenvwrapper 
                            visual-fill-column 
