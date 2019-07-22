@@ -57,6 +57,7 @@
 ;;;---------------- Basic setup --------------------------------------
 (setq
  org-agenda-include-diary nil
+ org-list-allow-alphabetical t
  org-log-done t
  org-CUA-compatible t
  org-support-shift-select t
