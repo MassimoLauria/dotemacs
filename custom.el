@@ -7,7 +7,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-item-indent 0)
- '(TeX-master t t)
+ '(TeX-master t)
  '(ansi-color-names-vector
    [solarized-bg red green yellow blue magenta cyan solarized-fg])
  '(apropos-do-all t)
@@ -179,7 +179,10 @@
  '(require-final-newline (quote t))
  '(safe-local-variable-values
    (quote
-    ((flycheck-python-pycompile-executable . "python3")
+    ((org-latex-packages-alist
+      ("" "minted"))
+     (org-latex-listings quote minted)
+     (flycheck-python-pycompile-executable . "python3")
      (org-babel-default-header-args:python
       (:results . "replace output code"))
      (org-latex-listings-options

@@ -484,9 +484,10 @@ for `reftex-default-bibliography'."
    Better than default because it manages UTF-8 characters but
    requires pygments installed and -shell-escape option in the
    pdflatex call"
-
+  (require 'ox-latex)
   (add-to-list 'org-latex-packages-alist '("" "minted"))
   (setq org-latex-listings 'minted)
+  (setq org-latex-compiler "xelatex")
   (setq org-latex-pdf-process
         '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
           "%bib %b"
