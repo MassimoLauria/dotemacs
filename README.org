@@ -386,3 +386,28 @@ Ignore if the path does not exists."
 
 #+END_SRC
 
+** Bookmarks
+
+   If you are  like me you have  several files you visit  on a regular
+   bases,  for some  periods of  time. E.g.,  lecture folders,  course
+   journal, the tex files for the  paper you are currently working on.
+   It is convenient to bookmark  such locations, but the bookmark file
+   should be in some private versioned folder.
+
+#+BEGIN_SRC emacs-lisp
+   (setq bookmark-default-file "~/personal/conf/emacs.bookmarks")
+#+END_SRC
+   
+   I use =helm-mini=  to access and set bookmarks, but  it is possible
+   to edit  and delete them with  command =bookmark-bmenu-list=, bound
+   to =C-x r l=.
+
+#+BEGIN_SRC emacs-lisp
+(setq helm-mini-default-sources '(helm-source-buffers-list
+                                  helm-source-bookmarks
+                                  helm-source-recentf
+                                  helm-source-buffer-not-found))
+#+END_SRC
+
+
+
