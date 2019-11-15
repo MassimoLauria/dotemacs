@@ -175,7 +175,7 @@ in the kill-ring and `pos' is the position current-kill"
 ;; Comint keys
 (use-package comint
   :defer t
-  :init 
+  :init
   (add-hook 'comint-mode-hook
             '(lambda()
                (local-set-key (kbd "M-n") 'comint-next-input)
@@ -197,36 +197,36 @@ in the kill-ring and `pos' is the position current-kill"
 (defvar semantic-tags-location-ring (make-ring 20))
 
 (defun semantic-goto-definition (point)
-  "Goto definition using semantic-ia-fast-jump   
-save the pointer marker if tag is found. 
+  "Goto definition using semantic-ia-fast-jump
+save the pointer marker if tag is found.
 
-Code from 
+Code from
 http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
   (interactive "d")
   (condition-case err
-      (progn                            
-        (ring-insert semantic-tags-location-ring (point-marker))  
+      (progn
+        (ring-insert semantic-tags-location-ring (point-marker))
         (semantic-ia-fast-jump point))
     (error
-     ;;if not found remove the tag saved in the ring  
+     ;;if not found remove the tag saved in the ring
      (set-marker (ring-remove semantic-tags-location-ring 0) nil nil)
      (signal (car err) (cdr err)))))
 
 (defun semantic-pop-tag-mark ()
   "popup the tag save by semantic-goto-definition
 
-Code from 
-http://sourceforge.net/mailarchive/message.php?msg_id=27414242"   
-  (interactive)                                                    
-  (if (ring-empty-p semantic-tags-location-ring)                   
-      (message "%s" "No more tags available")                      
-    (let* ((marker (ring-remove semantic-tags-location-ring 0))    
-              (buff (marker-buffer marker))                        
-                 (pos (marker-position marker)))                   
-      (if (not buff)                                               
-            (message "Buffer has been deleted")                    
-        (switch-to-buffer buff)                                    
-        (goto-char pos))                                           
+Code from
+http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
+  (interactive)
+  (if (ring-empty-p semantic-tags-location-ring)
+      (message "%s" "No more tags available")
+    (let* ((marker (ring-remove semantic-tags-location-ring 0))
+              (buff (marker-buffer marker))
+                 (pos (marker-position marker)))
+      (if (not buff)
+            (message "Buffer has been deleted")
+        (switch-to-buffer buff)
+        (goto-char pos))
       (set-marker marker nil nil))))
 
 (eval-after-load "semantic"
@@ -345,7 +345,7 @@ is already narrowed."
 ;; it is handy to have support of OFFLINE dictionaries.
 (use-package sdcv
   :bind ("C-c d" . sdcv)
-         
+
   :config
   ;; the only entry point for the package
   (defun sdcv (&optional word)
@@ -384,9 +384,13 @@ And display complete translations in other buffer."
          ( "C-x C-f" . helm-find-files)
          ( "M-x"     . helm-M-x)
          ( "M-y"     . helm-show-kill-ring))
-  :config
+  :init
   (setq helm-ff-skip-boring-files t)
-  (setq helm-display-header-line t))
+  (setq helm-display-header-line t)
+  (setq helm-ff-lynx-style-map t)
+  :config
+  (define-key helm-map (kbd "<left>") 'helm-previous-source)
+  (define-key helm-map (kbd "<right>") 'helm-next-source))
 
 ;; Fill/unfill paragraph
 (use-package unfill

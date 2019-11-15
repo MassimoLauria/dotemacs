@@ -40,13 +40,13 @@ part of the main config inside this =README.org= file.
   I  make  the  index  to  show  my  local  info  documents  as  well.
   For example  my copy  of "Structure  and Interpretation  of Computer
   Programs".
- 
+
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'Info-directory-list (concat base-config-path "/info"))
 #+END_SRC
- 
-** Adjust =PATH= environment variables 
-  
+
+** Adjust =PATH= environment variables
+
    When Emacs is  lauched as an app  (on MacOSX) or from  a gui command
    (in linux)  there is often  the chance that the  running environment
    does not contain some environment variables  or does not set them up
@@ -65,12 +65,12 @@ VARNAME is undefined of empty, it defines it. If ELEMENT is
 already in the list, the function won't do anything.
 
 There is no guarantee on the actual order of the elements in the
-list."  
+list."
   (let ((separator (if (eq system-type 'windows-nt) ";" ":"))
         tmplist)
     (if (getenv varname)
-        (setq tmplist (split-string 
-                       (getenv varname) 
+        (setq tmplist (split-string
+                       (getenv varname)
                        separator)))
     (add-to-list 'tmplist element append 'string-equal)
     (setenv varname (mapconcat 'identity tmplist ":"))))
@@ -82,11 +82,11 @@ VARNAME is considered as a list of elements like \"aa:bb:cc\". If
 ELEMENT is not in the list, the function won't do anything.
 
 There is no guarantee on the actual order of the elements in the
-list."  
+list."
   (let ((separator (if (eq system-type 'windows-nt) ";" ":"))
         tmplist)
     (if (getenv varname)
-        (setq tmplist (split-string 
+        (setq tmplist (split-string
                        (getenv varname)
                        separator)))
     (setenv varname (mapconcat 'identity (remove element tmplist) ":"))))
@@ -108,7 +108,7 @@ Ignore if the path does not exists."
 
    Some useful  paths to add  to the environment. In  particular tools
    like =Cask=,  =cabal=, =cargo=, install their  executables files in
-   a corresponding hidden folder inside =$HOME=. 
+   a corresponding hidden folder inside =$HOME=.
 
 #+BEGIN_SRC emacs-lisp
 (environment-add-path "/usr/local/bin")                        ;; Homebrew  (MacOS)
@@ -121,13 +121,13 @@ Ignore if the path does not exists."
   use `/etc/paths.d' files. I pick up these paths as well.
 
 #+BEGIN_SRC emacs-lisp
-(with-temp-buffer 
-  (condition-case nil 
+(with-temp-buffer
+  (condition-case nil
       (dolist (file (cons "/etc/paths" (directory-files "/etc/paths.d/" t)))
         (if (not (file-directory-p file))
             (insert-file-contents file)))
     (error nil))
-      
+
   (dolist (path (split-string (buffer-string) "\n" t))
     (if (file-directory-p path)
         (environment-add-path path))))
@@ -149,7 +149,7 @@ Ignore if the path does not exists."
 
 
 * Localization/Internationalization
-  
+
 ** Text encoding is always UTF-8
 
    I work  mostly with UTF-8 file,  Hence UTF-8 is the  default coding
@@ -236,7 +236,7 @@ Ignore if the path does not exists."
    functionality, but it only knows about English words. I can add the
    Italian ones to  ~parse-time-weekdays~ and ~parse-time-months~ when
    package =parse-time= is loaded. I also add the timezones.
- 
+
 #+BEGIN_SRC emacs-lisp :tangle no
 (defconst parse-time-weekdays
   '(("dom" . 0) ("lun" . 1) ("mar" . 2) ("mer" . 3) ("gio" . 4) ("ven" . 5) ("sab" . 6)
@@ -267,12 +267,12 @@ Ignore if the path does not exists."
 
 * Programming
 
-** Syntax highlighting
+** Generic Syntax highlighting
 
    Of  course   every  mode   include  syntax  highlighting   for  the
    corresponding  type of  file.  There are  more  "semantic" ways  to
    highlight pieces of codes. Many of these syntax highlight packages are described in
-   
+
    - [[http://www.wilfred.me.uk/blog/2014/09/27/the-definitive-guide-to-syntax-highlighting/][The Definitive Guide To Syntax Highlighting]]
 
 
@@ -285,13 +285,99 @@ Ignore if the path does not exists."
   :init (setq rainbow-delimiters-max-face-count 4)
   :commands rainbow-delimiters-mode)
 #+END_SRC
- 
+
    The next package colors each identifier, so that the occurrences of
    that identifier have the same color than the definition.
 
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-identifiers
   :commands rainbow-identifiers-mode)
+#+END_SRC
+
+
+
+
+** Python
+
+   Python  is  the programming  language  I  am using  most  nowadays.
+   My setup is  not very sophisticated right now. Earlier  it was more
+   complex  but  it  was  breaking  quite  often  at  each  change  of
+   technology, Ipython, and so on...
+
+   My configuration  is based around the  default =python.el= included
+   with  Emacs   (there  are   indeed  other  python   modes  around).
+   Furthermore it uses
+   - =anaconda-mode= and =company-anacon= for completion;
+   - =pyenv= to manage the virtual environments.
+   - standard  python   as  interactive  shell  (Ipython   prompt  and
+     completion tend to confuse Emacs if not well configured).
+
+   Binaries will be found in the =pyenv= paths.
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'exec-path (concat (getenv "HOME") "/.pyenv/shims"))
+(add-to-list 'exec-path (concat (getenv "HOME") "/.pyenv/bin"))
+(environment-add-path (concat (getenv "HOME") "/.pyenv/shims"))
+(environment-add-path (concat (getenv "HOME") "/.pyenv/bin"))
+#+END_SRC
+
+  Using the key F10 I can  toggle the prompt shell buffer connected to
+  this python buffer.
+
+#+BEGIN_SRC emacs-lisp
+(with-eval-after-load "python"
+  (define-key python-mode-map (kbd "<f10>") 'python-shell-switch-to-shell)
+  (define-key inferior-python-mode-map (kbd "<f10>") 'delete-window))
+#+END_SRC
+
+   Autocompletion is based around  Anaconda Mode, paired with Company.
+   We also use Anacoda for code navigation using =M-.= and =M-,=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package anaconda-mode
+  :diminish nil
+  :commands anaconda-mode
+  :init
+  (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+  :config
+  (define-key anaconda-mode-map  (kbd "M-/") 'anaconda-mode-show-doc)
+  (define-key anaconda-mode-map  (kbd "M-.") 'anaconda-mode-find-definitions)
+  (define-key anaconda-mode-map  (kbd "M-,") 'pop-tag-mark)
+  (define-key anaconda-mode-map  (kbd "M-r") nil))
+
+;; Auto completion
+(use-package company-anaconda
+  :after (anaconda-mode company)
+  :commands company-anaconda
+  :config (add-to-list 'company-backends 'company-anaconda))
+#+END_SRC
+
+
+  I  have  not reached  a  definitive  configuration regarding  syntax
+  checking,  but for  now I  am using  =pylint= (=flake8=  is also  an
+  alternative) which is run by Flycheck.
+
+#+BEGIN_SRC emacs-lisp
+(use-package pylint
+  :commands pylint
+  :init (autoload 'tramp-tramp-file-p "tramp")) ;; needs `tramp-tramp-file-p'
+
+(add-hook 'python-mode-hook 'flycheck-mode)
+#+END_SRC
+
+  Emacs is able to find the appropriate =pyenv= Python Environment and
+  to load  it automatically. Which  is useful for running  =pylint= or
+  the Python Shell.
+
+#+BEGIN_SRC emacs-lisp
+(use-package pyenv-mode
+  :commands (pyenv-mode-set pyenv-mode-unset pyenv-mode))
+
+(use-package pyenv-mode-auto
+  :commands pyenv-mode-auto-hook
+  :init (add-hook 'find-file-hook #'pyenv-mode-auto-hook)
+  :config (pyenv-mode))
 #+END_SRC
 
 
@@ -311,7 +397,7 @@ Ignore if the path does not exists."
 ** Matlab
 
    There is =run-octave= so I guess =run=matlab= should exists.
- 
+
 #+BEGIN_SRC emacs-lisp
 (use-package matlab
   :init
@@ -326,7 +412,7 @@ Ignore if the path does not exists."
 
 (defalias 'run-matlab 'matlab-shell)
 #+END_SRC
-   
+
 
 ** Mathematica
 
@@ -347,7 +433,7 @@ Ignore if the path does not exists."
 (defalias 'run-mathematica 'run-wolfram)
 #+END_SRC
 
-   
+
 
 * Various features
 
@@ -373,14 +459,14 @@ Ignore if the path does not exists."
 (make-directory backup-dir t)
 
 (setq version-control nil)
-   
+
 (setq delete-old-versions t) ;; silently delete old versions
 (setq kept-new-versions 3)   ;; number of newest versions to keep
 (setq kept-old-versions 2)   ;; number of oldest versions to keep
 (setq backup-by-copying t)
 (setq backup-by-copying-when-linked t)
 
-(setq backup-directory-alist 
+(setq backup-directory-alist
       `(("." . "~/.emacs.d/backups/")      ;; location for local files
         (,tramp-file-name-regexp .  nil))) ;; disable for remove files
 
@@ -397,7 +483,7 @@ Ignore if the path does not exists."
 #+BEGIN_SRC emacs-lisp
    (setq bookmark-default-file "~/personal/conf/emacs.bookmarks")
 #+END_SRC
-   
+
    I use =helm-mini=  to access and set bookmarks, but  it is possible
    to edit  and delete them with  command =bookmark-bmenu-list=, bound
    to =C-x r l=.
@@ -408,6 +494,3 @@ Ignore if the path does not exists."
                                   helm-source-recentf
                                   helm-source-buffer-not-found))
 #+END_SRC
-
-
-

@@ -10,7 +10,6 @@
 ;;  This is a list of packages that can be installed in batch
 ;;
 (setq requested-packages '(ace-window
-                           ag 
                            anaconda-mode 
                            async 
                            auctex
@@ -73,7 +72,8 @@
                            pythonic 
                            rainbow-delimiters 
                            rainbow-identifiers 
-                           rainbow-mode 
+                           rainbow-mode
+                           rg
                            s 
                            sdcv 
                            seq 
