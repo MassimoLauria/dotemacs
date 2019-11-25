@@ -37,6 +37,8 @@
                            guess-language
                            helm
                            helm-bibtex
+                           helm-rg
+                           helm-recoll
                            highlight-blocks 
                            highlight-defined 
                            highlight-quoted 
