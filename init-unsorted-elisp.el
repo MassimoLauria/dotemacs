@@ -366,10 +366,6 @@ And display complete translations in other buffer."
   (setq sql-sqlite-program "/usr/bin/sqlite3")
   )
 
-(use-package swiper
-  :bind ("C-s" . swiper))
-
-
 ;; Helm always at bottom
 (add-to-list 'display-buffer-alist
              `(,(rx bos "*helm" (* not-newline) "*" eos)

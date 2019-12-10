@@ -20,7 +20,8 @@
                            company-anaconda 
                            company-irony 
                            company-irony-c-headers 
-                           dash 
+                           dash
+                           deadgrep
                            deferred 
                            diminish 
                            elisp-slime-nav 
@@ -39,6 +40,7 @@
                            helm-bibtex
                            helm-rg
                            helm-recoll
+                           helm-swoop
                            highlight-blocks 
                            highlight-defined 
                            highlight-quoted 
@@ -84,7 +86,6 @@
                            smartparens
                            solarized-theme
                            ssh-config-mode 
-                           swiper 
                            try 
                            undo-tree
                            unfill
