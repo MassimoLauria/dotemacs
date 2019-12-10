@@ -157,7 +157,7 @@
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(org-modules
    (quote
-    (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mac-protocol)))
+    (org-bbdb org-bibtex org-docview org-gnus org-info org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m )))
  '(org-preview-latex-default-process (quote dvisvgm))
  '(package-selected-packages
    (quote
