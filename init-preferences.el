@@ -13,10 +13,10 @@
 (if (eq system-type 'windows-nt)
     (setq default-font "Consolas 14"))
 
-(when (eq system-type 'gnu/linux)
-  (require 'unicode-fonts)
-  (unicode-fonts-setup)
-  (set-frame-font default-font))
+;; (when (eq system-type 'gnu/linux)
+;;   (require 'unicode-fonts)
+;;   (unicode-fonts-setup)
+;;   (set-frame-font default-font))
 
 ;; This fixes some issues related with Mojave and Hunspell
 (setenv "LANG" "it_IT")
