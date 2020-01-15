@@ -392,6 +392,10 @@ And display complete translations in other buffer."
 (use-package unfill
   :bind ([remap fill-paragraph] . unfill-toggle))
 
+(use-package py-yapf
+  :config
+  (add-hook 'python-mode-hook 'py-yapf-enable-on-save))
+
 
 (provide 'init-unsorted-elisp)
 ;;; init-unsorted-elisp.el ends here
