@@ -226,10 +226,16 @@ Optional argument NODELIM see `bibtex-make-field'."
 (defun mybibtex-dnd-setup () 
   (setq-local dnd-protocol-alist '(("^file:" . mybibtex-dnd-add-file-linux))))
 
+(defun mybibtex-open-pdf ()
+  "Opens the PDF files mentioned in the bibtex entry"
+  (interactive)
+  (bibtex-completion-open-pdf (list (bibtex-completion-key-at-point))))
+
 
 (use-package bibtex
   :bind (:map bibtex-mode-map
               ("M-q" . bibtex-fill-entry)
+              ("C-c C-o" . mybibtex-open-pdf)
               ("<drag-n-drop>" . mybibtex-dnd-add-file-mac))
   
   :config
