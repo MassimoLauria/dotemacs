@@ -19,7 +19,7 @@
 ;;   (set-frame-font default-font))
 
 ;; This fixes some issues related with Mojave and Hunspell
-(setenv "LANG" "it_IT")
+(setenv "LANG" "it_IT.UTF-8")
 
 (if (not (eq system-type 'gnu/linux))
     (setq default-frame-alist `((font . ,default-font))))
