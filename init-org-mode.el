@@ -100,7 +100,7 @@
                    ))
           (alltodo ""
                    ((org-agenda-overriding-header "           TODO LIST\n")
-                    (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline))
+                    (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline 'todo '("UNSOLVED")))
                     (org-agenda-sorting-strategy '(tag-up priority-down))
                     ))
           (agenda "" ;; Birthdays in this week
@@ -110,6 +110,10 @@
                    (org-agenda-start-on-weekday nil)
                    (org-agenda-time-grid nil)
                    (org-agenda-entry-types '(:sexp))))
+          (todo "UNSOLVED"
+                   ((org-agenda-overriding-header "           OPEN PROBLEMS\n")
+                    (org-agenda-sorting-strategy '(tag-up priority-down))
+                    ))
           ))))
 
 ;; Set a key for the agenda view
