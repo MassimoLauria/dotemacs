@@ -63,6 +63,9 @@
 ;;;---------------- Basic setup --------------------------------------
 (setq
  org-agenda-include-diary nil
+ org-agenda-window-setup 'only-window
+ org-agenda-restore-windows-after-quit t
+ org-agenda-show-future-repeats 'next
  org-list-allow-alphabetical t
  org-log-done t
  org-CUA-compatible t
@@ -79,7 +82,6 @@
  org-use-sub-superscripts (quote {})
  org-M-RET-may-split-line nil
  ;; org-babel-no-eval-on-ctrl-c-ctrl-c t
- org-agenda-show-future-repeats 'next
  org-hide-leading-stars t
  org-highlight-latex-and-related '(latex script entities)
  org-highlight-latex-fragments-and-specials t
