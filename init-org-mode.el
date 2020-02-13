@@ -43,6 +43,10 @@
      ;; Reading
      ("TOREAD" :foreground "blue" :background "white" :weight bold)
      ("READ" :foreground "lightgreen" :weight bold)
+     ;; Projects
+     ("IN-PROGRESS" :foreground "red" :background "white" :weight bold)
+     ("NEXT" :foreground "blue" :background "white" :weight bold)
+     ("DONE" :foreground "lightgreen" :weight bold)
      ;; Review the entry
      ("REVIEWENTRY" . (:foreground "blue" :background "lightgreen" :weight bold)))))
 
@@ -51,6 +55,8 @@
     ((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED" "HASNEWERENTRY")
      (sequence "TOREAD" "|" "READ" "CANCELED")
      (sequence "UNSOLVED" "|" "SOLVED")
+     (sequence "IN-PROGRESS" "FEEDBACK" "|" "DONE" "CANCELED")
+     (sequence "NEXT" "|" "DONE" "CANCELED")
      (sequence "REVIEWENTRY" "|"))))
 
 
@@ -98,11 +104,6 @@
                    (org-deadline-warning-days 90)        ;; [1]
                    (org-agenda-entry-types '(:deadline))  ;; [2]
                    ))
-          (alltodo ""
-                   ((org-agenda-overriding-header "           TODO LIST\n")
-                    (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline 'todo '("UNSOLVED")))
-                    (org-agenda-sorting-strategy '(tag-up priority-down))
-                    ))
           (agenda "" ;; Birthdays in this week
                   ((org-agenda-overriding-header "           ANNIVERSARIES IN 7 DAYS\n")
                    (org-agenda-span 7)
@@ -110,9 +111,20 @@
                    (org-agenda-start-on-weekday nil)
                    (org-agenda-time-grid nil)
                    (org-agenda-entry-types '(:sexp))))
-          (todo "UNSOLVED"
+          (tags-todo "project"
+                   ((org-agenda-overriding-header "           PROJECTS STATUS\n")
+                    (org-agenda-sorting-strategy '(priority-down))
+                    ))
+          (tags-todo "@question"
                    ((org-agenda-overriding-header "           OPEN PROBLEMS\n")
-                    (org-agenda-sorting-strategy '(tag-up priority-down))
+                    (org-agenda-sorting-strategy '(priority-down))
+                    ))
+          (tags-todo "-project-@question"
+                   ((org-agenda-overriding-header "           TODO LIST\n")
+                    (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                'scheduled
+                                                'deadline ))
+                    (org-agenda-sorting-strategy '(priority-down))
                     ))
           ))))
 
