@@ -12,7 +12,7 @@
 
 (setq bibtex-completion-bibliography "~/lavori/latex/bibliographies/theoryofcomputing.bib"
       bibtex-completion-library-path "~/cloud/Papers/"
-      bibtex-completion-notes-path "~/lavori/latex/bibliographies/notes.org"
+      bibtex-completion-notes-path "~/lavori/latex/bibliographies/papernotes.org"
       bibtex-completion-pdf-field "file"
       )
 
