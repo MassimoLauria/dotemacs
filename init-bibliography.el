@@ -231,11 +231,20 @@ Optional argument NODELIM see `bibtex-make-field'."
   (interactive)
   (bibtex-completion-open-pdf (list (bibtex-completion-key-at-point))))
 
+(defun mybibtex-open-url-or-doi ()
+  "Opens the PDF, the URL or the DOI mentioned in the bibtex entry"
+  (interactive)
+  (bibtex-completion-open-url-or-doi (list (bibtex-completion-key-at-point))))
+
+(defun mybibtex-open-any ()
+  "Opens the PDF, the URL or the DOI mentioned in the bibtex entry"
+  (interactive)
+  (bibtex-completion-open-any (list (bibtex-completion-key-at-point))))
 
 (use-package bibtex
   :bind (:map bibtex-mode-map
               ("M-q" . bibtex-fill-entry)
-              ("C-c C-o" . mybibtex-open-pdf)
+              ("C-c C-o" . mybibtex-open-any)
               ("<drag-n-drop>" . mybibtex-dnd-add-file-mac))
   
   :config
