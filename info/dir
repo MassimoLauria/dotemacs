@@ -14,11 +14,14 @@ File: dir,	Node: Top	This is the top of the INFO tree
 
 * Menu:
 
+Miscellaneous
+
 The Algorithmic Language Scheme
 * SICP: (sicp). Structure and Interpretation of Computer Programs
 
 The Python Language documentation
-* Python: (python.info). One line description of project
+* Python: (python.info).        Python 3.8 standard documentation
+* pybind11: (pybind11.info).    PyBind11 (C++ bindings in python)
 
 TeX
 * LaTeX2e: (latex2e).              Unofficial LaTeX reference manual.
