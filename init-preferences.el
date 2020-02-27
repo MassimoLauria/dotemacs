@@ -9,7 +9,7 @@
 
 ;; Set fonts
 ;;   - on linux we use Xresources instead
-(defvar default-font "DejaVu Sans Mono 14" "The font I use by default")
+(defvar default-font "DejaVu Sans Mono 18" "The font I use by default")
 (if (eq system-type 'windows-nt)
     (setq default-font "Consolas 14"))
 
@@ -21,9 +21,23 @@
 ;; This fixes some issues related with Mojave and Hunspell
 (setenv "LANG" "it_IT.UTF-8")
 
-(if (not (eq system-type 'gnu/linux))
-    (setq default-frame-alist `((font . ,default-font))))
-
+(setq initial-frame-alist '((top . 0.5)   ;; center vertical position
+                            (left . 0.5)) ;; center horizontal position
+                            
+      
+(setq default-frame-alist `((font . ,default-font)
+                            (height . 64)
+                            (width . 120)
+                            (tool-bar . t)
+                            (internal-border-width . 3)
+                            (border-width . 0)
+                            (vertical-scroll-bars . nil)
+                            (horizontal-scroll-bars . nil)
+                            (left-fringe . 0)
+                            (right-fringe . 0)
+                            (tool-bar-lines . 0)
+                            (menu-bar-line . 0)
+                            ))
 
 ;; Set theme to zenburn
 (use-package zenburn-theme
@@ -48,15 +62,6 @@
       (setq ns-alternate-modifier 'meta)
       (setq ns-right-alternate-modifier 'nil))
   (setq ns-alternate-modifier 'nil))
-
-
-;; GUI elements off
-(when (fboundp 'scroll-bar-mode)
-      (scroll-bar-mode -1))
-(when tool-bar-mode
-  (tool-bar-mode -1))
-(when menu-bar-mode 
-  (menu-bar-mode -1))
 
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
