@@ -21,8 +21,8 @@
 ;; This fixes some issues related with Mojave and Hunspell
 (setenv "LANG" "it_IT.UTF-8")
 
-(setq initial-frame-alist '((top . 0.5)   ;; center vertical position
-                            (left . 0.5)) ;; center horizontal position
+(setq initial-frame-alist '((top . 0.5)    ;; center vertical position
+                            (left . 0.5))) ;; center horizontal position
                             
       
 (setq default-frame-alist `((font . ,default-font)
