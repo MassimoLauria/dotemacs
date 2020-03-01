@@ -331,7 +331,9 @@ Ignore if the path does not exists."
 #+END_SRC
 
    Autocompletion is based around  Anaconda Mode, paired with Company.
-   We also use Anacoda for code navigation using =M-.= and =M-,=.
+   We  also use  Anacoda for  code navigation  using =M-.=  and =M-,=.
+   Unfortunately =anaconda-mode= does not work with Python 3.8, so for
+   now I have to stay with Python 3.7.
 
 #+BEGIN_SRC emacs-lisp
 (use-package anaconda-mode
@@ -380,7 +382,12 @@ Ignore if the path does not exists."
   :config (pyenv-mode))
 #+END_SRC
 
+  Of course standard indentation is 4.
 
+#+BEGIN_SRC emacs-lisp
+(setq python-indent-guess-indent-offset nil)
+(setq python-indent-offset 4)
+#+END_SRC
 
 
 * Math packages
