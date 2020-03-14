@@ -96,7 +96,7 @@
 
 (setq org-agenda-custom-commands
       '(("n" "My agenda setting"
-         ((agenda "" ((org-agenda-overriding-header "           TODAY\n")
+         ((agenda "" ((org-agenda-overriding-header "           AGENDA OF THE DAY\n")
                       (org-agenda-span 1)))
                       ;; limits the agenda display to a single day)
           (agenda ""  
