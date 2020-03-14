@@ -137,7 +137,6 @@
 It shows the full view of my custom agenda."
   (interactive "P")
   (org-agenda arg "n"))
-(global-set-key [f6]  'my-org-agenda-show)
 
 (defun init-org-mode--setup ()
   "Setup for org-mode"
@@ -658,7 +657,8 @@ This is a workaround to get the old templates in org 9.2
 (use-package org
   :mode ("\\.org\\'" . org-mode)
   :pin gnu
-  :bind ([f5] . org-capture)
+  :bind (([f5] . org-capture)
+         ([f6] . my-org-agenda-show))
   :config
   (init-org-mode--setup))
 
@@ -666,6 +666,10 @@ This is a workaround to get the old templates in org 9.2
 (use-package org-bullets
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+(use-package helm-org-rifle
+  :bind ([f8] . helm-org-rifle))
+
 
 
 (provide 'init-org-mode)

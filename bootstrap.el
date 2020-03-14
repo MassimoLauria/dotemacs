@@ -41,6 +41,7 @@
                            helm-rg
                            helm-recoll
                            helm-swoop
+                           helm-org-rifle
                            highlight-blocks 
                            highlight-defined 
                            highlight-quoted 
