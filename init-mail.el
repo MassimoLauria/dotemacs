@@ -55,7 +55,6 @@
 (setq mu4e-compose-complete-only-personal t)
 (setq mu4e-compose-dont-reply-to-self t)
 
-(setq message-auto-save-directory "~/personal/mail/drafts")
 (setq message-kill-buffer-on-exit t)
 (setq mu4e-sent-messages-behavior 'delete)  ;; for gmail
 
@@ -114,6 +113,7 @@
   (setq mu4e-view-show-addresses t)
   (setq mu4e-get-mail-command "mbsync gmail")
   (setq mu4e-change-filenames-when-moving t)
+
   (setq mu4e-headers-skip-duplicates t)
   (setq mu4e-headers-show-threads t)
   (setq mu4e-headers-include-related t)
@@ -122,6 +122,8 @@
   (setq mu4e-compose-complete-only-personal nil)
   (setq mu4e-compose-complete-only-after "2012-01-01")
 
+  (setq mu4e-sent-messages-behavior 'delete)  ;; gmail takes care of sent mails
+  
   (setq mu4e-confirm-quit nil)
 
   :config
