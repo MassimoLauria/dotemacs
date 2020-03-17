@@ -26,20 +26,6 @@
 
 ;;; Code:
 
-
-
-
-;; Auto-mode
-(setq auto-mode-alist (cons '("\\.zsh" . sh-mode) auto-mode-alist))
-
-;; Command line editing
-(setq auto-mode-alist (cons '("zsh[a-zA-Z0-9]*" . sh-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("bash-fc-[0-9]*" . sh-mode) auto-mode-alist))
-
-
-
-
-
 (use-package graphviz-dot-mode
   :mode ("\\.dot" . graphviz-dot-mode))
 

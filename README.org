@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 #+STARTUP: collapsed
 #+title: Massimo's Emacs configuration
-#+author: Massimo Lauria <lauria.massimo@gmail.com>
+#+author: Massimo Lauria <massimo.lauria@uniroma1.it>
 
 
-This is the Emacs config of Massimo Lauria (C) 2009-2019.
+This is the Emacs config of Massimo Lauria (C) 2009-2020.
 
 This configuration  is under massive  and continue change,  and things
 break every day. I just put it  online so you can cut & paste whatever
@@ -387,6 +387,27 @@ Ignore if the path does not exists."
 #+BEGIN_SRC emacs-lisp
 (setq python-indent-guess-indent-offset nil)
 (setq python-indent-offset 4)
+#+END_SRC
+
+
+** Shell programming
+
+   I don't  have a  particularly clever  setup for  shell programming,
+   even though  I should probably  take it more seriously.  There many
+   bad  patterns in  shell programming  and  few good  ones. I  should
+   massively use  snippets. One  thing that is  needed is  to activate
+   shell mode automatically for [[http://zsh.sourceforge.net/][Zsh]] scripts.
+   
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.zsh" . sh-mode))
+#+END_SRC
+
+   Furthermore   it  is   possible   to  edit   command  lines   while
+   using terminal. This setup activates ~sh-mode~ there as well
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist '("zsh[a-zA-Z0-9]*" . sh-mode))
+(add-to-list 'auto-mode-alist '("bash-fc-[0-9]*"  . sh-mode))
 #+END_SRC
 
 
