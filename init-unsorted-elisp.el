@@ -1,6 +1,6 @@
 ;;; init-unsorted-elisp.el --- Contains small chunks of elisp code in no particular order
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -351,10 +351,9 @@ And display complete translations in other buffer."
 (use-package calibre-mode
   :commands calibre-find
   :config
-  (setq calibre-root-dir (expand-file-name "~/Documents/Calibre"))
+  (setq calibre-root-dir (expand-file-name "~/cloud/Books/"))
   (setq calibre-db (concat calibre-root-dir "/metadata.db"))
-  (setq sql-sqlite-program "/usr/bin/sqlite3")
-  )
+  (setq sql-sqlite-program "/usr/bin/sqlite3"))
 
 ;; Helm always at bottom
 (add-to-list 'display-buffer-alist
