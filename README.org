@@ -283,7 +283,9 @@ Ignore if the path does not exists."
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
   :init (setq rainbow-delimiters-max-face-count 4)
-  :commands rainbow-delimiters-mode)
+  :commands rainbow-delimiters-mode
+  :hook ((emacs-lisp-mode . rainbow-delimiters-mode)
+         (lisp-interaction-mode . rainbow-delimiters-mode)))
 #+END_SRC
 
    The next package colors each identifier, so that the occurrences of
@@ -293,9 +295,6 @@ Ignore if the path does not exists."
 (use-package rainbow-identifiers
   :commands rainbow-identifiers-mode)
 #+END_SRC
-
-
-
 
 ** Python
 
@@ -357,28 +356,27 @@ Ignore if the path does not exists."
 
 
   I  have  not reached  a  definitive  configuration regarding  syntax
-  checking,  but for  now I  am using  =pylint= (=flake8=  is also  an
-  alternative) which is run by Flycheck.
+  checking, but for  now I am using either [[https://www.pylint.org/][Pylint]]  or [[https://flake8.pycqa.org/en/latest/][Flake8]] which are
+  run  by [[https://www.flycheck.org/][Flycheck]],  an  emacs package  which  highlight code  errors.
+  Furthermore I use [[https://github.com/google/yapf][Yapf]] to enforce code formatting.
 
 #+BEGIN_SRC emacs-lisp
-(use-package pylint
-  :commands pylint
-  :init (autoload 'tramp-tramp-file-p "tramp")) ;; needs `tramp-tramp-file-p'
-
 (add-hook 'python-mode-hook 'flycheck-mode)
+
+(use-package py-yapf
+  :hook (python-mode . py-yapf-enable-on-save))
 #+END_SRC
 
   Emacs is able to find the appropriate =pyenv= Python Environment and
-  to load  it automatically. Which  is useful for running  =pylint= or
-  the Python Shell.
+  to  load  it  automatically.  Which is  useful  for  running  syntax
+  checkers or the Python Shell.
 
 #+BEGIN_SRC emacs-lisp
 (use-package pyenv-mode
   :commands (pyenv-mode-set pyenv-mode-unset pyenv-mode))
 
 (use-package pyenv-mode-auto
-  :commands pyenv-mode-auto-hook
-  :init (add-hook 'find-file-hook #'pyenv-mode-auto-hook)
+  :hook (find-file . pyenv-mode-auto-hook)
   :config (pyenv-mode))
 #+END_SRC
 

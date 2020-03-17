@@ -72,7 +72,6 @@
                            pdf-tools 
                            pkg-info
                            poet-theme
-                           py-autopep8
                            py-yapf
                            pyenv-mode 
                            pyenv-mode-auto 
