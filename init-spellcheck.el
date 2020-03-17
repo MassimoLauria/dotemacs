@@ -3,54 +3,45 @@
 ;;; 
 ;;;-----------------------------------------------------------------
 
-;; Spellcheck the whole text
-(global-set-key [f2]  'ispell-buffer)  
+(global-set-key [f2]  'ispell-buffer)     ;; spellcheck document
+(global-set-key (kbd "M-s") 'ispell-word) ;; spellcheck word
+(global-set-key (kbd "M-<f2>") 'spellcheck-cycle-language) ;; cycle languages
 
-;; Spellcheck word (usually overridden by flyspell)
-(global-set-key (kbd "M-s") 'ispell-word)
 
-;; Switch among the chosen languages
-(global-set-key (kbd "M-<f2>") 'spellcheck-cycle-language)
-
+(defvar my-preferred-languages
+  (list "american" "italiano")
+  "The two main languages i switch between (default first)")
 
 ;; Flyspell -- spell checking on the fly.
 (use-package flyspell
   :commands (flyspell-mode flyspell-prog-mode)
   :config
   (setq ispell-program-name (executable-find "hunspell"))
+  (setq ispell-dictionary (car my-preferred-languages))  ;; first in list is default
   (if (not ispell-program-name)
       (message "Spell checking disabled: impossible to find correctly installed 'Hunspell'."))
   :hook ((text-mode . flyspell-mode)
          (prog-mode . flyspell-prog-mode))
   :diminish nil)
 
-; Automatically detect language for Flyspell
-(use-package guess-language         
-  :commands (guess-language-mode guess-language spellcheck-cycle-language)
-  :hook flyspell-mode
-  :config
-  (setq guess-language-langcodes '((en . ("american" "American"))
-                                   (it . ("italiano" "Italian")))
-        guess-language-languages '(en it)
-        guess-language-min-paragraph-length 45)
-  :diminish nil)
-
-
 (defun spellcheck-cycle-language ()
   "Switch between spell checking languages, in the current buffer."
   (interactive)
-  (let (new-pos
-        old-pos)
-    (setq old-pos (position guess-language-current-language guess-language-languages))
-    (setq new-pos (cond
-                   ((eq old-pos nil)                                    0)               ;; not found
-                   ((= old-pos (- (length guess-language-langcodes) 1)) 0)               ;; last position
-                   (t                                                   (+ old-pos 1)))) ;; any other pos
+  (let* ((old-pos (position ispell-current-dictionary
+                            my-preferred-languages
+                            :test 'equal))
+         (new-pos (cond
+                   ((eq old-pos nil)                                  0)               ;; not found
+                   ((= old-pos (- (length my-preferred-languages) 1)) 0)               ;; last position
+                   (t                                                 (+ old-pos 1))))) ;; any other pos
 
-    (ispell-change-dictionary (car (cdr (nth new-pos guess-language-langcodes))))
-    (setq guess-language-current-language (car (nth new-pos guess-language-langcodes)))
-    ))
+    (ispell-change-dictionary (nth new-pos my-preferred-languages))))
 
+;; A nicer Helm based interface for flyspell
+(use-package flyspell-correct-helm
+  :after flyspell
+  :bind (:map flyspell-mode-map
+              ("M-s" . flyspell-correct-wrapper)))
 
 (provide 'init-spellcheck)
 ;; Local Variables:

@@ -29,7 +29,8 @@
                            esup 
                            expand-region 
                            f
-                           flycheck 
+                           flycheck
+                           flycheck-correct-helm
                            flycheck-irony 
                            forge
                            git-commit 
