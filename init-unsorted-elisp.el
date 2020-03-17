@@ -150,19 +150,9 @@ in the kill-ring and `pos' is the position current-kill"
                             (local-set-key (kbd "M-<f9>"  ) 'gud-tbreak)
                             )
           )
-
-
-;;; Flymake setup --------
-
-;; Overwrite flymake-display-warning to suppress annoying dialog boxs
-(defun flymake-display-warning (warning)
-  "Display a warning to the user, using minibuffer"
-  (message warning))
-
-;; All urls/mails are clickable in comments and strings (Not present in Emacs22)
+;; All urls/mails are clickable in comments and strings
 (when-available 'goto-address-prog-mode
-  (add-hook 'find-file-hooks 'goto-address-prog-mode)
-  )
+  (add-hook 'find-file-hooks 'goto-address-prog-mode))
 
 
 ;; Eldoc for lisp
