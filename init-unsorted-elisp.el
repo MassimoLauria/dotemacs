@@ -368,21 +368,24 @@ And display complete translations in other buffer."
          ( "C-x C-r" . helm-mini)
          ( "C-x C-f" . helm-find-files)
          ( "M-x"     . helm-M-x)
-         ( "M-y"     . helm-show-kill-ring))
+         ( "M-y"     . helm-show-kill-ring)
+         :map helm-map
+         ( "<left>"  . helm-previous-source)
+         ( "<right>" . helm-next-source))  
   :init
   (setq helm-ff-skip-boring-files t)
   (setq helm-display-header-line t)
   (setq helm-ff-lynx-style-map t)
   :config
-  (define-key helm-map (kbd "<left>") 'helm-previous-source)
-  (define-key helm-map (kbd "<right>") 'helm-next-source))
+  (helm-mode))
+
 
 ;; Fill/unfill paragraph
 (use-package unfill
   :bind ([remap fill-paragraph] . unfill-toggle))
 
 (use-package py-yapf
-  :config
+  :init
   (add-hook 'python-mode-hook 'py-yapf-enable-on-save))
 
 
