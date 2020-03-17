@@ -357,7 +357,8 @@ And display complete translations in other buffer."
          ( "M-y"     . helm-show-kill-ring)
          :map helm-map
          ( "<left>"  . helm-previous-source)
-         ( "<right>" . helm-next-source))  
+         ( "<right>" . helm-next-source))
+  :diminish helm-mode
   :init
   (setq helm-ff-skip-boring-files t)
   (setq helm-display-header-line t)
