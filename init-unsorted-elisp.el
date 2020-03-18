@@ -366,6 +366,12 @@ And display complete translations in other buffer."
   :config
   (helm-mode))
 
+(use-package helm-rg                    ;
+  :commands (helm-rg)
+  :init
+  (defalias 'rg 'helm-rg "RipGrep in the current folder"))
+
+
 
 ;; Fill/unfill paragraph
 (use-package unfill
