@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8; ispell-local-dictionary: "english" -*-
 #+STARTUP: collapsed
 #+title: Massimo's Emacs configuration
 #+author: Massimo Lauria <massimo.lauria@uniroma1.it>
@@ -602,3 +602,4 @@ Ignore if the path does not exists."
                                   helm-source-recentf
                                   helm-source-buffer-not-found))
 #+END_SRC
+

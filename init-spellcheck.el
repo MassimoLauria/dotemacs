@@ -7,10 +7,8 @@
 (global-set-key (kbd "M-s") 'ispell-word) ;; spellcheck word
 (global-set-key (kbd "M-<f2>") 'spellcheck-cycle-language) ;; cycle languages
 
-
-(defvar my-preferred-languages
-  (list "american" "italiano")
-  "The two main languages i switch between (default first)")
+;; The main languages I switch between (the default is the first)"
+(setq my-preferred-languages '("english" "italiano" "british"))
 
 ;; Flyspell -- spell checking on the fly.
 (use-package flyspell
@@ -21,9 +19,19 @@
   (if (not ispell-program-name)
       (message "Spell checking disabled: impossible to find correctly installed 'Hunspell'."))
   :hook ((text-mode . flyspell-mode)
-         (prog-mode . flyspell-prog-mode))
-  :diminish nil)
+         (prog-mode . flyspell-prog-mode)))
 
+;; Puts the current language in the modeline.
+(defadvice ispell-init-process (after ispell-init-process-after activate)
+  (setq flyspell-mode-line-string
+        (let ((lang (or ispell-local-dictionary ispell-dictionary nil)))
+          (cond
+           ((string-equal lang "italiano") " [IT]")
+           ((string-equal lang "british")  " [GB]")
+           ((string-equal lang "english") " [EN]")
+           (t "")))))
+
+        
 (defun spellcheck-cycle-language ()
   "Switch between spell checking languages, in the current buffer."
   (interactive)
