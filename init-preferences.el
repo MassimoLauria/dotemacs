@@ -4,40 +4,8 @@
 ;;;
 ;;;-----------------------------------------------------------------
 
-;;; Themes and Fonts
+;;; Themes
 
-
-;; Set fonts
-;;   - on linux we use Xresources instead
-(defvar default-font "DejaVu Sans Mono 18" "The font I use by default")
-(if (eq system-type 'windows-nt)
-    (setq default-font "Consolas 14"))
-
-;; (when (eq system-type 'gnu/linux)
-;;   (require 'unicode-fonts)
-;;   (unicode-fonts-setup)
-;;   (set-frame-font default-font))
-
-;; This fixes some issues related with Mojave and Hunspell
-(setenv "LANG" "it_IT.UTF-8")
-
-(setq initial-frame-alist '((top . 0.5)    ;; center vertical position
-                            (left . 0.5))) ;; center horizontal position
-                            
-      
-(setq default-frame-alist `((font . ,default-font)
-                            (height . 64)
-                            (width . 120)
-                            (tool-bar . t)
-                            (internal-border-width . 3)
-                            (border-width . 0)
-                            (vertical-scroll-bars . nil)
-                            (horizontal-scroll-bars . nil)
-                            (left-fringe . 0)
-                            (right-fringe . 0)
-                            (tool-bar-lines . 0)
-                            (menu-bar-line . 0)
-                            ))
 
 ;; Set theme to zenburn
 (use-package zenburn-theme

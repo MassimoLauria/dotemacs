@@ -150,6 +150,11 @@ Ignore if the path does not exists."
 
 * Localization/Internationalization
 
+#+BEGIN_SRC emacs-lisp
+(setenv "LANG" "it_IT.UTF-8")
+#+END_SRC
+
+
 ** Text encoding is always UTF-8
 
    I work  mostly with UTF-8 file,  Hence UTF-8 is the  default coding
@@ -264,6 +269,59 @@ Ignore if the path does not exists."
 
 
 
+
+
+* Appearance
+** Fonts 
+
+   The  most important  visual setup  for a  text editor  is the  font.
+   The  default  font is  included  with  this configuration,  but  for
+   windows  (which  I   almost  never  use)  I   have  an  alternative.
+   Notice that on X11 we can also use ~Xresources~ file.
+  
+ #+BEGIN_SRC emacs-lisp
+(defvar default-font "DejaVu Sans Mono 18" "The font I use by default")
+(if (eq system-type 'windows-nt)
+    (setq default-font "Consolas 14"))
+ #+END_SRC
+
+   Text is more readable with some space between lines.
+
+ #+BEGIN_SRC emacs-lisp
+(setq line-spacing 0.2)
+ #+END_SRC
+
+   I like Emacs to open in a wide frame at the center of the screen, on
+   startup.  At  least  on  these  systems  where  the  layout  of  the
+   application is left  to the user. A very small  internal border puts
+   distance between  the characters and  screen borders, and  all other
+   decorations are deactivated.
+
+ #+BEGIN_SRC emacs-lisp
+(setq initial-frame-alist '((top . 0.5)    ;; center vertical position
+                            (left . 0.5))) ;; center horizontal position
+                            
+      
+(setq default-frame-alist `((font . ,default-font)
+                            (height . 64)
+                            (width . 120)
+                            (tool-bar . nil)
+                            (internal-border-width . 3)
+                            (border-width . 0)
+                            (vertical-scroll-bars . nil)
+                            (horizontal-scroll-bars . nil)
+                            (left-fringe . 0)
+                            (right-fringe . 0)
+                            (tool-bar-lines . 0)
+                            (menu-bar-line . 0)
+                            ))
+
+ #+END_SRC
+
+
+** Themes
+
+   Setting for the appearance of emacs. 
 
 * Programming
 
