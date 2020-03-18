@@ -7,21 +7,6 @@
 ;;; Themes
 
 
-;; Set theme to zenburn
-(use-package zenburn-theme
-  :config
-  (load-theme 'zenburn t))
-
-;; Fix zenburn theme for flyspell/flymake/flycheck
-(custom-theme-set-faces
- 'zenburn
- '(flycheck-error-face ((t (:underline "DodgerBlue1"))))
- '(flycheck-warning-face ((t (:underline "green"))))
- '(flymake-errline ((t (:underline "DodgerBlue1"))))
- '(flymake-warnline ((t (:underline "green"))))
- '(flyspell-duplicate ((t (:strike-through "red"))))
- '(flyspell-incorrect ((t (:underline "red"))))
- )
 
 
 ;; Meta usage in MacOSX requires some thought

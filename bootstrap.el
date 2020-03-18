@@ -99,7 +99,8 @@
                            wgrep-ag 
                            which-key 
                            with-editor 
-                           writeroom-mode 
+                           writeroom-mode
+                           writegood-mode
                            xml-rpc
                            xscheme
                            yasnippet 

@@ -274,30 +274,27 @@ Ignore if the path does not exists."
 * Appearance
 ** Fonts 
 
-   The  most important  visual setup  for a  text editor  is the  font.
-   The  default  font is  included  with  this configuration,  but  for
-   windows  (which  I   almost  never  use)  I   have  an  alternative.
-   Notice that on X11 we can also use ~Xresources~ file.
+   The most  important visual  setup for  a text  editor is  the font.
+   I include the default font with this configuration, but for Windows
+   (which I  almost never use) I  have an alternative. Notice  that on
+   X11 we can also use ~Xresources~ file.
   
- #+BEGIN_SRC emacs-lisp
-(defvar default-font "DejaVu Sans Mono 18" "The font I use by default")
-(if (eq system-type 'windows-nt)
-    (setq default-font "Consolas 14"))
- #+END_SRC
+#+BEGIN_SRC emacs-lisp
+(defvar default-font
+  (cond
+   ((eq system-type 'windows-nt) "Consolas 14") 
+   (t                            "DejaVu Sans Mono 18"))
+  "The font I use by default")
+#+END_SRC
 
-   Text is more readable with some space between lines.
+   I like Emacs to  open in a wide frame at the  center of the screen,
+   on  startup,  at  least  on  these  systems  with  floating  window
+   managers.  A  small  internal  border  puts  distance  between  the
+   characters and screen  borders, and that instead  helps with tiling
+   window  managers. I  disable any  other decorations.  Text is  more
+   readable with some additional space between lines.
 
- #+BEGIN_SRC emacs-lisp
-(setq line-spacing 0.2)
- #+END_SRC
-
-   I like Emacs to open in a wide frame at the center of the screen, on
-   startup.  At  least  on  these  systems  where  the  layout  of  the
-   application is left  to the user. A very small  internal border puts
-   distance between  the characters and  screen borders, and  all other
-   decorations are deactivated.
-
- #+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp
 (setq initial-frame-alist '((top . 0.5)    ;; center vertical position
                             (left . 0.5))) ;; center horizontal position
                             
@@ -306,6 +303,7 @@ Ignore if the path does not exists."
                             (height . 64)
                             (width . 120)
                             (tool-bar . nil)
+                            (line-spacing . 0.2)
                             (internal-border-width . 3)
                             (border-width . 0)
                             (vertical-scroll-bars . nil)
@@ -318,10 +316,37 @@ Ignore if the path does not exists."
 
  #+END_SRC
 
+** Theme
 
-** Themes
+   The color  theme i use  is Zenburn, which features  Dark background
+   and low contrast. I wonder if it is good for the eyes.
 
-   Setting for the appearance of emacs. 
+#+BEGIN_SRC emacs-lisp
+;; Set theme to zenburn
+(use-package zenburn-theme
+  :config
+  (load-theme 'zenburn t))
+#+END_SRC
+
+   Syntax/Spell  checkers  add  decorations  to  the  text  to  signal
+   mistakes.  The defaults  decorations  from Zenburn  are either  too
+   intrusive or too faint, so I customize them.
+
+   - Violet for spelling mistakes
+   - Red for syntax mistakes in programming languages
+   - Yellow for syntax/style warnings
+
+#+BEGIN_SRC emacs-lisp
+(custom-theme-set-faces
+ 'zenburn
+ '(flycheck-error ((t (:underline "Red"))))
+ '(flycheck-warning ((t (:underline "Yellow"))))
+ '(flyspell-duplicate ((t (:strike-through "magenta"))))
+ '(flyspell-incorrect ((t (:underline (:color "magenta" :style wave)))))
+ '(writegood-duplicates-face ((t nil)))
+ '(writegood-passive-voice-face ((t (:underline (:color "Yellow" :style wave)))))
+ '(writegood-weasels-face ((t (:strike-through "yellow")))))
+#+END_SRC
 
 * Programming
 
@@ -469,14 +494,13 @@ Ignore if the path does not exists."
 
 * Math packages
 
-  I don't use very often math packages, and I should probably use them
-  way more. Anyway there is some support for them in Emacs, so why not
+  I don't use math packages often,  and I should probably use them way
+  more. Anyway  there is some  support for them  in Emacs, so  why not
   having a basic setup?
 
-  Interestingly enough  Mathematica, Octave  and Matlab all  use files
-  with  =.m= extension,  which is  the same  extension of  Objective-C
-  files. Well I do not use either very much, so I don't need to fiddle
-  with =auto-mode-alist=.
+  Mathematica, Octave  and Matlab all  use files with  =.m= extension,
+  which is the same extension of Objective-C files. Since I do not use
+  either much, I don't need to fiddle with =auto-mode-alist=.
 
 ** Matlab
 
@@ -500,9 +524,9 @@ Ignore if the path does not exists."
 
 ** Mathematica
 
-   Nowadays Mathematica is a super-cool  software that works mostly on
-   the network and  has great AI. I  guess it is nicer to  use via the
-   appropriate GUI or on the web. Still emacs rocks.
+   Nowadays Mathematica  is a  super-cool software  that works  on the
+   network  and has  great AI.  I guess  it is  nicer to  use via  the
+   appropriate GUI or on the web. Still, emacs rocks.
 
 #+BEGIN_SRC emacs-lisp
 (use-package wolfram-mode
@@ -519,7 +543,7 @@ Ignore if the path does not exists."
 
 
 
-* Various features
+* Other features
 
 ** Backup and autosave of files
 
