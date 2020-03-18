@@ -67,10 +67,6 @@
 
 ;; Recenter sequence
 (setq recenter-positions '(top middle bottom))
-
-
-;; Cursor position helpers
-(global-hl-line-mode nil)
   
 (use-package beacon ; flashes the cursor's line when you scroll
   :diminish ""
