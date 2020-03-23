@@ -87,7 +87,6 @@
      ("refth" "{"))))
  '(fringe-mode 0 nil (fringe))
  '(global-company-mode t)
- '(global-hl-line-mode t)
  '(global-nlinum-mode t)
  '(global-semantic-decoration-mode t)
  '(global-semantic-idle-scheduler-mode t)
