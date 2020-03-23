@@ -26,6 +26,27 @@
                         )))
 
 
+;;;---------------- TAGS states --------------------------------------
+(setq org-tag-persistent-alist '(;; Work related (english)
+                                 ("project"  . ?p)
+                                 ("meeting"  . ?m)
+                                 ("class"    . ?c)
+                                 (:newline)
+                                 ;; Contents
+                                 ("@idea"      . ?i)
+                                 ("@reference" . ?r)
+                                 ("@question"  . ??)
+                                 ("@quote"     . ?q)
+                                 (:newline)
+                                 ;; Personal (italian)
+                                 ("fun"       . ?f)
+                                 ("viaggi"    . ?v)
+                                 ("salute"    . ?s)
+                                 (:newline)
+                                 (:newline)
+                                 (:newline)
+                                 ))
+
 ;;;---------------- TODO states --------------------------------------
 (setq org-todo-keyword-faces
    (quote
@@ -338,8 +359,8 @@ part of the keyboard.
 
 (setq org-capture-templates
       `(
-        ("n" "Notebook note"     entry (file "notebook.org")    "* REVIEWENTRY %?\n  %U\n  %i\n  %a\n\n")
-        ("t" "Task"              entry (file "agenda.org"  )    "* TODO ⌚ %?\n  %U\n\n  %i\n\n")
+        ("n" "Notebook note"     entry (file "notebook.org")    "* REVIEW %?\n  %T\n  %i\n  %a\n\n")
+        ("t" "Task"              entry (file "agenda.org"  )    "* TODO ⌚ %?\n  %T\n\n  %i\n\n")
         ("d" "Deadline"          entry (file "agenda.org")      "* TODO ⌚ %?\n  DEADLINE: %^t\n  %U\n\n  %i\n\n")
         ("e" "Event/Appointment" entry (file "agenda.org")      "* %?\n  WHEN  ⌚ %^t\n  %i\n\n")
         ("c" "New contact"       entry (file+olp "contacts.org" "UNCATEGORIZED") ,my/org-contacts-template :empty-lines 1)
@@ -603,7 +624,7 @@ This is a workaround to get the old templates in org 9.2
                          )
   
   (tempo-define-template "python session"
-                         '("#+BEGIN_SRC python :session :exports both :results output" n>
+                         '("#+BEGIN_SRC python :session ????? :exports both :results output" n>
                            p n>
                            "#+END_SRC" n>)
                          "<P"
