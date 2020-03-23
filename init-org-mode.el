@@ -30,34 +30,26 @@
 (setq org-todo-keyword-faces
    (quote
     (;; Basic
+     ("NEXT" :foreground "blue" :background "white" :weight bold)
      ("TODO" :foreground "red" :background "black" :weight bold)
-     ("FEEDBACK" :foreground "yellow" :weight bold)
      ("WAIT" :foreground "yellow" :weight bold)
+     ;; Review the entry
+     ("REVIEW" . (:foreground "blue" :background "lightgreen" :weight bold))
+     ;; Open problems, dreams and projects
+     ("INACTIVE" :foreground "blue" :background "white" :weight bold)
+     ("ACTIVE" :foreground "red" :background "white" :weight bold)
+     ;; Done tags
      ("DONE" :foreground "lightgreen" :weight bold)
      ("CANCELED" :foreground "lightgreen" :strike-through t :weight bold)
      ("DELEGATED" :foreground "cyan" :weight bold)
-     ("HASNEWERENTRY" :foreground "cyan" :weight bold)
-     ;; Open problems
-     ("UNSOLVED" :foreground "blue" :background "white" :weight bold)
-     ("SOLVED" :foreground "lightgreen" :weight bold)
-     ;; Reading
-     ("TOREAD" :foreground "blue" :background "white" :weight bold)
-     ("READ" :foreground "lightgreen" :weight bold)
-     ;; Projects
-     ("IN-PROGRESS" :foreground "red" :background "white" :weight bold)
-     ("NEXT" :foreground "blue" :background "white" :weight bold)
-     ("DONE" :foreground "lightgreen" :weight bold)
-     ;; Review the entry
-     ("REVIEWENTRY" . (:foreground "blue" :background "lightgreen" :weight bold)))))
+     )))
+
 
 (setq org-todo-keywords
    (quote
-    ((sequence "TODO" "FEEDBACK" "WAIT" "|" "DONE" "CANCELED" "DELEGATED" "HASNEWERENTRY")
-     (sequence "TOREAD" "|" "READ" "CANCELED")
-     (sequence "UNSOLVED" "|" "SOLVED")
-     (sequence "IN-PROGRESS" "FEEDBACK" "|" "DONE" "CANCELED")
-     (sequence "NEXT" "|" "DONE" "CANCELED")
-     (sequence "REVIEWENTRY" "|"))))
+    ((sequence "REVIEW" "TODO" "WAIT" "NEXT" "|" "DONE" "CANCELED" "DELEGATED")
+     (sequence "ACTIVE" "INACTIVE" "|" "DONE" "CANCELED")
+     )))
 
 
 ;;;---------------- Basic setup --------------------------------------
@@ -94,18 +86,17 @@
         "    "
         "----------------"))
 
+;; These tags categorizes a whole big thing, and I don't want all
+;; subitems to pop up in the corresponding agenda view.
+(setq org-tags-exclude-from-inheritance '("project" "@question"))
+
 (setq org-agenda-custom-commands
       '(("n" "My agenda setting"
-         ((agenda "" ((org-agenda-overriding-header "           AGENDA OF THE DAY\n")
-                      (org-agenda-span 1)))
-                      ;; limits the agenda display to a single day)
-          (agenda ""  
-                  ((org-agenda-overriding-header "           DEADLINES in 3 months\n")
-                   (org-agenda-span 1)
-                   (org-agenda-time-grid nil)
-                   (org-deadline-warning-days 90)        ;; [1]
-                   (org-agenda-entry-types '(:deadline))  ;; [2]
-                   ))
+         ((agenda "" ((org-agenda-overriding-header "           AGENDA OF THE DAY / DEADLINES in 3 months\n")
+                      ;; limits the agenda display to a single day) 
+                      (org-agenda-span 1)
+                      (org-deadline-warning-days 90)        ;; [1]
+                      ))
           (agenda "" ;; Birthdays in this week
                   ((org-agenda-overriding-header "           ANNIVERSARIES IN 7 DAYS\n")
                    (org-agenda-span 7)
@@ -113,6 +104,12 @@
                    (org-agenda-start-on-weekday nil)
                    (org-agenda-time-grid nil)
                    (org-agenda-entry-types '(:sexp))))
+          (todo "NEXT|REVIEW"
+                   ((org-agenda-overriding-header "           NEXT THING TO DO\n")
+                    (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                'scheduled
+                                                'deadline ))
+                    ))
           (tags-todo "project"
                    ((org-agenda-overriding-header "           PROJECTS STATUS\n")
                     (org-agenda-sorting-strategy '(priority-down))
@@ -125,10 +122,12 @@
                    ((org-agenda-overriding-header "           TODO LIST\n")
                     (org-agenda-skip-function '(org-agenda-skip-entry-if
                                                 'scheduled
-                                                'deadline ))
+                                                'deadline
+                                                'todo '("NEXT" "REVIEW")))
                     (org-agenda-sorting-strategy '(priority-down))
                     ))
           ))))
+
 
 ;; Set a key for the agenda view
 (defun my-org-agenda-show (&optional arg)
