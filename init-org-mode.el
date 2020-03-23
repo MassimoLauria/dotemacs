@@ -42,6 +42,7 @@
                                  ("fun"       . ?f)
                                  ("viaggi"    . ?v)
                                  ("salute"    . ?s)
+                                 ("money"     . ?$)
                                  (:newline)
                                  (:newline)
                                  (:newline)
