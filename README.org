@@ -441,13 +441,17 @@ Ignore if the path does not exists."
   I  have  not reached  a  definitive  configuration regarding  syntax
   checking, but for  now I am using either [[https://www.pylint.org/][Pylint]]  or [[https://flake8.pycqa.org/en/latest/][Flake8]] which are
   run  by [[https://www.flycheck.org/][Flycheck]],  an  emacs package  which  highlight code  errors.
-  Furthermore I use [[https://github.com/google/yapf][Yapf]] to enforce code formatting.
+  Furthermore I  use [[https://github.com/google/yapf][Yapf]]  to enforce  code formatting,  together with
+  [[https://github.com/JorisE/yapfify][Yapfify]] emacs package.  I tried [[https://github.com/paetzke/py-yapf.el][Py-Yapf]] before but it  had some bugs
+  open for a while, like the  fact that it empties the kill-ring every
+  time you save python code.
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'python-mode-hook 'flycheck-mode)
 
-(use-package py-yapf
-  :hook (python-mode . py-yapf-enable-on-save))
+(use-package yapfify
+  :diminish yapf-mode 
+  :hook (python-mode . yapf-mode))
 #+END_SRC
 
   Emacs is able to find the appropriate =pyenv= Python Environment and

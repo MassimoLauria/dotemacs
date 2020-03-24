@@ -72,7 +72,6 @@
                            pdf-tools 
                            pkg-info
                            poet-theme
-                           py-yapf
                            pyenv-mode 
                            pyenv-mode-auto 
                            pythonic 
@@ -103,6 +102,7 @@
                            writegood-mode
                            xml-rpc
                            xscheme
+                           yapfify
                            yasnippet 
                            yasnippet-snippets 
                            zenburn-theme))
