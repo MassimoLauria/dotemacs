@@ -100,10 +100,10 @@
  org-src-tab-acts-natively t
  org-src-preserve-indentation t
  org-edit-src-content-indentation 0
- org-confirm-babel-evaluate t
+ org-confirm-babel-evaluate nil
+ org-babel-no-eval-on-ctrl-c-ctrl-c nil
  org-use-sub-superscripts (quote {})
  org-M-RET-may-split-line nil
- ;; org-babel-no-eval-on-ctrl-c-ctrl-c t
  org-hide-leading-stars t
  org-highlight-latex-and-related '(latex script entities)
  org-highlight-latex-fragments-and-specials t
