@@ -1,10 +1,12 @@
 ;;;
-;;; Utilities for robust and safe emacs usage.
+;;; The Org-Mode setup. One of the most important pieces of
+;;; configuration of my emacs setup. 
+;;; 
+;;; No support for Org-Mode < 9
 ;;;
-;;; In some terminals the keybindings may not work properly.
-;;;
-;;; No support for Org-Mode < 8
-;;;------------------------------------------------------------------
+;;; Some of the ideas in this configuration come from the following
+;;; post:  http://cachestocaches.com/2020/3/my-organized-life/
+;;; ------------------------------------------------------------------
 
 
 ;;;------------ File locations ---------------------------------------
@@ -63,6 +65,7 @@
      ("NEXT" :foreground "blue" :background "white" :weight bold)
      ("TODO" :foreground "red" :background "black" :weight bold)
      ("WAIT" :foreground "yellow" :weight bold)
+     ("SOMEDAY" :foreground "white" :background "blue" :weight bold)
      ;; Review the entry
      ("REVIEW" . (:foreground "blue" :background "lightgreen" :weight bold))
      ;; Open problems, dreams and projects
@@ -79,6 +82,7 @@
    (quote
     ((sequence "REVIEW" "TODO" "WAIT" "NEXT" "|" "DONE" "CANCELED" "DELEGATED")
      (sequence "ACTIVE" "INACTIVE" "|" "DONE" "CANCELED")
+     (sequence "SOMEDAY" "|" "CANCELED")
      )))
 
 
