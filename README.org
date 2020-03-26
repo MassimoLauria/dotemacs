@@ -456,10 +456,19 @@ Ignore if the path does not exists."
 
   Emacs is able to find the appropriate =pyenv= Python Environment and
   to  load  it  automatically.  Which is  useful  for  running  syntax
-  checkers or the Python Shell.
+  checkers or  the Python Shell.  Notice that by  default =pyenv-mode=
+  sets key  bidings on =C-c C-s=  and =C-c C-u=, which  conflicts with
+  tons  of  stuff,  including  =org-schedule=. Hence  I  disable  such
+  bindings,  since  =pyenv-mode-auto=   sets  the  python  environment
+  automatically according  =.python-version=. In the rare  cases where
+  I  need  to  switch  environment  I usually  run  the  command  from
+  the minibuffer.
 
 #+BEGIN_SRC emacs-lisp
 (use-package pyenv-mode
+  :bind (:map pyenv-mode-map
+         ("C-c C-s" . nil)
+         ("C-c C-u" . nil))
   :commands (pyenv-mode-set pyenv-mode-unset pyenv-mode))
 
 (use-package pyenv-mode-auto
