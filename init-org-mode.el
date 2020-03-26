@@ -90,6 +90,7 @@
  org-agenda-show-future-repeats 'next
  org-list-allow-alphabetical t
  org-log-done t
+ org-log-reschedule t
  org-CUA-compatible t
  org-support-shift-select t
  org-cycle-emulate-tab t
