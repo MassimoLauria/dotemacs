@@ -7,15 +7,17 @@
 (global-set-key (kbd "M-s") 'ispell-word) ;; spellcheck word
 (global-set-key (kbd "M-<f2>") 'spellcheck-cycle-language) ;; cycle languages
 
-;; The main languages I switch between (the default is the first)"
-(setq my-preferred-languages '("english" "italiano" "british"))
+;; The main languages I switch between (the default is the last)"
+(setq my-preferred-languages
+      (ring-convert-sequence-to-ring '("british" "italiano" "english")))
 
 ;; Flyspell -- spell checking on the fly.
 (use-package flyspell
   :commands (flyspell-mode flyspell-prog-mode)
   :config
+  (setq flyspell-duplicate-distance)
   (setq ispell-program-name (executable-find "hunspell"))
-  (setq ispell-dictionary (car my-preferred-languages))  ;; first in list is default
+  (setq ispell-dictionary (ring-ref my-preferred-languages -1))  ;; first in list is default
   (if (not ispell-program-name)
       (message "Spell checking disabled: impossible to find correctly installed 'Hunspell'."))
   :hook ((text-mode . flyspell-mode)
@@ -35,15 +37,10 @@
 (defun spellcheck-cycle-language ()
   "Switch between spell checking languages, in the current buffer."
   (interactive)
-  (let* ((old-pos (position ispell-current-dictionary
-                            my-preferred-languages
-                            :test 'equal))
-         (new-pos (cond
-                   ((eq old-pos nil)                                  0)               ;; not found
-                   ((= old-pos (- (length my-preferred-languages) 1)) 0)               ;; last position
-                   (t                                                 (+ old-pos 1))))) ;; any other pos
-
-    (ispell-change-dictionary (nth new-pos my-preferred-languages))))
+  (let* ((lang-ring my-preferred-languages)
+         (lang (ring-ref lang-ring -1)))
+        (ring-insert lang-ring lang)
+        (ispell-change-dictionary lang)))
 
 ;; A nicer Helm based interface for flyspell
 (use-package flyspell-correct-helm
