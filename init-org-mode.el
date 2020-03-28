@@ -63,6 +63,7 @@
    (quote
     (;; Basic
      ("NEXT" :foreground "blue" :background "white" :weight bold)
+     ("CALL" :foreground "blue" :background "white" :weight bold)
      ("TODO" :foreground "red" :background "black" :weight bold)
      ("WAIT" :foreground "yellow" :weight bold)
      ("SOMEDAY" :foreground "white" :background "blue" :weight bold)
@@ -80,12 +81,14 @@
 
 (setq org-todo-keywords
    (quote
-    ((sequence "REVIEW" "TODO" "WAIT" "NEXT" "|" "DONE" "CANCELED" "DELEGATED")
+    ((sequence "REVIEW"  "NEXT" "CALL" "TODO" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")
      (sequence "ACTIVE" "INACTIVE" "|" "DONE" "CANCELED")
      (sequence "SOMEDAY" "|" "CANCELED")
      )))
 
-
+;; Stuck projects are the ones with project tags and no NEXT or
+;; CALL todo keyword.
+(setq org-stuck-projects '("project" ("CALL NEXT") nil))
 ;;;---------------- Basic setup --------------------------------------
 (setq
  org-agenda-include-diary nil
