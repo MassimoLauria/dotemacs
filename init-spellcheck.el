@@ -8,6 +8,7 @@
 (global-set-key (kbd "M-<f2>") 'spellcheck-cycle-language) ;; cycle languages
 
 ;; The main languages I switch between (the default is the last)"
+(require 'ring)
 (setq my-preferred-languages
       (ring-convert-sequence-to-ring '("british" "italiano" "english")))
 
