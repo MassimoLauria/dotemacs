@@ -364,15 +364,13 @@ part of the keyboard.
     output))
 
 
-(setq my/org-contacts-template "* %(org-contacts-template-name)
+(setq my/org-contacts-template "* REVIEW %(org-contacts-template-name)
   :PROPERTIES:
   :EMAIL: %(org-contacts-template-email)
   :END:
   
   %?
-  %^{ADDRESS}p 
-  %^{BIRTHDAY}p
-  %^{PHONE}p")
+  ")
 
 (setq org-capture-templates
       `(
