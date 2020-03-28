@@ -15,7 +15,7 @@
 (use-package flyspell
   :commands (flyspell-mode flyspell-prog-mode)
   :config
-  (setq flyspell-duplicate-distance)
+  (setq flyspell-duplicate-distance 0) ;; signal as repetitions only adjacent pairs
   (setq ispell-program-name (executable-find "hunspell"))
   (setq ispell-dictionary (ring-ref my-preferred-languages -1))  ;; first in list is default
   (if (not ispell-program-name)
