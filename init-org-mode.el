@@ -29,8 +29,8 @@
 
 ;; Refile targets
 (setq org-refile-targets
-      '((nil :maxlevel . 3)
-        (org-agenda-files :maxlevel . 3)))
+      '((nil :maxlevel . 2)
+        (org-agenda-files :maxlevel . 2)))
 
 (setq org-refile-use-outline-path 'file)
 (setq org-outline-path-complete-in-steps nil)
