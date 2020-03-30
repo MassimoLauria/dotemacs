@@ -7,7 +7,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-item-indent 0)
- '(TeX-master t)
+ '(TeX-master t t)
  '(ansi-color-names-vector
    [solarized-bg red green yellow blue magenta cyan solarized-fg])
  '(apropos-do-all t)
@@ -135,8 +135,6 @@
  '(ns-right-alternate-modifier nil)
  '(ns-tool-bar-display-mode (quote both) t)
  '(ns-tool-bar-size-mode (quote regular) t)
- '(org-agenda-current-time-string #("——————————————⌚⌚⌚—————————————" 0 30 (org-heading t)))
- '(org-agenda-search-headline-for-time nil)
  '(org-beamer-environments-extra
    (quote
     (("onlyenv" "O" "\\\\begin{onlyenv}%a" "\\\\end{onlyenv}"))))

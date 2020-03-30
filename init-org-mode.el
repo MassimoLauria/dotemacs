@@ -123,6 +123,9 @@
         (600 800 1000 1200 1400 1600 1800 2000 2200)
         "    "
         "----------------"))
+(setq org-agenda-current-time-string "——————————————⌚⌚⌚—————————————")
+(setq org-agenda-search-headline-for-time nil)
+ 
 
 ;; These tags categorizes a whole big thing, and I don't want all
 ;; subitems to pop up in the corresponding agenda view.
@@ -180,11 +183,15 @@ It shows the full view of my custom agenda."
   (interactive)
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
+  
   ;; org-babel and export
   (init-org-mode--babel-setup)
   (init-org-mode--latex-export-setup)
   (init-org-setup-template)
 
+  ;; Fix color theme
+  (init-org-mode-faces)
+  
   ;; Org-mode communicating with external applications.
   (require 'org-protocol nil t)
 
@@ -527,6 +534,21 @@ for `reftex-default-bibliography'."
   (org-toggle-latex-fragment '(16)))
 
 
+(defun init-org-mode-faces ()
+  "Setup preferred colors for org mode"
+  ;; Set the color
+  (require 'color)
+  
+  ;; Darken the background color for code blocks
+  (let ((darkbg (color-darken-name
+                 (face-attribute 'default :background) 15)))
+    (setq org-src-block-faces `(("emacs-lisp" (:background ,darkbg))
+                                ("python"     (:background ,darkbg))
+                                ("latex"      (:background ,darkbg)))))
+
+  ;; Code blocks delimiters are oblique
+  (set-face-attribute 'org-block-begin-line nil :slant 'italic)
+  (set-face-attribute 'org-block-end-line nil :slant 'italic))
 
 
 ;; Setup for PDF/Latex exports
@@ -575,7 +597,7 @@ for `reftex-default-bibliography'."
 
 (defun init-org-mode--babel-setup ()
   "Org-babel configuration. Code in org-mode files!"
-
+  
   ;; Activate languages (it could be a security RISK!!)
   (org-babel-do-load-languages
    'org-babel-load-languages
