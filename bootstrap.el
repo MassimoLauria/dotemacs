@@ -13,7 +13,6 @@
                            anaconda-mode 
                            async 
                            auctex
-                           avy
                            beacon 
                            bind-key 
                            company 
@@ -21,7 +20,6 @@
                            company-irony 
                            company-irony-c-headers 
                            dash
-                           deadgrep
                            deferred 
                            diminish 
                            elisp-slime-nav 
@@ -36,7 +34,6 @@
                            git-commit 
                            gnus-alias 
                            graphviz-dot-mode 
-                           guess-language
                            helm
                            helm-bibtex
                            helm-rg
@@ -59,7 +56,6 @@
                            magit-popup 
                            magit-svn 
                            metaweblog
-                           moe-theme
                            ob-ipython 
                            olivetti
                            org
@@ -94,8 +90,6 @@
                            use-package 
                            virtualenvwrapper 
                            visual-fill-column 
-                           wgrep 
-                           wgrep-ag 
                            which-key 
                            with-editor 
                            writeroom-mode
