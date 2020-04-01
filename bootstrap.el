@@ -61,7 +61,8 @@
                            org
                            org-bullets 
                            org-pdfview 
-                           org-plus-contrib 
+                           org-plus-contrib
+                           org-static-blog
                            package-build 
                            pallet 
                            pcache 
