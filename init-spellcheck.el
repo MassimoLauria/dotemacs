@@ -57,7 +57,7 @@
   (setq langtool-language-tool-jar "/usr/local/share/languagetool/languagetool-commandline.jar")
   :config
   (setq langtool-mother-tongue "it")'
-  (setq langtool-user-arguments "-d WHITESPACE_RULE"))
+  (setq langtool-disabled-rules "WHITESPACE_RULE"))
 
 
 (provide 'init-spellcheck)
