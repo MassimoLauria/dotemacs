@@ -52,10 +52,13 @@
 
 ;; Grammar check
 (use-package langtool
-  :if (file-exists-p "/usr/local/share/languagetool-commandline.jar")
+  :if (file-directory-p "/usr/local/share/languagetool/")
   :init
-  (setq langtool-language-tool-jar "/usr/local/share/languagetool-commandline.jar"))
-  
+  (setq langtool-language-tool-jar "/usr/local/share/languagetool/languagetool-commandline.jar")
+  :config
+  (setq langtool-mother-tongue "it")'
+  (setq langtool-user-arguments "-d WHITESPACE_RULE"))
+
 
 (provide 'init-spellcheck)
 ;; Local Variables:
