@@ -332,10 +332,10 @@ is already narrowed."
               (split-string (buffer-string) "\n")))))
 
 (setq helm-sdcv-source
-      '((name . "English and Italian words")
+      '((name . "English and Italian expression")
         (candidates . helm-sdcv-list-of-words)
         (action . (lambda (candidate)
-                    (sdcv-search-detail candidate)))))
+                    (sdcv-search-input candidate)))))
 
 (defun helm-sdcv (&optional word)
   (interactive)
