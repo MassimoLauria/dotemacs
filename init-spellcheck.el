@@ -49,6 +49,14 @@
   :bind (:map flyspell-mode-map
               ("M-s" . flyspell-correct-wrapper)))
 
+
+;; Grammar check
+(use-package langtool
+  :if (file-exists-p "/usr/local/share/languagetool-commandline.jar")
+  :init
+  (setq langtool-language-tool-jar "/usr/local/share/languagetool-commandline.jar"))
+  
+
 (provide 'init-spellcheck)
 ;; Local Variables:
 ;; mode: emacs-lisp
