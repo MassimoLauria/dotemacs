@@ -317,21 +317,38 @@ is already narrowed."
 (setq dired-use-ls-dired (memq system-type '(gnu/linux cygwin)))
 
 
-;; SDCV is a command line client for StarDict dictionaries.
-;; it is handy to have support of OFFLINE dictionaries.
-(use-package sdcv
-  :bind ("C-c d" . sdcv)
+(defvar helm-sdcv-word-cache nil
+  "Caches all words from the wordfile.")
 
-  :config
-  ;; the only entry point for the package
-  (defun sdcv (&optional word)
-    "Get current word (if any) or prompt input.
-And display complete translations in other buffer."
-    (interactive)
-    ;; Display details translate result.
-    (sdcv-search-detail (or word
-                            (sdcv-region-or-word)
-                            (sdcv-prompt-input)))))
+(defvar helm-sdcv-word-file "~/personal/dictionaries/wordlists/english_and_italian.txt"
+  "File containing all words to be looked up.")
+
+;; All words from the wordlist (using cache)
+(defun helm-sdcv-list-of-words ()
+  (or helm-sdcv-word-cache
+      (setq helm-sdcv-word-cache
+            (with-temp-buffer
+              (insert-file helm-sdcv-word-file)
+              (split-string (buffer-string) "\n")))))
+
+(setq helm-sdcv-source
+      '((name . "English and Italian words")
+        (candidates . helm-sdcv-list-of-words)
+        (action . (lambda (candidate)
+                    (sdcv-search-detail candidate)))))
+
+(defun helm-sdcv (&optional word)
+  (interactive)
+  (require 'sdcv)
+  (helm
+   :prompt "Lookup in dictionary: "
+   :input (or word (word-at-point))
+   :fuzzy-math t
+   :buffer "*SDCV with helm"
+   :sources '(helm-sdcv-source)))
+
+(global-set-key (kbd "C-c d") 'helm-sdcv)
+
 
 
 (use-package calibre-mode
