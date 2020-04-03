@@ -28,8 +28,9 @@
                            expand-region 
                            f
                            flycheck
-                           flycheck-correct-helm
                            flycheck-irony 
+                           flyspell
+                           flyspell-correct-helm
                            forge
                            git-commit 
                            gnus-alias 
@@ -47,7 +48,8 @@
                            htmlize 
                            iedit 
                            irony 
-                           irony-eldoc 
+                           irony-eldoc
+                           langtool
                            latex-preview-pane 
                            let-alist 
                            logito 
@@ -64,9 +66,9 @@
                            org-plus-contrib
                            org-static-blog
                            package-build 
-                           pallet 
                            pcache 
-                           pdf-tools 
+                           pdf-tools
+                           pinboard
                            pkg-info
                            poet-theme
                            pyenv-mode 
@@ -76,7 +78,7 @@
                            rainbow-identifiers 
                            rainbow-mode
                            rg
-                           s 
+                           s
                            sdcv 
                            seq 
                            shut-up 
