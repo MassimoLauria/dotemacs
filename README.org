@@ -379,6 +379,70 @@ Ignore if the path does not exists."
   :commands rainbow-identifiers-mode)
 #+END_SRC
 
+
+** Fixing Errors
+
+We all  know most of development  time is spend looking  for error and
+fixing them. Here we set the  basic function that Emacs has to compile
+and  navigate  the errors.  In  particular  I  want to  integrate  the
+~previous-error~  and  ~next-error~  function of  various  type  (e.g.
+=Flycheck=, =*grep*=, =*compilation*=). I also implement a function to
+show/hide the error buffer, called ~mxl-toggle-error-window~.
+
+The  function keys  from =F9=  to =F12=  are reserved  for development
+needs, and  the functionality  strongly depends  on the  current mode.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key [f9]  'recompile)
+(global-set-key (kbd "M-<f9>")  'compile)
+(global-set-key [f10] 'gdb)
+(global-set-key [f11] 'previous-error)
+(global-set-key [f12] 'next-error)
+(global-set-key [M-f11] 'mxl-toggle-error-window)
+(global-set-key [M-f12] 'mxl-toggle-error-window)
+#+END_SRC
+
+In order  to toggle the  visibility of the error  list I had  to write
+a surprisingly complex and incomplete function. I need to extend it as
+long as  I come  across further  types of  error buffers.  Since LaTeX
+error  management is  a bit  special, I  have to  do a  specific setup
+for that.
+
+
+#+BEGIN_SRC emacs-lisp
+(defun mxl-toggle-error-window (&optional buffer-or-name)
+  "Toggle the visibility or the error list.
+
+The error list is the buffer that contains the errors which can
+be navigated by `next-error' and `previous-error'. The function
+visualizes the error 
+"
+  (interactive)
+  (let* ((std-error-buffers '("*grep*" "*compilation*"))
+         (current-error-bon (cond
+                             (buffer-or-name (get-buffer buffer-or-name))     ;; input argument 
+                             ((eq next-error-function            ;; flycheck errors
+                                  'flycheck-next-error-function) 
+                              "*Flycheck errors*")
+                             ((member (buffer-name next-error-last-buffer)
+                                      std-error-buffers)
+                              next-error-last-buffer)
+                             (t nil)))      ;; *compilation*, *grep*,...
+         buffer
+         name
+         window)
+    
+    (when current-error-bon
+      (setq buffer (get-buffer current-error-bon))
+      (setq name (buffer-name buffer))
+      (setq window (get-buffer-window buffer))
+      (if window
+          (progn (message (concat "Closing error list: " name))
+                 (delete-window window))
+        (message (concat "Opening error list: " name))
+        (display-buffer buffer)))))
+#+END_SRC
+
 ** Python
 
    Python  is  the programming  language  I  am using  most  nowadays.

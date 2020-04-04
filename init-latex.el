@@ -86,14 +86,25 @@
 
 
 ;; Keyboard shortcut
+(defun mxl-toggle-tex-errors ()
+  "Hide/Show the latex error window"
+  (interactive)
+  (let* ((oldwin (get-buffer-window (current-buffer))))
+    (if (get-buffer TeX-error-overview-buffer-name)
+        (mxl-toggle-error-window TeX-error-overview-buffer-name)
+      (TeX-error-overview)
+      (message (concat "Opening error list: " TeX-error-overview-buffer-name))
+      (select-window oldwin))))
+
 (add-hook 'TeX-mode-hook
           '(lambda ()
              (define-key TeX-mode-map (kbd "<f9>")  'init-latex--make)
              (define-key TeX-mode-map (kbd "<f10>") 'TeX-pin-region)
              (define-key TeX-mode-map (kbd "<f11>") 'TeX-previous-error)
              (define-key TeX-mode-map (kbd "<f12>") 'TeX-next-error)
-             (define-key TeX-mode-map (kbd "M-<f11>") 'previous-error)
-             (define-key TeX-mode-map (kbd "M-<f12>") 'next-error)))
+             (define-key TeX-mode-map (kbd "M-<f11>") 'mxl-toggle-tex-errors)
+             (define-key TeX-mode-map (kbd "M-<f12>") 'mxl-toggle-tex-errors)
+             ))
 
 
 (defun init-latex--make ()

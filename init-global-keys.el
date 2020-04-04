@@ -62,12 +62,6 @@
 (global-set-key [f4]  'kmacro-end-or-call-macro)
 
 
-;; devel (adapted to each mode)
-(global-set-key [f9]  'recompile)
-(global-set-key (kbd "M-<f9>")  'compile)
-(global-set-key [f10] 'gdb)
-(global-set-key [f11] 'previous-error)
-(global-set-key [f12] 'next-error)
 
 (provide 'init-global-keys)
 ;; Local Variables:
