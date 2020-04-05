@@ -51,14 +51,14 @@
 
 
 ;; Grammar check
-(use-package langtool
-  :if (file-directory-p "/usr/local/share/languagetool/")
-  :init
-  (setq langtool-language-tool-jar "/usr/local/share/languagetool/languagetool-commandline.jar")
-  :config
-  (setq langtool-mother-tongue "it")'
-  (setq langtool-disabled-rules "WHITESPACE_RULE"))
-
+(when (file-directory-p "/usr/local/share/languagetool/")
+  (use-package langtool
+    :init
+    (setq langtool-language-tool-jar "/usr/local/share/languagetool/languagetool-commandline.jar")
+    :config
+    (setq langtool-mother-tongue "it")'
+    (setq langtool-disabled-rules "WHITESPACE_RULE")
+    :commands (langtool-check langtool-check-buffer langtool-switch-default-language)))
 
 (provide 'init-spellcheck)
 ;; Local Variables:
