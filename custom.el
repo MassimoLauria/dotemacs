@@ -7,7 +7,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-item-indent 0)
- '(TeX-master t)
+ '(TeX-master t t)
  '(ansi-color-names-vector
    [solarized-bg red green yellow blue magenta cyan solarized-fg])
  '(apropos-do-all t)
@@ -155,7 +155,7 @@
  '(org-preview-latex-default-process (quote dvisvgm))
  '(package-selected-packages
    (quote
-    (langtool org-static-blog yapfify writegood-mode flyspell-correct-helm anaconda-mode powerline helm-swoop gnu-elpa-keyring-update deadgrep helm-recoll helm-rg rg unicode-fonts forge helm-ls-git helm-bibtex helm org unfill ivy-hydra leuven-theme moe-theme solarized-theme poet-theme sdcv gscholar-bibtex org-bullets company-box ivy-rich which-key yasnippet-snippets magit pythonic esup pyenv-mode-auto ivy-bibtex guess-language pdf-tools wc-mode atomic-chrome zoom-frm latex-preview-pane ob-ipython ssh-config-mode py-autopep8 company-irony-c-headers flycheck-irony visual-fill-column writeroom-mode wgrep wgrep-ag ag iedit try smex counsel zenburn-theme yasnippet virtualenvwrapper use-package undo-tree swiper smartparens skeletor rainbow-mode rainbow-identifiers rainbow-delimiters pallet org-plus-contrib magit-svn magit-gh-pulls magic-latex-buffer irony-eldoc highlight-symbol highlight-quoted highlight-defined highlight-blocks graphviz-dot-mode gnus-alias flycheck expand-region elisp-slime-nav elfeed deferred company-irony auctex ace-window)))
+    (company-anaconda langtool org-static-blog yapfify writegood-mode flyspell-correct-helm powerline helm-swoop gnu-elpa-keyring-update deadgrep helm-recoll helm-rg rg unicode-fonts forge helm-ls-git helm-bibtex helm org unfill ivy-hydra leuven-theme moe-theme solarized-theme poet-theme sdcv gscholar-bibtex org-bullets company-box ivy-rich which-key yasnippet-snippets magit pythonic esup pyenv-mode-auto ivy-bibtex guess-language pdf-tools wc-mode atomic-chrome zoom-frm latex-preview-pane ob-ipython ssh-config-mode py-autopep8 company-irony-c-headers flycheck-irony visual-fill-column wgrep wgrep-ag ag iedit try smex counsel zenburn-theme yasnippet virtualenvwrapper use-package undo-tree swiper smartparens skeletor rainbow-mode rainbow-identifiers rainbow-delimiters pallet org-plus-contrib magit-svn magit-gh-pulls magic-latex-buffer irony-eldoc highlight-symbol highlight-quoted highlight-defined highlight-blocks graphviz-dot-mode gnus-alias flycheck expand-region elisp-slime-nav elfeed deferred company-irony auctex ace-window)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(post-attachment-regexp "\\(attach\\|alleg\\)")
  '(post-rename-buffer nil)
