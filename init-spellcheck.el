@@ -3,14 +3,15 @@
 ;;; 
 ;;;-----------------------------------------------------------------
 
-(global-set-key [f2]  'ispell-buffer)     ;; spellcheck document
-(global-set-key (kbd "M-s") 'ispell-word) ;; spellcheck word
+(global-set-key [f2]  'language-check-dwim)  ;; spellcheck document
+(global-set-key (kbd "M-s") 'ispell-word)    ;; spellcheck word
 (global-set-key (kbd "M-<f2>") 'spellcheck-cycle-language) ;; cycle languages
 
 ;; The main languages I switch between (the default is the last)"
 (require 'ring)
 (setq my-preferred-languages
       (ring-convert-sequence-to-ring '("british" "italiano" "english")))
+
 
 ;; Flyspell -- spell checking on the fly.
 (use-package flyspell
@@ -30,8 +31,8 @@
         (let ((lang (or ispell-local-dictionary ispell-dictionary nil)))
           (cond
            ((string-equal lang "italiano") " [IT]")
+           ((string-equal lang "english")  " [EN]")
            ((string-equal lang "british")  " [GB]")
-           ((string-equal lang "english") " [EN]")
            (t "")))))
 
         
@@ -41,7 +42,41 @@
   (let* ((lang-ring my-preferred-languages)
          (lang (ring-ref lang-ring -1)))
         (ring-insert lang-ring lang)
-        (ispell-change-dictionary lang)))
+        (ispell-change-dictionary lang)
+        (setq langtool-default-language 
+              (cond
+               ((string-equal lang "italiano") "it")
+               ((string-equal lang "english")  "en")
+               ((string-equal lang "british")  "en-GB")
+               (t "")))))
+
+
+;; Spell/Grammar check command
+(defun language-check-dwim () 
+  "Launch either spell check or grammar check
+
+Offer a choice between spell checking the buffer, or grammar
+checking it. It a region is active the spell check will be
+performed on that region. If some grammar checking session is
+open, the command will just close it.
+"
+  (interactive)
+   ;; If grammar check is active, close it
+  (if langtool-mode-line-message
+      (langtool-check-done)
+    ;; otherwise offer a choice
+    (let* ((choices '("spelling" "grammar" "none"))
+           (selection (ido-completing-read "Check for " choices )))
+      (pcase selection
+        ("spelling"
+         (if (region-active-p)
+             (call-interactively 'ispell-region)
+           (ispell-buffer)))
+        ("grammar" (langtool-check-buffer))
+        (otherwise nil))
+      )))
+
+
 
 ;; A nicer Helm based interface for flyspell
 (use-package flyspell-correct-helm
