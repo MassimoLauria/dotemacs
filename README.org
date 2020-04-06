@@ -357,7 +357,7 @@ Ignore if the path does not exists."
   edit   my    websites...   and   sometimes   to    prepare   slides.
   Therefore I  need to setup  a proper  environment. I often  see many
   emacs user writing  LaTeX with for a tool which  is barely setup for
-  writing code, and definitely not right for writing prose. 
+  writing code, and definitely not right for writing prose.  
 
   Emacs has  a lot of  potential in  prose writing, especially  if you
   ditch  LaTeX and  write  in Org  Mode or  Markdown.  In this  regard
@@ -365,7 +365,7 @@ Ignore if the path does not exists."
 
   - [[http://www.danielallington.net/2016/09/the-latex-fetish/][The LaTeX fetish (Or: Don’t write in LaTeX! It’s just for typesetting)]]
   - [[https://irreal.org/blog/?p=5054][Using Emacs for Prose]]
-
+    
 ** Syntax and Grammar Check
 
    Too few  people on Emacs have  a decent setup for  syntax checking,
@@ -412,7 +412,7 @@ Ignore if the path does not exists."
    variable. Be careful to have  dictionaries for all three languages,
    otherwise the setup will fail.
 
-#+BEGIN_SRC emacs-lisp :notangle
+#+BEGIN_SRC emacs-lisp :tangle no 
 (setenv "DICPATH" (concat (getenv "HOME") "..."))
 #+END_SRC
 
@@ -422,19 +422,24 @@ Ignore if the path does not exists."
    Notice that  I activate  flyspell using the  first of  my preferred
    languages,  and that  I use  =flyspell-prog-mode= for  programming.
    Flyspell  allows a  more  interactive interface  for fixing  typos,
-   contrary to the default =ispell-word=.
+   contrary to the default =ispell-word=. 
 
 #+BEGIN_SRC emacs-lisp
 (use-package flyspell
   :commands (flyspell-mode flyspell-prog-mode)
   :config
-  (setq flyspell-duplicate-distance 0) ;; signal as repetitions only adjacent pairs
+  (setq flyspell-duplicate-distance 0     ;; signal as repetitions only adjacent pairs
+        flyspell-highlight-flag t         ;; mark mispelled words
+        flyspell-issue-message-flag nil   ;; silent checking
+        flyspell-persistent-highlight nil ;; only highlight one word
+        flyspell-use-meta-tab nil)
   (setq ispell-program-name (executable-find "hunspell"))
   (setq ispell-dictionary (ring-ref mxl-preferred-languages -1))  ;; last language by default
   (if (not ispell-program-name)
-      (message "Spell checking disabled: impossible to find correctly installed 'Hunspell'."))
-  :hook ((text-mode . flyspell-mode)
-         (prog-mode . flyspell-prog-mode)))
+      (message "Spell checking disabled: impossible to find correctly installed 'Hunspell'.")))
+
+(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
 (use-package flyspell-correct-helm
   :after flyspell
@@ -448,7 +453,9 @@ Ignore if the path does not exists."
    is.
 
 #+BEGIN_SRC emacs-lisp
-(defadvice ispell-init-process (after ispell-init-process-after activate)
+(defun mxl-set-flyspell-modeline ()
+  "Refresh the flyspell modeline with language indicator"
+  (interactive)
   (setq flyspell-mode-line-string
         (let ((lang (or ispell-local-dictionary ispell-dictionary nil)))
           (cond
@@ -456,6 +463,11 @@ Ignore if the path does not exists."
            ((string-equal lang "english")  " [EN]")
            ((string-equal lang "british")  " [GB]")
            (t "")))))
+
+
+(defadvice ispell-init-process (after ispell-init-process-after activate)
+  (mxl-set-flyspell-modeline))
+
 #+END_SRC
 
    This is the code for cycling among the preferred languages. At each
@@ -476,8 +488,6 @@ Ignore if the path does not exists."
                ((string-equal lang "english")  "en")
                ((string-equal lang "british")  "en-GB")
                (t "")))))
-
-
 #+END_SRC
 
     Grammar check with Langtool is  reasonably easy to setup. The only
@@ -514,7 +524,8 @@ open, the command will just close it.
 "
   (interactive)
    ;; If grammar check is active, close it
-  (if langtool-mode-line-message
+  (if (and (boundp 'langtool-mode-line-message)
+           langtool-mode-line-message)
       (langtool-check-done)
     ;; otherwise offer a choice
     (let* ((choices '("spelling" "grammar" "none"))
