@@ -1,7 +1,6 @@
-# -*- coding: utf-8; ispell-local-dictionary: "english" -*-
-#+STARTUP: collapsed
 #+title: Massimo's Emacs configuration
 #+author: Massimo Lauria <massimo.lauria@uniroma1.it>
+#+STARTUP: collapsed
 
 
 This is the Emacs config of Massimo Lauria (C) 2009-2020.
