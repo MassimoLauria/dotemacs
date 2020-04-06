@@ -1,6 +1,6 @@
 ;;; init-textmode.el --- Preferences for Text editing
 
-;; Copyright (C) 2010, 2011, 2013, 2015, 2018  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2013, 2015, 2018, 2020  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: files, wp
@@ -82,7 +82,6 @@
 
 
 ;; Reset the text-mode hook
-(setq text-mode-hook nil)
 (add-hook 'text-mode-hook 'MassimoLauria/text-mode-setup)
 (add-hook 'text-mode-hook 'MassimoLauria/text-mode-nontex)
 (add-hook 'rst-mode-hook 'MassimoLauria/rst-mode-setup)
