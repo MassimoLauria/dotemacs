@@ -348,6 +348,189 @@ Ignore if the path does not exists."
  '(writegood-weasels-face ((t (:strike-through "yellow")))))
 #+END_SRC
 
+
+
+* Prose and Technical Writing 
+
+  I   use  Emacs   to  write   technical  papers   about  math,   code
+  documentation, lecture  notes for  my courses ,  blog posts,  and to
+  edit   my    websites...   and   sometimes   to    prepare   slides.
+  Therefore I  need to setup  a proper  environment. I often  see many
+  emacs user writing  LaTeX with for a tool which  is barely setup for
+  writing code, and definitely not right for writing prose. 
+
+  Emacs has  a lot of  potential in  prose writing, especially  if you
+  ditch  LaTeX and  write  in Org  Mode or  Markdown.  In this  regard
+  I suggest the following reading.
+
+  - [[http://www.danielallington.net/2016/09/the-latex-fetish/][The LaTeX fetish (Or: Don’t write in LaTeX! It’s just for typesetting)]]
+  - [[https://irreal.org/blog/?p=5054][Using Emacs for Prose]]
+
+** Syntax and Grammar Check
+
+   Too few  people on Emacs have  a decent setup for  syntax checking,
+   and even  fewer have a decent  setup for grammar checking.  I don't
+   claim that my setup is especially  clever, but at least it includes
+   spell and grammar check in
+
+   - Italian;
+   - American English;
+   - British English.
+
+   In particular I  often write papers with colleagues  who prefer the
+   British  spelling  rather  than   American  one  (which  I  favor),
+   therefore I keep them both.
+
+#+BEGIN_SRC emacs-lisp
+(require 'ring)
+(setq mxl-preferred-languages
+      (ring-convert-sequence-to-ring '("british" "italiano" "english")))
+#+END_SRC
+
+   The entry points of my setup are three functionalities
+   - Syntax/Grammar check, activated with =mxl-language-check=
+   - Cycle between languages with =mxl-language-cycle=
+   - Fix interactively the typos
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key [f2]  'mxl-language-check)
+(global-set-key (kbd "M-<f2>") 'mxl-language-cycle)
+(global-set-key [M-s]  'ispell-word)
+#+END_SRC
+
+   The setup revolves on few  packages.
+
+   - [[https://www.cs.hmc.edu/~geoff/ispell.html][Ispell]] (actually [[https://hunspell.github.io/][Hunspell]] ) for spell checking;
+   - [[http://www-sop.inria.fr/members/Manuel.Serrano/flyspell/flyspell.html][Flyspell]] for spelling errors highlighting and fixing of typos;
+   - [[https://languagetool.org/][LanguageTool]] and [[https://github.com/mhayashi1120/Emacs-langtool][langtool.el]] for grammar checking.
+
+   Flyspell requires a working setup of  Ispell. I setup the latter to
+   make  use  of  [[https://hunspell.github.io/][Hunspell]],  which  is  the  default  spellchecker  of
+   Libre/Openoffice and Firefox.  Notice that I usually  need to place
+   my  dictionaries   for  hunspell  in  a   non  standard  directory.
+   Hunspell  look  them  in  the  directories  in  the  =DICPATH=  env
+   variable. Be careful to have  dictionaries for all three languages,
+   otherwise the setup will fail.
+
+#+BEGIN_SRC emacs-lisp :notangle
+(setenv "DICPATH" (concat (getenv "HOME") "..."))
+#+END_SRC
+
+   Flyspell highlights typos  and strikes out words  that are repeated
+   within a  certain distance =flyspell-duplicate-distance=,  which is
+   set  to 0  because  I  only want  to  signal adjacent  repetitions.
+   Notice that  I activate  flyspell using the  first of  my preferred
+   languages,  and that  I use  =flyspell-prog-mode= for  programming.
+   Flyspell  allows a  more  interactive interface  for fixing  typos,
+   contrary to the default =ispell-word=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package flyspell
+  :commands (flyspell-mode flyspell-prog-mode)
+  :config
+  (setq flyspell-duplicate-distance 0) ;; signal as repetitions only adjacent pairs
+  (setq ispell-program-name (executable-find "hunspell"))
+  (setq ispell-dictionary (ring-ref mxl-preferred-languages -1))  ;; last language by default
+  (if (not ispell-program-name)
+      (message "Spell checking disabled: impossible to find correctly installed 'Hunspell'."))
+  :hook ((text-mode . flyspell-mode)
+         (prog-mode . flyspell-prog-mode)))
+
+(use-package flyspell-correct-helm
+  :after flyspell
+  :bind (:map flyspell-mode-map
+              ("M-s" . flyspell-correct-wrapper)))
+#+END_SRC
+
+   The language  for spell and  grammar check is  the last one  in the
+   ring  =mxl-preferred-languages=,  so  that  we  switch  the  chosen
+   language by rotating the ring. Mode-line will signal which one that
+   is.
+
+#+BEGIN_SRC emacs-lisp
+(defadvice ispell-init-process (after ispell-init-process-after activate)
+  (setq flyspell-mode-line-string
+        (let ((lang (or ispell-local-dictionary ispell-dictionary nil)))
+          (cond
+           ((string-equal lang "italiano") " [IT]")
+           ((string-equal lang "english")  " [EN]")
+           ((string-equal lang "british")  " [GB]")
+           (t "")))))
+#+END_SRC
+
+   This is the code for cycling among the preferred languages. At each
+   rotation the  settings for both  the spell checker and  the grammar
+   checker are updated.
+
+#+BEGIN_SRC emacs-lisp
+(defun mxl-language-cycle ()
+  "Switch between spell checking languages, in the current buffer."
+  (interactive)
+  (let* ((lang-ring mxl-preferred-languages)
+         (lang (ring-ref lang-ring -1)))
+        (ring-insert lang-ring lang)
+        (ispell-change-dictionary lang)
+        (setq langtool-default-language 
+              (cond
+               ((string-equal lang "italiano") "it")
+               ((string-equal lang "english")  "en")
+               ((string-equal lang "british")  "en-GB")
+               (t "")))))
+
+
+#+END_SRC
+
+    Grammar check with Langtool is  reasonably easy to setup. The only
+    caveat is  that it need  to be  installed. When installed,  we use
+    =langtool-disabled-rules=   to   deactivate  some   checks   (e.g.
+    whitespaces) which generates too many false positives.
+
+#+BEGIN_SRC emacs-lisp
+(when (file-directory-p "/usr/local/share/languagetool/")
+  (use-package langtool
+    :init
+    (setq langtool-language-tool-jar "/usr/local/share/languagetool/languagetool-commandline.jar")
+    :config
+    (setq langtool-mother-tongue "it")'
+    (setq langtool-disabled-rules "WHITESPACE_RULE")
+    :commands (langtool-check langtool-check-buffer langtool-switch-default-language)))
+
+#+END_SRC
+
+    The  last component  is  a  single function  =mxl-language-check=.
+    Allows to
+    - pick between syntax and grammar check in the current language;
+    - stop grammar check if one is running;
+#+BEGIN_SRC emacs-lisp
+
+;; Spell/Grammar check command
+(defun mxl-language-check () 
+  "Launch either spell check or grammar check
+
+Offer a choice between spell checking the buffer, or grammar
+checking it. It a region is active the spell check will be
+performed on that region. If some grammar checking session is
+open, the command will just close it.
+"
+  (interactive)
+   ;; If grammar check is active, close it
+  (if langtool-mode-line-message
+      (langtool-check-done)
+    ;; otherwise offer a choice
+    (let* ((choices '("spelling" "grammar" "none"))
+           (selection (ido-completing-read "Check for " choices )))
+      (pcase selection
+        ("spelling"
+         (if (region-active-p)
+             (call-interactively 'ispell-region)
+           (ispell-buffer)))
+        ("grammar" (langtool-check-buffer))
+        (otherwise nil))
+      )))
+#+END_SRC
+
+
+
 * Programming
 
 ** Generic Syntax highlighting
