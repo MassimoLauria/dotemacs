@@ -542,7 +542,7 @@ open, the command will just close it.
 
 
 * Programming
-
+  
 ** Generic Syntax highlighting
 
    Of  course   every  mode   include  syntax  highlighting   for  the
@@ -554,7 +554,8 @@ open, the command will just close it.
 
    The first package color parenthesis  with dirrerent colors, so that
    matching  parenthesis have  the same  color. Of  course after  some
-   nesting the colors repeat.
+   nesting  the   colors  repeat.   This  is  especially   useful  for
+   lisp programming.
 
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
@@ -572,6 +573,38 @@ open, the command will just close it.
   :commands rainbow-identifiers-mode)
 #+END_SRC
 
+
+   Next  package sets  a different  background color  for each  nested
+   code block.
+
+#+BEGIN_SRC emacs-lisp
+(use-package highlight-blocks
+  :commands highlight-blocks-mode)
+#+END_SRC
+
+   Next package highlights occurrences of the symbol under the point.
+
+#+BEGIN_SRC emacs-lisp
+(use-package highlight-symbol
+  :commands highlight-symbol-mode)
+#+END_SRC
+
+   Next package highlight  lisp quotes, so it is not  useful for other
+   languages (maybe Scheme?).
+
+#+BEGIN_SRC emacs-lisp
+(use-package highlight-quoted
+  :commands highlight-quoted-mode)
+#+END_SRC
+
+  Next package is  useful for emacs lisp. It highlight  names that are
+  defined  in   emacs  lisp,  differentiating   functions,  variables,
+  builtins, ...
+
+#+BEGIN_SRC emacs-lisp
+(use-package  highlight-defined  :ensure t  
+  :commands highlight-defined-mode)
+#+END_SRC
 
 ** Fixing Errors
 
@@ -748,7 +781,12 @@ visualizes the error
    bad  patterns in  shell programming  and  few good  ones. I  should
    massively use  snippets. One  thing that is  needed is  to activate
    shell mode automatically for [[http://zsh.sourceforge.net/][Zsh]] scripts.
-   
+
+   I don't know  muc shell programming. Maybe I  should make templates
+   for good bash programming practices as in 
+   - [[http://mywiki.wooledge.org/BashPitfalls][Bash Pitfalls]]
+   - [[http://redsymbol.net/articles/unofficial-bash-strict-mode/][Bash Strict mode]] 
+
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'auto-mode-alist '("\\.zsh" . sh-mode))
 #+END_SRC
