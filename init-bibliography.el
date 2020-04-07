@@ -16,6 +16,17 @@
       bibtex-completion-pdf-field "file"
       )
 
+
+;; Bib entries are imported via biblio.el
+;;
+;; which nees a bit of setup, especially for ArXiv
+(use-package biblio
+  :defer t
+  :init
+  (setq biblio-arxiv-bibtex-header "misc") ;; default "@Online" is non standard
+  (setq biblio-cleanup-bibtex-function 'bibtex-clean-entry)
+  (setq biblio-download-directory "~/Downloads/"))
+
 ;;
 ;; Setup the key generation for bibtex files
 ;;
