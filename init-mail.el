@@ -201,6 +201,15 @@
                '("org-contact-add" . mu4e-action-add-org-contact) t)
 
 
+  ;; This hook correctly modifies the \Inbox and \Starred flags on email when they are marked.
+  ;; Without it refiling (archiving) and flagging (starring) email won't properly result in
+  ;; the corresponding gmail action.
+  (add-hook 'mu4e-mark-execute-pre-hook
+	    (lambda (mark msg)
+	      (cond ((member mark '(refile trash)) (mu4e-action-retag-message msg "-\\Inbox"))
+		    ((equal mark 'flag) (mu4e-action-retag-message msg "\\Starred"))
+		    ((equal mark 'unflag) (mu4e-action-retag-message msg "-\\Starred")))))
+
   ;; -----------------
   ;; Setup identities
   ;; -----------------
