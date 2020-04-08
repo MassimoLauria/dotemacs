@@ -105,10 +105,15 @@
                            zenburn-theme))
 ;; -------------------------------------------------------------------
 
-;; Emacs packages
+;; Security setting for connection
 (setq tls-checktrust t)
 (setq gnutls-verify-error t)
+(setq tls-checktrust t
+      tls-program
+      '("gnutls-cli -p %p --dh-bits=2048 --ocsp --x509cafile=%t --priority='SECURE192:+SECURE128:-VERS-ALL:+VERS-TLS1.2:%%PROFILE_MEDIUM' %h"))
+(setq network-security-level 'high)
 
+;; Emacs packages
 (setq package-user-dir (concat "~/.emacs.d/elpa/" emacs-version))
 (setq package-archives  '(("gnu"   . "https://elpa.gnu.org/packages/")
                           ("melpa" . "https://melpa.org/packages/")
