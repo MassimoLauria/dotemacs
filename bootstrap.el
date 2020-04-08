@@ -106,6 +106,7 @@
 ;; -------------------------------------------------------------------
 
 ;; Security setting for connection
+;; https://github.com/antifuchs/safe-tls-defaults-mode/blob/master/safe-tls-defaults.el
 (setq tls-checktrust t)
 (setq gnutls-verify-error t)
 (setq tls-checktrust t
