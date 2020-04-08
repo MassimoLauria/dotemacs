@@ -87,7 +87,6 @@
 
 ;; Coding
 (require 'init-autotype)          ; Automatic file filling
-(require 'init-highlight)         ; Preferences for code highlighting
 (require 'init-templates)         ; Templates
 (require 'init-auto-complete)     ; Completion configuration -- check for speed
 
