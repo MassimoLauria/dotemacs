@@ -105,18 +105,10 @@
                            zenburn-theme))
 ;; -------------------------------------------------------------------
 
-;;TLS
-(setq tls-checktrust t)
-(let ((trustfile "~/config/emacs/ca-cert-root.pem"))
-  (setq tls-program
-        (list
-         (format "gnutls-cli%s --x509cafile %s -p %%p %%h"
-                 (if (eq window-system 'w32) ".exe" "") trustfile)))
-  (setq gnutls-verify-error t)
-  (setq gnutls-trustfiles (list trustfile)))
-
 ;; Emacs packages
 (setq tls-checktrust t)
+(setq gnutls-verify-error t)
+
 (setq package-user-dir (concat "~/.emacs.d/elpa/" emacs-version))
 (setq package-archives  '(("gnu"   . "https://elpa.gnu.org/packages/")
                           ("melpa" . "https://melpa.org/packages/")
