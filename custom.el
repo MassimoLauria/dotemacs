@@ -114,18 +114,8 @@
  '(massimo-keyboard-folding-meta-g-override-p t)
  '(massimo-keyboard-global-mode t)
  '(menu-bar-mode nil)
- '(mu4e-headers-include-related t t)
- '(mu4e-headers-skip-duplicates t t)
- '(mu4e-split-view nil)
- '(mu4e-view-image-max-height 300)
- '(mu4e-view-image-max-width 400)
- '(mu4e-view-show-addresses t t)
- '(mu4e-view-show-images t)
  '(nlinum-format "%2d│")
  '(no-easy-keys t)
- '(nrepl-message-colors
-   (quote
-    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(ns-right-alternate-modifier nil)
  '(ns-tool-bar-display-mode (quote both) t)
  '(ns-tool-bar-size-mode (quote regular) t)

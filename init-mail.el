@@ -52,12 +52,6 @@
 ;; Composing emails with mu4e (and message-mode)
 ;;
 (define-key global-map "\C-cm" 'compose-mail)
-(setq mu4e-compose-complete-only-personal t)
-(setq mu4e-compose-dont-reply-to-self t)
-
-(setq message-kill-buffer-on-exit t)
-(setq mu4e-sent-messages-behavior 'delete)  ;; for gmail
-
 
 (defun setup-message-mode ()
   "Setup editor for emails"
@@ -109,8 +103,13 @@
   (setq mu4e-maildir-shortcuts nil)
 
   ;; Tuning
-  (setq mu4e-show-images t)
+
+  (setq mu4e-split-view nil)
   (setq mu4e-view-show-addresses t)
+  (setq mu4e-show-images t)
+  (setq mu4e-view-image-max-height 300)
+  (setq mu4e-view-image-max-width 400)
+
   (setq mu4e-get-mail-command "mbsync gmail")
   (setq mu4e-change-filenames-when-moving t)
 
@@ -121,11 +120,13 @@
   (setq mu4e-compose-complete-addresses t)
   (setq mu4e-compose-complete-only-personal nil)
   (setq mu4e-compose-complete-only-after "2012-01-01")
-
+  (setq mu4e-compose-dont-reply-to-self t)
+  
   (setq mu4e-sent-messages-behavior 'delete)  ;; gmail takes care of sent mails
   
+  (setq message-kill-buffer-on-exit t)
   (setq mu4e-confirm-quit nil)
-
+  
   :config
   (setq mail-user-agent 'mu4e-user-agent)
 
