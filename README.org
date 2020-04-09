@@ -859,21 +859,26 @@ visualizes the error
    remembers to  save stuff from time  to time. I'd rather  put all my
    backups and autosaves in a specific folder.
 
+#+BEGIN_SRC emacs-lisp
+(defvar mxl-autosave-dir "~/.emacs.d/autosaves/")
+(defvar mxl-backup-dir   "~/.emacs.d/backups/")
+(make-directory mxl-autosave-dir t)
+(make-directory mxl-backup-dir t)
+#+END_SRC
+
+
    First I setup the autosave feature
 
 #+BEGIN_SRC emacs-lisp
-(defvar autosave-dir "~/.emacs.d/autosaves/")
-(make-directory autosave-dir t)
-(setq tramp-auto-save-directory nil)
+(setq tramp-auto-save-directory mxl-autosave-dir)
+(setq auto-save-file-name-transforms
+      `((".*" ,mxl-autosave-dir t)))
 #+END_SRC
 
    then I setup the backup features, where copies of old versions are
    kept. Disable backups for remote files.
 
 #+BEGIN_SRC emacs-lisp
-(defvar   backup-dir "~/.emacs.d/backups/")
-(make-directory backup-dir t)
-
 (setq version-control nil)
 
 (setq delete-old-versions t) ;; silently delete old versions
@@ -883,8 +888,8 @@ visualizes the error
 (setq backup-by-copying-when-linked t)
 
 (setq backup-directory-alist
-      `(("." . "~/.emacs.d/backups/")      ;; location for local files
-        (,tramp-file-name-regexp .  nil))) ;; disable for remove files
+      `(("." . ,mxl-backup-dir)                ;; location for local files
+        (,tramp-file-name-regexp .  nil)))     ;; disable for remote files
 
 #+END_SRC
 
