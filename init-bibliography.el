@@ -5,16 +5,17 @@
 ;;;-----------------------------------------------------------------
 
 
-;; Bibfiles and folder
+;; Main bibliography file
+(defconst mxl-main-bibtex-file "~/lavori/latex/bibliographies/theoryofcomputing.bib"
+  "My main bibliography file.")
 
 ;; For reftex
-(setq reftex-default-bibliography '("~/lavori/latex/bibliographies/theoryofcomputing.bib"))
+(setq reftex-default-bibliography (list mxl-main-bibtex-file))
 
-(setq bibtex-completion-bibliography "~/lavori/latex/bibliographies/theoryofcomputing.bib"
+(setq bibtex-completion-bibliography mxl-main-bibtex-file
       bibtex-completion-library-path "~/cloud/Papers/"
       bibtex-completion-notes-path "~/lavori/latex/bibliographies/papernotes.org"
-      bibtex-completion-pdf-field "file"
-      )
+      bibtex-completion-pdf-field "file")
 
 
 ;; Bib entries are imported via biblio.el
