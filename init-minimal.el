@@ -21,14 +21,13 @@
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
 (setq debug-on-error t)
-(setq load-path (cons "~/config/emacs/" load-path))
 
 ;; Emacs packages
 (setq package-user-dir "~/.emacs.d/elpa/minimal/")
-(setq package-archives  '(("gnu" . "http://elpa.gnu.org/packages/")
-                          ("elpa" . "http://tromey.com/elpa/")
-                          ("melpa"        . "http://melpa.org/packages/")
-			  ))
+(setq package-archives  '(("gnu"   . "https://elpa.gnu.org/packages/")
+                          ("melpa" . "https://melpa.org/packages/")
+                          ("org"   . "https://orgmode.org/elpa/")
+                          ))
 (when (require 'package nil t)
   (package-initialize))
 
