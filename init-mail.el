@@ -1,7 +1,7 @@
 ;;;
 ;;; Sending:  msmtp (if installed)
 ;;; Fetching: mbsync
-;;; Contacts: bbdb
+;;; Contacts: org-contacts / helm-org-contacts
 ;;; Reading/Writing:  mu4e
 ;;;------------------------------------------------------------------
 
@@ -20,15 +20,13 @@
                       (insert-file-contents "~/personal/mail/work.sign")
                       (buffer-string)))
 
-
+(define-key global-map "\C-cm" 'mu4e-compose-new)
+(add-hook 'message-mode-hook 'auto-fill-mode)
 ;;
 ;; Sending emails (settings for gmail)
-;;
-(setq smtp-password (string-trim
-                     (shell-command-to-string "python -c \"import keyring; print(keyring.get_password('smtp.gmail.com','lauria.massimo@gmail.com'))\"")))
+;; smtpmail-smtp-user set by mu4e-context
 
 (setq smtpmail-default-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-user    "lauria.massimo@gmail.com"
       smtpmail-smtp-server  "smtp.gmail.com"
       smtpmail-smtp-service 587
       smtpmail-debug-info t 
@@ -39,6 +37,10 @@
 
 (if sendmail-program
     (progn ;; msmtp
+      (setq mail-specify-envelope-from t)  ;; otherwise MSMTP sends
+                                           ;; with the wrong account
+                                           ;; and it gets marked
+                                           ;; as SPAM.
       (setq send-mail-function 'sendmail-send-it)
       (setq message-send-mail-function 'message-send-mail-with-sendmail))
   (progn ;; emacs smtpmail (and queueing)
@@ -46,23 +48,6 @@
           message-send-mail-function 'message-smtpmail-send-it
           smtpmail-queue-dir "~/personal/mail/queue/cur/"
           smtpmail-queue-mail nil)))
-
-
-;;
-;; Composing emails with mu4e (and message-mode)
-;;
-(define-key global-map "\C-cm" 'compose-mail)
-
-(defun setup-message-mode ()
-  "Setup editor for emails"
-  (interactive)
-  (require 'bbdb-com nil t)
-  (auto-fill-mode 1)
-  (set-fill-column 70)
-  (define-key message-mode-map [f2] 'ispell-message))
-
-(add-hook 'message-mode-hook 'setup-message-mode)
-
 ;;; Reading email with mu4e
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e/")
 (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e/")
@@ -75,7 +60,7 @@
    name))
 
 (use-package mu4e
-  :commands mu4e
+  :commands (mu4e mu4e-compose-new)
   :init
   ;; addresses
   (setq mu4e-user-mail-address-list (list email-address-academic
@@ -121,13 +106,16 @@
   (setq mu4e-compose-complete-only-personal nil)
   (setq mu4e-compose-complete-only-after "2012-01-01")
   (setq mu4e-compose-dont-reply-to-self t)
-  
-  (setq mu4e-sent-messages-behavior 'delete)  ;; gmail takes care of sent mails
+
+  ;; gmail profile should use 'delete
+  ;; uniroma1 profile should use 'sent Useful only if I use my main reading address also to send emails.
+  (setq mu4e-sent-messages-behavior 'delete)
   
   (setq message-kill-buffer-on-exit t)
   (setq mu4e-confirm-quit nil)
   
   :config
+  (define-key mu4e-compose-mode-map [f2] 'ispell-message)
   (setq mail-user-agent 'mu4e-user-agent)
 
   ;; ---------------------------
@@ -214,25 +202,31 @@
   ;; Setup identities
   ;; -----------------
   (setq mu4e-context-policy 'pick-first)
-  (setq mu4e-compose-context-policy 'pick-first)
+  (setq mu4e-compose-context-policy 'ask)
 
   (setq mu4e-contexts
         `( ,(make-mu4e-context
-             :name "Academic"
+             :name "uniroma1"
              :match-func (lambda (msg)
                            (when msg
                              (mu4e-message-contact-field-matches msg
-                                                                 :to email-address-academic)))
+                                                                 '(:to :from :cc :bcc)
+                                                                 email-address-academic)))
              :vars `( ( user-mail-address      . ,email-address-academic  )
+                      ( smtpmail-smtp-user     . ,email-address-academic  )
+                      ( mu4e-sent-messages-behavior . sent) ;; to have them in my personal 'sent' mailbox
                       ( mu4e-compose-signature . ,signature-academic)))
 
            ,(make-mu4e-context
-             :name "Personal"
+             :name "gmail"
              :match-func (lambda (msg)
                            (when msg
                              (mu4e-message-contact-field-matches msg
-                                                                 :to email-address-personal)))
+                                                                 '(:to :from :cc :bcc)
+                                                                 email-address-personal)))
              :vars `( ( user-mail-address      . ,email-address-personal  )
+                      ( smtpmail-smtp-user     . ,email-address-personal  )
+                      ( mu4e-sent-messages-behavior . delete)
                       ( mu4e-compose-signature . ,signature-personal))))))
 
 ;;
