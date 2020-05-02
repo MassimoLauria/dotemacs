@@ -62,16 +62,13 @@
 (setq org-todo-keyword-faces
    (quote
     (;; Basic
-     ("NEXT" :foreground "blue" :background "white" :weight bold)
-     ("CALL" :foreground "blue" :background "white" :weight bold)
+     ("NEXT" :foreground "white" :background "blue" :weight bold)
+     ("CALL" :foreground "white" :background "blue" :weight bold)
      ("TODO" :foreground "red" :background "black" :weight bold)
      ("WAIT" :foreground "yellow" :weight bold)
-     ("SOMEDAY" :foreground "white" :background "blue" :weight bold)
+     ("SOMEDAY" :foreground "blue" :background "white" :weight bold)
      ;; Review the entry
      ("REVIEW" . (:foreground "blue" :background "lightgreen" :weight bold))
-     ;; Open problems, dreams and projects
-     ("INACTIVE" :foreground "blue" :background "white" :weight bold)
-     ("ACTIVE" :foreground "red" :background "white" :weight bold)
      ;; Done tags
      ("DONE" :foreground "lightgreen" :weight bold)
      ("CANCELED" :foreground "lightgreen" :strike-through t :weight bold)
@@ -80,15 +77,8 @@
 
 
 (setq org-todo-keywords
-   (quote
-    ((sequence "REVIEW"  "NEXT" "CALL" "TODO" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")
-     (sequence "ACTIVE" "INACTIVE" "|" "DONE" "CANCELED")
-     (sequence "SOMEDAY" "|" "CANCELED")
-     )))
+      '((sequence "REVIEW"  "NEXT" "CALL" "TODO" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")))
 
-;; Stuck projects are the ones with project tags and no NEXT or
-;; CALL todo keyword.
-(setq org-stuck-projects '("project" ("CALL NEXT") nil))
 ;;;---------------- Basic setup --------------------------------------
 (setq
  org-agenda-include-diary nil
@@ -130,6 +120,10 @@
 ;; These tags categorizes a whole big thing, and I don't want all
 ;; subitems to pop up in the corresponding agenda view.
 (setq org-tags-exclude-from-inheritance '("project" "@question"))
+(setq org-stuck-projects '("project|@question/-SOMEDAY-DONE"
+                           ("CALL" "NEXT" "REVIEW") ()))
+
+
 
 (setq org-agenda-custom-commands
       '(("n" "My agenda setting"
@@ -145,29 +139,33 @@
                    (org-agenda-start-on-weekday nil)
                    (org-agenda-time-grid nil)
                    (org-agenda-entry-types '(:sexp))))
-          (todo "NEXT|REVIEW"
+          (todo "NEXT|CALL|REVIEW"
                    ((org-agenda-overriding-header "           NEXT THING TO DO\n")
                     (org-agenda-skip-function '(org-agenda-skip-entry-if
-                                                'scheduled
-                                                'deadline ))
+                                                'scheduled))
                     ))
-          (tags-todo "project"
+          (tags    "project"
                    ((org-agenda-overriding-header "           PROJECTS STATUS\n")
                     (org-agenda-sorting-strategy '(priority-down))
+                    (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                'todo '("DONE" "CANCELED" "DELEGATED")))
                     ))
-          (tags-todo "@question"
+          (tags    "@question"
                    ((org-agenda-overriding-header "           OPEN PROBLEMS\n")
                     (org-agenda-sorting-strategy '(priority-down))
+                    (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                'todo '("DONE" "CANCELED" "DELEGATED")))
                     ))
           (tags-todo "-project-@question"
                    ((org-agenda-overriding-header "           TODO LIST\n")
                     (org-agenda-skip-function '(org-agenda-skip-entry-if
                                                 'scheduled
                                                 'deadline
-                                                'todo '("NEXT" "REVIEW")))
+                                                'todo '("NEXT" "CALL" "REVIEW")))
                     (org-agenda-sorting-strategy '(priority-down))
                     ))
           ))))
+
 
 
 ;; Set a key for the agenda view
