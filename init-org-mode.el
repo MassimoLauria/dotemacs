@@ -77,7 +77,8 @@
 
 
 (setq org-todo-keywords
-      '((sequence "REVIEW"  "NEXT" "CALL" "TODO" "WAIT" "|" "DONE" "CANCELED" "DELEGATED")))
+      '((sequence "REVIEW"  "NEXT" "CALL" "TODO" "WAIT" "SOMEDAY" "|" "DONE" "CANCELED" "DELEGATED")
+        ))
 
 ;;;---------------- Basic setup --------------------------------------
 (setq
