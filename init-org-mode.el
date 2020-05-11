@@ -383,7 +383,7 @@ part of the keyboard.
         ("n" "Notebook note"     entry (file "notebook.org")    "* REVIEW %?\n  %T\n  %i\n  %a\n\n")
         ("t" "Task"              entry (file "agenda.org"  )    "* REVIEW ⌚ %?\n  %T\n\n  %i\n\n")
         ("d" "Deadline"          entry (file "agenda.org")      "* REVIEW ⌚ %?\n  DEADLINE: %^t\n  %U\n\n  %i\n\n")
-        ("e" "Event/Appointment" entry (file "agenda.org")      "* %?\n  SCHEDULED: %^t\n  %i\n\n")
+        ("e" "Event/Appointment" entry (file "agenda.org")      "* %?\n  %^t\n  %i\n\n")
         ("c" "New contact"       entry (file+olp "contacts.org" "UNCATEGORIZED") ,my/org-contacts-template :empty-lines 1)
         ("j" "Journal Entry"     entry (file+olp+datetree "journal.org") "* inserito il %U\n\n  %?\n\n%i\n\n")
       
