@@ -426,6 +426,7 @@ Ignore if the path does not exists."
 #+BEGIN_SRC emacs-lisp
 (use-package flyspell
   :commands (flyspell-mode flyspell-prog-mode)
+  :bind (:map flyspell-mode-map ("C-;" . nil)) 
   :config
   (setq flyspell-duplicate-distance 0     ;; signal as repetitions only adjacent pairs
         flyspell-highlight-flag t         ;; mark mispelled words
