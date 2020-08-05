@@ -102,6 +102,8 @@
   (setq mu4e-headers-show-threads t)
   (setq mu4e-headers-include-related t)
 
+  (setq mu4e-headers-date-format "%e %b '%y")
+  
   (setq mu4e-compose-complete-addresses t)
   (setq mu4e-compose-complete-only-personal nil)
   (setq mu4e-compose-complete-only-after "2012-01-01")
@@ -124,7 +126,7 @@
   (setq mu4e-bookmarks (list
                         (make-mu4e-bookmark
                          :name "———————————————————————————"
-                         :query "date:2999"
+                         :query "date:2099"
                          :key ?{)
                         (make-mu4e-bookmark
                          :name (icon-on-linux "📬 " "Posta in arrivo")
@@ -152,7 +154,7 @@
                          :key ?A)
                         (make-mu4e-bookmark
                          :name "———————————————————————————"
-                         :query "date:2999"
+                         :query "date:2099"
                          :key ?-)))
 
   ;; Put in the bookmarks all the user folders with increasing
@@ -172,7 +174,7 @@
   (add-to-list 'mu4e-bookmarks
                (make-mu4e-bookmark
                 :name "———————————————————————————"
-                :query "date:2999"
+                :query "date:2099"
                 :key ?})
                'append)
 
