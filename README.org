@@ -282,7 +282,7 @@ Ignore if the path does not exists."
 (defvar default-font
   (cond
    ((eq system-type 'windows-nt) "Consolas 14") 
-   (t                            "DejaVu Sans Mono 18"))
+   (t                            "Roboto Mono 18"))
   "The font I use by default")
 #+END_SRC
 
