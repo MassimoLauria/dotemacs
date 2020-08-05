@@ -61,6 +61,7 @@
 
 (use-package company
   :config
+  (setq company-dabbrev-downcase nil)
   (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
 
 ;; (use-package company-box
