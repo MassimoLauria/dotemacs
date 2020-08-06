@@ -391,7 +391,9 @@ is already narrowed."
   (defalias 'rg 'helm-rg "RipGrep in the current folder"))
 
 (use-package helm-c-yasnippet
-  :bind ( "M-/" . helm-yas-complete))
+  ;; M-t is usually reserved to transpose words, but I've never
+  ;; used it.
+  :bind ( "M-t" . helm-yas-complete))
 
 
 ;; Fill/unfill paragraph
