@@ -37,6 +37,7 @@
                            graphviz-dot-mode 
                            helm
                            helm-bibtex
+                           helm-c-yasnippet
                            helm-rg
                            helm-recoll
                            helm-swoop

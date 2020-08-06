@@ -372,7 +372,9 @@ is already narrowed."
          ( "C-x C-f" . helm-find-files)
          ( "M-x"     . helm-M-x)
          ( "M-y"     . helm-show-kill-ring)
+         ( "M-`"     . helm-resume)
          :map helm-map
+         ( "M-`"     . helm-keyboard-quit)
          ( "<left>"  . helm-previous-source)
          ( "<right>" . helm-next-source))
   :diminish helm-mode
@@ -388,6 +390,8 @@ is already narrowed."
   :init
   (defalias 'rg 'helm-rg "RipGrep in the current folder"))
 
+(use-package helm-c-yasnippet
+  :bind ( "M-/" . helm-yas-complete))
 
 
 ;; Fill/unfill paragraph
