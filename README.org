@@ -708,6 +708,20 @@ visualizes the error
 (environment-add-path (concat (getenv "HOME") "/.pyenv/bin"))
 #+END_SRC
 
+We  set  the key  F9  to  launch the  tests  for  the python  program.
+In particular we use  =python-pytest-dispatch=, which shows a complete
+interface similar  to Magit,  and allows  various options  for testing
+(i.e. test a single file/module).
+
+#+BEGIN_SRC emacs-lisp
+(use-package python-pytest
+  :commands python-pytest-dispatch
+  :bind (:map python-mode-map
+         ("<f9>" . python-pytest-dispatch)))
+#+END_SRC
+
+
+
   Using the key F10 I can  toggle the prompt shell buffer connected to
   this python buffer.
 

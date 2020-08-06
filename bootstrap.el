@@ -74,6 +74,7 @@
                            poet-theme
                            pyenv-mode 
                            pyenv-mode-auto 
+                           python-pytest
                            pythonic 
                            rainbow-delimiters 
                            rainbow-identifiers 
