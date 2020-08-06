@@ -284,6 +284,9 @@ Ignore if the path does not exists."
    ((eq system-type 'windows-nt) "Consolas 14") 
    (t                            "Roboto Mono 18"))
   "The font I use by default")
+
+(defvar symbol-font "DejaVu Sans Mono"
+  "Font I use for as a fallback for some math symbols")
 #+END_SRC
 
    I like Emacs to  open in a wide frame at the  center of the screen,
@@ -312,8 +315,19 @@ Ignore if the path does not exists."
                             (tool-bar-lines . 0)
                             (menu-bar-line . 0)
                             ))
+#+END_SRC
 
- #+END_SRC
+Some glyphs  are not  includes in  the default  font, thus  emacs uses
+a  fallback which  sometimes  is less  than  desirable. In  particular
+this messes  up the  alignment in  ~helm-bibtex~. For  such characters
+I use an alternative fallback font.
+
+*Hint:* To  discover the  properties of  some text  on the  screen the
+command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
+
+#+BEGIN_SRC emacs-lisp
+(set-fontset-font t #x2318 symbol-font)   ; ⌘
+#+END_SRC
 
 ** Theme
 
