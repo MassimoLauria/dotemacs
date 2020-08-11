@@ -63,7 +63,7 @@
                            olivetti
                            org
                            org-bullets 
-                           org-pdfview 
+                           org-pdftools 
                            org-plus-contrib
                            org-static-blog
                            package-build 
