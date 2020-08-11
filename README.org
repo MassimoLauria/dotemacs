@@ -41,6 +41,8 @@ part of the main config inside this =README.org= file.
   Programs".
 
 #+BEGIN_SRC emacs-lisp
+(if (not (boundp 'Info-directory-list))
+    (setq Info-directory-list nil))
 (add-to-list 'Info-directory-list (concat base-config-path "/info"))
 #+END_SRC
 
