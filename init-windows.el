@@ -46,12 +46,4 @@
 (force-window-at-bottom (rx bos "*Tex errors*" eos))
 (force-window-at-bottom (rx bos "*Tex Help*" eos))
 
-
-(eval-after-load 'winner-mode-hook
-  '(progn 
-     (define-key winner-mode-map (kbd "C-c C-j") 'winner-undo)
-     (define-key winner-mode-map (kbd "C-c C-l") 'winner-redo)
-     ))
-
-
 (provide 'init-windows)

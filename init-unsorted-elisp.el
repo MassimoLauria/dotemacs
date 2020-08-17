@@ -369,6 +369,8 @@ is already narrowed."
   :bind (( "C-x C-b" . helm-mini)
          ( "C-x b"   . helm-mini)
          ( "C-x C-r" . helm-mini)
+         ( [M-S-up]    . helm-mini)
+         ( [M-S-down]  . helm-mini)
          ( "C-x C-f" . helm-find-files)
          ( "M-x"     . helm-M-x)
          ( "M-y"     . helm-show-kill-ring)

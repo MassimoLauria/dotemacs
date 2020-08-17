@@ -884,8 +884,8 @@ interface similar  to Magit,  and allows  various options  for testing
 
 
 * Other features
-
 ** Backup and autosave of files
+
 
    Emacs  manages  multiple  backups  for files,  and  furthermore  it
    remembers to  save stuff from time  to time. I'd rather  put all my
@@ -943,8 +943,26 @@ interface similar  to Magit,  and allows  various options  for testing
 
 #+BEGIN_SRC emacs-lisp
 (setq helm-mini-default-sources '(helm-source-buffers-list
-                                  helm-source-bookmarks
                                   helm-source-recentf
+                                  helm-source-bookmarks
                                   helm-source-buffer-not-found))
 #+END_SRC
 
+** Hide some buffers in Helm
+
+   Some buffers  clutter selection menus  and there are no  reasons to
+   visit them.  For example the  buffer =*import calendar*=  just runs
+   the  script   which  imports  my  google   calendars  in  org-mode.
+   Better hide them from the buffer list.
+
+#+BEGIN_SRC emacs-lisp
+(setq helm-boring-buffer-regexp-list
+  '("\\` " "\\`\\*helm" "\\`\\*Echo Area" "\\`\\*Minibuf" "\\`\\*Echo Area" 
+    "\\`\\*import calendar*"
+    "\\`\\*Help"
+    "\\`\\*Disabled Command"
+    "\\`\\*Backtrace"))
+
+(setq helm-white-buffer-regexp-list nil)
+
+#+END_SRC

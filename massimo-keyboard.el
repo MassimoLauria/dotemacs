@@ -1,6 +1,6 @@
 ;;; massimo-keyboard.el --- Keybindings specific for the author habits -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2015, 2016, 2018, 2019  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2015, 2016, 2018, 2019, 2020  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: convenience
@@ -89,19 +89,6 @@ At least they are considered useful for the author.
     (define-key map (kbd "M-f")  'delete-char)
     (define-key map (kbd "M-w")  'kill-whole-line)
 
-
-    ;; Moving between buffers (M-S)
-    (require 'init-buffer-navigation nil t)
-    (if (boundp 'buffer-navigation-method)
-        (progn
-          (define-key map [M-S-up] 'previous-buffer-smart)
-          (define-key map [M-S-down] 'next-buffer-smart)
-          (define-key map [M-S-left] 'previous-buffer-navigation-method)
-          (define-key map [M-S-right] 'next-buffer-navigation-method)
-          )
-      (define-key map [M-S-up] 'previous-buffer)
-      (define-key map [M-S-down] 'next-buffer)
-      )
 
     (define-key map (kbd "C-x k")   'kill-this-buffer)
     ;; Default text navigation (usually shadowed by other modes)
