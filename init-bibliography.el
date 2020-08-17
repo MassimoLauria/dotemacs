@@ -282,9 +282,6 @@ Optional argument NODELIM see `bibtex-make-field'."
         'bibtex-completion-format-citation-cite)
   (setq bibtex-completion-cite-prompt-for-optional-arguments nil)
 
-  ;; Macbook screen is too small to read pdfs inside emacs.
-  (if (string-equal system-type "darwin")
-      (setq bibtex-completion-pdf-open-function 'helm-open-file-with-default-tool))  
   ;; Make 'Insert citation' the first (and thus the default) action
   (helm-delete-action-from-source  "Insert citation" helm-source-bibtex)
   (helm-add-action-to-source       "Insert citation" 'helm-bibtex-insert-citation helm-source-bibtex 0)

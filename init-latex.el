@@ -74,6 +74,7 @@ by default."
   (setq pdf-view-resize-factor 1.1)
   ;; use isearch instead of swiper
   (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
+  (define-key pdf-view-mode-map (kbd "O") 'open-in-external-app)
   ;; keyboard shortcut for zooming
   (define-key pdf-view-mode-map (kbd "+") 'pdf-view-enlarge)
   (define-key pdf-view-mode-map (kbd "=") 'pdf-view-enlarge)
