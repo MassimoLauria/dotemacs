@@ -43,24 +43,60 @@
   ;; View PDFs within emacs using `pdf-tools' package
   (add-to-list 'TeX-view-program-selection '(output-pdf "PDF Tools"))
  
-  ;; On MacOSX we could use Skim PDF viewer
+  ;; On MacOSX we could use Skim PDF viewer. Actually I don't because
+  ;; lately the rendering quality is horrible, and I'd rather use
+  ;; PDF-tools as in Linux.
   (when (eq system-type 'darwin)
     (add-to-list 'TeX-view-program-list
                  '("displayline" 
-                   "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o %b"))
-    (add-to-list 'TeX-view-program-selection 
-                 '(output-pdf "displayline"))))
+                   "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o %b"))))
 
 
 ;; Load PDF tools if AucTeX wants to open a PDF
 (use-package pdf-tools
+  :pin manual
   :mode  ("\\.pdf" . pdf-view-mode)
   :init
   (setq pdf-view-use-unicode-ligther nil)  ;; make loading faster
   :config
   (pdf-tools-install)
-  (setq-default pdf-view-display-size 'fit-page))
-
+  (setq pdf-view-use-scaling t)
+  (setq-default pdf-view-display-size 'fit-page)
+  ;; Highlights do not open the annotation window when created
+  (setq pdf-annot-activate-created-annotations nil)
+  (defun mxl-pdf-annot-add-text-annotation ()
+    "Add text annotation but forces activation which is off
+by default."
+    (interactive)
+    (let ((pdf-annot-activate-created-annotations t))
+      (call-interactively 'pdf-annot-add-text-annotation)))
+  ;; more fine-grained zooming
+  (setq pdf-view-resize-factor 1.1)
+  ;; use isearch instead of swiper
+  (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
+  ;; keyboard shortcut for zooming
+  (define-key pdf-view-mode-map (kbd "+") 'pdf-view-enlarge)
+  (define-key pdf-view-mode-map (kbd "=") 'pdf-view-enlarge)
+  (define-key pdf-view-mode-map (kbd "-") 'pdf-view-shrink)
+  (define-key pdf-view-mode-map (kbd "0") 'pdf-view-scale-reset)
+  (define-key pdf-view-mode-map (kbd "W") 'pdf-view-fit-width-to-window)
+  (define-key pdf-view-mode-map (kbd "H") 'pdf-view-fit-height-to-window)
+  (define-key pdf-view-mode-map (kbd "P") 'pdf-view-fit-page-to-window)
+  ;; Margin removal
+  (defun mxl-pdf-view-toggle-crop()
+    "Crop/Uncrop according to the bounding box"
+    (interactive)
+    (if (pdf-view-current-slice)
+        (pdf-view-reset-slice)
+      (pdf-view-set-slice-from-bounding-box)))
+  (define-key pdf-view-mode-map (kbd "c") 'mxl-pdf-view-toggle-crop)
+  ;; keyboard shortcuts for annotations
+  (define-key pdf-view-mode-map (kbd "h") 'pdf-annot-add-highlight-markup-annotation)
+  (define-key pdf-view-mode-map (kbd "u") 'pdf-annot-add-underline-markup-annotation)
+  (define-key pdf-view-mode-map (kbd "s") 'pdf-annot-add-strikeout-markup-annotation)
+  (define-key pdf-view-mode-map (kbd "t") 'mxl-pdf-annot-add-text-annotation)
+  (define-key pdf-view-mode-map (kbd "l") 'pdf-annot-list-annotations)
+  (define-key pdf-view-mode-map (kbd "D") 'pdf-annot-delete))
 
 (eval-after-load "tex" '(init-latex--viewer-setup))
 
