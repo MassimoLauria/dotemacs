@@ -712,7 +712,6 @@ This is a workaround to get the old templates in org 9.2
 ;;;------------------------- Load -----------------------------------
 (use-package org
   :mode ("\\.org\\'" . org-mode)
-  :pin gnu
   :bind (([f5] . org-capture)
          ([f6] . my-org-agenda-show))
   :config

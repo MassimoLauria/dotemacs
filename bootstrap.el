@@ -9,10 +9,18 @@
 
 ;;  This is a list of packages that can be installed in batch
 ;;
-(setq requested-packages '(ace-window
+(setq requested-packages '(;; very important packages first
+                           use-package
+                           org-plus-contrib
+                           helm
+                           magit
+                           magit-svn 
+                           auctex
+                           pdf-tools
+                           ;; others
+                           ace-window
                            anaconda-mode 
                            async 
-                           auctex
                            beacon 
                            bind-key 
                            company 
@@ -35,7 +43,6 @@
                            git-commit 
                            gnus-alias 
                            graphviz-dot-mode 
-                           helm
                            helm-bibtex
                            helm-c-yasnippet
                            helm-rg
@@ -55,20 +62,15 @@
                            let-alist 
                            logito 
                            magic-latex-buffer 
-                           magit 
                            magit-popup 
-                           magit-svn 
                            metaweblog
                            ob-ipython 
                            olivetti
-                           org
                            org-bullets 
                            org-pdftools 
-                           org-plus-contrib
                            org-static-blog
                            package-build 
                            pcache 
-                           pdf-tools
                            pinboard
                            pkg-info
                            poet-theme
