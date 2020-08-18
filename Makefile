@@ -1,17 +1,18 @@
 # Copyright (C) 2015, 2016, 2018, 2019, 2020 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2020-08-11, 12:01 (CEST) Massimo Lauria"
+# Time-stamp: "2020-08-18, 02:04 (CEST) Massimo Lauria"
 #
 
 ## Emacs binary
 
 EMACS=emacs
 EMACSCLIENT=emacsclient
+EMACSAPP=Emacs.app
 
 ifeq ($(shell uname -s),Darwin)
-EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
-EMACSCLIENT=/Applications/Emacs.app/Contents/MacOS/bin/emacsclient
+EMACS=/Applications/${EMACSAPP}/Contents/MacOS/Emacs
+EMACSCLIENT=/Applications/${EMACSAPP}/Contents/MacOS/bin/emacsclient
 endif
 
 ## Init files
