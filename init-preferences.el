@@ -5,7 +5,9 @@
 ;;;-----------------------------------------------------------------
 
 
+;; Start in home
 (setq default-directory "~/")
+(setq command-line-default-directory "~/")
 
 ;; Meta usage in MacOSX requires some thought
 (if (boundp 'ns-right-alternate-modifier)
