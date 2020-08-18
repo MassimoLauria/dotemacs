@@ -4,10 +4,8 @@
 ;;;
 ;;;-----------------------------------------------------------------
 
-;;; Themes
 
-
-
+(setq default-directory "~/")
 
 ;; Meta usage in MacOSX requires some thought
 (if (boundp 'ns-right-alternate-modifier)
