@@ -6,7 +6,6 @@
 
 (use-package magit
   :commands (magit-status magit-blame magit-mode)
-  
   :config
   (add-to-list 'magit-no-confirm 'stage-all-changes)
   (setq magit-push-always-verify nil)

@@ -25,6 +25,7 @@
 (setq reftex-plug-into-AUCTeX t)
 (setq bib-cite-use-reftex-view-crossref t)
 (setq TeX-view-evince-keep-focus t)
+(setq LaTeX-item-indent 0)
 (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
 
 ;; View command fixes 
