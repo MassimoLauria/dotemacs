@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020  Massimo Lauria
-;; Time-stamp: "2020-08-18, 19:02 (CEST) Massimo Lauria"
+;; Time-stamp: "2020-08-20, 13:32 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -48,8 +48,23 @@
 (defvar base-config-path "~/config/emacs/"
   "The path of the whole emacs setup")
 
-;; Load README.org only if newer than README.el
-(org-babel-load-file (concat base-config-path "README.org"))
+;; Load README.org only if newer than README.el. This should happen
+;; already in org-bable-load-file but something does not work on MacOS
+;; and startup time is very slow. Anyway this code avoid loading
+;; `org-mode' for `org-babel-load-file'
+(let* ((org-file (concat base-config-path "README.org"))
+       (el-file (concat (file-name-sans-extension org-file) ".el"))
+       (age (lambda (file)
+              (float-time
+               (time-since
+                (file-attribute-modification-time
+                 (or (file-attributes (file-truename file))
+                     (file-attributes file))))))))
+  (if (and
+       (file-exists-p el-file)
+       (< (funcall age el-file) (funcall age org-file)))
+      (load-file el-file)
+    (org-babel-load-file org-file)))
 
 ;;; Module(s) initialization -------------------------------------------
 (require 'iso-transl)

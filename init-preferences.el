@@ -16,10 +16,20 @@
       (setq ns-right-alternate-modifier 'nil))
   (setq ns-alternate-modifier 'nil))
 
+
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
 
+;; Cursor
+(setq x-stretch-cursor t)
 (blink-cursor-mode nil)
+(setq cua-normal-cursor-color 'bar
+      cua-overwrite-cursor-color 'hollow
+      cua-read-only-cursor-color 'hbar
+      cua-enable-cursor-indications t
+      cua-enable-modeline-indications t)
+ 
+
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
 (setq mouse-highlight nil)
@@ -32,7 +42,6 @@
 (line-number-mode 1)
 (column-number-mode 1)
 
-(setq x-stretch-cursor t)
 ; (show-paren-mode 1)                     ; We use sp-show-paren-mode from smartparen
 
 ;; Speedbar
@@ -84,10 +93,10 @@
 ;; S-<arrow> select, C-<Ret> rectangular mark, C-<SPC> mark
 (transient-mark-mode t)
 (delete-selection-mode t)
+(setq cua-enable-cua-keys t)
+(setq cua-keep-region-after-copy t)
 (cua-mode t)
 
-
-(setq cua-keep-region-after-copy t)
 
 
 ;;(setq warning-minimum-level :error)

@@ -687,6 +687,31 @@ visualizes the error
         (display-buffer buffer)))))
 #+END_SRC
 
+   Most programming languages are supported by =flycheck=, a tool that
+   automatically   checks  the   buffer  for   error  while   writing.
+   Let's  activate it  by default.  In supported  languages =flycheck=
+   activates, assuming all needed tools for that language are present.
+   Use   =flycheck-verify-setup=    to   investigate    the   checkers
+   enabled/disabled/available in a buffer.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'after-init-hook #'global-flycheck-mode)
+#+END_SRC
+
+   Let's do a bit of setup  of =flycheck=, in particular how the error
+   are signaled to the user.
+
+#+BEGIN_SRC emacs-lisp
+(setq flycheck-disabled-checkers '(tex-chktex)
+      flycheck-display-errors-delay 0.1
+      flycheck-highlighting-mode 'symbols
+      flycheck-idle-change-delay 1.0)
+#+END_SRC
+
+ 
+
+
+
 ** Python
 
    Python  is  the programming  language  I  am using  most  nowadays.
@@ -831,6 +856,21 @@ interface similar  to Magit,  and allows  various options  for testing
 (add-to-list 'auto-mode-alist '("bash-fc-[0-9]*"  . sh-mode))
 #+END_SRC
 
+   There  is   a  nice   syntax  checker   for  shell   script  called
+   =shellcheck=,  which  is  a  godsend  considering  how  brittle  is
+   the language.
+
+** Copyright notice and timestamps
+
+   Automatic  update  of  the   copyright  notices  and  time  stamps.
+   Useful to keep additional track  about files age, regardless of git
+   history.
+
+#+BEGIN_SRC emacs-lisp
+(setq copyright-query nil)                       ; do not ask before a copyright 
+(add-hook 'before-save-hook 'copyright-update)   ; update copyright if present
+(add-hook 'before-save-hook 'time-stamp)         ; insert timestamp
+#+END_SRC
 
 * Math packages
 
@@ -911,6 +951,8 @@ interface similar  to Magit,  and allows  various options  for testing
    kept. Disable backups for remote files.
 
 #+BEGIN_SRC emacs-lisp
+(setq make-backup-files t)
+
 (setq version-control nil)
 
 (setq delete-old-versions t) ;; silently delete old versions
