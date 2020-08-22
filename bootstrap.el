@@ -131,14 +131,14 @@
     (package-refresh-contents)))
 
 (defun install-pkgs ()
-  "Install all packages in `requested-packages'"
+  "Install all packages in `requested-packages'."
   (package-refresh-contents)
   (dolist (package requested-packages)
     (unless (package-installed-p package)
       (package-install package))))
 
 (defun upgrade-pkgs ()
-  "Upgrade installed packages"
+  "Upgrade installed packages."
   (package-refresh-contents)
   (save-window-excursion
     (package-list-packages t)
@@ -151,3 +151,4 @@
 
 
 (provide 'bootstrap)
+;;; bootstrap.el ends here

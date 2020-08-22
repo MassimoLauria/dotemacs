@@ -57,11 +57,6 @@
  '(highlight-symbol-idle-delay 0.5)
  '(large-file-warning-threshold nil)
  '(linum-format " %2d│")
- '(massimo-keyboard-comint-modes
-   '(shell-mode comint-mode inferior-octave-mode inferior-emacs-lisp-mode))
- '(massimo-keyboard-eshell-active t)
- '(massimo-keyboard-folding-meta-g-override-p t)
- '(massimo-keyboard-global-mode t)
  '(menu-bar-mode nil)
  '(nlinum-format "%2d│")
  '(no-easy-keys t)
@@ -78,7 +73,7 @@
                  ("begin" "$1" "$" "$$" "\\(" "\\[")))
  '(org-preview-latex-default-process 'dvisvgm)
  '(package-selected-packages
-   '(lsp-mode org-pdftools python-pytest helm-c-yasnippet company-anaconda langtool org-static-blog yapfify writegood-mode flyspell-correct-helm powerline helm-swoop gnu-elpa-keyring-update deadgrep helm-recoll helm-rg rg unicode-fonts forge helm-ls-git helm-bibtex helm org unfill ivy-hydra leuven-theme moe-theme solarized-theme poet-theme sdcv gscholar-bibtex org-bullets company-box ivy-rich which-key yasnippet-snippets magit pythonic esup pyenv-mode-auto ivy-bibtex guess-language pdf-tools wc-mode atomic-chrome zoom-frm latex-preview-pane ob-ipython ssh-config-mode py-autopep8 company-irony-c-headers flycheck-irony visual-fill-column wgrep wgrep-ag ag iedit try smex counsel zenburn-theme yasnippet virtualenvwrapper use-package undo-tree swiper smartparens skeletor rainbow-mode rainbow-identifiers rainbow-delimiters pallet org-plus-contrib magit-svn magit-gh-pulls magic-latex-buffer irony-eldoc highlight-symbol highlight-quoted highlight-defined highlight-blocks graphviz-dot-mode gnus-alias flycheck expand-region elisp-slime-nav elfeed deferred company-irony auctex ace-window))
+   '(latex-math-preview lsp-mode org-pdftools python-pytest helm-c-yasnippet company-anaconda langtool org-static-blog yapfify writegood-mode flyspell-correct-helm powerline helm-swoop gnu-elpa-keyring-update deadgrep helm-recoll helm-rg rg unicode-fonts forge helm-ls-git helm-bibtex helm org unfill ivy-hydra leuven-theme moe-theme solarized-theme poet-theme sdcv gscholar-bibtex org-bullets company-box ivy-rich which-key yasnippet-snippets magit pythonic esup pyenv-mode-auto ivy-bibtex guess-language pdf-tools wc-mode atomic-chrome zoom-frm latex-preview-pane ob-ipython ssh-config-mode py-autopep8 company-irony-c-headers flycheck-irony visual-fill-column wgrep wgrep-ag ag iedit try smex counsel zenburn-theme yasnippet virtualenvwrapper use-package undo-tree swiper smartparens skeletor rainbow-mode rainbow-identifiers rainbow-delimiters pallet org-plus-contrib magit-svn magit-gh-pulls magic-latex-buffer irony-eldoc highlight-symbol highlight-quoted highlight-defined highlight-blocks graphviz-dot-mode gnus-alias flycheck expand-region elisp-slime-nav elfeed deferred company-irony auctex ace-window))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
  '(powerline-default-separator 'arrow)
  '(powerline-text-scale-factor 0.5)
@@ -127,7 +122,6 @@
      (TeX-PDF-mode . t)
      (org-babel-python-command . "python3")))
  '(save-interprogram-paste-before-kill t)
- '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/places")
  '(save-place-mode t nil (saveplace))
  '(semantic-decoration-styles

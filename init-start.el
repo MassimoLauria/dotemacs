@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020  Massimo Lauria
-;; Time-stamp: "2020-08-20, 13:32 (CEST) Massimo Lauria"
+;; Time-stamp: "2020-08-22, 12:50 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -43,10 +43,11 @@
           (lambda () (setq gc-cons-threshold (* 20 1024 1024))))
 
 ;;; Setup Emacs environment --------------------------------------------
-(require 'bootstrap)    ;; package system
-
 (defvar base-config-path "~/config/emacs/"
   "The path of the whole emacs setup")
+
+(require 'bootstrap)    ;; package system
+
 
 ;; Load README.org only if newer than README.el. This should happen
 ;; already in org-bable-load-file but something does not work on MacOS
@@ -113,9 +114,11 @@
 (require 'init-unsorted-elisp)  ; various setups -- check for speed
 
 ;; My keyboard configuration
-(use-package massimo-keyboard
-  :commands (massimo-keyboard-mode massimo-keyboard-global-mode))
-(massimo-keyboard-global-mode)
+(use-package mxl-keyboard
+  :commands (mxl-keyboard-mode mxl-keyboard-global-mode)
+  :config
+  (mxl-keyboard-global-mode)
+  :demand t)
 
 ;;; Customized settings -------------------------------------------------
 (setq custom-file "~/config/emacs/custom.el")
