@@ -149,6 +149,31 @@
        (package-menu-execute)))))
 
 
+;; Load `org-mode' config file.
+;; Load README.org only if newer than README.el. This code avoid
+;; loading `org-mode' for `org-babel-load-file'
+(defun mxl-maybe-load-org-config (fName)
+  "Load `org-mode' config file `fName'
+
+Load the org-mode file only if it is newer than the corresponding
+elisp file obtained with `org-babel', otherwise load the elisp
+file directly. This code avoid loading `org-mode' for
+`org-babel-load-file' function, when unnecessary"
+  (let* ((org-file fName)
+         (el-file (concat (file-name-sans-extension org-file) ".el"))
+         (age (lambda (file)
+                (float-time
+                 (time-since
+                  (file-attribute-modification-time
+                   (or (file-attributes (file-truename file))
+                       (file-attributes file))))))))
+    (if (and
+         (file-exists-p el-file)
+         (< (funcall age el-file) (funcall age org-file)))
+        (load-file el-file)
+      (org-babel-load-file org-file))))
+
+
 
 (provide 'bootstrap)
 ;;; bootstrap.el ends here
