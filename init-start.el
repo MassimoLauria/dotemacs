@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020  Massimo Lauria
-;; Time-stamp: "2020-08-22, 12:50 (CEST) Massimo Lauria"
+;; Time-stamp: "2020-08-23, 20:42 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -116,6 +116,7 @@
 ;; My keyboard configuration
 (use-package mxl-keyboard
   :commands (mxl-keyboard-mode mxl-keyboard-global-mode)
+  :diminish " ⊤"
   :config
   (mxl-keyboard-global-mode)
   :demand t)
