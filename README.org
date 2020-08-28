@@ -145,7 +145,6 @@ Ignore if the path does not exists."
 (let ((private "~/personal/conf/emacs.el"))
   (when (file-readable-p private)
     (load-file private)))
-
 #+END_SRC
 
 

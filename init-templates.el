@@ -1,9 +1,9 @@
 ;;; init-templates.el --- Setup template projects
 
-;; Copyright (C) 2015  Massimo Lauria
+;; Copyright (C) 2015, 2020  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2015-02-28, 18:08 (CET) Massimo Lauria>
+;; Time-stamp: <2020-08-28, 15:58 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@
 
 (defalias 'template-project        'skeletor-create-project)
 (defalias 'template-project-at-dir 'skeletor-create-project-at)
-(setq skeletor-user-organisation user-organisation)
 
 (use-package skeletor
   :ensure t

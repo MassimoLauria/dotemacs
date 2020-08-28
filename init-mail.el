@@ -75,7 +75,9 @@
         mu4e-attachment-dir  "~/Downloads")
 
   (setq mu4e-other-folders
-        (cl-set-difference (directory-files mu4e-maildir)
+        (cl-set-difference (if (file-accessible-directory-p mu4e-maildir)
+                               (directory-files mu4e-maildir)
+                             nil)
                            '("." ".." "inbox" "archive" "drafts" "sent" "spam" "trash" "special") :test 'equal))
 
   ;; Update in the background, silently
