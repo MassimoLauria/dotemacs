@@ -50,6 +50,7 @@
           smtpmail-queue-mail nil)))
 ;;; Reading email with mu4e
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e/")
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e/")
 (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e/")
 
 
