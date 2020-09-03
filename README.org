@@ -794,6 +794,7 @@ interface similar  to Magit,  and allows  various options  for testing
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'python-mode-hook 'flycheck-mode)
+(add-to-list 'flycheck-disabled-checkers 'python-mypy)
 
 (use-package yapfify
   :diminish yapf-mode 
