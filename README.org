@@ -327,8 +327,11 @@ I use an alternative fallback font.
 command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
 
 #+BEGIN_SRC emacs-lisp
-(set-fontset-font t #x2318 symbol-font)   ; ⌘
-(set-fontset-font t #x270e symbol-font)   ; ✎
+(run-with-idle-timer 1 nil
+                     (lambda ()
+                       (set-fontset-font t #x2318 symbol-font)   ; ⌘
+                       (set-fontset-font t #x270e symbol-font)   ; ✎
+))
 #+END_SRC
 
 ** Theme
