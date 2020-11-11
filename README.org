@@ -327,12 +327,16 @@ I use an alternative fallback font.
 command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
 
 #+BEGIN_SRC emacs-lisp
-(run-with-idle-timer 1 nil
-                     (lambda ()
-                       (set-fontset-font t #x2318 symbol-font)   ; ⌘
-                       (set-fontset-font t #x270e symbol-font)   ; ✎
-))
+(defun mxl-fix-bibfonts (frame)
+  (set-fontset-font t #x2318 symbol-font)   ; ⌘
+  (set-fontset-font t #x270e symbol-font))  ; ✎
+ 
+(mapc 'mxl-fix-bibfonts (frame-list))                    ; applies to existing frames
+(add-hook 'after-make-frame-functions 'mxl-fix-bibfonts) ; applies to future frames
 #+END_SRC
+
+#+RESULTS:
+: mxl-after-frame-fix-bibfonts
 
 ** Theme
 
