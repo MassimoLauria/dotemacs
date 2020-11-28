@@ -19,6 +19,7 @@
                            pdf-tools
                            ;; others
                            ace-window
+                           all-the-icons
                            anaconda-mode 
                            async 
                            beacon 
@@ -94,7 +95,6 @@
                            undo-tree
                            unfill
                            unicode-fonts
-                           use-package 
                            virtualenvwrapper 
                            visual-fill-column 
                            which-key 

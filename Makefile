@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016, 2018, 2019, 2020 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2020-08-18, 02:04 (CEST) Massimo Lauria"
+# Time-stamp: "2020-11-28, 11:07 (CET) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -22,7 +22,7 @@ INITFULL=$(abspath init-start.el)
 INITMINI=$(abspath init-minimal.el)
 
 ## Font files
-FONTS=dejavu-fonts-ttf-2.37 iosevska-fonts-ttf-2.1.0 baskerville-font source-code-pro roboto-mono
+FONTS=dejavu-fonts-ttf-2.37 iosevska-fonts-ttf-2.1.0 baskerville-font source-code-pro roboto-mono all-the-icons-fonts
 
 FONTPATH=~/.fonts
 ifeq ($(shell uname -s),Darwin)
