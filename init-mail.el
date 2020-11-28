@@ -132,27 +132,27 @@
                          :query "date:2099"
                          :key ?{)
                         (make-mu4e-bookmark
-                         :name (icon-on-linux "📬 " "Posta in arrivo")
+                         :name (icon-on-linux " " "Posta in arrivo")
                          :query "maildir:/inbox"
                          :key ?i)
                         (make-mu4e-bookmark
-                         :name (icon-on-linux "→ " "Inviati (ultimo mese)")
+                         :name (icon-on-linux " " "Inviati (ultimo mese)")
                          :query "maildir:/sent AND date:1m..now"
                          :key ?s)
                         (make-mu4e-bookmark
-                         :name (icon-on-linux "📧 " "Tutti i messaggi (ultimo mese)")
+                         :name (icon-on-linux " " "Tutti i messaggi (ultimo mese)")
                          :query "maildir:/archive AND date:1m..now"
                          :key ?a)
                         (make-mu4e-bookmark
-                         :name (icon-on-linux "☆ " "Speciali")
+                         :name (icon-on-linux " " "Speciali")
                          :query "maildir:/special"
                          :key ?t)
                         (make-mu4e-bookmark
-                         :name (icon-on-linux "🗋 " "Bozze")
+                         :name (icon-on-linux " " "Bozze")
                          :query "maildir:/drafts"
                          :key ?d)
                         (make-mu4e-bookmark
-                         :name (icon-on-linux "📎" "Con allegato")
+                         :name (icon-on-linux " " "Con allegato")
                          :query "flag:attach"
                          :key ?A)
                         (make-mu4e-bookmark
@@ -167,7 +167,7 @@
         do
         (add-to-list 'mu4e-bookmarks
                         (make-mu4e-bookmark
-                         :name  (icon-on-linux "🏷 " label)
+                         :name  (icon-on-linux " " label)
                          :query (concat "maildir:/" label)
                          :key (string-to-char (number-to-string i)))
                         'append)
