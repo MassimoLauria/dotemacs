@@ -64,12 +64,6 @@
    '("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3"))
  '(org-beamer-environments-extra
    '(("onlyenv" "O" "\\\\begin{onlyenv}%a" "\\\\end{onlyenv}")))
- '(org-file-apps
-   '((auto-mode . emacs)
-     ("\\.mm\\'" . default)
-     ("\\.x?html?\\'" . default)
-     ("\\.pdf\\'" . default)
-     ("jpg" . "open %s")))
  '(org-format-latex-options
    '(:foreground "White" :background default :scale 1.7279999999999998 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\[")))
