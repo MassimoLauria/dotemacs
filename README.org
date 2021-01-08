@@ -519,15 +519,16 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
     whitespaces) which generates too many false positives.
 
 #+BEGIN_SRC emacs-lisp
-(when (file-directory-p "/usr/local/share/languagetool/")
+(setq langtool-path '("/usr/local/share/languagetool" "/snap/languagetool/current/usr/bin"))
+(setq langtool-language-tool-jar (concat (dolist (elt langtool-path value)
+                                             (setq value (if (file-directory-p elt) elt)))
+                                           "/languagetool-commandline.jar"))
+(when (file-exists-p langtool-language-tool-jar)
   (use-package langtool
-    :init
-    (setq langtool-language-tool-jar "/usr/local/share/languagetool/languagetool-commandline.jar")
     :config
     (setq langtool-mother-tongue "it")'
     (setq langtool-disabled-rules "WHITESPACE_RULE")
     :commands (langtool-check langtool-check-buffer langtool-switch-default-language)))
-
 #+END_SRC
 
     The  last component  is  a  single function  =mxl-language-check=.
