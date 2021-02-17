@@ -24,6 +24,7 @@
                            async 
                            beacon 
                            bind-key 
+                           cmake-mode
                            company 
                            company-anaconda 
                            company-irony 
