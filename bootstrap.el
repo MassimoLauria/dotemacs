@@ -12,6 +12,7 @@
 (setq requested-packages '(;; very important packages first
                            use-package
                            org-plus-contrib
+                           eglot
                            helm
                            magit
                            magit-svn 
@@ -20,15 +21,11 @@
                            ;; others
                            ace-window
                            all-the-icons
-                           anaconda-mode 
                            async 
                            beacon 
                            bind-key 
                            cmake-mode
                            company 
-                           company-anaconda 
-                           company-irony 
-                           company-irony-c-headers 
                            dash
                            deferred 
                            diminish 
@@ -38,7 +35,6 @@
                            expand-region 
                            f
                            flycheck
-                           flycheck-irony 
                            flyspell
                            flyspell-correct-helm
                            forge
@@ -57,8 +53,6 @@
                            highlight-symbol 
                            htmlize 
                            iedit 
-                           irony 
-                           irony-eldoc
                            langtool
                            latex-preview-pane 
                            let-alist 

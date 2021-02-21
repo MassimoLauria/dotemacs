@@ -1,9 +1,9 @@
 ;;; init-modeline.el --- Setup the modeline
 
-;; Copyright (C) 2013, 2014, 2015, 2016, 2018, 2020  Massimo Lauria
+;; Copyright (C) 2013, 2014, 2015, 2016, 2018, 2020, 2021  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2020-08-23, 20:40 (CEST) Massimo Lauria>
+;; Time-stamp: <2021-02-21, 01:18 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -96,6 +96,20 @@ nil."
      'flycheck-mode-line-status-text-slim
      ))
 
+
+(defalias 'flymake-report-status 'flymake-report-status-slim)
+(defun flymake-report-status-slim (e-w &optional status)
+  "Show \"slim\" flymake status in mode line."
+  (when e-w
+    (setq flymake-mode-line-e-w e-w))
+  (when status
+    (setq flymake-mode-line-status status))
+  (let* ((mode-line " Φ"))
+    (when (> (length flymake-mode-line-e-w) 0)
+      (setq mode-line (concat mode-line ":" flymake-mode-line-e-w)))
+    (setq mode-line (concat mode-line flymake-mode-line-status))
+    (setq flymake-mode-line mode-line)
+    (force-mode-line-update)))
 
 ;; ;; powerline makes mode-line cool
 (when (require 'powerline nil t)

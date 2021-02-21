@@ -715,6 +715,7 @@ visualizes the error
    enabled/disabled/available in a buffer.
 
 #+BEGIN_SRC emacs-lisp
+(setq flycheck-global-modes '(not python-mode))    ; Python uses eglot/flymake
 (add-hook 'after-init-hook #'global-flycheck-mode)
 #+END_SRC
 
@@ -732,6 +733,45 @@ visualizes the error
 
 
 
+
+
+** Programming language support
+   
+   The most convenient way to  integrate language features nowadays is
+   to  use a  language  server that  implements  LSP (Language  Server
+   Protocol). I am  currenly using [[https://github.com/joaotavora/eglot][Eglot]] which should provide, and set up on
+   its own, several features as 
+   - completion using =company-mode=
+   - integrated help using =eldoc=
+   - jump to/from definitions using =xref= (try =M-,= =M-.= keybindings)
+   - code snippets (if =yasnippet= is enabled in advance)
+   - code checking using =flymake=
+   - other features...
+
+   [[https://github.com/joaotavora/eglot][Eglot]] detects the root of a project using =project-find-dir=, which
+   by  default  considers  a  Git  submodule as  part  of  a  project.
+   I usually  work in a different  way, and I consider  Git submodules
+   are standalone.
+
+#+BEGIN_SRC emacs-lisp
+(setq project-vc-merge-submodules nil)
+#+END_SRC
+
+   Some useful functions to manage Eglot.
+
+#+BEGIN_SRC emacs-lisp
+(defun mxl/toggle-flymake-errors()
+  (interactive)
+  (let ((buffer (get-buffer (flymake--diagnostics-buffer-name))))
+    (if (and buffer (get-buffer-window buffer))
+        (delete-windows-on buffer)
+      (flymake-show-diagnostics-buffer))))
+
+(defun mxl/eglot-format-buffer-on-save ()
+  (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
+#+END_SRC
+   
+
 ** Python
 
    Python  is  the programming  language  I  am using  most  nowadays.
@@ -742,7 +782,8 @@ visualizes the error
    My configuration  is based around the  default =python.el= included
    with  Emacs   (there  are   indeed  other  python   modes  around).
    Furthermore it uses
-   - =anaconda-mode= and =company-anacon= for completion;
+   - =eglot= as a LSP client, providing help, completion, symbol search;
+   - requires to run ~pip install python-language-server~ to instal =pyls=;
    - =pyenv= to manage the virtual environments.
    - standard  python   as  interactive  shell  (Ipython   prompt  and
      completion tend to confuse Emacs if not well configured).
@@ -763,64 +804,41 @@ interface similar  to Magit,  and allows  various options  for testing
 
 #+BEGIN_SRC emacs-lisp
 (use-package python-pytest
-  :commands python-pytest-dispatch
-  :bind (:map python-mode-map
-         ("<f9>" . python-pytest-dispatch)))
+  :commands python-pytest-dispatch)
 #+END_SRC
 
-
-
-  Using the key F10 I can  toggle the prompt shell buffer connected to
-  this python buffer.
+Using the  key F10 I can  toggle the prompt shell  buffer connected to
+this python buffer.
 
 #+BEGIN_SRC emacs-lisp
-(with-eval-after-load "python"
-  (define-key python-mode-map (kbd "<f10>") 'python-shell-switch-to-shell)
-  (define-key inferior-python-mode-map (kbd "<f10>") 'delete-window))
-#+END_SRC
 
-   Autocompletion is based around  Anaconda Mode, paired with Company.
-   We  also use  Anacoda for  code navigation  using =M-.=  and =M-,=.
-   Unfortunately =anaconda-mode= does not work with Python 3.8, so for
-   now I have to stay with Python 3.7.
-
-#+BEGIN_SRC emacs-lisp
-(use-package anaconda-mode
-  :diminish nil
-  :commands anaconda-mode
+(use-package python
   :init
-  (add-hook 'python-mode-hook 'anaconda-mode)
-  (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
-  :config
-  (define-key anaconda-mode-map  (kbd "M-/") 'anaconda-mode-show-doc)
-  (define-key anaconda-mode-map  (kbd "M-.") 'anaconda-mode-find-definitions)
-  (define-key anaconda-mode-map  (kbd "M-,") 'pop-tag-mark)
-  (define-key anaconda-mode-map  (kbd "M-r") nil))
-
-;; Auto completion
-(use-package company-anaconda
-  :after (anaconda-mode company)
-  :commands company-anaconda
-  :config (add-to-list 'company-backends 'company-anaconda))
+  (setq python-indent-guess-indent-offset nil
+        python-indent-offset 4)
+  :hook ((python-mode . eglot-ensure)
+         (python-mode . mxl/eglot-format-buffer-on-save))
+  :bind (:map python-mode-map
+              ("<f9>"    .  python-pytest-repeat)
+              ("<f10>"   .  python-shell-switch-to-shell)
+              ("<f11>"   .  flymake-goto-prev-error)
+              ("<f12>"   .  flymake-goto-next-error)
+              ("M-<f9>"  .  python-pytest-dispatch)
+              ("M-<f10>" .  run-python)
+              ("M-<f11>" .  mxl/toggle-flymake-errors)
+              ("M-<f12>" .  mxl/toggle-flymake-errors)
+         :map inferior-python-mode-map
+              ("<f10>" . delete-window)))
 #+END_SRC
 
-
+   
   I  have  not reached  a  definitive  configuration regarding  syntax
-  checking, but for  now I am using either [[https://www.pylint.org/][Pylint]]  or [[https://flake8.pycqa.org/en/latest/][Flake8]] which are
-  run  by [[https://www.flycheck.org/][Flycheck]],  an  emacs package  which  highlight code  errors.
-  Furthermore I  use [[https://github.com/google/yapf][Yapf]]  to enforce  code formatting,  together with
-  [[https://github.com/JorisE/yapfify][Yapfify]] emacs package.  I tried [[https://github.com/paetzke/py-yapf.el][Py-Yapf]] before but it  had some bugs
-  open for a while, like the  fact that it empties the kill-ring every
-  time you save python code.
+  checking. I used to run [[https://www.pylint.org/][Pylint]]  or [[https://flake8.pycqa.org/en/latest/][Flake8]] from by [[https://www.flycheck.org/][Flycheck]], an emacs
+  package  which highlight  code errors.  Now I  use [[https://github.com/joaotavora/eglot][Eglot]]  which runs
+  =flymake= by default, and provides =eglot-format= with calls [[https://github.com/google/yapf][Yapf]] to
+  enforce  code  formatting. I  would  like  to run  it  automatically
+  before saving.
 
-#+BEGIN_SRC emacs-lisp
-(add-hook 'python-mode-hook 'flycheck-mode)
-(add-to-list 'flycheck-disabled-checkers 'python-mypy)
-
-(use-package yapfify
-  :diminish yapf-mode 
-  :hook (python-mode . yapf-mode))
-#+END_SRC
 
   Emacs is able to find the appropriate =pyenv= Python Environment and
   to  load  it  automatically.  Which is  useful  for  running  syntax
@@ -842,13 +860,6 @@ interface similar  to Magit,  and allows  various options  for testing
 (use-package pyenv-mode-auto
   :hook (find-file . pyenv-mode-auto-hook)
   :config (pyenv-mode))
-#+END_SRC
-
-  Of course standard indentation is 4.
-
-#+BEGIN_SRC emacs-lisp
-(setq python-indent-guess-indent-offset nil)
-(setq python-indent-offset 4)
 #+END_SRC
 
 
