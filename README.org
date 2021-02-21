@@ -354,20 +354,25 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
    mistakes.  The defaults  decorations  from Zenburn  are either  too
    intrusive or too faint, so I customize them.
 
-   - Violet for spelling mistakes
+   - Violet for spelling/grammar mistakes
    - Red for syntax mistakes in programming languages
    - Yellow for syntax/style warnings
+   - Green for syntax/style notes  
 
 #+BEGIN_SRC emacs-lisp
 (custom-theme-set-faces
  'zenburn
  '(flycheck-error ((t (:underline "Red"))))
  '(flycheck-warning ((t (:underline "Yellow"))))
- '(flyspell-duplicate ((t (:strike-through "magenta"))))
+ '(flycheck-info ((t (:underline "deep sky blue"))))
+ '(flymake-error ((t (:underline "Red1"))))
+ '(flymake-warning ((t (:underline "yellow"))))
+ '(flymake-note ((t (:underline "deep sky blue"))))
+ '(flyspell-duplicate ((t (:underline (:color "magenta" :style wave)))))
  '(flyspell-incorrect ((t (:underline (:color "magenta" :style wave)))))
  '(writegood-duplicates-face ((t nil)))
- '(writegood-passive-voice-face ((t (:underline (:color "Yellow" :style wave)))))
- '(writegood-weasels-face ((t (:strike-through "yellow")))))
+ '(writegood-passive-voice-face ((t (:underline (:color "magenta" :style wave)))))
+ '(writegood-weasels-face ((t (:underline (:color "magenta" :style wave))))))
 #+END_SRC
 
 
@@ -715,7 +720,7 @@ visualizes the error
    enabled/disabled/available in a buffer.
 
 #+BEGIN_SRC emacs-lisp
-(setq flycheck-global-modes '(not python-mode))    ; Python uses eglot/flymake
+(setq flycheck-global-modes '(not python-mode c-mode c++-mode objc-mode)) ; Use eglot/flymake
 (add-hook 'after-init-hook #'global-flycheck-mode)
 #+END_SRC
 
@@ -729,13 +734,8 @@ visualizes the error
       flycheck-idle-change-delay 1.0)
 #+END_SRC
 
- 
 
-
-
-
-
-** Programming language support
+** Programming language support (LSP)
    
    The most convenient way to  integrate language features nowadays is
    to  use a  language  server that  implements  LSP (Language  Server
@@ -770,6 +770,18 @@ visualizes the error
 (defun mxl/eglot-format-buffer-on-save ()
   (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
 #+END_SRC
+
+   We configure basic keybindings for the modes that use =eglot=
+
+#+BEGIN_SRC emacs-lisp
+(use-package eglot
+  :bind (:map eglot-mode-map
+              ("<f11>"   .  flymake-goto-prev-error)
+              ("<f12>"   .  flymake-goto-next-error)
+              ("M-<f11>" .  mxl/toggle-flymake-errors)
+              ("M-<f12>" .  mxl/toggle-flymake-errors)))   
+#+END_SRC
+   
    
 
 ** Python
@@ -862,6 +874,39 @@ this python buffer.
   :config (pyenv-mode))
 #+END_SRC
 
+
+** C and C++
+
+   A  basic  setup  for  C   and  C++,  possibly  enabling  =flyspell=
+   and =doxygen=.
+
+   
+#+BEGIN_SRC emacs-lisp
+(defun setup-cc-mode ()
+  "My Setup for C and C++"
+  (interactive)
+
+  ;; editing facilities
+  (local-set-key (kbd "RET") 'newline-and-indent)
+  (local-set-key (kbd "M-SPC") 'ff-find-related-file) ;; go to corresponding header file
+  (setq c-block-comment-prefix "")
+  (setq fill-column 70)
+
+  ;; Minor modes
+  (when (fboundp 'doxygen-mode)  (doxygen-mode  t))
+  (when (fboundp 'flyspell-prog-mode) (flyspell-prog-mode))
+  (eglot-ensure))
+#+END_SRC
+
+   Setup  C and  C++  modes, using  [[https://github.com/joaotavora/eglot][Eglot]] which  in  turn uses  =ccls=
+   by default.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'c-mode-hook   'setup-cc-mode)
+(add-hook 'c++-mode-hook 'setup-cc-mode)
+(add-hook 'c-mode-hook   'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+#+END_SRC
 
 ** Shell programming
 

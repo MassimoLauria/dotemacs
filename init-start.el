@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020  Massimo Lauria
-;; Time-stamp: "2020-08-23, 22:57 (CEST) Massimo Lauria"
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021  Massimo Lauria
+;; Time-stamp: "2021-02-21, 15:51 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -26,7 +26,7 @@
 ;;  Emacs 24.  In case Emacs is older, this file should not be loaded
 ;;  and the fallback `init-minimal.el' should.
 
-
+;;; Code:
 
 ;; Fallback configuration
 (when (< emacs-major-version 24)
@@ -44,8 +44,9 @@
 
 ;;; Setup Emacs environment --------------------------------------------
 (defvar base-config-path "~/config/emacs/"
-  "The path of the whole emacs setup")
+  "The path of the whole Emacs setup.")
 
+(add-to-list 'load-path base-config-path)
 (require 'bootstrap)    ;; package system
 
 
@@ -82,7 +83,6 @@
 
 ;; Programming
 (require 'init-magit)
-(require 'init-cc-mode)
 (require 'init-scheme)
 
 ;; Writing science

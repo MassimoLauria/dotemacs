@@ -1,11 +1,13 @@
 ;;; bootstrap.el --- package/profile utils -*- coding: utf-8 -*-
+
+
+;;; Commentary:
 ;;
-;; 
-;;  Usage:
+;;  $ emacs -batch -l bootstrap.el -f install-pkgs
 ;;
-;;    emacs -batch -l bootstrap.el -f install-pkgs
-;;
-;;    emacs -batch -l bootstrap.el -f upgrade-pkgs
+;;  $ emacs -batch -l bootstrap.el -f upgrade-pkgs
+
+;;; Code:
 
 ;;  This is a list of packages that can be installed in batch
 ;;
