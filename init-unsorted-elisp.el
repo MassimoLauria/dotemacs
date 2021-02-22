@@ -32,11 +32,6 @@
 (autoload 'muttrc-mode "muttrc-mode"
   "Mode to edit mutt configuration files")
 
-
-(use-package semantic
-  :commands semantic-mode)
-
-
 ;; Editing
 (use-package expand-region
   :commands er/expand-region)
@@ -147,63 +142,6 @@
 
 
 
-;; Tags managements ----------------------------------------
-;; Fix the keybindings for Semantic, Gtags and Etags
-
-;; M-. is for finding the tag
-;; M-, is for popping the tag stack
-;; The usual binding for popping is M-* which is disabled here.
-
-
-(defvar semantic-tags-location-ring (make-ring 20))
-
-(defun semantic-goto-definition (point)
-  "Goto definition using semantic-ia-fast-jump
-save the pointer marker if tag is found.
-
-Code from
-http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
-  (interactive "d")
-  (condition-case err
-      (progn
-        (ring-insert semantic-tags-location-ring (point-marker))
-        (semantic-ia-fast-jump point))
-    (error
-     ;;if not found remove the tag saved in the ring
-     (set-marker (ring-remove semantic-tags-location-ring 0) nil nil)
-     (signal (car err) (cdr err)))))
-
-(defun semantic-pop-tag-mark ()
-  "popup the tag save by semantic-goto-definition
-
-Code from
-http://sourceforge.net/mailarchive/message.php?msg_id=27414242"
-  (interactive)
-  (if (ring-empty-p semantic-tags-location-ring)
-      (message "%s" "No more tags available")
-    (let* ((marker (ring-remove semantic-tags-location-ring 0))
-              (buff (marker-buffer marker))
-                 (pos (marker-position marker)))
-      (if (not buff)
-            (message "Buffer has been deleted")
-        (switch-to-buffer buff)
-        (goto-char pos))
-      (set-marker marker nil nil))))
-
-(eval-after-load "semantic"
-  '(progn
-     (define-key semantic-mode-map (kbd "M-.") 'semantic-goto-definition)
-     (define-key semantic-mode-map (kbd "M-,") 'semantic-pop-tag-mark)
-     ))
-
-
-;; Gtags keys
-(eval-after-load 'gtags-mode
-          '(progn
-             (define-key gtags-mode-map (kbd "M-.") 'gtags-find-tag)
-             (define-key gtags-mode-map (kbd "M-,") 'gtags-pop-stack)
-             (define-key gtags-mode-map (kbd "M-*") 'nil)
-             ))
 
 ;; Elisp navigation
 (eval-after-load "elisp-slime-nav-autoloads.el"
