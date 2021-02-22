@@ -141,16 +141,6 @@
                )))
 
 
-
-
-;; Elisp navigation
-(eval-after-load "elisp-slime-nav-autoloads.el"
-          '(progn
-             (add-hook 'lisp-interaction-mode-hook 'elisp-slime-nav-mode)
-             (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode)
-             ))
-
-
 ;; Kill buffers with running processes
 (setq kill-buffer-query-functions
       (remove 'process-kill-buffer-query-function kill-buffer-query-functions))
