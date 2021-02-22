@@ -73,7 +73,7 @@
         mu4e-trash-folder "/trash"
         mu4e-refile-folder "/archive"
         ;; attachments go here
-        mu4e-attachment-dir  "~/Downloads")
+        mu4e-attachment-dir  "~/queue")
 
   (setq mu4e-other-folders
         (cl-set-difference (if (file-accessible-directory-p mu4e-maildir)
@@ -97,6 +97,7 @@
   (setq mu4e-show-images t)
   (setq mu4e-view-image-max-height 300)
   (setq mu4e-view-image-max-width 400)
+  (setq mu4e-completing-read-function 'helm-comp-read)
 
   (setq mu4e-get-mail-command "mbsync gmail")
   (setq mu4e-change-filenames-when-moving t)
