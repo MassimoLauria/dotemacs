@@ -571,6 +571,49 @@ open, the command will just close it.
 
 
 
+** Word wrapping and text width
+
+   I  like  when  files  are,   to  some  extent,  of  limited  width.
+   Unfortunately  it is  not  always possible  for technical  reasons.
+   There are many options to wrap a text a specific width, either hard
+   coding  newlines,  or wrapping  on  the  display without  modifying
+   the file.
+
+   - =auto-fill-mode=  (hard insert line breaks automatically)
+   - =visual-fill-mode= (visual wrap at window margin)
+   - =isual-fill-column-mode= (visual wrap at fixed margin)
+
+   To be  readable, prose text files  should have at most  70 columns.
+   And when word wrapping is hard-coded, the text should be justified.
+   
+#+BEGIN_SRC emacs-lisp
+(setq fill-column 70)
+(setq default-justification 'full)
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+#+END_SRC
+   
+   For  text  files  like  org-mode  files  it  is  better  to  enable
+   =auto-fill-mode=. For email messages it  is better to use something
+   like  =visual-fill--column-mode=.  The standard  =visual-line-mode=
+   matches the text width with the  window width, which is annoying on
+   large horizontal screen.
+
+   Notice that it is  possible for =visual-fill-column-mode= to center
+   the text setting =visual-fill-column-center-text= to =t=.
+   
+#+BEGIN_SRC emacs-lisp
+(use-package visual-fill-column
+  :init
+  (setq-local fill-column 70)
+  (setq visual-fill-column-center-text nil)
+  :config
+  (advice-add 'text-scale-adjust :after #'visual-fill-column-adjust)
+  :hook ((visual-line-mode . 'visual-fill-column-mode)
+         (visual-line-mode . 'turn-off-auto-fill)
+         (message-hook-mode . 'visual-line-mode)))
+#+END_SRC
+
+   
 * Org-Protocol integration
 
   Org-mode  provides a  protocol for  capturing snippets  of text  and

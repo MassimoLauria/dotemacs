@@ -21,11 +21,11 @@
                       (buffer-string)))
 
 (define-key global-map "\C-cm" 'mu4e-compose-new)
-(add-hook 'message-mode-hook 'auto-fill-mode)
-;;
+
+
+
 ;; Sending emails (settings for gmail)
 ;; smtpmail-smtp-user set by mu4e-context
-
 (setq smtpmail-default-smtp-server "smtp.gmail.com"
       smtpmail-smtp-server  "smtp.gmail.com"
       smtpmail-smtp-service 587
@@ -207,8 +207,8 @@
   ;; -----------------
   ;; Setup identities
   ;; -----------------
-  (setq mu4e-context-policy 'pick-first)
-  (setq mu4e-compose-context-policy 'ask)
+  (setq mu4e-context-policy 'ask-if-none)
+  (setq mu4e-compose-context-policy 'pick-first)
 
   (setq mu4e-contexts
         `( ,(make-mu4e-context

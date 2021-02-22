@@ -100,7 +100,6 @@
                            writegood-mode
                            xml-rpc
                            xscheme
-                           yapfify
                            yasnippet 
                            yasnippet-snippets 
                            zenburn-theme))
