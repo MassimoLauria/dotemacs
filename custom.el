@@ -14,6 +14,7 @@
  '(ansi-color-names-vector
    [solarized-bg red green yellow blue magenta cyan solarized-fg])
  '(apropos-do-all t)
+ '(auth-source-save-behavior nil)
  '(before-save-hook '(copyright-update time-stamp))
  '(colon-double-space t)
  '(comint-input-ignoredups t)
@@ -38,7 +39,6 @@
      ("Asia/Tokyo" "Tokyo")
      ("Europe/Stockholm" "Stockholm")))
  '(eldoc-idle-delay 0.3)
- '(epa-pinentry-mode 'loopback)
  '(epg-pinentry-mode 'loopback)
  '(fci-rule-color "#073642")
  '(font-latex-fontify-sectioning 'color)

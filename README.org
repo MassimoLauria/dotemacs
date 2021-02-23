@@ -442,11 +442,41 @@ The renaming table is `rename-major-mode-alist'."
 (diminish 'auto-revert-mode)
 (diminish 'auto-fill-function " ⓗ")
 (diminish 'visual-line-mode  " ⓢ")
-(diminish 'eldoc-mode "")
-(diminish 'eldoc-mode "")
 (diminish 'abbrev-mode "")
 (diminish 'mml-mode "")
+(diminish 'eldoc-mode "")
 #+END_SRC
+
+
+** Cleanup the modeline --- syntax check with Flycheck
+
+   Flycheck spams the modeline. Let's try to make the error diagnostic
+   more compact.
+   
+#+BEGIN_SRC emacs-lisp
+(defun flycheck-mode-line-status-text-slim (&optional status)
+  "Get a text describing STATUS for use in the mode line.
+
+STATUS defaults to `flycheck-last-status-change' if omitted or
+nil."
+  (let ((text (pcase (or status flycheck-last-status-change)
+                (`not-checked "")
+                (`no-checker "")
+                (`running "")
+                (`errored "✗")
+                (`finished
+                 (if flycheck-current-errors
+                     (let ((error-counts (flycheck-count-errors
+                                          flycheck-current-errors)))
+                       (format "✗:%s/%s"
+                               (or (cdr (assq 'error error-counts)) 0)
+                               (or (cdr (assq 'warning error-counts)) 0)))
+                   "✓"))
+                (`interrupted "")
+                (`suspicious "?"))))
+    (concat " " text)))
+#+END_SRC
+
 
 * Prose and Technical Writing
 
@@ -700,6 +730,8 @@ open, the command will just close it.
 
 * Programming
 
+** Trailing whitespaces
+  
   Removal of trailing  whitespace is useful in code. I  would do it in
   text files  as well, but  working in  parallel on LaTeX  files makes
   such  removals problematic  with  co-authors. It  makes merges  more
@@ -790,88 +822,102 @@ open, the command will just close it.
 
 ** Fixing Errors
 
-We all  know most of development  time is spend looking  for error and
-fixing them. Here we set the  basic function that Emacs has to compile
-and  navigate  the errors.  In  particular  I  want to  integrate  the
-~previous-error~  and  ~next-error~  function of  various  type  (e.g.
-=Flycheck=, =*grep*=, =*compilation*=). I also implement a function to
-show/hide the error buffer, called ~mxl-toggle-error-window~.
+   We all know most of development time is spend looking for error and
+   fixing them.  Here we up set  the basic function that  Emacs has to
+   compile and navigate the  errors ~previous-error~ and ~next-error~.
+   The function keys  from =F9= to =F12= are  reserved for development
+   needs, and the functionality strongly  depends on the current mode.
+   In particular I would like
+   - =F9= run something;
+   - =F10= debug/interact;
+   - =F11= previous error;
+   - =F12= next error.
+   And I use =M-F11=  and =M-F12= to toggle the list  of errors. To do
+   the latter we need to implement specific functions.
 
-The  function keys  from =F9=  to =F12=  are reserved  for development
-needs, and  the functionality  strongly depends  on the  current mode.
-
+   First we fix some general keybindings.
+   
 #+BEGIN_SRC emacs-lisp
 (global-set-key [f9]  'recompile)
 (global-set-key (kbd "M-<f9>")  'compile)
 (global-set-key [f10] 'gdb)
 (global-set-key [f11] 'previous-error)
 (global-set-key [f12] 'next-error)
-(global-set-key [M-f11] 'mxl-toggle-error-window)
-(global-set-key [M-f12] 'mxl-toggle-error-window)
 #+END_SRC
 
-In order  to toggle the  visibility of the error  list I had  to write
-a surprisingly complex and incomplete function. I need to extend it as
-long as  I come  across further  types of  error buffers.  Since LaTeX
-error  management is  a bit  special, I  have to  do a  specific setup
-for that.
-
+In order to  toggle the visibility of  the error list I  have to write
+specific  code. This  is annoying  and  moreover does  not cover  many
+cases. Since  LaTeX error management  is a bit  special, I have  to do
+a specific setup for that.
 
 #+BEGIN_SRC emacs-lisp
-(defun mxl-toggle-error-window (&optional buffer-or-name)
-  "Toggle the visibility or the error list.
+(defun mxl/toggle-flycheck-errors (&optional buffer-or-name)
+  "Toggle the visibility or the Flycheck error list.
 
 The error list is the buffer that contains the errors which can
 be navigated by `next-error' and `previous-error'. The function
 visualizes the error
 "
   (interactive)
-  (let* ((std-error-buffers '("*grep*" "*compilation*"))
-         (current-error-bon (cond
-                             (buffer-or-name (get-buffer buffer-or-name))     ;; input argument
-                             ((eq next-error-function            ;; flycheck errors
-                                  'flycheck-next-error-function)
-                              "*Flycheck errors*")
-                             ((member (buffer-name next-error-last-buffer)
-                                      std-error-buffers)
-                              next-error-last-buffer)
-                             (t nil)))      ;; *compilation*, *grep*,...
-         buffer
-         name
-         window)
+  (let ((window (get-buffer-window "*Flycheck errors*")))
+  (if window
+      (delete-window window)
+    (flycheck-list-errors))))
 
-    (when current-error-bon
-      (setq buffer (get-buffer current-error-bon))
-      (setq name (buffer-name buffer))
-      (setq window (get-buffer-window buffer))
-      (if window
-          (progn (message (concat "Closing error list: " name))
-                 (delete-window window))
-        (message (concat "Opening error list: " name))
-        (display-buffer buffer)))))
+
+(defun mxl/toggle-flymake-errors()
+  "Toggle the visibility or the Flycheck error list.
+
+The error list is the buffer that contains the errors which can
+be navigated by `flymake-next-error' and `flymake-previous-error'. The function
+visualizes the error
+"
+  (interactive)
+  (let ((buffer (get-buffer (flymake--diagnostics-buffer-name))))
+    (if (and buffer (get-buffer-window buffer))
+        (delete-windows-on buffer)
+      (flymake-show-diagnostics-buffer))))
 #+END_SRC
 
    Most programming languages are supported by =flycheck=, a tool that
    automatically   checks  the   buffer  for   error  while   writing.
-   Let's  activate it  by default.  In supported  languages =flycheck=
-   activates, assuming all needed tools for that language are present.
-   Use   =flycheck-verify-setup=    to   investigate    the   checkers
-   enabled/disabled/available in a buffer.
+   Let's  activate  it by  default.  It  =flycheck= activates  in  the
+   buffers to the  supported languages, assuming all  needed tools for
+   that   language  are   present.   Use  =flycheck-verify-setup=   to
+   investigate the checkers enabled/disabled/available in a buffer.
 
 #+BEGIN_SRC emacs-lisp
-(setq flycheck-global-modes '(not python-mode c-mode c++-mode objc-mode)) ; Use eglot/flymake
+(use-package flycheck
+  :init
+  (setq flycheck-disabled-checkers '(tex-chktex)
+        flycheck-display-errors-delay 0.1
+        flycheck-highlighting-mode 'symbols
+        flycheck-idle-change-delay 1.0)
+  :config
+  (defalias 'flycheck-mode-line-status-text 'flycheck-mode-line-status-text-slim)
+  :bind
+  (("<f11>" . previous-error)
+   ("<f12>" . next-error)
+   ("M-<f11>" . mxl/toggle-flycheck-errors)
+   ("M-<f12>" . mxl/toggle-flycheck-errors)
+   ))
+
+;;(setq flycheck-global-modes '(not python-mode c-mode c++-mode objc-mode)) ; Use eglot/flymake
 (add-hook 'after-init-hook #'global-flycheck-mode)
 #+END_SRC
 
-   Let's do a bit of setup  of =flycheck=, in particular how the error
-   are signaled to the user.
+For   some  language   I  use   [[https://github.com/joaotavora/eglot][Eglot]],  which   integrates  =flymake=.
+Therefore I set some similar keybindings for it.
 
 #+BEGIN_SRC emacs-lisp
-(setq flycheck-disabled-checkers '(tex-chktex)
-      flycheck-display-errors-delay 0.1
-      flycheck-highlighting-mode 'symbols
-      flycheck-idle-change-delay 1.0)
+(use-package flymake
+  :bind (:map flymake-mode-map
+              ("<f11>"   .  flymake-goto-prev-error)
+              ("<f12>"   .  flymake-goto-next-error)
+              ("M-<f11>" .  mxl/toggle-flymake-errors)
+              ("M-<f12>" .  mxl/toggle-flymake-errors)))
 #+END_SRC
+
 
 ** Programming language support (LSP)
 
@@ -883,47 +929,45 @@ visualizes the error
    - integrated help using =eldoc=
    - jump to/from definitions using =xref= (try =M-,= =M-.= keybindings)
    - code snippets (if =yasnippet= is enabled in advance)
-   - code checking using =flymake=
+   - code checking using =flymake= (I will disable in favor of =flycheck=)
    - other features...
 
+#+BEGIN_SRC emacs-lisp
+
+(defun mxl/swap-syntaxchecker()
+  (flymake-mode -1)
+  (flycheck-mode 1))
+
+(use-package eglot
+  :config
+  (add-hook 'eglot-managed-mode-hook 'mxl/swap-syntaxchecker)
+  (add-to-list 'eglot-stay-out-of 'flymake)
+  (diminish 'eldoc-mode))
+#+END_SRC
+
+   
    [[https://github.com/joaotavora/eglot][Eglot]] detects the root of a project using =project-find-dir=, which
    by  default  considers  a  Git  submodule as  part  of  a  project.
    I usually  work in a different  way, and I consider  Git submodules
    are standalone.
 
-#+BEGIN_SRC emacs-lisp
+,#+BEGIN_SRC emacs-lisp
 (setq project-vc-merge-submodules nil)
 #+END_SRC
 
-   Some useful functions to manage Eglot.
+   With  this function  we  activate the  automatic formatting  before
+   file saving. Not very quick for large files.
 
 #+BEGIN_SRC emacs-lisp
-(defun mxl/toggle-flymake-errors()
-  (interactive)
-  (let ((buffer (get-buffer (flymake--diagnostics-buffer-name))))
-    (if (and buffer (get-buffer-window buffer))
-        (delete-windows-on buffer)
-      (flymake-show-diagnostics-buffer))))
-
 (defun mxl/eglot-format-buffer-on-save ()
   (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
 #+END_SRC
 
    We configure basic keybindings for the modes that use =eglot=
 
-#+BEGIN_SRC emacs-lisp
-(use-package eglot
-  :bind (:map eglot-mode-map
-              ("<f11>"   .  flymake-goto-prev-error)
-              ("<f12>"   .  flymake-goto-next-error)
-              ("M-<f11>" .  mxl/toggle-flymake-errors)
-              ("M-<f12>" .  mxl/toggle-flymake-errors)))
-#+END_SRC
-
-
 ** Python
 
-   Python  is  the programming  language  I  am using  most  nowadays.
+   Python is the  programming language I am using  the most, nowadays.
    My setup is  not very sophisticated right now. Earlier  it was more
    complex  but  it  was  breaking  quite  often  at  each  change  of
    technology, Ipython, and so on...
@@ -969,12 +1013,8 @@ this python buffer.
   :bind (:map python-mode-map
               ("<f9>"    .  python-pytest-repeat)
               ("<f10>"   .  python-shell-switch-to-shell)
-              ("<f11>"   .  flymake-goto-prev-error)
-              ("<f12>"   .  flymake-goto-next-error)
               ("M-<f9>"  .  python-pytest-dispatch)
               ("M-<f10>" .  run-python)
-              ("M-<f11>" .  mxl/toggle-flymake-errors)
-              ("M-<f12>" .  mxl/toggle-flymake-errors)
          :map inferior-python-mode-map
               ("<f10>" . delete-window)))
 #+END_SRC
