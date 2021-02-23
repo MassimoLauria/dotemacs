@@ -665,7 +665,7 @@ open, the command will just close it.
 
    For  text  files  like  org-mode  files  it  is  better  to  enable
    =auto-fill-mode=. For email messages it  is better to use something
-   like  =visual-fill--column-mode=.  The standard  =visual-line-mode=
+   like  =visual-fill-column-mode=.  The standard  =visual-line-mode=
    matches the text width with the  window width, which is annoying on
    large horizontal screen.
 
@@ -674,14 +674,15 @@ open, the command will just close it.
 
 #+BEGIN_SRC emacs-lisp
 (use-package visual-fill-column
+  :disabled
   :init
   (setq-local fill-column 70)
   (setq visual-fill-column-center-text nil)
   :config
   (advice-add 'text-scale-adjust :after #'visual-fill-column-adjust)
-  :hook ((visual-line-mode . 'visual-fill-column-mode)
-         (visual-line-mode . 'turn-off-auto-fill)
-         (message-hook-mode . 'visual-line-mode)))
+  :hook ((visual-line-mode . turn-on-visual-fill-column-mode)
+         (visual-line-mode . turn-off-auto-fill)
+         (message-mode . visual-line-mode)))
 #+END_SRC
 
 

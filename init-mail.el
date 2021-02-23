@@ -207,7 +207,7 @@
   ;; -----------------
   ;; Setup identities
   ;; -----------------
-  (setq mu4e-context-policy 'ask-if-none)
+  (setq mu4e-context-policy 'pick-first)
   (setq mu4e-compose-context-policy 'pick-first)
 
   (setq mu4e-contexts
