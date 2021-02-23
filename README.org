@@ -155,6 +155,22 @@ Ignore if the path does not exists."
 #+END_SRC
 
 
+** Keyboard
+
+   Naturally I have my keyboard minor mode.
+
+#+BEGIN_SRC emacs-lisp
+;; My keyboard configuration
+(use-package mxl-keyboard
+  :commands (mxl-keyboard-mode mxl-keyboard-global-mode)
+  :diminish ""
+  :config
+  (mxl-keyboard-global-mode)
+  :demand t)
+#+END_SRC
+
+
+
 ** Text encoding is always UTF-8
 
    I work  mostly with UTF-8 file,  Hence UTF-8 is the  default coding
@@ -272,17 +288,17 @@ Ignore if the path does not exists."
 
 
 * Appearance
-** Fonts 
+** Fonts
 
    The most  important visual  setup for  a text  editor is  the font.
    I include the default font with this configuration, but for Windows
    (which I  almost never use) I  have an alternative. Notice  that on
    X11 we can also use ~Xresources~ file.
-  
+
 #+BEGIN_SRC emacs-lisp
 (defvar default-font
   (cond
-   ((eq system-type 'windows-nt) "Consolas 14") 
+   ((eq system-type 'windows-nt) "Consolas 14")
    (t                            "Roboto Mono 18"))
   "The font I use by default")
 
@@ -300,8 +316,8 @@ Ignore if the path does not exists."
 #+BEGIN_SRC emacs-lisp
 (setq initial-frame-alist '((top . 0.5)    ;; center vertical position
                             (left . 0.5))) ;; center horizontal position
-                            
-      
+
+
 (setq default-frame-alist `((font . ,default-font)
                             (height . 64)
                             (width . 120)
@@ -330,7 +346,7 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
 (defun mxl-fix-bibfonts (frame)
   (set-fontset-font t #x2318 symbol-font)   ; ⌘
   (set-fontset-font t #x270e symbol-font))  ; ✎
- 
+
 (mapc 'mxl-fix-bibfonts (frame-list))                    ; applies to existing frames
 (add-hook 'after-make-frame-functions 'mxl-fix-bibfonts) ; applies to future frames
 #+END_SRC
@@ -357,7 +373,7 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
    - Violet for spelling/grammar mistakes
    - Red for syntax mistakes in programming languages
    - Yellow for syntax/style warnings
-   - Green for syntax/style notes  
+   - Green for syntax/style notes
 
 #+BEGIN_SRC emacs-lisp
 (custom-theme-set-faces
@@ -375,16 +391,72 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
  '(writegood-weasels-face ((t (:underline (:color "magenta" :style wave))))))
 #+END_SRC
 
+** Cleanup the modeline --- major modes
+
+   To make the modeline cleaner and more cute, I will rename the major
+   mode so  to make it  more compact. The  list of abbreviation  is an
+   ~alist~ named  =rename-major-mode-alist= where  each pair in  it is
+   the major mode and new representation.
+
+#+BEGIN_SRC emacs-lisp
+(defvar rename-major-mode-alist
+  `((lisp-interaction-mode . "λ")
+    (emacs-lisp-mode . "λ")
+    (inferior-emacs-lisp-mode . "iλ")
+    (python-mode . "Py")
+    (org-mode . "⏲")
+    (org-agenda-mode . "⏲")
+    (LaTeX-mode . "Σ")
+    (latex-mode . "Σ"))
+  "Alist for `rename-major-mode-alist'.")
+#+END_SRC
+
+   To apply the renaming scheme we need the following code.
+
+#+BEGIN_SRC emacs-lisp
+(defun rename-major-mode-line ()
+  "Change the major mode name in the mode-line.
+
+The renaming table is `rename-major-mode-alist'."
+  (interactive)
+  (loop for cleaner in rename-major-mode-alist
+        do (let* ((mode (car cleaner))
+                 (mode-str (cdr cleaner)))
+             (when (eq mode major-mode)
+               (setq mode-name mode-str)))))
+
+(add-hook 'after-change-major-mode-hook 'rename-major-mode-line)
+#+END_SRC
 
 
-* Prose and Technical Writing 
+** Cleanup the modeline --- minor modes
+
+   Ref: [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Mode-Line-Data.html][The data structure of the modeline]]
+
+   A lot of minor  modes show up in the modeline. It  would be nice to
+   get rid of them. The package =diminish= allows to convert the minor
+   mode indication.
+
+#+BEGIN_SRC emacs-lisp
+(use-package autorevert
+     :config
+     (diminish 'auto-revert-mode "")
+     :commands auto-revert-mode)
+
+(diminish 'auto-revert-mode)
+(diminish 'auto-fill-function " ⓗ")
+(diminish 'visual-line-mode  " ⓢ")
+(diminish 'eldoc-mode "")
+#+END_SRC
+
+* Prose and Technical Writing
 
   I   use  Emacs   to  write   technical  papers   about  math,   code
   documentation, lecture  notes for  my courses ,  blog posts,  and to
   edit   my    websites...   and   sometimes   to    prepare   slides.
   Therefore I  need to setup  a proper  environment. I often  see many
   emacs user writing  LaTeX with for a tool which  is barely setup for
-  writing code, and definitely not right for writing prose.  
+  writing code, and definitely not right for writing prose.
 
   Emacs has  a lot of  potential in  prose writing, especially  if you
   ditch  LaTeX and  write  in Org  Mode or  Markdown.  In this  regard
@@ -392,7 +464,7 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
 
   - [[http://www.danielallington.net/2016/09/the-latex-fetish/][The LaTeX fetish (Or: Don’t write in LaTeX! It’s just for typesetting)]]
   - [[https://irreal.org/blog/?p=5054][Using Emacs for Prose]]
-    
+
 ** Syntax and Grammar Check
 
    Too few  people on Emacs have  a decent setup for  syntax checking,
@@ -439,7 +511,7 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
    variable. Be careful to have  dictionaries for all three languages,
    otherwise the setup will fail.
 
-#+BEGIN_SRC emacs-lisp :tangle no 
+#+BEGIN_SRC emacs-lisp :tangle no
 (setenv "DICPATH" (concat (getenv "HOME") "..."))
 #+END_SRC
 
@@ -449,12 +521,12 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
    Notice that  I activate  flyspell using the  first of  my preferred
    languages,  and that  I use  =flyspell-prog-mode= for  programming.
    Flyspell  allows a  more  interactive interface  for fixing  typos,
-   contrary to the default =ispell-word=. 
+   contrary to the default =ispell-word=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package flyspell
   :commands (flyspell-mode flyspell-prog-mode)
-  :bind (:map flyspell-mode-map ("C-;" . nil)) 
+  :bind (:map flyspell-mode-map ("C-;" . nil))
   :config
   (setq flyspell-duplicate-distance 0     ;; signal as repetitions only adjacent pairs
         flyspell-highlight-flag t         ;; mark mispelled words
@@ -487,11 +559,10 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
   (setq flyspell-mode-line-string
         (let ((lang (or ispell-local-dictionary ispell-dictionary nil)))
           (cond
-           ((string-equal lang "italiano") " [IT]")
-           ((string-equal lang "english")  " [EN]")
-           ((string-equal lang "british")  " [GB]")
+           ((string-equal lang "italiano") " [it]")
+           ((string-equal lang "english")  " [en]")
+           ((string-equal lang "british")  " [gb]")
            (t "")))))
-
 
 (defadvice ispell-init-process (after ispell-init-process-after activate)
   (mxl-set-flyspell-modeline))
@@ -510,7 +581,7 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
          (lang (ring-ref lang-ring -1)))
         (ring-insert lang-ring lang)
         (ispell-change-dictionary lang)
-        (setq langtool-default-language 
+        (setq langtool-default-language
               (cond
                ((string-equal lang "italiano") "it")
                ((string-equal lang "english")  "en")
@@ -543,7 +614,7 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
 #+BEGIN_SRC emacs-lisp
 
 ;; Spell/Grammar check command
-(defun mxl-language-check () 
+(defun mxl-language-check ()
   "Launch either spell check or grammar check
 
 Offer a choice between spell checking the buffer, or grammar
@@ -585,13 +656,13 @@ open, the command will just close it.
 
    To be  readable, prose text files  should have at most  70 columns.
    And when word wrapping is hard-coded, the text should be justified.
-   
+
 #+BEGIN_SRC emacs-lisp
 (setq fill-column 70)
 (setq default-justification 'full)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 #+END_SRC
-   
+
    For  text  files  like  org-mode  files  it  is  better  to  enable
    =auto-fill-mode=. For email messages it  is better to use something
    like  =visual-fill--column-mode=.  The standard  =visual-line-mode=
@@ -600,7 +671,7 @@ open, the command will just close it.
 
    Notice that it is  possible for =visual-fill-column-mode= to center
    the text setting =visual-fill-column-center-text= to =t=.
-   
+
 #+BEGIN_SRC emacs-lisp
 (use-package visual-fill-column
   :init
@@ -613,7 +684,7 @@ open, the command will just close it.
          (message-hook-mode . 'visual-line-mode)))
 #+END_SRC
 
-   
+
 * Org-Protocol integration
 
   Org-mode  provides a  protocol for  capturing snippets  of text  and
@@ -625,18 +696,38 @@ open, the command will just close it.
 
   and   saved   it   into   the   =macos=   folder   in   this   emacs
   configuration repository. In order to make it work just copy it into
-  =/Applications= folder. 
+  =/Applications= folder.
 
 * Programming
-  
+
+  Removal of trailing  whitespace is useful in code. I  would do it in
+  text files  as well, but  working in  parallel on LaTeX  files makes
+  such  removals problematic  with  co-authors. It  makes merges  more
+  difficult.
+
+  But I  code this  is not  usually an issue.  So let's  set automatic
+  deletion of trailing whitespace, but just in programming buffers.
+
+#+BEGIN_SRC emacs-lisp
+(defun mxl/delete-trailing-whitespace-on-save-on ()
+  (interactive)
+  (add-hook 'before-save-hook 'delete-trailing-whitespace 0 t))
+
+(defun mxl/delete-trailing-whitespace-on-save-off ()
+  (interactive)
+  (remove-hook 'before-save-hook #'delete-trailing-whitespace t))
+
+(add-hook 'prog-mode-hook #'mxl/delete-trailing-whitespace-on-save-on)
+#+END_SRC
+
 ** Generic Syntax highlighting
 
    Of  course   every  mode   include  syntax  highlighting   for  the
    corresponding  type of  file.  There are  more  "semantic" ways  to
-   highlight pieces of codes. Many of these syntax highlight packages are described in
+   highlight pieces of codes. Many  of these syntax highlight packages
+   are described in
 
    - [[http://www.wilfred.me.uk/blog/2014/09/27/the-definitive-guide-to-syntax-highlighting/][The Definitive Guide To Syntax Highlighting]]
-
 
    The first package color parenthesis  with dirrerent colors, so that
    matching  parenthesis have  the same  color. Of  course after  some
@@ -645,6 +736,7 @@ open, the command will just close it.
 
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
+  :diminish ""
   :init (setq rainbow-delimiters-max-face-count 4)
   :commands rainbow-delimiters-mode
   :hook ((emacs-lisp-mode . rainbow-delimiters-mode)
@@ -656,6 +748,7 @@ open, the command will just close it.
 
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-identifiers
+  :diminish ""
   :commands rainbow-identifiers-mode)
 #+END_SRC
 
@@ -665,6 +758,7 @@ open, the command will just close it.
 
 #+BEGIN_SRC emacs-lisp
 (use-package highlight-blocks
+  :diminish ""
   :commands highlight-blocks-mode)
 #+END_SRC
 
@@ -672,6 +766,7 @@ open, the command will just close it.
 
 #+BEGIN_SRC emacs-lisp
 (use-package highlight-symbol
+  :diminish ""
   :commands highlight-symbol-mode)
 #+END_SRC
 
@@ -680,6 +775,7 @@ open, the command will just close it.
 
 #+BEGIN_SRC emacs-lisp
 (use-package highlight-quoted
+  :diminish ""
   :commands highlight-quoted-mode)
 #+END_SRC
 
@@ -688,7 +784,7 @@ open, the command will just close it.
   builtins, ...
 
 #+BEGIN_SRC emacs-lisp
-(use-package  highlight-defined  :ensure t  
+(use-package  highlight-defined  :ensure t
   :commands highlight-defined-mode)
 #+END_SRC
 
@@ -727,14 +823,14 @@ for that.
 
 The error list is the buffer that contains the errors which can
 be navigated by `next-error' and `previous-error'. The function
-visualizes the error 
+visualizes the error
 "
   (interactive)
   (let* ((std-error-buffers '("*grep*" "*compilation*"))
          (current-error-bon (cond
-                             (buffer-or-name (get-buffer buffer-or-name))     ;; input argument 
+                             (buffer-or-name (get-buffer buffer-or-name))     ;; input argument
                              ((eq next-error-function            ;; flycheck errors
-                                  'flycheck-next-error-function) 
+                                  'flycheck-next-error-function)
                               "*Flycheck errors*")
                              ((member (buffer-name next-error-last-buffer)
                                       std-error-buffers)
@@ -743,7 +839,7 @@ visualizes the error
          buffer
          name
          window)
-    
+
     (when current-error-bon
       (setq buffer (get-buffer current-error-bon))
       (setq name (buffer-name buffer))
@@ -777,13 +873,12 @@ visualizes the error
       flycheck-idle-change-delay 1.0)
 #+END_SRC
 
-
 ** Programming language support (LSP)
-   
+
    The most convenient way to  integrate language features nowadays is
    to  use a  language  server that  implements  LSP (Language  Server
    Protocol). I am  currenly using [[https://github.com/joaotavora/eglot][Eglot]] which should provide, and set up on
-   its own, several features as 
+   its own, several features as
    - completion using =company-mode=
    - integrated help using =eldoc=
    - jump to/from definitions using =xref= (try =M-,= =M-.= keybindings)
@@ -822,10 +917,9 @@ visualizes the error
               ("<f11>"   .  flymake-goto-prev-error)
               ("<f12>"   .  flymake-goto-next-error)
               ("M-<f11>" .  mxl/toggle-flymake-errors)
-              ("M-<f12>" .  mxl/toggle-flymake-errors)))   
+              ("M-<f12>" .  mxl/toggle-flymake-errors)))
 #+END_SRC
-   
-   
+
 
 ** Python
 
@@ -871,8 +965,7 @@ this python buffer.
   :init
   (setq python-indent-guess-indent-offset nil
         python-indent-offset 4)
-  :hook ((python-mode . eglot-ensure)
-         (python-mode . mxl/eglot-format-buffer-on-save))
+  :hook ((python-mode . eglot-ensure))
   :bind (:map python-mode-map
               ("<f9>"    .  python-pytest-repeat)
               ("<f10>"   .  python-shell-switch-to-shell)
@@ -886,7 +979,7 @@ this python buffer.
               ("<f10>" . delete-window)))
 #+END_SRC
 
-   
+
   I  have  not reached  a  definitive  configuration regarding  syntax
   checking. I used to run [[https://www.pylint.org/][Pylint]]  or [[https://flake8.pycqa.org/en/latest/][Flake8]] from by [[https://www.flycheck.org/][Flycheck]], an emacs
   package  which highlight  code errors.  Now I  use [[https://github.com/joaotavora/eglot][Eglot]]  which runs
@@ -917,13 +1010,12 @@ this python buffer.
   :config (pyenv-mode))
 #+END_SRC
 
-
 ** C and C++
 
    A  basic  setup  for  C   and  C++,  possibly  enabling  =flyspell=
    and =doxygen=.
 
-   
+
 #+BEGIN_SRC emacs-lisp
 (defun setup-cc-mode ()
   "My Setup for C and C++"
@@ -951,6 +1043,29 @@ this python buffer.
 (add-hook 'c++-mode-hook 'eglot-ensure)
 #+END_SRC
 
+** Emacs Lisp
+
+   Emacs  lisp is  pretty integrated  in Emacs,  dah! Nevertheless  in
+   order   to  navigate   in  symbols,   it  is   better  to   install
+   =elisp-slime-nav-mode=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package elisp-slime-nav
+  :diminish ""
+  :hook ((lisp-interaction-mode . elisp-slime-nav-mode)
+         (emacs-lisp-mode . elisp-slime-nav-mode)
+         (ielm-mode . elisp-slime-nav-mode)))
+#+END_SRC
+
+   It is nice  to have documentation for  the stuff we do  and read in
+   elisp code. So it is a good idea to turn on =eldoc= if possible.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
+#+END_SRC
+
 ** Shell programming
 
    I don't  have a  particularly clever  setup for  shell programming,
@@ -960,9 +1075,9 @@ this python buffer.
    shell mode automatically for [[http://zsh.sourceforge.net/][Zsh]] scripts.
 
    I don't know  muc shell programming. Maybe I  should make templates
-   for good bash programming practices as in 
+   for good bash programming practices as in
    - [[http://mywiki.wooledge.org/BashPitfalls][Bash Pitfalls]]
-   - [[http://redsymbol.net/articles/unofficial-bash-strict-mode/][Bash Strict mode]] 
+   - [[http://redsymbol.net/articles/unofficial-bash-strict-mode/][Bash Strict mode]]
 
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'auto-mode-alist '("\\.zsh" . sh-mode))
@@ -978,7 +1093,7 @@ this python buffer.
 
    There  is   a  nice   syntax  checker   for  shell   script  called
    =shellcheck=,  which  is  a  godsend  considering  how  brittle  is
-   the language.
+   the language. One day I will
 
 ** Copyright notice and timestamps
 
@@ -987,7 +1102,7 @@ this python buffer.
    history.
 
 #+BEGIN_SRC emacs-lisp
-(setq copyright-query nil)                       ; do not ask before a copyright 
+(setq copyright-query nil)                       ; do not ask before a copyright
 (add-hook 'before-save-hook 'copyright-update)   ; update copyright if present
 (add-hook 'before-save-hook 'time-stamp)         ; insert timestamp
 #+END_SRC
@@ -1119,7 +1234,7 @@ this python buffer.
 
 #+BEGIN_SRC emacs-lisp
 (setq helm-boring-buffer-regexp-list
-  '("\\` " "\\`\\*helm" "\\`\\*Echo Area" "\\`\\*Minibuf" "\\`\\*Echo Area" 
+  '("\\` " "\\`\\*helm" "\\`\\*Echo Area" "\\`\\*Minibuf" "\\`\\*Echo Area"
     "\\`\\*import calendar*"
     "\\`\\*Help"
     "\\`\\*Disabled Command"

@@ -121,13 +121,6 @@
   (add-hook 'find-file-hooks 'goto-address-prog-mode))
 
 
-;; Eldoc for lisp
-(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
-;;}}}
-
-
 ;; Comint keys
 (use-package comint
   :defer t
@@ -148,19 +141,6 @@
 ;; This is just nice
 (use-package which-func
   :commands (which-func-mode))
-
-
-;; Trailining whitespace removal
-(defvar do-delete-whitespace t
-  "Local variable to decide whether deleting trailing whitespaces
-  when saving.")
-
-(defun delete-trailing-whitespace--conditional ()
-  "Call `delete-trailing-whitespace' unless `do-delete-whitespace' in non `nil'"
-  (when do-delete-whitespace
-    (delete-trailing-whitespace)))
-
-(add-hook 'before-save-hook 'delete-trailing-whitespace--conditional)
 
 ;; Powershell facilities
 (autoload 'powershell-mode "powershell-mode" "A editing mode for Microsoft PowerShell." t)

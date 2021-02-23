@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021  Massimo Lauria
-;; Time-stamp: "2021-02-21, 15:51 (CET) Massimo Lauria"
+;; Time-stamp: "2021-02-23, 00:38 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -98,13 +98,6 @@
 ;; Other stuff
 (require 'init-unsorted-elisp)  ; various setups -- check for speed
 
-;; My keyboard configuration
-(use-package mxl-keyboard
-  :commands (mxl-keyboard-mode mxl-keyboard-global-mode)
-  :diminish " ⊤"
-  :config
-  (mxl-keyboard-global-mode)
-  :demand t)
 
 ;;; Customized settings -------------------------------------------------
 (setq custom-file "~/config/emacs/custom.el")

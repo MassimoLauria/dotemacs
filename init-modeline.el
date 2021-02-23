@@ -3,7 +3,7 @@
 ;; Copyright (C) 2013, 2014, 2015, 2016, 2018, 2020, 2021  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2021-02-21, 01:18 (CET) Massimo Lauria>
+;; Time-stamp: <2021-02-23, 01:02 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -27,45 +27,6 @@
 ;;; Code:
 
 
-;; abbreviations of major modes
-(defvar rename-major-mode-alist
-  `(;; lisp
-    (lisp-interaction-mode . "λ")
-    (emacs-lisp-mode . "eλ")
-    (inferior-emacs-lisp-mode . "ieλ")
-    ;; other programming languages
-    (python-mode . "Py"))
-  "Alist for `rename-major-mode-alist'.")
-
-(defun rename-major-mode-line ()
-  "Change the major mode name in the mode-line.
-
-The renaming table is `rename-major-mode-alist'."
-  (interactive)
-  (loop for cleaner in rename-major-mode-alist
-        do (let* ((mode (car cleaner))
-                 (mode-str (cdr cleaner)))
-             (when (eq mode major-mode)
-               (setq mode-name mode-str)))))
-
-(add-hook 'after-change-major-mode-hook 'rename-major-mode-line)
-
-
-;; abbreviation of minor modes
-(require 'diminish nil t)
-(when (fboundp 'diminish)
-  (eval-after-load 'hideshow '(diminish 'hs-minor-mode))
-  (eval-after-load 'reftex-mode '(diminish 'reftex-mode))
-  (eval-after-load 'eldoc '(diminish 'eldoc-mode))
-  (eval-after-load 'company '(diminish 'company-mode " α"))
-  (eval-after-load 'simple '(diminish 'auto-fill-function " ⓕ"))
-  (eval-after-load 'projectile '(diminish 'projectile-mode))
-  (eval-after-load 'elisp-slime-nav '(diminish 'elisp-slime-nav-mode))
-  (eval-after-load 'fixme-mode '(diminish 'fixme-mode))
-
-  ;; Spell checkers
-  (eval-after-load 'writegood-mode '(diminish 'writegood-mode))
-  )
 
 
 (defun flycheck-mode-line-status-text-slim (&optional status)

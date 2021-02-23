@@ -4,7 +4,7 @@
 ;;;-----------------------------------------------------------------
 
 ;;
-;; Many great features require AucTeX 11.88. 
+;; Many great features require AucTeX 11.88.
 ;;
 ;; previous version of auctex would not support, e.g., forward/inverse
 ;; search with Evince, do not have a proper support of compilation
@@ -28,7 +28,7 @@
 (setq LaTeX-item-indent 0)
 (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
 
-;; View command fixes 
+;; View command fixes
 ;;
 ;; 1 - use `displayline' command under MacOSX (from Skim.app)
 ;; 2 - do not ask for confirmation with the View command.
@@ -36,20 +36,20 @@
 (defun init-latex--viewer-setup ()
   "Set the \"View\" function saner defaults"
 
-  ;; No question asked when viewing documents 
-  (add-to-list 'TeX-command-list '("View" "%V" 
-                                   TeX-run-discard-or-function nil t 
+  ;; No question asked when viewing documents
+  (add-to-list 'TeX-command-list '("View" "%V"
+                                   TeX-run-discard-or-function nil t
                                    :help "Run Viewer"))
 
   ;; View PDFs within emacs using `pdf-tools' package
   (add-to-list 'TeX-view-program-selection '(output-pdf "PDF Tools"))
- 
+
   ;; On MacOSX we could use Skim PDF viewer. Actually I don't because
   ;; lately the rendering quality is horrible, and I'd rather use
   ;; PDF-tools as in Linux.
   (when (eq system-type 'darwin)
     (add-to-list 'TeX-view-program-list
-                 '("displayline" 
+                 '("displayline"
                    "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o %b"))))
 
 
@@ -103,7 +103,7 @@ by default."
 (eval-after-load "tex" '(init-latex--viewer-setup))
 
 
-;; Basic LaTeX-mode-hook setup 
+;; Basic LaTeX-mode-hook setup
 (add-hook 'TeX-mode-hook 'TeX-PDF-mode)
 (add-hook 'TeX-mode-hook 'flycheck-mode)
 (add-hook 'TeX-mode-hook 'turn-on-reftex)
@@ -152,10 +152,10 @@ by default."
 
    (TeX-command-region-begin            ; region pinned
     (TeX-command-region nil))
-   
+
    ((fboundp 'TeX-texify)          ; TeX-texify loaded
     (call-interactively 'TeX-texify))
-   
+
    (t                                   ; default
     (call-interactively 'TeX-command-master))))
 
@@ -181,7 +181,7 @@ started."
 ;; Install LaTeX improved `up-list' command
 (add-hook 'LaTeX-mode-hook
           (lambda()
-            (if (and 
+            (if (and
                  (boundp 'massimo-keyboard-mode-map)
                  (fboundp 'sp-up-sexp))
                 (define-key massimo-keyboard-mode-map (kbd "M-p") 'sp-up-sexp))))
@@ -220,7 +220,7 @@ started."
           ((eq fmt 'soft) (my-setup-of-latex-softformat))
           (t (my-setup-of-latex-hardformat)) ; default is hard
           )))
-  
+
 
 (add-hook 'LaTeX-mode-hook 'my-setup-of-latex-format)
 
@@ -232,6 +232,7 @@ started."
 
 (add-hook 'reftex-mode-hook
           (lambda ()
+            (diminish 'reftex-mode)
             (local-set-key (kbd "C-c l") 'reftex-label)       ;; Label creation
             (local-set-key (kbd "C-c r") 'reftex-reference)   ;; Label selection
             (local-set-key (kbd "M-,") 'reftex-view-crossref) ;; View crossref
@@ -300,7 +301,7 @@ It either tries \"lacheck\" or \"chktex\"."
 ;; Guess master file
 (add-hook
  'LaTeX-mode-hook
- (lambda () (setq TeX-master (or 
+ (lambda () (setq TeX-master (or
                               (guess-TeX-master (buffer-file-name))
                               t))))
 
@@ -325,9 +326,9 @@ It either tries \"lacheck\" or \"chktex\"."
     candidate))
 
 
-;; Smart parenthesis 
+;; Smart parenthesis
 
-(add-hook  ; Workaround for `TeX-insert-quote' conflict with `smartparens' 
+(add-hook  ; Workaround for `TeX-insert-quote' conflict with `smartparens'
  'LaTeX-mode-hook
  (lambda () (local-unset-key "\"")))
 
@@ -349,20 +350,22 @@ It either tries \"lacheck\" or \"chktex\"."
      ))
 
 ;; Yasnippet in LaTeX
-(add-hook  
+(add-hook
    'LaTeX-mode-hook
    (lambda () (yas-minor-mode-on)))
 
 
 (use-package magic-latex-buffer
-  :init 
+  :config
+  (diminish 'magic-latex-buffer "")
+  :init
   (setq magic-latex-enable-block-highlight nil
         magic-latex-enable-suscript        t
         magic-latex-enable-pretty-symbols  t
         magic-latex-enable-block-align     nil
         magic-latex-enable-inline-image    nil
         magic-latex-enable-minibuffer-echo nil)
-  :config 
+  :config
   (add-hook 'LaTeX-mode-hook 'magic-latex-buffer))
 
 

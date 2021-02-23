@@ -29,7 +29,7 @@
 (setq smtpmail-default-smtp-server "smtp.gmail.com"
       smtpmail-smtp-server  "smtp.gmail.com"
       smtpmail-smtp-service 587
-      smtpmail-debug-info t 
+      smtpmail-debug-info t
       starttls-use-gnutls t
       smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil)))
 
@@ -86,7 +86,7 @@
   (setq mu4e-update-interval 100)
 
 
-  
+
   ;; no shotcuts (uses bookmarks instead)
   (setq mu4e-maildir-shortcuts nil)
 
@@ -107,7 +107,7 @@
   (setq mu4e-headers-include-related t)
 
   (setq mu4e-headers-date-format "%e %b '%y")
-  
+
   (setq mu4e-compose-complete-addresses t)
   (setq mu4e-compose-complete-only-personal nil)
   (setq mu4e-compose-complete-only-after "2012-01-01")
@@ -116,10 +116,10 @@
   ;; gmail profile should use 'delete
   ;; uniroma1 profile should use 'sent Useful only if I use my main reading address also to send emails.
   (setq mu4e-sent-messages-behavior 'delete)
-  
+
   (setq message-kill-buffer-on-exit t)
   (setq mu4e-confirm-quit nil)
-  
+
   :config
   (define-key mu4e-compose-mode-map [f2] 'ispell-message)
   (setq mail-user-agent 'mu4e-user-agent)
@@ -174,7 +174,7 @@
                         'append)
         (setq i (+ i 1)))
 
-  ;; 
+  ;;
   (add-to-list 'mu4e-bookmarks
                (make-mu4e-bookmark
                 :name "———————————————————————————"
@@ -264,7 +264,7 @@
   (helm-delete-action-from-source  "Insert email address with name" helm-source-org-contacts)
   (helm-delete-action-from-source  "Insert phone number" helm-source-org-contacts)
   (helm-delete-action-from-source  "Show entry" helm-source-org-contacts)
-  ;; Add actions in the right order (first one on top) 
+  ;; Add actions in the right order (first one on top)
   (helm-add-action-to-source       "Insert email address (with name)" 'helm-org-contacts-insert-email-with-name helm-source-org-contacts)
   (helm-add-action-to-source       "Insert email address (no name)"   'helm-org-contacts-insert-plain-email     helm-source-org-contacts)
   (helm-add-action-to-source       "Insert phone"                     'helm-org-contacts-insert-phone-number    helm-source-org-contacts)

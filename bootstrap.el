@@ -17,91 +17,91 @@
                            eglot
                            helm
                            magit
-                           magit-svn 
+                           magit-svn
                            auctex
                            pdf-tools
                            ;; others
                            ace-window
                            all-the-icons
-                           async 
-                           beacon 
-                           bind-key 
+                           async
+                           beacon
+                           bind-key
                            cmake-mode
-                           company 
+                           company
                            dash
-                           deferred 
-                           diminish 
-                           elisp-slime-nav 
-                           epl 
-                           esup 
-                           expand-region 
+                           deferred
+                           diminish
+                           elisp-slime-nav
+                           epl
+                           esup
+                           expand-region
                            f
                            flycheck
                            flyspell
                            flyspell-correct-helm
                            forge
-                           git-commit 
-                           gnus-alias 
-                           graphviz-dot-mode 
+                           git-commit
+                           gnus-alias
+                           graphviz-dot-mode
                            helm-bibtex
                            helm-c-yasnippet
                            helm-rg
                            helm-recoll
                            helm-swoop
                            helm-org-rifle
-                           highlight-blocks 
-                           highlight-defined 
-                           highlight-quoted 
-                           highlight-symbol 
-                           htmlize 
-                           iedit 
+                           highlight-blocks
+                           highlight-defined
+                           highlight-quoted
+                           highlight-symbol
+                           htmlize
+                           iedit
                            langtool
-                           latex-preview-pane 
-                           let-alist 
-                           logito 
-                           magic-latex-buffer 
-                           magit-popup 
+                           latex-preview-pane
+                           let-alist
+                           logito
+                           magic-latex-buffer
+                           magit-popup
                            metaweblog
-                           ob-ipython 
+                           ob-ipython
                            olivetti
-                           org-bullets 
-                           org-pdftools 
+                           org-bullets
+                           org-pdftools
                            org-static-blog
-                           package-build 
-                           pcache 
+                           package-build
+                           pcache
                            pinboard
                            pkg-info
                            poet-theme
-                           pyenv-mode 
-                           pyenv-mode-auto 
+                           pyenv-mode
+                           pyenv-mode-auto
                            python-pytest
-                           pythonic 
-                           rainbow-delimiters 
-                           rainbow-identifiers 
+                           pythonic
+                           rainbow-delimiters
+                           rainbow-identifiers
                            rainbow-mode
                            rg
                            s
-                           sdcv 
-                           seq 
-                           shut-up 
-                           skeletor 
+                           sdcv
+                           seq
+                           shut-up
+                           skeletor
                            smartparens
                            solarized-theme
-                           ssh-config-mode 
-                           try 
+                           ssh-config-mode
+                           try
                            undo-tree
                            unfill
                            unicode-fonts
-                           virtualenvwrapper 
-                           visual-fill-column 
-                           which-key 
-                           with-editor 
+                           virtualenvwrapper
+                           visual-fill-column
+                           which-key
+                           with-editor
                            writeroom-mode
                            writegood-mode
                            xml-rpc
                            xscheme
-                           yasnippet 
-                           yasnippet-snippets 
+                           yasnippet
+                           yasnippet-snippets
                            zenburn-theme))
 ;; -------------------------------------------------------------------
 

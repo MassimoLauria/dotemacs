@@ -26,6 +26,7 @@
 ;;
 (with-eval-after-load "company"
   ;; Menu movement
+  (diminish 'company-mode)
   (define-key company-active-map (kbd "M-j") #'company-select-previous)
   (define-key company-active-map (kbd "M-l") #'company-select-next)
   (define-key company-active-map (kbd "M-i") #'company-select-previous)

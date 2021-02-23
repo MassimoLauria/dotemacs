@@ -1,9 +1,9 @@
 ;;; init-autotype.el --- Automatic test insertion configuration
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2021  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2018-06-27, 16:12 (CEST) Massimo Lauria>
+;; Time-stamp: <2021-02-23, 00:46 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -32,12 +32,12 @@
 (use-package yasnippet
   :commands (yas-minor-mode yas-global-mode yas-expand)
   :hook (prog-mode . yas-minor-mode)
-  :diminish (yas-minor-mode . " 🅨")
-  
+  :diminish (yas-minor-mode . "")
+
   ;; edit the snippets
   :mode  ("\\.yasnippet" . snippet-mode)
   :mode  ("\\.snippet" . snippet-mode)
-  
+
   :config
   (add-to-list 'yas-snippet-dirs (concat base-config-path "/snippets/") )
   (require 'yasnippet-snippets nil t)
@@ -55,13 +55,13 @@
 
 (use-package autopair
   :commands (autopair-mode autopair-global-mode)
-  :diminish " ♊")
+  :diminish "")
 
 
 (use-package smartparens
   :commands (smartparens-mode smartparens-global-mode)
-  :diminish " ♊"
-  :config (progn 
+  :diminish ""
+  :config (progn
             (require 'smartparens-config nil t)
             (require 'smartparens-latex nil t)
             (define-key smartparens-mode-map (kbd "C-M-i") 'sp-up-sexp)
