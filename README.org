@@ -169,6 +169,12 @@ Ignore if the path does not exists."
   :demand t)
 #+END_SRC
 
+  I often  type =C-x C-z=  by mistake,  which hides the  current Emacs
+  frame via =susped-frame=. I hate it.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-x C-z") 'nil)
+#+END_SRC
 
 
 ** Text encoding is always UTF-8
@@ -391,8 +397,16 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
 
 ** Modeline customization
 
-   We start from the Doom Emacs Modeline. See [[https://github.com/seagle0128/doom-modeline][here]].
-   
+   We use Doom Emacs Modeline (see [[https://github.com/seagle0128/doom-modeline][here]]). Many other customizations of
+   the modeline that I used to  do are incompatible, or even obsolete,
+   with this modeline engine. Maybe I could personalize it better from
+   scratch, but  most of  my solutions  were hacks  and were  not well
+   integrated with the  rest of Emacs. Doom Modeline  is minimal, well
+   organized and nice to look at (especially with icons enabled).
+
+   Furthermore I  will likely  support functionalities that  I haven't
+   decided to use yet (e.g. mu4e or github integration).
+  
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
   :ensure t
@@ -404,10 +418,19 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
   (doom-modeline-mode 1))
 #+END_SRC
 
-   To make the modeline cleaner and more cute, I will rename the major
-   mode so  to make it  more compact. The  list of abbreviation  is an
-   ~alist~ named  =rename-major-mode-alist= where  each pair in  it is
-   the major mode and new representation.
+
+*** COMMENT Renaming major modes
+    :PROPERTIES:
+    :header-args: :tangle no
+    :END:
+
+    *Note:*  this  is   incompatible  with  =doom-modeline=  therefore
+    I disable the whole setup described below.
+    
+    To make the modeline cleaner and more cute, I will rename the major
+    mode so  to make it  more compact. The  list of abbreviation  is an
+    ~alist~ named  =rename-major-mode-alist= where  each pair in  it is
+    the major mode and new representation.
 
 #+BEGIN_SRC emacs-lisp
 (defvar rename-major-mode-alist
@@ -437,6 +460,9 @@ The renaming table is `rename-major-mode-alist'."
 
 
 ** COMMENT Cleanup the modeline --- minor modes
+   :PROPERTIES:
+   :header-args: :tangle no
+   :END:
 
    Ref: [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Mode-Line-Data.html][The data structure of the modeline]]
 
@@ -461,6 +487,9 @@ The renaming table is `rename-major-mode-alist'."
 
 
 ** COMMENT Cleanup the modeline --- syntax check with Flycheck
+   :PROPERTIES:
+   :header-args: :tangle no
+   :END:
 
    This part is deactivated because of doom modeline.
    
