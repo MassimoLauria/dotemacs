@@ -28,7 +28,7 @@
       cua-read-only-cursor-color 'hbar
       cua-enable-cursor-indications t
       cua-enable-modeline-indications t)
- 
+
 
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
@@ -58,11 +58,6 @@
 (setq echo-keystrokes 0.1)
 
 
-;;  Tab expansion
-(setq-default indent-tabs-mode nil) ;; Expand tabs as spaces
-(setq default-tab-width 4)
-
-
 ;; VC warning
 (setq vc-follow-symlinks nil)
 
@@ -76,14 +71,14 @@
 
 ;; Recenter sequence
 (setq recenter-positions '(top middle bottom))
-  
+
 (use-package beacon ; flashes the cursor's line when you scroll
   :diminish ""
   :config
   (beacon-mode 1))
-  
+
 (use-package which-key
-  :diminish ""      
+  :diminish ""
   :config
   (which-key-mode))
 

@@ -389,7 +389,20 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
  '(writegood-weasels-face ((t (:underline (:color "magenta" :style wave))))))
 #+END_SRC
 
-** Cleanup the modeline --- major modes
+** Modeline customization
+
+   We start from the Doom Emacs Modeline. See [[https://github.com/seagle0128/doom-modeline][here]].
+   
+#+BEGIN_SRC emacs-lisp
+(use-package doom-modeline
+  :ensure t
+  :init
+  (setq doom-modeline-icon t)
+  (setq doom-modeline-major-mode-icon t)
+  (setq doom-modeline-enable-word-count t)
+  (setq pyenv-mode-mode-line-format "")
+  (doom-modeline-mode 1))
+#+END_SRC
 
    To make the modeline cleaner and more cute, I will rename the major
    mode so  to make it  more compact. The  list of abbreviation  is an
@@ -423,13 +436,14 @@ The renaming table is `rename-major-mode-alist'."
 #+END_SRC
 
 
-** Cleanup the modeline --- minor modes
+** COMMENT Cleanup the modeline --- minor modes
 
    Ref: [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Mode-Line-Data.html][The data structure of the modeline]]
 
    A lot of minor  modes show up in the modeline. It  would be nice to
    get rid of them. The package =diminish= allows to convert the minor
-   mode indication.
+   mode indication. Notice  that I do not activate minor  modes in the
+   doom-modeline.
 
 #+BEGIN_SRC emacs-lisp
 (use-package autorevert
@@ -446,8 +460,10 @@ The renaming table is `rename-major-mode-alist'."
 #+END_SRC
 
 
-** Cleanup the modeline --- syntax check with Flycheck
+** COMMENT Cleanup the modeline --- syntax check with Flycheck
 
+   This part is deactivated because of doom modeline.
+   
    Flycheck spams the modeline. Let's try to make the error diagnostic
    more compact.
    
@@ -729,6 +745,18 @@ open, the command will just close it.
 
 * Programming
 
+
+** Tab vs Space
+
+   Of course I use 4 spaces for indentation
+
+#+BEGIN_SRC emacs-lisp
+(setq-default indent-tabs-mode nil) ;; Expand tabs as spaces
+(setq-default tab-width 4)
+(setq default-tab-width 4)
+#+END_SRC
+
+   
 ** Trailing whitespaces
   
   Removal of trailing  whitespace is useful in code. I  would do it in
@@ -901,7 +929,7 @@ visualizes the error
    ("M-<f12>" . mxl/toggle-flycheck-errors)
    ))
 
-;;(setq flycheck-global-modes '(not python-mode c-mode c++-mode objc-mode)) ; Use eglot/flymake
+(setq flycheck-global-modes '(not org-mode)) ; Use eglot/flymake
 (add-hook 'after-init-hook #'global-flycheck-mode)
 #+END_SRC
 

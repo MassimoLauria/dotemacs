@@ -20,6 +20,7 @@
                            magit-svn
                            auctex
                            pdf-tools
+                           doom-modeline
                            ;; others
                            ace-window
                            all-the-icons
