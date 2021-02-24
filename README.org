@@ -345,14 +345,12 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
 #+BEGIN_SRC emacs-lisp
 (defun mxl-fix-bibfonts (frame)
   (set-fontset-font t #x2318 symbol-font)   ; ⌘
-  (set-fontset-font t #x270e symbol-font))  ; ✎
+  (set-fontset-font t #x270e symbol-font)   ; ✎
+  (set-fontset-font t nil "Symbola"))       ; other fonts like 😊 💾  
 
 (mapc 'mxl-fix-bibfonts (frame-list))                    ; applies to existing frames
 (add-hook 'after-make-frame-functions 'mxl-fix-bibfonts) ; applies to future frames
 #+END_SRC
-
-#+RESULTS:
-: mxl-after-frame-fix-bibfonts
 
 ** Theme
 
@@ -463,17 +461,18 @@ nil."
                 (`not-checked "")
                 (`no-checker "")
                 (`running "")
-                (`errored "✗")
+                (`errored "😵")
                 (`finished
-                 (if flycheck-current-errors
-                     (let ((error-counts (flycheck-count-errors
-                                          flycheck-current-errors)))
-                       (format "✗:%s/%s"
-                               (or (cdr (assq 'error error-counts)) 0)
-                               (or (cdr (assq 'warning error-counts)) 0)))
-                   "✓"))
-                (`interrupted "")
-                (`suspicious "?"))))
+                 (let-alist (flycheck-count-errors flycheck-current-errors)
+                   (if (or .error .warning .info)
+                       (concat
+                        "⎧"
+                        (if .error (format "😱%s" .error ""))
+                        (if .warning (format "😟%s" .warning ""))
+                        (if .info (format "💁%s" .info ""))
+                        "⎫"))))
+                (`interrupted "😲")
+                (`suspicious "😒"))))
     (concat " " text)))
 #+END_SRC
 
