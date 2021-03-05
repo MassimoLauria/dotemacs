@@ -53,6 +53,8 @@
                    "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o %b"))))
 
 
+
+
 ;; Load PDF tools if AucTeX wants to open a PDF
 (use-package pdf-tools
   :pin manual
@@ -75,7 +77,6 @@ by default."
   (setq pdf-view-resize-factor 1.1)
   ;; use isearch instead of swiper
   (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
-  (define-key pdf-view-mode-map (kbd "O") 'open-in-external-app)
   ;; keyboard shortcut for zooming
   (define-key pdf-view-mode-map (kbd "+") 'pdf-view-enlarge)
   (define-key pdf-view-mode-map (kbd "=") 'pdf-view-enlarge)
@@ -84,6 +85,13 @@ by default."
   (define-key pdf-view-mode-map (kbd "W") 'pdf-view-fit-width-to-window)
   (define-key pdf-view-mode-map (kbd "H") 'pdf-view-fit-height-to-window)
   (define-key pdf-view-mode-map (kbd "P") 'pdf-view-fit-page-to-window)
+  ;; Open in apps
+  (define-key pdf-view-mode-map (kbd "O") 'open-in-external-app)
+  (defun mxl-pdf-open-in-xournal()
+    "Open the current PDF in Xournal, for editing"
+    (interactive)
+    (start-process "open-pdf-in-xournal" nil "xournalpp" (buffer-file-name)))
+  (define-key pdf-view-mode-map (kbd "X") 'mxl-pdf-open-in-xournal)
   ;; Margin removal
   (defun mxl-pdf-view-toggle-crop()
     "Crop/Uncrop according to the bounding box"
@@ -97,6 +105,7 @@ by default."
   (define-key pdf-view-mode-map (kbd "u") 'pdf-annot-add-underline-markup-annotation)
   (define-key pdf-view-mode-map (kbd "s") 'pdf-annot-add-strikeout-markup-annotation)
   (define-key pdf-view-mode-map (kbd "t") 'mxl-pdf-annot-add-text-annotation)
+  (define-key pdf-view-mode-map (kbd "l") 'pdf-annot-list-annotations)
   (define-key pdf-view-mode-map (kbd "l") 'pdf-annot-list-annotations)
   (define-key pdf-view-mode-map (kbd "D") 'pdf-annot-delete))
 

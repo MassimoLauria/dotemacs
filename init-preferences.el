@@ -39,6 +39,8 @@
 (setq search-highlight t)
 (setq query-replace-highlight t)
 
+(setq history-delete-duplicates t)
+
 (line-number-mode 1)
 (column-number-mode 1)
 

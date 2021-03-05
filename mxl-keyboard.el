@@ -1,6 +1,6 @@
 ;;; mxl-keyboard.el --- Keybindings specific for the author habits -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010-2020  Massimo Lauria
+;; Copyright (C) 2010-2021  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: convenience
@@ -30,7 +30,7 @@
   "Minor mode for which setup a bunch of useful keybindings.
 At least they are considered useful for the author.
 ")
- 
+
 (defcustom mxl-keyboard-comint-modes '(shell-mode comint-mode inferior-octave-mode inferior-emacs-lisp-mode)
   "`comint' keybidnings from mxl activated in these modes."
   :tag "Comint derived modes where mxl keymap is active"
@@ -65,6 +65,9 @@ At least they are considered useful for the author.
     ;; Out of expression
     (define-key map (kbd "M-p") 'up-list)
 
+    ;; Ripgrep
+    (define-key map (kbd "C-M-s") 'helm-rg)
+
     ;; Deletion keys
     (define-key map (kbd "M-e")  'backward-kill-word)
     (define-key map (kbd "M-r")  'kill-word)
@@ -82,7 +85,7 @@ At least they are considered useful for the author.
     (define-key map (kbd "C-'") 'narrow-or-widen-dwim)
     (define-key map (kbd "C-;") 'iedit-mode)
 
-    
+
     ;; Expand region configuration
     (define-key map (kbd "C-SPC") 'er/expand-region)
 
@@ -90,7 +93,7 @@ At least they are considered useful for the author.
     (define-key map (kbd "C--") 'text-scale-decrease)
     (define-key map (kbd "C-=") 'text-scale-increase)
     (define-key map (kbd "C-0") 'text-scale-adjust)
-    
+
     map)
   "Keymap for mxl-keyboard-mode.")
 
@@ -163,7 +166,7 @@ modified according to the useage pattern of the author."
 
     ;; Deletion keys
     (define-key map (kbd "M-w")  'comint-kill-whole-line)
-    
+
     ;; hide buffer
     (define-key map (kbd "<M-return>")  'bury-buffer)
 
@@ -213,4 +216,3 @@ modified according to the useage pattern of the author."
 
 (provide 'mxl-keyboard)
 ;;; mxl-keyboard.el ends here
-
