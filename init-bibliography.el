@@ -72,18 +72,18 @@
         ( bibtex-autokey-name-separator ", ")
         ( bibtex-autokey-name-case-convert 'capitalize)
         ( bibtex-autokey-additional-names " et al")
-        
+
         ;; Year part
         (bibtex-autokey-name-year-separator " (")
         (bibtex-autokey-year-length 4)
         (bibtex-autokey-year-title-separator "")
-        
+
         ;; Title part
         (bibtex-autokey-titlewords 0)
         (fulltitle (bibtex-autokey-get-field "title"))
         )
 
-    (unless (string-empty-p fulltitle) 
+    (unless (string-empty-p fulltitle)
       (concat (bibtex-generate-autokey) ") - " fulltitle))
     ))
 
@@ -183,7 +183,7 @@ Optional argument NODELIM see `bibtex-make-field'."
 (defun mybibtex-add-file-to-library (&optional file)
   "Associate a document to the bibtex entry currently under cursor.
 
-  ISSUES: 
+  ISSUES:
   1. Documents  can only be added to the file field.
   2. There are not alternative actions when the target filename already exists.
 "
@@ -235,7 +235,7 @@ Optional argument NODELIM see `bibtex-make-field'."
 	(mybibtex-add-file-to-library f)
       (error "Can not read %s" uri))))
 
-(defun mybibtex-dnd-setup () 
+(defun mybibtex-dnd-setup ()
   (setq-local dnd-protocol-alist '(("^file:" . mybibtex-dnd-add-file-linux))))
 
 (defun mybibtex-open-pdf ()
@@ -258,7 +258,7 @@ Optional argument NODELIM see `bibtex-make-field'."
               ("M-q" . bibtex-fill-entry)
               ("C-c C-o" . mybibtex-open-any)
               ("<drag-n-drop>" . mybibtex-dnd-add-file-mac))
-  
+
   :config
   (setq bibtex-autokey-name-case-convert 'capitalize
         bibtex-autokey-titleword-case-convert 'capitalize)
@@ -272,7 +272,7 @@ Optional argument NODELIM see `bibtex-make-field'."
 
 
 (use-package helm-bibtex
-  :commands (helm-bibtex)
+  :commands (helm-bibtex bibtex-completion-open-pdf)
   :bind ("C-c b" . helm-bibtex)
   :config
 
