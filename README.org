@@ -945,8 +945,8 @@ visualizes the error
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
   :init
-  (setq flycheck-disabled-checkers '(tex-chktex)
-        flycheck-display-errors-delay 0.1
+  (setq-default flycheck-disabled-checkers '(tex-chktex python-mypy))
+  (setq flycheck-display-errors-delay 0.1
         flycheck-highlighting-mode 'symbols
         flycheck-idle-change-delay 1.0)
   :config
