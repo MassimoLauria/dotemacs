@@ -329,11 +329,11 @@ Ignore if the path does not exists."
                             (width . 120)
                             (tool-bar . nil)
                             (line-spacing . 0.2)
-                            (internal-border-width . 3)
+                            (internal-border-width . 0)
                             (border-width . 0)
                             (vertical-scroll-bars . nil)
                             (horizontal-scroll-bars . nil)
-                            (left-fringe . 0)
+                            (left-fringe . 8)
                             (right-fringe . 0)
                             (tool-bar-lines . 0)
                             (menu-bar-line . 0)
@@ -382,6 +382,8 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
 #+BEGIN_SRC emacs-lisp
 (custom-theme-set-faces
  'zenburn
+ '(mode-line ((t (:box nil))))
+ '(mode-line-inactive ((t (:box nil))))
  '(flycheck-error ((t (:underline "Red"))))
  '(flycheck-warning ((t (:underline "Yellow"))))
  '(flycheck-info ((t (:underline "deep sky blue"))))
@@ -412,6 +414,7 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
   :ensure t
   :init
   (setq doom-modeline-icon t)
+  (setq doom-modeline-bar-width 6)
   (setq doom-modeline-major-mode-icon t)
   (setq doom-modeline-enable-word-count t)
   (setq pyenv-mode-mode-line-format "")
