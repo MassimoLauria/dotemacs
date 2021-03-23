@@ -78,12 +78,14 @@ Examples:
 
         ;; Title part
         (bibtex-autokey-titlewords 0)
+        (forbidden ":;")  ;; char that we are going to substitute
         (fulltitle (bibtex-autokey-get-field "title"))
         )
 
     (unless (string-empty-p fulltitle)
       (concat (bibtex-generate-autokey) ") - "
-              (replace-regexp-in-string ":" "_" fulltitle)))
+              (replace-regexp-in-string (concat "[" forbidden "]")
+                                        "_" fulltitle)))
     ))
 
 
