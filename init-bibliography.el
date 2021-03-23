@@ -56,16 +56,14 @@
       bibtex-autokey-titleword-case-convert 'capitalize
       bibtex-autokey-titleword-length nil)
 
-
-;;
-;; Setup the filename generation for bibtex entries
-;;
-;; Examples:
-;;   Surname, Surname (2014) - This is a title.pdf         -- up to two authors
-;;   Surname, Surname, et al (2014) - This is a title.pdf  -- more than two authors
-;;
 (defun bibtex-generate-filename ()
-  "docstring"
+  "Generate the PDF file name for a bibtex entry.
+
+Cleans up colons in the filename
+
+Examples:
+  Surname, Surname (2014) - This is a title.pdf         -- up to two authors
+  Surname, Surname, et al (2014) - This is a title.pdf  -- more than two authors"
   (interactive "P")
   (let (( bibtex-autokey-names  2 )
         ( bibtex-autokey-names-stretch 1)
@@ -84,7 +82,8 @@
         )
 
     (unless (string-empty-p fulltitle)
-      (concat (bibtex-generate-autokey) ") - " fulltitle))
+      (concat (bibtex-generate-autokey) ") - "
+              (replace-regexp-in-string ":" "_" fulltitle)))
     ))
 
 
