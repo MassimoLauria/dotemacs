@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021  Massimo Lauria
-;; Time-stamp: "2021-03-30, 00:32 (CEST) Massimo Lauria"
+;; Time-stamp: "2021-03-30, 10:54 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -33,9 +33,12 @@
   (error "Emacs <24 not supported by default configuration. Use fallback one"))
 
 ;; Native compilation
-(if (and (fboundp 'native-comp-available-p)
-       (native-comp-available-p))
-  (setq comp-deferred-compilation t))
+(when (and (fboundp 'native-comp-available-p)
+           (native-comp-available-p))
+  (setq comp-deferred-compilation t)
+  (setq comp-async-query-on-exit t)
+  (setq comp-async-jobs-number 4)
+  (setq comp-async-report-warnings-errors nil))
 
 
 ;; Init file loaded with less aggressive garbage collector and with

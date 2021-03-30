@@ -3,14 +3,16 @@
 
 ;;; Commentary:
 ;;
-;;  $ emacs -batch -l bootstrap.el -f install-pkgs
-;;
-;;  $ emacs -batch -l bootstrap.el -f upgrade-pkgs
+;;  Setup my Emacs installation, installing/upgrading packages.
+;;  It provides useful function which can be called even by
+;;  the Makefile.
 
 ;;; Code:
 
 ;;  This is a list of packages that can be installed in batch
 ;;
+(defvar requested-packages nil "Packages I want to install via makefile.")
+
 (setq requested-packages '(;; very important packages first
                            use-package
                            org-plus-contrib
@@ -149,14 +151,14 @@
 ;; Load `org-mode' config file.
 ;; Load README.org only if newer than README.el. This code avoid
 ;; loading `org-mode' for `org-babel-load-file'
-(defun mxl-maybe-load-org-config (fName)
-  "Load `org-mode' config file `fName'
+(defun mxl-maybe-load-org-config (fname)
+  "Config file `FNAME' is loaded, via `org-babel-load-file'.
 
-Load the org-mode file only if it is newer than the corresponding
+Load the `org-mode' file only if it is newer than the corresponding
 elisp file obtained with `org-babel', otherwise load the elisp
 file directly. This code avoid loading `org-mode' for
 `org-babel-load-file' function, when unnecessary"
-  (let* ((org-file fName)
+  (let* ((org-file fname)
          (el-file (concat (file-name-sans-extension org-file) ".el"))
          (age (lambda (file)
                 (float-time
