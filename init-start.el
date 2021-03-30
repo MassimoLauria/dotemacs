@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021  Massimo Lauria
-;; Time-stamp: "2021-02-23, 00:38 (CET) Massimo Lauria"
+;; Time-stamp: "2021-03-30, 00:32 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -31,6 +31,12 @@
 ;; Fallback configuration
 (when (< emacs-major-version 24)
   (error "Emacs <24 not supported by default configuration. Use fallback one"))
+
+;; Native compilation
+(if (and (fboundp 'native-comp-available-p)
+       (native-comp-available-p))
+  (setq comp-deferred-compilation t))
+
 
 ;; Init file loaded with less aggressive garbage collector and with
 ;; debug support on errors
