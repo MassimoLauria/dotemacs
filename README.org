@@ -2,8 +2,7 @@
 #+author: Massimo Lauria <massimo.lauria@uniroma1.it>
 #+STARTUP: collapsed
 
-
-This is the Emacs config of Massimo Lauria (C) 2009-2020.
+This is the Emacs config of Massimo Lauria (C) 2009-2021.
 
 This configuration  is under massive  and continue change,  and things
 break every day. I just put it  online so you can cut & paste whatever
@@ -728,7 +727,7 @@ open, the command will just close it.
 
    - =auto-fill-mode=  (hard insert line breaks automatically)
    - =visual-fill-mode= (visual wrap at window margin)
-   - =isual-fill-column-mode= (visual wrap at fixed margin)
+   - =visual-fill-column-mode= (visual wrap at fixed margin)
 
    To be  readable, prose text files  should have at most  70 columns.
    And when word wrapping is hard-coded, the text should be justified.
@@ -759,6 +758,15 @@ open, the command will just close it.
   :hook ((visual-line-mode . turn-on-visual-fill-column-mode)
          (visual-line-mode . turn-off-auto-fill)
          (message-mode . visual-line-mode)))
+#+END_SRC
+
+Writing prose is  easier in a no-distraction setup.  What did Virginia
+Woolf say? "A Room of One's Own".
+
+#+BEGIN_SRC emacs-lisp
+(use-package writeroom-mode
+  :init
+  (setq writeroom-bottom-divider-width 0))
 #+END_SRC
 
 
@@ -1302,7 +1310,7 @@ this python buffer.
 #+END_SRC
 
 ** Bookmarks
-
+   
    If you are  like me you have  several files you visit  on a regular
    bases,  for some  periods of  time. E.g.,  lecture folders,  course
    journal, the tex files for the  paper you are currently working on.
@@ -1325,7 +1333,7 @@ this python buffer.
 #+END_SRC
 
 ** Hide some buffers in Helm
-
+   
    Some buffers  clutter selection menus  and there are no  reasons to
    visit them.  For example the  buffer =*import calendar*=  just runs
    the  script   which  imports  my  google   calendars  in  org-mode.
@@ -1341,4 +1349,20 @@ this python buffer.
 
 (setq helm-white-buffer-regexp-list nil)
 
+#+END_SRC
+
+** Regexp search/replace
+
+   Calling =replace= and =query-replace= on regexp(s) is quite tricky.
+   It is difficult to understand  what the matched text is, especially
+   when   using  the   emacs   regexp   syntax.  The   =visual-regexp=
+   package helps.
+   
+#+BEGIN_SRC emacs-lisp
+(use-package visual-regexp
+  :commands (vr/replace vr/mc-mark vr/query-replace)
+  :bind
+  (("M-%" . vr/replace)
+   ("C-M-%" . vr/query-replace)
+  ))
 #+END_SRC

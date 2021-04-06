@@ -97,6 +97,7 @@
                            unicode-fonts
                            virtualenvwrapper
                            visual-fill-column
+                           visual-regexp
                            which-key
                            with-editor
                            writeroom-mode
