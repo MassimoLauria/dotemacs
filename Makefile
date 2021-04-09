@@ -1,7 +1,7 @@
-# Copyright (C) 2015, 2016, 2018, 2019, 2020 by Massimo Lauria <lauria.massimo@gmail.com>
+# Copyright (C) 2015, 2016, 2018, 2019, 2020, 2021 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2020-11-28, 11:07 (CET) Massimo Lauria"
+# Time-stamp: "2021-04-10, 00:39 (CEST) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -39,7 +39,6 @@ all:
 	@rm -f ~/.emacs.d/init.el
 	@ln -s ${INIT} ~/.emacs.d
 	${MAKE} install-pkgs
-	${MAKE}	install-fonts
 	@echo "Done."
 
 minisetup:
@@ -57,8 +56,6 @@ emacs-changed:
 uninstall:
 	@echo "Completely erase Emacs configuration."
 	@rm -fr ~/.emacs.d/init.el
-	@rm -fr ~/.emacs.d/anaconda-mode/
-	@rm -fr ~/.emacs.d/irony/
 
 
 # --------- Install tools, fonts and packages -----------
