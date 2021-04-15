@@ -287,7 +287,60 @@ Optional argument NODELIM see `bibtex-make-field'."
   (helm-delete-action-from-source  "Insert citation" helm-source-bibtex)
   (helm-add-action-to-source       "Insert citation" 'helm-bibtex-insert-citation helm-source-bibtex 0)
   ;; Default height for helm-bibtex window
-  (setq helm-bibtex-full-frame nil))
+  (setq helm-bibtex-full-frame nil)
+
+  ;; Workaround because
+  (defalias 'bibtex-completion-find-pdf-in-field 'mxl-find-pdf-in-field-workaround
+    "Massimo's workaround")
+  )
+
+
+(defun mxl-find-pdf-in-field-workaround (key-or-entry)
+  "Workaround by Masssimo.
+
+I had to put here the old implementation because it was broken. See Bug #370 in
+https://github.com/tmalsburg/helm-bibtex
+
+Here KEY-OR-ENTRY is either a bibtex entry or a bibtex key."
+  (when bibtex-completion-pdf-field
+    (let* ((entry (if (stringp key-or-entry)
+                      (bibtex-completion-get-entry1 key-or-entry t)
+                    key-or-entry))
+           (value (bibtex-completion-get-value bibtex-completion-pdf-field entry)))
+      (cond
+       ((not value) nil)         ; Field not defined.
+       ((f-file? value) (list value))   ; A bare full path was found.
+       ((-any 'f-file? (--map (f-join it (f-filename value)) (-flatten bibtex-completion-library-path))) (-filter 'f-file? (--map (f-join it (f-filename value)) (-flatten bibtex-completion-library-path))))
+       (t                               ; Zotero/Mendeley/JabRef/Calibre format:
+        (let ((value (replace-regexp-in-string "\\([^\\]\\)[;]" "\\1\^^" value)))
+          (cl-loop  ; Looping over the files:
+           for record in (s-split "\^^" value)
+                                        ; Replace unescaped colons by field separator:
+           for record = (replace-regexp-in-string "\\([^\\]\\|^\\):" "\\1\^_" record)
+                                        ; Unescape stuff:
+           for record = (replace-regexp-in-string "\\\\\\(.\\)" "\\1" record)
+                                        ; Now we can safely split:
+           for record = (s-split "\^_" record)
+           for file-name = (nth 0 record)
+           for path = (or (nth 1 record) "")
+           for paths = (if (s-match "^[A-Z]:" path)
+                           (list path)                 ; Absolute Windows path
+                                        ; Something else:
+                         (append
+                          (list
+                           path
+                           file-name
+                           (f-join (f-root) path) ; Mendeley #105
+                           (f-join (f-root) path file-name)) ; Mendeley #105
+                          (--map (f-join it path)
+                                 (-flatten bibtex-completion-library-path)) ; Jabref #100
+                          (--map (f-join it path file-name)
+                                 (-flatten bibtex-completion-library-path)))) ; Jabref #100
+           for result = (-first (lambda (path)
+                                  (if (and (not (s-blank-str? path))
+                                           (f-exists? path))
+                                      path nil)) paths)
+           if result collect result)))))))
 
 
 (provide 'init-bibliography)
