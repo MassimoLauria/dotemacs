@@ -298,8 +298,8 @@ Optional argument NODELIM see `bibtex-make-field'."
 (defun mxl-find-pdf-in-field-workaround (key-or-entry)
   "Workaround by Masssimo.
 
-I had to put here the old implementation because it was broken. See Bug #370 in
-https://github.com/tmalsburg/helm-bibtex
+I had to put here the old implementation because it was broken. See Bug #371 in
+https://github.com/tmalsburg/helm-bibtex/issues/371
 
 Here KEY-OR-ENTRY is either a bibtex entry or a bibtex key."
   (when bibtex-completion-pdf-field
