@@ -167,15 +167,14 @@ It will not work properly if it is not bound to a key.
     (reftex-citation)))
 
 
-(defun refresh-xmodmap ()
-  "Refresh the xmodmap settings
+(defun uskey ()
+  "Refresh the keyboard settings.
 
-Unfortunately on new X11 with modern keyboard settings the
-  Xmodmap paradigm is obsolete and for some reason the settings
-  get lost. This command will refresh them from inside emacs, so
-  that I don't have to open a terminal for that."
+Unfortunately on for some reason the keyboard settings get lost.
+  This command will refresh them from inside EMACS, so that
+  I don't have to open a terminal for that."
   (interactive)
-  (shell-command "xmodmap ~/.Xmodmap" nil nil))
+  (shell-command "setxkbmap -config ~/config/xsession/setxkbmap.pcus" nil nil))
 
 
 ;;----- Fix compile modes ------------------------------------------------
