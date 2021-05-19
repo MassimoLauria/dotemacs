@@ -119,7 +119,7 @@
 (setq network-security-level 'high)
 
 ;; Emacs packages
-(setq package-user-dir (concat "~/.emacs.d/elpa/" emacs-version))
+(setq package-user-dir (concat "~/config/emacs/elpa-local/" emacs-version))
 (setq package-archives  '(("gnu"   . "https://elpa.gnu.org/packages/")
                           ("melpa" . "https://melpa.org/packages/")
                           ("org"   . "https://orgmode.org/elpa/")
