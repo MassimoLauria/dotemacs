@@ -57,7 +57,6 @@
 
 ;; Load PDF tools if AucTeX wants to open a PDF
 (use-package pdf-tools
-  :pin manual
   :mode  ("\\.pdf" . pdf-view-mode)
   :init
   (setq pdf-view-use-unicode-ligther nil)  ;; make loading faster

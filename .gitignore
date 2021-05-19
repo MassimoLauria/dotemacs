@@ -3,6 +3,4 @@
 README.el
 
 # Ignore backup files and precompiled files.
-*~
-*.elc
 *.pyc
