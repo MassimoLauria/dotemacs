@@ -4,3 +4,6 @@ README.el
 
 # Ignore backup files and precompiled files.
 *.pyc
+
+# EPDFinfo
+elpa-local/**/epdfinfo
