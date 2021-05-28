@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016, 2018, 2019, 2020, 2021 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2021-04-10, 00:39 (CEST) Massimo Lauria"
+# Time-stamp: "2021-05-28, 20:47 (CEST) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -62,10 +62,12 @@ uninstall:
 install-pkgs:
 	@echo "Install the required emacs packages"
 	${EMACS} -batch -l bootstrap.el -f install-pkgs
+	${EMACS} -batch -l bootstrap.el -f pdf-tools-install
 
 upgrade-pkgs:
 	@echo "Update emacs packages"
 	${EMACS} -batch -l bootstrap.el -f upgrade-pkgs
+	${EMACS} -batch -l bootstrap.el -f pdf-tools-install
 
 
 install-fonts:
