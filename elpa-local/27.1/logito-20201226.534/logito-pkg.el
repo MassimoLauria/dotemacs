@@ -1,0 +1,2 @@
+;;; Generated package description from /Users/massimo/config/emacs/elpa-local/27.1/logito-20201226.534/logito.el  -*- no-byte-compile: t -*-
+(define-package "logito" "20201226.534" "logging library for Emacs" '((emacs "25.1")) :commit "d5934ce10ba3a70d3fcfb94d742ce3b9136ce124" :authors '(("Yann Hodique" . "yann.hodique@gmail.com")) :maintainer '("Yann Hodique" . "yann.hodique@gmail.com") :keywords '("lisp" "extensions"))

@@ -1,0 +1,2 @@
+;;; Generated package description from /Users/massimo/config/emacs/elpa-local/27.1/helm-bibtex-20201214.2111/helm-bibtex.el  -*- no-byte-compile: t -*-
+(define-package "helm-bibtex" "20201214.2111" "A bibliography manager based on Helm" '((bibtex-completion "1.0.0") (helm "1.5.5") (cl-lib "0.5") (emacs "24.1")) :commit "9f6ea920a49457d85096caa0e61f086a42b2908e" :authors '(("Titus von der Malsburg" . "malsburg@posteo.de")) :maintainer '("Titus von der Malsburg" . "malsburg@posteo.de") :url "https://github.com/tmalsburg/helm-bibtex")

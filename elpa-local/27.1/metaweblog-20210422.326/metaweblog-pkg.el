@@ -1,0 +1,2 @@
+;;; Generated package description from /Users/massimo/config/emacs/elpa-local/27.1/metaweblog-20210422.326/metaweblog.el  -*- no-byte-compile: t -*-
+(define-package "metaweblog" "20210422.326" "An XML-RPC MetaWeblog and WordPress API client." '((emacs "26.3")) :commit "543813e0acceb55653d876302a5d5741879fb717" :authors '(("Puneeth Chaganti" . "punchagan+org2blog@gmail.com")) :maintainer '("Grant Rettke" . "grant@wisdomandwonder.com") :keywords '("comm") :url "https://github.com/org2blog/org2blog")
