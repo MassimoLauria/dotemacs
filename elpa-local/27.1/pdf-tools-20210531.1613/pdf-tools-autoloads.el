@@ -207,9 +207,10 @@ mode otherwise.
 Display a PDF Tools menu in the menu-bar.
 
 If called interactively, enable Pdf-Misc-Menu-Bar minor mode if
-ARG is positive, and disable it if ARG is zero or negative.  If
-called from Lisp, also enable the mode if ARG is omitted or nil,
-and toggle it if ARG is `toggle'; disable the mode otherwise.
+ARG is positive, and disable it if ARG is zero or negative.
+If called from Lisp, also enable the mode if ARG is omitted or
+nil, and toggle it if ARG is `toggle'; disable the
+mode otherwise.
 
 \(fn &optional ARG)" t nil)
 
@@ -219,8 +220,8 @@ Provide a right-click context menu in PDF buffers.
 If called interactively, enable Pdf-Misc-Context-Menu minor mode
 if ARG is positive, and disable it if ARG is zero or negative.
 If called from Lisp, also enable the mode if ARG is omitted or
-nil, and toggle it if ARG is `toggle'; disable the mode
-otherwise.
+nil, and toggle it if ARG is `toggle'; disable the
+mode otherwise.
 
 \\{pdf-misc-context-menu-minor-mode-map}
 
@@ -264,9 +265,10 @@ or call the function `pdf-occur-global-minor-mode'.")
 Enable integration of Pdf Occur with other modes.
 
 If called interactively, enable Pdf-Occur-Global minor mode if
-ARG is positive, and disable it if ARG is zero or negative.  If
-called from Lisp, also enable the mode if ARG is omitted or nil,
-and toggle it if ARG is `toggle'; disable the mode otherwise.
+ARG is positive, and disable it if ARG is zero or negative.
+If called from Lisp, also enable the mode if ARG is omitted or
+nil, and toggle it if ARG is `toggle'; disable the
+mode otherwise.
 
 This global minor mode enables (or disables)
 `pdf-occur-ibuffer-minor-mode' and `pdf-occur-dired-minor-mode'
@@ -278,9 +280,10 @@ in all current and future ibuffer/dired buffer.
 Hack into ibuffer's do-occur binding.
 
 If called interactively, enable Pdf-Occur-Ibuffer minor mode if
-ARG is positive, and disable it if ARG is zero or negative.  If
-called from Lisp, also enable the mode if ARG is omitted or nil,
-and toggle it if ARG is `toggle'; disable the mode otherwise.
+ARG is positive, and disable it if ARG is zero or negative.
+If called from Lisp, also enable the mode if ARG is omitted or
+nil, and toggle it if ARG is `toggle'; disable the
+mode otherwise.
 
 This mode remaps `ibuffer-do-occur' to
 `pdf-occur-ibuffer-do-occur', which will start the PDF Tools
@@ -293,9 +296,10 @@ and otherwise fallback to `ibuffer-do-occur'.
 Hack into dired's `dired-do-search' binding.
 
 If called interactively, enable Pdf-Occur-Dired minor mode if ARG
-is positive, and disable it if ARG is zero or negative.  If
-called from Lisp, also enable the mode if ARG is omitted or nil,
-and toggle it if ARG is `toggle'; disable the mode otherwise.
+is positive, and disable it if ARG is zero or negative.
+If called from Lisp, also enable the mode if ARG is omitted or
+nil, and toggle it if ARG is `toggle'; disable the
+mode otherwise.
 
 This mode remaps `dired-do-search' to
 `pdf-occur-dired-do-search', which will start the PDF Tools
@@ -474,9 +478,10 @@ or call the function `pdf-virtual-global-minor-mode'.")
 Enable recognition and handling of VPDF files.
 
 If called interactively, enable Pdf-Virtual-Global minor mode if
-ARG is positive, and disable it if ARG is zero or negative.  If
-called from Lisp, also enable the mode if ARG is omitted or nil,
-and toggle it if ARG is `toggle'; disable the mode otherwise.
+ARG is positive, and disable it if ARG is zero or negative.
+If called from Lisp, also enable the mode if ARG is omitted or
+nil, and toggle it if ARG is `toggle'; disable the
+mode otherwise.
 
 \(fn &optional ARG)" t nil)
 
