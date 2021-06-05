@@ -61,7 +61,7 @@
   :init
   (setq pdf-view-use-unicode-ligther nil)  ;; make loading faster
   :config
-  (pdf-tools-install)
+  (pdf-tools-install :no-query)
   (setq pdf-view-use-scaling t)
   (setq-default pdf-view-display-size 'fit-page)
   ;; Highlights do not open the annotation window when created
