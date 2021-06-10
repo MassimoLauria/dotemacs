@@ -24,7 +24,7 @@
 
 (use-package magit-svn
   :diminish magit-svn-mode
-  :commands (magit-svn-mode turn-on-magit-svn))
+  :commands magit-svn-mode)
 
 (use-package forge
   :after magit)
@@ -33,5 +33,3 @@
 (add-to-list 'auto-mode-alist '("/COMMIT_EDITMSG\\'" . diff-mode))
 
 (provide 'init-magit)
-
-
