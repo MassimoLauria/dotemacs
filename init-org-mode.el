@@ -1,7 +1,7 @@
 ;;;
 ;;; The Org-Mode setup. One of the most important pieces of
-;;; configuration of my emacs setup. 
-;;; 
+;;; configuration of my emacs setup.
+;;;
 ;;; No support for Org-Mode < 9
 ;;;
 ;;; Some of the ideas in this configuration come from the following
@@ -12,7 +12,7 @@
 ;;;------------ File locations ---------------------------------------
 (setq org-directory "~/personal/agenda/")
 (setq org-default-notes-file (concat org-directory "agenda.org"))      ;; default capture file
-(setq org-default-journal-file (concat org-directory "journal.org")) 
+(setq org-default-journal-file (concat org-directory "journal.org"))
 
 (setq org-archive-location (concat org-directory
                                    "ZZ_archived.org"                   ;; archive file
@@ -116,7 +116,7 @@
         "----------------"))
 (setq org-agenda-current-time-string "——————————————⌚⌚⌚—————————————")
 (setq org-agenda-search-headline-for-time nil)
- 
+
 
 ;; These tags categorizes a whole big thing, and I don't want all
 ;; subitems to pop up in the corresponding agenda view.
@@ -129,7 +129,7 @@
 (setq org-agenda-custom-commands
       '(("n" "My agenda setting"
          ((agenda "" ((org-agenda-overriding-header "           AGENDA OF THE DAY / DEADLINES in 3 months\n")
-                      ;; limits the agenda display to a single day) 
+                      ;; limits the agenda display to a single day)
                       (org-agenda-span 1)
                       (org-deadline-warning-days 90)        ;; [1]
                       ))
@@ -171,7 +171,7 @@
 
 ;; Set a key for the agenda view
 (defun my-org-agenda-show (&optional arg)
-  "Show my custom agenda. 
+  "Show my custom agenda.
 
 It shows the full view of my custom agenda."
   (interactive "P")
@@ -182,7 +182,7 @@ It shows the full view of my custom agenda."
   (interactive)
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
-  
+
   ;; org-babel and export
   (init-org-mode--babel-setup)
   (init-org-mode--latex-export-setup)
@@ -190,7 +190,7 @@ It shows the full view of my custom agenda."
 
   ;; Fix color theme
   (init-org-mode-faces)
-  
+
   ;; Org-mode communicating with external applications.
   (require 'org-protocol nil t)
 
@@ -338,7 +338,7 @@ part of the keyboard.
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Org Capture template configuration 
+;;; Org Capture template configuration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; support functions
@@ -374,7 +374,7 @@ part of the keyboard.
   :PROPERTIES:
   :EMAIL: %(org-contacts-template-email)
   :END:
-  
+
   %?
   ")
 
@@ -386,7 +386,7 @@ part of the keyboard.
         ("e" "Event/Appointment" entry (file "agenda.org")      "* %?\n  %^t\n  %i\n\n")
         ("c" "New contact"       entry (file+olp "contacts.org" "CONTATTI") ,my/org-contacts-template :empty-lines 1)
         ("j" "Journal Entry"     entry (file+olp+datetree "journal.org") "* inserito il %U\n\n  %?\n\n%i\n\n")
-      
+
         ;; ("Q" "File a notebook" entry (file+olp "notebook.org" "PHYSICAL NOTEBOOKS")
         ;;  "* New notebook %? :notebook:%^g\n  %U\n\n  %^{ID}p%^{Formato}p%^{Fogli}p%^{Nome}p\n\n")
         ("w" "External URL" entry (file+olp "notebook.org" "CAPTURED URLS")  "%(org-capture-URL-data)")))
@@ -460,9 +460,9 @@ part of the keyboard.
   (sp-local-pair 'org-mode "“" "”")  ;; add so you can jump back and forth and out and in the pair!
   (sp-local-pair 'org-mode "\"" nil :post-handlers '(my-replace-straight-quotes))
   (sp-local-tag  'org-mode "\"" "“" "”" :actions '(wrap))
-  (sp-local-pair 'org-mode "$" "$" ) 
+  (sp-local-pair 'org-mode "$" "$" )
   (sp-local-tag  'org-mode "$" "$" "$" :actions '(wrap))
-  (sp-local-pair 'org-mode "/" "/") 
+  (sp-local-pair 'org-mode "/" "/")
   (sp-local-tag  'org-mode "/" "/" "/" :actions '(wrap))
   (sp-local-tag  'org-mode "*" "*" "*" :actions '(wrap))
   (sp-local-tag  'org-mode "=" "=" "=" :actions '(wrap)))
@@ -472,7 +472,7 @@ part of the keyboard.
   "Set the `ac-sources', in particular remove some annoying ones."
   (interactive)
   (dolist (badSource
-           '(ac-source-files-in-current-dir ac-source-filename) 
+           '(ac-source-files-in-current-dir ac-source-filename)
            ac-sources)
     (setq ac-sources (remove badSource ac-sources))))
 
@@ -480,7 +480,7 @@ part of the keyboard.
 
 (defun my-org-bibtex-open (path)
   "Visit the bibliography entry on PATH.
-  
+
 If the bibtex entry does not specify a bibtex file in its path,
 then the first file in `reftex-default-bibliography' is used."
   (let* ((search (when (string-match "::\\(.+\\)\\'" path)
@@ -502,12 +502,12 @@ Apapted from the blog \"WebLog Pro Olivier Berger\""
                    (match-string 1 path)))
          (path (substring path 0 (match-beginning 0))))
     (cond ((eq format 'latex)
-           (if (or (not desc) 
+           (if (or (not desc)
                    (equal 0 (search "bibtex:" desc)))
                (format "\\cite{%s}" search)
              (format "\\cite[%s]{%s}" desc search)))
           (t
-           (if (or (not desc) 
+           (if (or (not desc)
                    (equal 0 (search "bibtex:" desc)))
                (format "[%s]" search)
              (format "(%s)" desc search)))
@@ -517,7 +517,7 @@ Apapted from the blog \"WebLog Pro Olivier Berger\""
   "This is the format of BibTeX entries in org-mode files.")
 
 (defun org-mode/setup-citations ()
-  "Setup bibtex links with support for LaTeX export and 
+  "Setup bibtex links with support for LaTeX export and
 for `reftex-default-bibliography'."
   (interactive)
   (turn-on-reftex)
@@ -529,7 +529,7 @@ for `reftex-default-bibliography'."
 (defun update-org-latex-fragments ()
   (org-toggle-latex-fragment '(16))
   (let ((text-scale-factor (expt text-scale-mode-step text-scale-mode-amount)))
-    (plist-put org-format-latex-options :scale text-scale-factor)) 
+    (plist-put org-format-latex-options :scale text-scale-factor))
   (org-toggle-latex-fragment '(16)))
 
 
@@ -537,7 +537,7 @@ for `reftex-default-bibliography'."
   "Setup preferred colors for org mode"
   ;; Set the color
   (require 'color)
-  
+
   ;; Darken the background color for code blocks
   (let ((darkbg (color-darken-name
                  (face-attribute 'default :background) 15)))
@@ -553,7 +553,7 @@ for `reftex-default-bibliography'."
 ;; Setup for PDF/Latex exports
 (defun init-org-mode--latex-export-setup ()
   "Setup minted package for code listing
-   
+
    Better than default because it manages UTF-8 characters but
    requires pygments installed and -shell-escape option in the
    pdflatex call"
@@ -596,7 +596,7 @@ for `reftex-default-bibliography'."
 
 (defun init-org-mode--babel-setup ()
   "Org-babel configuration. Code in org-mode files!"
-  
+
   ;; Activate languages (it could be a security RISK!!)
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -634,7 +634,7 @@ This is a workaround to get the old templates in org 9.2
                          "<S"
                          "Insert an SQLite code"
                          )
-   
+
   (tempo-define-template "python"
                          '("#+BEGIN_SRC python :exports both :results output" n>
                            p n>
@@ -642,30 +642,46 @@ This is a workaround to get the old templates in org 9.2
                          "<p"
                          "Python code"
                          )
-   
+
   (tempo-define-template "elisp"
                          '("#+BEGIN_SRC emacs-lisp" n>
                            p n>
                            "#+END_SRC" n>)
-                         "<l"
+                         "<E"
                          "Emacs Lisp code"
                          )
 
-  (tempo-define-template "latex"
+  (tempo-define-template "latex code"
                          '("#+BEGIN_SRC latex" n>
                            p n>
                            "#+END_SRC" n>)
-                         "<L"
+                         "<l"
                          "Latex code"
                          )
-  
+
+  (tempo-define-template "latex export"
+                         '("#+BEGIN_EXPORT latex" n>
+                           p n>
+                           "#+END_EXPORT" n>)
+                         "<L"
+                         "Latex export"
+                         )
+
+  (tempo-define-template "html export"
+                         '("#+BEGIN_EXPORT html" n>
+                           p n>
+                           "#+END_EXPORT" n>)
+                         "<H"
+                         "Latex export"
+                         )
+
   (tempo-define-template "python session"
                          '("#+BEGIN_SRC python :session ????? :exports both :results output" n>
                            p n>
                            "#+END_SRC" n>)
                          "<P"
                          "Python code in a session")
-   
+
   (tempo-define-template "theorem"
                          '("#+begin_theorem" n>
                            p n>
@@ -675,14 +691,14 @@ This is a workaround to get the old templates in org 9.2
                            "#+end_proof" n>)
                          "<t"
                          "Theorem with proof")
-             
+
   (tempo-define-template "equation"
-                         '("\\begin{equation}" n>
+                         '("\\begin{equation*}" n>
                            p n>
-                           "\\end{equation}" n>)
-                         "<E"
-                         "Math equation")
-   
+                           "\\end{equation*}" n>)
+                         "<Q"
+                         "Math equation with no label")
+
   (tempo-define-template "slidenode"
                          '(n
                            "*** " n>
@@ -705,6 +721,10 @@ This is a workaround to get the old templates in org 9.2
                            "#+END_CENTER" n>)
                          "<c"
                          "Centered section")
+
+   (add-hook 'org-beamer-mode-hook
+          #'(lambda ()
+              (yas-activate-extra-mode 'latex-mode)))
 
   )
 

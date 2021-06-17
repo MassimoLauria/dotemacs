@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: No title frame
+# key: obnotitle
+# --
+** No title                                                 :B_fullframe:
+   :PROPERTIES:
+   :BEAMER_env: fullframe
+   :END:
+
+   $0

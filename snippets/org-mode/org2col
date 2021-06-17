@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: Two columns frame
+# key: org2col
+# --
+*** Left                                                     :B_column:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: column
+    :BEAMER_col: ${1:0.5}
+    :END:
+
+
+*** Right                                                    :B_column:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: column
+    :BEAMER_col: ${1:$(- 1.0 (string-to-number yas-text))}
+    :END:

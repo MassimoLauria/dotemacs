@@ -1,0 +1,12 @@
+# key: org2section
+# name: Section separator
+# --
+** $1                                                 :B_fullframe:
+   :PROPERTIES:
+   :BEAMER_env: fullframe
+   :END:
+
+   #+BEGIN_CENTER
+   \large
+   ${1:$(downcase yas-text)}
+   #+END_CENTER
