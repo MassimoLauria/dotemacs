@@ -63,6 +63,7 @@
   :config
   (pdf-tools-install :no-query)
   (setq pdf-view-use-scaling t)
+  (setq revert-without-query '(".pdf"))
   (setq-default pdf-view-display-size 'fit-page)
   ;; Highlights do not open the annotation window when created
   (setq pdf-annot-activate-created-annotations nil)
