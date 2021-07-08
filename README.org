@@ -887,6 +887,39 @@ Woolf say? "A Room of One's Own".
   :commands highlight-defined-mode)
 #+END_SRC
 
+** Highlight notes in comment
+
+   This  code  was stolen  by  Casey  Muratori  aka [[https://www.youtube.com/channel/UCaTznQhurW5AaiYPbhEA-KA][Molly  Rocket]]  and
+   highlight some words in code to make annotations. I implement
+   - TODO (Red)
+   - NOTE (Green)
+   - CITE (Blue)
+
+#+BEGIN_SRC emacs-lisp
+(setq mxl-annotation-prog-modes
+      '(python-mode
+        c++-mode
+        c-mode
+        emacs-lisp-mode))
+
+(make-face 'font-lock-fixme-face)
+(make-face 'font-lock-note-face)
+(make-face 'font-lock-cite-face)
+(mapc (lambda (mode)
+        (font-lock-add-keywords
+         mode
+         '(("\\<\\(TODO\\)" 1 'font-lock-fixme-face t)
+	       ("\\<\\(NOTE\\)" 1 'font-lock-note-face t)
+	       ("\\<\\(CITE\\)" 1 'font-lock-cite-face t))))
+	  mxl-annotation-prog-modes)
+
+(modify-face 'font-lock-fixme-face "Red" nil nil t nil nil nil nil)
+(modify-face 'font-lock-note-face "Light Green" nil nil t nil nil nil nil)
+(modify-face 'font-lock-cite-face "Light Blue" nil nil t nil nil nil nil)
+     #+END_SRC
+     
+   
+
 ** Fixing Errors
 
    We all know most of development time is spend looking for error and
