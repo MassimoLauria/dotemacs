@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021  Massimo Lauria
-;; Time-stamp: "2021-03-30, 10:54 (CEST) Massimo Lauria"
+;; Time-stamp: "2021-07-11, 18:51 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -120,6 +120,10 @@
 ;;; Start server --------------------------------------------------------
 (require 'init-server)
 
+(message "*** Emacs loaded in %s with %d garbage collections."
+     (format "%.2f seconds"
+             (float-time
+              (time-subtract after-init-time before-init-time))) gcs-done)
 
 (provide 'init-start)
 ;; Local Variables:
