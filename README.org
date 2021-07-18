@@ -1405,35 +1405,6 @@ this python buffer.
   :bind ( "M-t" . helm-yas-complete))
 #+END_SRC
 
-** Choice and expansion of templates (prefix and completion)
-
-   I have been a  user of =tempo= template system and  I like the idea
-   of  having an  explicit prefix  key to  trigger templates.  I never
-   liked template expansion to pop up  while I am writing other words.
-   For example  in =yasnippet-snippets= there is  a template triggered
-   by the letter ='a'=. A bit  too agressive IMHO. Instead I will only
-   use the prefix ='<'= for my snippet keys, as in =tempo= templates.
-
-   Furthermore I will have a trigger key that activates the snippets.
-   
-#+BEGIN_SRC emacs-lisp
-(defun mxl-complete-template ()
-  "Open company selector for yasnippet templates.
-
-Call `company-yasnippet' after the insertion of the
-`mxl-template-trigger-key' character. This solution is easier
-than fighting to integrate `company-mode' with
-`company-yasnippet'."
-  (interactive)
-  (insert "<")
-  (call-interactively 'company-yasnippet))
-
-(global-set-key (kbd "<")
-                'mxl-complete-template)
-#+END_SRC
-
-
-
 * Other features
 ** Backup and autosave of files
 
