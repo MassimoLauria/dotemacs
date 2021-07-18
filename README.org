@@ -1298,6 +1298,156 @@ this python buffer.
 
 
 
+* Writing facilities
+
+  I am not very happy with this  setup, but it fits with the fact that
+  I  don't like  completion  and  snippet expansion  to  step on  each
+  other  toes.  And  let's  admit  it,  =company-yasnippet=  does  not
+  integrate at all with ~company-mode~.
+
+  In general completion should only be  about stuff I am typing, while
+  templates and  snippets should  trigger only when  explicitly asked.
+  In  my  configuration template  expansion  activates  using an  Helm
+  selection, or  by completion  after a character  ='<'= which  is the
+  first character in  all yasnippet keys. For this reason  I don't use
+  =yasnippet-snippets= because it fills  by typing space with snippets
+  which trigger out of the blue.
+  
+** Completion
+
+   I like  to move  in the  completion menu  using the  =M-jkli= keys.
+   =TAB= activates completion, and =M-o= only expands the common part.
+   
+#+BEGIN_SRC emacs-lisp
+(use-package company
+  :diminish t
+  :config
+  (setq company-dabbrev-downcase nil)
+  :bind (:map company-active-map
+              ("M-j" . company-select-previous)
+              ("M-l" . company-select-next)
+              ("M-i" . company-select-previous)
+              ("M-k" . company-select-next)
+              ("M-u" . company-abort)
+              ("M-o" . company-complete-common)
+              ("\r" . nil)
+              ([return] . nil)
+              ("\t" . company-complete-selection)
+              ([tab] . company-complete-selection)
+              ))
+#+END_SRC
+
+   Completion is active by default.
+   
+#+BEGIN_SRC emacs-lisp
+(add-hook 'after-init-hook 'global-company-mode)
+#+END_SRC
+
+** Templates - Setup of Yasnippet.el
+
+   I  use Yasnippet  both for  code  snippets and  for file  template.
+   Previously I  set up Yasnippet so  that it would insert  a template
+   for new files. It would not work  well for LaTeX files since I need
+   many  types of  templates for  them, and  in general  whenever some
+   tools  would   create  new   empty  files.   I  trigger   the  file
+   template explicitly.
+
+   I  do  not use  =yasnippet-snippets=.  I  only  use my  own  sparse
+   collection of  snippets (some copied  and edited from  that package
+   anyway).
+
+#+BEGIN_SRC emacs-lisp
+(setq mxl-local-snippet-dir (concat base-config-path "/snippets/"))
+#+END_SRC
+
+   Basic setup of Yasnippet.
+
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet
+  :commands (yas-minor-mode yas-global-mode yas-expand)
+  :diminish (yas-minor-mode . "")
+
+  ;; edit the snippets
+  :mode  ("\\.yasnippet" . snippet-mode)
+  :mode  ("\\.snippet" . snippet-mode)
+
+  :init
+  (yas-global-mode 1)
+
+  :config
+  (add-to-list 'yas-snippet-dirs mxl-local-snippet-dir)
+  (progn
+    (yas-reload-all)))
+#+END_SRC
+
+   We need to be careful about whitespace, while editing snippet specs.
+   
+#+BEGIN_SRC emacs-lisp
+(add-hook 'snippet-mode-hook (lambda ()
+                               (whitespace-mode)
+                               (make-local-variable 'require-final-newline)
+                               (setq require-final-newline nil)
+                               ))
+#+END_SRC
+
+** Choice and expansion of templates (menu)
+
+   There are two access point to templates/snippets.
+
+   1. One  is by expanding  a template chosen from  a menu. I  map the
+      menu   to  =M-t=   keybind,  since   I've  never   used  it   to
+      transpose words.
+
+#+BEGIN_SRC emacs-lisp
+(use-package helm-c-yasnippet
+  ;; M-t is usually reserved to transpose words, but I've never
+  ;; used it.
+  :bind ( "M-t" . helm-yas-complete))
+#+END_SRC
+
+** Choice and expansion of templates (prefix and completion)
+
+   I have been a  user of =tempo= template system and  I like the idea
+   of  having an  explicit prefix  key to  trigger templates.  I never
+   liked template expansion to pop up  while I am writing other words.
+   For example  in =yasnippet-snippets= there is  a template triggered
+   by  the letter  ='a'=. A  bit too  agressive IMHO.  Instead I  will
+   trigger them only with that prefix.
+
+   As in  =tempo= templates,  I use  ='<'= to  trigger the  choice and
+   expansion of templates. 
+#+BEGIN_SRC emacs-lisp
+(defcustom mxl-template-trigger-key "<"
+  "Keys that trigger choice and expansion of templates")
+#+END_SRC
+
+   While  I don't  have  =company-yasnippet=  among my  =company-mode=
+   backends, I can still use it on demand
+   
+#+BEGIN_SRC emacs-lisp
+(use-package company-yasnippet
+  :commands company-yasnippet)
+
+(defun mxl-complete-template ()
+  "Open company selector for yasnippet templates.
+
+Call `company-yasnippet' after the insertion of the
+`mxl-template-trigger-key' character. This solution is easier
+than fighting to integrate `company-mode' with
+`company-yasnippet'."
+  (interactive)
+  (insert mxl-template-trigger-key)
+  (call-interactively 'company-yasnippet))
+#+END_SRC
+
+   Activate the template completion menu.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd mxl-template-trigger-key)
+                'mxl-complete-template)
+#+END_SRC
+
+
 * Other features
 ** Backup and autosave of files
 

@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021  Massimo Lauria
-;; Time-stamp: "2021-07-11, 18:51 (CEST) Massimo Lauria"
+;; Time-stamp: "2021-07-18, 15:04 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -83,7 +83,6 @@
 ;; Coding
 (require 'init-autotype)          ; Automatic file filling
 (require 'init-templates)         ; Templates
-(require 'init-auto-complete)     ; Completion configuration -- check for speed
 
 ;; Keyboard settings
 (require 'init-global-keys)       ; global keys

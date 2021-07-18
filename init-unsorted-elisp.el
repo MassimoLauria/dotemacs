@@ -283,10 +283,6 @@ is already narrowed."
   :init
   (defalias 'rg 'helm-rg "RipGrep in the current folder"))
 
-(use-package helm-c-yasnippet
-  ;; M-t is usually reserved to transpose words, but I've never
-  ;; used it.
-  :bind ( "M-t" . helm-yas-complete))
 
 
 ;; Fill/unfill paragraph

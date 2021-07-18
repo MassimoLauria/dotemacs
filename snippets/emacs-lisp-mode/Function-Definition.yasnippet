@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Function Definition (defun)
+# key: <defun
+# --
+(defun ${1:fun} (${2:args})
+  "${3:short docstring}
+
+${4:long description about} ${2:$(upcase yas-text)}"
+  ${5:(interactive "P")}
+  $0)

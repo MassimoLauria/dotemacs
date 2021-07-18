@@ -1,9 +1,9 @@
-;;; init-autotype.el --- Automatic test insertion configuration
+;;; init-autotype.el --- setup template and completion
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2021  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2021-02-23, 00:46 (CET) Massimo Lauria>
+;; Time-stamp: <2021-07-18, 15:02 (CEST) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -19,37 +19,6 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-
-;; This is the part of my init files devoted to automatic text
-;; insertion. It configures facilities like update of copyright notes
-;; and time-stamps, Yasnippet and auto-insert.
-
-
-(setq template-time-format      "%Y-%02m-%02d, %A %02H:%02M (%Z)")  ;; Time format similar with time-stamp one.
-
-
-;;; Snippets -----------------------------------------------------------------
-(use-package yasnippet
-  :commands (yas-minor-mode yas-global-mode yas-expand)
-  :hook (prog-mode . yas-minor-mode)
-  :diminish (yas-minor-mode . "")
-
-  ;; edit the snippets
-  :mode  ("\\.yasnippet" . snippet-mode)
-  :mode  ("\\.snippet" . snippet-mode)
-
-  :config
-  (add-to-list 'yas-snippet-dirs (concat base-config-path "/snippets/") )
-  (require 'yasnippet-snippets nil t)
-  (progn
-    (yas-reload-all)))
-
-;; Avoid automatic insertion of newlines at the end of a snippet recipe.
-(add-hook 'snippet-mode-hook (lambda ()
-                               (whitespace-mode)
-                               (make-local-variable 'require-final-newline)
-                               (setq require-final-newline nil)
-                               ))
 
 ;;; Parenthesis support ----------------------------------------------------------
 
@@ -86,81 +55,6 @@
                     not-empty
                     (not (eq this-original-command 'self-insert-command)))))
           (cua--fallback))))))
-
-
-;;; File templates (using `auto-insert' and `yasnippet') -----------------------
-
-(require 'autoinsert)
-(setq auto-insert-query nil)
-(setq auto-insert-alist nil)  ;; Reset auto-insert rules.
-
-
-(defun template-file ()
-    "Create a file according to the appropriate template.
-
-If the newly created filetype has more that one templates, then a
-choice is offered."
-    (interactive)
-    (call-interactively 'find-file)
-    (yas-minor-mode 1)
-    (auto-insert))
-
-
-(defun define-template-rule (rule template)
-  "Setup a rule for the template application
-
-RULE is either a mode symbol as `sh-mode' and TEMPLATE is either
-a string or a list of strings. Each string must be a valid
-`yasnippet' template for the mode."
-  (cond ((stringp template)
-         (define-auto-insert rule
-           `(lambda ()
-              (goto-char (point-min))
-              (insert ,template)
-              (call-interactively 'yas-expand))))
-        ((functionp template)
-         (define-auto-insert rule template))))
-
-
-;; Templates are nothing else that snippets for the respective mode,
-(define-template-rule 'sh-mode               "empty-template")
-(define-template-rule 'makefile-bsdmake-mode "empty-template")
-(define-template-rule 'makefile-gmake-mode   "empty-template")
-(define-template-rule 'emacs-lisp-mode       "empty-template")
-(define-template-rule "\\.c\\'"              "empty-c-template")
-(define-template-rule "\\.h\\'"              "empty-h-template")
-(define-template-rule "\\.\\(C\\|cc\\|cpp\\)\\'" "empty-cc-template-snippet")
-(define-template-rule "\\.\\(H\\|hh\\|hpp\\)\\'" "empty-hh-template-snippet")
-(define-template-rule 'rust-mode             "selfcontained")
-(define-template-rule 'scheme-mode           "selfcontained")
-
-(defun choose-latex-template ()
-  "Query the user to choose a template for a new latex file."
-  (interactive)
-  (let ((type (ido-completing-read "Document type: "
-                                   '("Letter"
-                                     "Paper"
-                                     "Note"
-                                     "Slides"
-                                     "Picture (Tikz)"
-                                     "Empty"))))
-    (cond ((string-equal "Letter" type)
-           (insert "latex-letter-template"))
-          ((string-equal "Paper" type)
-           (insert "latex-paper-template"))
-          ((string-equal "Note" type)
-           (insert "latex-note-template"))
-          ((string-equal "Slides" type)
-           (insert "latex-slides-template"))
-          ((string-equal "Picture (Tikz)" type)
-           (insert "latex-pgfpic-template"))
-          ))
-  (yas-expand))
-
-;; Function `choose-latex-template' must ber defined before calling
-;; `define-template-rule'.
-(define-template-rule "\\.tex\\'" 'choose-latex-template)
-
 
 (provide 'init-autotype)
 ;;; init-autotype.el ends here

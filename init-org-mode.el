@@ -186,7 +186,6 @@ It shows the full view of my custom agenda."
   ;; org-babel and export
   (init-org-mode--babel-setup)
   (init-org-mode--latex-export-setup)
-  (init-org-setup-template)
 
   ;; Fix color theme
   (init-org-mode-faces)
@@ -614,120 +613,6 @@ for `reftex-default-bibliography'."
 
   (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
   (add-hook 'org-babel-after-execute-hook 'org-babel-python-strip-session-chars))
-
-
-(defun init-org-setup-template ()
-  "Setup templates in org 9.2
-
-This is a workaround to get the old templates in org 9.2
-"
-  (require 'org-tempo)
-  (setq org-structure-template-alist nil)
-  (setq org-tempo-keywords-alist nil)
-  (setq org-tempo-tags nil)
-  (tempo-define-template "sqlite"
-                         '("#+header: :db {{{DEFAULTDB}}}" n>
-                           "#+header: :colnames yes :nullvalue NULL" n>
-                           "#+BEGIN_SRC sqlite :exports both" n>
-                           p n>
-                           "#+END_SRC" n>)
-                         "<S"
-                         "Insert an SQLite code"
-                         )
-
-  (tempo-define-template "python"
-                         '("#+BEGIN_SRC python :exports both :results output" n>
-                           p n>
-                           "#+END_SRC" n>)
-                         "<p"
-                         "Python code"
-                         )
-
-  (tempo-define-template "elisp"
-                         '("#+BEGIN_SRC emacs-lisp" n>
-                           p n>
-                           "#+END_SRC" n>)
-                         "<E"
-                         "Emacs Lisp code"
-                         )
-
-  (tempo-define-template "latex code"
-                         '("#+BEGIN_SRC latex" n>
-                           p n>
-                           "#+END_SRC" n>)
-                         "<l"
-                         "Latex code"
-                         )
-
-  (tempo-define-template "latex export"
-                         '("#+BEGIN_EXPORT latex" n>
-                           p n>
-                           "#+END_EXPORT" n>)
-                         "<L"
-                         "Latex export"
-                         )
-
-  (tempo-define-template "html export"
-                         '("#+BEGIN_EXPORT html" n>
-                           p n>
-                           "#+END_EXPORT" n>)
-                         "<H"
-                         "Latex export"
-                         )
-
-  (tempo-define-template "python session"
-                         '("#+BEGIN_SRC python :session ????? :exports both :results output" n>
-                           p n>
-                           "#+END_SRC" n>)
-                         "<P"
-                         "Python code in a session")
-
-  (tempo-define-template "theorem"
-                         '("#+begin_theorem" n>
-                           p n>
-                           "#+end_theorem" n>
-                           "#+begin_proof" n>
-                           n>
-                           "#+end_proof" n>)
-                         "<t"
-                         "Theorem with proof")
-
-  (tempo-define-template "equation"
-                         '("\\begin{equation*}" n>
-                           p n>
-                           "\\end{equation*}" n>)
-                         "<Q"
-                         "Math equation with no label")
-
-  (tempo-define-template "slidenode"
-                         '(n
-                           "*** " n>
-                           ":PROPERTIES:" n>
-                           ":BEAMER_env: note" n>
-                           ":END:" n> p)
-                         "<n"
-                         "Notes for the slide")
-  (tempo-define-template "column"
-                         '(n
-                           "*** " n>
-                           ":PROPERTIES:" n>
-                           ":BEAMER_col: 0.5" n>
-                           ":END:" n> p)
-                         "<2"
-                         "Column block")
-   (tempo-define-template "org-mode center"
-                         '("#+BEGIN_CENTER" n>
-                           p n>
-                           "#+END_CENTER" n>)
-                         "<c"
-                         "Centered section")
-
-   (add-hook 'org-beamer-mode-hook
-          #'(lambda ()
-              (yas-activate-extra-mode 'latex-mode)))
-
-  )
-
 
 ;;;------------------------- Load -----------------------------------
 (use-package org
