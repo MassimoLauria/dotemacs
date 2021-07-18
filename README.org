@@ -1411,23 +1411,12 @@ this python buffer.
    of  having an  explicit prefix  key to  trigger templates.  I never
    liked template expansion to pop up  while I am writing other words.
    For example  in =yasnippet-snippets= there is  a template triggered
-   by  the letter  ='a'=. A  bit too  agressive IMHO.  Instead I  will
-   trigger them only with that prefix.
+   by the letter ='a'=. A bit  too agressive IMHO. Instead I will only
+   use the prefix ='<'= for my snippet keys, as in =tempo= templates.
 
-   As in  =tempo= templates,  I use  ='<'= to  trigger the  choice and
-   expansion of templates. 
-#+BEGIN_SRC emacs-lisp
-(defcustom mxl-template-trigger-key "<"
-  "Keys that trigger choice and expansion of templates")
-#+END_SRC
-
-   While  I don't  have  =company-yasnippet=  among my  =company-mode=
-   backends, I can still use it on demand
+   Furthermore I will have a trigger key that activates the snippets.
    
 #+BEGIN_SRC emacs-lisp
-(use-package company-yasnippet
-  :commands company-yasnippet)
-
 (defun mxl-complete-template ()
   "Open company selector for yasnippet templates.
 
@@ -1436,16 +1425,13 @@ Call `company-yasnippet' after the insertion of the
 than fighting to integrate `company-mode' with
 `company-yasnippet'."
   (interactive)
-  (insert mxl-template-trigger-key)
+  (insert "<")
   (call-interactively 'company-yasnippet))
-#+END_SRC
 
-   Activate the template completion menu.
-
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd mxl-template-trigger-key)
+(global-set-key (kbd "<")
                 'mxl-complete-template)
 #+END_SRC
+
 
 
 * Other features

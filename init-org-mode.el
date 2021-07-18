@@ -614,6 +614,26 @@ for `reftex-default-bibliography'."
   (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
   (add-hook 'org-babel-after-execute-hook 'org-babel-python-strip-session-chars))
 
+
+
+(defun company-org-keywords (command &optional arg &rest ignored)
+  "Company-mode backend for #+KEYWORDS
+
+See https://emacs.stackexchange.com/questions/21171/company-mode-completion-for-org-keywords"
+  (interactive (list 'interactive))
+  (cl-case command
+    (interactive (company-begin-backend 'org-keyword-backend))
+    (prefix (and (eq major-mode 'org-mode)
+                 (cons (company-grab-line "^#\\+\\(\\w*\\)" 1)
+                       t)))
+    (candidates (mapcar #'upcase
+                        (cl-remove-if-not
+                         (lambda (c) (string-prefix-p arg c))
+                         (pcomplete-completions))))
+    (ignore-case t)
+    (duplicates t)))
+
+
 ;;;------------------------- Load -----------------------------------
 (use-package org
   :mode ("\\.org\\'" . org-mode)

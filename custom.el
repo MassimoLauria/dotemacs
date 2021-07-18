@@ -181,7 +181,6 @@
  '(flymake-error ((t (:underline "Red1"))))
  '(flymake-note ((t (:underline "deep sky blue"))))
  '(flymake-warning ((t (:underline "yellow"))))
- '(font-lock-fixme-face ((((class color) (background dark)) (:background "Yellow" :foreground "Red" :underline nil))) t)
  '(fringe ((t (:background "#3F3F3F" :foreground "#DCDCCC"))))
  '(linum ((t (:inherit (shadow default) :background "#303030" :foreground "dark gray"))))
  '(linum-highlight-face ((t (:foreground "Yellow"))))
