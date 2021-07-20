@@ -296,19 +296,11 @@ Ignore if the path does not exists."
 ** Fonts
 
    The most  important visual  setup for  a text  editor is  the font.
-   I include the default font with this configuration, but for Windows
-   (which I  almost never use) I  have an alternative. Notice  that on
-   X11 we can also use ~Xresources~ file.
+   =symbol-font= is the fallback needed for some math symbols.
 
 #+BEGIN_SRC emacs-lisp
-(defvar default-font
-  (cond
-   ((eq system-type 'windows-nt) "Consolas 14")
-   (t                            "Roboto Mono 18"))
-  "The font I use by default")
-
-(defvar symbol-font "DejaVu Sans Mono"
-  "Font I use for as a fallback for some math symbols")
+(setq default-font "Fira Code 18")
+(setq symbol-font "DejaVu Sans Mono")
 #+END_SRC
 
    I like Emacs to  open in a wide frame at the  center of the screen,
