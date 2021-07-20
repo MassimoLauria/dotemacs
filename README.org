@@ -1307,9 +1307,9 @@ this python buffer.
 
   In general completion should only be  about stuff I am typing, while
   templates and  snippets should  trigger only when  explicitly asked.
-  In  my  configuration template  expansion  activates  using an  Helm
-  selection, or  by completion  after a character  ='<'= which  is the
-  first character in  all yasnippet keys. For this reason  I don't use
+  In  my configuration  templates (actually  snippets) all  start with
+  characters ='<'=  followed by some text.  This is unlikely to  be in
+  the   text   by   accident.   For    this   reason   I   don't   use
   =yasnippet-snippets= because it fills  by typing space with snippets
   which trigger out of the blue.
   
@@ -1405,6 +1405,10 @@ this python buffer.
   :bind ( "M-t" . helm-yas-complete))
 #+END_SRC
 
+   2. By expanding  during typing. All my snippets either  do not have
+      a  key, hence  are accessible  only from  the menu,  or the  key
+      starts with ='<'= .
+   
 * Other features
 ** Backup and autosave of files
 
