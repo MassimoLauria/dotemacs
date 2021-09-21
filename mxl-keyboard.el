@@ -62,9 +62,6 @@ At least they are considered useful for the author.
     (define-key map (kbd "M-b") 'backward-paragraph)     ;; Fight with canonical binding
     (define-key map (kbd "M-n") 'forward-paragraph)
 
-    ;; Out of expression
-    (define-key map (kbd "M-p") 'up-list)
-
     ;; Ripgrep
     (define-key map (kbd "C-M-s") 'helm-rg)
 

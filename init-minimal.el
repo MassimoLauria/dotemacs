@@ -9,11 +9,11 @@
 ;; - compatible with older Emacs
 ;; - self contained
 ;; - still quite usable
-;; 
+;;
 ;; Usage:
 ;;
 ;; $ emacs -q -l ~/config/emacs/init-minimal.el
-;; 
+;;
 
 
 ;; -------------------------------------------------------------------
@@ -21,6 +21,9 @@
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
 (setq debug-on-error t)
+(defalias 'yes-or-no-p 'y-or-n-p) ; y/n instead of yes/no
+(setq confirm-kill-emacs nil)     ; exit without questions
+
 
 ;; Emacs packages
 (setq package-user-dir "~/.emacs.d/elpa/minimal/")
@@ -55,7 +58,6 @@
     (define-key map (kbd "M-h") 'move-end-of-line)
     (define-key map (kbd "M-b") 'backward-paragraph)
     (define-key map (kbd "M-n") 'forward-paragraph)
-    (define-key map (kbd "M-p") 'up-list)
     ;; Deletion keys
     (define-key map (kbd "M-e")  'backward-kill-word)
     (define-key map (kbd "M-r")  'kill-word)
@@ -73,13 +75,13 @@
   :lighter " Minimo" ; Modeline string
   :group   'minimo-keyboard)
 (defun turn-on-minimo-keyboard () (minimo-keyboard-mode 1))
-(define-globalized-minor-mode  minimo-keyboard-global-mode  
+(define-globalized-minor-mode  minimo-keyboard-global-mode
   minimo-keyboard-mode turn-on-minimo-keyboard)
 (minimo-keyboard-global-mode)
 
 ;; Fix XTerm issues
 (when (and (>= emacs-major-version 23)
-           (member (tty-type) '("xterm" 
+           (member (tty-type) '("xterm"
 				"xterm-256color"
 				"screen"
 				"screen-256-color")))
