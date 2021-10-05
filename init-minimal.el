@@ -67,6 +67,8 @@
     ;; Moving between buffers (M-S)
     (define-key map [M-S-up] 'previous-buffer)
     (define-key map [M-S-down] 'next-buffer)
+    ;; Quicker actions
+    (define-key map (kbd "C-x k")   'kill-this-buffer)
     map)
   "Keymap for minimo-keyboard-mode.")
 
