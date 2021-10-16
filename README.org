@@ -892,22 +892,27 @@ Woolf say? "A Room of One's Own".
       '(python-mode
         c++-mode
         c-mode
+        sh-mode
         emacs-lisp-mode))
 
 (make-face 'font-lock-fixme-face)
 (make-face 'font-lock-note-face)
 (make-face 'font-lock-cite-face)
+(make-face 'font-lock-alert-face)
 (mapc (lambda (mode)
         (font-lock-add-keywords
          mode
          '(("\\<\\(TODO\\)" 1 'font-lock-fixme-face t)
 	       ("\\<\\(NOTE\\)" 1 'font-lock-note-face t)
+	       ("\\<\\(ALERT\\)" 1 'font-lock-alert-face t)
+	       ("\\<\\(WARNING\\)" 1 'font-lock-alert-face t)
 	       ("\\<\\(CITE\\)" 1 'font-lock-cite-face t))))
 	  mxl-annotation-prog-modes)
 
 (modify-face 'font-lock-fixme-face "Red" nil nil t nil nil nil nil)
 (modify-face 'font-lock-note-face "Light Green" nil nil t nil nil nil nil)
 (modify-face 'font-lock-cite-face "Light Blue" nil nil t nil nil nil nil)
+(modify-face 'font-lock-alert-face "Yellow" nil nil t nil nil nil nil)
      #+END_SRC
      
    
