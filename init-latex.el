@@ -370,9 +370,9 @@ It either tries \"lacheck\" or \"chktex\"."
   :init
   (setq magic-latex-enable-block-highlight nil
         magic-latex-enable-suscript        t
-        magic-latex-enable-pretty-symbols  t
+        magic-latex-enable-pretty-symbols  nil
         magic-latex-enable-block-align     nil
-        magic-latex-enable-inline-image    nil
+        magic-latex-enable-inline-image    t
         magic-latex-enable-minibuffer-echo nil)
   :config
   (add-hook 'LaTeX-mode-hook 'magic-latex-buffer))
