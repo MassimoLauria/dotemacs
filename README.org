@@ -1048,7 +1048,7 @@ Therefore I set some similar keybindings for it.
    I usually  work in a different  way, and I consider  Git submodules
    are standalone.
 
-,#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp
 (setq project-vc-merge-submodules nil)
 #+END_SRC
 
@@ -1354,7 +1354,7 @@ this python buffer.
    anyway).
 
 #+BEGIN_SRC emacs-lisp
-(setq mxl-local-snippet-dir (concat base-config-path "/snippets/"))
+(setq mxl-local-snippet-dir (concat base-config-path "snippets/"))
 #+END_SRC
 
    Basic setup of Yasnippet.
@@ -1372,7 +1372,7 @@ this python buffer.
   (yas-global-mode 1)
 
   :config
-  (add-to-list 'yas-snippet-dirs mxl-local-snippet-dir)
+  (setq yas-snippet-dirs (list mxl-local-snippet-dir))
   (progn
     (yas-reload-all)))
 #+END_SRC
