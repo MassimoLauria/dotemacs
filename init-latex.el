@@ -364,21 +364,6 @@ It either tries \"lacheck\" or \"chktex\"."
    (lambda () (yas-minor-mode-on)))
 
 
-(use-package magic-latex-buffer
-  :config
-  (diminish 'magic-latex-buffer "")
-  :init
-  (setq magic-latex-enable-block-highlight nil
-        magic-latex-enable-suscript        t
-        magic-latex-enable-pretty-symbols  nil
-        magic-latex-enable-block-align     nil
-        magic-latex-enable-inline-image    t
-        magic-latex-enable-minibuffer-echo nil)
-  :config
-  (add-hook 'LaTeX-mode-hook 'magic-latex-buffer))
-
-
-
 (provide 'init-latex)
 ;; Local Variables:
 ;; mode: emacs-lisp

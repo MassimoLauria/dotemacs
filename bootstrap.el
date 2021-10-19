@@ -62,7 +62,6 @@
                            latex-preview-pane
                            let-alist
                            logito
-                           magic-latex-buffer
                            magit-popup
                            metaweblog
                            ob-ipython
