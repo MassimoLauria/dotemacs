@@ -61,7 +61,7 @@
   :init
   (setq pdf-view-use-unicode-ligther nil)  ;; make loading faster
   :config
-  (pdf-tools-install :no-query)
+  (pdf-loader-install t)
   (setq pdf-view-use-scaling t)
   (setq revert-without-query '(".pdf"))
   (setq-default pdf-view-display-size 'fit-page)
