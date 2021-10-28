@@ -3,8 +3,15 @@
 # Basic build setup
 RELEASE=emacs-28
 BUILDOPTS="--with-native-compilation --with-x-toolkit=lucid --with-mailutils --with-harfbuzz"
-PREFIX=~/.local/
+PREFIX=${HOME}/.local
+CONFDIR=${HOME}/config/emacs
+INITFILE=${HOME}/.emacs.d/init.el
 CC=gcc-10
+
+
+# Package install under Debian/Ubuntu
+# sudo apt build-dep emacs
+# sudo apt install libgccjit0 libgccjit-10-dev libjansson-dev
 
 #
 SRCDIR=${PREFIX}/src/emacs
@@ -39,4 +46,17 @@ fi
 echo "* Run: build emacs"
 make -j4
 
-echo "* Run: install in ${PREFIX}"
+EMACS_VERSION=`${SRCDIR}/src/emacs --batch -Q --eval '(print emacs-version)'|xargs`
+
+echo "* Run: install version ${EMACS_VERSION} in ${PREFIX}"
+make install
+
+cd ${CONFDIR}
+
+if [ -f ${INITFILE} ]; then
+    echo "* Run: update emacs configuration"
+    EMACS=${SRCDIR}/bin/emacs-${EMACS_VERSION} make emacs-changed
+else
+    echo "* Run: create NEW emacs configuration"
+    EMACS=${SRCDIR}/bin/emacs-${EMACS_VERSION} make all
+fi

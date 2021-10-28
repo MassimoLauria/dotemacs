@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021  Massimo Lauria
-;; Time-stamp: "2021-07-18, 15:04 (CEST) Massimo Lauria"
+;; Time-stamp: "2021-10-28, 13:25 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -35,11 +35,10 @@
 ;; Native compilation
 (when (and (fboundp 'native-comp-available-p)
            (native-comp-available-p))
-  (setq comp-deferred-compilation t)
-  (setq comp-async-query-on-exit t)
-  (setq comp-async-jobs-number 4)
-  (setq comp-async-report-warnings-errors nil))
-
+  (setq native-comp-deferred-compilation t)
+  (setq native-comp-async-query-on-exit t)
+  (setq native-comp-async-jobs-number 0) ;; half the CPUs
+  (setq native-comp-async-report-warnings-errors nil))
 
 ;; Init file loaded with less aggressive garbage collector and with
 ;; debug support on errors
