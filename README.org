@@ -1312,8 +1312,9 @@ this python buffer.
   
 ** Completion
 
-   I like  to move  in the  completion menu  using the  =M-jkli= keys.
-   =TAB= activates completion, and =M-o= only expands the common part.
+   I like  to move in  the completion menu  using the =M-i=  and =M-k=
+   keys.  =TAB=,  =M-o= and  =Enter=  do  completion, and  =M-l=  only
+   expands the common part. =M-j= simply kills the previoius word.
    
 #+BEGIN_SRC emacs-lisp
 (use-package company
@@ -1321,12 +1322,12 @@ this python buffer.
   :config
   (setq company-dabbrev-downcase nil)
   :bind (:map company-active-map
-              ("M-j" . company-select-previous)
-              ("M-l" . company-select-next)
+              ("M-j" . backward-kill-word)
+              ("M-l" . company-complete-common)
               ("M-i" . company-select-previous)
               ("M-k" . company-select-next)
               ("M-u" . company-abort)
-              ("M-o" . company-complete-common)
+              ("M-o" . company-complete-selection)
               ("\r" . nil)
               ([return] . nil)
               ("\t" . company-complete-selection)
