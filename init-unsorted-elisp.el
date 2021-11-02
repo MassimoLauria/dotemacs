@@ -268,15 +268,42 @@ is already narrowed."
          ( "M-`"     . helm-resume)
          :map helm-map
          ( "M-`"     . helm-keyboard-quit)
-         ( "<left>"  . helm-previous-source)
-         ( "<right>" . helm-next-source))
+         ( "M-i"  . helm-previous-line)
+         ( "M-k"  . helm-next-line)
+         ( "M-j"  . helm-previous-source)
+         ( "M-k"  . helm-next-source)
+         :map helm-find-files-map
+         ( "M-`"     . helm-keyboard-quit)
+         ( "M-i"  . helm-previous-line)
+         ( "M-k"  . helm-next-line)
+         ( "M-j"  . helm-previous-source)
+         ( "M-k"  . helm-next-source))
   :diminish helm-mode
   :init
   (setq helm-ff-skip-boring-files t)
   (setq helm-display-header-line t)
-  (setq helm-ff-lynx-style-map t)
   :config
-  (helm-mode))
+  (helm-mode)
+  (mxl-setup-helm))
+
+(defun mxl-setup-helm()
+  (define-key helm-map (kbd "M-i") 'helm-previous-line)
+  (define-key helm-map (kbd "M-k") 'helm-next-line)
+
+  (define-key helm-buffer-map (kbd "M-i") 'helm-previous-line)
+  (define-key helm-buffer-map (kbd "M-k") 'helm-next-line)
+
+  (define-key helm-find-files-map (kbd "M-i") 'helm-previous-line)
+  (define-key helm-find-files-map (kbd "M-k") 'helm-next-line)
+  (define-key helm-find-files-map  (kbd "M-l")  'helm-ff-RET)
+  (define-key helm-find-files-map  (kbd "M-j") 'helm-find-files-up-one-level)
+
+  (define-key helm-read-file-map (kbd "M-i") 'helm-previous-line)
+  (define-key helm-read-file-map (kbd "M-k") 'helm-next-line)
+  (define-key helm-read-file-map  (kbd "M-o")  'helm-execute-persistent-action)
+  (define-key helm-read-file-map  (kbd "M-l")  nil)
+  (define-key helm-read-file-map  (kbd "M-j") 'helm-find-files-up-one-level)
+  )
 
 (use-package helm-rg                    ;
   :commands (helm-rg)
