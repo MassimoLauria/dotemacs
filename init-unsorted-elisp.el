@@ -274,6 +274,7 @@ is already narrowed."
          ( "M-l"  . helm-maybe-exit-minibuffer)
          ( "M-u"  . helm-previous-source)
          ( "M-o"  . helm-next-source)
+         ( "M-;"  . helm-select-action)
          :map helm-find-files-map
          ( "M-`"  . helm-keyboard-quit)
          ( "M-i"  . helm-previous-line)
@@ -282,6 +283,7 @@ is already narrowed."
          ( "M-j"  . helm-find-files-up-one-level)
          ( "M-u"  . helm-previous-source)
          ( "M-o"  . helm-next-source)
+         ( "M-;"  . helm-select-action)
          :map helm-generic-files-map
          ( "M-`"  . helm-keyboard-quit)
          ( "M-i"  . helm-previous-line)
@@ -290,6 +292,7 @@ is already narrowed."
          ( "M-l"  . helm-maybe-exit-minibuffer)
          ( "M-u"  . helm-previous-source)
          ( "M-o"  . helm-next-source)
+         ( "M-;"  . helm-select-action)
          :map helm-read-file-map
          ( "M-`"  . helm-keyboard-quit)
          ( "M-i"  . helm-previous-line)
@@ -298,6 +301,7 @@ is already narrowed."
          ( "M-l"  . helm-maybe-exit-minibuffer)
          ( "M-u"  . helm-previous-source)
          ( "M-o"  . helm-next-source)
+         ( "M-;"  . helm-select-action)
          :map helm-buffer-map
          ( "M-`"  . helm-keyboard-quit)
          ( "M-i"  . helm-previous-line)
@@ -306,6 +310,7 @@ is already narrowed."
          ( "M-l"  . helm-maybe-exit-minibuffer)
          ( "M-u"  . helm-previous-source)
          ( "M-o"  . helm-next-source))
+         ( "M-;"  . helm-select-action)
   :diminish helm-mode
   :init
   (setq helm-ff-skip-boring-files t)

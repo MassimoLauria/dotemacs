@@ -1323,11 +1323,11 @@ this python buffer.
   (setq company-dabbrev-downcase nil)
   :bind (:map company-active-map
               ("M-j" . backward-kill-word)
-              ("M-l" . company-complete-common)
+              ("M-l" . company-complete-selection)
               ("M-i" . company-select-previous)
               ("M-k" . company-select-next)
               ("M-u" . company-abort)
-              ("M-o" . company-complete-selection)
+              ("M-o" . company-complete-common)
               ("\r" . nil)
               ([return] . nil)
               ("\t" . company-complete-selection)
@@ -1400,6 +1400,9 @@ this python buffer.
 (use-package helm-c-yasnippet
   ;; M-t is usually reserved to transpose words, but I've never
   ;; used it.
+  :init
+  (setq helm-yas-space-match-any-greedy t
+        helm-yas-display-key-on-candidate t)
   :bind ( "M-t" . helm-yas-complete))
 #+END_SRC
 
