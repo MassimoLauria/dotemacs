@@ -273,8 +273,8 @@ Optional argument NODELIM see `bibtex-make-field'."
 
 
 (use-package helm-bibtex
-  :commands (helm-bibtex bibtex-completion-open-pdf)
-  :bind ("C-c b" . helm-bibtex)
+  :commands (helm-bibtex helm-bibtex-with-local-bibliography bibtex-completion-open-pdf)
+  :bind ("C-c b" . helm-bibtex-with-local-bibliography)
   :config
 
   ;; Use latex citation in org files
