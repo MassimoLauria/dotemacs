@@ -1370,6 +1370,7 @@ this python buffer.
   :mode  ("\\.snippet" . snippet-mode)
 
   :init
+  (add-to-list 'warning-suppress-types '(yasnippet backquote-change))
   (yas-global-mode 1)
 
   :config

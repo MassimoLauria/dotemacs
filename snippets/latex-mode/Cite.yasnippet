@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# contributor : Marcio M. Ribeiro <marcio.mr@gmail.com>
 # group: references
 # name : \cite
+# key: <c
 # --
-\cite{${1:label$(unless yas/modified-p (reftex-citation nil 'dont-insert))}}$0
+\cite{`(helm-bibtex-with-local-bibliography)`}

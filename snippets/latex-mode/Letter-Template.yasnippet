@@ -1,9 +1,9 @@
-#name : Letter Template
-#key : latex-letter-template
+#name : Template: a letter
+#key : * nokey
 #expand-env: ((time-format "%Y-%02m-%02d, %A %02H:%02M (%Z)") (yas/indent-line 'fixed))
 # --
 % Created   : "`(format-time-string time-format (current-time))` `user-full-name`"
-% Time-stamp: <2013-08-02, 22:47 (CEST) Massimo Lauria>
+% Time-stamp: <2021-11-08, 20:52 (CET) Massimo Lauria>
 % Encoding  : UTF-8
 \documentclass[a4paper,11pt]{letter}
 \usepackage[utf8]{inputenc}
@@ -33,6 +33,7 @@ $0
 
 \end{letter}
 \end{document}
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: t
