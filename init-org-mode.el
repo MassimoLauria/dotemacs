@@ -525,6 +525,14 @@ for `reftex-default-bibliography'."
   ;; Set the color
   (require 'color)
 
+  ;; Fontify Quote and Verse
+  ;; do not use org-block for verse
+  ;; use italic for verse
+  (setq org-fontify-quote-and-verse-block t)
+  (set-face-attribute 'org-verse nil
+                      :slant 'italic
+                      :inherit t)
+
   ;; Darken the background color for code blocks
   (let ((darkbg (color-darken-name
                  (face-attribute 'default :background) 15)))
