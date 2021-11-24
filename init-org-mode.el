@@ -441,18 +441,6 @@ part of the keyboard.
   ;;    (org-agenda-goto-calendar)))
   )
 
-(defface org-block-begin-line
-  '((t (:foreground "#7F9F7F" :background "#4F4F4F")))
-  "Face used for the line delimiting the begin of source blocks.")
-
-(defface org-block-background
-  '((t (:background "#000000")))
-  "Face used for the source block background.")
-
-(defface org-block-end-line
-  '((t (:foreground "#7F9F7F" :background "#4F4F4F")))
-  "Face used for the line delimiting the end of source blocks.")
-
 
 ;; Nice quotes and smartparens
 (when (require 'smartparens nil t)
@@ -540,13 +528,17 @@ for `reftex-default-bibliography'."
   ;; Darken the background color for code blocks
   (let ((darkbg (color-darken-name
                  (face-attribute 'default :background) 15)))
-    (setq org-src-block-faces `(("emacs-lisp" (:background ,darkbg))
-                                ("python"     (:background ,darkbg))
-                                ("latex"      (:background ,darkbg)))))
+    (set-face-attribute 'org-block nil :background darkbg :extend t))
 
-  ;; Code blocks delimiters are oblique
-  (set-face-attribute 'org-block-begin-line nil :slant 'italic)
-  (set-face-attribute 'org-block-end-line nil :slant 'italic))
+  ;; Code blocks delimiters are oblique and with different color
+  (set-face-attribute 'org-block-begin-line nil
+                      :slant 'italic
+                      :foreground "#7F9F7F"
+                      :background "#4F4F4F")
+  (set-face-attribute 'org-block-end-line nil
+                      :slant 'italic
+                      :foreground "#7F9F7F"
+                      :background "#4F4F4F"))
 
 
 ;; Setup for PDF/Latex exports
