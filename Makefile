@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016, 2018, 2019, 2020, 2021 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2021-10-28, 23:08 (CEST) Massimo Lauria"
+# Time-stamp: "2021-11-25, 00:23 (CET) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -21,9 +21,6 @@ INIT=$(abspath init.el)
 INITFULL=$(abspath init-start.el)
 INITMINI=$(abspath init-minimal.el)
 
-## Font files
-FONTS=dejavu-fonts-ttf-2.37 iosevska-fonts-ttf-2.1.0 baskerville-font	\
-source-code-pro roboto-mono all-the-icons-fonts fira-code-5.2
 
 FONTPATH=~/.fonts
 ifeq ($(shell uname -s),Darwin)
@@ -73,13 +70,12 @@ upgrade-pkgs:
 
 
 install-fonts:
-	@echo "Install fonts: ${FONTS}"
-	@mkdir -p ${FONTPATH}
-	@for font in ${FONTS}                       ;\
-	     do unzip fonts/$$font.zip -d fonts/    ;\
-             mv fonts/$$font/ttf/*.ttf ${FONTPATH}  ;\
-	     rm -fr fonts/$$font/                   ;\
-	done
+	@echo "Install fonts for my configurations: "
+	@rm -fr ${FONTPATH}/emacs
+	@mkdir -p ${FONTPATH}/emacs
+	unzip fonts/fira-code-5.2.zip        -d ${FONTPATH}/emacs
+	unzip fonts/dejavu-fonts-2.37.zip   -d  ${FONTPATH}/emacs
+	unzip fonts/all-the-icons-fonts.zip -d  ${FONTPATH}/emacs
 
 # --------- Measure setup quality -----------------------
 test:
