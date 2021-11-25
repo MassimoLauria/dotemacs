@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016, 2018, 2019, 2020, 2021 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2021-11-25, 00:23 (CET) Massimo Lauria"
+# Time-stamp: "2021-11-25, 12:18 (CET) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -76,6 +76,7 @@ install-fonts:
 	unzip fonts/fira-code-5.2.zip        -d ${FONTPATH}/emacs
 	unzip fonts/dejavu-fonts-2.37.zip   -d  ${FONTPATH}/emacs
 	unzip fonts/all-the-icons-fonts.zip -d  ${FONTPATH}/emacs
+	-fc-cache -f -v
 
 # --------- Measure setup quality -----------------------
 test:
