@@ -305,10 +305,9 @@ Ignore if the path does not exists."
 
    I like Emacs to  open in a wide frame at the  center of the screen,
    on  startup,  at  least  on  these  systems  with  floating  window
-   managers.  A  small  internal  border  puts  distance  between  the
-   characters and screen  borders, and that instead  helps with tiling
-   window  managers. I  disable any  other decorations.  Text is  more
-   readable with some additional space between lines.
+   managers. No internal border except for  a small fringe on the left
+   side. I disable  any other decorations. Text is  more readable with
+   some additional space between lines.
 
 #+BEGIN_SRC emacs-lisp
 (setq initial-frame-alist '((top . 0.5)    ;; center vertical position
@@ -796,7 +795,7 @@ Woolf say? "A Room of One's Own".
   such  removals problematic  with  co-authors. It  makes merges  more
   difficult.
 
-  But I  code this  is not  usually an issue.  So let's  set automatic
+  But in  code this is  not usually an  issue. So let's  set automatic
   deletion of trailing whitespace, but just in programming buffers.
 
 #+BEGIN_SRC emacs-lisp
@@ -886,6 +885,8 @@ Woolf say? "A Room of One's Own".
    - TODO (Red)
    - NOTE (Green)
    - CITE (Blue)
+   - ALERT (Yellow)
+   - WARNING (YELLOW)
 
 #+BEGIN_SRC emacs-lisp
 (setq mxl-annotation-prog-modes
