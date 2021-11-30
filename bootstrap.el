@@ -74,6 +74,8 @@
                            pinboard
                            pkg-info
                            poet-theme
+                           projectile
+                           helm-projectile
                            pyenv-mode
                            pyenv-mode-auto
                            python-pytest
