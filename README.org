@@ -296,10 +296,23 @@ Ignore if the path does not exists."
 ** Fonts
 
    The most  important visual  setup for  a text  editor is  the font.
+   Several families of fonts are tried in order of preference, and the
+   first which  is present in the  machine is picked as  default font.
    =symbol-font= is the fallback needed for some math symbols.
 
 #+BEGIN_SRC emacs-lisp
-(setq default-font "Fira Code 18")
+(cond
+ ((find-font (font-spec :name "Fira Code"))
+  (setq default-font "Fira Code 18"))
+ ((find-font (font-spec :name "DejaVu Sans Mono"))
+  (setq default-font "DejaVu Sans Mono 18"))
+ ((find-font (font-spec :name "Menlo"))   ;; Default of macOS
+  (setq default-font "Menlo-18"))
+ ((find-font (font-spec :name "Inconsolata"))
+  (setq default-font "Inconsolata-18"))   ;; Default on Windows
+((find-font (font-spec :family "Monospace"))
+  (setq default-font "Monospace-18")))    ;; Last resort
+
 (setq symbol-font "DejaVu Sans Mono")
 #+END_SRC
 
