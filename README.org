@@ -310,7 +310,7 @@ Ignore if the path does not exists."
   (setq default-font "Menlo-18"))
  ((find-font (font-spec :name "Inconsolata"))
   (setq default-font "Inconsolata-18"))   ;; Default on Windows
-((find-font (font-spec :family "Monospace"))
+(t
   (setq default-font "Monospace-18")))    ;; Last resort
 
 (setq symbol-font "DejaVu Sans Mono")
