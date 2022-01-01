@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# name: Advent of Code template
+# key: * nokey
+# --
+"""Advent of Code `(format-time-string "%Y day %d" (current-time))`
+"""
+
+EXAMPLE = """
+"""
+
+def readdata(data=None):
+    """Read and parse the input data"""
+    if data is None:
+       with open("input`(format-time-string "%d" (current-time))`.txt") as f:
+            data = f.read()
+    return data
+
+
+def part1(data=None):
+    """solve part 1"""
+    pass
+
+
+if __name__ == "__main__":
+    part1(EXAMPLE)
+    # part1()
+    # part2()

@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: ArXiv article
+# key: <a
+# --
+@Article{,
+  author          = {},
+  title           = {$0},
+  journal         = {CoRR},
+  year            = 20${1:$(substring yas-text 0 (min 2 (length yas-text)))},
+  volume          = {abs/$1},
+  url             = {https://arxiv.org/abs/$1},
+  eprinttype      = {arXiv},
+  eprint          = {$1}
+}
