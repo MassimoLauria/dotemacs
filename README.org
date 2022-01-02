@@ -1087,7 +1087,8 @@ Therefore I set some similar keybindings for it.
    with  Emacs   (there  are   indeed  other  python   modes  around).
    Furthermore it uses
    - =eglot= as a LSP client, providing help, completion, symbol search;
-   - requires to run ~pip install python-language-server~ to instal =pyls=;
+   - requires  to  run  ~pip  install  python-lsp-server~  to  install
+     =pylsp=;
    - =pyenv= to manage the virtual environments.
    - standard  python   as  interactive  shell  (Ipython   prompt  and
      completion tend to confuse Emacs if not well configured).
@@ -1244,7 +1245,7 @@ this python buffer.
 
    There  is   a  nice   syntax  checker   for  shell   script  called
    =shellcheck=,  which  is  a  godsend  considering  how  brittle  is
-   the language. One day I will
+   the language. One day I will set it up.
 
 ** Copyright notice and timestamps
 
