@@ -1042,7 +1042,7 @@ Therefore I set some similar keybindings for it.
 #+END_SRC
 
 ** Programming language support (LSP)
-
+   
    The most convenient way to  integrate language features nowadays is
    to  use a  language  server that  implements  LSP (Language  Server
    Protocol). I am currenly using  [[https://github.com/joaotavora/eglot][Eglot]] which should provide, and set
@@ -1205,36 +1205,30 @@ format regions or function definitions.
 
 ** C and C++
 
-   A  basic  setup  for  C   and  C++,  possibly  enabling  =flyspell=
-   and =doxygen=.
-
-
-#+BEGIN_SRC emacs-lisp
-(defun setup-cc-mode ()
-  "My Setup for C and C++"
-  (interactive)
-
-  ;; editing facilities
-  (local-set-key (kbd "RET") 'newline-and-indent)
-  (local-set-key (kbd "M-SPC") 'ff-find-related-file) ;; go to corresponding header file
-  (setq c-block-comment-prefix "")
-  (setq fill-column 70)
-
-  ;; Minor modes
-  (when (fboundp 'doxygen-mode)  (doxygen-mode  t))
-  (when (fboundp 'flyspell-prog-mode) (flyspell-prog-mode))
-  (eglot-ensure))
-#+END_SRC
-
    Setup  C and  C++  modes, using  [[https://github.com/joaotavora/eglot][Eglot]] which  in  turn uses  =ccls=
    by default.
 
 #+BEGIN_SRC emacs-lisp
-(add-hook 'c-mode-hook   'setup-cc-mode)
-(add-hook 'c++-mode-hook 'setup-cc-mode)
-(add-hook 'c-mode-hook   'eglot-ensure)
-(add-hook 'c++-mode-hook 'eglot-ensure)
+(defun mxl/cc-mode-setup ()
+  "Setup for C/C++ modes"
+  (set-fill-column 78))
+
+(use-package cc-mode
+  :config
+  (setq c-basic-offset 4)
+  (setq c-block-comment-prefix "")
+  :bind (:map c-mode-map 
+         ("RET"     .  newline-and-indent)
+         ("M-SPC"   .  ff-find-related-file)
+         :map c++-mode-map 
+         ("RET"     .  newline-and-indent)
+         ("M-SPC"   .  ff-find-related-file))
+  :hook ((c-mode    . eglot-ensure)
+         (c++-mode  . eglot-ensure)
+         (c-mode    . mxl/cc-mode-setup)
+         (c++-mode  . mxl/cc-mode-setup)))
 #+END_SRC
+
 
 ** Emacs Lisp
 
