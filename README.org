@@ -1045,20 +1045,28 @@ Therefore I set some similar keybindings for it.
 
    The most convenient way to  integrate language features nowadays is
    to  use a  language  server that  implements  LSP (Language  Server
-   Protocol). I am  currenly using [[https://github.com/joaotavora/eglot][Eglot]] which should provide, and set up on
-   its own, several features as
+   Protocol). I am currenly using  [[https://github.com/joaotavora/eglot][Eglot]] which should provide, and set
+   up on its own, several features as
    - completion using =company-mode=
    - integrated help using =eldoc=
    - jump to/from definitions using =xref= (try =M-,= =M-.= keybindings)
    - code snippets (if =yasnippet= is enabled in advance)
    - code checking using =flymake= (I will disable in favor of =flycheck=)
    - other features...
-
+  
 #+BEGIN_SRC emacs-lisp
 
 (defun mxl/swap-syntaxchecker()
   (flymake-mode -1)
   (flycheck-mode 1))
+
+(defun mxl/eglot-format-region-or-defun ()
+  (interactive)
+  (save-mark-and-excursion
+    (if (not (region-active-p))
+        (mark-defun))
+    (call-interactively 'eglot-format)))
+
 
 (use-package eglot
   :config
@@ -1103,6 +1111,7 @@ Therefore I set some similar keybindings for it.
    - =pyenv= to manage the virtual environments.
    - standard  python   as  interactive  shell  (Ipython   prompt  and
      completion tend to confuse Emacs if not well configured).
+   - =yapfify= to format code.
 
    Binaries will be found in the =pyenv= paths.
 
@@ -1130,6 +1139,20 @@ By default  =C-c C-c=  uses =python-shell-send-buffer= which  does not
 execute the content  of main by default. I usually  need it, therefore
 I remap the key.
 
+To format code  I use =yapfify=. I use this  custom function to either
+format regions or function definitions.
+
+#+BEGIN_SRC emacs-lisp
+(defun mxl/yapfify-region-or-defun ()
+  (interactive)
+  (save-mark-and-excursion
+    (if (not (region-active-p))
+        (python-mark-defun))
+    (call-interactively 'yapfify-region)))
+#+END_SRC
+
+
+
 #+BEGIN_SRC emacs-lisp
 (use-package python
   :init
@@ -1137,11 +1160,14 @@ I remap the key.
         python-indent-offset 4)
   :hook ((python-mode . eglot-ensure))
   :bind (:map python-mode-map
+              ("M-q"     .  mxl/yapfify-region-or-defun)
+              ("C-M-q"   .  yapfify-buffer)
+              ("<f10>"   .  python-shell-switch-to-shell)
               ("<f9>"    .  python-pytest-repeat)
               ("<f10>"   .  python-shell-switch-to-shell)
               ("M-<f9>"  .  python-pytest-dispatch)
               ("M-<f10>" .  run-python)
-              ("C-c C-c" . (lambda () (interactive) (python-shell-send-buffer t)))
+              ("C-c C-c" .  (lambda () (interactive) (python-shell-send-buffer t)))
          :map inferior-python-mode-map
               ("<f10>" . delete-window)))
 #+END_SRC
@@ -1261,7 +1287,6 @@ I remap the key.
    There  is   a  nice   syntax  checker   for  shell   script  called
    =shellcheck=,  which  is  a  godsend  considering  how  brittle  is
    the language. One day I will set it up.
-
 
 ** Copyright notice and timestamps
 

@@ -106,6 +106,7 @@
                            xml-rpc
                            xscheme
                            yasnippet
+                           yapfify
                            zenburn-theme))
 ;; -------------------------------------------------------------------
 
