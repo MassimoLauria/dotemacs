@@ -1030,6 +1030,17 @@ Therefore I set some similar keybindings for it.
 #+END_SRC
 
 
+** Inferior shell
+
+   I like the inferior  shell to scroll to bottom when  I send code to
+   be executed.
+   
+#+BEGIN_SRC emacs-lisp
+(setq comint-scroll-to-bottom-on-input t)
+(setq comint-scroll-to-bottom-on-output t)
+(setq comint-move-point-for-output t)
+#+END_SRC
+
 ** Programming language support (LSP)
 
    The most convenient way to  integrate language features nowadays is
@@ -1115,8 +1126,11 @@ interface similar  to Magit,  and allows  various options  for testing
 Using the  key F10 I can  toggle the prompt shell  buffer connected to
 this python buffer.
 
-#+BEGIN_SRC emacs-lisp
+By default  =C-c C-c=  uses =python-shell-send-buffer= which  does not
+execute the content  of main by default. I usually  need it, therefore
+I remap the key.
 
+#+BEGIN_SRC emacs-lisp
 (use-package python
   :init
   (setq python-indent-guess-indent-offset nil
@@ -1127,6 +1141,7 @@ this python buffer.
               ("<f10>"   .  python-shell-switch-to-shell)
               ("M-<f9>"  .  python-pytest-dispatch)
               ("M-<f10>" .  run-python)
+              ("C-c C-c" . (lambda () (interactive) (python-shell-send-buffer t)))
          :map inferior-python-mode-map
               ("<f10>" . delete-window)))
 #+END_SRC
@@ -1246,6 +1261,7 @@ this python buffer.
    There  is   a  nice   syntax  checker   for  shell   script  called
    =shellcheck=,  which  is  a  godsend  considering  how  brittle  is
    the language. One day I will set it up.
+
 
 ** Copyright notice and timestamps
 
