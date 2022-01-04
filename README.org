@@ -996,10 +996,13 @@ visualizes the error
 
    Most programming languages are supported by =flycheck=, a tool that
    automatically   checks  the   buffer  for   error  while   writing.
-   Let's  activate  it by  default.  It  =flycheck= activates  in  the
-   buffers to the  supported languages, assuming all  needed tools for
-   that   language  are   present.   Use  =flycheck-verify-setup=   to
-   investigate the checkers enabled/disabled/available in a buffer.
+   It =flycheck= activates in the  buffers to the supported languages,
+   assuming  all   needed  tools   for  that  language   are  present.
+   Use   =flycheck-verify-setup=    to   investigate    the   checkers
+   enabled/disabled/available  in  a  buffer.  I don't  like  all  the
+   annotations that flycheck leaves on the buffer. It makes everything
+   more confused, therefore I activate flycheck only when I proctively
+   show the list of errors explicitly.
 
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
@@ -1018,7 +1021,6 @@ visualizes the error
    ))
 
 (setq flycheck-global-modes '(not org-mode)) ; Use eglot/flymake
-(add-hook 'after-init-hook #'global-flycheck-mode)
 #+END_SRC
 
 For   some  language   I  use   [[https://github.com/joaotavora/eglot][Eglot]],  which   integrates  =flymake=.
