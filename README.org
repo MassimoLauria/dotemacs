@@ -1020,7 +1020,7 @@ visualizes the error
    ("M-<f12>" . mxl/toggle-flycheck-errors)
    ))
 
-(setq flycheck-global-modes '(not org-mode)) ; Use eglot/flymake
+(setq flycheck-global-modes '(not org-mode)) ; Use eglot/flymake 
 #+END_SRC
 
 For   some  language   I  use   [[https://github.com/joaotavora/eglot][Eglot]],  which   integrates  =flymake=.
@@ -1057,7 +1057,7 @@ Therefore I set some similar keybindings for it.
    - integrated help using =eldoc=
    - jump to/from definitions using =xref= (try =M-,= =M-.= keybindings)
    - code snippets (if =yasnippet= is enabled in advance)
-   - code checking using =flymake= (I will disable in favor of =flycheck=)
+   - code checking using =flymake= (I will disable it in favor of =flycheck=)
    - other features...
   
 #+BEGIN_SRC emacs-lisp
@@ -1076,7 +1076,6 @@ Therefore I set some similar keybindings for it.
 
 (use-package eglot
   :config
-  (add-hook 'eglot-managed-mode-hook 'mxl/swap-syntaxchecker)
   (add-to-list 'eglot-stay-out-of 'flymake)
   (diminish 'eldoc-mode))
 #+END_SRC
