@@ -1172,6 +1172,7 @@ format regions or function definitions.
               ("<f10>"   .  python-shell-switch-to-shell)
               ("M-<f9>"  .  python-pytest-dispatch)
               ("M-<f10>" .  run-python)
+              ;; Force the execution of the main block
               ("C-c C-c" .  (lambda () (interactive) (python-shell-send-buffer t)))
          :map inferior-python-mode-map
               ("<f10>" . delete-window)))
