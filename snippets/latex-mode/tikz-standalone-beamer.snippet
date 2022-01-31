@@ -1,0 +1,35 @@
+#name : Tikz picture standalone file (for beamer)
+#key : * nokey
+#expand-env: ((time-format "%Y-%02m-%02d, %A %02H:%02M (%Z)"))
+# --
+% Copyright (C) `(substring (current-time-string) -4)` by `user-full-name`
+%
+% Created   : "`(format-time-string time-format (current-time))` `user-full-name`"
+% Time-stamp: <>
+% Encoding  : UTF-8
+%
+% Usage:
+% This file uses the standalone package, which means that the picture
+% can be compiled on its own but can be included in external file
+% using the \input macro.
+%
+% Container file: \usepackage{standalone} + \input{subfile}
+% Subfile: \documentclass{standalone}
+%
+
+\documentclass[beamer]{standalone}
+\usepackage{tikz}
+% Real content is in the document environment
+\begin{document}
+\begin{standaloneframe}
+\begin{tikzpicture}
+  \path[draw=none,use as bounding box] (${1:0},${2:0}) rectangle ($3,$4);
+  \draw[lightgray,thin] ($1,$2) grid ($3,$4);
+  $0
+\end{tikzpicture}
+\end{standaloneframe}
+\end{document}
+
+%%% Local Variables:
+%%% TeX-master: t
+%%% End:
