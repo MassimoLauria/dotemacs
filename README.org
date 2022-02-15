@@ -1151,10 +1151,12 @@ format regions or function definitions.
 #+BEGIN_SRC emacs-lisp
 (defun mxl/yapfify-region-or-defun ()
   (interactive)
-  (save-mark-and-excursion
-    (if (not (region-active-p))
-        (python-mark-defun))
-    (call-interactively 'yapfify-region)))
+  (if (python-syntax-comment-or-string-p)
+      (python-fill-paragraph t)
+    (save-mark-and-excursion
+      (if (not (region-active-p))
+          (python-mark-defun))
+      (call-interactively 'yapfify-region))))
 #+END_SRC
 
 
