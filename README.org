@@ -1571,3 +1571,12 @@ format regions or function definitions.
    ("C-M-%" . vr/query-replace)
   ))
 #+END_SRC
+
+** Setup regexp builder
+
+#+BEGIN_SRC emacs-lisp
+(use-package re-builder
+  :init
+  (setq reb-re-syntax 'string)
+  )
+#+END_SRC
