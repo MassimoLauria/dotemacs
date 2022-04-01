@@ -1542,7 +1542,11 @@ format regions or function definitions.
    saving the recent files. Let's save them every few minutes.
    
 #+BEGIN_SRC emacs-lisp
-   (run-at-time nil (* 3 60) 'recentf-save-list)  ; three minutes
+  (use-package recentf
+    :commands recentf-save-list
+    :init 
+    (run-at-time nil (* 3 60) 'recentf-save-list)  ; three minutes
+    )
 #+END_SRC
 
 ** Hide some buffers in Helm
