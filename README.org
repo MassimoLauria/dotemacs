@@ -1537,6 +1537,14 @@ format regions or function definitions.
                                   helm-source-buffer-not-found))
 #+END_SRC
 
+   The list of recent  files is saved on Emacs exit  by default. I use
+   Emacs as a server process,  therefore it usually exits abruptly not
+   saving the recent files. Let's save them every few minutes.
+   
+#+BEGIN_SRC emacs-lisp
+   (run-at-time nil (* 3 60) 'recentf-save-list)  ; three minutes
+#+END_SRC
+
 ** Hide some buffers in Helm
    
    Some buffers  clutter selection menus  and there are no  reasons to
