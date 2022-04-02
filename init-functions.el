@@ -170,12 +170,13 @@ It will not work properly if it is not bound to a key.
 (defun uskey ()
   "Refresh the keyboard settings.
 
-Unfortunately on for some reason the keyboard settings get lost.
-  This command will refresh them from inside EMACS, so that
-  I don't have to open a terminal for that."
+Unfortunately on for some reason the keyboard settings get lost. This command will refresh them from inside EMACS, so that I don't have to open a terminal for that."
   (interactive)
+  (shell-command "setxkbmap -options" nil nil)
+  (shell-command "python ~/config/xsession/xkb_capsunlock.py" nil nil)
   (shell-command "setxkbmap -config ~/config/xsession/setxkbmap.pcus" nil nil))
 
+(defalias 'USKEY 'uskey)
 
 ;;----- Fix compile modes ------------------------------------------------
 
