@@ -635,7 +635,10 @@ See https://emacs.stackexchange.com/questions/21171/company-mode-completion-for-
 
 
 ;;;------------------------- Load -----------------------------------
+(use-package org-contrib :pin nongnu)
+
 (use-package org
+  :pin gnu
   :mode ("\\.org\\'" . org-mode)
   :bind (([f5] . org-capture)
          ([f6] . my-org-agenda-show))

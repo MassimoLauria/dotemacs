@@ -15,7 +15,8 @@
 
 (setq requested-packages '(;; very important packages first
                            use-package
-                           org-plus-contrib
+                           org
+                           org-contrib
                            eglot
                            helm
                            magit
@@ -121,13 +122,17 @@
 
 ;; Emacs packages
 (setq package-user-dir (concat "~/config/emacs/elpa-local/" emacs-version))
-(setq package-archives  '(("gnu"   . "https://elpa.gnu.org/packages/")
-                          ("melpa" . "https://melpa.org/packages/")
-                          ("org"   . "https://orgmode.org/elpa/")
+(setq package-archives  '(("gnu"    . "https://elpa.gnu.org/packages/")
+                          ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+                          ("melpa"  . "https://melpa.org/packages/")
                           ))
+
 
 (when (require 'package nil t)
   (package-initialize)
+  ;; https://github.com/jwiegley/use-package/issues/319#issuecomment-845214233
+  (assq-delete-all 'org package--builtins)
+  (assq-delete-all 'org package--builtin-versions)
   (unless package-archive-contents
     (package-refresh-contents)))
 

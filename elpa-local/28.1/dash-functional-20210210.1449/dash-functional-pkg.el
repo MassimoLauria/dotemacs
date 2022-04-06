@@ -1,0 +1,2 @@
+;;; Generated package description from dash-functional.el  -*- no-byte-compile: t -*-
+(define-package "dash-functional" "20210210.1449" "Collection of useful combinators for Emacs Lisp" '((dash "2.18.0")) :commit "dc61f4641779616122692e34a32ba2a158ee034c" :authors '(("Matus Goljer" . "matus.goljer@gmail.com") ("Magnar Sveen" . "magnars@gmail.com")) :maintainer '("Matus Goljer" . "matus.goljer@gmail.com") :keywords '("extensions" "lisp") :url "https://github.com/magnars/dash.el")
