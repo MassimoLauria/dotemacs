@@ -1,2 +1,0 @@
-;;; Generated package description from /Users/massimo/config/emacs/elpa-local/27.1/pyenv-mode-auto-20180620.1252/pyenv-mode-auto.el  -*- no-byte-compile: t -*-
-(define-package "pyenv-mode-auto" "20180620.1252" "Automatically activates pyenv version if .python-version file exists." '((pyenv-mode "0.1.0") (s "1.11.0") (f "0.17.0")) :commit "347b94cd5ad22e33cc41be661c102d4548767858" :authors '(("Sviatoslav Bulbakha" . "mail@ssbb.me")) :maintainer '("Sviatoslav Bulbakha" . "mail@ssbb.me") :keywords '("python" "pyenv") :url "https://github.com/ssbb/pyenv-mode-auto")

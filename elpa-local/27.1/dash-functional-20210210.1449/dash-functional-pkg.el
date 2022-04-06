@@ -1,2 +1,0 @@
-;;; Generated package description from /Users/massimo/config/emacs/elpa-local/27.1/dash-functional-20210210.1449/dash-functional.el  -*- no-byte-compile: t -*-
-(define-package "dash-functional" "20210210.1449" "Collection of useful combinators for Emacs Lisp" '((dash "2.18.0")) :commit "aab346ed9d8f0f7ea033029c9688810353052e7e" :authors '(("Matus Goljer" . "matus.goljer@gmail.com") ("Magnar Sveen" . "magnars@gmail.com")) :maintainer '("Matus Goljer" . "matus.goljer@gmail.com") :keywords '("extensions" "lisp") :url "https://github.com/magnars/dash.el")
