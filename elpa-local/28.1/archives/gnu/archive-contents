@@ -137,14 +137,14 @@
 	   ("John Wiegley" . "jwiegley@gmail.com"))
 	  (:keywords "async"))])
  (auctex .
-	 [(13 1 1)
+	 [(13 1 2)
 	  ((emacs
 	    (24 3)))
 	  "Integrated environment for *TeX*" tar
 	  ((:url . "https://www.gnu.org/software/auctex/")
 	   (:keywords "tex" "latex" "texinfo" "context" "doctex" "preview-latex")
 	   (:maintainer nil . "auctex-devel@gnu.org")
-	   (:commit . "8ff369bd92d213f6ae000fadab0e3c4fd3f3e8e2"))])
+	   (:commit . "2568505587f0f6fb9bdac54ba59bda8503882a7a"))])
  (aumix-mode .
 	     [(7)
 	      nil "run the aumix program in a buffer" single
@@ -475,7 +475,7 @@
 			("Ingo Lohmar" . "i.lohmar@gmail.com"))
 		       (:keywords "abbrev" "convenience" "matching"))])
  (compat .
-	 [(28 1 0 1)
+	 [(28 1 0 3)
 	  ((emacs
 	    (24 3))
 	   (nadvice
@@ -486,7 +486,7 @@
 	   (:maintainer "Compat Development" . "~pkal/compat-devel@lists.sr.ht")
 	   (:authors
 	    ("Philip Kaludercic" . "philipk@posteo.net"))
-	   (:commit . "b527bf88f394defd06380767bce2178c74f60068"))])
+	   (:commit . "7a97ee1860e15ff9657d94dc15d03bc5e47d1773"))])
  (consult .
 	  [(0 16)
 	   ((emacs
@@ -508,7 +508,7 @@
 		      ("Jackson Ray Hamilton" . "jackson@jacksonrayhamilton.com"))
 		     (:keywords "convenience" "faces" "tools"))])
  (corfu .
-	[(0 20)
+	[(0 21)
 	 ((emacs
 	   (27 1)))
 	 "Completion Overlay Region FUnction" tar
@@ -516,7 +516,7 @@
 	  (:maintainer "Daniel Mendler" . "mail@daniel-mendler.de")
 	  (:authors
 	   ("Daniel Mendler" . "mail@daniel-mendler.de"))
-	  (:commit . "e2cc92b029bd9334f88d382def7066c35c31b3a9"))])
+	  (:commit . "ba099c770dd6d410553473604f184adf20d7b359"))])
  (coterm .
 	 [(1 5)
 	  ((emacs
@@ -579,7 +579,7 @@
 		(:authors
 		 ("Theodor Thornhill" . "theo@thornhill.no")))])
  (csv-mode .
-	   [(1 18)
+	   [(1 19)
 	    ((emacs
 	      (24 1))
 	     (cl-lib
@@ -589,7 +589,8 @@
 	     (:maintainer nil . "emacs-devel@gnu.org")
 	     (:authors
 	      ("\"Francis J. Wright\"" . "F.J.Wright@qmul.ac.uk"))
-	     (:url . "https://elpa.gnu.org/packages/csv-mode.html"))])
+	     (:url . "https://elpa.gnu.org/packages/csv-mode.html")
+	     (:commit . "5c19624398bfd6b976cc9876db582e3e23611601"))])
  (cycle-quotes .
 	       [(0 1)
 		nil "Cycle between quote styles" tar
@@ -629,9 +630,9 @@
 		  ("Daiki Ueno" . "ueno@gnu.org"))
 		 (:maintainer nil . "emacs-devel@gnu.org"))])
  (debbugs .
-	  [(0 31)
+	  [(0 32)
 	   ((emacs
-	     (25 1))
+	     (26 1))
 	    (soap-client
 	     (3 1 5)))
 	   "SOAP library to access debbugs servers" tar
@@ -640,7 +641,7 @@
 	    (:authors
 	     ("Michael Albinus" . "michael.albinus@gmx.de"))
 	    (:url . "https://elpa.gnu.org/packages/debbugs.html")
-	    (:commit . "0be023a614f49f295e63337a875a7514db78be2f"))])
+	    (:commit . "a35646a9798226b8630fbd7a0691edc78ccd92b3"))])
  (delight .
 	  [(1 7)
 	   ((cl-lib
@@ -1601,6 +1602,17 @@
 	(:authors
 	 ("Stefan Monnier" . "monnier@iro.umontreal.ca"))
 	(:url . "http://elpa.gnu.org/packages/lex.html"))])
+ (lin .
+      [(0 3 0)
+       ((emacs
+	 (27 1)))
+       "Make `hl-line-mode' more suitable for selection UIs" tar
+       ((:url . "https://git.sr.ht/~protesilaos/lin")
+	(:keywords "convenience" "faces" "theme")
+	(:maintainer "Protesilaos Stavrou" . "info@protesilaos.com")
+	(:authors
+	 ("Protesilaos Stavrou" . "info@protesilaos.com"))
+	(:commit . "edc29c2afe98ecd120108b7d3561aff938cc22c3"))])
  (lmc .
       [(1 4)
        ((emacs
@@ -1646,16 +1658,16 @@
 	   (:maintainer "Alexey Veretennikov" . "alexey.veretennikov@gmail.com")
 	   (:url . "https://github.com/fourier/loccur"))])
  (logos .
-	[(0 3 0)
+	[(0 3 1)
 	 ((emacs
 	   (27 1)))
 	 "Simple focus mode and extras" tar
-	 ((:url . "https://gitlab.com/protesilaos/logos")
+	 ((:url . "https://git.sr.ht/~protesilaos/logos")
 	  (:keywords "convenience" "focus" "writing" "presentation" "narrowing")
 	  (:maintainer "Protesilaos Stavrou" . "info@protesilaos.com")
 	  (:authors
 	   ("Protesilaos Stavrou" . "info@protesilaos.com"))
-	  (:commit . "de6959ceef59d818aa5ec2b1700932f5b78bcb78"))])
+	  (:commit . "9e6824b8fa67c6c96e46eeb410cbca2f88193a2d"))])
  (map .
       [(3 2 1)
        ((emacs
@@ -2253,16 +2265,16 @@
 	       ("Scott Andrew Borton" . "scott@pp.htv.fi"))
 	      (:maintainer "John Darrington" . "john@darrington.wattle.id.au"))])
  (pulsar .
-	 [(0 2 0)
+	 [(0 3 0)
 	  ((emacs
 	    (27 1)))
 	  "Pulse highlight on demand or after select functions" tar
-	  ((:url . "https://protesilaos.com/emacs/pulsar")
+	  ((:url . "https://git.sr.ht/~protesilaos/pulsar")
 	   (:keywords "convenience" "pulse" "highlight")
 	   (:maintainer "Protesilaos Stavrou" . "info@protesilaos.com")
 	   (:authors
 	    ("Protesilaos Stavrou" . "info@protesilaos.com"))
-	   (:commit . "4cfc18a0093b1c4478fc5dc0342f07a4f0033c8b"))])
+	   (:commit . "cdb7892a2b7e8e7cc644b8e24e5ab6bf0c51584d"))])
  (pyim .
        [(4 1 0)
 	((emacs
@@ -2981,6 +2993,17 @@
 	      (:maintainer "Jonas Bernoulli" . "jonas@bernoul.li")
 	      (:authors
 	       ("Jonas Bernoulli" . "jonas@bernoul.li")))])
+ (transient-cycles .
+		   [(1 0)
+		    ((emacs
+		      (27 1)))
+		    "Define command variants with transient cycling" tar
+		    ((:url . "https://git.spwhitton.name/dotfiles/tree/.emacs.d/site-lisp/transient-cycles.el")
+		     (:keywords "buffer" "window" "minor-mode" "convenience")
+		     (:maintainer "Sean Whitton" . "spwhitton@spwhitton.name")
+		     (:authors
+		      ("Sean Whitton" . "spwhitton@spwhitton.name"))
+		     (:commit . "a5b86dd04e84e7ff1cf8c4062843fccb92991145"))])
  (trie .
        [(0 5)
 	((tNFA
@@ -3128,7 +3151,7 @@
 		  ("Wilson Snyder" . "wsnyder@wsnyder.org"))
 		 (:commit . "86f08fb377e2b8f2df0614c48783bdce347f3758"))])
  (vertico .
-	  [(0 21)
+	  [(0 22)
 	   ((emacs
 	     (27 1)))
 	   "VERTical Interactive COmpletion" tar
@@ -3136,7 +3159,7 @@
 	    (:maintainer "Daniel Mendler" . "mail@daniel-mendler.de")
 	    (:authors
 	     ("Daniel Mendler" . "mail@daniel-mendler.de"))
-	    (:commit . "e82b7ff371a348d9e5a1ac7bf4b652f0a2d38198"))])
+	    (:commit . "abf488b8bd501354cc36afb8901fa6929f34bbeb"))])
  (vertico-posframe .
 		   [(0 5 3)
 		    ((emacs

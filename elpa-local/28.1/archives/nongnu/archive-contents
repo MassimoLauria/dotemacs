@@ -28,13 +28,13 @@
 		(:authors
 		 ("Jordon Biondo" . "jordonbiondo@gmail.com")))])
  (annotate .
-	   [(1 5 1)
+	   [(1 5 3)
 	    nil "annotate files without changing them" tar
 	    ((:url . "https://github.com/bastibe/annotate.el")
-	     (:maintainer "Bastian Bechtold")
+	     (:maintainer "Bastian Bechtold <bastibe.dev@mailbox.org>, cage" . "cage-dev@twistfold.it")
 	     (:authors
 	      ("Bastian Bechtold"))
-	     (:commit . "aa3c0540ee644e0e205644545d659a6ba16d76ac"))])
+	     (:commit . "e694b977cc82887ce722912a2634ae4b0bc4f5ea"))])
  (anti-zenburn-theme .
 		     [(2 5 1)
 		      nil "Low-contrast Zenburn-inverted theme" tar
@@ -128,14 +128,15 @@
 	     (:authors
 	      ("Dave Pearson" . "davep@davep.org")))])
  (buttercup .
-	    [(1 24)
+	    [(1 25)
 	     ((emacs
 	       (24 3)))
 	     "Behavior-Driven Emacs Lisp Testing" tar
 	     ((:url . "https://github.com/jorgenschaefer/emacs-buttercup")
-	      (:maintainer "Jorgen Schaefer" . "contact@jorgenschaefer.de")
+	      (:maintainer "Ola Nilsson" . "ola.nilsson@gmail.com")
 	      (:authors
-	       ("Jorgen Schaefer" . "contact@jorgenschaefer.de")))])
+	       ("Jorgen Schaefer" . "contact@jorgenschaefer.de"))
+	      (:commit . "ba62f80555d46faf49dc451c0ad20f39f6a170ab"))])
  (caml .
        [(4 9)
 	((emacs
@@ -755,15 +756,16 @@
 	       ("Thierry Volpiatto" . "thierry.volpiatto@gmail.com"))
 	      (:commit . "5e035c9193bf1e1d4bb709794a154957544dcfc7"))])
  (highlight-parentheses .
-			[(2 1 0)
+			[(2 1 1)
 			 ((emacs
 			   (24 3)))
 			 "Highlight surrounding parentheses" tar
 			 ((:url . "https://sr.ht/~tsdh/highlight-parentheses.el/")
+			  (:keywords "faces" "matching")
 			  (:maintainer "Tassilo Horn" . "tsdh@gnu.org")
 			  (:authors
 			   ("Nikolaj Schumacher <bugs * nschum de>"))
-			  (:keywords "faces" "matching"))])
+			  (:commit . "438a1cb2563e2a2496be4678cc0df8d5b22caf5d"))])
  (htmlize .
 	  [(1 57)
 	   nil "Convert buffer text and decorations to HTML." tar
@@ -1305,15 +1307,16 @@
 	   (:authors
 	    ("Vitalie Spinu")))])
  (shellcop .
-	   [(0 0 7)
+	   [(0 0 8)
 	    ((emacs
 	      (25 1)))
 	    "Analyze info&error in shell-mode" tar
 	    ((:url . "https://github.com/redguardtoo/shellcop")
 	     (:keywords "unix" "tools")
-	     (:maintainer "Chen Bin <chenbin DOT sh AT gmail DOT com>")
+	     (:maintainer "Chen Bin" . "chenbin.sh@gmail.com")
 	     (:authors
-	      ("Chen Bin <chenbin DOT sh AT gmail DOT com>")))])
+	      ("Chen Bin" . "chenbin.sh@gmail.com"))
+	     (:commit . "f6060cc292d0143c925252b27d5db21de03ce7f0"))])
  (slime .
 	[(2 26 1)
 	 ((cl-lib
