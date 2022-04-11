@@ -1,2 +1,0 @@
-;;; Generated package description from metaweblog.el  -*- no-byte-compile: t -*-
-(define-package "metaweblog" "20210422.326" "An XML-RPC MetaWeblog and WordPress API client." '((emacs "26.3")) :commit "68695ed0e012379556d57f9564ac5ad8cd68fbb8" :authors '(("Puneeth Chaganti" . "punchagan+org2blog@gmail.com")) :maintainer '("Grant Rettke" . "grant@wisdomandwonder.com") :keywords '("comm") :url "https://github.com/org2blog/org2blog")
