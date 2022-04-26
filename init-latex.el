@@ -202,38 +202,16 @@ started."
 
 
 ;; To help collaboration, in LaTeX file sometimes I need to use soft
-;; word wrapping.  In that case the filling is made to an arbitrary
-;; large value, so that fill-paragraph won't do hard-wrapping by
-;; error.
-;;
-(defvar my-setup-of-latex-default-format 'hard
-  "Default formatting rules for LaTeX")
-
-(defun my-setup-of-latex-softformat()
-  "Setup of text editing in LaTeX (soft wrapping)."
-  (interactive)
-  (setq fill-column 9999)
-  (setq default-justification 'left)
-  (auto-fill-mode -1))
-
-(defun my-setup-of-latex-hardformat()
-  "Setup of text editing in LaTeX (soft wrapping)."
+;; word wrapping. I keep a low value of fill-column so that I can do
+;; hard wrapping regardless but auto-fill must be off.
+(defun mxl-latex-wrapping()
+  "Setup of text editing in LaTeX."
   (interactive)
   (setq fill-column 70)
   (setq default-justification 'left)
-  (auto-fill-mode 1))
+  (auto-fill-mode -1))
 
-(defun my-setup-of-latex-format( &optional format)
-  "Setup of text editing in LaTeX (`FORMAT' is either hard or soft)."
-  (interactive)
-  (let ((fmt (or format my-setup-of-latex-default-format)))
-    (cond ((eq fmt 'hard) (my-setup-of-latex-hardformat))
-          ((eq fmt 'soft) (my-setup-of-latex-softformat))
-          (t (my-setup-of-latex-hardformat)) ; default is hard
-          )))
-
-
-(add-hook 'LaTeX-mode-hook 'my-setup-of-latex-format)
+(add-hook 'LaTeX-mode-hook 'mxl-latex-wrapping)
 
 
 ;; RefTeX setup has to use `kpsewhich' to find stuff, so that it
