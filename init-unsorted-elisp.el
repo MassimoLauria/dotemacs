@@ -1,6 +1,6 @@
 ;;; init-unsorted-elisp.el --- Contains small chunks of elisp code in no particular order
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -328,6 +328,16 @@ is already narrowed."
 ;; Fill/unfill paragraph
 (use-package unfill
   :bind ([remap fill-paragraph] . unfill-toggle))
+
+(use-package projectile
+  :init
+  (setq compilation-read-command nil)
+  :config
+  (projectile-register-project-type 'latexmk '(".latexmkrc")
+                                    :project-file ".latexmkrc"
+                                    :compile "latexmk"
+                                    :run "latexmk -pv"))
+
 
 
 (provide 'init-unsorted-elisp)
