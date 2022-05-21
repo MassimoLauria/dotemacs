@@ -389,7 +389,7 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
  '(mode-line-inactive ((t (:box nil))))
  '(flycheck-error ((t (:underline "Red"))))
  '(flycheck-warning ((t (:underline "Yellow"))))
- '(flycheck-info ((t (:underline "deep sky blue"))))
+ '(flycheck-info ((t nil)))
  '(flymake-error ((t (:underline "Red1"))))
  '(flymake-warning ((t (:underline "yellow"))))
  '(flymake-note ((t (:underline "deep sky blue"))))
@@ -962,6 +962,10 @@ cases. Since  LaTeX error management  is a bit  special, I have  to do
 a specific setup for that.
 
 #+BEGIN_SRC emacs-lisp
+
+(setq flycheck-navigation-minimum-level 'warning)
+(setq flycheck-error-list-minimum-level 'warning)
+
 (defun mxl/toggle-flycheck-errors (&optional buffer-or-name)
   "Toggle the visibility or the Flycheck error list.
 
@@ -977,7 +981,9 @@ visualizes the error
                (flycheck-mode -1))
     (eldoc-mode -1)
     (flycheck-mode 1)
-    (flycheck-list-errors))))
+    (flycheck-list-errors)
+    (setq next-error-last-buffer (get-buffer "*Flycheck errors*"))
+    )))
 
 
 (defun mxl/toggle-flymake-errors()
