@@ -163,7 +163,7 @@
 
   ;; Put in the bookmarks all the user folders with increasing
   ;; bookmark shortcut (won't work with more than 9 bookmarks)
-  (loop for label in mu4e-other-folders
+  (cl-loop for label in mu4e-other-folders
         with i = 1
         do
         (add-to-list 'mu4e-bookmarks

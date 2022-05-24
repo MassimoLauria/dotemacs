@@ -103,18 +103,18 @@
 ;; Use full featured gdb GUI.
 (setq gdb-many-windows t)
 (setq gdb-use-separate-io-buffer t)
-(add-hook 'gud-mode-hook '(lambda ()
-                            (local-set-key (kbd "<f10>") 'gud-nexti)
-                            (local-set-key (kbd "<f11>") 'gud-next )
-                            (local-set-key (kbd "<f12>") 'gud-cont)
+(add-hook 'gud-mode-hook #'(lambda ()
+                             (local-set-key (kbd "<f10>") 'gud-nexti)
+                             (local-set-key (kbd "<f11>") 'gud-next )
+                             (local-set-key (kbd "<f12>") 'gud-cont)
 
-                            (local-set-key (kbd "M-<f10>") 'gud-stepi)
-                            (local-set-key (kbd "M-<f11>") 'gud-step )
-                            (local-set-key (kbd "M-<f12>") 'gud-until)
+                             (local-set-key (kbd "M-<f10>") 'gud-stepi)
+                             (local-set-key (kbd "M-<f11>") 'gud-step )
+                             (local-set-key (kbd "M-<f12>") 'gud-until)
 
-                            (local-set-key (kbd "<f9>"  ) 'gud-break)
-                            (local-set-key (kbd "M-<f9>"  ) 'gud-tbreak)
-                            )
+                             (local-set-key (kbd "<f9>"  ) 'gud-break)
+                             (local-set-key (kbd "M-<f9>"  ) 'gud-tbreak)
+                             )
           )
 ;; All urls/mails are clickable in comments and strings
 (when-available 'goto-address-prog-mode
@@ -126,12 +126,12 @@
   :defer t
   :init
   (add-hook 'comint-mode-hook
-            '(lambda()
-               (local-set-key (kbd "M-n") 'comint-next-input)
-               (local-set-key (kbd "M-p") 'comint-previous-input)
-               (local-set-key [down] 'comint-next-matching-input-from-input)
-               (local-set-key [up] 'comint-previous-matching-input-from-input)
-               )))
+            #'(lambda()
+                (local-set-key (kbd "M-n") 'comint-next-input)
+                (local-set-key (kbd "M-p") 'comint-previous-input)
+                (local-set-key [down] 'comint-next-matching-input-from-input)
+                (local-set-key [up] 'comint-previous-matching-input-from-input)
+                )))
 
 
 ;; Kill buffers with running processes
