@@ -207,6 +207,21 @@
 			   (:maintainer "Julien Barnier")
 			   (:authors
 			    ("Julien Barnier")))])
+ (corfu-terminal .
+		 [(0 1)
+		  ((emacs
+		    (26 1))
+		   (corfu
+		    (0 24))
+		   (popon
+		    (0)))
+		  "Corfu popup on terminal" tar
+		  ((:url . "https://codeberg.org/akib/emacs-corfu-terminal")
+		   (:keywords "convenience")
+		   (:maintainer "Akib Azmain Turja" . "akib@disroot.org")
+		   (:authors
+		    ("Akib Azmain Turja" . "akib@disroot.org"))
+		   (:commit . "cca92ac666f6edf3ec2a5dbf2fc1a577fd15cb61"))])
  (crux .
        [(0 4 0)
 	((seq
@@ -387,10 +402,8 @@
 		    (:authors
 		     ("Sylvain Benner" . "sylvain.benner@gmail.com")))])
  (evil-matchit .
-	       [(2 4 4)
-		((evil
-		  (1 14 0))
-		 (emacs
+	       [(3 0 0)
+		((emacs
 		  (25 1)))
 		"Vim matchit ported to Evil" tar
 		((:url . "http://github.com/redguardtoo/evil-matchit")
@@ -398,7 +411,7 @@
 		 (:maintainer "Chen Bin" . "chenbin.sh@gmail.com")
 		 (:authors
 		  ("Chen Bin" . "chenbin.sh@gmail.com"))
-		 (:commit . "b314e816bacfc01bb7df9b19a06b18638af5cdbe"))])
+		 (:commit . "7a2a7384b6e752a805d6fbb78cf9425e54c2b18b"))])
  (evil-nerd-commenter .
 		      [(3 5 7)
 		       ((emacs
@@ -441,6 +454,23 @@
 		   (:maintainer "https://turbocafe.keybase.pub")
 		   (:authors
 		    ("https://turbocafe.keybase.pub")))])
+ (flymake-popon .
+		[(0 1)
+		 ((emacs
+		   (26 1))
+		  (flymake
+		   (0))
+		  (popon
+		   (0))
+		  (posframe
+		   (0)))
+		 "Flymake diagnostics on cursor hover" tar
+		 ((:url . "https://codeberg.org/akib/emacs-flymake-popon")
+		  (:keywords "convenience")
+		  (:maintainer "Akib Azmain Turja" . "akib@disroot.org")
+		  (:authors
+		   ("Akib Azmain Turja" . "akib@disroot.org"))
+		  (:commit . "df877f3656bce86cbee33aa6c4eedd42b37647e7"))])
  (forth-mode .
 	     [(0 2)
 	      nil "Programming language mode for Forth" tar
@@ -1076,16 +1106,16 @@
 		 ("Bastian Bechtold")
 		 ("Christian Schwarzgruber")))])
  (org-mime .
-	   [(0 2 6)
+	   [(0 3 1)
 	    ((emacs
 	      (25 1)))
 	    "org html export for text/html MIME emails" tar
 	    ((:url . "http://github.com/org-mime/org-mime")
 	     (:keywords "mime" "mail" "email" "html")
-	     (:maintainer "Chen Bin (redguardtoo)")
+	     (:maintainer "Chen Bin" . "chenbin.sh@gmail.com")
 	     (:authors
 	      ("Eric Schulte"))
-	     (:commit . "3f1f3a38429da17811f61a7a5685224d79de9594"))])
+	     (:commit . "cf96f585c68ad14751a3f73d937cbfcb890171b9"))])
  (org-present .
 	      [(0 1)
 	       ((org
@@ -1205,6 +1235,17 @@
 	     (:authors
 	      ("Eric James Michael Ritz"))
 	     (:keywords "languages" "php"))])
+ (popon .
+	[(0 1)
+	 ((emacs
+	   (25 1)))
+	 "\"Pop\" floating text \"on\" a window" tar
+	 ((:url . "https://codeberg.org/akib/emacs-popon")
+	  (:keywords "lisp" "extensions" "frames")
+	  (:maintainer "Akib Azmain Turja" . "akib@disroot.org")
+	  (:authors
+	   ("Akib Azmain Turja" . "akib@disroot.org"))
+	  (:commit . "240fb286d8e8f8333c5d20da5fe8b32c277cd6eb"))])
  (popup .
 	[(0 5 9)
 	 ((emacs
@@ -1515,14 +1556,15 @@
 	       ("Venkat Iyer" . "venkat@comit.com"))
 	      (:url . "https://elpa.nongnu.org/nongnu/vc-fossil.html"))])
  (visual-fill-column .
-		     [(2 4)
+		     [(2 5)
 		      ((emacs
 			(25 1)))
 		      "fill-column for visual-line-mode" tar
 		      ((:url . "https://codeberg.org/joostkremers/visual-fill-column")
 		       (:maintainer "Joost Kremers" . "joostkremers@fastmail.fm")
 		       (:authors
-			("Joost Kremers" . "joostkremers@fastmail.fm")))])
+			("Joost Kremers" . "joostkremers@fastmail.fm"))
+		       (:commit . "afaad5ac6b15cdf9f362662538e35d48578e218a"))])
  (web-mode .
 	   [(17 2 0)
 	    ((emacs
@@ -1587,7 +1629,7 @@
 	      (:authors
 	       ("Le Wang")))])
  (xah-fly-keys .
-	       [(17 7 20220429090059)
+	       [(17 9 20220516184525)
 		((emacs
 		  (24 1)))
 		"ergonomic modal keybinding minor mode." tar
@@ -1596,7 +1638,7 @@
 		 (:maintainer "Xah Lee" . "xah@xahlee.org")
 		 (:authors
 		  ("Xah Lee ( http://xahlee.info/ )"))
-		 (:commit . "e4db51a90d13eb886b88bbba6a71846653a76e47"))])
+		 (:commit . "9e4d32ad028649786557858366acf1cd9793d338"))])
  (xml-rpc .
 	  [(1 6 15)
 	   nil "An elisp implementation of clientside XML-RPC" tar
