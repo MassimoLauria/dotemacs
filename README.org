@@ -295,25 +295,23 @@ Ignore if the path does not exists."
 * Appearance
 ** Fonts
 
-   The most  important visual  setup for  a text  editor is  the font.
-   Several families of fonts are tried in order of preference, and the
-   first which  is present in the  machine is picked as  default font.
-   =symbol-font= is the fallback needed for some math symbols.
+The most important visual setup for a  text editor is the font. We set
+the default  font. The =symbol-font=  is the fallback needed  for some
+math symbols.
 
 #+BEGIN_SRC emacs-lisp
-(cond
- ((find-font (font-spec :name "Fira Code"))
-  (setq default-font "Fira Code 18"))
- ((find-font (font-spec :name "DejaVu Sans Mono"))
-  (setq default-font "DejaVu Sans Mono 18"))
- ((find-font (font-spec :name "Menlo"))   ;; Default of macOS
-  (setq default-font "Menlo-18"))
- ((find-font (font-spec :name "Inconsolata"))
-  (setq default-font "Inconsolata-18"))   ;; Default on Windows
-(t
-  (setq default-font "Monospace-18")))    ;; Last resort
+;(setq default-font "Fira Code")
+(setq default-font "DejaVu Sans Mono")
+;(setq default-font "Menlo")
+;(setq default-font "Inconsolata")
+;(setq default-font "Source Code Pro")
 
 (setq symbol-font "DejaVu Sans Mono")
+
+(set-face-attribute 'default nil
+                    :family "DejaVu Sans Mono"
+                    :width 'normal
+                    :height 180)
 #+END_SRC
 
    I like Emacs to  open in a wide frame at the  center of the screen,
@@ -327,8 +325,7 @@ Ignore if the path does not exists."
                             (left . 0.5))) ;; center horizontal position
 
 
-(setq default-frame-alist `((font . ,default-font)
-                            (height . 64)
+(setq default-frame-alist `((height . 64)
                             (width . 120)
                             (tool-bar . nil)
                             (line-spacing . 0.2)
@@ -355,7 +352,8 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
 (defun mxl-fix-bibfonts (frame)
   (set-fontset-font t #x2318 symbol-font)   ; ⌘
   (set-fontset-font t #x270e symbol-font)   ; ✎
-  (set-fontset-font t nil "Symbola"))       ; other fonts like 😊 💾  
+  ;;(set-fontset-font t nil "Symbola")
+  )       ; other fonts like 😊 💾  
 
 (mapc 'mxl-fix-bibfonts (frame-list))                    ; applies to existing frames
 (add-hook 'after-make-frame-functions 'mxl-fix-bibfonts) ; applies to future frames

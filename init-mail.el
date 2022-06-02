@@ -133,7 +133,7 @@
                          :query "date:2099"
                          :key ?{)
                         (make-mu4e-bookmark
-                         :name "Posta in arrivo"
+                         :name " Posta in arrivo"
                          :query "maildir:/inbox"
                          :key ?i)
                         (make-mu4e-bookmark
