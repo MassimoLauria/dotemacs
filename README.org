@@ -774,6 +774,39 @@ Woolf say? "A Room of One's Own".
 #+END_SRC
 
 
+** Math and Latex
+
+*** Math mode is LaTeX/Org-mode
+
+   My main  TeX/LaTeX setup  is based  on its own  file, but  there is
+   a  nice utility  which allows  to conveniently  type the  depecated
+   dollas  signs. By  typing  a dollar,  the inline  pair  =\( \)=  is
+   inserted. It toogles between pair =\( \)= and =\[ \]= everytime the
+   dollar is typed while at the end of a pair or inside an empty pair.
+
+   Recall you can type =$= by preceding it with =C-q=.
+   
+#+BEGIN_SRC emacs-lisp
+(use-package math-delimiters
+  :commands (math-delimiters-insert)
+  :ensure nil)
+
+(with-eval-after-load 'org
+  (define-key org-mode-map "$" #'math-delimiters-insert))
+
+(with-eval-after-load 'tex              ; for AUCTeX
+  (define-key TeX-mode-map "$" #'math-delimiters-insert))
+
+(with-eval-after-load 'tex-mode         ; for the built-in TeX/LaTeX modes
+  (define-key tex-mode-map "$" #'math-delimiters-insert))
+#+END_SRC
+
+#+RESULTS:
+: math-delimiters-insert
+
+   
+
+
 * Org-Protocol integration
 
   Org-mode  provides a  protocol for  capturing snippets  of text  and
