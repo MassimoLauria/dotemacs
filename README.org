@@ -1391,6 +1391,26 @@ format regions or function definitions.
 
 
 
+* Reading Material
+
+** Books
+
+I manage books via  [[https://calibre-ebook.com/][Calibre]], which I use to store  and manage my PDFs,
+Ebook, and so on. The package  [[https://github.com/chenyanming/calibredb.el][calibredb]] allows to access and open the
+books from inside Emacs.
+
+#+BEGIN_SRC emacs-lisp
+(use-package calibredb
+  :commands (calibredb calibredb-find-helm)
+  :init
+  (setq calibredb-id-width 5)
+  (setq calibredb-format-all-the-icons nil)
+  (setq calibredb-format-character-icons nil)
+  :config
+  (setq calibredb-root-dir (expand-file-name "~/cloud/Books/"))
+  (setq calibredb-db-dir (concat calibredb-root-dir "/metadata.db")))
+#+END_SRC
+
 * Writing facilities
 
   I am not very happy with this  setup, but it fits with the fact that

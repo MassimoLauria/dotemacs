@@ -20,7 +20,6 @@
                            eglot
                            helm
                            magit
-                           magit-svn
                            auctex
                            pdf-tools
                            doom-modeline
@@ -30,6 +29,7 @@
                            async
                            beacon
                            bind-key
+                           calibredb
                            cmake-mode
                            company
                            dash

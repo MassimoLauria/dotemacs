@@ -243,14 +243,6 @@ is already narrowed."
 (global-set-key (kbd "C-c d") 'helm-sdcv)
 
 
-
-(use-package calibre-mode
-  :commands calibre-find
-  :config
-  (setq calibre-root-dir (expand-file-name "~/cloud/Books/"))
-  (setq calibre-db (concat calibre-root-dir "/metadata.db"))
-  (setq sql-sqlite-program "/usr/bin/sqlite3"))
-
 ;; Helm always at bottom
 (add-to-list 'display-buffer-alist
              `(,(rx bos "*helm" (* not-newline) "*" eos)
@@ -316,7 +308,8 @@ is already narrowed."
   (setq helm-ff-skip-boring-files t)
   (setq helm-display-header-line t)
   :config
-  (helm-mode))
+  (helm-mode)
+  (helm-ff-icon-mode))
 
 (use-package helm-rg                    ;
   :commands (helm-rg)
