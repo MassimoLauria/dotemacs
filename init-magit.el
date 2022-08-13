@@ -26,8 +26,8 @@
   :diminish magit-svn-mode
   :commands magit-svn-mode)
 
-(use-package forge
-  :after magit)
+;; (use-package forge
+;;   :after magit)
 
 ;; Edit commit messages with emacs
 (add-to-list 'auto-mode-alist '("/COMMIT_EDITMSG\\'" . diff-mode))
