@@ -1,0 +1,2 @@
+;;; Generated package description from helm-projectile.el  -*- no-byte-compile: t -*-
+(define-package "helm-projectile" "20220807.350" "Helm integration for Projectile" '((helm "1.9.9") (projectile "2.2.0") (cl-lib "0.3")) :commit "6dcc543815984f7f40e99050b1ee3b68a088e160" :authors '(("Bozhidar Batsov")) :maintainer '("Bozhidar Batsov") :keywords '("project" "convenience") :url "https://github.com/bbatsov/helm-projectile")
