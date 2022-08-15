@@ -17,6 +17,7 @@
                            use-package
                            org
                            org-contrib
+                           org-contacts
                            eglot
                            helm
                            magit
