@@ -72,10 +72,6 @@
      "Invoke `magit-status' on the folder."
      (call-interactively 'magit-status)))
 
-(add-to-list 'eshell-visual-options '("git" "--help" "--paginate"))
-(add-to-list 'eshell-visual-subcommands '("git" "log" "diff" "show"))
-
-
 
 (defun eshell/ripgrep (pattern)
   "Use Emacs helm-rg facility instead of calling external rg"
