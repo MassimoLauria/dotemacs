@@ -1,6 +1,6 @@
 ;;; massimo-keyboard.el --- Keybindings specific for the author habits -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010, 2011, 2012, 2013  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2022  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: convenience
@@ -30,7 +30,7 @@
   (define-key eshell-mode-map (kbd "<M-return>") 'bury-buffer))
 
 (add-hook 'eshell-mode-hook 'eshell-my-setup)
-  
+
 ;;; Commands
 
 (defun eshell/emacs (&rest args)
@@ -45,6 +45,14 @@
     ;; not the starting directory
     (mapc #'find-file (mapcar #'expand-file-name (eshell-flatten-list (reverse args))))))
 
+(defalias 'eshell/ff 'eshell/emacs)
+
+(defun eshell/d (&rest args)
+  (if args
+      (dired args)
+    (dired ".")))
+
+
 (defun eshell/ec (&rest args)
   "Invoke `find-file' on the file.
     \"ec +42 foo\" also goes to line 42 in the buffer."
@@ -57,10 +65,24 @@
       (find-file (pop args)))))
 
 
-(eval-after-load "magit" 
+
+
+(eval-after-load "magit"
   '(defun eshell/git (&rest args)
      "Invoke `magit-status' on the folder."
      (call-interactively 'magit-status)))
+
+(add-to-list 'eshell-visual-options '("git" "--help" "--paginate"))
+(add-to-list 'eshell-visual-subcommands '("git" "log" "diff" "show"))
+
+
+
+(defun eshell/ripgrep (pattern)
+  "Use Emacs helm-rg facility instead of calling external rg"
+  (helm-rg pattern))
+
+(defalias 'eshell/rg 'eshell/ripgrep)
+
 
 
 (defun eshell-view-file (file)
