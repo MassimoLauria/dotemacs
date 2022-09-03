@@ -250,6 +250,13 @@ is already narrowed."
                (inhibit-same-window . t)
                (window-height . 0.4)))
 
+(defun mxl/toggle-helm-ff-skip-boring ()
+  (interactive)
+  (setq helm-ff-skip-boring-files (not helm-ff-skip-boring-files))
+  (if helm-ff-skip-boring-files
+      (message "Hide hidden files")
+    (message "Show hidden files")))
+
 (use-package helm
   :bind (( "C-x C-b" . helm-mini)
          ( "C-x b"   . helm-mini)
@@ -276,6 +283,7 @@ is already narrowed."
          ( "M-u"  . helm-previous-source)
          ( "M-o"  . helm-next-source)
          ( "M-;"  . helm-select-action)
+         ( "M-."  . mxl/toggle-helm-ff-skip-boring)
          :map helm-generic-files-map
          ( "M-`"  . helm-keyboard-quit)
          ( "M-i"  . helm-previous-line)
@@ -305,11 +313,14 @@ is already narrowed."
          ( "M-;"  . helm-select-action)
   :diminish helm-mode
   :init
-  (setq helm-ff-skip-boring-files t)
   (setq helm-display-header-line t)
+  (setq helm-ff-skip-boring-files t)
   :config
   (helm-mode)
-  (helm-ff-icon-mode))
+  (helm-ff-icon-mode)
+    ;; Hidden files are not shown in helm-find-file
+  (customize-set-variable 'helm-boring-file-regexp-list
+                          (cons "^\\..+" helm-boring-file-regexp-list)))
 
 (use-package helm-rg                    ;
   :commands (helm-rg)
