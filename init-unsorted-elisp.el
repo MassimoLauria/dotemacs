@@ -250,12 +250,30 @@ is already narrowed."
                (inhibit-same-window . t)
                (window-height . 0.4)))
 
-(defun mxl/toggle-helm-ff-skip-boring ()
+;; The following setup is due to the answer to my question on Emacs
+;; Stackexchange, by user d125q.
+;;
+;; https://emacs.stackexchange.com/questions/73414/how-to-toggle-helm-ff-skip-boring-files-during-file-navigation-with-helm-find/73418#73418
+
+(defun helm-ff-toggle-skip-boring-files ()
+  (with-helm-buffer
+    (setq helm-ff-skip-boring-files (not helm-ff-skip-boring-files))
+    (let* ((cand (helm-get-selection))
+           (target (if helm-ff-transformer-show-only-basename
+                       (helm-basename cand)
+                     cand)))
+      (if helm-ff-skip-boring-files
+          (message "Hide hidden files")
+        (message "Show hidden files"))
+      (helm-force-update
+       (format helm-ff-last-expanded-candidate-regexp (regexp-quote target))))))
+
+(defun helm-ff-run-toggle-skip-boring-files ()
   (interactive)
-  (setq helm-ff-skip-boring-files (not helm-ff-skip-boring-files))
-  (if helm-ff-skip-boring-files
-      (message "Hide hidden files")
-    (message "Show hidden files")))
+  (with-helm-alive-p
+    (unless (helm-empty-source-p)
+      (helm-ff-toggle-skip-boring-files))))
+
 
 (use-package helm
   :bind (( "C-x C-b" . helm-mini)
@@ -283,7 +301,7 @@ is already narrowed."
          ( "M-u"  . helm-previous-source)
          ( "M-o"  . helm-next-source)
          ( "M-;"  . helm-select-action)
-         ( "M-."  . mxl/toggle-helm-ff-skip-boring)
+         ( "M-."  . helm-ff-run-toggle-skip-boring-files)
          :map helm-generic-files-map
          ( "M-`"  . helm-keyboard-quit)
          ( "M-i"  . helm-previous-line)
@@ -318,6 +336,7 @@ is already narrowed."
   :config
   (helm-mode)
   (helm-ff-icon-mode)
+  (put 'helm-ff-run-toggle-skip-boring-files 'helm-only t)
     ;; Hidden files are not shown in helm-find-file
   (customize-set-variable 'helm-boring-file-regexp-list
                           (cons "^\\..+" helm-boring-file-regexp-list)))
