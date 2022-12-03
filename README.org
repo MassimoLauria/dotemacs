@@ -1491,6 +1491,7 @@ books from inside Emacs.
 
   :config
   (setq yas-snippet-dirs (list mxl-local-snippet-dir))
+  (setq yas-indent-line 'fixed)
   (progn
     (yas-reload-all)))
 #+END_SRC
