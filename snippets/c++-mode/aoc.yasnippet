@@ -1,0 +1,57 @@
+# -*- mode: snippet -*-
+# name: Template Advent of Code file
+# key: * nokey
+# --
+/* -*- mode: C++; compile-command: "g++ -s -O3 `(file-name-nondirectory (buffer-file-name))` -o `(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`; ./`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`" -*- */
+
+// Get the data
+#include <iostream>
+#include <sstream>
+#include <fstream>
+
+//#include <vector>
+//#include <string>
+//#include <unordered_set>
+//#include <unordered_map>
+
+using namespace std;
+
+// Data
+string EXAMPLE {R"~(
+)~"};
+
+string INPUTFILE="input`(format-time-string "%d" (current-time))`.txt";
+
+
+void part1(istream& input) {
+    cout<<"part1"<<endl;
+}
+
+void part2(istream& input) {
+    cout<<"part2"<<endl;
+}
+
+int main () {
+    cout<<"Advent of code `(format-time-string "%Y day %d" (current-time))`"<<endl;
+
+    // part1 - example data
+    istringstream example {EXAMPLE} ;
+    part1(example);
+
+    // part2 - input file
+    ifstream  input {INPUTFILE};
+    if (!input) {
+        cerr<<"Unable to open "<<INPUTFILE<<endl;
+        return -1;
+    }
+    part1(input);
+
+    // part2 - example data
+    example.seekg(0);
+    part2(example);
+    // part2 - input file
+    input.seekg(0);
+    part2(input);
+
+    return 0;
+}
