@@ -1340,6 +1340,31 @@ format regions or function definitions.
 (add-hook 'before-save-hook 'time-stamp)         ; insert timestamp
 #+END_SRC
 
+** Set compile command
+
+It is possible to set the compile  command for a file via a file local
+variable on top.
+
+#+begin_example
+/* -*- mode: C++; compile-command: "g++ -s -O3 code07.cc -o code07; ./code07" -*- */
+
+// Get the data
+#include <iostream>
+#include <sstream>
+#include <fstream>
+.....
+.....
+#+end_example
+
+In order not to make Emacs  complain, we declate compile-command to be
+a safe variable.
+
+#+BEGIN_SRC emacs-lisp
+(put 'compile-command 'safe-local-variable #'stringp)
+#+END_SRC
+
+
+
 * Math packages
 
   I don't use math packages often,  and I should probably use them way
