@@ -34,24 +34,35 @@ void part2(istream& input) {
 int main () {
     cout<<"Advent of code `(format-time-string "%Y day %d" (current-time))`"<<endl;
 
-    // part1 - example data
-    istringstream example {EXAMPLE} ;
-    part1(example);
+    // data
+    istringstream p1example {EXAMPLE} ;
+    istringstream p2example {EXAMPLE} ;
 
-    // part2 - input file
+    ifstream      p1file    {INPUTFILE};
+    ifstream      p2file    {INPUTFILE};
+
+
+    // part1 - example data
+    part1(p1example);
+
+    // part1 - input file
     ifstream  input {INPUTFILE};
-    if (!input) {
+    if (!p1input) {
         cerr<<"Unable to open "<<INPUTFILE<<endl;
         return -1;
     }
-    part1(input);
+    part1(p1input);
 
     // part2 - example data
-    example.seekg(0);
-    part2(example);
+    part2(p2example);
+
     // part2 - input file
-    input.seekg(0);
-    part2(input);
+    ifstream  input {INPUTFILE};
+    if (!p2input) {
+        cerr<<"Unable to open "<<INPUTFILE<<endl;
+        return -1;
+    }
+    part2(p2input);
 
     return 0;
 }
