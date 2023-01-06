@@ -1044,7 +1044,7 @@ visualizes the error
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
   :init
-  (setq-default flycheck-disabled-checkers '(tex-chktex python-mypy))
+  (setq-default flycheck-disabled-checkers '(tex-chktex))
   (setq flycheck-display-errors-function #'flycheck-display-error-messages
         flycheck-highlighting-mode 'symbols
         flycheck-indication-mode nil
