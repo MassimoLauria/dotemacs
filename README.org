@@ -1275,6 +1275,26 @@ format regions or function definitions.
          (c++-mode  . mxl/cc-mode-setup)))
 #+END_SRC
 
+This  is  a simple  function  to  be  used  when writing  single  file
+C/C++ code.
+
+#+BEGIN_SRC emacs-lisp
+(defun mxl/simplec-compileandrun()
+  "Compile and run the current C/C++ file"
+  (interactive)
+  (save-buffer)
+  (let* ((ext (file-name-extension (buffer-file-name)))
+         (src (file-name-nondirectory (buffer-file-name)))
+         (exe (file-name-sans-extension src))
+         (flg "-ggdb"))
+    (message (pcase ext
+               ("c"   (concat "gcc " flg src " -o " exe " && ./" exe))
+               ("cc"  (concat "g++ " flg src " -o " exe " && ./" exe))
+               ("cpp" (concat "g++ " flg src " -o " exe " && ./" exe))
+               ("cxx" (concat "g++ " flg src " -o " exe " && ./" exe))
+               ))))
+#+END_SRC
+
 
 ** Emacs Lisp
 
