@@ -81,6 +81,7 @@
                            pyenv-mode
                            pyenv-mode-auto
                            python-pytest
+                           pip-requirements
                            pythonic
                            rainbow-delimiters
                            rainbow-identifiers
