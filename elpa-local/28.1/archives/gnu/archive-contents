@@ -19,11 +19,13 @@
 	 ("Leo Liu" . "sdl.web@gmail.com"))
 	(:commit . "90c90a80322aa9f26ce88f2f24a224afc4c994b8"))])
  (ada-mode .
-	   [(7 3 1)
+	   [(8 0 3)
 	    ((uniquify-files
 	      (1 0 1))
 	     (wisi
-	      (4 0 0))
+	      (4 1 1))
+	     (gnat-compiler
+	      (1 0 0))
 	     (emacs
 	      (25 3)))
 	    "major-mode for editing Ada sources" tar
@@ -32,7 +34,7 @@
 	     (:maintainer "Stephen Leake" . "stephen_leake@stephe-leake.org")
 	     (:authors
 	      ("Stephen Leake" . "stephen_leake@stephe-leake.org"))
-	     (:commit . "64acce8bda65d3409166a63be26fd21100ef54ce"))])
+	     (:commit . "6daaf0ccbe572ef1a9e7355d5c4bbf86a9e4ae75"))])
  (ada-ref-man .
 	      [(2020 1)
 	       nil "Ada Reference Manual 2012" tar
@@ -900,7 +902,7 @@
 	       ("Leo Liu" . "sdl.web@gmail.com"))
 	      (:commit . "f155d19c528e27f8f6c72f0d75f652edbdcab37f"))])
  (ebdb .
-       [(0 8 16)
+       [(0 8 17)
 	((emacs
 	  (25 1))
 	 (seq
@@ -911,7 +913,7 @@
 	 (:maintainer "Eric Abrahamsen" . "eric@ericabrahamsen.net")
 	 (:authors
 	  ("Eric Abrahamsen" . "eric@ericabrahamsen.net"))
-	 (:commit . "a961744cc49a6e9b96474ef8ea90dc34feaef24c"))])
+	 (:commit . "610d1ed5d4095936836102e1e48dc4416d0d260b"))])
  (ebdb-gnorb .
 	     [(1 0 2)
 	      ((gnorb
@@ -1354,6 +1356,18 @@
 	     (:authors
 	      ("Stefan Monnier" . "monnier@iro.umontreal.ca"))
 	     (:maintainer "Stefan Monnier" . "monnier@iro.umontreal.ca"))])
+ (gnat-compiler .
+		[(1 0 1)
+		 ((emacs
+		   (25 3))
+		  (wisi
+		   (4 2 0)))
+		 "Support for running GNAT tools" tar
+		 ((:maintainer "Stephen Leake" . "stephen_leake@member.fsf.org")
+		  (:authors
+		   ("Stephen Leake" . "stephen_leake@member.fsf.org"))
+		  (:url . "https://elpa.gnu.org/packages/gnat-compiler.html")
+		  (:commit . "959c4d359637d6ddabba5a531266c3bc95df5745"))])
  (gnome-c-style .
 		[(0 1)
 		 nil "minor mode for editing GNOME-style C source code" tar
@@ -1420,6 +1434,20 @@
 	     ("Damien Cassou" . "damien@cassou.me"))
 	    (:maintainer "Damien Cassou" . "damien@cassou.me")
 	    (:url . "https://gitlab.petton.fr/DamienCassou/desktop-environment"))])
+ (gpr-query .
+	    [(1 0 2)
+	     ((emacs
+	       (25 3))
+	      (wisi
+	       (4 2 0))
+	      (gnat-compiler
+	       (1 0 1)))
+	     "Minor mode for navigating sources using gpr_query" tar
+	     ((:maintainer "Stephen Leake" . "stephen_leake@member.fsf.org")
+	      (:authors
+	       ("Stephen Leake" . "stephen_leake@member.fsf.org"))
+	      (:url . "https://elpa.gnu.org/packages/gpr-query.html")
+	      (:commit . "92ac06f23d02c94aa89a1a5364776ea7df15d581"))])
  (graphql .
 	  [(0 1 2)
 	   ((emacs
@@ -2069,12 +2097,13 @@
 	   ("Stefan Monnier" . "monnier@iro.umontreal.ca"))
 	  (:maintainer "Stefan Monnier" . "monnier@iro.umontreal.ca"))])
  (nadvice .
-	  [(0 3)
-	   nil "Forward compatibility for Emacs-24.4's nadvice" single
-	   ((:url . "http://elpa.gnu.org/packages/nadvice.html")
+	  [(0 4)
+	   nil "Forward compatibility for Emacs-24.4's nadvice" tar
+	   ((:maintainer "Stefan Monnier" . "monnier@iro.umontreal.ca")
 	    (:authors
 	     ("Stefan Monnier" . "monnier@iro.umontreal.ca"))
-	    (:maintainer "Stefan Monnier" . "monnier@iro.umontreal.ca"))])
+	    (:url . "https://elpa.gnu.org/packages/nadvice.html")
+	    (:commit . "d19e9ae649374a0f2fab1baa045ed192e0851750"))])
  (nameless .
 	   [(1 0 2)
 	    ((emacs
@@ -2252,7 +2281,7 @@
 	       ("Omar Antolín Camarena" . "omar@matem.unam.mx"))
 	      (:commit . "847694e78c12d903d5e3f6cb365a5d3b984db537"))])
  (org .
-      [(9 6)
+      [(9 6 1)
        ((emacs
 	 (25 1)))
        "Outline-based notes management and organizer" tar
@@ -2261,7 +2290,7 @@
 	(:maintainer "Bastien Guerry" . "bzg@gnu.org")
 	(:authors
 	 ("Carsten Dominik" . "carsten.dominik@gmail.com"))
-	(:commit . "b3da427ebb1c401355aa4cba9baeaa92f87ccb2f"))])
+	(:commit . "630f86dfc42472aafd9a4f305e1965cbe92b2891"))])
  (org-contacts .
 	       [(1 1)
 		((emacs
@@ -3725,18 +3754,18 @@
 		("Bastien" . "bzg@gnu.org"))
 	       (:maintainer "Bastien" . "bzg@gnu.org"))])
  (wisi .
-       [(4 0 0)
+       [(4 2 1)
 	((emacs
 	  (25 3))
 	 (seq
 	  (2 20)))
 	"Utilities for implementing an indentation/navigation engine using a generalized LR parser" tar
-	((:url . "http://stephe-leake.org/ada/wisitoken.html")
+	((:url . "https://stephe-leake.org/ada/wisitoken.html")
 	 (:keywords "parser" "indentation" "navigation")
 	 (:maintainer "Stephen Leake" . "stephen_leake@stephe-leake.org")
 	 (:authors
 	  ("Stephen Leake" . "stephen_leake@stephe-leake.org"))
-	 (:commit . "dd717efa4b86c5c20d09a64f5a110f6f844b4c5e"))])
+	 (:commit . "decea1307cc18e7596468cca20c626b4c67d1f31"))])
  (wisitoken-grammar-mode .
 			 [(1 2 0)
 			  ((wisi
