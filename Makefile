@@ -87,10 +87,10 @@ test:
 	|| (echo "Test failed: errors on load. $$?"; exit 1)
 
 # -------- Daemon ---------------------------------
-startdaemon:
+start:
 	${EMACS} --daemon --chdir ${HOME}
 
-stopdaemon:
+stop:
 	${EMACSCLIENT} -e '(kill-emacs)'
 
 
