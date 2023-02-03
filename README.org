@@ -1287,11 +1287,11 @@ C/C++ code.
          (src (file-name-nondirectory (buffer-file-name)))
          (exe (file-name-sans-extension src))
          (flg "-ggdb"))
-    (message (pcase ext
-               ("c"   (concat "gcc " flg src " -o " exe " && ./" exe))
-               ("cc"  (concat "g++ " flg src " -o " exe " && ./" exe))
-               ("cpp" (concat "g++ " flg src " -o " exe " && ./" exe))
-               ("cxx" (concat "g++ " flg src " -o " exe " && ./" exe))
+    (shell-command (pcase ext
+               ("c"   (concat "gcc " flg " " src " -o " exe " && ./" exe))
+               ("cc"  (concat "g++ " flg " " src " -o " exe " && ./" exe))
+               ("cpp" (concat "g++ " flg " " src " -o " exe " && ./" exe))
+               ("cxx" (concat "g++ " flg " " src " -o " exe " && ./" exe))
                ))))
 #+END_SRC
 
