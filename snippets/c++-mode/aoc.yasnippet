@@ -9,10 +9,20 @@
 #include <sstream>
 #include <fstream>
 
-//#include <vector>
-//#include <string>
+#include <vector>
+#include <string>
 //#include <unordered_set>
 //#include <unordered_map>
+
+/* utils.h provides
+   - load_file_content: loads a text file into a string
+   - get_all_integers: parses all integers in text into a vector<int>,
+                       and ignores other non digit characters
+   - splitlines: split text into lines, produces a vector<string>
+   - splitlines: split text into tokens, produces a vector<string>
+*/
+#include "utils.h"
+
 
 using namespace std;
 
@@ -23,46 +33,29 @@ string EXAMPLE {R"~(
 string INPUTFILE="input`(format-time-string "%d" (current-time))`.txt";
 
 
-void part1(istream& input) {
+void part1(const string& text) {
     cout<<"part1"<<endl;
 }
 
-void part2(istream& input) {
+void part2(const string& text) {
     cout<<"part2"<<endl;
 }
 
 int main () {
     cout<<"Advent of code `(format-time-string "%Y day %d" (current-time))`"<<endl;
 
-    // data
-    istringstream p1example {EXAMPLE} ;
-    istringstream p2example {EXAMPLE} ;
-
-    ifstream      p1file    {INPUTFILE};
-    ifstream      p2file    {INPUTFILE};
-
-
     // part1 - example data
-    part1(p1example);
+    part1(EXAMPLE);
 
     // part1 - input file
-    ifstream  input {INPUTFILE};
-    if (!p1input) {
-        cerr<<"Unable to open "<<INPUTFILE<<endl;
-        return -1;
-    }
-    part1(p1input);
+    auto text = load_file_content(INPUTFILE);
+    part1(text);
 
     // part2 - example data
-    part2(p2example);
+    // part2(EXAMPLE);
 
     // part2 - input file
-    ifstream  input {INPUTFILE};
-    if (!p2input) {
-        cerr<<"Unable to open "<<INPUTFILE<<endl;
-        return -1;
-    }
-    part2(p2input);
+    // part2(text);
 
     return 0;
 }
