@@ -11,8 +11,8 @@
 
 #include <vector>
 #include <string>
-//#include <unordered_set>
-//#include <unordered_map>
+#include <unordered_set>
+#include <unordered_map>
 
 /* utils.h provides
    - load_file_content: loads a text file into a string
@@ -20,6 +20,11 @@
                        and ignores other non digit characters
    - splitlines: split text into lines, produces a vector<string>
    - splitlines: split text into tokens, produces a vector<string>
+
+   - aoc_set<T,N>   : A set of tuples of length N of type T
+
+   - aoc_dict<I,N,O>: A dictonary that maps tuples of length N of type I and
+                      produces output of type O
 */
 #include "utils.h"
 
