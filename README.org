@@ -175,6 +175,15 @@ Ignore if the path does not exists."
 (global-set-key (kbd "C-x C-z") 'nil)
 #+END_SRC
 
+When I delete  the rest of a line  via =C-k=, I want it  to remove the
+newline  in the  end as  well.  But only  when  the cursor  is at  the
+first column.
+
+#+BEGIN_SRC emacs-lisp
+(setq kill-whole-line t)
+#+END_SRC
+
+
 
 ** Text encoding is always UTF-8
 
