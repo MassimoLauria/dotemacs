@@ -78,14 +78,14 @@ Examples:
 
         ;; Title part
         (bibtex-autokey-titlewords 0)
-        (forbidden ":;")  ;; char that we are going to substitute
+        (forbidden "\\:;")  ;; char that we are going to substitute
         (fulltitle (bibtex-autokey-get-field "title"))
         )
 
     (unless (string-empty-p fulltitle)
-      (concat (bibtex-generate-autokey) ") - "
-              (replace-regexp-in-string (concat "[" forbidden "]")
-                                        "_" fulltitle)))
+      (mybibtex-normalize-string
+       (replace-regexp-in-string (concat "[" forbidden "]") ""
+                                 (concat (bibtex-generate-autokey) ") - " fulltitle))))
     ))
 
 
@@ -172,6 +172,43 @@ Optional argument NODELIM see `bibtex-make-field'."
 ;;
 ;; End of code stolen and adapted from Org-Ref
 ;; https://github.com/jkitchin/org-ref
+
+
+;; Code produced by chatGPT
+(defun mxl-remove-latex-accents (latex-string)
+  "Remove LaTeX accent commands from the given string."
+  (let ((accents-alist
+         '(("\\`{\\([aeiouyAEIOUY]\\)}" . "\\1")    ; grave
+           ("\\'{\\([aeiouyAEIOUY]\\)}" . "\\1")    ; acute
+           ("\\^{\\([aeiouyAEIOUY]\\)}" . "\\1")    ; circumflex
+           ("\\\"{\\([aeiouyAEIOUY]\\)}" . "\\1")   ; umlaut
+           ("\\\"\\([aeiouyAEIOUY]\\)" . "\\1")     ; umlaut no braces
+           ("\\`\\([aeiouyAEIOUY]\\)" . "\\1")      ; grave no braces
+           ("\\'\\([aeiouyAEIOUY]\\)" . "\\1")      ; acute no braces
+           ("\\~{\\([nNaAoO]\\)}" . "\\1")          ; tilde
+           ("\\={\\([aeiouyAEIOUY]\\)}" . "\\1")    ; macron
+           ("\\.{\\([aeiouyAEIOUY]\\)}" . "\\1")    ; dot accent
+           ("\\c{\\([cCsStT]\\)}" . "\\1")          ; cedilla
+           ("\\d{\\([aeiouyAEIOUY]\\)}" . "\\1")    ; dot-under accent
+           ("\\b{\\([a-zA-Z]\\)}" . "\\1")          ; bar-under accent
+           ("\\H{\\([a-zA-Z]\\)}" . "\\1")          ; double-acute accent
+           ("\\t{\\([aeiouyAEIOUY]\\)}" . "\\1")    ; tie-after accent
+           ("\\u{\\([aeiouyAEIOUY]\\)}" . "\\1")    ; breve accent
+           ("\\v{\\([aeiouyAEIOUY]\\)}" . "\\1")    ; caron/hacek accent
+           ("\\k{\\([aeiouyAEIOUY]\\)}" . "\\1")    ; ogonek accent
+           ("\\r{\\([a-zA-Z]\\)}" . "\\1")          ; ring accent
+           ("\\s{\\([cC]\\)}" . "\\1")             ; dotless i/j
+           )))
+    (dolist (accents-pair accents-alist)
+      (setq latex-string (replace-regexp-in-string (car accents-pair) (cdr accents-pair) latex-string)))
+    latex-string))
+
+(defun mxl-remove-brackets-braces (string)
+  "Remove parenthesis, brackets, and braces from the given string."
+  (replace-regexp-in-string "[]{}[]" "" string))
+
+(defun mybibtex-normalize-string (string)
+  (mxl-remove-latex-accents (mxl-remove-paren-brackets-braces string)))
 
 
 (defun mybibtex-clean-pages-dashes ()
