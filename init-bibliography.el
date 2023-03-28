@@ -208,7 +208,7 @@ Optional argument NODELIM see `bibtex-make-field'."
   (replace-regexp-in-string "[]{}[]" "" string))
 
 (defun mybibtex-normalize-string (string)
-  (mxl-remove-latex-accents (mxl-remove-paren-brackets-braces string)))
+  (mxl-remove-latex-accents (mxl-remove-brackets-braces string)))
 
 
 (defun mybibtex-clean-pages-dashes ()
