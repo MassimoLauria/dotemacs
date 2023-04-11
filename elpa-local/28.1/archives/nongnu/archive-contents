@@ -28,13 +28,13 @@
 		(:authors
 		 ("Jordon Biondo" . "jordonbiondo@gmail.com")))])
  (annotate .
-	   [(1 9 0)
+	   [(2 0 0)
 	    nil "annotate files without changing them" tar
 	    ((:url . "https://github.com/bastibe/annotate.el")
 	     (:maintainer "Bastian Bechtold <bastibe.dev@mailbox.org>, cage" . "cage-dev@twistfold.it")
 	     (:authors
 	      ("Bastian Bechtold"))
-	     (:commit . "44349cef8bd8383ff7955c66c3b2f5492b3b8914"))])
+	     (:commit . "b8c929994048ed98c2a4fe6510365ece90dad8ec"))])
  (anti-zenburn-theme .
 		     [(2 5 1)
 		      nil "Low-contrast Zenburn-inverted theme" tar
@@ -199,7 +199,7 @@
 	    (:url . "https://elpa.nongnu.org/nongnu/cdlatex.html")
 	    (:commit . "6f734db8ab87f11dffb77c33a445140baeb723c4"))])
  (cider .
-	[(1 6 0)
+	[(1 7 0)
 	 ((emacs
 	   (26))
 	  (clojure-mode
@@ -225,7 +225,7 @@
 	   ("Artur Malabarba" . "bruce.connor.am@gmail.com")
 	   ("Hugo Duncan" . "hugo@hugoduncan.org")
 	   ("Steve Purcell" . "steve@sanityinc.com"))
-	  (:commit . "80408364f8e6870d8f5a33e0e096b86f1a7ef144"))])
+	  (:commit . "f39e0b52014913f5acc1dc28ad94c68385c0834e"))])
  (clojure-mode .
 	       [(5 16 0)
 		((emacs
@@ -386,7 +386,7 @@
 		 ("Arne Jørgensen" . "arne@arnested.dk"))
 		(:commit . "ed90b0c4d808365e9ae9f16cc8a96eff17815621"))])
  (eat .
-      [(0 6)
+      [(0 7)
        ((emacs
 	 (28 1)))
        "Emulate A Terminal, in a region, in a buffer and in Eshell" tar
@@ -395,7 +395,7 @@
 	(:maintainer "Akib Azmain Turja" . "akib@disroot.org")
 	(:authors
 	 ("Akib Azmain Turja" . "akib@disroot.org"))
-	(:commit . "f2bca97ac679666f56db4d45c578275da26a9a6b"))])
+	(:commit . "a20c01e012351cec8a94974835e7aa2c0d5afade"))])
  (edit-indirect .
 		[(0 1 10)
 		 ((emacs
@@ -429,7 +429,7 @@
 		(:keywords "languages" "elixir")
 		(:commit . "1d94b525ddcc995b5a979de7b050c2309648ca6f"))])
  (elpher .
-	 [(3 4 2)
+	 [(3 4 3)
 	  ((emacs
 	    (27 1)))
 	  "A friendly gopher and gemini client" tar
@@ -438,7 +438,7 @@
 	   (:maintainer "Tim Vaughan" . "plugd@thelambdalab.xyz")
 	   (:authors
 	    ("Tim Vaughan" . "plugd@thelambdalab.xyz"))
-	   (:commit . "f117f2f53490dbe521d3a726362b37dba0cd418a"))])
+	   (:commit . "2f66d418cf4ed176b12c24eaadb5240b49da0448"))])
  (engine-mode .
 	      [(2 2 1)
 	       ((cl-lib
@@ -946,7 +946,7 @@
 	       ("Bozhidar Batsov"))
 	      (:keywords "convenience"))])
  (haml-mode .
-	    [(3 1 10)
+	    [(3 2 1)
 	     ((emacs
 	       (24))
 	      (cl-lib
@@ -956,7 +956,8 @@
 	      (:keywords "markup" "languages" "html")
 	      (:maintainer "Natalie Weizenbaum")
 	      (:authors
-	       ("Natalie Weizenbaum")))])
+	       ("Natalie Weizenbaum"))
+	      (:commit . "45a0b23db0b8f827c78f7749457f3427263e6ffd"))])
  (haskell-mode .
 	       [(17 2)
 		nil "A Haskell editing mode" tar
@@ -1588,7 +1589,7 @@
 	       ("Andreas Politz" . "mail@andreas-politz.de"))
 	      (:commit . "96703b2bb5c937afd05778086c43280b0593fe99"))])
  (php-mode .
-	   [(1 24 2)
+	   [(1 24 3)
 	    ((emacs
 	      (25 2)))
 	    "Major mode for editing PHP code" tar
@@ -1597,7 +1598,7 @@
 	     (:maintainer "USAMI Kenta" . "tadsan@zonu.me")
 	     (:authors
 	      ("Eric James Michael Ritz"))
-	     (:commit . "d63b8af8333b53ef05b1f9b9e066253497302a50"))])
+	     (:commit . "bed4d8ced39ecbfd6ac4961d88cb1ba9ddbaa939"))])
  (popon .
 	[(0 12)
 	 ((emacs
@@ -1650,7 +1651,7 @@
 	       ("David Christiansen" . "david@davidchristiansen.dk"))
 	      (:keywords "convenience"))])
  (racket-mode .
-	      [(1 0 20230209 92406)
+	      [(1 0 20230321 113335)
 	       ((emacs
 		 (25 1)))
 	       "Racket editing, REPL, and more" tar
@@ -1885,7 +1886,7 @@
 		     ("John Olsson" . "john@cryon.se"))
 		    (:commit . "2d5acd143a153e16372d59000e57d76291ab81dd"))])
  (subed .
-	[(1 2 0)
+	[(1 2 1)
 	 ((emacs
 	   (25 1)))
 	 "A major mode for editing subtitles" tar
@@ -1894,7 +1895,7 @@
 	  (:maintainer "Sacha Chua" . "sacha@sachachua.com")
 	  (:authors
 	   ("Random User"))
-	  (:commit . "089d9f33db9e34512352b1344627cdb20b967409"))])
+	  (:commit . "0519eb16ad618880fbc9cfd272ebb13e2ceab619"))])
  (sweeprolog .
 	     [(0 17 0)
 	      ((emacs
@@ -2074,7 +2075,7 @@
 	     ("Campbell Barton" . "ideasman42@gmail.com"))
 	    (:commit . "57615408f9bd70247d2b2844a1946a00300ef5bb"))])
  (undo-fu-session .
-		  [(0 4)
+		  [(0 5)
 		   ((emacs
 		     (28 1)))
 		   "Persistent undo, available between sessions" tar
@@ -2083,7 +2084,7 @@
 		    (:maintainer "Campbell Barton" . "ideasman42@gmail.com")
 		    (:authors
 		     ("Campbell Barton" . "ideasman42@gmail.com"))
-		    (:commit . "e6cf0dca6ae598b1c752dec7bdc18daeac88acec"))])
+		    (:commit . "6a306462ee1fa3a7c6303561f9ddf510e448b731"))])
  (vc-fossil .
 	    [(20221120)
 	     nil "VC backend for the fossil sofware configuraiton management system" tar
@@ -2215,7 +2216,7 @@
 	      (:authors
 	       ("Le Wang")))])
  (xah-fly-keys .
-	       [(23 0 20230310115257)
+	       [(23 10 20230404113004)
 		((emacs
 		  (24 1)))
 		"ergonomic modal keybinding minor mode." tar
@@ -2224,7 +2225,7 @@
 		 (:maintainer "Xah Lee" . "xah@xahlee.org")
 		 (:authors
 		  ("Xah Lee ( http://xahlee.info/ )"))
-		 (:commit . "a590cf24998b44e0d1e3d5b8660fc6da8b51e1c0"))])
+		 (:commit . "8f176955197762c9d7cdd4aaf8ed4d6530d2ba04"))])
  (xkcd .
        [(1 1)
 	((json

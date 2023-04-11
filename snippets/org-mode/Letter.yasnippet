@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: Math Letter
+# key: * nokey
+# contributor: Massimo Lauria <massimo.lauria@uniroma1.it>
+# --
+#+macro: SUBJECT ${1:letter title}
+#+macro: DST     ${2:recipients}
+#+options: toc:nil num:nil
+#+latex_class_options: [12pt,a4paper]
+#+latex_header_extra: \usepackage{parskip}
+#+latex_header_extra: \usepackage[margin=2cm,nohead]{geometry}
+\textbf{Date:} \today \\\\
+\textbf{From:} `user-full-name` \texttt{<`user-mail-address`>} \\\\
+\textbf{To:} {{{DST}}} \\\\
+\centerline{\bf \large {{{SUBJECT}}} }
+\medskip
+
+$0
