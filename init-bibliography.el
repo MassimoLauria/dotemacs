@@ -257,12 +257,12 @@ Optional argument NODELIM see `bibtex-make-field'."
   (let* ((window (posn-window (event-start event)))
          (arg (car (cdr (cdr event))))
          (type (car arg))
-         (data (car (cdr arg)))
+         (data (car (cdr (cdr arg))))
          (f (cond ((eq type 'file) data)
                   (t (dnd-get-local-file-name data t))
                   )))
     (if (and f (file-readable-p f))
-	(mybibtex-add-file-to-library f)
+	    (mybibtex-add-file-to-library f)
       (error "Can not read %s" uri))))
 
 
@@ -295,6 +295,7 @@ Optional argument NODELIM see `bibtex-make-field'."
   :bind (:map bibtex-mode-map
               ("M-q" . bibtex-fill-entry)
               ("C-c C-o" . mybibtex-open-any)
+              ("C-c C-a" . mybibtex-add-file-to-library)
               ("<drag-n-drop>" . mybibtex-dnd-add-file-mac))
 
   :config
