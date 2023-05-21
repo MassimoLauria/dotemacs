@@ -6,7 +6,7 @@
 
 
 ;; Main bibliography file
-(defconst mxl-main-bibtex-file "~/lavori/latex/bibliographies/theoryofcomputing.bib"
+(defconst mxl-main-bibtex-file "~/lavori/latex/bibtex/bib/theoryofcomputing.bib"
   "My main bibliography file.")
 
 ;; For reftex
@@ -14,7 +14,7 @@
 
 (setq bibtex-completion-bibliography mxl-main-bibtex-file
       bibtex-completion-library-path "~/cloud/Papers/"
-      bibtex-completion-notes-path "~/lavori/latex/bibliographies/papernotes.org"
+      bibtex-completion-notes-path "~/lavori/latex/bibnotes.org"
       bibtex-completion-pdf-field "file")
 
 
