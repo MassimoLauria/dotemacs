@@ -1,12 +1,12 @@
 #!/bin/sh
 
 # Basic build setup
-RELEASE=emacs-28.1
+RELEASE=emacs-28.2
 BUILDOPTS="--with-native-compilation --with-x-toolkit=lucid --with-mailutils --with-harfbuzz"
 PREFIX=${HOME}/.local
 CONFDIR=${HOME}/config/emacs
 INITFILE=${HOME}/.emacs.d/init.el
-CC=gcc-10
+CC=gcc-12
 
 
 # Package install under Debian/Ubuntu

@@ -79,7 +79,7 @@
                            projectile
                            helm-projectile
                            pyenv-mode
-                           pyenv-mode-auto
+                           ;; pyenv-mode-auto
                            python-pytest
                            pip-requirements
                            pythonic
