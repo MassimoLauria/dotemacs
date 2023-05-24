@@ -1,6 +1,6 @@
 ;;; init-textmode.el --- Preferences for Text editing
 
-;; Copyright (C) 2010, 2011, 2013, 2015, 2018, 2020  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2013, 2015, 2018, 2020, 2023  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: files, wp
@@ -44,7 +44,7 @@
 
 (defun MassimoLauria/text-mode-nontex()
   "Setup of text modes which are not for LaTeX."
-  (when (notany (lambda (m) (eq m major-mode))
+  (when (cl-notany (lambda (m) (eq m major-mode))
                 '(LaTeX-mode TeX-mode latex-mode tex-mode))
     ;; Text formatting
     (set-default 'fill-column 70)
@@ -70,7 +70,7 @@
   (when (eq action 'insert)
     (delete-char 1)
     (delete-char -1)
-    (insert "“") 
+    (insert "“")
     (insert "”")
     (backward-char 1)))
 

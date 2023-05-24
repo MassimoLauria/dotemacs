@@ -1253,9 +1253,9 @@ format regions or function definitions.
          ("C-c C-u" . nil))
   :commands (pyenv-mode-set pyenv-mode-unset pyenv-mode))
 
-;;(use-package pyenv-mode-auto
-;;  :hook (find-file . pyenv-mode-auto-hook)
-;;  :config (pyenv-mode))
+(use-package pyenv-mode-auto
+ :hook (find-file . pyenv-mode-auto-hook)
+ :config (pyenv-mode))
 #+END_SRC
 
 ** C and C++

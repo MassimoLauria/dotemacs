@@ -1,6 +1,6 @@
 ;;; autopair.el --- Automagically pair braces and quotes like TextMate
 
-;; Copyright (C) 2009,2010 Joao Tavora
+;; Copyright (C) 2009,2010,2023 Joao Tavora
 
 ;; Author: Joao Tavora <joaotavora [at] gmail.com>
 ;; Keywords: convenience, emulations
@@ -27,7 +27,7 @@
 ;;
 ;; Another stab at making braces and quotes pair like in
 ;; TextMate:
-;; 
+;;
 ;; * Opening braces/quotes are autopaired;
 ;; * Closing braces/quotes are autoskipped;
 ;; * Backspacing an opening brace/quote autodeletes its adjacent pair.
@@ -210,7 +210,7 @@ It's a Common-lisp-style even-numbered property list, each pair
 of elements being of the form (TYPE , PAIRS). PAIRS is a mixed
 list whose elements are cons cells, which look like cells look
 like (OPENING . CLOSING). Autopair pairs these like
-parenthesis. 
+parenthesis.
 
 TYPE can be one of:
 
@@ -300,7 +300,7 @@ list, or call it from your handlers.")
 (defvar autopair-handle-wrap-action-fns '()
   "Autopair wrap handlers to run *instead* of the default handler.
 
-Each element is a function taking four arguments (ACTION, PAIR, 
+Each element is a function taking four arguments (ACTION, PAIR,
 POS-BEFORE and REGION-BEFORE), which are the three elements of the
 `autopair-wrap-action' variable, which see.
 
@@ -363,7 +363,7 @@ For now, simply returns `last-command-event'"
                         ;; syntax class "string quote
                         (define-key map (string char) 'autopair-insert-or-skip-quote))
                        ((eq class (car (string-to-syntax "$")))
-                        ;; syntax class "paired-delimiter" 
+                        ;; syntax class "paired-delimiter"
                         ;;
                         ;; Apropos this class, see Issues 18, 25 and
                         ;; elisp info node "35.2.1 Table of Syntax
@@ -485,7 +485,7 @@ A list of four elements is returned:
          (beyond-autopair (autopair-original-binding)))
     (when autopair-autowrap
       (setq autopair-wrap-action (autopair-calculate-wrap-action)))
-    
+
     (setq this-original-command beyond-cua)
     ;; defer to "paredit-mode" if that is installed and running
     (when (and (featurep 'paredit)
@@ -571,7 +571,7 @@ returned) and uplisting stops there."
     (error nil)))
 
 ;; interactive commands and their associated predicates
-;; 
+;;
 (defun autopair-insert-or-skip-quote ()
   (interactive)
   (setq autopair-inserted (autopair-calculate-inserted))
@@ -584,7 +584,7 @@ returned) and uplisting stops there."
          (inside-string (and (eq where-sym :string)
                              (fourth orig-info)))
          (escaped-p (autopair-escaped-p syntax-info))
-         
+
          )
     (cond (;; decides whether to skip the quote...
            ;;
@@ -641,7 +641,7 @@ returned) and uplisting stops there."
 
 (defun autopair-in-unterminated-string-p (autopair-triplet)
   (and (eq autopair-inserted (fourth (third autopair-triplet)))
-       (condition-case nil (progn (scan-sexps (ninth (third autopair-triplet)) 1) nil) (error t))))     
+       (condition-case nil (progn (scan-sexps (ninth (third autopair-triplet)) 1) nil) (error t))))
 
 
 (defun autopair-insert-opening ()
@@ -746,12 +746,12 @@ by this command. Then place point after the first, indented.\n\n"
                             ;; `autopair-forward') returned an error.
                             ;; typically we don't want to autopair,
                             ;; unless one of the following occurs:
-                            ;; 
+                            ;;
                             (cond (;; 1. The error is *not* of type "containing
                                    ;;    expression ends prematurely", which means
                                    ;;    we're in the "too-many-openings" situation
                                    ;;    and thus want to autopair.
-                                   (not (string-match "prematurely" (second err)))  
+                                   (not (string-match "prematurely" (second err)))
                                    t)
                                   (;; 2. We stopped at a closing parenthesis. Do
                                    ;; autopair if we're in a mixed parens situation,
@@ -762,14 +762,14 @@ by this command. Then place point after the first, indented.\n\n"
                                    ;; also different from the expected. The second
                                    ;; `scan-lists' places point at the closing of the
                                    ;; last list we forwarded over.
-                                   ;; 
+                                   ;;
                                    (condition-case err
                                        (prog1
                                            (eq (char-after (scan-lists (point) -1 0))
                                                autopair-inserted)
                                          (goto-char (scan-lists (point) -1 -1)))
                                      (error t))
-                                   
+
                                    (or
                                     ;; mixed () ] for input (, yes autopair
                                     (not (eq expected-closing (char-after (third err))))
@@ -793,8 +793,8 @@ by this command. Then place point after the first, indented.\n\n"
   "Performs pairing and wrapping based on `autopair-action' and
 `autopair-wrap-action'. "
   (when (and autopair-wrap-action
-             (notany #'null autopair-wrap-action))
-    
+             (cl-notany #'null autopair-wrap-action))
+
     (if autopair-handle-wrap-action-fns
         (condition-case err
             (mapc #'(lambda (fn)
@@ -805,9 +805,9 @@ by this command. Then place point after the first, indented.\n\n"
                    (autopair-mode -1))))
       (apply #'autopair-default-handle-wrap-action autopair-wrap-action))
     (setq autopair-wrap-action nil))
-  
+
   (when (and autopair-action
-             (notany #'null autopair-action))
+             (cl-notany #'null autopair-action))
     (if autopair-handle-action-fns
         (condition-case err
             (mapc #'(lambda (fn)
@@ -940,7 +940,7 @@ by this command. Then place point after the first, indented.\n\n"
         (t
          t)))
 
-;; example latex paired-delimiter helper 
+;; example latex paired-delimiter helper
 ;;
 (defun autopair-latex-mode-paired-delimiter-action (action pair pos-before)
   "Pair or skip latex's \"paired delimiter\" syntax in math mode. Added AucText support, thanks Massimo Lauria"
@@ -966,7 +966,7 @@ by this command. Then place point after the first, indented.\n\n"
         (insert pair)
         (backward-char)))))
 
-;; Commands and predicates for the autopair-extra* feature 
+;; Commands and predicates for the autopair-extra* feature
 ;;
 
 (defun autopair-extra-insert-opening ()
@@ -1017,7 +1017,7 @@ by this command. Then place point after the first, indented.\n\n"
 
 ;; Commands and tex-mode specific handler functions for the "paired
 ;; delimiter" syntax class.
-;; 
+;;
 (defun autopair-insert-or-skip-paired-delimiter ()
   " insert or skip a character paired delimiter"
   (interactive)
