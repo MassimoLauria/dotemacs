@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Basic build setup
-RELEASE=emacs-28.2
+RELEASE=emacs-28.1
 BUILDOPTS="--with-native-compilation --with-x-toolkit=lucid --with-mailutils --with-harfbuzz"
 PREFIX=${HOME}/.local
 CONFDIR=${HOME}/config/emacs
@@ -47,6 +47,8 @@ echo "* Run: build emacs"
 make -j4
 
 EMACS_VERSION=`${SRCDIR}/src/emacs --batch -Q --eval '(print emacs-version)'|xargs`
+
+exit
 
 echo "* Run: install version ${EMACS_VERSION} in ${PREFIX}"
 make install
