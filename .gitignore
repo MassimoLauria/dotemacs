@@ -7,3 +7,4 @@ README.el
 
 # EPDFinfo
 elpa-local/**/epdfinfo
+elpa-local/**/sqlite/emacsql-sqlite
