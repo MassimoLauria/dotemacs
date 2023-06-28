@@ -681,9 +681,12 @@ nil."
     whitespaces) which generates too many false positives.
 
 #+BEGIN_SRC emacs-lisp
-(setq langtool-path '("/usr/local/share/languagetool" "/snap/languagetool/current/usr/bin"))
+(setq langtool-path '("/usr/local/share/languagetool"
+                      "~/.local/share/LanguageTool"
+                      "/snap/languagetool/current/usr/bin"))
 (setq langtool-language-tool-jar (concat (dolist (elt langtool-path value)
-                                             (setq value (if (file-directory-p elt) elt)))
+                                           (setq elt (expand-file-name elt))
+                                           (if (file-directory-p elt) (setq value elt)))
                                            "/languagetool-commandline.jar"))
 (when (file-exists-p langtool-language-tool-jar)
   (use-package langtool
