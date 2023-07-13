@@ -681,19 +681,20 @@ nil."
     whitespaces) which generates too many false positives.
 
 #+BEGIN_SRC emacs-lisp
-(setq langtool-path '("/usr/local/share/languagetool"
-                      "~/.local/share/LanguageTool"
-                      "/snap/languagetool/current/usr/bin"))
-(setq langtool-language-tool-jar (concat (dolist (elt langtool-path value)
-                                           (setq elt (expand-file-name elt))
-                                           (if (file-directory-p elt) (setq value elt)))
-                                           "/languagetool-commandline.jar"))
+(setq langtool-path '("/usr/local/share/languagetool";
+			"~/.local/share/LanguageTool"
+                        "/snap/languagetool/current/usr/bin"))
+(setq langtool-tmp "")
+(setq langtool-language-tool-jar (concat (dolist (elt langtool-path langtool-tmp)
+					     (setq elt (expand-file-name elt))
+					     (if (file-directory-p elt) (setq langtool-tmp elt)))
+					     "/languagetool-commandline.jar"))
 (when (file-exists-p langtool-language-tool-jar)
   (use-package langtool
-    :config
-    (setq langtool-mother-tongue "it")'
-    (setq langtool-disabled-rules "WHITESPACE_RULE")
-    :commands (langtool-check langtool-check-buffer langtool-switch-default-language)))
+	:config
+	(setq langtool-mother-tongue "it")'
+	(setq langtool-disabled-rules "WHITESPACE_RULE")
+	:commands (langtool-check langtool-check-buffer langtool-switch-default-language)))
 #+END_SRC
 
     The  last component  is  a  single function  =mxl-language-check=.
