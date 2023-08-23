@@ -63,7 +63,6 @@
    (quote
     (;; Basic
      ("NEXT" :foreground "white" :background "blue" :weight bold)
-     ("CALL" :foreground "white" :background "blue" :weight bold)
      ("TODO" :foreground "red" :background "black" :weight bold)
      ("WAIT" :foreground "yellow" :weight bold)
      ("SOMEDAY" :foreground "blue" :background "white" :weight bold)
@@ -77,7 +76,7 @@
 
 
 (setq org-todo-keywords
-      '((sequence "TODO" "REVIEW"  "NEXT" "CALL" "WAIT" "SOMEDAY" "|" "DONE" "CANCELED" "DELEGATED")
+      '((sequence "REVIEW" "TODO" "NEXT" "WAIT" "SOMEDAY" "|" "DONE" "CANCELED" "DELEGATED")
         ))
 
 ;;;---------------- Basic setup --------------------------------------
