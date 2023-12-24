@@ -1162,8 +1162,8 @@ Therefore I set some similar keybindings for it.
    with  Emacs   (there  are   indeed  other  python   modes  around).
    Furthermore it uses
    - =eglot= as a LSP client, providing help, completion, symbol search;
-   - requires  to  run  ~pip  install  python-lsp-server~  to  install
-     =pylsp=;
+   - requires  to  run  ~pip  install  pyright~  to  install
+     a decent language server;
    - =pyenv= to manage the virtual environments.
    - standard  python   as  interactive  shell  (Ipython   prompt  and
      completion tend to confuse Emacs if not well configured).
