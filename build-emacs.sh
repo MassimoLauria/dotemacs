@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # Basic build setup
-RELEASE=emacs-28.1
-BUILDOPTS="--with-native-compilation --with-x-toolkit=lucid --with-mailutils --with-harfbuzz"
+RELEASE=emacs-29.1
+BUILDOPTS="--with-native-compilation --with-x-toolkit=lucid --with-mailutils --with-harfbuzz --with-json --with-tree-sitter"
 PREFIX=${HOME}/.local
 CONFDIR=${HOME}/config/emacs
 INITFILE=${HOME}/.emacs.d/init.el

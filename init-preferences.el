@@ -41,6 +41,8 @@
 
 (setq history-delete-duplicates t)
 
+(setq global-auto-rever-non-file-buffers t)
+
 (line-number-mode 1)
 (column-number-mode 1)
 
