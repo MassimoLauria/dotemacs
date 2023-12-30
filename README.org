@@ -404,21 +404,18 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
    - Green for syntax/style notes
 
 #+BEGIN_SRC emacs-lisp
-;; (custom-theme-set-faces
-;;  'zenburn
-;;  '(mode-line ((t (:box nil))))
-;;  '(mode-line-inactive ((t (:box nil))))
-;;  '(flycheck-error ((t (:underline "Red"))))
-;;  '(flycheck-warning ((t (:underline "Yellow"))))
-;;  '(flycheck-info ((t nil)))
-;;  '(flymake-error ((t (:underline "Red1"))))
-;;  '(flymake-warning ((t (:underline "yellow"))))
-;;  '(flymake-note ((t (:underline "deep sky blue"))))
-;;  '(flyspell-duplicate ((t (:underline (:color "magenta" :style wave)))))
-;;  '(flyspell-incorrect ((t (:underline (:color "magenta" :style wave)))))
-;;  '(writegood-duplicates-face ((t nil)))
-;;  '(writegood-passive-voice-face ((t (:underline (:color "magenta" :style wave)))))
-;;  '(writegood-weasels-face ((t (:underline (:color "magenta" :style wave))))))
+(custom-set-faces
+ '(flycheck-error ((t (:underline "Red"))))
+ '(flycheck-warning ((t (:underline "Yellow"))))
+ '(flycheck-info ((t nil)))
+ '(flymake-error ((t (:underline "Red1"))))
+ '(flymake-warning ((t (:underline "yellow"))))
+ '(flymake-note ((t (:underline "deep sky blue"))))
+ '(flyspell-duplicate ((t (:underline (:color "magenta" :style wave)))))
+ '(flyspell-incorrect ((t (:underline (:color "magenta" :style wave)))))
+ '(writegood-duplicates-face ((t nil)))
+ '(writegood-passive-voice-face ((t (:underline (:color "magenta" :style wave)))))
+ '(writegood-weasels-face ((t (:underline (:color "magenta" :style wave))))))
 #+END_SRC
 
 ** Modeline customization
