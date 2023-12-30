@@ -315,12 +315,19 @@ math symbols.
 ;(setq default-font "Inconsolata")
 ;(setq default-font "Source Code Pro")
 
-(setq symbol-font "DejaVu Sans Mono")
+;(setq symbol-font "DejaVu Sans Mono")
 
 (set-face-attribute 'default nil
                     :family "DejaVu Sans Mono"
                     :width 'normal
                     :height 180)
+
+(use-package nerd-icons
+  :custom
+  (nerd-icons-font-family "Symbols Nerd Font Mono")
+  )
+
+
 #+END_SRC
 
    I like Emacs to  open in a wide frame at the  center of the screen,
@@ -349,35 +356,27 @@ math symbols.
                             ))
 #+END_SRC
 
-Some glyphs  are not  includes in  the default  font, thus  emacs uses
-a  fallback which  sometimes  is less  than  desirable. In  particular
-this messes  up the  alignment in  ~helm-bibtex~. For  such characters
-I use an alternative fallback font.
-
 *Hint:* To  discover the  properties of  some text  on the  screen the
 command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
 
-#+BEGIN_SRC emacs-lisp
-(defun mxl-fix-bibfonts (frame)
-  (set-fontset-font t #x2318 symbol-font)   ; ⌘
-  (set-fontset-font t #x270e symbol-font)   ; ✎
-  ;;(set-fontset-font t nil "Symbola")
-  )       ; other fonts like 😊 💾  
-
-(mapc 'mxl-fix-bibfonts (frame-list))                    ; applies to existing frames
-(add-hook 'after-make-frame-functions 'mxl-fix-bibfonts) ; applies to future frames
-#+END_SRC
-
 ** Theme
 
-   The color  theme i use  is Zenburn, which features  Dark background
-   and low contrast. I wonder if it is good for the eyes.
+   The color theme  I usually go for  is Zenburn, but now  I am trying
+   modus-vivendi for a while.
 
 #+BEGIN_SRC emacs-lisp
-;; Set theme to zenburn
-(use-package zenburn-theme
+(use-package modus-themes
+  :init
+  (setq modus-themes-italic-constructs t
+        modus-themes-bold-constructs nil
+        modus-themes-mixed-fonts t
+        modus-themes-variable-pitch-ui nil
+        modus-themes-org-blocks 'gray-background
+        modus-themes-mode-line '(borderless accented)
+        modus-themes-custom-auto-reload t
+        modus-themes-disable-other-themes t)
   :config
-  (load-theme 'zenburn t))
+  (modus-themes-load-theme 'modus-vivendi))
 #+END_SRC
 
    Syntax/Spell  checkers  add  decorations  to  the  text  to  signal
@@ -390,21 +389,21 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
    - Green for syntax/style notes
 
 #+BEGIN_SRC emacs-lisp
-(custom-theme-set-faces
- 'zenburn
- '(mode-line ((t (:box nil))))
- '(mode-line-inactive ((t (:box nil))))
- '(flycheck-error ((t (:underline "Red"))))
- '(flycheck-warning ((t (:underline "Yellow"))))
- '(flycheck-info ((t nil)))
- '(flymake-error ((t (:underline "Red1"))))
- '(flymake-warning ((t (:underline "yellow"))))
- '(flymake-note ((t (:underline "deep sky blue"))))
- '(flyspell-duplicate ((t (:underline (:color "magenta" :style wave)))))
- '(flyspell-incorrect ((t (:underline (:color "magenta" :style wave)))))
- '(writegood-duplicates-face ((t nil)))
- '(writegood-passive-voice-face ((t (:underline (:color "magenta" :style wave)))))
- '(writegood-weasels-face ((t (:underline (:color "magenta" :style wave))))))
+;; (custom-theme-set-faces
+;;  'zenburn
+;;  '(mode-line ((t (:box nil))))
+;;  '(mode-line-inactive ((t (:box nil))))
+;;  '(flycheck-error ((t (:underline "Red"))))
+;;  '(flycheck-warning ((t (:underline "Yellow"))))
+;;  '(flycheck-info ((t nil)))
+;;  '(flymake-error ((t (:underline "Red1"))))
+;;  '(flymake-warning ((t (:underline "yellow"))))
+;;  '(flymake-note ((t (:underline "deep sky blue"))))
+;;  '(flyspell-duplicate ((t (:underline (:color "magenta" :style wave)))))
+;;  '(flyspell-incorrect ((t (:underline (:color "magenta" :style wave)))))
+;;  '(writegood-duplicates-face ((t nil)))
+;;  '(writegood-passive-voice-face ((t (:underline (:color "magenta" :style wave)))))
+;;  '(writegood-weasels-face ((t (:underline (:color "magenta" :style wave))))))
 #+END_SRC
 
 ** Modeline customization
@@ -418,7 +417,10 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
 
    Furthermore I  will likely  support functionalities that  I haven't
    decided to use yet (e.g. mu4e or github integration).
-  
+
+   Note  that Doom  Emacs Modeline  requires Nerd  fonts. They  should
+   be already in my setup.
+   
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
   :ensure t
@@ -430,6 +432,7 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
   (setq pyenv-mode-mode-line-format "")
   (doom-modeline-mode 1))
 #+END_SRC
+
 
 
 *** COMMENT Renaming major modes

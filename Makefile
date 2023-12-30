@@ -1,7 +1,7 @@
-# Copyright (C) 2015, 2016, 2018, 2019, 2020, 2021, 2022 by Massimo Lauria <lauria.massimo@gmail.com>
+# Copyright (C) 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2022-04-05, 23:27 (CEST) Massimo Lauria"
+# Time-stamp: "2023-12-29, 20:51 (CET) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -73,9 +73,10 @@ install-fonts:
 	@echo "Install fonts for my configurations: "
 	@rm -fr ${FONTPATH}/emacs
 	@mkdir -p ${FONTPATH}/emacs
-	unzip fonts/fira-code-5.2.zip        -d ${FONTPATH}/emacs
-	unzip fonts/dejavu-fonts-2.37.zip   -d  ${FONTPATH}/emacs
-	unzip fonts/all-the-icons-fonts.zip -d  ${FONTPATH}/emacs
+	unzip fonts/fira-code-5.2.zip          -d ${FONTPATH}/emacs
+	unzip fonts/dejavu-fonts-2.37.zip      -d ${FONTPATH}/emacs
+	unzip fonts/nerdfonts-symbols-only.zip -d ${FONTPATH}/emacs
+	unzip fonts/all-the-icons-fonts.zip    -d ${FONTPATH}/emacs
 	cp ./fonts/NotoColorEmoji.ttf           ${FONTPATH}/emacs
 	-fc-cache -f -v
 

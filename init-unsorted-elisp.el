@@ -1,6 +1,6 @@
 ;;; init-unsorted-elisp.el --- Contains small chunks of elisp code in no particular order
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords:
@@ -334,6 +334,7 @@ is already narrowed."
   (setq helm-display-header-line t)
   (setq helm-ff-skip-boring-files t)
   :config
+  (setq helm-move-to-line-cycle-in-source nil)
   (helm-mode)
   (helm-ff-icon-mode)
   (put 'helm-ff-run-toggle-skip-boring-files 'helm-only t)

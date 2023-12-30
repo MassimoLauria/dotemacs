@@ -66,6 +66,9 @@
                            logito
                            magit-popup
                            metaweblog
+                           nerd-icons
+                           nerd-icons-dired
+                           nerd-icons-completion
                            ob-ipython
                            olivetti
                            org-bullets
@@ -75,7 +78,6 @@
                            pcache
                            pinboard
                            pkg-info
-                           poet-theme
                            projectile
                            helm-projectile
                            pyenv-mode
@@ -93,7 +95,6 @@
                            shut-up
                            skeletor
                            smartparens
-                           solarized-theme
                            ssh-config-mode
                            try
                            undo-tree
@@ -110,6 +111,10 @@
                            xscheme
                            yasnippet
                            yapfify
+                           ;; themes
+                           poet-theme
+                           modus-theme
+                           solarized-theme
                            zenburn-theme))
 ;; -------------------------------------------------------------------
 

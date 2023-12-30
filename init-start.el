@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021  Massimo Lauria
-;; Time-stamp: "2021-10-28, 13:25 (CEST) Massimo Lauria"
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2023  Massimo Lauria
+;; Time-stamp: "2023-12-30, 01:01 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -68,8 +68,7 @@
 (require 'init-functions)        ; Utility functions for configuration
 
 ;; Work environment customization
-(require 'init-preferences)       ; Basic editor preferences -- check for speed
-(require 'init-modeline)          ; modeline preferences -- check for speed
+(require 'init-preferences)       ; Basic editor preferences
 
 ;; Writing
 (require 'init-textmode)          ; Preferences for text editing

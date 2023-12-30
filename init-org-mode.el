@@ -522,30 +522,33 @@ for `reftex-default-bibliography'."
 (defun init-org-mode-faces ()
   "Setup preferred colors for org mode"
   ;; Set the color
-  (require 'color)
+  ;;(require 'color)
 
   ;; Fontify Quote and Verse
   ;; do not use org-block for verse
   ;; use italic for verse
   (setq org-fontify-quote-and-verse-block t)
-  (set-face-attribute 'org-verse nil
-                      :slant 'italic
-                      :inherit t)
+  ;; (set-face-attribute 'org-verse nil
+  ;;                     :slant 'italic
+  ;;                     :inherit t)
 
   ;; Darken the background color for code blocks
-  (let ((darkbg (color-darken-name
-                 (face-attribute 'default :background) 15)))
-    (set-face-attribute 'org-block nil :background darkbg :extend t))
+  ;; Not very useful for a black background theme
+  ;; (let ((darkbg (color-darken-name
+  ;;                (face-attribute 'default :background) 15)))
+  ;;   (set-face-attribute 'org-block nil :background darkbg :extend t))
 
   ;; Code blocks delimiters are oblique and with different color
-  (set-face-attribute 'org-block-begin-line nil
-                      :slant 'italic
-                      :foreground "#7F9F7F"
-                      :background "#4F4F4F")
-  (set-face-attribute 'org-block-end-line nil
-                      :slant 'italic
-                      :foreground "#7F9F7F"
-                      :background "#4F4F4F"))
+  (setq org-fontify-whole-block-delimiter-line t)
+  ;; (set-face-attribute 'org-block-begin-line nil
+  ;;                     :slant 'italic
+  ;;                     :foreground "dim gray"
+  ;;                     :background "#333333")
+  ;; (set-face-attribute 'org-block-end-line nil
+  ;;                     :slant 'italic
+  ;;                     :foreground "#7F9F7F"
+  ;;                     :background "#4F4F4F")
+  )
 
 
 ;; Setup for PDF/Latex exports
