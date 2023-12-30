@@ -542,8 +542,8 @@ for `reftex-default-bibliography'."
   (setq org-fontify-whole-block-delimiter-line t)
   ;; (set-face-attribute 'org-block-begin-line nil
   ;;                     :slant 'italic
-  ;;                     :foreground "dim gray"
-  ;;                     :background "#333333")
+  ;;                     :foreground "#7F9F7F"
+  ;;                     :background "#4F4F4F")
   ;; (set-face-attribute 'org-block-end-line nil
   ;;                     :slant 'italic
   ;;                     :foreground "#7F9F7F"
