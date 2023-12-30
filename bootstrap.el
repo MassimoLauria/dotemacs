@@ -113,7 +113,7 @@
                            yapfify
                            ;; themes
                            poet-theme
-                           modus-theme
+                           modus-themes
                            solarized-theme
                            zenburn-theme))
 ;; -------------------------------------------------------------------
