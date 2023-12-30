@@ -126,7 +126,8 @@ by default."
 
 ;; Various improvements to the mode
 (add-hook 'LaTeX-mode-hook
-          (lambda () (progn
+          (lambda
+            () (progn
                        (make-local-variable 'compilation-exit-message-function)
                        (setq compilation-exit-message-function 'nil)
                        (add-to-list 'LaTeX-verbatim-environments "comment")
@@ -146,7 +147,7 @@ by default."
       (select-window oldwin))))
 
 (add-hook 'TeX-mode-hook
-          '(lambda ()
+          (lambda ()
              (define-key TeX-mode-map (kbd "<f9>")  'init-latex--make)
              (define-key TeX-mode-map (kbd "<f10>") 'TeX-pin-region)
              (define-key TeX-mode-map (kbd "<f11>") 'TeX-previous-error)

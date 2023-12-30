@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2023  Massimo Lauria
-;; Time-stamp: "2023-12-30, 01:01 (CET) Massimo Lauria"
+;; Time-stamp: "2023-12-30, 18:55 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -43,8 +43,8 @@
 ;; Init file loaded with less aggressive garbage collector and with
 ;; debug support on errors
 (setq debug-on-error t)
-(add-hook 'after-init-hook '(lambda ()
-                              (setq debug-on-error nil)))
+(add-hook 'after-init-hook (lambda ()
+                             (setq debug-on-error nil)))
 
 (setq gc-cons-threshold (* 128 1024 1024))
 (add-hook 'emacs-startup-hook
