@@ -367,31 +367,45 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
 #+BEGIN_SRC emacs-lisp
   (defun mxl/tune-modus-theme ()
     "Make some changes to the theme"
-    (if (seq-intersection '(modus-vivendi modus-operandi)
-                          custom-enabled-themes)
-        (custom-set-faces
-         `(org-block-begin-line ((t (:slant italic
-                                     :background ,(modus-themes-get-color-value 'bg-inactive)
-                                     :foreground ,(modus-themes-get-color-value 'bg-active))))))))
+    (custom-set-faces
+     `(org-block-begin-line
+       ((t
+         (:slant italic
+          :background ,(modus-themes-get-color-value 'bg-inactive)
+          :foreground ,(modus-themes-get-color-value 'bg-active)))))))
 
   (use-package modus-themes
     :init
-    (setq modus-themes-italic-constructs t
-	  modus-themes-bold-constructs nil
-	  modus-themes-mixed-fonts t
-	  modus-themes-variable-pitch-ui nil
-	  modus-themes-org-blocks 'gray-background
-	  modus-themes-mode-line '(borderless accented)
-	  modus-themes-custom-auto-reload t
-	  modus-themes-disable-other-themes t)
-    ;; Gray selection that preserves underlying colors
+    (setq modus-themes-disable-other-themes t
+          modus-themes-italic-constructs t
+	      modus-themes-bold-constructs nil
+	      modus-themes-mixed-fonts t
+	      modus-themes-variable-pitch-ui nil )  ;; basic customizations
+
+    (setq modus-themes-org-blocks 'gray-background) ;; org source blocks
+	
+    ;; change defaults in modus themes
     (setq modus-themes-common-palette-overrides
-	'((bg-region bg-active) 
-	  (fg-region unspecified)
-	  (fg-heading-1 keyword)))
+      '((border-mode-line-active unspecified)     ;; borderless mode-line (1)
+        (border-mode-line-inactive unspecified)   ;; borderless mode-line (2)
+	    (fg-region unspecified)))                 ;; syntax visible in region
+    
+    ;; change defaults in modus vivendi specifically
+    (setq modus-vivendi-palette-overrides
+      '((bg-region bg-cyan-subtle)                ;; region color
+        (bg-mode-line-active bg-cyan-subtle)
+	    (fg-heading-1 keyword)))                  ;; org-heading 
+
+    ;; change defaults in modus operandi specifically
+    (setq modus-operandi-palette-overrides
+      '((bg-region bg-cyan-intense)               ;; region color
+        (bg-mode-line-active bg-cyan-intense)
+	    (fg-heading-1 keyword)))                  ;; org-heading 
+
     :config
     (add-hook 'modus-themes-after-load-theme-hook #'mxl/tune-modus-theme)
-    (modus-themes-load-theme 'modus-vivendi))
+    (modus-themes-load-theme 'modus-vivendi)
+    (global-set-key (kbd "M-<f5>") 'modus-themes-toggle)) 
 #+END_SRC
 
    Syntax/Spell  checkers  add  decorations  to  the  text  to  signal
