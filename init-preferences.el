@@ -35,6 +35,9 @@
 (setq mouse-highlight nil)
 (setq use-file-dialog nil)
 (setq use-dialog-box  nil)
+(setq help-at-pt-display-when-idle t)
+(setq help-at-pt-timer-delay 0.2)
+(help-at-pt-set-timer)
 
 (setq search-highlight t)
 (setq query-replace-highlight t)

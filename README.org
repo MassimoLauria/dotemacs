@@ -2,7 +2,7 @@
 #+author: Massimo Lauria <massimo.lauria@uniroma1.it>
 #+STARTUP: collapsed
 
-This is the Emacs config of Massimo Lauria (C) 2009-2021.
+This is the Emacs config of Massimo Lauria (C) 2009-2024.
 
 This configuration  is under massive  and continue change,  and things
 break every day. I just put it  online so you can cut & paste whatever
@@ -382,7 +382,13 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
 	      modus-themes-mixed-fonts t
 	      modus-themes-variable-pitch-ui nil )  ;; basic customizations
 
+
     (setq modus-themes-org-blocks 'gray-background) ;; org source blocks
+
+
+    (setq modus-themes-mode-line '(accented borderless) ;; customizations for
+          modus-themes-region '(accented bg-only))      ;; version <4 shipped with
+                                                        ;; with Emacs 29.1
 	
     ;; change defaults in modus themes
     (setq modus-themes-common-palette-overrides
@@ -409,13 +415,13 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
 #+END_SRC
 
    Syntax/Spell  checkers  add  decorations  to  the  text  to  signal
-   mistakes.  The defaults  decorations  from Zenburn  are either  too
-   intrusive or too faint, so I customize them.
+   mistakes. The defaults decorations are  either too intrusive or too
+   faint, so I customize them.
 
    - Violet for spelling/grammar mistakes
    - Red for syntax mistakes in programming languages
    - Yellow for syntax/style warnings
-   - Green for syntax/style notes
+   - Blue for syntax/style notes
 
 #+BEGIN_SRC emacs-lisp
 (custom-set-faces
@@ -434,18 +440,13 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
 
 ** Modeline customization
 
-   We use Doom Emacs Modeline (see [[https://github.com/seagle0128/doom-modeline][here]]). Many other customizations of
-   the modeline that I used to  do are incompatible, or even obsolete,
-   with this modeline engine. Maybe I could personalize it better from
-   scratch, but  most of  my solutions  were hacks  and were  not well
-   integrated with the  rest of Emacs. Doom Modeline  is minimal, well
-   organized and nice to look at (especially with icons enabled).
-
-   Furthermore I  will likely  support functionalities that  I haven't
-   decided to use yet (e.g. mu4e or github integration).
-
-   Note  that Doom  Emacs Modeline  requires Nerd  fonts. They  should
-   be already in my setup.
+   We use  Doom Emacs Modeline  (see [[https://github.com/seagle0128/doom-modeline][here]]). Doom Modeline  is minimal,
+   well organized and nice to look at (especially with icons enabled).
+   This also  makes obsolete  other customizations  hacks I  did, that
+   often were incompatible with other emacs setup.
+   
+   Note that Doom Emacs Modeline requires Nerd fonts. They are already
+   be in my setup.
    
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
