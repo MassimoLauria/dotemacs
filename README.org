@@ -306,16 +306,15 @@ first column.
 
 The most important visual setup for a  text editor is the font. We set
 the default  font. The =symbol-font=  is the fallback needed  for some
-math symbols.
-
+math symbols. I use =nerd-fonts= for icons and symbols.
+ 
 #+BEGIN_SRC emacs-lisp
-;(setq default-font "Fira Code")
 (setq default-font "DejaVu Sans Mono")
+(setq symbol-font "DejaVu Sans Mono")
+;(setq default-font "Fira Code")
 ;(setq default-font "Menlo")
 ;(setq default-font "Inconsolata")
 ;(setq default-font "Source Code Pro")
-
-;(setq symbol-font "DejaVu Sans Mono")
 
 (set-face-attribute 'default nil
                     :family "DejaVu Sans Mono"
@@ -324,10 +323,11 @@ math symbols.
 
 (use-package nerd-icons
   :custom
-  (nerd-icons-font-family "Symbols Nerd Font Mono")
-  )
+  (nerd-icons-font-family "Symbols Nerd Font Mono"))
 
-
+(use-package nerd-icons-dired
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
 #+END_SRC
 
    I like Emacs to  open in a wide frame at the  center of the screen,
@@ -453,117 +453,14 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
   :ensure t
   :init
   (setq doom-modeline-icon t)
-  (setq doom-modeline-bar-width 6)
   (setq doom-modeline-major-mode-icon t)
+  (setq doom-modeline-buffer-state-icon t)
   (setq doom-modeline-enable-word-count t)
-  (setq pyenv-mode-mode-line-format "")
+  (setq doom-modeline-buffer-encoding t)
+  (setq doom-modeline-env-enable-python nil)
+  (setq doom-modeline-bar-width 6)
   (doom-modeline-mode 1))
 #+END_SRC
-
-
-
-*** COMMENT Renaming major modes
-    :PROPERTIES:
-    :header-args: :tangle no
-    :END:
-
-    *Note:*  this  is   incompatible  with  =doom-modeline=  therefore
-    I disable the whole setup described below.
-    
-    To make the modeline cleaner and more cute, I will rename the major
-    mode so  to make it  more compact. The  list of abbreviation  is an
-    ~alist~ named  =rename-major-mode-alist= where  each pair in  it is
-    the major mode and new representation.
-
-#+BEGIN_SRC emacs-lisp
-(defvar rename-major-mode-alist
-  `((lisp-interaction-mode . "λ")
-    (emacs-lisp-mode . "λ")
-    (inferior-emacs-lisp-mode . "iλ")
-    (python-mode . "Py"))
-  "Alist for `rename-major-mode-alist'.")
-#+END_SRC
-
-   To apply the renaming scheme we need the following code.
-
-#+BEGIN_SRC emacs-lisp
-(defun rename-major-mode-line ()
-  "Change the major mode name in the mode-line.
-
-The renaming table is `rename-major-mode-alist'."
-  (interactive)
-  (loop for cleaner in rename-major-mode-alist
-        do (let* ((mode (car cleaner))
-                 (mode-str (cdr cleaner)))
-             (when (eq mode major-mode)
-               (setq mode-name mode-str)))))
-
-(add-hook 'after-change-major-mode-hook 'rename-major-mode-line)
-#+END_SRC
-
-
-** COMMENT Cleanup the modeline --- minor modes
-   :PROPERTIES:
-   :header-args: :tangle no
-   :END:
-
-   Ref: [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Mode-Line-Data.html][The data structure of the modeline]]
-
-   A lot of minor  modes show up in the modeline. It  would be nice to
-   get rid of them. The package =diminish= allows to convert the minor
-   mode indication. Notice  that I do not activate minor  modes in the
-   doom-modeline.
-
-#+BEGIN_SRC emacs-lisp
-(use-package autorevert
-     :config
-     (diminish 'auto-revert-mode "")
-     :commands auto-revert-mode)
-
-(diminish 'auto-revert-mode)
-(diminish 'auto-fill-function " ⓗ")
-(diminish 'visual-line-mode  " ⓢ")
-(diminish 'abbrev-mode "")
-(diminish 'mml-mode "")
-(diminish 'eldoc-mode "")
-#+END_SRC
-
-
-** COMMENT Cleanup the modeline --- syntax check with Flycheck
-   :PROPERTIES:
-   :header-args: :tangle no
-   :END:
-
-   This part is deactivated because of doom modeline.
-   
-   Flycheck spams the modeline. Let's try to make the error diagnostic
-   more compact.
-   
-#+BEGIN_SRC emacs-lisp
-(defun flycheck-mode-line-status-text-slim (&optional status)
-  "Get a text describing STATUS for use in the mode line.
-
-STATUS defaults to `flycheck-last-status-change' if omitted or
-nil."
-  (let ((text (pcase (or status flycheck-last-status-change)
-                (`not-checked "")
-                (`no-checker "")
-                (`running "")
-                (`errored "😵")
-                (`finished
-                 (let-alist (flycheck-count-errors flycheck-current-errors)
-                   (if (or .error .warning .info)
-                       (concat
-                        "⎧"
-                        (if .error (format "😱%s" .error ""))
-                        (if .warning (format "😟%s" .warning ""))
-                        (if .info (format "💁%s" .info ""))
-                        "⎫"))))
-                (`interrupted "😲")
-                (`suspicious "😒"))))
-    (concat " " text)))
-#+END_SRC
-
 
 * Prose and Technical Writing
 
