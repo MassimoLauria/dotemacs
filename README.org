@@ -317,7 +317,7 @@ math symbols. I use =nerd-fonts= for icons and symbols.
 ;(setq default-font "Source Code Pro")
 
 (set-face-attribute 'default nil
-                    :family "DejaVu Sans Mono"
+                    :family default-font
                     :width 'normal
                     :height 180)
 
