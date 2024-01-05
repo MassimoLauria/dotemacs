@@ -26,7 +26,6 @@
                            doom-modeline
                            ;; others
                            ace-window
-                           all-the-icons
                            async
                            beacon
                            bind-key
