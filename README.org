@@ -307,14 +307,10 @@ first column.
 The most important visual setup for a  text editor is the font. We set
 the default  font. The =symbol-font=  is the fallback needed  for some
 math symbols. I use =nerd-fonts= for icons and symbols.
- 
+
 #+BEGIN_SRC emacs-lisp
 (setq default-font "DejaVu Sans Mono")
 (setq symbol-font "DejaVu Sans Mono")
-;(setq default-font "Fira Code")
-;(setq default-font "Menlo")
-;(setq default-font "Inconsolata")
-;(setq default-font "Source Code Pro")
 
 (set-face-attribute 'default nil
                     :family default-font
@@ -329,6 +325,13 @@ math symbols. I use =nerd-fonts= for icons and symbols.
   :hook
   (dired-mode . nerd-icons-dired-mode))
 #+END_SRC
+
+In GUI emacs we use a specific font family for the nerd icons. To make
+this =nerd-fonts= to work in terminal we need to setup a single merged
+font like  the ones at https://www.nerdfonts.com.  I setup =alacritty=
+to  use  =DejaVu  Sans  Mono  Nerd Font=  and  nerd  fonts  work  fine
+there too.
+
 
    I like Emacs to  open in a wide frame at the  center of the screen,
    on  startup,  at  least  on  these  systems  with  floating  window
