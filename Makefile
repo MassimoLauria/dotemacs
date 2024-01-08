@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2024-01-05, 10:10 (CET) Massimo Lauria"
+# Time-stamp: "2024-01-08, 21:18 (CET) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -32,7 +32,10 @@ endif
 
 # --------- Setup Emacs ---------------------------------
 all:
-	@echo "Setup Emacs editor (override any previous configuration)."
+	@type ${EMACS} > /dev/null || (echo "Could not run '${EMACS}' program" && exit 1)
+	@echo "Setup Emacs configuration"
+	@echo " - program: ${EMACS}"
+	@echo " - version: `${EMACS} -Q --version|head -1|cut -d' ' -f3`"
 	@mkdir -p ~/.emacs.d
 	@rm -f ~/.emacs.d/init.el
 	@ln -s ${INIT} ~/.emacs.d
@@ -46,31 +49,34 @@ minisetup:
 	@cp ${INITMINI} ~/.emacs.d/init.el
 	@echo "Done."
 
-emacs-changed:
-	@echo "Setup a new emacs while preserving the current configuration."
-	${MAKE} install-pkgs
-
-
 uninstall:
-	@echo "Completely erase Emacs configuration."
+	@echo "Erase Emacs configuration."
 	@rm -fr ~/.emacs.d/init.el
 
 
 # --------- Install tools, fonts and packages -----------
 install-pkgs:
-	@echo "Install the required emacs packages"
+	@echo "Install the needed packages, use 'upgrade-pkgs' to upgrade"
 	${EMACS} -batch -l bootstrap.el -f install-pkgs
-	${EMACS} -batch -l bootstrap.el --eval '(pdf-tools-install t)'
+	${MAKE} setup-pkgs
 
 
 upgrade-pkgs:
-	@echo "Update emacs packages"
+	@echo "Update packages"
 	${EMACS} -batch -l bootstrap.el -f upgrade-pkgs
-	${EMACS} -batch -l bootstrap.el --eval '(pdf-tools-install t)'
+	${MAKE} setup-pkgs
 
+
+VERSION:=$(shell ${EMACS} -Q --version|head -1|cut -d' ' -f3 )
+PDFTOOLPATH:=$(shell ls -d ${PWD}/elpa-local/${VERSION}/pdf-tools-* | tail -1)
+
+setup-pkgs:
+	@echo ${VERSION}
+	@echo ${PDFTOOLPATH}
+	${PDFTOOLPATH}/build/server/autobuild -i ${PDFTOOLPATH}
 
 install-fonts:
-	@echo "Install fonts for my configurations: "
+	@echo "Install fonts"
 	@rm -fr ${FONTPATH}/emacs
 	@mkdir -p ${FONTPATH}/emacs
 	unzip fonts/fira-code-5.2.zip          -d ${FONTPATH}/emacs
@@ -78,6 +84,7 @@ install-fonts:
 	unzip fonts/nerdfonts-symbols-only.zip -d ${FONTPATH}/emacs
 	cp ./fonts/NotoColorEmoji.ttf           ${FONTPATH}/emacs
 	-fc-cache -f -v
+
 
 # --------- Measure setup quality -----------------------
 test:

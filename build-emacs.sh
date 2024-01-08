@@ -19,7 +19,7 @@ SRCDIR=${PREFIX}/src/emacs
 if [ -d ${SRCDIR} ]; then
     echo "* Run: updating emacs sources"
     cd ${SRCDIR}
-    git pull > /dev/null
+    git fetch -a > /dev/null
 else
     echo "* Run: dowloading emacs sources"
     git clone git://git.sv.gnu.org/emacs.git ${SRCDIR}
@@ -44,6 +44,9 @@ else
 fi
 
 echo "* Run: build emacs"
+cd lisp
+make autoloads
+cd ..
 make -j4
 
 EMACS_VERSION=`${SRCDIR}/src/emacs --batch -Q --eval '(print emacs-version)'|xargs`
@@ -53,10 +56,5 @@ make install
 
 cd ${CONFDIR}
 
-if [ -f ${INITFILE} ]; then
-    echo "* Run: update emacs configuration (not)"
-#    EMACS=${SRCDIR}/bin/emacs-${EMACS_VERSION} make emacs-changed
-else
-    echo "* Run: create NEW emacs configuration"
-    EMACS=${SRCDIR}/bin/emacs-${EMACS_VERSION} make all
-fi
+echo "* Run: setup the configuration"
+EMACS=${SRCDIR}/bin/emacs-${EMACS_VERSION} make
