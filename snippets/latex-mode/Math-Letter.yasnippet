@@ -1,0 +1,55 @@
+# -*- mode: snippet -*-
+#name : Template: a math letter
+#key : * nokey
+#expand-env: ((time-format "%Y-%02m-%02d, %A %02H:%02M (%Z)"))
+# --
+% Time-stamp: <2024-01-09, 00:13 (CET) Massimo Lauria>
+% Encoding  : UTF-8
+\documentclass[a4paper,14pt]{extarticle}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[margin=1in,nohead]{geometry}
+\usepackage{charter}
+\usepackage{parskip}
+\usepackage{xspace}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\titleformat{\section}{\bf\large}{\thesection.}{0.5em}{}
+\titleformat{\subsection}[runin]{\bfseries}{}{0pt}{}[.\ ]
+
+
+\usepackage{amsmath,amsthm,amssymb}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{open.problem}{Open Problem}
+\newtheorem{example}{Example}
+
+\begin{document} % ----------- BEGIN DOCUMENT -------------------------
+\def\subject{${1:letter title}}
+\def\recipients{${2:recipients}}
+\textbf{Date:} \today \\\\
+\textbf{From:} `user-full-name`  \href{mailto:`user-mail-address`}{\texttt{<`user-mail-address`>}} \\\\
+\textbf{To:} \recipients \\\\
+\vspace{5pt}
+\hrule
+\vspace{10pt}
+\centerline{\bf \large \subject}
+\medskip
+
+% ---------------------------- BEGIN LETTER --------------------------
+$0
+
+
+%\bibliography{theoryofcomputing}
+%\bibliographystyle{alpha}
+\end{document} % ------------- END DOCUMENT --------------------------
+
+
+%%% Local Variables:
+%%% mode: xelatex
+%%% TeX-master: t
+%%% End:
