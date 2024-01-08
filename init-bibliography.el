@@ -311,7 +311,10 @@ Optional argument NODELIM see `bibtex-make-field'."
 
 
 (use-package helm-bibtex
-  :commands (helm-bibtex helm-bibtex-with-local-bibliography bibtex-completion-open-pdf)
+  :commands (helm-bibtex
+             helm-bibtex-with-local-bibliography
+             bibtex-completion-open-pdf
+             bibtex-completion-open-any)
   :bind ("C-c b" . helm-bibtex-with-local-bibliography)
   :config
 
