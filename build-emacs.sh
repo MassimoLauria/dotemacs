@@ -54,8 +54,8 @@ make install
 cd ${CONFDIR}
 
 if [ -f ${INITFILE} ]; then
-    echo "* Run: update emacs configuration"
-    EMACS=${SRCDIR}/bin/emacs-${EMACS_VERSION} make emacs-changed
+    echo "* Run: update emacs configuration (not)"
+#    EMACS=${SRCDIR}/bin/emacs-${EMACS_VERSION} make emacs-changed
 else
     echo "* Run: create NEW emacs configuration"
     EMACS=${SRCDIR}/bin/emacs-${EMACS_VERSION} make all
