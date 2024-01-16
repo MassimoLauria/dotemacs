@@ -1,2 +1,0 @@
-;;; Generated package description from bind-key.el  -*- no-byte-compile: t -*-
-(define-package "bind-key" "20220809.42" "A simple way to manage personal keybindings" 'nil :commit "e5f64cc6d9d0df3721b319eeecca1f4f49ea86a3" :authors '(("John Wiegley" . "johnw@newartisans.com")) :maintainer '("John Wiegley" . "johnw@newartisans.com") :keywords '("keys" "keybinding" "config" "dotemacs") :url "https://github.com/jwiegley/use-package")
