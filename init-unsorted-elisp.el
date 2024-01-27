@@ -367,7 +367,13 @@ is already narrowed."
   (projectile-register-project-type 'latexmk '(".latexmkrc")
                                     :project-file ".latexmkrc"
                                     :compile "latexmk"
-                                    :run "latexmk -pvc"))
+                                    :run "latexmk -pvc")
+
+  (projectile-register-project-type 'go projectile-go-project-test-function
+                                    :compile "go build"
+                                    :run "go run ."
+                                    :test "go test ./..."
+                                    :test-suffix "_test"))
 
 
 
