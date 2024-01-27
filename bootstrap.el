@@ -46,6 +46,7 @@
                            forge
                            git-commit
                            gnus-alias
+                           go-mode
                            graphviz-dot-mode
                            helm-bibtex
                            helm-c-yasnippet
