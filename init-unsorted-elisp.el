@@ -380,6 +380,7 @@ is already narrowed."
 (use-package pdf-tools
   :magic ("%PDF" . pdf-view-mode)
   :config
+  (add-hook 'pdf-view-mode-hook (lambda () (auto-revert-mode 1)))
   (pdf-tools-install :no-query))
 
 (provide 'init-unsorted-elisp)
