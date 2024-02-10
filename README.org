@@ -880,7 +880,11 @@ Woolf say? "A Room of One's Own".
       '(python-mode
         c++-mode
         c-mode
+        go-mode
+        rust-mode
         sh-mode
+        latex-mode
+        LaTeX-mode
         emacs-lisp-mode))
 
 (make-face 'font-lock-fixme-face)
