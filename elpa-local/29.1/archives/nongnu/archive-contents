@@ -106,6 +106,17 @@
 	      ((:url . "https://github.com/jasonm23/autothemer")
 	       (:maintainer "Jason Milkins" . "jasonm23@gmail.com")
 	       (:commit . "8f72afc6dba5ad7cc3a201a084fd20571f945d2e"))])
+ (base32 .
+	 [(1 0)
+	  ((emacs
+	    (27 1)))
+	  "Base32 support" tar
+	  ((:url . "https://gitlab.com/fledermaus/totp.el")
+	   (:keywords "tools")
+	   (:maintainer "Vivek Das Mohapatra" . "vivek@etla.org")
+	   (:authors
+	    ("Vivek Das Mohapatra" . "vivek@etla.org"))
+	   (:commit . "v1.0"))])
  (bash-completion .
 		  [(3 1 1)
 		   ((emacs
@@ -221,7 +232,7 @@
 	    (:url . "https://elpa.nongnu.org/nongnu/cdlatex.html")
 	    (:commit . "33770dec73138909714711b05a63e79da5a19ccd"))])
  (cider .
-	[(1 13 0)
+	[(1 13 1)
 	 ((emacs
 	   (26))
 	  (clojure-mode
@@ -249,7 +260,7 @@
 	   ("Artur Malabarba" . "bruce.connor.am@gmail.com")
 	   ("Hugo Duncan" . "hugo@hugoduncan.org")
 	   ("Steve Purcell" . "steve@sanityinc.com"))
-	  (:commit . "9f7e55b08af9256213d90ce2d6492e98db854f2a"))])
+	  (:commit . "06dc45844ad05fe23fccb7dec1609404e3cda88e"))])
  (clojure-mode .
 	       [(5 18 1)
 		((emacs
@@ -473,7 +484,7 @@
 		(:keywords "languages" "elixir")
 		(:commit . "00d6580a040a750e019218f9392cf9a4c2dac23a"))])
  (elpher .
-	 [(3 5 0)
+	 [(3 5 1)
 	  ((emacs
 	    (27 1)))
 	  "A friendly gopher and gemini client" tar
@@ -482,7 +493,7 @@
 	   (:maintainer "Tim Vaughan" . "plugd@thelambdalab.xyz")
 	   (:authors
 	    ("Tim Vaughan" . "plugd@thelambdalab.xyz"))
-	   (:commit . "81f2883614c303184116449ec3583ef5c136ec2f"))])
+	   (:commit . "3f53ed5b6550d25a66bc83f6f26d8cfb06b1dcce"))])
  (engine-mode .
 	      [(2 2 4)
 	       ((cl-lib
@@ -1160,13 +1171,14 @@
 	       ("Akib Azmain Turja" . "akib@disroot.org"))
 	      (:commit . "2d3a3f551b52c07a11b9ea0f842ef39915911c55"))])
  (htmlize .
-	  [(1 57)
+	  [(1 56)
 	   nil "Convert buffer text and decorations to HTML." tar
-	   ((:url . "https://github.com/hniksic/emacs-htmlize")
+	   ((:keywords "hypermedia" "extensions")
 	    (:maintainer "Hrvoje Niksic" . "hniksic@gmail.com")
 	    (:authors
 	     ("Hrvoje Niksic" . "hniksic@gmail.com"))
-	    (:keywords "hypermedia" "extensions"))])
+	    (:url . "https://elpa.nongnu.org/nongnu/htmlize.html")
+	    (:commit . "7b63aa058c3dd0d9f8c07706cd8bb4e56aaa1fb3"))])
  (hyperdrive .
 	     [(0 3)
 	      ((emacs
@@ -1452,13 +1464,13 @@
 	    ("Stefan Kangas" . "stefankangas@gmail.com"))
 	   (:commit . "480602f2ec5467aa2418ee98b328fb85d3b58d0c"))])
  (meow .
-       [(1 4 4)
+       [(1 4 5)
 	((emacs
 	  (27 1)))
 	"Yet Another modal editing" tar
 	((:url . "https://www.github.com/DogLooksGood/meow")
 	 (:keywords "convenience" "modal-editing")
-	 (:commit . "f553db183a47b23d037b1a7f1cab48b0b4798a37"))])
+	 (:commit . "54d4e933039827c158a4f593a94681a64e0d8042"))])
  (minibar .
 	  [(0 3)
 	   ((emacs
@@ -1857,7 +1869,7 @@
 	       ("David Christiansen" . "david@davidchristiansen.dk"))
 	      (:keywords "convenience"))])
  (racket-mode .
-	      [(1 0 20240129 111238)
+	      [(1 0 20240130 151349)
 	       ((emacs
 		 (25 1)))
 	       "Racket editing, REPL, and more" tar
@@ -2113,7 +2125,7 @@
 	  (:maintainer "Sacha Chua" . "sacha@sachachua.com")
 	  (:commit . "e73c0a38039eb32fd43911023ff35007e324c733"))])
  (sweeprolog .
-	     [(0 27 3)
+	     [(0 27 4)
 	      ((emacs
 		(27 1))
 	       (compat
@@ -2124,7 +2136,7 @@
 	       (:maintainer "Eshel Yaron" . "~eshel/dev@lists.sr.ht")
 	       (:authors
 		("Eshel Yaron" . "me@eshelyaron.com"))
-	       (:commit . "52f506b3a3dd7e7003a44ad3ae5257b3d22025d2"))])
+	       (:commit . "799e1aebfd280ed6d00fb1034a3fed60de21c8d7"))])
  (swift-mode .
 	     [(9 1 0)
 	      ((emacs
@@ -2227,6 +2239,19 @@
 	    (:maintainer "Sergei Nosov <sergei.nosov [at] gmail.com>")
 	    (:authors
 	     ("Sergei Nosov <sergei.nosov [at] gmail.com>")))])
+ (totp-auth .
+	    [(1 0)
+	     ((emacs
+	       (27 1))
+	      (base32
+	       (0 1)))
+	     "RFC6238 TOTP" tar
+	     ((:url . "https://gitlab.com/fledermaus/totp.el")
+	      (:keywords "2fa" "two-factor" "totp" "otp" "password" "comm")
+	      (:maintainer "Vivek Das Mohapatra" . "vivek@etla.org")
+	      (:authors
+	       ("Vivek Das Mohapatra" . "vivek@etla.org"))
+	      (:commit . "v1.0"))])
  (treeview .
 	   [(1 2 0)
 	    ((emacs
@@ -2312,7 +2337,7 @@
 	       ("Daniel Semyonov" . "daniel@dsemy.com"))
 	      (:commit . "93ae3db40d07ae15e61d34c3c3870de5d2fce2de"))])
  (visual-fill-column .
-		     [(2 5 1)
+		     [(2 5 2)
 		      ((emacs
 			(25 1)))
 		      "fill-column for visual-line-mode" tar
@@ -2320,16 +2345,16 @@
 		       (:maintainer "Joost Kremers" . "joostkremers@fastmail.fm")
 		       (:authors
 			("Joost Kremers" . "joostkremers@fastmail.fm"))
-		       (:commit . "695a59789209c42fa08a5bce92963ee32f4455be"))])
+		       (:commit . "5e74afe39d0afb911dae51af4e7a60ccdf9701f3"))])
  (web-mode .
-	   [(17 3 17)
+	   [(17 3 18)
 	    ((emacs
 	      (23 1)))
 	    "major mode for editing web templates" tar
 	    ((:url . "https://web-mode.org")
 	     (:keywords "languages")
 	     (:maintainer "François-Xavier Bois" . "fxbois@gmail.com")
-	     (:commit . "82847071ce93293bdb7945db08d970f13fd883cf"))])
+	     (:commit . "208f32b98873f5381f6516f9de8424418e3cf16f"))])
  (webpaste .
 	   [(3 2 2)
 	    ((emacs
@@ -2433,14 +2458,14 @@
 	      (:authors
 	       ("Le Wang")))])
  (xah-fly-keys .
-	       [(24 20 20240120121202)
+	       [(24 21 20240213125545)
 		((emacs
 		  (27)))
 		"ergonomic modal keybinding minor mode." tar
 		((:url . "http://xahlee.info/emacs/misc/xah-fly-keys.html")
 		 (:keywords "convenience" "vi" "vim" "ergoemacs" "keybinding")
 		 (:maintainer "Xah Lee" . "xah@xahlee.org")
-		 (:commit . "0e5aa069fe7fc32c40c5ebd7272e31d70ebeb4dc"))])
+		 (:commit . "56af7d65896cd285fe46c53828087f4d727387f3"))])
  (xkcd .
        [(1 1)
 	((json

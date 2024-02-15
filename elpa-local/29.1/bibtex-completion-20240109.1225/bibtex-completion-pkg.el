@@ -1,4 +1,4 @@
-(define-package "bibtex-completion" "20230918.953" "A BibTeX backend for completion frameworks"
+(define-package "bibtex-completion" "20240109.1225" "A BibTeX backend for completion frameworks"
   '((parsebib "1.0")
     (s "1.9.0")
     (dash "2.6.0")
@@ -6,7 +6,7 @@
     (cl-lib "0.5")
     (biblio "0.2")
     (emacs "26.1"))
-  :commit "95551744de8210867e9d34feaf47ae639ea04114" :authors
+  :commit "bf184cc311c9e1724f8b2eaf75b9e202c3aedd16" :authors
   '(("Titus von der Malsburg" . "malsburg@posteo.de")
     ("Justin Burkett" . "justin@burkett.cc"))
   :maintainers

@@ -323,6 +323,7 @@ Optional argument NODELIM see `bibtex-make-field'."
                     bibtex-completion-format-citation-functions))
         'bibtex-completion-format-citation-cite)
   (setq bibtex-completion-cite-prompt-for-optional-arguments nil)
+  (setq bibtex-completion-watch-bibliography nil)
 
   ;; Make 'Insert citation' the first (and thus the default) action
   (helm-delete-action-from-source  "Insert citation" helm-source-bibtex)
