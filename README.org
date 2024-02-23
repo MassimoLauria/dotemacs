@@ -465,6 +465,31 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
   (doom-modeline-mode 1))
 #+END_SRC
 
+Sometimes  I want  to hide  my  mode-line, maybe  in conjunction  with
+something like ~olivetti-mode~.
+
+#+BEGIN_SRC emacs-lisp
+(defun mxl/toggle-mode-line ()
+  "Hide/show mode-line in the current buffer"
+  (interactive)
+  (if (local-variable-p 'mode-line-format)
+      (kill-local-variable 'mode-line-format)
+    (setq-local mode-line-format nil))
+  (force-mode-line-update))
+
+(defun mxl/hide-mode-line ()
+  "Hide mode-line in the current buffer"
+  (interactive)
+  (setq-local mode-line-format nil))
+
+(defun mxl/show-mode-line ()
+  "Hide mode-line in the current buffer"
+  (interactive)
+  (if (local-variable-p 'mode-line-format)
+      (kill-local-variable 'mode-line-format)))
+#+END_SRC
+
+
 * Prose and Technical Writing
 
   I   use  Emacs   to  write   technical  papers   about  math,   code
@@ -1393,7 +1418,7 @@ books from inside Emacs.
 
 #+BEGIN_SRC emacs-lisp
 (use-package calibredb
-  :commands (calibredb calibredb-find-helm)
+  :commands (calibredb)
   :init
   (setq calibredb-id-width 5)
   (setq calibredb-format-all-the-icons nil)
