@@ -490,6 +490,11 @@ something like ~olivetti-mode~.
 #+END_SRC
 
 
+* Usability
+
+Emacs definitely can  improve in term of usability. Here  we setup few
+packages  in  order  to  make  it  more  polished  and  nice  to  use.
+
 * Prose and Technical Writing
 
   I   use  Emacs   to  write   technical  papers   about  math,   code

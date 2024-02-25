@@ -18,7 +18,7 @@
                   display-buffer-at-bottom)
                  (reusable-frames . visible)
                  (side            . bottom)
-                 (window-height   . 0.3))))
+                 (window-height   . 0.4))))
 
 ;; Force the some buffers to be displayed in a "side" window, i.e.
 ;; a window that is locked and reusable.
@@ -29,8 +29,8 @@
                   display-buffer-in-side-window)
                  (reusable-frames . visible)
                  (side            . right)
-                 (window-height   . 0.4))))
- 
+                 (window-height   . 0.5))))
+
 (defun side-windows-clear ()
   "Quit side windows of the current frame."
   (interactive)
@@ -41,6 +41,7 @@
 (force-window-at-bottom (rx bos "*Flycheck errors*" eos))
 (force-window-at-bottom (rx bos "*Flycheck error messages*" eos))
 (force-window-at-bottom (rx bos "*Help*" eos))
+(force-window-at-bottom (rx bos "*helpful"))
 (force-window-at-bottom (rx bos "*Apropos*" eos))
 (force-window-at-bottom (rx bos "*Metahelp*" eos))
 (force-window-at-bottom (rx bos "*Tex errors*" eos))
