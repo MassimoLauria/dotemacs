@@ -471,8 +471,7 @@ by default."
      "$")
    " "))
 (setq eshell-prompt-function 'mxl-eshell-prompt)
-(setq eshell-highlight-prompt nil)
-(setq eshell-prompt-regexp    "^[^#$]*[#$] ")
+(setq eshell-prompt-regexp    "^[^#$\n]*[#$] ")
 (defun git-prompt-branch-name ()
     "Get current git branch name"
     (let ((args '("symbolic-ref" "HEAD" "--short")))
