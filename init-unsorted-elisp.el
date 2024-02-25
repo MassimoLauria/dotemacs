@@ -435,5 +435,53 @@ by default."
   (define-key pdf-view-mode-map (kbd "D") 'pdf-annot-delete))
 
 
+;; Eshell prompt
+(defun with-face (str &rest face-plist)
+  (propertize str 'face face-plist))
+
+(defun mxl-eshell-prompt ()
+  (concat
+   "\n"
+   (with-face "┌─" :foreground "#79a8ff" :weight 'bold)
+   (with-face "─(" :foreground "white" :weight 'bold)
+   (with-face (format-time-string "%H:%M" (current-time))
+              :foreground "green" :weight 'bold)
+   (with-face ")─" :foreground "white" :weight 'bold)
+   (with-face "──" :foreground "#79a8ff" :weight 'bold)
+   (let ((branch (git-prompt-branch-name)))
+     (if branch
+         (concat
+          (with-face "─[±" :foreground "white" :weight 'bold)
+          (with-face (git-prompt-branch-name)
+                     :foreground "light green" :weight 'bold)
+          (with-face "]─" :foreground "white" :weight 'bold)
+          )
+       (with-face "" :foreground "white" :weight 'bold)
+       ))
+   (with-face "──" :foreground "#79a8ff" :weight 'bold)
+   (with-face "─(" :foreground "white" :weight 'bold)
+   (with-face (concat (abbreviate-file-name (eshell/pwd)) "")
+              :foreground "#44f"
+              :weight 'bold)
+   (with-face ")" :foreground "white" :weight 'bold)
+   "\n"
+   (with-face "│\n└─" :foreground "#79a8ff" :weight 'bold)
+   (if (= (user-uid) 0)
+       (with-face "#" :foreground "red")
+     "$")
+   " "))
+(setq eshell-prompt-function 'mxl-eshell-prompt)
+(setq eshell-highlight-prompt nil)
+(setq eshell-prompt-regexp    "^[^#$]*[#$] ")
+(defun git-prompt-branch-name ()
+    "Get current git branch name"
+    (let ((args '("symbolic-ref" "HEAD" "--short")))
+      (with-temp-buffer
+        (apply #'process-file "git" nil (list t nil) nil args)
+        (unless (bobp)
+          (goto-char (point-min))
+          (buffer-substring-no-properties (point) (line-end-position))))))
+(setq comint-prompt-read-only t)
+
 (provide 'init-unsorted-elisp)
 ;;; init-unsorted-elisp.el ends here

@@ -66,7 +66,7 @@
                  ("begin" "$1" "$" "$$" "\\(" "\\[")))
  '(org-preview-latex-default-process 'dvisvgm)
  '(package-selected-packages
-   '(bibtex-completion flymake-go flymake-go-staticcheck go-mode rust-mode eat nerd-icons-completion nerd-icons-dired modus-themes base16-theme emacsql emacsql-sqlite green-phosphor-theme green-screen-theme pip-requirements company-emoji company-emojify org-contacts calibredb org-contrib helm-projectile helm-company projectile-ripgrep fira-code-mode pdfgrep visual-regexp pdf-tools company-jedi ninja-mode emoji-cheat-sheet-plus eglot cmake-mode neotree all-the-icons nov latex-math-preview lsp-mode org-pdftools python-pytest helm-c-yasnippet langtool org-static-blog yapfify writegood-mode flyspell-correct-helm powerline helm-swoop gnu-elpa-keyring-update deadgrep helm-recoll helm-rg rg unicode-fonts forge helm-ls-git helm-bibtex helm org unfill ivy-hydra leuven-theme moe-theme solarized-theme poet-theme sdcv gscholar-bibtex org-bullets company-box ivy-rich which-key magit pythonic esup pyenv-mode-auto ivy-bibtex guess-language wc-mode atomic-chrome zoom-frm latex-preview-pane ob-ipython ssh-config-mode py-autopep8 visual-fill-column wgrep wgrep-ag ag iedit try smex counsel zenburn-theme yasnippet virtualenvwrapper use-package undo-tree swiper smartparens skeletor rainbow-mode rainbow-identifiers rainbow-delimiters pallet magit-svn magit-gh-pulls highlight-symbol highlight-quoted highlight-defined highlight-blocks graphviz-dot-mode gnus-alias flycheck expand-region elisp-slime-nav elfeed deferred auctex ace-window))
+   '(monkeytype helpful bibtex-completion flymake-go flymake-go-staticcheck go-mode rust-mode eat nerd-icons-completion nerd-icons-dired modus-themes base16-theme emacsql emacsql-sqlite green-phosphor-theme green-screen-theme pip-requirements company-emoji company-emojify org-contacts calibredb org-contrib helm-projectile helm-company projectile-ripgrep fira-code-mode pdfgrep visual-regexp pdf-tools company-jedi ninja-mode emoji-cheat-sheet-plus eglot cmake-mode neotree all-the-icons nov latex-math-preview lsp-mode org-pdftools python-pytest helm-c-yasnippet langtool org-static-blog yapfify writegood-mode flyspell-correct-helm powerline helm-swoop gnu-elpa-keyring-update deadgrep helm-recoll helm-rg rg unicode-fonts forge helm-ls-git helm-bibtex helm org unfill ivy-hydra leuven-theme moe-theme solarized-theme poet-theme sdcv gscholar-bibtex org-bullets company-box ivy-rich which-key magit pythonic esup pyenv-mode-auto ivy-bibtex guess-language wc-mode atomic-chrome zoom-frm latex-preview-pane ob-ipython ssh-config-mode py-autopep8 visual-fill-column wgrep wgrep-ag ag iedit try smex counsel zenburn-theme yasnippet virtualenvwrapper use-package undo-tree swiper smartparens skeletor rainbow-mode rainbow-identifiers rainbow-delimiters pallet magit-svn magit-gh-pulls highlight-symbol highlight-quoted highlight-defined highlight-blocks graphviz-dot-mode gnus-alias flycheck expand-region elisp-slime-nav elfeed deferred auctex ace-window))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
  '(powerline-default-separator 'arrow)
  '(powerline-text-scale-factor 0.5)
@@ -88,7 +88,8 @@
  '(reftex-ref-macro-prompt nil)
  '(require-final-newline 't)
  '(safe-local-variable-values
-   '((org-latex-packages-alist
+   '((TeX-master . "main")
+     (org-latex-packages-alist
       ("" "minted"))
      (org-latex-listings quote minted)
      (flycheck-python-pycompile-executable . "python3")
