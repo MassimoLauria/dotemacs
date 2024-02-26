@@ -423,14 +423,14 @@ by default."
   ;; Open in apps
   (define-key pdf-view-mode-map (kbd "O") 'open-in-external-app)
   ;; Movements
-  (define-key pdf-view-mode-map (kbd "o") 'pdf-history-backward)
-  (define-key pdf-view-mode-map (kbd "u") 'pdf-history-forward)
+  (define-key pdf-view-mode-map (kbd "o") 'pdf-history-forward)
+  (define-key pdf-view-mode-map (kbd "u") 'pdf-history-backward)
   (define-key pdf-view-mode-map (kbd "i") 'pdf-view-previous-line-or-previous-page)
   (define-key pdf-view-mode-map (kbd "k") 'pdf-view-next-line-or-next-page)
   (define-key pdf-view-mode-map (kbd "j") 'pdf-view-previous-page)
   (define-key pdf-view-mode-map (kbd "l") 'pdf-view-next-page)
-  (define-key pdf-view-mode-map (kbd "M-o") 'pdf-history-backward)
-  (define-key pdf-view-mode-map (kbd "M-u") 'pdf-history-forward)
+  (define-key pdf-view-mode-map (kbd "M-o") 'pdf-history-forward)
+  (define-key pdf-view-mode-map (kbd "M-u") 'pdf-history-backward)
   (define-key pdf-view-mode-map (kbd "M-i") 'pdf-view-previous-line-or-previous-page)
   (define-key pdf-view-mode-map (kbd "M-k") 'pdf-view-next-line-or-next-page)
   (define-key pdf-view-mode-map (kbd "M-j") 'pdf-view-previous-page)
