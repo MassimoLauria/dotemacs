@@ -6,7 +6,12 @@
   :config (setq
            aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
            aw-scope 'frame
-           aw-background t))
+           aw-background t
+           )
+  :custom-face
+  ;; I don't like the annoying large size of the font. Ok it is more
+  ;; readable but it moves around all the content.
+  (aw-leading-char-face ((t (:height 1.0)))))
 
 
 ;; Force the some buffers to be displayed the "bottom" window, i.e.
