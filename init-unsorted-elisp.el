@@ -384,9 +384,13 @@ is already narrowed."
   :init
   (setq pdf-view-use-unicode-ligther nil)  ;; make loading faster
   :config
+  (delete 'pdf-outline-minor-mode pdf-tools-enabled-modes)
   (pdf-tools-install :no-query)
   (pdf-loader-install t)
-  (add-hook 'pdf-view-mode-hook (lambda () (auto-revert-mode 1)))
+  (add-hook 'pdf-view-mode-hook (lambda ()
+                                  (auto-revert-mode 1)
+                                  (beacon-mode -1)
+                                  ))
   (setq pdf-view-use-scaling t)
   (setq revert-without-query '(".pdf"))
   (setq-default pdf-view-display-size 'fit-page)
@@ -412,6 +416,24 @@ by default."
   (define-key pdf-view-mode-map (kbd "P") 'pdf-view-fit-page-to-window)
   ;; Open in apps
   (define-key pdf-view-mode-map (kbd "O") 'open-in-external-app)
+  ;; Movements
+  (define-key pdf-view-mode-map (kbd "o") 'pdf-history-backward)
+  (define-key pdf-view-mode-map (kbd "u") 'pdf-history-forward)
+  (define-key pdf-view-mode-map (kbd "i") 'pdf-view-previous-line-or-previous-page)
+  (define-key pdf-view-mode-map (kbd "k") 'pdf-view-next-line-or-next-page)
+  (define-key pdf-view-mode-map (kbd "j") 'pdf-view-previous-page)
+  (define-key pdf-view-mode-map (kbd "l") 'pdf-view-next-page)
+  (define-key pdf-view-mode-map (kbd "M-o") 'pdf-history-backward)
+  (define-key pdf-view-mode-map (kbd "M-u") 'pdf-history-forward)
+  (define-key pdf-view-mode-map (kbd "M-i") 'pdf-view-previous-line-or-previous-page)
+  (define-key pdf-view-mode-map (kbd "M-k") 'pdf-view-next-line-or-next-page)
+  (define-key pdf-view-mode-map (kbd "M-j") 'pdf-view-previous-page)
+  (define-key pdf-view-mode-map (kbd "M-l") 'pdf-view-next-page)
+  ;; Outline
+  (define-key pdf-view-mode-map (kbd "g") 'pdf-outline)
+  (define-key pdf-outline-buffer-mode-map (kbd "g") 'quit-window)
+  (define-key pdf-outline-buffer-mode-map (kbd "RET") 'pdf-outline-display-link) ; stay in the outline buffer
+
   (defun mxl-pdf-open-in-xournal()
     "Open the current PDF in Xournal, for editing"
     (interactive)
@@ -430,8 +452,7 @@ by default."
   (define-key pdf-view-mode-map (kbd "u") 'pdf-annot-add-underline-markup-annotation)
   (define-key pdf-view-mode-map (kbd "s") 'pdf-annot-add-strikeout-markup-annotation)
   (define-key pdf-view-mode-map (kbd "t") 'mxl-pdf-annot-add-text-annotation)
-  (define-key pdf-view-mode-map (kbd "l") 'pdf-annot-list-annotations)
-  (define-key pdf-view-mode-map (kbd "l") 'pdf-annot-list-annotations)
+  (define-key pdf-view-mode-map (kbd "L") 'pdf-annot-list-annotations)
   (define-key pdf-view-mode-map (kbd "D") 'pdf-annot-delete))
 
 
