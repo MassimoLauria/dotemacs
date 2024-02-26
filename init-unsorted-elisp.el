@@ -377,6 +377,12 @@ is already narrowed."
                                     :test-suffix "_test"))
 
 
+(use-package pdf-outline
+  :commands (pdf-outline)
+  :bind (:map pdf-outline-buffer-mode-map
+              ("g"   . quit-window)
+              ("RET" . pdf-outline-display-link) ))
+
 ;; Setup PDF tools
 (use-package pdf-tools
   :mode  ("\\.pdf" . pdf-view-mode)
@@ -431,8 +437,6 @@ by default."
   (define-key pdf-view-mode-map (kbd "M-l") 'pdf-view-next-page)
   ;; Outline
   (define-key pdf-view-mode-map (kbd "g") 'pdf-outline)
-  (define-key pdf-outline-buffer-mode-map (kbd "g") 'quit-window)
-  (define-key pdf-outline-buffer-mode-map (kbd "RET") 'pdf-outline-display-link) ; stay in the outline buffer
 
   (defun mxl-pdf-open-in-xournal()
     "Open the current PDF in Xournal, for editing"
