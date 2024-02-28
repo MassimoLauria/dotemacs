@@ -1628,6 +1628,30 @@ books from inside Emacs.
     (run-at-time nil (* 60 60) 'recentf-save-list))
 #+END_SRC
 
+** Make register comfortable
+
+I set the combos ~M-0 M-1~ up to ~M-0 M-9~ for saving the point in the
+respective register,  and I use  the corresponding ~M-1~ ...  ~M-9~ to
+jump back to it.
+
+#+BEGIN_SRC emacs-lisp
+(global-unset-key (kbd "M-0"))  ; I need it as a prefix key for next keybinds.
+  
+(dotimes (i 9)
+  (let ((num (+ 1 i))
+        (str (number-to-string (+ 1 i))))
+    (global-set-key
+     (kbd (concat "M-0 M-" str))
+     `(lambda () (interactive) (point-to-register ,num)
+        (message (concat "Position saved to register " ,str)))) 
+    (global-set-key
+     (kbd (concat "M-" str))
+     `(lambda () (interactive) (jump-to-register ,num)
+        (message (concat "Position loaded from register " ,str))))))
+    
+#+END_SRC
+
+
 ** Hide some buffers in Helm
    
    Some buffers  clutter selection menus  and there are no  reasons to
