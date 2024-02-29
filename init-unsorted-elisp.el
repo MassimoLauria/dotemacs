@@ -453,8 +453,6 @@ by default."
   (define-key pdf-view-mode-map (kbd "c") 'mxl-pdf-view-toggle-crop)
   ;; keyboard shortcuts for annotations
   (define-key pdf-view-mode-map (kbd "h") 'pdf-annot-add-highlight-markup-annotation)
-  (define-key pdf-view-mode-map (kbd "u") 'pdf-annot-add-underline-markup-annotation)
-  (define-key pdf-view-mode-map (kbd "s") 'pdf-annot-add-strikeout-markup-annotation)
   (define-key pdf-view-mode-map (kbd "t") 'mxl-pdf-annot-add-text-annotation)
   (define-key pdf-view-mode-map (kbd "L") 'pdf-annot-list-annotations)
   (define-key pdf-view-mode-map (kbd "D") 'pdf-annot-delete))
