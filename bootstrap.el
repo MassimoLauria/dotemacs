@@ -24,6 +24,7 @@
                            auctex
                            pdf-tools
                            doom-modeline
+                           dashboard
                            ;; others
                            ace-window
                            async

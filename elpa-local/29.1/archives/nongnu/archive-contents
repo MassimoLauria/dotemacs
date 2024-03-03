@@ -190,7 +190,7 @@
 	      ("Dave Pearson" . "davep@davep.org"))
 	     (:commit . "fe676396fa7e4372e01bf2c3d9a62e8d53615d46"))])
  (buttercup .
-	    [(1 33)
+	    [(1 34)
 	     ((emacs
 	       (24 4)))
 	     "Behavior-Driven Emacs Lisp Testing" tar
@@ -198,7 +198,7 @@
 	      (:maintainer "Ola Nilsson" . "ola.nilsson@gmail.com")
 	      (:authors
 	       ("Jorgen Schaefer" . "contact@jorgenschaefer.de"))
-	      (:commit . "e4fb7cd560d27d8879a2c7739ee96946adec2df8"))])
+	      (:commit . "c0764a764cf088dcb5132c44d5864b22d7723765"))])
  (camera .
 	 [(0 3)
 	  ((emacs
@@ -271,14 +271,14 @@
 		 (:maintainer "Bozhidar Batsov" . "bozhidar@batsov.dev")
 		 (:commit . "25d713a67d8e0209ee74bfc0153fdf677697b43f"))])
  (clojure-ts-mode .
-		  [(0 2 0)
+		  [(0 2 2)
 		   ((emacs
-		     (29)))
+		     (29 1)))
 		   "Major mode for Clojure code" tar
 		   ((:url . "http://github.com/clojure-emacs/clojure-ts-mode")
 		    (:keywords "languages" "clojure" "clojurescript" "lisp")
 		    (:maintainer "Danny Freeman" . "danny@dfreeman.email")
-		    (:commit . "8e61fe8ff4795975ec9e225af931d3a514c99445"))])
+		    (:commit . "a923aa83a61751a588ed3afc133d45898995762e"))])
  (coffee-mode .
 	      [(0 6 3)
 	       ((emacs
@@ -306,15 +306,16 @@
 		    ("Akib Azmain Turja" . "akib@disroot.org"))
 		   (:commit . "501548c3d51f926c687e8cd838c5865ec45d03cc"))])
  (crux .
-       [(0 4 0)
-	((seq
-	  (1 11)))
+       [(0 5 0)
+	((emacs
+	  (26 1)))
 	"A Collection of Ridiculously Useful eXtensions" tar
 	((:url . "https://github.com/bbatsov/crux")
+	 (:keywords "convenience")
 	 (:maintainer "Bozhidar Batsov" . "bozhidar@batsov.dev")
 	 (:authors
 	  ("Bozhidar Batsov" . "bozhidar@batsov.dev"))
-	 (:keywords "convenience"))])
+	 (:commit . "7980df10e47eef41d4d1c57cfb690ec406381ed3"))])
  (cyberpunk-theme .
 		  [(1 22)
 		   nil "Cyberpunk Color Theme" tar
@@ -614,7 +615,7 @@
 		    (:authors
 		     ("Sylvain Benner" . "sylvain.benner@gmail.com")))])
  (evil-matchit .
-	       [(3 0 2)
+	       [(3 0 4)
 		((emacs
 		  (25 1)))
 		"Vim matchit ported to Evil" tar
@@ -623,7 +624,7 @@
 		 (:maintainer "Chen Bin" . "chenbin.sh@gmail.com")
 		 (:authors
 		  ("Chen Bin" . "chenbin.sh@gmail.com"))
-		 (:commit . "f27b2a87bab75e3b8a87c277049a4363cdfcbf61"))])
+		 (:commit . "1c4fefa9bb11cc4b1d7f10614d2021c12ed12e89"))])
  (evil-nerd-commenter .
 		      [(3 6 1)
 		       ((emacs
@@ -720,6 +721,20 @@
 	    (:authors
 	     ("Le Wang"))
 	    (:commit . "29e3664b75618847eaaf821713a74eb3c897a124"))])
+ (flycheck .
+	   [(34 1)
+	    ((emacs
+	      (26 1)))
+	    "On-the-fly syntax checking" tar
+	    ((:url . "http://www.flycheck.org")
+	     (:keywords "convenience" "languages" "tools")
+	     (:maintainer
+	      ("Clément Pit-Claudel" . "clement.pitclaudel@live.com")
+	      ("fmdkdd" . "fmdkdd@gmail.com")
+	      ("Bozhidar Batsov" . "bozhidar@batsov.dev"))
+	     (:authors
+	      ("Sebastian Wiesner" . "swiesner@lunaryorn.com"))
+	     (:commit . "5a9ff918f91e230ae08a6bdce7ec1f107864a5e2"))])
  (flymake-guile .
 		[(0 5)
 		 ((emacs
@@ -1869,7 +1884,7 @@
 	       ("David Christiansen" . "david@davidchristiansen.dk"))
 	      (:keywords "convenience"))])
  (racket-mode .
-	      [(1 0 20240130 151349)
+	      [(1 0 20240301 121422)
 	       ((emacs
 		 (25 1)))
 	       "Racket editing, REPL, and more" tar
@@ -1971,16 +1986,18 @@
 	       ("Natalie Weizenbaum"))
 	      (:keywords "markup" "language" "css"))])
  (scad-mode .
-	    [(93 2)
+	    [(93 3)
 	     ((emacs
-	       (27 1)))
+	       (27 1))
+	      (compat
+	       (29 1 4 4)))
 	     "A major mode for editing OpenSCAD code" tar
 	     ((:url . "https://github.com/openscad/emacs-scad-mode")
 	      (:keywords "languages")
-	      (:maintainer "Len Trigg <lenbok@gmail.com>, Daniel Mendler" . "mail@daniel-mendler.de")
-	      (:authors
-	       ("Len Trigg, Łukasz Stelmach, zk_phi, Daniel Mendler"))
-	      (:commit . "749b11df1d3041aa0a90542cba0fe5d9563c3a1f"))])
+	      (:maintainer
+	       ("Len Trigg" . "lenbok@gmail.com")
+	       ("Daniel Mendler" . "mail@daniel-mendler.de"))
+	      (:commit . "8d5650c5cfee96c42d64427bfcadb89f6bda66be"))])
  (scala-mode .
 	     [(0 23)
 	      nil "Major mode for editing Scala" tar
@@ -2337,7 +2354,7 @@
 	       ("Daniel Semyonov" . "daniel@dsemy.com"))
 	      (:commit . "93ae3db40d07ae15e61d34c3c3870de5d2fce2de"))])
  (visual-fill-column .
-		     [(2 5 2)
+		     [(2 6 2)
 		      ((emacs
 			(25 1)))
 		      "fill-column for visual-line-mode" tar
@@ -2345,16 +2362,16 @@
 		       (:maintainer "Joost Kremers" . "joostkremers@fastmail.fm")
 		       (:authors
 			("Joost Kremers" . "joostkremers@fastmail.fm"))
-		       (:commit . "5e74afe39d0afb911dae51af4e7a60ccdf9701f3"))])
+		       (:commit . "5b9f9309bdf040b72bb2c3d99d1d8a0f0d98c308"))])
  (web-mode .
-	   [(17 3 18)
+	   [(17 3 19)
 	    ((emacs
 	      (23 1)))
 	    "major mode for editing web templates" tar
 	    ((:url . "https://web-mode.org")
 	     (:keywords "languages")
 	     (:maintainer "François-Xavier Bois" . "fxbois@gmail.com")
-	     (:commit . "208f32b98873f5381f6516f9de8424418e3cf16f"))])
+	     (:commit . "10f1269ab1007ab3d5fe018c83bb82c979617bfd"))])
  (webpaste .
 	   [(3 2 2)
 	    ((emacs
@@ -2458,14 +2475,14 @@
 	      (:authors
 	       ("Le Wang")))])
  (xah-fly-keys .
-	       [(24 21 20240213125545)
+	       [(24 21 20240220095736)
 		((emacs
 		  (27)))
 		"ergonomic modal keybinding minor mode." tar
 		((:url . "http://xahlee.info/emacs/misc/xah-fly-keys.html")
 		 (:keywords "convenience" "vi" "vim" "ergoemacs" "keybinding")
 		 (:maintainer "Xah Lee" . "xah@xahlee.org")
-		 (:commit . "56af7d65896cd285fe46c53828087f4d727387f3"))])
+		 (:commit . "a36a3c44bfd008770c8e83ae367b30c408bad4d5"))])
  (xkcd .
        [(1 1)
 	((json
