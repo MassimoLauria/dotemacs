@@ -503,7 +503,7 @@ info. For that I configure the ~dashboard~ package.
   :init
   (setq dashboard-banner-logo-title "La matematica sono i mezzi di produzione")
   (setq dashboard-startup-banner 'logo)
-  (setq dashboard-items '((recents   . 10)))
+  (setq dashboard-items '((recents   . 10) (bookmarks . 5)))
 
   ;; Alignment
   (setq dashboard-center-content t)
