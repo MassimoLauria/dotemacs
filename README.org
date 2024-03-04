@@ -503,15 +503,7 @@ info. For that I configure the ~dashboard~ package.
   :init
   (setq dashboard-banner-logo-title "La matematica sono i mezzi di produzione")
   (setq dashboard-startup-banner 'logo)
-  (setq dashboard-items '((recents   . 5)
-                          (bookmarks . 5)
-                          (agenda    . 5)))
-  (setq dashboard-item-names '(("Recent Files:"  .
-                                "File recenti:")
-                               ("Bookmarks:"  .
-                                "Segnalibri:")
-                               ("Agenda for the coming week:"
-                                . "Agenda:")))
+  (setq dashboard-items '((recents   . 10)))
 
   ;; Alignment
   (setq dashboard-center-content t)
@@ -529,7 +521,8 @@ info. For that I configure the ~dashboard~ package.
   :config
   ;; Open the dashboard at startup on new frames
   (dashboard-setup-startup-hook)
-  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))))
+  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
+  )
 
 #+END_SRC
 
