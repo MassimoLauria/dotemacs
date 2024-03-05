@@ -121,29 +121,29 @@
 
 
 
-(defun LaTeX-up-list ()
-  "A function similar to standard Emacs `up-list', but if we are
-outside of a syntax block, it attempts to escape math from
-delimiters. It substitues `up-list' the first time AucTeX is
-started."
-  (interactive)
-  (condition-case X
-      ;; Try to jump to an outer syntax block.
-      (up-list)
-    ('error
-     ;; If inside math mode of LaTeX-mode, escape from it.
-     (if (or
-               (eq (get-text-property (point) 'face) 'font-latex-math-face)
-               (member 'font-latex-math-face (get-text-property (point) 'face)))
-         (save-match-data (search-forward-regexp "\\$?\\$"))))))
+;; (defun LaTeX-up-list ()
+;;   "A function similar to standard Emacs `up-list', but if we are
+;; outside of a syntax block, it attempts to escape math from
+;; delimiters. It substitues `up-list' the first time AucTeX is
+;; started."
+;;   (interactive)
+;;   (condition-case X
+;;       ;; Try to jump to an outer syntax block.
+;;       (up-list)
+;;     ('error
+;;      ;; If inside math mode of LaTeX-mode, escape from it.
+;;      (if (or
+;;                (eq (get-text-property (point) 'face) 'font-latex-math-face)
+;;                (member 'font-latex-math-face (get-text-property (point) 'face)))
+;;          (save-match-data (search-forward-regexp "\\$?\\$"))))))
 
-;; Install LaTeX improved `up-list' command
-(add-hook 'LaTeX-mode-hook
-          (lambda()
-            (if (and
-                 (boundp 'massimo-keyboard-mode-map)
-                 (fboundp 'sp-up-sexp))
-                (define-key massimo-keyboard-mode-map (kbd "M-p") 'sp-up-sexp))))
+;; ;; Install LaTeX improved `up-list' command
+;; (add-hook 'LaTeX-mode-hook
+;;           (lambda()
+;;             (if (and
+;;                  (boundp 'massimo-keyboard-mode-map)
+;;                  (fboundp 'sp-up-sexp))
+;;                 (define-key massimo-keyboard-mode-map (kbd "M-p") 'sp-up-sexp))))
 
 
 
@@ -239,8 +239,43 @@ It either tries \"lacheck\" or \"chktex\"."
 (add-hook
  'LaTeX-mode-hook
  (lambda () (setq TeX-master (or
+                              (mxl/projectile-TeX-master)
+                              (mxl/latexmkrc-TeX-master)
                               (guess-TeX-master (buffer-file-name))
                               t))))
+
+(defun mxl/guess-TeX-master ()
+  "Try to guess the TeX-master document in some ways"
+  (let ((candidates ())
+        (curdir (file-name-directory buffer-file-name))
+        (prjdir (and (boundp 'projectile-project-root)
+                     (projectile-project-root))))
+    (when curdir
+      (add-to-list 'candidates (concat curdir "main.tex"))
+      (add-to-list 'candidates (concat curdir ".latexmkrc"))
+      )
+    (when prjdir
+      (add-to-list 'candidates (concat prjdir "main.tex"))
+      (add-to-list 'candidates (concat prjdir ".latexmkrc"))
+      )
+  ))
+
+(defun mxl/projectile-TeX-master ()
+  "Try to get the TeX-master file in the project root"
+  (let ((candidate (concat (projectile-project-root) "main.tex")))
+    (and (projectile-project-root)
+         (file-exists-p candidate)
+         candidate)))
+
+(defun mxl/latexmkrc-TeX-master ()
+  "Try to get the TeX-master from latexmkrc"
+  (with-temp-buffer
+    (insert-file-contents (concat (projectile-project-root) ".latexmkrc"))
+    (re-search-forward
+     "@default_files\\ *=\\ *(\\ *'\\(.*tex\\)'\\ *)" nil t)
+    (concat (projectile-project-root) (match-string 1))
+    ))
+
 
 (defun guess-TeX-master (filename)
   "Guess the master file for FILENAME from currently open .tex files."
