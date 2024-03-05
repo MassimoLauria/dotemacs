@@ -238,49 +238,63 @@ It either tries \"lacheck\" or \"chktex\"."
 ;; Guess master file
 (add-hook
  'LaTeX-mode-hook
- (lambda () (setq TeX-master (or
-                              (mxl/projectile-TeX-master)
-                              (mxl/latexmkrc-TeX-master)
-                              (guess-TeX-master (buffer-file-name))
-                              t))))
+ (lambda () (setq TeX-master (or (mxl/TeX-master-from-latexmkrc)
+                                 (mxl/TeX-master-is-maintex)
+                                 (mxl/TeX-master-from-docroot)
+                                 (mxl/TeX-master-from-open-buffers)
+                                 t))
+   (if (not (eq TeX-master t))
+       (message "TeX master document: %s" TeX-master))))
 
-(defun mxl/guess-TeX-master ()
-  "Try to guess the TeX-master document in some ways"
-  (let ((candidates ())
-        (curdir (file-name-directory buffer-file-name))
-        (prjdir (and (boundp 'projectile-project-root)
-                     (projectile-project-root))))
-    (when curdir
-      (add-to-list 'candidates (concat curdir "main.tex"))
-      (add-to-list 'candidates (concat curdir ".latexmkrc"))
-      )
-    (when prjdir
-      (add-to-list 'candidates (concat prjdir "main.tex"))
-      (add-to-list 'candidates (concat prjdir ".latexmkrc"))
-      )
-  ))
+(defun mxl/current-TeX-docroot ()
+  "Try to guess the base directory of a TeX project
 
-(defun mxl/projectile-TeX-master ()
-  "Try to get the TeX-master file in the project root"
-  (let ((candidate (concat (projectile-project-root) "main.tex")))
-    (and (projectile-project-root)
-         (file-exists-p candidate)
+First tries the project root, if defined by `projectile',
+otherwise use the directory containing the current file."
+  (or (and (boundp 'projectile-project-root)
+           (projectile-project-root))
+      (file-name-directory buffer-file-name)))
+
+(defun mxl/TeX-master-is-maintex ()
+  "Use main.tex as TeX-master document"
+  (let ((candidate (concat (mxl/current-TeX-docroot) "main.tex")))
+    (and (file-exists-p candidate)
          candidate)))
 
-(defun mxl/latexmkrc-TeX-master ()
+(defun mxl/TeX-master-from-latexmkrc ()
   "Try to get the TeX-master from latexmkrc"
-  (with-temp-buffer
-    (insert-file-contents (concat (projectile-project-root) ".latexmkrc"))
-    (re-search-forward
-     "@default_files\\ *=\\ *(\\ *'\\(.*tex\\)'\\ *)" nil t)
-    (concat (projectile-project-root) (match-string 1))
-    ))
+  (when (file-exists-p (concat (mxl/current-TeX-docroot) ".latexmkrc"))
+    (with-temp-buffer
+      (insert-file-contents (concat (mxl/current-TeX-docroot) ".latexmkrc"))
+      (re-search-forward
+       "@default_files\\ *=\\ *(\\ *'\\(.*tex\\)'\\ *)" nil t)
+      (concat (mxl/current-TeX-docroot) (match-string 1)))))
 
+(defun mxl/TeX-master-from-docroot ()
+  "Guess the master file for tex files in the document root."
+  (let* ((candidate nil)
+         (basedir (mxl/current-TeX-docroot))
+         (filename (file-relative-name buffer-file-name basedir))
+         (file-list (directory-files basedir t "\\.tex$")))
+    (dolist (file file-list)
+      (with-temp-buffer
+        (insert-file-contents file nil nil nil t)
+        (goto-char (point-min))
+        (if (re-search-forward (concat "\\\\input{" filename "}") nil t)
+            (setq candidate file))
+        (if (re-search-forward (concat "\\\\include{"
+                                       (file-name-sans-extension filename) "}")
+                               nil t)
+            (setq candidate file))))
+    candidate))
 
-(defun guess-TeX-master (filename)
-  "Guess the master file for FILENAME from currently open .tex files."
+(defun mxl/TeX-master-from-open-buffers ()
+  "Guess the master file for FILENAME from currently open .tex files.
+
+I copied this function from somewhere on the web.
+"
   (let ((candidate nil)
-        (filename (file-name-nondirectory filename)))
+        (filename (file-name-nondirectory buffer-file-name)))
     (save-excursion
       (dolist (buffer (buffer-list))
         (with-current-buffer buffer
@@ -293,8 +307,6 @@ It either tries \"lacheck\" or \"chktex\"."
                       (setq candidate file))
                   (if (re-search-forward (concat "\\\\include{" (file-name-sans-extension filename) "}") nil t)
                       (setq candidate file))))))))
-    (if candidate
-        (message "TeX master document: %s" (file-name-nondirectory candidate)))
     candidate))
 
 
