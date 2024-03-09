@@ -14,13 +14,24 @@
   (aw-leading-char-face ((t (:height 1.0)))))
 
 
-;; Force the some buffers to be displayed the "bottom" window, i.e.
-;; windows that is reusable (but not locked).
-(defun force-window-at-bottom (regexp)
+;; Force the some buffers to be displayed at the "bottom" of the frame.
+;; The windows that is reusable (but not locked).
+(defun force-window-at-bottom-of-frame (regexp)
   (add-to-list 'display-buffer-alist
                `(,regexp
                  (display-buffer-reuse-window
                   display-buffer-at-bottom)
+                 (reusable-frames . visible)
+                 (side            . bottom)
+                 (window-height   . 0.4))))
+
+;; Force the some buffers to be displayed at the "bottom" of the
+;; current window. The windows that is reusable (but not locked).
+(defun force-window-at-bottom-of-window (regexp)
+  (add-to-list 'display-buffer-alist
+               `(,regexp
+                 (display-buffer-reuse-window
+                  display-buffer-below-selected)
                  (reusable-frames . visible)
                  (side            . bottom)
                  (window-height   . 0.4))))
@@ -51,5 +62,6 @@
 (force-window-at-bottom (rx bos "*Metahelp*" eos))
 (force-window-at-bottom (rx bos "*Tex errors*" eos))
 (force-window-at-bottom (rx bos "*Tex Help*" eos))
+(force-window-at-bottom-of-window (rx bos "*compilation*"))
 
 (provide 'init-windows)
