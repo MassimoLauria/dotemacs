@@ -54,14 +54,14 @@
     (quit-window nil window)))
 
 
-(force-window-at-bottom (rx bos "*Flycheck errors*" eos))
-(force-window-at-bottom (rx bos "*Flycheck error messages*" eos))
-(force-window-at-bottom (rx bos "*Help*" eos))
-(force-window-at-bottom (rx bos "*helpful"))
-(force-window-at-bottom (rx bos "*Apropos*" eos))
-(force-window-at-bottom (rx bos "*Metahelp*" eos))
-(force-window-at-bottom (rx bos "*Tex errors*" eos))
-(force-window-at-bottom (rx bos "*Tex Help*" eos))
+(force-window-at-bottom-of-window (rx bos "*Flycheck errors*" eos))
+(force-window-at-bottom-of-window (rx bos "*Flycheck error messages*" eos))
+(force-window-at-bottom-of-frame (rx bos "*Help*" eos))
+(force-window-at-bottom-of-frame (rx bos "*helpful"))
+(force-window-at-bottom-of-frame (rx bos "*Apropos*" eos))
+(force-window-at-bottom-of-frame (rx bos "*Metahelp*" eos))
+(force-window-at-bottom-of-window (rx bos "*Tex errors*" eos))
+(force-window-at-bottom-of-window (rx bos "*Tex Help*" eos))
 (force-window-at-bottom-of-window (rx bos "*compilation*"))
 
 (provide 'init-windows)
