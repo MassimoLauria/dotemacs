@@ -354,6 +354,7 @@ is already narrowed."
   :bind ([remap fill-paragraph] . unfill-toggle))
 
 (use-package projectile
+  :commands (projectile-mode)
   :init
   (setq compilation-read-command nil)
   (setq projectile-current-project-on-switch t)
@@ -375,6 +376,16 @@ is already narrowed."
                                     :run "go run ."
                                     :test "go test ./..."
                                     :test-suffix "_test"))
+
+(use-package helm-projectile
+  :after projectile
+  :config
+  (setq helm-mini-default-sources '(helm-source-buffers-list
+                                    helm-source-recentf
+                                    helm-source-bookmarks
+                                    helm-source-projectile-files-list
+                                    helm-source-buffer-not-found)))
+
 
 
 (use-package pdf-outline

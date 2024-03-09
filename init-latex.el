@@ -67,6 +67,7 @@
 (add-hook 'TeX-mode-hook 'turn-on-reftex)
 (add-hook 'TeX-mode-hook 'turn-on-flyspell)
 (add-hook 'TeX-mode-hook 'TeX-source-specials-mode)
+(add-hook 'TeX-mode-hook 'projectile-mode)
 
 ;; All TeX made with a single keystroke (BibTeX must run at least once).
 (require-maybe 'TeX-texify)
