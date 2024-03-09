@@ -503,16 +503,12 @@ info. For that I configure the ~dashboard~ package.
   :init
   (setq dashboard-banner-logo-title "La matematica sono i mezzi di produzione")
   (setq dashboard-startup-banner 'logo)
-  (setq dashboard-items '((recents   . 10) (bookmarks . 5)))
-
+  (setq dashboard-items '((recents   . 8) (bookmarks . 8)))
+  (setq dashboard-hide-cursor nil)
+  
   ;; Alignment
   (setq dashboard-center-content t)
-  (setq dashboard-vertically-center-content t)
-
-  ;; Icons in the dashboard
-  (setq dashboard-display-icons-p 'display-graphic-p)     ; display icons on both GUI and terminal
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
+  (setq dashboard-vertically-center-content nil)
 
   ;; No footer or loading time info
   (setq dashboard-set-init-info nil)
@@ -521,8 +517,7 @@ info. For that I configure the ~dashboard~ package.
   :config
   ;; Open the dashboard at startup on new frames
   (dashboard-setup-startup-hook)
-  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
-  )
+  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))))
 
 #+END_SRC
 
