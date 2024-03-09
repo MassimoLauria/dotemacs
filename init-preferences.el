@@ -81,8 +81,25 @@
 
 (use-package beacon ; flashes the cursor's line when you scroll
   :diminish ""
+  :custom
+  (beacon-size 70)
+  (beacon-blink-duration 0.1)  ;; fade duration
+  (beacon-blink-delay 0.2)     ;; time before fading
+  (beacon-blink-when-point-moves-horizontally nil)
+  (beacon-blink-when-point-moves-vertically 5)
+  (beacon-blink-when-buffer-changes t)
+  (beacon-blink-when-window-scrolls t)
+  (beacon-blink-when-window-changes t)
+  (beacon-blink-when-focused t)
+  (beacon-dont-blink-commands '(next-line
+                                previous-line
+                                forward-line))
+
   :config
+  ;; Avoid beacon during isearch
+  (add-hook 'beacon-dont-blink-predicates #'(lambda () (bound-and-true-p isearch-mode)))
   (beacon-mode 1))
+
 
 (use-package which-key
   :diminish ""
