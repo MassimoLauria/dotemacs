@@ -118,37 +118,6 @@
    (t                                   ; default
     (call-interactively 'TeX-command-master))))
 
-
-
-
-;; (defun LaTeX-up-list ()
-;;   "A function similar to standard Emacs `up-list', but if we are
-;; outside of a syntax block, it attempts to escape math from
-;; delimiters. It substitues `up-list' the first time AucTeX is
-;; started."
-;;   (interactive)
-;;   (condition-case X
-;;       ;; Try to jump to an outer syntax block.
-;;       (up-list)
-;;     ('error
-;;      ;; If inside math mode of LaTeX-mode, escape from it.
-;;      (if (or
-;;                (eq (get-text-property (point) 'face) 'font-latex-math-face)
-;;                (member 'font-latex-math-face (get-text-property (point) 'face)))
-;;          (save-match-data (search-forward-regexp "\\$?\\$"))))))
-
-;; ;; Install LaTeX improved `up-list' command
-;; (add-hook 'LaTeX-mode-hook
-;;           (lambda()
-;;             (if (and
-;;                  (boundp 'massimo-keyboard-mode-map)
-;;                  (fboundp 'sp-up-sexp))
-;;                 (define-key massimo-keyboard-mode-map (kbd "M-p") 'sp-up-sexp))))
-
-
-
-
-
 ;; To help collaboration, in LaTeX file sometimes I need to use soft
 ;; word wrapping. I keep a low value of fill-column so that I can do
 ;; hard wrapping regardless but auto-fill must be off.

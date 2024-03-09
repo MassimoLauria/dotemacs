@@ -156,7 +156,9 @@ Ignore if the path does not exists."
 
 ** Keyboard
 
-   Naturally I have my keyboard minor mode.
+I have my keyboard setup in a  minor mode. This is mostly for editing,
+movements and things like that.  Commands for specific tools are setup
+in the appropriate sections.
 
 #+BEGIN_SRC emacs-lisp
 ;; My keyboard configuration
@@ -168,12 +170,26 @@ Ignore if the path does not exists."
   :demand t)
 #+END_SRC
 
-  I often  type =C-x C-z=  by mistake,  which hides the  current Emacs
-  frame via =susped-frame=. I hate it.
+I often type =C-x C-z= by mistake, which hides the current Emacs frame
+via =susped-frame=. I hate it.
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-x C-z") 'nil)
+(global-unset-key (kbd "C-x C-z"))
 #+END_SRC
+
+Having  ~previous-buffer~  and  ~next-buffer~  on the  arrow  keys  is
+a trap. I  tend to use reach for these  command automatically and then
+I find myself going  around buffer until I find the  one I was looking
+for.  Too inefficient.  I'd  rather  disable such  keys  and use  some
+version of ~switch-to-buffer~.
+
+#+BEGIN_SRC emacs-lisp
+(global-unset-key (kbd "C-x <left>"))
+(global-unset-key (kbd "C-x <right>"))
+(global-unset-key (kbd "C-x C-<left>"))
+(global-unset-key (kbd "C-x C-<right>"))
+#+END_SRC
+
 
 When I delete  the rest of a line  via =C-k=, I want it  to remove the
 newline  in the  end as  well.  But only  when  the cursor  is at  the
@@ -181,6 +197,16 @@ first column.
 
 #+BEGIN_SRC emacs-lisp
 (setq kill-whole-line t)
+#+END_SRC
+
+Function keys: easy to reach commands that are not immediately related
+to editing.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key [f1]  'help)
+;; (global-set-key [f2] 'ispell-buffer)  ;; in the spellcheck setup
+(global-set-key [f3]  'kmacro-start-macro-or-insert-counter)
+(global-set-key [f4]  'kmacro-end-or-call-macro)
 #+END_SRC
 
 
@@ -1304,7 +1330,6 @@ C/C++ code.
                ))))
 #+END_SRC
 
-
 ** Emacs Lisp
 
    Emacs  lisp is  pretty integrated  in Emacs,  dah! Nevertheless  in
@@ -1327,6 +1352,28 @@ C/C++ code.
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
 #+END_SRC
+
+** Scheme
+
+I am not a  scheme programmer but just in case I  want to finally read
+"Structure  and  Interpretation  of  Computer Programs"  I  have  some
+minimal setup ready.
+
+#+BEGIN_SRC emacs-lisp
+(use-package xscheme
+  :config 
+  (setq scheme-program-name
+        (or
+         (executable-find "mit-scheme")
+         (executable-find "/usr/local/bin/mit-scheme")
+         (executable-find "/Applications/MITScheme.app/Contents/Resources/mit-scheme")
+         "scheme"
+         ))
+  (if (file-name-directory scheme-program-name)
+      (add-to-list 'exec-path (file-name-directory scheme-program-name) 'append))
+  :commands (run-scheme scheme-mode))
+#+END_SRC
+
 
 ** Shell programming
 

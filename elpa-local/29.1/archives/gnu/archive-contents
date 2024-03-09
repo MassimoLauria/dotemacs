@@ -19,7 +19,7 @@
 	 ("Leo Liu" . "sdl.web@gmail.com"))
 	(:commit . "90c90a80322aa9f26ce88f2f24a224afc4c994b8"))])
  (activities .
-	     [(0 5 1)
+	     [(0 6)
 	      ((emacs
 		(29 1))
 	       (persist
@@ -30,7 +30,7 @@
 	       (:maintainer "Adam Porter" . "adam@alphapapa.net")
 	       (:authors
 		("Adam Porter" . "adam@alphapapa.net"))
-	       (:commit . "12e2c3a29b19f999f73a976b4b6a63644cce6563"))])
+	       (:commit . "7db998d883e81c044a2a58e1cd6c668f07189c84"))])
  (ada-mode .
 	   [(8 1 0)
 	    ((uniquify-files
@@ -469,7 +469,7 @@
 	     ("Kjartan Oli Agustsson" . "kjartanoli@disroot.org"))
 	    (:commit . "855a9cb092eecf1e5c17ea56c440a0200f95eb4c"))])
  (cape .
-       [(1 3)
+       [(1 4)
 	((emacs
 	  (27 1))
 	 (compat
@@ -480,7 +480,7 @@
 	 (:maintainer "Daniel Mendler" . "mail@daniel-mendler.de")
 	 (:authors
 	  ("Daniel Mendler" . "mail@daniel-mendler.de"))
-	 (:commit . "c56cd95f6df003f8928f11e8776d3a9a3eca6890"))])
+	 (:commit . "af61a4e670818f100beb6ef582449931b3965b10"))])
  (capf-autosuggest .
 		   [(0 3)
 		    ((emacs
@@ -641,7 +641,7 @@
 	    ("Daniel Mendler" . "mail@daniel-mendler.de"))
 	   (:commit . "3809be4d24a301c78d40bd00fc15bb763e0a3a2a"))])
  (consult .
-	  [(1 3)
+	  [(1 4)
 	   ((emacs
 	     (27 1))
 	    (compat
@@ -650,7 +650,7 @@
 	   ((:url . "https://github.com/minad/consult")
 	    (:keywords "matching" "files" "completion")
 	    (:maintainer "Daniel Mendler" . "mail@daniel-mendler.de")
-	    (:commit . "66f7c20899976f23494c7016ce0cd25f1b4ff2e0"))])
+	    (:commit . "0eab65fe3273c97a422c99ee426eef7f2d2dffa4"))])
  (consult-hoogle .
 		 [(0 1 1)
 		  ((emacs
@@ -1173,7 +1173,7 @@
 	       ("Markus Triska" . "triska@metalevel.at"))
 	      (:commit . "cfcdf9e42821d246b7fbc84877aa4ecacc184a1c"))])
  (eev .
-      [(20240205)
+      [(20240309)
        ((emacs
 	 (25 1)))
        "Support for e-scripts (eepitch blocks, elisp hyperlinks, etc)" tar
@@ -1182,7 +1182,7 @@
 	(:maintainer "Eduardo Ochs" . "eduardoochs@gmail.com")
 	(:authors
 	 ("Eduardo Ochs" . "eduardoochs@gmail.com"))
-	(:commit . "d8261dc70acdd78aa2c32c6a9916630ed90a0423"))])
+	(:commit . "eda749bc689591a8f43a98e002d63b4ef2d4602d"))])
  (ef-themes .
 	    [(1 5 1)
 	     ((emacs
@@ -1814,7 +1814,7 @@
 	     ("Sean Allred" . "code@seanallred.com"))
 	    (:commit . "b57b5ca5d2d0837e1fb4a4f30c051d5f3e643f0f"))])
  (greader .
-	  [(0 9 16)
+	  [(0 9 18)
 	   ((emacs
 	     (25)))
 	   "gnamù reader, send buffer contents to a speech engine." tar
@@ -1823,7 +1823,7 @@
 	    (:authors
 	     ("Michelangelo Rodriguez" . "michelangelo.rodriguez@gmail.com"))
 	    (:url . "https://elpa.gnu.org/packages/greader.html")
-	    (:commit . "e15265afa0d92af2c189a53eb0d8b7e1f33252f6"))])
+	    (:commit . "629b007e75e16d79112358899bdacb04fe9e7d63"))])
  (greenbar .
 	   [(1 1)
 	    nil "Mark comint output with \"greenbar\" background" single
@@ -2282,7 +2282,7 @@
 	 ("Protesilaos Stavrou" . "info@protesilaos.com"))
 	(:commit . "09cf249c78385502a2ead30c4fa1468cf96939f7"))])
  (listen .
-	 [(0 4)
+	 [(0 6)
 	  ((emacs
 	    (29 1))
 	   (persist
@@ -2297,7 +2297,7 @@
 	   (:maintainer "Adam Porter" . "adam@alphapapa.net")
 	   (:authors
 	    ("Adam Porter" . "adam@alphapapa.net"))
-	   (:commit . "95eb3eeb7e757d55ac4ac34882a55170b7bc94bc"))])
+	   (:commit . "644996b00acd09a62c204d68fde3917fe19de189"))])
  (llm .
       [(0 10 0)
        ((emacs
@@ -2774,7 +2774,7 @@
 	       ("Omar Antolín Camarena" . "omar@matem.unam.mx"))
 	      (:commit . "847694e78c12d903d5e3f6cb365a5d3b984db537"))])
  (org .
-      [(9 6 20)
+      [(9 6 21)
        ((emacs
 	 (26 1)))
        "Outline-based notes management and organizer" tar
@@ -2783,7 +2783,7 @@
 	(:maintainer "Bastien Guerry" . "bzg@gnu.org")
 	(:authors
 	 ("Carsten Dominik" . "carsten.dominik@gmail.com"))
-	(:commit . "fe9bc9efd127544a5cf6d1c8a49eb6152a773c02"))])
+	(:commit . "28dc5dd1ac1325ecb6bdec3e9f72997c35eebfa0"))])
  (org-contacts .
 	       [(1 1)
 		((emacs
@@ -3435,14 +3435,14 @@
 	     (:url . "https://elpa.gnu.org/packages/rnc-mode.html")
 	     (:commit . "dfee31d83208b734ed1d1fdc523565d7056db850"))])
  (rt-liberation .
-		[(6)
+		[(7)
 		 nil "Emacs interface to RT" tar
 		 ((:url . "http://www.nongnu.org/rtliber/")
 		  (:keywords "rt" "tickets")
 		  (:maintainer "Yoni Rabkin" . "yrk@gnu.org")
 		  (:authors
 		   ("Yoni Rabkin" . "yrk@gnu.org"))
-		  (:commit . "c97eff6716c2438f9052b4641fa6128bf759af96"))])
+		  (:commit . "3b98d22c76de94fae16434517b99525fabc58f31"))])
  (ruby-end .
 	   [(0 4 3)
 	    nil "Automatic insertion of end blocks for Ruby" tar
@@ -3684,16 +3684,16 @@
 	    (:maintainer "Artur Malabarba" . "emacs@endlessparentheses.com")
 	    (:url . "https://github.com/Malabarba/speed-of-thought-lisp"))])
  (spacious-padding .
-		   [(0 3 0)
+		   [(0 4 0)
 		    ((emacs
 		      (28 1)))
 		    "Increase the padding/spacing of frames and windows" tar
-		    ((:url . "https://git.sr.ht/~protesilaos/spacious-padding")
+		    ((:url . "https://github.com/protesilaos/spacious-padding")
 		     (:keywords "convenience" "focus" "writing" "presentation")
-		     (:maintainer "Protesilaos Stavrou General Issues" . "~protesilaos/general-issues@lists.sr.ht")
+		     (:maintainer "Protesilaos Stavrou" . "info@protesilaos.com")
 		     (:authors
 		      ("Protesilaos Stavrou" . "info@protesilaos.com"))
-		     (:commit . "9d96d301d5bccf192daaf00dba64bca9979dcb5a"))])
+		     (:commit . "227e6144cdd842d7d32b8cb7f587dcb53c0ea82b"))])
  (spinner .
 	  [(1 7 4)
 	   ((emacs

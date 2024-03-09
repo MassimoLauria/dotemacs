@@ -1,6 +1,6 @@
 ;;; mxl-keyboard.el --- Keybindings specific for the author habits -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010-2021  Massimo Lauria
+;; Copyright (C) 2010-2021, 2024  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: convenience
@@ -47,7 +47,7 @@ At least they are considered useful for the author.
 
 (defvar mxl-keyboard-mode-map
   (let ((map (make-sparse-keymap)))
-    ;; Movements in Text without leaving basic keyboard.
+    ;; Movements in Text without leaving homerow.
     (define-key map (kbd "M-j") 'backward-char)
     (define-key map (kbd "M-l") 'forward-char)
     (define-key map (kbd "M-i") 'previous-line)
@@ -61,6 +61,14 @@ At least they are considered useful for the author.
     ;; Paragraphs
     (define-key map (kbd "M-b") 'backward-paragraph)     ;; Fight with canonical binding
     (define-key map (kbd "M-n") 'forward-paragraph)
+
+    ;; Relatively standard movements on arrow keys I don't use them
+    ;; a lot but they work in other systems and I sometime find myself
+    ;; using them
+    (define-key map [C-left]  'backward-word)
+    (define-key map [C-right] 'forward-word)
+    (define-key map [C-up]    'backward-paragraph)
+    (define-key map [C-down]  'forward-paragraph)
 
     ;; Ripgrep
     (define-key map (kbd "C-M-s") 'helm-rg)
@@ -82,13 +90,10 @@ At least they are considered useful for the author.
     (define-key map (kbd "C-'") 'narrow-or-widen-dwim)
     (define-key map (kbd "C-;") 'iedit-mode)
 
-
-    ;; Expand region configuration
-    (define-key map (kbd "C-SPC") 'er/expand-region)
-
     ;; Zoom in/out
     (define-key map (kbd "C--") 'text-scale-decrease)
     (define-key map (kbd "C-=") 'text-scale-increase)
+    (define-key map (kbd "C-+") 'text-scale-adjust)
     (define-key map (kbd "C-0") 'text-scale-adjust)
 
     map)

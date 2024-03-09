@@ -39,7 +39,6 @@
                            elisp-slime-nav
                            epl
                            esup
-                           expand-region
                            f
                            flycheck
                            flyspell

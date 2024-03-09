@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2023  Massimo Lauria
-;; Time-stamp: "2023-12-30, 18:55 (CET) Massimo Lauria"
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2023, 2024  Massimo Lauria
+;; Time-stamp: "2024-03-09, 18:47 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -29,8 +29,8 @@
 ;;; Code:
 
 ;; Fallback configuration
-(when (< emacs-major-version 24)
-  (error "Emacs <24 not supported by default configuration. Use fallback one"))
+(when (< emacs-major-version 28)
+  (error "Emacs <28 not supported by default configuration. Use fallback one"))
 
 ;; Native compilation
 (when (and (fboundp 'native-comp-available-p)
@@ -69,6 +69,7 @@
 
 ;; Work environment customization
 (require 'init-preferences)       ; Basic editor preferences
+(require 'init-windows)           ; windows layout
 
 ;; Writing
 (require 'init-textmode)          ; Preferences for text editing
@@ -81,15 +82,11 @@
 ;; Coding
 (require 'init-autotype)          ; Automatic file filling
 (require 'init-templates)         ; Templates
+(require 'init-magit)
 
 ;; Keyboard settings
-(require 'init-global-keys)       ; global keys
 (require 'init-hyperlink)         ; keys for opening links
-(require 'init-windows)           ; windows layout
 
-;; Programming
-(require 'init-magit)
-(require 'init-scheme)
 
 ;; Writing science
 (require 'init-latex)        ; AucTeX
