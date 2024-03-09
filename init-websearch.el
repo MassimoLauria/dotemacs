@@ -1,9 +1,9 @@
 ;;; init-websearch.el --- Search Engines
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2019  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2019, 2024  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2019-01-30, 00:11 (CET) Massimo Lauria>
+;; Time-stamp: <2024-03-09, 19:05 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -27,7 +27,6 @@
 ;;; Code:
 (require 'url-util)
 
-
 (defmacro def-search-engine (name docstring func query)
   "Define a search engine lookup function.
 
@@ -35,46 +34,28 @@ NAME is a human readable search engine name.  DOCSTRING is the
 documentation string for the search engine.  FUNC is the name of
 the lookup function, QUERY is the url of the query string: the
 search string is appended to the query string."
-  `(defun ,func ()
+  `(defun ,func (&optional searchstring)
      ,docstring
      (interactive)
      (browse-url
       (concat
        ,query
-       (url-hexify-string (if mark-active
-                              (buffer-substring (region-beginning) (region-end))
-                            (read-string (concat ,name ": "))))))))
-
-(defmacro def-dictionary-lookup (name docstring func query)
-  "Define a dictionary lookup function for word at point.
-
-NAME is a human readable dictionary name.  DOCSTRING is the
-documentation string for the dictionary.  FUNC is the name of
-the lookup function, QUERY is the url of the query string: the
-word queried is appended to the query string."
-  `(defun ,func (&optional word)
-     ,(concat docstring "\n\nLook up either for WORD, or for the word under cursor, or query an argument if none of them applies")
-     (interactive)
-     (browse-url
-      (concat
-       ,query
-       (url-hexify-string (or
-                           word
-                           (current-word t nil)
-                           (read-string (concat ,name ": "))
-                           ))))))
-
-
+       (url-hexify-string (or searchstring
+                              (if mark-active
+                                  (buffer-substring (region-beginning)
+                                                    (region-end)))
+                              (read-string (concat ,name ": ")
+                                           (current-word t nil))))))))
 
 ;;
 ;; Google engines
 ;;
 (def-search-engine "Google"
-  "Search with Google search engine."
+  "Search with Google"
   google
   "http://www.google.com/search?ie=utf-8&oe=utf-8&q=")
 (def-search-engine "Google Scholar"
-  "Search with Google Scholar, and academic search engine."
+  "Search with Google Scholar"
   scholar
   "http://scholar.google.com/scholar?hl=it&q=")
 (def-search-engine "Translate to English"
@@ -125,7 +106,7 @@ word queried is appended to the query string."
   "Search on Wolfram Alpha"
   al
   "http://www.wolframalpha.com/input/?i=")
-(def-search-engine "OEIS" 
+(def-search-engine "OEIS"
   "Search in OnLine Encyclopedia of Integer Sequences"
   oeis
   "http://oeis.org/search?q=")
@@ -134,35 +115,30 @@ word queried is appended to the query string."
 ;;
 ;; Dictionary and thesaurus lookup
 ;;
-(def-dictionary-lookup "The Free Dictionary"
+(def-search-engine "The Free Dictionary"
   "Look up for a word in The Free Dictionary."
   freedict
   "http://www.thefreedictionary.com/_/search.aspx?pid=osearch&word=")
 
-(def-dictionary-lookup "Oxford Dictionary"
+(def-search-engine "Oxford Dictionary"
   "Look up for a word in Oxford Dictionary Online"
   dict
   "https://en.oxforddictionaries.com/search?filter=dictionary&query=")
 
-(def-dictionary-lookup "Oxford Dictionary (Thesaurus)"
+(def-search-engine "Oxford Dictionary (Thesaurus)"
   "Look up for a word in Thesaurus.com."
   thes
   "https://en.oxforddictionaries.com/search?filter=thesaurus&query=")
 
 
 ;; Programming languages references
-(def-dictionary-lookup "C++ Reference"
+(def-search-engine "Search in C++ Reference"
   "Search in cppreference.com."
   cpphelp
   "http://en.cppreference.com/mwiki/index.php?search=")
 
-(def-dictionary-lookup "Python 2 help"
-  "Search in Python 2 documentation."
-  py2help
-"https://docs.python.org/2/search.html?q=")
-
-(def-dictionary-lookup "Python 3 help"
-  "Search in Python 3 documentation."
+(def-search-engine "Search in Python Doc"
+  "Search in Python documentation."
   pyhelp
 "https://docs.python.org/3/search.html?q=")
 
