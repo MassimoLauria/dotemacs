@@ -277,6 +277,7 @@ is already narrowed."
 
 
 (defun helm-setup-global-key ()
+  "Setup/Teardown the global key bindings related to helm"
   (interactive)
   (if helm-mode (progn
       (global-set-key (kbd "C-x C-b") 'helm-mini)
@@ -295,8 +296,6 @@ is already narrowed."
     (global-set-key (kbd "M-x"    ) 'execute-extended-command)
     (global-set-key (kbd "M-y"    ) 'yank-pop)
     (global-set-key (kbd "M-`"    ) 'nil)))
-
-
 
 (use-package helm
   :bind (:map helm-map
