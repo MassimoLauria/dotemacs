@@ -279,6 +279,7 @@ is already narrowed."
   :bind (( "C-x C-b" . helm-mini)
          ( "C-x b"   . helm-mini)
          ( "C-x C-r" . helm-mini)
+         ( "M-SPC"   . helm-mini)
          ( "C-x C-f" . helm-find-files)
          ( "M-x"     . helm-M-x)
          ( "M-y"     . helm-show-kill-ring)
