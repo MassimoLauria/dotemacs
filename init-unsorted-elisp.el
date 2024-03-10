@@ -275,16 +275,31 @@ is already narrowed."
       (helm-ff-toggle-skip-boring-files))))
 
 
+
+(defun helm-setup-global-key ()
+  (interactive)
+  (if helm-mode (progn
+      (global-set-key (kbd "C-x C-b") 'helm-mini)
+      (global-set-key (kbd "C-x b"  ) 'helm-mini)
+      (global-set-key (kbd "C-x C-r") 'helm-mini)
+      (global-set-key (kbd "M-SPC"  ) 'helm-mini)
+      (global-set-key (kbd "C-x C-f") 'helm-find-files)
+      (global-set-key (kbd "M-x"    ) 'helm-M-x)
+      (global-set-key (kbd "M-y"    ) 'helm-show-kill-ring)
+      (global-set-key (kbd "M-`"    ) 'helm-resume))
+    (global-set-key (kbd "C-x C-b") 'switch-to-buffer)
+    (global-set-key (kbd "C-x b"  ) 'switch-to-buffer)
+    (global-set-key (kbd "C-x C-r") 'recentf)
+    (global-set-key (kbd "M-SPC"  ) 'nil)
+    (global-set-key (kbd "C-x C-f") 'find-files)
+    (global-set-key (kbd "M-x"    ) 'execute-extended-command)
+    (global-set-key (kbd "M-y"    ) 'yank-pop)
+    (global-set-key (kbd "M-`"    ) 'nil)))
+
+
+
 (use-package helm
-  :bind (( "C-x C-b" . helm-mini)
-         ( "C-x b"   . helm-mini)
-         ( "C-x C-r" . helm-mini)
-         ( "M-SPC"   . helm-mini)
-         ( "C-x C-f" . helm-find-files)
-         ( "M-x"     . helm-M-x)
-         ( "M-y"     . helm-show-kill-ring)
-         ( "M-`"     . helm-resume)
-         :map helm-map
+  :bind (:map helm-map
          ( "M-`"  . helm-keyboard-quit)
          ( "M-i"  . helm-previous-line)
          ( "M-k"  . helm-next-line)
@@ -334,6 +349,7 @@ is already narrowed."
   :init
   (setq helm-display-header-line t)
   (setq helm-ff-skip-boring-files t)
+  (add-hook 'helm-mode-hook 'helm-setup-global-key)
   :config
   (setq helm-move-to-line-cycle-in-source nil)
   (helm-mode)
