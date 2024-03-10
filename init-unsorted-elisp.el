@@ -292,7 +292,7 @@ is already narrowed."
     (global-set-key (kbd "C-x b"  ) 'switch-to-buffer)
     (global-set-key (kbd "C-x C-r") 'recentf)
     (global-set-key (kbd "M-SPC"  ) 'nil)
-    (global-set-key (kbd "C-x C-f") 'find-files)
+    (global-set-key (kbd "C-x C-f") 'find-file)
     (global-set-key (kbd "M-x"    ) 'execute-extended-command)
     (global-set-key (kbd "M-y"    ) 'yank-pop)
     (global-set-key (kbd "M-`"    ) 'nil)))
