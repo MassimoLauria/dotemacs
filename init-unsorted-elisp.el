@@ -342,9 +342,10 @@ is already narrowed."
          ( "M-j"  . backward-kill-word)
          ( "M-l"  . helm-maybe-exit-minibuffer)
          ( "M-u"  . helm-previous-source)
-         ( "M-o"  . helm-next-source))
-         ( "M-;"  . helm-select-action)
+         ( "M-o"  . helm-next-source)
+         ( "M-;"  . helm-select-action))
   :diminish helm-mode
+  :demand t
   :init
   (setq helm-display-header-line t)
   (setq helm-ff-skip-boring-files t)
