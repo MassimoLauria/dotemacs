@@ -531,6 +531,8 @@ info. For that I configure the ~dashboard~ package.
   (setq dashboard-startup-banner 'logo)
   (setq dashboard-items '((recents   . 8) (bookmarks . 8)))
   (setq dashboard-hide-cursor nil)
+
+  (setq dashboard-force-refresh t)
   
   ;; Alignment
   (setq dashboard-center-content t)

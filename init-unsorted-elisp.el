@@ -298,6 +298,7 @@ is already narrowed."
     (global-set-key (kbd "M-`"    ) 'nil)))
 
 (use-package helm
+  :demand t
   :bind (:map helm-map
          ( "M-`"  . helm-keyboard-quit)
          ( "M-i"  . helm-previous-line)
@@ -372,6 +373,7 @@ is already narrowed."
 
 (use-package projectile
   :commands (projectile-mode)
+  :demand t
   :init
   (setq compilation-read-command nil)
   (setq projectile-current-project-on-switch t)
@@ -383,6 +385,7 @@ is already narrowed."
               ("<f11>" . previous-error)
               ("<f12>" . next-error))
   :config
+  (projectile-mode)
   (projectile-register-project-type 'latexmk '(".latexmkrc")
                                     :project-file ".latexmkrc"
                                     :compile "latexmk"
