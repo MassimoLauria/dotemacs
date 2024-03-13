@@ -298,7 +298,6 @@ is already narrowed."
     (global-set-key (kbd "M-`"    ) 'nil)))
 
 (use-package helm
-  :demand t
   :bind (:map helm-map
          ( "M-`"  . helm-keyboard-quit)
          ( "M-i"  . helm-previous-line)
