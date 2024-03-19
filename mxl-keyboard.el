@@ -70,9 +70,6 @@ At least they are considered useful for the author.
     (define-key map [C-up]    'backward-paragraph)
     (define-key map [C-down]  'forward-paragraph)
 
-    ;; Ripgrep
-    (define-key map (kbd "C-M-s") 'helm-rg)
-
     ;; Deletion keys
     (define-key map (kbd "M-e")  'backward-kill-word)
     (define-key map (kbd "M-r")  'kill-word)

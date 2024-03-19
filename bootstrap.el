@@ -25,6 +25,14 @@
                            pdf-tools
                            doom-modeline
                            dashboard
+                           ;; minibuffer completion
+                           vertico
+                           embark
+                           marginalia
+                           orderless
+                           consult
+                           consult-yasnippet
+                           consult-projectile
                            ;; others
                            ace-window
                            async
@@ -32,6 +40,8 @@
                            bind-key
                            calibredb
                            cmake-mode
+                           citar
+                           citar-embark
                            company
                            dash
                            deferred
@@ -49,8 +59,6 @@
                            go-mode
                            graphviz-dot-mode
                            helm-bibtex
-                           helm-c-yasnippet
-                           helm-rg
                            helm-recoll
                            helm-swoop
                            helm-org-rifle

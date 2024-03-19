@@ -280,6 +280,7 @@ is already narrowed."
   "Setup/Teardown the global key bindings related to helm"
   (interactive)
   (if helm-mode (progn
+      (vertico-mode -1)
       (global-set-key (kbd "C-x C-b") 'helm-mini)
       (global-set-key (kbd "C-x b"  ) 'helm-mini)
       (global-set-key (kbd "C-x C-r") 'helm-mini)
@@ -288,6 +289,7 @@ is already narrowed."
       (global-set-key (kbd "M-x"    ) 'helm-M-x)
       (global-set-key (kbd "M-y"    ) 'helm-show-kill-ring)
       (global-set-key (kbd "M-`"    ) 'helm-resume))
+    (vertico-mode 1)
     (global-set-key (kbd "C-x C-b") 'switch-to-buffer)
     (global-set-key (kbd "C-x b"  ) 'switch-to-buffer)
     (global-set-key (kbd "C-x C-r") 'recentf)
@@ -358,13 +360,6 @@ is already narrowed."
     ;; Hidden files are not shown in helm-find-file
   (customize-set-variable 'helm-boring-file-regexp-list
                           (cons "^\\..+" helm-boring-file-regexp-list)))
-
-(use-package helm-rg                    ;
-  :commands (helm-rg)
-  :init
-  (defalias 'rg 'helm-rg "RipGrep in the current folder"))
-
-
 
 ;; Fill/unfill paragraph
 (use-package unfill

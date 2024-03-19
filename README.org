@@ -419,29 +419,29 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
     (setq modus-themes-mode-line '(accented borderless) ;; customizations for
           modus-themes-region '(accented bg-only))      ;; version <4 shipped with
                                                         ;; with Emacs 29.1
-	
+
     ;; change defaults in modus themes
     (setq modus-themes-common-palette-overrides
       '((border-mode-line-active unspecified)     ;; borderless mode-line (1)
         (border-mode-line-inactive unspecified)   ;; borderless mode-line (2)
 	    (fg-region unspecified)))                 ;; syntax visible in region
-    
+
     ;; change defaults in modus vivendi specifically
     (setq modus-vivendi-palette-overrides
       '((bg-region bg-cyan-subtle)                ;; region color
         (bg-mode-line-active bg-cyan-subtle)
-	    (fg-heading-1 keyword)))                  ;; org-heading 
+	    (fg-heading-1 keyword)))                  ;; org-heading
 
     ;; change defaults in modus operandi specifically
     (setq modus-operandi-palette-overrides
       '((bg-region bg-cyan-intense)               ;; region color
         (bg-mode-line-active bg-cyan-intense)
-	    (fg-heading-1 keyword)))                  ;; org-heading 
+	    (fg-heading-1 keyword)))                  ;; org-heading
 
     :config
     (add-hook 'modus-themes-after-load-theme-hook #'mxl/tune-modus-theme)
     (modus-themes-load-theme 'modus-vivendi)
-    (global-set-key (kbd "M-<f5>") 'modus-themes-toggle)) 
+    (global-set-key (kbd "M-<f5>") 'modus-themes-toggle))
 #+END_SRC
 
    Syntax/Spell  checkers  add  decorations  to  the  text  to  signal
@@ -474,10 +474,10 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
    well organized and nice to look at (especially with icons enabled).
    This also  makes obsolete  other customizations  hacks I  did, that
    often were incompatible with other emacs setup.
-   
+
    Note that Doom Emacs Modeline requires Nerd fonts. They are already
    be in my setup.
-   
+
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
   :ensure t
@@ -533,7 +533,7 @@ info. For that I configure the ~dashboard~ package.
   (setq dashboard-hide-cursor nil)
 
   (setq dashboard-force-refresh t)
-  
+
   ;; Alignment
   (setq dashboard-center-content t)
   (setq dashboard-vertically-center-content nil)
@@ -541,7 +541,7 @@ info. For that I configure the ~dashboard~ package.
   ;; No footer or loading time info
   (setq dashboard-set-init-info nil)
   (setq dashboard-set-footer nil)
-  
+
   :config
   ;; Open the dashboard at startup on new frames
   (dashboard-setup-startup-hook)
@@ -554,6 +554,90 @@ info. For that I configure the ~dashboard~ package.
 
 Emacs definitely can  improve in term of usability. Here  we setup few
 packages  in  order  to  make  it  more  polished  and  nice  to  use.
+
+** Minubuffer completion
+
+The  completion framework  used to  be based  on ~Helm~  but now  I am
+moving  toward the  ~vertico~,  ~marginalia~, ~orderless~,  ~consult~,
+~embark~  mechanism. It  integrates  better with  Emacs  and does  not
+require a specific implementation for every use case. Let's see how it
+goes.  Package  ~vertico~ provides  a  basic  vertical choice  in  the
+minibuffer, with  filtering and  completion, while  ~marginalia~ shows
+documentation on  the side of  the candidate.  The stuff typed  at the
+minibuffer  is used  to complete/filter  the choices,  and ~orderless~
+allows some kind of fuzzy matching.
+
+#+BEGIN_SRC emacs-lisp
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic))      ; Use orderless
+  (completion-category-defaults nil)          ; I want to be in control!
+  (completion-category-overrides
+   '((file (styles basic               ; For `tramp' hostname completion with `vertico'
+                   orderless)))))
+
+(use-package vertico
+  :ensure t
+  :custom 
+  (vertico-count 10)    ; Number of candidates to display
+  (vertico-resize nil)
+  :init
+  (require 'orderless)  ; should be loaded before
+  :config
+  ;; (vertico-reverse-mode) ;; if I want prompt on the bottom line
+  (vertico-mode)
+  (marginalia-mode))
+
+(use-package marginalia
+  :commands (marginalia-mode)
+  :custom
+  (marginalia-max-relative-age 0)
+  (marginalia-align 'left))
+#+END_SRC
+
+
+#+BEGIN_SRC emacs-lisp
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic))      ; Use orderless
+  (completion-category-defaults nil)          ; I want to be in control!
+  (completion-category-overrides
+   '((file (styles basic-remote               ; For `tramp' hostname completion with `vertico'
+                   orderless)))))
+#+END_SRC
+
+
+** Minibuffer tool: Find File / Switch buffer / Grep
+
+Package ~consult~ allows to  have different categories of completions.
+It also shows  file preview but honestly I don't  like that. It builds
+on top of ~vertico~ and has a lot of tools like ~consult-ripgrep~.
+
+I use it to search in files and to switch buffer.
+
+#+BEGIN_SRC emacs-lisp
+(use-package consult
+  :bind (("C-M-s"   . consult-ripgrep)
+         ("C-x C-b" . consult-buffer)
+         ("M-SPC"   . consult-buffer)
+         ("M-y"     . consult-yank-from-kill-ring))
+  :custom
+  (consult-preview-key 'nil) ; no preview
+  :config
+  (consult-customize
+      consult-goto-line
+      consult-line
+      :preview-key ' any)  ;; immediate preview just for these tools
+  )
+
+;; add projectile among in the switch buffer
+(use-package consult-projectile
+  :after projectile
+  :config
+  (add-to-list 'consult-buffer-sources
+               'consult-projectile--source-projectile-file 'append))
+#+END_SRC
+ 
 
 * Prose and Technical Writing
 
@@ -816,7 +900,7 @@ Woolf say? "A Room of One's Own".
    dollar is typed while at the end of a pair or inside an empty pair.
 
    Recall you can type =$= by preceding it with =C-q=.
-   
+
 #+BEGIN_SRC emacs-lisp
 (use-package math-delimiters
   :commands (math-delimiters-insert)
@@ -835,7 +919,7 @@ Woolf say? "A Room of One's Own".
 #+RESULTS:
 : math-delimiters-insert
 
-   
+
 
 
 * Org-Protocol integration
@@ -864,9 +948,9 @@ Woolf say? "A Room of One's Own".
 (setq default-tab-width 4)
 #+END_SRC
 
-   
+
 ** Trailing whitespaces
-  
+
   Removal of trailing  whitespace is useful in code. I  would do it in
   text files  as well, but  working in  parallel on LaTeX  files makes
   such  removals problematic  with  co-authors. It  makes merges  more
@@ -996,8 +1080,8 @@ Woolf say? "A Room of One's Own".
 (modify-face 'font-lock-cite-face "Light Blue" nil nil t nil nil nil nil)
 (modify-face 'font-lock-alert-face "Yellow" nil nil t nil nil nil nil)
      #+END_SRC
-     
-   
+
+
 
 ** Fixing Errors
 
@@ -1015,7 +1099,7 @@ Woolf say? "A Room of One's Own".
    latter we need to implement specific functions.
 
    First we fix some general keybindings.
-   
+
 #+BEGIN_SRC emacs-lisp
 (global-set-key [f9]  'recompile)
 (global-set-key (kbd "M-<f9>")  'compile)
@@ -1095,7 +1179,7 @@ visualizes the error
    ("M-<f12>" . mxl/toggle-flycheck-errors)
    ))
 
-(setq flycheck-global-modes '(not org-mode)) ; Use eglot/flymake 
+(setq flycheck-global-modes '(not org-mode)) ; Use eglot/flymake
 #+END_SRC
 
 For   some  language   I  use   [[https://github.com/joaotavora/eglot][Eglot]],  which   integrates  =flymake=.
@@ -1115,7 +1199,7 @@ Therefore I set some similar keybindings for it.
 
    I like the inferior  shell to scroll to bottom when  I send code to
    be executed.
-   
+
 #+BEGIN_SRC emacs-lisp
 (setq comint-scroll-to-bottom-on-input t)
 (setq comint-scroll-to-bottom-on-output t)
@@ -1123,7 +1207,7 @@ Therefore I set some similar keybindings for it.
 #+END_SRC
 
 ** Programming language support (LSP)
-   
+
    The most convenient way to  integrate language features nowadays is
    to  use a  language  server that  implements  LSP (Language  Server
    Protocol). I am currenly using  [[https://github.com/joaotavora/eglot][Eglot]] which should provide, and set
@@ -1134,7 +1218,7 @@ Therefore I set some similar keybindings for it.
    - code snippets (if =yasnippet= is enabled in advance)
    - code checking using =flymake= (I will disable it in favor of =flycheck=)
    - other features...
-  
+
 #+BEGIN_SRC emacs-lisp
 
 (defun mxl/swap-syntaxchecker()
@@ -1155,7 +1239,7 @@ Therefore I set some similar keybindings for it.
   (diminish 'eldoc-mode))
 #+END_SRC
 
-   
+
    [[https://github.com/joaotavora/eglot][Eglot]] detects the root of a project using =project-find-dir=, which
    by  default  considers  a  Git  submodule as  part  of  a  project.
    I usually  work in a different  way, and I consider  Git submodules
@@ -1300,10 +1384,10 @@ format regions or function definitions.
   :config
   (setq c-basic-offset 4)
   (setq c-block-comment-prefix "")
-  :bind (:map c-mode-map 
+  :bind (:map c-mode-map
          ("RET"     .  newline-and-indent)
          ("M-SPC"   .  ff-find-related-file)
-         :map c++-mode-map 
+         :map c++-mode-map
          ("RET"     .  newline-and-indent)
          ("M-SPC"   .  ff-find-related-file))
   :hook ((c-mode    . eglot-ensure)
@@ -1363,7 +1447,7 @@ minimal setup ready.
 
 #+BEGIN_SRC emacs-lisp
 (use-package xscheme
-  :config 
+  :config
   (setq scheme-program-name
         (or
          (executable-find "mit-scheme")
@@ -1528,13 +1612,13 @@ books from inside Emacs.
   the   text   by   accident.   For    this   reason   I   don't   use
   =yasnippet-snippets= because it fills  by typing space with snippets
   which trigger out of the blue.
-  
+
 ** Completion
 
    I like  to move in  the completion menu  using the =M-i=  and =M-k=
    keys.  =TAB=,  =M-o= and  =Enter=  do  completion, and  =M-l=  only
    expands the common part. =M-j= simply kills the previoius word.
-   
+
 #+BEGIN_SRC emacs-lisp
 (use-package company
   :diminish t
@@ -1555,7 +1639,7 @@ books from inside Emacs.
 #+END_SRC
 
    Completion is active by default.
-   
+
 #+BEGIN_SRC emacs-lisp
 (add-hook 'after-init-hook 'global-company-mode)
 #+END_SRC
@@ -1600,7 +1684,7 @@ books from inside Emacs.
 #+END_SRC
 
    We need to be careful about whitespace, while editing snippet specs.
-   
+
 #+BEGIN_SRC emacs-lisp
 (add-hook 'snippet-mode-hook (lambda ()
                                (whitespace-mode)
@@ -1618,19 +1702,16 @@ books from inside Emacs.
       transpose words.
 
 #+BEGIN_SRC emacs-lisp
-(use-package helm-c-yasnippet
+(use-package consult-yasnippet
   ;; M-t is usually reserved to transpose words, but I've never
   ;; used it.
-  :init
-  (setq helm-yas-space-match-any-greedy t
-        helm-yas-display-key-on-candidate t)
-  :bind ( "M-t" . helm-yas-complete))
+  :bind ("M-t" . consult-yasnippet))
 #+END_SRC
 
    2. By expanding  during typing. All my snippets either  do not have
       a  key, hence  are accessible  only from  the menu,  or the  key
       starts with ='<'= .
-   
+
 * Other features
 ** Backup and autosave of files
 
@@ -1676,7 +1757,7 @@ books from inside Emacs.
 #+END_SRC
 
 ** Bookmarks
-   
+
    If you are  like me you have  several files you visit  on a regular
    bases,  for some  periods of  time. E.g.,  lecture folders,  course
    journal, the tex files for the  paper you are currently working on.
@@ -1699,8 +1780,8 @@ books from inside Emacs.
 #+END_SRC
 
    The  list  of  recent  files  is  saved  on  Emacs  exit  and  kill
-   by default. To err on safety, let's write the file 
-   
+   by default. To err on safety, let's write the file
+
 #+BEGIN_SRC emacs-lisp
 (use-package recentf
     :demand t
@@ -1717,24 +1798,24 @@ jump back to it.
 
 #+BEGIN_SRC emacs-lisp
 (global-unset-key (kbd "M-0"))  ; I need it as a prefix key for next keybinds.
-  
+
 (dotimes (i 9)
   (let ((num (+ 1 i))
         (str (number-to-string (+ 1 i))))
     (global-set-key
      (kbd (concat "M-0 M-" str))
      `(lambda () (interactive) (point-to-register ,num)
-        (message (concat "Position saved to register " ,str)))) 
+        (message (concat "Position saved to register " ,str))))
     (global-set-key
      (kbd (concat "M-" str))
      `(lambda () (interactive) (jump-to-register ,num)
         (message (concat "Position loaded from register " ,str))))))
-    
+
 #+END_SRC
 
 
 ** Hide some buffers in Helm
-   
+
    Some buffers  clutter selection menus  and there are no  reasons to
    visit them.  For example the  buffer =*import calendar*=  just runs
    the  script   which  imports  my  google   calendars  in  org-mode.
@@ -1758,7 +1839,7 @@ jump back to it.
    It is difficult to understand  what the matched text is, especially
    when   using  the   emacs   regexp   syntax.  The   =visual-regexp=
    package helps.
-   
+
 #+BEGIN_SRC emacs-lisp
 (use-package visual-regexp
   :commands (vr/replace vr/mc-mark vr/query-replace)

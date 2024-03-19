@@ -290,6 +290,19 @@
 		(:authors
 		 ("Chris Wanstrath" . "chris@ozmm.org"))
 		(:commit . "adfb7ae73d6ee2ef790c780dd3c967e62930e94a"))])
+ (consult-flycheck .
+		   [(1 0)
+		    ((emacs
+		      (27 1))
+		     (consult
+		      (1 0))
+		     (flycheck
+		      (32)))
+		    "Provides the command `consult-flycheck'" tar
+		    ((:url . "https://github.com/minad/consult")
+		     (:keywords "languages" "tools" "completion")
+		     (:maintainer "Daniel Mendler" . "mail@daniel-mendler.de")
+		     (:commit . "0662839aa5db429130f5ffd15c14d4a980b2e694"))])
  (corfu-terminal .
 		 [(0 7)
 		  ((emacs
@@ -1884,7 +1897,7 @@
 	       ("David Christiansen" . "david@davidchristiansen.dk"))
 	      (:keywords "convenience"))])
  (racket-mode .
-	      [(1 0 20240301 121422)
+	      [(1 0 20240316 203048)
 	       ((emacs
 		 (25 1)))
 	       "Racket editing, REPL, and more" tar
@@ -2475,14 +2488,14 @@
 	      (:authors
 	       ("Le Wang")))])
  (xah-fly-keys .
-	       [(24 22 20240306092400)
+	       [(24 22 20240315150218)
 		((emacs
 		  (27)))
 		"ergonomic modal keybinding minor mode." tar
 		((:url . "http://xahlee.info/emacs/misc/xah-fly-keys.html")
 		 (:keywords "convenience" "vi" "vim" "ergoemacs" "keybinding")
 		 (:maintainer "Xah Lee" . "xah@xahlee.org")
-		 (:commit . "e9266924f515ff2a9e11d6d0cf449c031a593191"))])
+		 (:commit . "069c8d38b2130187a3ad5f08b381d05d428ec835"))])
  (xkcd .
        [(1 1)
 	((json
