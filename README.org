@@ -741,11 +741,6 @@ the minibuffer as ~helm~ does. Apparently this recepy works.
 
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-
-(use-package flyspell-correct-helm
-  :after flyspell
-  :bind (:map flyspell-mode-map
-              ("M-s" . flyspell-correct-wrapper)))
 #+END_SRC
 
    The language  for spell and  grammar check is  the last one  in the
@@ -1878,16 +1873,9 @@ books from inside Emacs.
    (setq bookmark-default-file "~/personal/conf/emacs.bookmarks")
 #+END_SRC
 
-   I use =helm-mini=  to access and set bookmarks, but  it is possible
+   I use =consult-buffer=  to access and set bookmarks, but  it is possible
    to edit  and delete them with  command =bookmark-bmenu-list=, bound
    to =C-x r l=.
-
-#+BEGIN_SRC emacs-lisp
-(setq helm-mini-default-sources '(helm-source-buffers-list
-                                  helm-source-recentf
-                                  helm-source-bookmarks
-                                  helm-source-buffer-not-found))
-#+END_SRC
 
    The  list  of  recent  files  is  saved  on  Emacs  exit  and  kill
    by default. To err on safety, let's write the file
@@ -1923,25 +1911,6 @@ jump back to it.
 
 #+END_SRC
 
-
-** Hide some buffers in Helm
-
-   Some buffers  clutter selection menus  and there are no  reasons to
-   visit them.  For example the  buffer =*import calendar*=  just runs
-   the  script   which  imports  my  google   calendars  in  org-mode.
-   Better hide them from the buffer list.
-
-#+BEGIN_SRC emacs-lisp
-(setq helm-boring-buffer-regexp-list
-  '("\\` " "\\`\\*helm" "\\`\\*Echo Area" "\\`\\*Minibuf" "\\`\\*Echo Area"
-    "\\`\\*import calendar*"
-    "\\`\\*Help"
-    "\\`\\*Disabled Command"
-    "\\`\\*Backtrace"))
-
-(setq helm-white-buffer-regexp-list nil)
-
-#+END_SRC
 
 ** Regexp search/replace
 

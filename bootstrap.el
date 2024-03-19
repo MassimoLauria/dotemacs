@@ -19,7 +19,6 @@
                            org-contrib
                            org-contacts
                            eglot
-                           helm
                            magit
                            auctex
                            pdf-tools
@@ -43,6 +42,7 @@
                            consult
                            consult-projectile
                            consult-yasnippet
+                           consult-recoll
                            dash
                            deferred
                            diminish
@@ -52,16 +52,11 @@
                            f
                            flycheck
                            flyspell
-                           flyspell-correct-helm
                            forge
                            git-commit
                            gnus-alias
                            go-mode
                            graphviz-dot-mode
-                           helm-bibtex
-                           helm-recoll
-                           helm-swoop
-                           helm-org-rifle
                            highlight-blocks
                            highlight-defined
                            highlight-quoted

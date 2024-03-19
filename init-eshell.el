@@ -74,7 +74,7 @@
 
 
 (defun eshell/ripgrep (pattern)
-  "Use Emacs helm-rg facility instead of calling external rg"
+  "Use Emacs consult-ripgrep  instead of calling external rg"
   (consult-ripgrep pattern))
 
 (defalias 'eshell/rg 'eshell/ripgrep)
