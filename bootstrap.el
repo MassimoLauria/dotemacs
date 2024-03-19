@@ -30,9 +30,6 @@
                            embark
                            marginalia
                            orderless
-                           consult
-                           consult-yasnippet
-                           consult-projectile
                            ;; others
                            ace-window
                            async
@@ -43,6 +40,9 @@
                            citar
                            citar-embark
                            company
+                           consult
+                           consult-projectile
+                           consult-yasnippet
                            dash
                            deferred
                            diminish
@@ -87,7 +87,6 @@
                            pinboard
                            pkg-info
                            projectile
-                           helm-projectile
                            pyenv-mode
                            ;; pyenv-mode-auto
                            python-pytest

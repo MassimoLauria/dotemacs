@@ -209,157 +209,12 @@ is already narrowed."
 
 (setq dired-use-ls-dired (memq system-type '(gnu/linux cygwin)))
 
-
-(defvar helm-sdcv-word-cache nil
-  "Caches all words from the wordfile.")
-
-(defvar helm-sdcv-word-file "~/personal/dictionaries/wordlists/english_and_italian.txt"
-  "File containing all words to be looked up.")
-
-;; All words from the wordlist (using cache)
-(defun helm-sdcv-list-of-words ()
-  (or helm-sdcv-word-cache
-      (setq helm-sdcv-word-cache
-            (with-temp-buffer
-              (insert-file helm-sdcv-word-file)
-              (split-string (buffer-string) "\n")))))
-
-(setq helm-sdcv-source
-      '((name . "English and Italian expression")
-        (candidates . helm-sdcv-list-of-words)
-        (action . (lambda (candidate)
-                    (sdcv-search-input candidate)))))
-
-(defun helm-sdcv (&optional word)
-  (interactive)
-  (require 'sdcv)
-  (helm
-   :prompt "Lookup in dictionary: "
-   :input (or word (word-at-point))
-   :fuzzy-math t
-   :buffer "*SDCV with helm"
-   :sources '(helm-sdcv-source)))
-
-(global-set-key (kbd "C-c d") 'helm-sdcv)
-
-
 ;; Helm always at bottom
 (add-to-list 'display-buffer-alist
              `(,(rx bos "*helm" (* not-newline) "*" eos)
                (display-buffer-in-side-window)
                (inhibit-same-window . t)
                (window-height . 0.4)))
-
-;; The following setup is due to the answer to my question on Emacs
-;; Stackexchange, by user d125q.
-;;
-;; https://emacs.stackexchange.com/questions/73414/how-to-toggle-helm-ff-skip-boring-files-during-file-navigation-with-helm-find/73418#73418
-
-(defun helm-ff-toggle-skip-boring-files ()
-  (with-helm-buffer
-    (setq helm-ff-skip-boring-files (not helm-ff-skip-boring-files))
-    (let* ((cand (helm-get-selection))
-           (target (if helm-ff-transformer-show-only-basename
-                       (helm-basename cand)
-                     cand)))
-      (if helm-ff-skip-boring-files
-          (message "Hide hidden files")
-        (message "Show hidden files"))
-      (helm-force-update
-       (format helm-ff-last-expanded-candidate-regexp (regexp-quote target))))))
-
-(defun helm-ff-run-toggle-skip-boring-files ()
-  (interactive)
-  (with-helm-alive-p
-    (unless (helm-empty-source-p)
-      (helm-ff-toggle-skip-boring-files))))
-
-
-
-(defun helm-setup-global-key ()
-  "Setup/Teardown the global key bindings related to helm"
-  (interactive)
-  (if helm-mode (progn
-      (vertico-mode -1)
-      (global-set-key (kbd "C-x C-b") 'helm-mini)
-      (global-set-key (kbd "C-x b"  ) 'helm-mini)
-      (global-set-key (kbd "C-x C-r") 'helm-mini)
-      (global-set-key (kbd "M-SPC"  ) 'helm-mini)
-      (global-set-key (kbd "C-x C-f") 'helm-find-files)
-      (global-set-key (kbd "M-x"    ) 'helm-M-x)
-      (global-set-key (kbd "M-y"    ) 'helm-show-kill-ring)
-      (global-set-key (kbd "M-`"    ) 'helm-resume))
-    (vertico-mode 1)
-    (global-set-key (kbd "C-x C-b") 'switch-to-buffer)
-    (global-set-key (kbd "C-x b"  ) 'switch-to-buffer)
-    (global-set-key (kbd "C-x C-r") 'recentf)
-    (global-set-key (kbd "M-SPC"  ) 'nil)
-    (global-set-key (kbd "C-x C-f") 'find-file)
-    (global-set-key (kbd "M-x"    ) 'execute-extended-command)
-    (global-set-key (kbd "M-y"    ) 'yank-pop)
-    (global-set-key (kbd "M-`"    ) 'nil)))
-
-(use-package helm
-  :bind (:map helm-map
-         ( "M-`"  . helm-keyboard-quit)
-         ( "M-i"  . helm-previous-line)
-         ( "M-k"  . helm-next-line)
-         ( "M-j"  . backward-kill-word)
-         ( "M-l"  . helm-maybe-exit-minibuffer)
-         ( "M-u"  . helm-previous-source)
-         ( "M-o"  . helm-next-source)
-         ( "M-;"  . helm-select-action)
-         :map helm-find-files-map
-         ( "M-`"  . helm-keyboard-quit)
-         ( "M-i"  . helm-previous-line)
-         ( "M-k"  . helm-next-line)
-         ( "M-l"  . helm-ff-RET)
-         ( "M-j"  . helm-find-files-up-one-level)
-         ( "M-u"  . helm-previous-source)
-         ( "M-o"  . helm-next-source)
-         ( "M-;"  . helm-select-action)
-         ( "M-."  . helm-ff-run-toggle-skip-boring-files)
-         :map helm-generic-files-map
-         ( "M-`"  . helm-keyboard-quit)
-         ( "M-i"  . helm-previous-line)
-         ( "M-k"  . helm-next-line)
-         ( "M-j"  . backward-kill-word)
-         ( "M-l"  . helm-maybe-exit-minibuffer)
-         ( "M-u"  . helm-previous-source)
-         ( "M-o"  . helm-next-source)
-         ( "M-;"  . helm-select-action)
-         :map helm-read-file-map
-         ( "M-`"  . helm-keyboard-quit)
-         ( "M-i"  . helm-previous-line)
-         ( "M-k"  . helm-next-line)
-         ( "M-j"  . backward-kill-word)
-         ( "M-l"  . helm-maybe-exit-minibuffer)
-         ( "M-u"  . helm-previous-source)
-         ( "M-o"  . helm-next-source)
-         ( "M-;"  . helm-select-action)
-         :map helm-buffer-map
-         ( "M-`"  . helm-keyboard-quit)
-         ( "M-i"  . helm-previous-line)
-         ( "M-k"  . helm-next-line)
-         ( "M-j"  . backward-kill-word)
-         ( "M-l"  . helm-maybe-exit-minibuffer)
-         ( "M-u"  . helm-previous-source)
-         ( "M-o"  . helm-next-source)
-         ( "M-;"  . helm-select-action))
-  :diminish helm-mode
-  :demand t
-  :init
-  (setq helm-display-header-line t)
-  (setq helm-ff-skip-boring-files t)
-  (add-hook 'helm-mode-hook 'helm-setup-global-key)
-  :config
-  (setq helm-move-to-line-cycle-in-source nil)
-  (helm-mode)
-  (helm-ff-icon-mode)
-  (put 'helm-ff-run-toggle-skip-boring-files 'helm-only t)
-    ;; Hidden files are not shown in helm-find-file
-  (customize-set-variable 'helm-boring-file-regexp-list
-                          (cons "^\\..+" helm-boring-file-regexp-list)))
 
 ;; Fill/unfill paragraph
 (use-package unfill
@@ -390,16 +245,6 @@ is already narrowed."
                                     :run "go run ."
                                     :test "go test ./..."
                                     :test-suffix "_test"))
-
-(use-package helm-projectile
-  :after projectile
-  :config
-  (setq helm-mini-default-sources '(helm-source-buffers-list
-                                    helm-source-recentf
-                                    helm-source-bookmarks
-                                    helm-source-projectile-files-list
-                                    helm-source-buffer-not-found)))
-
 
 
 (use-package pdf-outline

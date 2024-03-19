@@ -256,6 +256,7 @@
 
 ;; See https://github.com/tmalsburg/helm-org-contacts
 (use-package helm-org-contacts
+  :after helm
   :bind ([f7] . helm-org-contacts)
   :config
   ;; Reorder actions

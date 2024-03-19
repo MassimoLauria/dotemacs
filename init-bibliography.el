@@ -309,13 +309,16 @@ Optional argument NODELIM see `bibtex-make-field'."
             (lambda () (setq fill-column 999999)))
   (add-hook 'bibtex-mode-hook 'mybibtex-dnd-setup))
 
+(global-set-key (kbd "C-c b") 'helm-bibtex-with-local-bibliography)
 
 (use-package helm-bibtex
+  :requires helm
   :commands (helm-bibtex
              helm-bibtex-with-local-bibliography
              bibtex-completion-open-pdf
              bibtex-completion-open-any)
   :bind ("C-c b" . helm-bibtex-with-local-bibliography)
+  :init
   :config
 
   ;; Use latex citation in org files

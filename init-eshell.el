@@ -1,6 +1,6 @@
 ;;; massimo-keyboard.el --- Keybindings specific for the author habits -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2022  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2022, 2024  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: convenience
@@ -75,7 +75,7 @@
 
 (defun eshell/ripgrep (pattern)
   "Use Emacs helm-rg facility instead of calling external rg"
-  (helm-rg pattern))
+  (consult-ripgrep pattern))
 
 (defalias 'eshell/rg 'eshell/ripgrep)
 
