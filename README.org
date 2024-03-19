@@ -589,16 +589,13 @@ allows some kind of fuzzy matching.
   :custom 
   (vertico-count 10)    ; Number of candidates to display
   (vertico-resize nil)
-  :bind (("M-`" . vertico-suspend)
-         :map vertico-map
-         ("M-`" . vertico-suspend))
   :init
   (require 'orderless)  ; should be loaded before
   :config
   ;; (vertico-reverse-mode) ;; if I want prompt on the bottom line
   (require 'vertico-directory)
-  (vertico-mode)
-  (marginalia-mode))
+  (vertico-mode    1)
+  (marginalia-mode 1))
 
 (use-package marginalia
   :commands (marginalia-mode)
