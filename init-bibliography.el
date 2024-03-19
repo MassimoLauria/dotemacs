@@ -229,14 +229,14 @@ Optional argument NODELIM see `bibtex-make-field'."
   (bibtex-beginning-of-entry)
   (let* ((entry (bibtex-parse-entry t))
          (newname (bibtex-generate-filename))
-         (path (-flatten (list bibtex-completion-library-path)))
+         (path (-flatten citar-library-paths))
          (path (if (cdr path)
                    (completing-read "Add pdf to: " path nil t)
                  (car path)))
          (ext (file-name-extension file))
          (pdf (expand-file-name (concat newname "." ext)
                                 path))
-         (filefieldcontent (bibtex-autokey-get-field bibtex-completion-pdf-field))
+         (filefieldcontent (bibtex-autokey-get-field citar-file-variable))
          (filefieldcontent (if (string-empty-p filefieldcontent)
                                ""
                              (concat filefieldcontent ";"))))
@@ -244,11 +244,11 @@ Optional argument NODELIM see `bibtex-make-field'."
     (condition-case nil
         (when (yes-or-no-p (concat "Attach paper " pdf))
           (copy-file file pdf 1)
-          (bibtex-set-field bibtex-completion-pdf-field (concat filefieldcontent
-                                                                ":"
-                                                                (file-name-nondirectory pdf)
-                                                                ":"
-                                                                (upcase ext))))
+          (bibtex-set-field citar-file-variable (concat filefieldcontent
+                                                        ":"
+                                                        (file-name-nondirectory pdf)
+                                                        ":"
+                                                        (upcase ext))))
       (error (message ("Error copying " file " to " pdf))))))
 
 (defun mybibtex-dnd-add-file-mac (event)
@@ -265,7 +265,6 @@ Optional argument NODELIM see `bibtex-make-field'."
 	    (mybibtex-add-file-to-library f)
       (error "Can not read %s" uri))))
 
-
 (defun mybibtex-dnd-add-file-linux (uri _action)
   "Attach a the file to a Bibtex entry it is dragged on"
   (let* ((f (dnd-get-local-file-name uri t)))
@@ -273,28 +272,31 @@ Optional argument NODELIM see `bibtex-make-field'."
 	(mybibtex-add-file-to-library f)
       (error "Can not read %s" uri))))
 
+; got from `bibtex-completion-get-key-bibtex'
+(defun mxl-bibtex-mode-get-key ()
+  "Return the key of the BibTeX entry at point, nil otherwise.
+This function can be used by `bibtex-completion-key-at-point' to
+find the key of the BibTeX entry at point in a BibTeX-mode
+buffer."
+  (when (eq major-mode 'bibtex-mode)
+    (save-excursion
+      (bibtex-beginning-of-entry)
+      (and (looking-at bibtex-entry-maybe-empty-head)
+           (bibtex-key-in-head)))))
+
 (defun mybibtex-dnd-setup ()
   (setq-local dnd-protocol-alist '(("^file:" . mybibtex-dnd-add-file-linux))))
 
-(defun mybibtex-open-pdf ()
-  "Opens the PDF files mentioned in the bibtex entry"
-  (interactive)
-  (bibtex-completion-open-pdf (list (bibtex-completion-key-at-point))))
-
-(defun mybibtex-open-url-or-doi ()
+(defun mxl-bibtex-mode-open ()
   "Opens the PDF, the URL or the DOI mentioned in the bibtex entry"
   (interactive)
-  (bibtex-completion-open-url-or-doi (list (bibtex-completion-key-at-point))))
-
-(defun mybibtex-open-any ()
-  "Opens the PDF, the URL or the DOI mentioned in the bibtex entry"
-  (interactive)
-  (bibtex-completion-open-any (list (bibtex-completion-key-at-point))))
+  (or (citar-open-files (list (mxl-bibtex-mode-get-key)))
+      (citar-open-links (list (mxl-bibtex-mode-get-key)))))
 
 (use-package bibtex
   :bind (:map bibtex-mode-map
               ("M-q" . bibtex-fill-entry)
-              ("C-c C-o" . mybibtex-open-any)
+              ("C-c C-o" . mxl-bibtex-mode-open)
               ("C-c C-a" . mybibtex-add-file-to-library)
               ("<drag-n-drop>" . mybibtex-dnd-add-file-mac))
 
@@ -309,83 +311,83 @@ Optional argument NODELIM see `bibtex-make-field'."
             (lambda () (setq fill-column 999999)))
   (add-hook 'bibtex-mode-hook 'mybibtex-dnd-setup))
 
-(global-set-key (kbd "C-c b") 'helm-bibtex-with-local-bibliography)
+;; (global-set-key (kbd "C-c b") 'helm-bibtex-with-local-bibliography)
 
-(use-package helm-bibtex
-  :requires helm
-  :commands (helm-bibtex
-             helm-bibtex-with-local-bibliography
-             bibtex-completion-open-pdf
-             bibtex-completion-open-any)
-  :bind ("C-c b" . helm-bibtex-with-local-bibliography)
-  :init
-  :config
+;; (use-package helm-bibtex
+;;   :requires helm
+;;   :commands (helm-bibtex
+;;              helm-bibtex-with-local-bibliography
+;;              bibtex-completion-open-pdf
+;;              bibtex-completion-open-any)
+;;   :bind ("C-c b" . helm-bibtex-with-local-bibliography)
+;;   :init
+;;   :config
 
-  ;; Use latex citation in org files
-  (setf (cdr (assoc 'org-mode
-                    bibtex-completion-format-citation-functions))
-        'bibtex-completion-format-citation-cite)
-  (setq bibtex-completion-cite-prompt-for-optional-arguments nil)
-  (setq bibtex-completion-watch-bibliography nil)
+;;   ;; Use latex citation in org files
+;;   (setf (cdr (assoc 'org-mode
+;;                     bibtex-completion-format-citation-functions))
+;;         'bibtex-completion-format-citation-cite)
+;;   (setq bibtex-completion-cite-prompt-for-optional-arguments nil)
+;;   (setq bibtex-completion-watch-bibliography nil)
 
-  ;; Make 'Insert citation' the first (and thus the default) action
-  (helm-delete-action-from-source  "Insert citation" helm-source-bibtex)
-  (helm-add-action-to-source       "Insert citation" 'helm-bibtex-insert-citation helm-source-bibtex 0)
-  ;; Default height for helm-bibtex window
-  (setq helm-bibtex-full-frame nil)
+;;   ;; Make 'Insert citation' the first (and thus the default) action
+;;   (helm-delete-action-from-source  "Insert citation" helm-source-bibtex)
+;;   (helm-add-action-to-source       "Insert citation" 'helm-bibtex-insert-citation helm-source-bibtex 0)
+;;   ;; Default height for helm-bibtex window
+;;   (setq helm-bibtex-full-frame nil)
 
-  ;; Workaround because
-  (defalias 'bibtex-completion-find-pdf-in-field 'mxl-find-pdf-in-field-workaround
-    "Massimo's workaround")
-  )
+;;   ;; Workaround because
+;;   (defalias 'bibtex-completion-find-pdf-in-field 'mxl-find-pdf-in-field-workaround
+;;     "Massimo's workaround")
+;;   )
 
 
-(defun mxl-find-pdf-in-field-workaround (key-or-entry)
-  "Workaround by Massimo.
+;; (defun mxl-find-pdf-in-field-workaround (key-or-entry)
+;;   "Workaround by Massimo.
 
-I had to put here the old implementation because it was broken. See Bug #371 in
-https://github.com/tmalsburg/helm-bibtex/issues/371
+;; I had to put here the old implementation because it was broken. See Bug #371 in
+;; https://github.com/tmalsburg/helm-bibtex/issues/371
 
-Here KEY-OR-ENTRY is either a bibtex entry or a bibtex key."
-  (when bibtex-completion-pdf-field
-    (let* ((entry (if (stringp key-or-entry)
-                      (bibtex-completion-get-entry1 key-or-entry t)
-                    key-or-entry))
-           (value (bibtex-completion-get-value bibtex-completion-pdf-field entry)))
-      (cond
-       ((not value) nil)         ; Field not defined.
-       ((f-file? value) (list value))   ; A bare full path was found.
-       ((-any 'f-file? (--map (f-join it (f-filename value)) (-flatten bibtex-completion-library-path))) (-filter 'f-file? (--map (f-join it (f-filename value)) (-flatten bibtex-completion-library-path))))
-       (t                               ; Zotero/Mendeley/JabRef/Calibre format:
-        (let ((value (replace-regexp-in-string "\\([^\\]\\)[;]" "\\1\^^" value)))
-          (cl-loop  ; Looping over the files:
-           for record in (s-split "\^^" value)
-                                        ; Replace unescaped colons by field separator:
-           for record = (replace-regexp-in-string "\\([^\\]\\|^\\):" "\\1\^_" record)
-                                        ; Unescape stuff:
-           for record = (replace-regexp-in-string "\\\\\\(.\\)" "\\1" record)
-                                        ; Now we can safely split:
-           for record = (s-split "\^_" record)
-           for file-name = (nth 0 record)
-           for path = (or (nth 1 record) "")
-           for paths = (if (s-match "^[A-Z]:" path)
-                           (list path)                 ; Absolute Windows path
-                                        ; Something else:
-                         (append
-                          (list
-                           path
-                           file-name
-                           (f-join (f-root) path) ; Mendeley #105
-                           (f-join (f-root) path file-name)) ; Mendeley #105
-                          (--map (f-join it path)
-                                 (-flatten bibtex-completion-library-path)) ; Jabref #100
-                          (--map (f-join it path file-name)
-                                 (-flatten bibtex-completion-library-path)))) ; Jabref #100
-           for result = (-first (lambda (path)
-                                  (if (and (not (s-blank-str? path))
-                                           (f-exists? path))
-                                      path nil)) paths)
-           if result collect result)))))))
+;; Here KEY-OR-ENTRY is either a bibtex entry or a bibtex key."
+;;   (when bibtex-completion-pdf-field
+;;     (let* ((entry (if (stringp key-or-entry)
+;;                       (bibtex-completion-get-entry1 key-or-entry t)
+;;                     key-or-entry))
+;;            (value (bibtex-completion-get-value bibtex-completion-pdf-field entry)))
+;;       (cond
+;;        ((not value) nil)         ; Field not defined.
+;;        ((f-file? value) (list value))   ; A bare full path was found.
+;;        ((-any 'f-file? (--map (f-join it (f-filename value)) (-flatten bibtex-completion-library-path))) (-filter 'f-file? (--map (f-join it (f-filename value)) (-flatten bibtex-completion-library-path))))
+;;        (t                               ; Zotero/Mendeley/JabRef/Calibre format:
+;;         (let ((value (replace-regexp-in-string "\\([^\\]\\)[;]" "\\1\^^" value)))
+;;           (cl-loop  ; Looping over the files:
+;;            for record in (s-split "\^^" value)
+;;                                         ; Replace unescaped colons by field separator:
+;;            for record = (replace-regexp-in-string "\\([^\\]\\|^\\):" "\\1\^_" record)
+;;                                         ; Unescape stuff:
+;;            for record = (replace-regexp-in-string "\\\\\\(.\\)" "\\1" record)
+;;                                         ; Now we can safely split:
+;;            for record = (s-split "\^_" record)
+;;            for file-name = (nth 0 record)
+;;            for path = (or (nth 1 record) "")
+;;            for paths = (if (s-match "^[A-Z]:" path)
+;;                            (list path)                 ; Absolute Windows path
+;;                                         ; Something else:
+;;                          (append
+;;                           (list
+;;                            path
+;;                            file-name
+;;                            (f-join (f-root) path) ; Mendeley #105
+;;                            (f-join (f-root) path file-name)) ; Mendeley #105
+;;                           (--map (f-join it path)
+;;                                  (-flatten bibtex-completion-library-path)) ; Jabref #100
+;;                           (--map (f-join it path file-name)
+;;                                  (-flatten bibtex-completion-library-path)))) ; Jabref #100
+;;            for result = (-first (lambda (path)
+;;                                   (if (and (not (s-blank-str? path))
+;;                                            (f-exists? path))
+;;                                       path nil)) paths)
+;;            if result collect result)))))))
 
 
 (provide 'init-bibliography)

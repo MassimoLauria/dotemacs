@@ -653,7 +653,6 @@ See https://emacs.stackexchange.com/questions/21171/company-mode-completion-for-
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 (use-package helm-org-rifle
-  :after helm
   :bind ([f8] . helm-org-rifle))
 
 

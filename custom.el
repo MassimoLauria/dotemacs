@@ -39,6 +39,10 @@
      ("Asia/Tokyo" "Tokyo")
      ("Europe/Stockholm" "Stockholm")))
  '(eldoc-idle-delay 0.3)
+ '(embark-prompter 'embark-keymap-prompter nil nil "Customized with use-package embark")
+ '(embark-verbose-indicator-display-action
+   '(display-buffer-at-bottom
+     (window-height . fit-window-to-buffer)))
  '(epg-pinentry-mode 'loopback)
  '(fci-rule-color "#073642")
  '(font-latex-fontify-sectioning 'color)

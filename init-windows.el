@@ -53,7 +53,6 @@
   (dolist (window (window-at-side-list))
     (quit-window nil window)))
 
-
 (force-window-at-bottom-of-window (rx bos "*Flycheck errors*" eos))
 (force-window-at-bottom-of-window (rx bos "*Flycheck error messages*" eos))
 (force-window-at-bottom-of-frame (rx bos "*Help*" eos))

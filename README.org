@@ -586,9 +586,7 @@ allows some kind of fuzzy matching.
   :config
   ;; (vertico-reverse-mode) ;; if I want prompt on the bottom line
   (vertico-mode)
-  (marginalia-mode)
-  (keymap-set vertico-map "M-SPC" #'embark-act-with-completing-read)
-  )
+  (marginalia-mode))
 
 (use-package marginalia
   :commands (marginalia-mode)
@@ -598,9 +596,13 @@ allows some kind of fuzzy matching.
 
 (use-package embark
   :commands (embark-act embark-dwim)
+  :bind (:map vertico-map ("M-SPC" . embark-act))
   :custom
-  (embark-prompter 'embark-completing-read-prompter)
-  (embark-indicators '(embark-minimal-indicator)))
+  ;; Show keys at the bottom (and above the minibuffer)
+  (embark-indicators '(embark-verbose-indicator embark-highlight-indicator embark-isearch-highlight-indicator))
+  (embark-verbose-indicator-display-action '(display-buffer-at-bottom)))
+
+
 #+END_SRC
 
 ** Minibuffer tool: Find File / Switch buffer / Grep
@@ -964,15 +966,37 @@ Woolf say? "A Room of One's Own".
 
 I have quite  a setup in ~init-bibliography~, but I  am trying to move
 it to this file. A key passage is to go from ~helm-bibtex~ to ~citar~.
-Fist let's tell ~citar~ where is the bibtex database and the files.
+First let's tell ~citar~ where is the bibtex database and the files.
+
+We also setup  some default action to use with  ~embark~. My selection
+of actions does not inherit the default ~embark~ actions and therefore
+is more focused.
 
 #+BEGIN_SRC emacs-lisp
 (use-package citar
-   ;; :bind ("C-c b " . citar-insert-citation)
+   :bind ("C-c b" . citar-open)
+   :commands (citar-open citar-open-files citar-open-links)
    :custom
    (citar-bibliography '("~/lavori/latex/bibtex/bib/theoryofcomputing.bib"))
    (citar-file-variable "file") 
-   (citar-library-paths '("~/cloud/Papers/")))
+   (citar-library-paths '("~/cloud/Papers/"))
+   :config
+   (citar-embark-mode))
+
+;; Actions available 
+(use-package citar-embark
+  :after (embark citar)
+  :config
+  (setq citar-embark-map
+        (let ((map (make-sparse-keymap)))
+          (define-key map (kbd "RET") #'citar-run-default-action)
+          (define-key map (kbd "c") #'citar-insert-citation)
+          (define-key map (kbd "f") #'citar-open-files)
+          (define-key map (kbd "l") #'citar-open-links)
+          (define-key map (kbd "e") #'citar-open-entry)
+          (define-key map (kbd "t") #'citar-insert-reference)
+          (define-key map (kbd "q") #'abort-recursive-edit)
+          map)))
 #+END_SRC
 
 *** Appearance of the bibliography selector
