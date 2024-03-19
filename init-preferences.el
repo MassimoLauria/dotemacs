@@ -56,7 +56,10 @@
 
 
 ;; don't let the cursor go into minibuffer prompt
-(setq minibuffer-prompt-properties (quote (read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
+(setq minibuffer-prompt-properties
+        '(read-only t cursor-intangible t face minibuffer-prompt))
+(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
 
 (defalias 'yes-or-no-p 'y-or-n-p) ; y/n instead of yes/no
 (setq confirm-kill-emacs nil)     ; exit without questions

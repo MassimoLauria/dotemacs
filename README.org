@@ -568,6 +568,14 @@ minibuffer  is used  to complete/filter  the choices,  and ~orderless~
 allows some kind of fuzzy matching.
 
 #+BEGIN_SRC emacs-lisp
+
+;; Ignore case in completion.
+(setq read-file-name-completion-ignore-case t
+      read-buffer-completion-ignore-case t
+      completion-ignore-case t
+      enable-recursive-minibuffers t)
+
+
 (use-package orderless
   :custom
   (completion-styles '(orderless basic))      ; Use orderless
@@ -581,10 +589,14 @@ allows some kind of fuzzy matching.
   :custom 
   (vertico-count 10)    ; Number of candidates to display
   (vertico-resize nil)
+  :bind (("M-`" . vertico-suspend)
+         :map vertico-map
+         ("M-`" . vertico-suspend))
   :init
   (require 'orderless)  ; should be loaded before
   :config
   ;; (vertico-reverse-mode) ;; if I want prompt on the bottom line
+  (require 'vertico-directory)
   (vertico-mode)
   (marginalia-mode))
 
