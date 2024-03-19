@@ -1,6 +1,6 @@
 ;;; init-textmode.el --- Preferences for Text editing
 
-;; Copyright (C) 2010, 2011, 2013, 2015, 2018, 2020, 2023  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2013, 2015, 2018, 2020, 2023, 2024  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: files, wp
@@ -24,11 +24,6 @@
 ;; for the text-mode, like word wrapping and auto-filling.
 
 ;;; Code:
-
-
-
-;; Text mode is default for files with no definite mode
-(setq default-major-mode 'text-mode)
 
 
 ;; Sentences. Identifying and breaking up.

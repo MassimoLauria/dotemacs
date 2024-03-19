@@ -519,34 +519,27 @@ something like ~olivetti-mode~.
 
 ** Landing page
 
-The startup  page is usually  the ~*scratch*~ buffer which  is rarely
-what I  need. I'd rather  setup a  startup page which  contains useful
-info. For that I configure the ~dashboard~ package.
-
+The startup  page is  usually the ~*scratch*~  buffer which  is rarely
+what I need. I'd rather start with som,e =*Untitled*= text file.
+ 
 #+BEGIN_SRC emacs-lisp
-(use-package dashboard
-  :ensure t
-  :init
-  (setq dashboard-banner-logo-title "La matematica sono i mezzi di produzione")
-  (setq dashboard-startup-banner 'logo)
-  (setq dashboard-items '((recents   . 8) (bookmarks . 8)))
-  (setq dashboard-hide-cursor nil)
+(setq initial-buffer-choice #'new-untitled-file)
 
-  (setq dashboard-force-refresh t)
+(defun new-untitled-file ()
+  "Create/Return an anonymous text buffer"
+  (let ((buffer)
+        (default-name "*Untitled*"))
+    (or (get-buffer default-name)
+        (with-current-buffer (get-buffer-create default-name)
+          (text-mode)
+          (current-buffer)))))
 
-  ;; Alignment
-  (setq dashboard-center-content t)
-  (setq dashboard-vertically-center-content nil)
+(defun open-untitled-file ()
+  "Create/Select an anonymous text buffer"
+  (interactive)
+  (switch-to-buffer (new-untitled-file)))
 
-  ;; No footer or loading time info
-  (setq dashboard-set-init-info nil)
-  (setq dashboard-set-footer nil)
-
-  :config
-  ;; Open the dashboard at startup on new frames
-  (dashboard-setup-startup-hook)
-  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))))
-
+(global-set-key (kbd "C-n") #'open-untitled-file)
 #+END_SRC
 
 
@@ -704,7 +697,7 @@ the minibuffer as ~helm~ does. Apparently this recepy works.
 #+BEGIN_SRC emacs-lisp
 (global-set-key [f2]  'mxl-language-check)
 (global-set-key (kbd "M-<f2>") 'mxl-language-cycle)
-(global-set-key [M-s]  'ispell-word)
+(global-set-key (kbd "M-s")  'ispell-word)
 #+END_SRC
 
    The setup revolves on few  packages.
