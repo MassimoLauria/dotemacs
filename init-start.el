@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2023, 2024  Massimo Lauria
-;; Time-stamp: "2024-03-09, 18:47 (CET) Massimo Lauria"
+;; Time-stamp: "2024-03-19, 18:25 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -94,7 +94,6 @@
 
 
 ;; Applications
-(require 'init-mail)       ; Mail + Contacts
 (require 'init-org-mode)   ; Organizer
 (require 'init-websearch)  ; Search the Web
 

@@ -652,10 +652,18 @@ See https://emacs.stackexchange.com/questions/21171/company-mode-completion-for-
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
-(use-package helm-org-rifle
-  :bind ([f8] . helm-org-rifle))
+(global-set-key (kbd "<f8>")
+                (lambda ()
+                  (interactive)
+                  (consult-ripgrep "~/personal/agenda/")))
 
 
+
+(use-package org-contacts
+  :commands (org-contacts org-contacts-anniversaries)
+  :init
+  ;; addresses
+  (setq org-contacts-files '("~/personal/agenda/contacts.org")))
 
 (provide 'init-org-mode)
 ;; Local Variables:
