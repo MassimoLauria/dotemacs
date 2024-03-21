@@ -1,6 +1,6 @@
 ;;; init-hyperlink.el --- Keybindings for inserting/opening/saving links in various modes
 
-;; Copyright (C) 2011, 2012, 2013, 2018, 2019  Massimo Lauria
+;; Copyright (C) 2011, 2012, 2013, 2018, 2019, 2024  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: convenience
@@ -23,7 +23,7 @@
 ;; There are several modes with different key sequence for opening
 ;; links in text.  This files organize the setup of such various sets
 ;; of functions.
-;; 
+;;
 ;; To insert URL and links I will always use `org-insert-link' which
 ;; can be customized to insert the link in the appropriate format.
 ;;
@@ -44,24 +44,9 @@
   "Secondary key sequence used to open links in text files.")
 
 
-(defun open-in-external-app ()
+(defalias 'open-in-external-app 'browse-url-of-dired-file open-in-external-app
   "Open the current file or dired marked files in external app.
-Works in Microsoft Windows, Mac OS X, Linux.
-
-
-(Copyright note.) Code stolen from Xah Lee and Helm project."
-  (interactive)
-  (require 'helm-utils)
-  (let ( (myFileList
-          (cond
-           ((string-equal major-mode "dired-mode") (dired-get-marked-files))
-           (t (list (buffer-file-name))) ) ) )
-
-    (when (or (<= (length myFileList) 5) (y-or-n-p "Open more than 5 files?") )
-      (mapc (lambda (fPath)
-              (helm-open-file-with-default-tool fPath))
-            myFileList))))
-
+Works in Microsoft Windows, Mac OS X, Linux.")
 
 ;; Setup for `goto-address-mode' and `goto-address-prog-mode'
 (add-hook 'goto-address-mode-hook
