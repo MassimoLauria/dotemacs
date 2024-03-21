@@ -695,11 +695,17 @@ the minibuffer as ~helm~ does. Apparently this recepy works.
    - Fix interactively the typos
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key [f2]  'mxl-language-check)
-(global-set-key (kbd "M-<f2>") 'mxl-language-cycle)
+
+(use-package flyspell
+  :custom
+  (flyspell-use-meta-tab nil))  ;; do not pollute key bindings
 
 (use-package flyspell-correct
-  :bind ("M-s" . flyspell-correct-at-point))
+  :commands (flyspell-correct-at-point))
+
+(global-set-key [f2]  'mxl-language-check)
+(global-set-key (kbd "M-<f2>") 'mxl-language-cycle)
+(global-set-key (kbd "M-s") 'flyspell-correct-at-point)
 #+END_SRC
 
    The setup revolves on few  packages.

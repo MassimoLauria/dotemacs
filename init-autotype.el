@@ -1,9 +1,9 @@
 ;;; init-autotype.el --- setup template and completion
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2021  Massimo Lauria
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2021, 2024  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
-;; Time-stamp: <2021-07-18, 15:02 (CEST) Massimo Lauria>
+;; Time-stamp: <2024-03-21, 12:46 (CET) Massimo Lauria>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -30,15 +30,15 @@
 (use-package smartparens
   :commands (smartparens-mode smartparens-global-mode)
   :diminish ""
-  :config (progn
-            (require 'smartparens-config nil t)
-            (require 'smartparens-latex nil t)
-            (define-key smartparens-mode-map (kbd "C-M-i") 'sp-up-sexp)
-            (define-key smartparens-mode-map (kbd "C-M-k") 'sp-down-sexp)
-            (define-key smartparens-mode-map (kbd "C-M-j") 'sp-backward-sexp)
-            (define-key smartparens-mode-map (kbd "C-M-l") 'sp-forward-sexp)
-            (define-key smartparens-mode-map (kbd "C-M-u") 'sp-forward-barf-sexp)
-            (define-key smartparens-mode-map (kbd "C-M-o") 'sp-forward-slurp-sexp)))
+  :custom
+  (sp-autoinsert-if-followed-by-same 3)
+  (sp-base-key-bindings nil)
+  (sp-highlight-pair-overlay nil)
+  (sp-navigate-consider-stringlike-sexp '(latex-mode))
+  (sp-wrap-repeat-last 2)
+  :config
+  (require 'smartparens-config nil t)
+  (require 'smartparens-latex nil t))
 
 
 
