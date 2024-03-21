@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2024-01-08, 21:18 (CET) Massimo Lauria"
+# Time-stamp: "2024-03-21, 13:16 (CET) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -40,6 +40,7 @@ all:
 	@rm -f ~/.emacs.d/init.el
 	@ln -s ${INIT} ~/.emacs.d
 	${MAKE} install-pkgs
+	${MAKE} install-fonts
 	@echo "Done."
 
 minisetup:

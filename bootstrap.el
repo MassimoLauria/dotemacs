@@ -23,7 +23,6 @@
                            auctex
                            pdf-tools
                            doom-modeline
-                           dashboard
                            ;; minibuffer completion
                            vertico
                            embark

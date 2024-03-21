@@ -4,7 +4,11 @@ README.el
 
 # Ignore backup files and precompiled files.
 *.pyc
+*.elc
 
-# EPDFinfo
+# EPDFinfo / SQLite  binaries
 elpa-local/**/epdfinfo
 elpa-local/**/sqlite/emacsql-sqlite
+
+# Package archives are volatile
+elpa-local/*/archives/
