@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2024-03-21, 13:16 (CET) Massimo Lauria"
+# Time-stamp: "2024-03-22, 09:11 (CET) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -96,11 +96,13 @@ test:
 
 # -------- Daemon ---------------------------------
 start:
+	@echo "Starting emacs server"
 	${EMACS} --daemon --chdir ${HOME}
 
+# Quietly kill emacs if it is running
 stop:
-	${EMACSCLIENT} -e '(kill-emacs)'
-
+	@echo "Killing emacs server (if it is running)"
+	@${EMACSCLIENT} -e '(kill-emacs)' -a /dev/null 2> /dev/null || true
 
 # --------- Default rules -------------------------
 clean:

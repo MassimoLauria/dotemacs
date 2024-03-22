@@ -44,7 +44,7 @@
   "Secondary key sequence used to open links in text files.")
 
 
-(defalias 'open-in-external-app 'browse-url-of-dired-file open-in-external-app
+(defalias 'open-in-external-app 'browse-url-of-dired-file 
   "Open the current file or dired marked files in external app.
 Works in Microsoft Windows, Mac OS X, Linux.")
 
