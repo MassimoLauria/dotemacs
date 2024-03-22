@@ -516,7 +516,6 @@ something like ~olivetti-mode~.
       (kill-local-variable 'mode-line-format)))
 #+END_SRC
 
-
 ** Landing page
 
 The startup  page is  usually the ~*scratch*~  buffer which  is rarely
@@ -598,7 +597,12 @@ allows some kind of fuzzy matching.
 
 (use-package embark
   :commands (embark-act embark-dwim)
-  :bind (:map vertico-map ("M-SPC" . embark-act))
+  :bind (:map vertico-map
+              ("M-q" . embark-act)
+         :map embark-general-map
+              ("M-q" . abort-recursive-edit)
+              ("M-SPC" . abort-recursive-edit)
+              )
   :custom
   ;; Show keys at the bottom (and above the minibuffer)
   (embark-indicators '(embark-verbose-indicator embark-highlight-indicator embark-isearch-highlight-indicator))
@@ -620,7 +624,9 @@ I use it to search in files and to switch buffer.
   :bind (("C-M-s"   . consult-ripgrep)
          ("C-x C-b" . consult-buffer)
          ("M-SPC"   . consult-buffer)
-         ("M-y"     . consult-yank-from-kill-ring))
+         ("M-y"     . consult-yank-from-kill-ring)
+         :map vertico-map
+         ("M-SPC" . abort-recursive-edit))
   :custom
   (consult-preview-key 'nil) ; no preview
   :config
@@ -862,7 +868,7 @@ I use do write a little helper for dictionary search, set to a key.
 #+END_SRC
 
 
-** Word wrapping and text width
+** Text files, word wrapping, etc...
 
    I  like  when  files  are,   to  some  extent,  of  limited  width.
    Unfortunately  it is  not  always possible  for technical  reasons.
@@ -874,24 +880,54 @@ I use do write a little helper for dictionary search, set to a key.
    - =visual-fill-mode= (visual wrap at window margin)
    - =visual-fill-column-mode= (visual wrap at fixed margin)
 
-   To be  readable, prose text files  should have at most  70 columns.
-   And when word wrapping is hard-coded, the text should be justified.
+   Some behavior of text filling can be controlled.
+   
+#+BEGIN_SRC emacs-lisp
+(setq sentence-end-double-space nil)   ;; no double space after period.
+
+(add-hook 'fill-nobreak-predicate 'fill-single-char-nobreak-p) ;; never break at single chat words 
+(add-hook 'fill-nobreak-predicate 'fill-single-word-nobreak-p) ;; never leave a single word on a row
+#+END_SRC
+
+I am on the fence about ~auto-fill-mode~. In general I don't like text
+to automatically  change while I  am writing. I'd rather  reformat the
+text willingly.
 
 #+BEGIN_SRC emacs-lisp
-(setq fill-column 70)
-(setq default-justification 'full)
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
+;; Fill/unfill paragraph
+(use-package unfill
+  :bind (:map text-mode-map ( "M-q" . unfill-toggle)))
+#+END_SRC
+
+To me, prose text files should have  at most 70 columns. And when word
+wrapping is hard-coded, the text should be justified. This makes sense
+at least  on pure  text files,  i.e., ones  that are  not meant  to be
+interpreted as code or special markup.
+
+#+BEGIN_SRC emacs-lisp
+(defun mxl-text-mode-setup ()
+  "Setup for text-mode files
+
+This applies to pure text mode files and not to modes derived
+from `text-mode'."
+  (interactive)
+  (when (eq 'text-mode major-mode)
+    (setq fill-column 70)
+    (setq default-justification 'full)))
+
+(add-hook 'text-mode-hook 'mxl-text-mode-setup)
 #+END_SRC
 
    For  text  files  like  org-mode  files  it  is  better  to  enable
    =auto-fill-mode=. For email messages it  is better to use something
-   like  =visual-fill-column-mode=.  The standard  =visual-line-mode=
+   like  =visual-fill-column-mode=.  The  standard  =visual-line-mode=
    matches the text width with the  window width, which is annoying on
    large horizontal screen.
 
    Notice that it is  possible for =visual-fill-column-mode= to center
    the text setting =visual-fill-column-center-text= to =t=.
 
+   
 #+BEGIN_SRC emacs-lisp
 (use-package visual-fill-column
   :disabled
@@ -978,9 +1014,12 @@ is more focused.
           (define-key map (kbd "l") #'citar-open-links)
           (define-key map (kbd "e") #'citar-open-entry)
           (define-key map (kbd "t") #'citar-insert-reference)
-          (define-key map (kbd "q") #'abort-recursive-edit)
+          (define-key map (kbd "M-q") #'abort-recursive-edit)
           map)))
 #+END_SRC
+
+#+RESULTS:
+: t
 
 *** Appearance of the bibliography selector
 

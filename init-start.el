@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2023, 2024  Massimo Lauria
-;; Time-stamp: "2024-03-19, 18:25 (CET) Massimo Lauria"
+;; Time-stamp: "2024-03-22, 21:43 (CET) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -70,9 +70,6 @@
 ;; Work environment customization
 (require 'init-preferences)       ; Basic editor preferences
 (require 'init-windows)           ; windows layout
-
-;; Writing
-(require 'init-textmode)          ; Preferences for text editing
 
 ;; Editor behaviour customization
 (require 'init-terminal-fix)      ; Fix some keys combinations in terminals

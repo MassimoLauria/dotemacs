@@ -44,7 +44,7 @@
   "Secondary key sequence used to open links in text files.")
 
 
-(defalias 'open-in-external-app 'browse-url-of-dired-file 
+(defalias 'open-in-external-app 'browse-url-of-dired-file
   "Open the current file or dired marked files in external app.
 Works in Microsoft Windows, Mac OS X, Linux.")
 
@@ -59,6 +59,9 @@ Works in Microsoft Windows, Mac OS X, Linux.")
               massimo-keyboard-open-link-key2 'goto-address-at-point)
             ))
 
+;; All urls/mails are clickable in comments and strings
+(add-hook 'prog-mode-hook 'goto-address-prog-mode)
+(add-hook 'text-mode-hook 'goto-address-mode)
 
 ;; Setup for `org-mode'
 (add-hook 'org-mode-hook
