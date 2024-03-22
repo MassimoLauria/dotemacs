@@ -189,8 +189,6 @@
  '(flymake-error ((t (:underline "Red1"))))
  '(flymake-note ((t (:underline "deep sky blue"))))
  '(flymake-warning ((t (:underline "yellow"))))
- '(flyspell-duplicate ((t (:underline (:color "magenta" :style wave)))))
- '(flyspell-incorrect ((t (:underline (:color "magenta" :style wave)))))
  '(linum ((t (:inherit (shadow default) :background "#303030" :foreground "dark gray"))))
  '(linum-highlight-face ((t (:foreground "Yellow"))))
  '(mmm-default-submode-face ((t (:background "gray15"))))

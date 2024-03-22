@@ -701,14 +701,6 @@ the minibuffer as ~helm~ does. Apparently this recepy works.
    - Fix interactively the typos
 
 #+BEGIN_SRC emacs-lisp
-
-(use-package flyspell
-  :custom
-  (flyspell-use-meta-tab nil))  ;; do not pollute key bindings
-
-(use-package flyspell-correct
-  :commands (flyspell-correct-at-point))
-
 (global-set-key [f2]  'mxl-language-check)
 (global-set-key (kbd "M-<f2>") 'mxl-language-cycle)
 (global-set-key (kbd "M-s") 'flyspell-correct-at-point)
@@ -732,7 +724,7 @@ the minibuffer as ~helm~ does. Apparently this recepy works.
 (setenv "DICPATH" (concat (getenv "HOME") "..."))
 #+END_SRC
 
-   Flyspell highlights typos  and strikes out words  that are repeated
+   *Flyspell* highlights typos and strikes out words that are repeated
    within a  certain distance =flyspell-duplicate-distance=,  which is
    set  to 0  because  I  only want  to  signal adjacent  repetitions.
    Notice that  I activate  flyspell using the  first of  my preferred
@@ -742,21 +734,27 @@ the minibuffer as ~helm~ does. Apparently this recepy works.
 
 #+BEGIN_SRC emacs-lisp
 (use-package flyspell
-  :commands (flyspell-mode flyspell-prog-mode)
+  :commands (flyspell-mode flyspell-prog-mode flyspell-correct-at-point)
   :bind (:map flyspell-mode-map ("C-;" . nil))
-  :config
-  (setq flyspell-duplicate-distance 0     ;; signal as repetitions only adjacent pairs
-        flyspell-highlight-flag t         ;; mark mispelled words
-        flyspell-issue-message-flag nil   ;; silent checking
-        flyspell-persistent-highlight nil ;; only highlight one word
-        flyspell-use-meta-tab nil)
+  :hook ((prog-mode . flyspell-prog-mode)
+         (text-mode . flyspell-mode))
+  :custom
+  (flyspell-duplicate-distance 0)     ;; signal as repetitions only adjacent pairs
+  (flyspell-highlight-flag t)         ;; mark mispelled words
+  (flyspell-issue-message-flag nil)   ;; silent checking
+  (flyspell-persistent-highlight nil) ;; only highlight one word
+  (flyspell-use-meta-tab nil)         ;; disable M-<tab>
+  :custom-face
+  (flyspell-duplicate ((t (:underline (:color "magenta" :style wave)))))
+  (flyspell-incorrect ((t (:underline (:color "magenta" :style wave)))))
+  :init
   (setq ispell-program-name (executable-find "hunspell"))
   (setq ispell-dictionary (ring-ref mxl-preferred-languages -1))  ;; last language by default
   (if (not ispell-program-name)
-      (message "Spell checking disabled: impossible to find correctly installed 'Hunspell'.")))
+      (message "Spell checking disabled: impossible to find correctly installed 'Hunspell'."))
+  :config 
+  (require 'flyspell-correct))        ;; the command I bind to M-s
 
-(add-hook 'text-mode-hook 'flyspell-mode)
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
 #+END_SRC
 
    The language  for spell and  grammar check is  the last one  in the
