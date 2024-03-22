@@ -836,7 +836,7 @@ open, the command will just close it.
       )))
 #+END_SRC
 
-** Looking up stuff in dictionaries
+** Lookingd up stuff in dictionaries
 
 I have few dictionaries of various  quality set to be used with ~sdcv~
 command line utility. There is an emacs package for it but it is quite
@@ -861,14 +861,13 @@ I use do write a little helper for dictionary search, set to a key.
             (with-temp-buffer
               (insert-file sdcv-word-file)
               (split-string (buffer-string) "\n"))))
-    (sdcv-search-input (or ;word
-                           (word-at-point)
-                           (completing-read "Lookup in dictionary: " sdcv-word-cache)
+    (sdcv-search-input (or word
+                           (completing-read "Lookup in dictionary: " sdcv-word-cache nil t (word-at-point))
                            ))))
 #+END_SRC
 
 
-** Text files, word wrapping, etc...
+** Text files, word wrapping, etc
 
    I  like  when  files  are,   to  some  extent,  of  limited  width.
    Unfortunately  it is  not  always possible  for technical  reasons.
