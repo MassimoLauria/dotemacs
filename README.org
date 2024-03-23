@@ -657,6 +657,31 @@ the minibuffer as ~helm~ does. Apparently this recepy works.
     (embark-act arg)))
 #+END_SRC
 
+** Completion
+
+To have auto completion I have  a simple setup based on ~corfu~, which
+complements ~vertico~,  which fits  the same  role in  the minibuffer.
+Contrary  to tools  like ~company~,  ~corfu~ uses  the same  logic and
+technology of ~vertco~ (e.g. ~orderless~ matching of candidates).
+This setup is very basic but functional.
+
+
+#+BEGIN_SRC emacs-lisp
+(use-package corfu
+  :custom
+  (corfu-auto t)
+  (corfu-separator ?\s) ;; M-s by default. This inserts orderless
+                        ;; field separator
+  (corfu-quit-no-match 'separator)
+    ;; Free the RET key for less intrusive behavior.
+  :bind
+  (:map corfu-map ("RET" . nil)) ;; RET does not complete
+  :init
+  (global-corfu-mode)
+  :config
+  (corfu-popupinfo-mode))
+#+END_SRC
+
 
 * Prose and Technical Writing
 
