@@ -40,9 +40,6 @@
      ("Europe/Stockholm" "Stockholm")))
  '(eldoc-idle-delay 0.3)
  '(embark-prompter 'embark-keymap-prompter nil nil "Customized with use-package embark")
- '(embark-verbose-indicator-display-action
-   '(display-buffer-at-bottom
-     (window-height . fit-window-to-buffer)))
  '(epg-pinentry-mode 'loopback)
  '(fci-rule-color "#073642")
  '(font-latex-fontify-sectioning 'color)
@@ -70,7 +67,7 @@
                  ("begin" "$1" "$" "$$" "\\(" "\\[")))
  '(org-preview-latex-default-process 'dvisvgm)
  '(package-selected-packages
-   '(flyspell-correct citar citar-embark consult-yasnippet consult consult-projectile consult-recoll consult-spotify embark embark-consult marginalia orderless vertico corfu page-break-lines monkeytype helpful bibtex-completion flymake-go flymake-go-staticcheck go-mode rust-mode eat nerd-icons-completion nerd-icons-dired modus-themes base16-theme emacsql emacsql-sqlite green-phosphor-theme green-screen-theme pip-requirements company-emoji company-emojify org-contacts calibredb org-contrib helm-company projectile-ripgrep fira-code-mode pdfgrep visual-regexp pdf-tools company-jedi ninja-mode emoji-cheat-sheet-plus eglot cmake-mode neotree all-the-icons nov latex-math-preview lsp-mode org-pdftools python-pytest langtool org-static-blog yapfify writegood-mode powerline helm-swoop gnu-elpa-keyring-update deadgrep helm-recoll rg unicode-fonts forge helm-ls-git helm-bibtex helm org unfill ivy-hydra leuven-theme moe-theme solarized-theme poet-theme sdcv gscholar-bibtex org-bullets company-box ivy-rich which-key magit pythonic esup pyenv-mode-auto ivy-bibtex guess-language wc-mode atomic-chrome zoom-frm latex-preview-pane ob-ipython ssh-config-mode py-autopep8 visual-fill-column wgrep wgrep-ag ag iedit try smex counsel zenburn-theme yasnippet virtualenvwrapper use-package undo-tree swiper smartparens skeletor rainbow-mode rainbow-identifiers rainbow-delimiters pallet magit-svn magit-gh-pulls highlight-symbol highlight-quoted highlight-defined highlight-blocks graphviz-dot-mode gnus-alias flycheck elisp-slime-nav elfeed deferred auctex ace-window))
+   '(chatgpt-shell flyspell-correct citar citar-embark consult-yasnippet consult consult-projectile consult-recoll consult-spotify embark embark-consult marginalia orderless vertico corfu page-break-lines monkeytype helpful bibtex-completion flymake-go flymake-go-staticcheck go-mode rust-mode eat nerd-icons-completion nerd-icons-dired modus-themes base16-theme emacsql emacsql-sqlite green-phosphor-theme green-screen-theme pip-requirements company-emoji company-emojify org-contacts calibredb org-contrib helm-company projectile-ripgrep fira-code-mode pdfgrep visual-regexp pdf-tools company-jedi ninja-mode emoji-cheat-sheet-plus eglot cmake-mode neotree nov latex-math-preview lsp-mode org-pdftools python-pytest langtool org-static-blog yapfify writegood-mode powerline helm-swoop gnu-elpa-keyring-update deadgrep helm-recoll rg unicode-fonts forge helm-ls-git helm-bibtex helm org unfill ivy-hydra leuven-theme moe-theme solarized-theme poet-theme sdcv gscholar-bibtex org-bullets company-box ivy-rich which-key magit pythonic esup pyenv-mode-auto ivy-bibtex guess-language wc-mode atomic-chrome zoom-frm latex-preview-pane ob-ipython ssh-config-mode py-autopep8 visual-fill-column wgrep wgrep-ag ag iedit try smex counsel zenburn-theme yasnippet virtualenvwrapper use-package undo-tree swiper smartparens skeletor rainbow-mode rainbow-identifiers rainbow-delimiters pallet magit-svn magit-gh-pulls highlight-symbol highlight-quoted highlight-defined highlight-blocks graphviz-dot-mode gnus-alias flycheck elisp-slime-nav elfeed deferred auctex ace-window))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
  '(powerline-default-separator 'arrow)
  '(powerline-text-scale-factor 0.5)
@@ -189,6 +186,8 @@
  '(flymake-error ((t (:underline "Red1"))))
  '(flymake-note ((t (:underline "deep sky blue"))))
  '(flymake-warning ((t (:underline "yellow"))))
+ '(flyspell-duplicate ((t (:underline (:color "magenta" :style wave)))))
+ '(flyspell-incorrect ((t (:underline (:color "magenta" :style wave)))))
  '(linum ((t (:inherit (shadow default) :background "#303030" :foreground "dark gray"))))
  '(linum-highlight-face ((t (:foreground "Yellow"))))
  '(mmm-default-submode-face ((t (:background "gray15"))))

@@ -657,32 +657,6 @@ the minibuffer as ~helm~ does. Apparently this recepy works.
     (embark-act arg)))
 #+END_SRC
 
-** Completion
-
-To have auto completion I have  a simple setup based on ~corfu~, which
-complements ~vertico~,  which fits  the same  role in  the minibuffer.
-Contrary  to tools  like ~company~,  ~corfu~ uses  the same  logic and
-technology of ~vertco~ (e.g. ~orderless~ matching of candidates).
-This setup is very basic but functional.
-
-
-#+BEGIN_SRC emacs-lisp
-(use-package corfu
-  :custom
-  (corfu-auto t)
-  (corfu-separator ?\s) ;; M-s by default. This inserts orderless
-                        ;; field separator
-  (corfu-quit-no-match 'separator)
-    ;; Free the RET key for less intrusive behavior.
-  :bind
-  (:map corfu-map ("RET" . nil)) ;; RET does not complete
-  :init
-  (global-corfu-mode)
-  :config
-  (corfu-popupinfo-mode))
-#+END_SRC
-
-
 * Prose and Technical Writing
 
   I   use  Emacs   to  write   technical  papers   about  math,   code
@@ -1769,35 +1743,33 @@ books from inside Emacs.
 
 ** Completion
 
-   I like  to move in  the completion menu  using the =M-i=  and =M-k=
-   keys.  =TAB=,  =M-o= and  =Enter=  do  completion, and  =M-l=  only
-   expands the common part. =M-j= simply kills the previoius word.
+I have a  simple setup based on ~corfu~,  which complements ~vertico~,
+which fits  the same role  in the  minibuffer. Contrary to  tools like
+~company~,  ~corfu~ uses  the same  logic and  technology of  ~vertco~
+(e.g. ~orderless~  matching of candidates).  This setup is  very basic
+but functional.
 
 #+BEGIN_SRC emacs-lisp
-(use-package company
-  :diminish t
+(use-package corfu
+  :custom
+  (corfu-auto t)
+  (corfu-separator ?\s) ;; M-s by default. This inserts orderless
+                        ;; field separator
+  (corfu-quit-no-match 'separator)
+  (corfu-bar-width 0)
+  (corfu-left-margin-width 0.1)
+  (corfu-right-margin-width 0)
+  (corfu-preview-current nil)
+  :bind
+  (:map corfu-map ("RET" . nil)) ;; RET does not complete
+  :init
+  (global-corfu-mode)
   :config
-  (setq company-dabbrev-downcase nil)
-  :bind (:map company-active-map
-              ("M-j" . backward-kill-word)
-              ("M-l" . company-complete-selection)
-              ("M-i" . company-select-previous)
-              ("M-k" . company-select-next)
-              ("M-u" . company-abort)
-              ("M-o" . company-complete-common)
-              ("\r" . nil)
-              ([return] . nil)
-              ("\t" . company-complete-selection)
-              ([tab] . company-complete-selection)
-              ))
+  (corfu-popupinfo-mode))
 #+END_SRC
 
-   Completion is active by default.
 
-#+BEGIN_SRC emacs-lisp
-(add-hook 'after-init-hook 'global-company-mode)
-#+END_SRC
-
+  
 ** Templates - Setup of Yasnippet.el
 
    I  use Yasnippet  both for  code  snippets and  for file  template.
