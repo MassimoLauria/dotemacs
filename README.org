@@ -1758,10 +1758,14 @@ but functional.
   (corfu-quit-no-match 'separator)
   (corfu-bar-width 0)
   (corfu-left-margin-width 0.1)
-  (corfu-right-margin-width 0)
+  (corfu-right-margin-width 0.1)
   (corfu-preview-current nil)
+  (corfu-quit-no-match nil)                   ;; "no match" warning with chances of recovering
   :bind
-  (:map corfu-map ("RET" . nil)) ;; RET does not complete
+  (:map corfu-map ("RET" . nil)               ;; RET does not complete
+        ("M-g" . corfu-info-location)         ;; show definition
+        ("M-h" . corfu-info-documentation)    ;; show help info
+        ("M-o" . corfu-insert))             ;; insert completion candidate
   :init
   (global-corfu-mode)
   :config
