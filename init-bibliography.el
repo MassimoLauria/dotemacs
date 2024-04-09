@@ -9,6 +9,12 @@
 (defconst mxl-main-bibtex-file "~/lavori/latex/bibtex/bib/theoryofcomputing.bib"
   "My main bibliography file.")
 
+(defconst mxl-default-pdf-download-dir
+  (if (eq system-type "darwin") "~/Downloads/" "~/queue/")
+  "Where I download my papers.")
+
+
+
 ;; For reftex
 (setq reftex-default-bibliography (list mxl-main-bibtex-file))
 
@@ -26,7 +32,7 @@
   :init
   (setq biblio-arxiv-bibtex-header "misc") ;; default "@Online" is non standard
   (setq biblio-cleanup-bibtex-function 'bibtex-clean-entry)
-  (setq biblio-download-directory "~/Downloads/"))
+  (setq biblio-download-directory mxl-default-pdf-download-dir))
 
 ;;
 ;; Setup the key generation for bibtex files
@@ -225,7 +231,8 @@ Optional argument NODELIM see `bibtex-make-field'."
   1. Documents  can only be added to the file field.
   2. There are not alternative actions when the target filename already exists.
 "
-  (interactive "f")
+  (interactive
+   (list (read-file-name "Select paper to attach: " mxl-default-pdf-download-dir)))
   (bibtex-beginning-of-entry)
   (let* ((entry (bibtex-parse-entry t))
          (newname (bibtex-generate-filename))
@@ -298,6 +305,7 @@ buffer."
               ("M-q" . bibtex-fill-entry)
               ("C-c C-o" . mxl-bibtex-mode-open)
               ("C-c C-a" . mybibtex-add-file-to-library)
+              ("C-c C-s" . biblio-dblp-lookup)
               ("<drag-n-drop>" . mybibtex-dnd-add-file-mac))
 
   :config
