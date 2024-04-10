@@ -305,7 +305,7 @@ buffer."
               ("M-q" . bibtex-fill-entry)
               ("C-c C-o" . mxl-bibtex-mode-open)
               ("C-c C-a" . mybibtex-add-file-to-library)
-              ("C-c C-s" . biblio-dblp-lookup)
+              ("C-c C-s" . biblio-lookup)
               ("<drag-n-drop>" . mybibtex-dnd-add-file-mac))
 
   :config
@@ -318,6 +318,5 @@ buffer."
   (add-hook 'bibtex-mode-hook
             (lambda () (setq fill-column 999999)))
   (add-hook 'bibtex-mode-hook 'mybibtex-dnd-setup))
-
 
 (provide 'init-bibliography)
