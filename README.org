@@ -1743,11 +1743,12 @@ books from inside Emacs.
 
 ** Completion
 
-I have a  simple setup based on ~corfu~,  which complements ~vertico~,
-which fits  the same role  in the  minibuffer. Contrary to  tools like
-~company~,  ~corfu~ uses  the same  logic and  technology of  ~vertco~
-(e.g. ~orderless~  matching of candidates).  This setup is  very basic
-but functional.
+I have a simple setup based on ~corfu~, which complements ~vertico~,
+which fits the same role in the minibuffer. Contrary to tools like
+~company~, ~corfu~ uses the same logic and technology of ~vertico~
+(e.g. ~orderless~ matching of candidates), and whatever is returned by
+~completion-at-point~. This setup is very basic but functional, and we
+use ~cape~ to add some extensions to it.
 
 #+BEGIN_SRC emacs-lisp
 (use-package corfu
@@ -1770,6 +1771,15 @@ but functional.
   (global-corfu-mode)
   :config
   (corfu-popupinfo-mode))
+
+
+(use-package cape
+  :init
+  ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)   ;; file paths
+  (add-to-list 'completion-at-point-functions #'cape-emoji)  ;; emoji
+  (add-to-list 'completion-at-point-functions #'cape-tex)    ;; Unicode chars from latex commands
+  )
 #+END_SRC
 
 
