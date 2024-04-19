@@ -1754,6 +1754,7 @@ use ~cape~ to add some extensions to it.
 (use-package corfu
   :custom
   (corfu-auto t)
+  (corfu-auto-delay 0.1)
   (corfu-separator ?\s) ;; M-s by default. This inserts orderless
                         ;; field separator
   (corfu-quit-no-match 'separator)
@@ -1761,11 +1762,11 @@ use ~cape~ to add some extensions to it.
   (corfu-left-margin-width 0.1)
   (corfu-right-margin-width 0.1)
   (corfu-preview-current nil)
-  (corfu-quit-no-match nil)                   ;; "no match" warning with chances of recovering
+  (corfu-quit-no-match t)                   ;; i hate the "no match" warning
   :bind
-  (:map corfu-map ("RET" . nil)               ;; RET does not complete
-        ("M-g" . corfu-info-location)         ;; show definition
-        ("M-h" . corfu-info-documentation)    ;; show help info
+  (:map corfu-map ("RET" . nil)             ;; RET does not complete
+        ("M-g" . corfu-info-location)       ;; show definition
+        ("M-h" . corfu-info-documentation)  ;; show help info
         ("M-o" . corfu-insert))             ;; insert completion candidate
   :init
   (global-corfu-mode)
