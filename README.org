@@ -991,10 +991,11 @@ is more focused.
 (use-package citar
    :bind ("C-c b" . citar-open)
    :commands (citar-open citar-open-files citar-open-links)
+   :init
+   (setq citar-library-paths '("~/cloud/Papers/")) ;; used outside citar
    :custom
    (citar-bibliography '("~/lavori/latex/bibtex/bib/theoryofcomputing.bib"))
    (citar-file-variable "file") 
-   (citar-library-paths '("~/cloud/Papers/"))
    :config
    (citar-embark-mode))
 
