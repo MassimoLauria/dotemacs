@@ -28,6 +28,13 @@
                            embark
                            marginalia
                            orderless
+                           consult
+                           consult-projectile
+                           consult-yasnippet
+                           consult-recoll
+                           ;; completion
+                           corfu
+                           cape
                            ;; others
                            ace-window
                            async
@@ -37,11 +44,6 @@
                            cmake-mode
                            citar
                            citar-embark
-                           company
-                           consult
-                           consult-projectile
-                           consult-yasnippet
-                           consult-recoll
                            dash
                            deferred
                            diminish
@@ -94,7 +96,6 @@
                            sdcv
                            seq
                            shut-up
-                           skeletor
                            smartparens
                            ssh-config-mode
                            try

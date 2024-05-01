@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2023, 2024  Massimo Lauria
-;; Time-stamp: "2024-05-01, 19:01 (CEST) Massimo Lauria"
+;; Time-stamp: "2024-05-01, 19:25 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -76,10 +76,6 @@
 (require 'init-eshell)            ; Emacs shell
 (require 'init-clipboard)         ; Clipboard managing
 
-;; Coding
-(require 'init-templates)         ; Templates
-(require 'init-magit)
-
 ;; Keyboard settings
 (require 'init-hyperlink)         ; keys for opening links
 
@@ -90,6 +86,7 @@
 
 
 ;; Applications
+(require 'init-magit)
 (require 'init-org-mode)   ; Organizer
 (require 'init-websearch)  ; Search the Web
 
