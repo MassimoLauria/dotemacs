@@ -279,36 +279,6 @@ I copied this function from somewhere on the web.
                       (setq candidate file))))))))
     candidate))
 
-
-;; Smart parenthesis
-
-(add-hook  ; Workaround for `TeX-insert-quote' conflict with `smartparens'
- 'LaTeX-mode-hook
- (lambda () (local-unset-key "\"")))
-
-(require 'smartparens-latex nil t)
-(eval-after-load "smartparens-latex"
-  '(sp-with-modes '(
-                 tex-mode
-                 plain-tex-mode
-                 latex-mode
-                 )
-     ;;(sp-local-pair "$" "$" :post-handlers '(sp-latex-insert-spaces-inside-pair))
-     (sp-local-pair "\\lceil" "\\rceil"
-                    :post-handlers '(sp-latex-insert-spaces-inside-pair))
-     (sp-local-pair "\\lfloor" "\\rfloor"
-                    :post-handlers '(sp-latex-insert-spaces-inside-pair))
-     ;; disable the default wrapping by `bi' and `be'
-     (sp-local-tag "bi" nil nil :actions nil)
-     (sp-local-tag "be" nil nil :actions nil)
-     ))
-
-;; Yasnippet in LaTeX
-(add-hook
-   'LaTeX-mode-hook
-   (lambda () (yas-minor-mode-on)))
-
-
 (provide 'init-latex)
 ;; Local Variables:
 ;; mode: emacs-lisp

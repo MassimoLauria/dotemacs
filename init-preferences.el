@@ -49,8 +49,6 @@
 (line-number-mode 1)
 (column-number-mode 1)
 
-; (show-paren-mode 1)                     ; We use sp-show-paren-mode from smartparen
-
 ;; Speedbar
 (setq speedbar-mode-hook '(lambda () (text-scale-decrease 1)))
 

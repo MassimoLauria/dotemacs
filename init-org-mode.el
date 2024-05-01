@@ -212,6 +212,7 @@ It shows the full view of my custom agenda."
 
   ;; Getting out of org-src editing
   (define-key org-src-mode-map (kbd "C-'") 'org-edit-src-exit)
+
   )
 
 
@@ -440,18 +441,6 @@ part of the keyboard.
   ;;    (org-agenda-goto-calendar)))
   )
 
-
-;; Nice quotes and smartparens
-(when (require 'smartparens nil t)
-  (sp-local-pair 'org-mode "“" "”")  ;; add so you can jump back and forth and out and in the pair!
-  (sp-local-pair 'org-mode "\"" nil :post-handlers '(my-replace-straight-quotes))
-  (sp-local-tag  'org-mode "\"" "“" "”" :actions '(wrap))
-  (sp-local-pair 'org-mode "$" "$" )
-  (sp-local-tag  'org-mode "$" "$" "$" :actions '(wrap))
-  (sp-local-pair 'org-mode "/" "/")
-  (sp-local-tag  'org-mode "/" "/" "/" :actions '(wrap))
-  (sp-local-tag  'org-mode "*" "*" "*" :actions '(wrap))
-  (sp-local-tag  'org-mode "=" "=" "=" :actions '(wrap)))
 
 ;; Remove annoying auto-completion sources
 (defun org-mode/setup-auto-complete ()

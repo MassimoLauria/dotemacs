@@ -1888,7 +1888,7 @@ use ~cape~ to add some extensions to it.
 #+END_SRC
 
 
-  
+ 
 ** Templates - Setup of Yasnippet.el
 
    I  use Yasnippet  both for  code  snippets and  for file  template.
@@ -1956,6 +1956,31 @@ use ~cape~ to add some extensions to it.
    2. By expanding  during typing. All my snippets either  do not have
       a  key, hence  are accessible  only from  the menu,  or the  key
       starts with ='<'= .
+
+
+
+** Automatic/Smart parenthesis
+
+Emacs can help with inserting pairs of parenthesis, brackets, and so
+on... Even more complex pairs like =\left{= and =\right}=. It should
+manage automatic wrapping of text, and stuff like that. Of couse, as
+usual with emacs, there are multiple functions and packages trying to
+do the same thing and therefore fight with each other. I use
+~smartparens~, but there are other options like ~autopair~ or
+~electric-pair~.
+
+#+BEGIN_SRC emacs-lisp
+(use-package smartparens
+  :commands (smartparens-mode smartparens-global-mode)
+  :diminish ""
+  :custom
+  (sp-base-key-bindings nil)
+  (sp-highlight-pair-overlay nil)
+  (sp-wrap-repeat-last 2)
+  :config
+  (require 'smartparens-config)
+  (sp-local-pair 'text-mode "“" "”"))
+#+END_SRC
 
 * Other features
 ** Backup and autosave of files

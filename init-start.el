@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2023, 2024  Massimo Lauria
-;; Time-stamp: "2024-03-22, 21:43 (CET) Massimo Lauria"
+;; Time-stamp: "2024-05-01, 19:01 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -77,7 +77,6 @@
 (require 'init-clipboard)         ; Clipboard managing
 
 ;; Coding
-(require 'init-autotype)          ; Automatic file filling
 (require 'init-templates)         ; Templates
 (require 'init-magit)
 

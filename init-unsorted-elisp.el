@@ -57,22 +57,6 @@
         uniquify-separator ":"))
 
 
-;; Nice quotes
-(defun MassimoLauria/replace-straight-quotes (pair action context)
-  (when (eq action 'insert)
-    (delete-char 1)
-    (delete-char -1)
-    (insert "“")
-    (insert "”")
-    (backward-char 1)))
-
-;; Nice quotes and smartparens
-(when (require 'smartparens nil t)
-  (sp-local-pair 'text-mode "“" "”")  ;; add so you can jump back and forth and out and in the pair!
-  (sp-local-pair 'text-mode "\"" nil :post-handlers '(MassimoLauria/replace-straight-quotes))
-  (sp-local-tag  'text-mode "\"" "“" "”" :actions '(wrap)))
-
-
 
 ;; Ediff customization
 ; (no external control frame)
