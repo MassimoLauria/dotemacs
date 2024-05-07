@@ -1877,15 +1877,16 @@ use ~cape~ to add some extensions to it.
   :config
   (corfu-popupinfo-mode))
 
+;; Usa cape-dabbrev only with prefix length 4, and only in text modes 
 (defun mxl/add-dabbrev-completion ()
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+  (add-to-list 'completion-at-point-functions (cape-capf-prefix-length #'cape-dabbrev 5)))
 
 (add-hook 'text-mode-hook #'mxl/add-dabbrev-completion)
 
 (use-package cape
   :custom
   (cape-dabbrev-check-other-buffers 'cape--buffers-major-mode) ;; only look for words in buffers with the same major modes
-  (cape-dabbrev-min-length 4)
+  (cape-dabbrev-min-length 5)
   :init
   ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)   ;; file paths
