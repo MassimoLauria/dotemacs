@@ -1762,8 +1762,6 @@ by default."
   (define-key pdf-view-mode-map (kbd "W") 'pdf-view-fit-width-to-window)
   (define-key pdf-view-mode-map (kbd "H") 'pdf-view-fit-height-to-window)
   (define-key pdf-view-mode-map (kbd "P") 'pdf-view-fit-page-to-window)
-  ;; Open in apps
-  (define-key pdf-view-mode-map (kbd "O") 'open-in-external-app)
   ;; Movements
   (define-key pdf-view-mode-map (kbd "u") 'pdf-history-backward)
   (define-key pdf-view-mode-map (kbd "o") 'pdf-history-forward)
@@ -1777,6 +1775,10 @@ by default."
   (define-key pdf-view-mode-map (kbd "M-k") 'pdf-view-next-line-or-next-page)
   (define-key pdf-view-mode-map (kbd "M-j") 'pdf-view-previous-page)
   (define-key pdf-view-mode-map (kbd "M-l") 'pdf-view-next-page)
+
+  ;; Links
+  (define-key pdf-links-minor-mode-map (kbd "f") 'pdf-links-action-perform)
+  
   ;; History
   (define-key pdf-history-minor-mode-map (kbd "B") nil)
   (define-key pdf-history-minor-mode-map (kbd "N") nil)
@@ -1790,11 +1792,25 @@ by default."
   ;; Outline
   (define-key pdf-view-mode-map (kbd "g") 'pdf-outline)
 
+  ;; Open in external apps
   (defun mxl-pdf-open-in-xournal()
     "Open the current PDF in Xournal, for editing"
     (interactive)
     (start-process "open-pdf-in-xournal" nil "xournalpp" (buffer-file-name)))
+  
+  (defun mxl-pdf-open-in-default-viewer()
+    "Open the current PDF in default viewer"
+    (interactive)
+    (let ((viewer
+          (cond
+           ((eq system-type 'gnu/linux) "xdg-open")
+           ((eq system-type 'darwin) "open")
+           (t "xdg-open"))))
+      (start-process "open-pdf-in-viewer" nil viewer (buffer-file-name))))
+  
   (define-key pdf-view-mode-map (kbd "X") 'mxl-pdf-open-in-xournal)
+  (define-key pdf-view-mode-map (kbd "O") 'mxl-pdf-open-in-default-viewer)
+
   ;; Margin removal
   (defun mxl-pdf-view-toggle-crop()
     "Crop/Uncrop according to the bounding box"
