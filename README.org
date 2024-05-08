@@ -1075,7 +1075,7 @@ with timestamped filename.
   (interactive)
   (let ((buffer)
         (spos)
-        (loc "~/personal/mail/drafts/")
+        (loc "~/personal/maildrafts/")
         (name (format-time-string "%Y%m%d-%H%M%S-maildraft.txt" (current-time))))
     (switch-to-buffer (find-file-noselect (concat loc name) nil nil nil))
     (setq fill-column 70)
