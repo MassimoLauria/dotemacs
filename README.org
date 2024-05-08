@@ -1092,20 +1092,6 @@ with timestamped filename.
     (save-buffer)))
 #+END_SRC
 
-
-* Org-Protocol integration
-
-  Org-mode  provides a  protocol for  capturing snippets  of text  and
-  informations, and to store links. In order to make this feature work
-  under macOS it is necessary to install some script which manages the
-  org-protocol at OS level. I have built such app according to
-
-  - https://github.com/xuchunyang/setup-org-protocol-on-mac
-
-  and   saved   it   into   the   =macos=   folder   in   this   emacs
-  configuration repository. In order to make it work just copy it into
-  =/Applications= folder.
-
 * Programming
 
 
