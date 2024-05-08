@@ -368,29 +368,18 @@ part of the keyboard.
       (setq output (buffer-string)))
     output))
 
-
-(setq my/org-contacts-template "* REVIEW %(org-contacts-template-name)
-  :PROPERTIES:
-  :EMAIL: %(org-contacts-template-email)
-  :END:
-
-  %?
-  ")
-
 (setq org-capture-templates
       `(
-        ("n" "Notebook note"     entry (file "notebook.org")    "* REVIEW %?\n  %T\n  %i\n  %a\n\n")
-        ("t" "Task"              entry (file "agenda.org"  )    "* REVIEW ⌚ %?\n  %T\n\n  %i\n\n")
-        ("d" "Deadline"          entry (file "agenda.org")      "* REVIEW ⌚ %?\n  DEADLINE: %^t\n  %U\n\n  %i\n\n")
-        ("e" "Event/Appointment" entry (file "agenda.org")      "* %?\n  %^t\n  %i\n\n")
-        ("c" "New contact"       entry (file+olp "contacts.org" "CONTATTI") ,my/org-contacts-template :empty-lines 1)
-        ("j" "Journal Entry"     entry (file+olp+datetree "journal.org") "* inserito il %U\n\n  %?\n\n%i\n\n")
+        ("t" "Task      (agenda.org)"  entry (file "agenda.org"  )    "* REVIEW ⌚ %?\n  %T\n\n  %i\n\n")
+        ("d" "Deadline  (agenda.org)"  entry (file "agenda.org")      "* REVIEW ⌚ %?\n  DEADLINE: %^t\n  %U\n\n  %i\n\n")
+        ("m" "Email       (new file)"  plain (function mxl/create-mail-draft) ""    ; Just create an email draft and stop capture
+         :immediate-finish t
+         :jump-to-captured t
+         :empty-lines-after 3
+         )
+        ("n" "Note    (notebook.org)"  entry (file "notebook.org")    "* REVIEW %?\n  %T\n  %i\n  %a\n\n")
+        ))
 
-        ;; ("Q" "File a notebook" entry (file+olp "notebook.org" "PHYSICAL NOTEBOOKS")
-        ;;  "* New notebook %? :notebook:%^g\n  %U\n\n  %^{ID}p%^{Formato}p%^{Fogli}p%^{Nome}p\n\n")
-        ("w" "External URL" entry (file+olp "notebook.org" "CAPTURED URLS")  "%(org-capture-URL-data)")))
-
-(setq org-default-capture-template "w")
 
 
 ;; Aquamacs misses some org-agenda keybindings!

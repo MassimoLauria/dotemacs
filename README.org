@@ -647,7 +647,7 @@ I use it to search in files and to switch buffer.
 ** Additional action with embark, as it was in helm
 
 I find convenient to have the choice of minibuffer action displayed in
-the minibuffer as ~helm~ does. Apparently this recepy works.
+the minibuffer as ~helm~ does. Apparently this recipe works.
 
 #+BEGIN_SRC emacs-lisp
 (defun embark-act-with-completing-read (&optional arg)
@@ -1048,6 +1048,48 @@ Setup  the look  and  icons  for the  bibliography  selection. We  use
   (list citar-indicator-files-icons
         citar-indicator-links-icons))
 
+#+END_SRC
+
+
+** Email drafts
+
+The fight to have email working inside emacs is a stink. I tried
+~notmuch~ and ~mu4e~ but they all fail to work well with gmail in
+a very complete way, mostly because the IMAP interface that gmail
+exposes is insufficient for many good features of GMAIL. For example
+tagging via notmuch is not synced between machine and that's
+a serious issues.
+
+In the end I just want something to quickly go and write email drafts.
+This function setup a buffer in textmode, fills it with some template
+and info mostly useful for bookkeeping. In the end I cut and paste the
+buffer into gmail client.
+
+#+BEGIN_SRC emacs-lisp
+(defun mxl/create-mail-draft ()
+  "Create a mail draft buffer in text-mode
+
+Drafts are stored in hardcoded path '~/personal/mail/drafts/'
+with timestamped filename.
+"
+  (interactive)
+  (let ((buffer)
+        (spos)
+        (loc "~/personal/mail/drafts/")
+        (name (format-time-string "%Y%m%d-%H%M%S-maildraft.txt" (current-time))))
+    (switch-to-buffer (find-file-noselect (concat loc name) nil nil nil))
+    (setq fill-column 70)
+    (text-mode)
+    (auto-fill-mode)
+    (setq default-justification 'left)
+    (insert "Date: " (format-time-string "%Y/%m/%d at %H:%M:%S" (current-time)) "\n")
+    (insert "From: " user-full-name " <" user-mail-address ">")
+    (insert "\n" (make-string fill-column ?—) "\n")
+    (setq spos (point))
+    (insert "\n\n\n-- \n")
+    (insert (or (and (boundp 'user-mail-signature) user-mail-signature) ""))
+    (goto-char spos)
+    (save-buffer)))
 #+END_SRC
 
 
