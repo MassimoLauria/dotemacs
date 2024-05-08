@@ -1878,15 +1878,14 @@ books from inside Emacs.
 
   I am not very happy with this  setup, but it fits with the fact that
   I  don't like  completion  and  snippet expansion  to  step on  each
-  other  toes.  And  let's  admit  it,  =company-yasnippet=  does  not
-  integrate at all with ~company-mode~.
-
-  In general completion should only be  about stuff I am typing, while
-  templates and  snippets should  trigger only when  explicitly asked.
-  In  my configuration  templates (actually  snippets) all  start with
-  characters ='<'=  followed by some text.  This is unlikely to  be in
-  the   text   by   accident.   For    this   reason   I   don't   use
-  =yasnippet-snippets= because it fills  by typing space with snippets
+  other  toes.
+  
+  In my workflow completion should only be about stuff I am typing,
+  while templates and snippets should trigger only when explicitly
+  asked. In my configuration templates (actually snippets) all start
+  with characters ='<'= followed by some text. This is unlikely to be
+  in the text by accident. For this reason I don't use
+  =yasnippet-snippets= because it fills by typing space with snippets
   which trigger out of the blue.
 
 ** Completion
