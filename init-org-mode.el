@@ -622,6 +622,8 @@ See https://emacs.stackexchange.com/questions/21171/company-mode-completion-for-
   :mode ("\\.org\\'" . org-mode)
   :bind (([f5] . org-capture)
          ([f6] . my-org-agenda-show))
+  :custom
+  (org-capture-bookmark . nil)
   :config
   (init-org-mode--setup))
 
