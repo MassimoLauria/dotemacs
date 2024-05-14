@@ -6,7 +6,7 @@
 
 
 ;; Main bibliography file
-(defconst mxl-main-bibtex-file "~/lavori/latex/bibtex/bib/theoryofcomputing.bib"
+(defconst mxl-main-bibtex-file "~/lavori/latex/bibliografia.bib"
   "My main bibliography file.")
 
 (defconst mxl-default-pdf-download-dir

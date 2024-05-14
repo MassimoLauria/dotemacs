@@ -994,7 +994,7 @@ is more focused.
    :init
    (setq citar-library-paths '("~/cloud/Papers/")) ;; used outside citar
    :custom
-   (citar-bibliography '("~/lavori/latex/bibtex/bib/theoryofcomputing.bib"))
+   (citar-bibliography '("~/lavori/latex/bibliografia.bib"))
    (citar-file-variable "file") 
    :config
    (citar-embark-mode))
@@ -1054,11 +1054,10 @@ Setup  the look  and  icons  for the  bibliography  selection. We  use
 ** Email drafts
 
 The fight to have email working inside emacs is a stink. I tried
-~notmuch~ and ~mu4e~ but they all fail to work well with gmail in
-a very complete way, mostly because the IMAP interface that gmail
-exposes is insufficient for many good features of GMAIL. For example
-tagging via notmuch is not synced between machine and that's
-a serious issues.
+~notmuch~ and ~mu4e~ but they all fail to work well with gmail in,
+mostly because the IMAP interface that gmail exposes is insufficient
+to implement many good features of GMAIL. For example, notmuch tags
+are not synced between machine and that's a serious issues.
 
 In the end I just want something to quickly go and write email drafts.
 This function setup a buffer in textmode, fills it with some template
@@ -1069,7 +1068,7 @@ buffer into gmail client.
 (defun mxl/create-mail-draft ()
   "Create a mail draft buffer in text-mode
 
-Drafts are stored in hardcoded path '~/personal/mail/drafts/'
+Drafts are stored in hardcoded path '~/personal/maildrafts/'
 with timestamped filename.
 "
   (interactive)
