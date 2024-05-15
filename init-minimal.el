@@ -64,21 +64,27 @@
     (define-key map (kbd "M-d")  'backward-delete-char)
     (define-key map (kbd "M-f")  'delete-char)
     (define-key map (kbd "M-w")  'kill-whole-line)
-    ;; Moving between buffers (M-S)
-    (define-key map [M-S-up] 'previous-buffer)
-    (define-key map [M-S-down] 'next-buffer)
+    ;; Moving between buffers
+    (define-key map (kbd "M-m")   'other-window)
     ;; Quicker actions
     (define-key map (kbd "C-x k")   'kill-this-buffer)
     map)
   "Keymap for minimo-keyboard-mode.")
 
 (define-minor-mode minimo-keyboard-mode
-  :init-value nil
-  :lighter " Minimo" ; Modeline string
-  :group   'minimo-keyboard)
-(defun turn-on-minimo-keyboard () (minimo-keyboard-mode 1))
-(define-globalized-minor-mode  minimo-keyboard-global-mode
-  minimo-keyboard-mode turn-on-minimo-keyboard)
+  "Minimal keyboard setup"
+  nil
+  " Minimo" ; Modeline string
+  minimo-keyboard-mode-map)
+
+
+(defun turn-on-minimo-keyboard ()
+  (minimo-keyboard-mode 1))
+(define-globalized-minor-mode
+  minimo-keyboard-global-mode
+  minimo-keyboard-mode
+  turn-on-minimo-keyboard)
+
 (minimo-keyboard-global-mode)
 
 ;; Fix XTerm issues
@@ -102,7 +108,7 @@
 
 ;; Color theme
 (condition-case msg
-    (load-theme 'zenburn t)
+    (load-theme 'modus-vivendi t)
     (error (format "%s" msg) ))
 
 
