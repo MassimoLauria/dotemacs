@@ -1,6 +1,6 @@
 ;;; init.el --- emacs bootstrap   -*- coding: utf-8 -*-
 ;;
-;; 
+;;
 ;;  Full Emacs configuration requires version >= 24, but in case of
 ;;  older emacs, we revert to a bare minimal configuration that still
 ;;  does not make me cringe.
@@ -16,6 +16,6 @@
 
 (setq load-path (cons "~/config/emacs/" load-path))
 
-(if (>= emacs-major-version 24)
+(if (>= emacs-major-version 29)
     (require 'init-start)
   (require 'init-minimal))
