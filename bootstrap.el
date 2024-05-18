@@ -47,7 +47,6 @@
                            dash
                            deferred
                            diminish
-                           elisp-slime-nav
                            epl
                            esup
                            f
@@ -130,6 +129,7 @@
 (setq network-security-level 'high)
 
 ;; Emacs packages
+(setopt package-install-upgrade-built-in t)
 (setq package-user-dir (concat "~/config/emacs/elpa-local/" emacs-version))
 (setq package-archives  '(("gnu"    . "https://elpa.gnu.org/packages/")
                           ("nongnu" . "https://elpa.nongnu.org/nongnu/")
