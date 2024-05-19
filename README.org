@@ -1574,20 +1574,8 @@ C/C++ code.
 
 ** Emacs Lisp
 
-   Emacs  lisp is  pretty integrated  in Emacs,  dah! Nevertheless  in
-   order   to  navigate   in  symbols,   it  is   better  to   install
-   =elisp-slime-nav-mode=.
-
-#+BEGIN_SRC emacs-lisp
-(use-package elisp-slime-nav
-  :diminish ""
-  :hook ((lisp-interaction-mode . elisp-slime-nav-mode)
-         (emacs-lisp-mode . elisp-slime-nav-mode)
-         (ielm-mode . elisp-slime-nav-mode)))
-#+END_SRC
-
-   It is nice  to have documentation for  the stuff we do  and read in
-   elisp code. So it is a good idea to turn on =eldoc= if possible.
+It is nice  to have documentation for  the stuff we do  and read in
+elisp code. So it is a good idea to turn on =eldoc= if possible.
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
