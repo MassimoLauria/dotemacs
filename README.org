@@ -547,7 +547,7 @@ what I need. I'd rather start with som,e =*Untitled*= text file.
 Emacs definitely can  improve in term of usability. Here  we setup few
 packages  in  order  to  make  it  more  polished  and  nice  to  use.
 
-** Find file
+** Find file using fzf
 
 #+BEGIN_SRC emacs-lisp
 (defun mxl/fzf-find-file-from-root ()
@@ -558,7 +558,7 @@ packages  in  order  to  make  it  more  polished  and  nice  to  use.
   :bind
   ("C-x C-f" . mxl/fzf-find-file-from-root)
   :custom
-  (fzf/args "-x --print-query --margin=1,0 --no-hscroll")
+  (fzf/args "-x --border none --print-query --margin=1,0 --no-hscroll")
 )
 #+END_SRC
 
