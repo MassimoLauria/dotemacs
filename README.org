@@ -547,22 +547,6 @@ what I need. I'd rather start with som,e =*Untitled*= text file.
 Emacs definitely can  improve in term of usability. Here  we setup few
 packages  in  order  to  make  it  more  polished  and  nice  to  use.
 
-** Find file using fzf
-
-#+BEGIN_SRC emacs-lisp
-(defun mxl/fzf-find-file-from-root ()
-  (interactive)
-  (fzf-find-file "~/"))
-
-(use-package fzf
-  :bind
-  ;; ("C-x C-f" . mxl/fzf-find-file-from-root)
-  :custom
-  (fzf/args "-x -e --border none --print-query --margin=1,0 --no-hscroll")
-)
-#+END_SRC
-
-
 ** Minubuffer completion
 
 The  completion framework  used to  be based  on ~Helm~  but now  I am
@@ -640,12 +624,17 @@ I use it to search in files and to switch buffer.
   :bind (("C-M-s"   . consult-ripgrep)
          ("C-x C-b" . consult-buffer)
          ("M-SPC"   . consult-buffer)
+         ("C-x C-f" . mxl/consult-find-file)
          ("M-y"     . consult-yank-from-kill-ring)
          :map vertico-map
          ("M-SPC" . abort-recursive-edit))
   :custom
   (consult-preview-key 'nil) ; no preview
   :config
+  (defun mxl/consult-find-file ()
+    (interactive)
+    (consult-find "~/"))
+  
   (consult-customize
       consult-goto-line
       consult-line
