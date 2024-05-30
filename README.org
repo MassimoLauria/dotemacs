@@ -556,9 +556,9 @@ packages  in  order  to  make  it  more  polished  and  nice  to  use.
 
 (use-package fzf
   :bind
-  ("C-x C-f" . mxl/fzf-find-file-from-root)
+  ;; ("C-x C-f" . mxl/fzf-find-file-from-root)
   :custom
-  (fzf/args "-x --border none --print-query --margin=1,0 --no-hscroll")
+  (fzf/args "-x -e --border none --print-query --margin=1,0 --no-hscroll")
 )
 #+END_SRC
 
