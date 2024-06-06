@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2024-03-22, 09:11 (CET) Massimo Lauria"
+# Time-stamp: "2024-06-06, 18:33 (CEST) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -96,6 +96,7 @@ test:
 
 # -------- Daemon ---------------------------------
 start:
+	@${MAKE} --no-print-directory  stop
 	@echo "Starting emacs server"
 	${EMACS} --daemon --chdir ${HOME}
 
