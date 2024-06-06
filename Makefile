@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2024-06-06, 18:33 (CEST) Massimo Lauria"
+# Time-stamp: "2024-06-06, 18:48 (CEST) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -14,6 +14,9 @@ ifeq ($(shell uname -s),Darwin)
 EMACS=/Applications/${EMACSAPP}/Contents/MacOS/Emacs
 EMACSCLIENT=/Applications/${EMACSAPP}/Contents/MacOS/bin/emacsclient
 endif
+
+VERSION:=$(shell ${EMACS} -Q --version|head -1|cut -d' ' -f3 )
+
 
 ## Init files
 
@@ -28,14 +31,16 @@ FONTPATH=~/Library/Fonts
 endif
 
 
-.PHONY: clean test profile minisetup start stop install-fonts
+.PHONY: clean test profile minisetup start stop setup install-fonts
+
+all: start
 
 # --------- Setup Emacs ---------------------------------
-all:
+setup:
 	@type ${EMACS} > /dev/null || (echo "Could not run '${EMACS}' program" && exit 1)
 	@echo "Setup Emacs configuration"
 	@echo " - program: ${EMACS}"
-	@echo " - version: `${EMACS} -Q --version|head -1|cut -d' ' -f3`"
+	@echo " - version: ${VERSION}"
 	@mkdir -p ~/.emacs.d
 	@rm -f ~/.emacs.d/init.el
 	@ln -s ${INIT} ~/.emacs.d
@@ -68,7 +73,6 @@ upgrade-pkgs:
 	${MAKE} setup-pkgs
 
 
-VERSION:=$(shell ${EMACS} -Q --version|head -1|cut -d' ' -f3 )
 PDFTOOLPATH:=$(shell ls -d ${PWD}/elpa-local/${VERSION}/pdf-tools-* | tail -1)
 
 setup-pkgs:
@@ -97,6 +101,7 @@ test:
 # -------- Daemon ---------------------------------
 start:
 	@${MAKE} --no-print-directory  stop
+	@[ -f ${HOME}/.emacs.d/init.el ] || ${MAKE} setup
 	@echo "Starting emacs server"
 	${EMACS} --daemon --chdir ${HOME}
 
