@@ -624,7 +624,7 @@ I use it to search in files and to switch buffer.
   :bind (("C-M-s"   . consult-ripgrep)
          ("C-x C-b" . consult-buffer)
          ("M-SPC"   . consult-buffer)
-         ("C-x C-f" . mxl/consult-find-file)
+         ("C-f"     . mxl/consult-find-file)
          ("M-y"     . consult-yank-from-kill-ring)
          :map vertico-map
          ("M-SPC" . abort-recursive-edit))
