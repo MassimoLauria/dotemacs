@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2024-06-06, 18:48 (CEST) Massimo Lauria"
+# Time-stamp: "2024-06-07, 21:23 (CEST) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -33,7 +33,9 @@ endif
 
 .PHONY: clean test profile minisetup start stop setup install-fonts
 
-all: start
+all:
+	@echo "There is no default command."
+
 
 # --------- Setup Emacs ---------------------------------
 setup:
