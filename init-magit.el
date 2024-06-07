@@ -7,6 +7,7 @@
 (use-package magit
   :commands (magit-status magit-blame magit-mode)
   :config
+  (setq dired-vc-rename-file t)  ;; git aware dired rename
   (add-to-list 'magit-no-confirm 'stage-all-changes)
   (setq magit-push-always-verify nil)
   ;; show full screen magit-status
