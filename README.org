@@ -1244,6 +1244,84 @@ with timestamped filename.
 
 
 
+** Compiling and building
+
+The ~compile~ and ~recompile~ commands are useful starting points.
+The main issue I have with those is that they are not launched from
+the top level project directory. I run compilation commands using
+~compile-multi~ and among other things, this package allows me to
+do that. Hence we first do the least possible setup for ~projectile~.
+
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+  :commands (projectile-mode)
+  :demand t
+  :init
+  (setq projectile-current-project-on-switch t)
+  :config
+  (projectile-mode))
+#+END_SRC
+
+With that I can do the basic setup of my compilation process.
+
+#+BEGIN_SRC emacs-lisp 
+(setq compile-command nil)             ;; no default command
+(setq compilation-ask-about-save nil)
+(setq compilation-read-command t)      ;; ask the command when using
+                                       ;; `compile' explicitly.
+#+END_SRC
+
+Now we setup ~compile-multi~ to always launch compilations from the
+project root. We also setup a default action that asks the compile
+command explicitly, and we adapt the ~recompile~ command to work with
+this setup.
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package compile-multi
+  :commands compile-multi
+  :bind
+  (("<f9>" .   'mxl/compile-multi-recompile)
+   ("M-<f9>" . 'compile-multi))
+  :init
+  (setq compile-multi-config nil)
+  (setq compile-multi-default-directory #'projectile-project-root)
+
+  (defun mxl/compile-multi-read ()
+    (interactive)
+    (setq compile-command (compilation-read-command compile-command))
+    (recompile))
+
+  (defun mxl/compile-multi-recompile ()
+  (interactive)
+  (if (and compile-command
+           (equal compilation-directory (funcall compile-multi-default-directory)))
+      (recompile)
+    (compile-multi)))
+
+  :config
+  (push `(t
+          ("Fallback:Edit command" . ,#'mxl/compile-multi-read))
+        compile-multi-config))
+
+
+#+END_SRC
+
+Here we have an example on how to add compile actions. If the project
+for a latex document has a ~.latexmkrc~ file, then we can use
+~latexmk~ to produce that document. These actions won't be available
+in projects which do not contain ~.latexmkrc~.
+
+#+BEGIN_SRC emacs-lisp
+(push `((file-exists-p ".latexmkrc")
+        ("LatexMK:compile document" . "latexmk")
+        ("LatexMK:clean" . "latexmk -C")
+        ("LatexMK:view externally"  . "latexmk -pvc"))
+        compile-multi-config)
+#+END_SRC
+
+
+     
 ** Fixing Errors
 
    We all know most of development time is spend looking for error and
@@ -1252,7 +1330,7 @@ with timestamped filename.
    The function keys  from =F9= to =F12= are  reserved for development
    needs, and the functionality strongly  depends on the current mode.
    In particular I would like
-   - =F9= run something;
+   - =F9= compile;
    - =F10= debug/interact;
    - =F11= previous error;
    - =F12= next error.
@@ -1262,9 +1340,6 @@ with timestamped filename.
    First we fix some general keybindings.
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key [f9]  'recompile)
-(global-set-key (kbd "M-<f9>")  'compile)
-(global-set-key [f10] 'gdb)
 (global-set-key [f11] 'previous-error)
 (global-set-key [f12] 'next-error)
 #+END_SRC

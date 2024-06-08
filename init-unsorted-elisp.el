@@ -213,33 +213,6 @@ is already narrowed."
                (window-height . 0.4)))
 
 
-(use-package projectile
-  :commands (projectile-mode)
-  :demand t
-  :init
-  (setq compilation-read-command nil)
-  (setq projectile-current-project-on-switch t)
-  (setq projectile-per-project-compilation-buffer t)
-  :bind (:map projectile-mode-map
-              ("<f9>"  . projectile-compile-project)
-              ("M-<f9>"  . projectile-test-project)
-              ("<f10>"   . projectile-run-project)
-              ("<f11>" . previous-error)
-              ("<f12>" . next-error))
-  :config
-  (projectile-mode)
-  (projectile-register-project-type 'latexmk '(".latexmkrc")
-                                    :project-file ".latexmkrc"
-                                    :compile "latexmk"
-                                    :run "latexmk -pvc")
-
-  (projectile-register-project-type 'go projectile-go-project-test-function
-                                    :compile "go build"
-                                    :run "go run ."
-                                    :test "go test ./..."
-                                    :test-suffix "_test"))
-
-
 
 
 ;; Eshell prompt
