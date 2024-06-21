@@ -110,7 +110,7 @@
 ;;;---------------- Agenda setup --------------------------------------
 (setq org-agenda-time-grid
       '((daily today)
-        (600 800 1000 1200 1400 1600 1800 2000 2200)
+        (800 1200 1600 2000 2400)
         "    "
         "----------------"))
 (setq org-agenda-current-time-string "——————————————⌚⌚⌚—————————————")
@@ -145,18 +145,12 @@
                                                 'scheduled))
                     ))
           (tags    "project"
-                   ((org-agenda-overriding-header "           PROJECTS STATUS\n")
+                   ((org-agenda-overriding-header "           PROJECTS\n")
                     (org-agenda-sorting-strategy '(priority-down))
                     (org-agenda-skip-function '(org-agenda-skip-entry-if
                                                 'todo '("DONE" "CANCELED" "DELEGATED")))
                     ))
-          (tags    "@question"
-                   ((org-agenda-overriding-header "           OPEN PROBLEMS\n")
-                    (org-agenda-sorting-strategy '(priority-down))
-                    (org-agenda-skip-function '(org-agenda-skip-entry-if
-                                                'todo '("DONE" "CANCELED" "DELEGATED")))
-                    ))
-          (tags-todo "-project-@question"
+          (tags-todo "-project"
                    ((org-agenda-overriding-header "           TODO LIST\n")
                     (org-agenda-skip-function '(org-agenda-skip-entry-if
                                                 'scheduled
