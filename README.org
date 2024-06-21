@@ -1606,12 +1606,32 @@ a single program and compile it and run it.
 #+BEGIN_SRC emacs-lisp
 (push `(c-mode
         ("C programming:compile"
-         "gcc" (buffer-file-name) "-Wall -Werror" "-g"  "-o"
-         (file-name-sans-extension (buffer-file-name)))
+         "gcc"
+         (file-relative-name buffer-file-name)
+         "-Wall -Werror" "-g"  "-o"
+         (file-name-sans-extension (file-relative-name buffer-file-name)))
         ("C programming:compile and run"
-         "gcc" (buffer-file-name) "-Wall -Werror" "-g"  "-o"
-         (file-name-sans-extension (buffer-file-name)) "&&"
-         (file-name-sans-extension (buffer-file-name))))
+         "gcc"
+         (file-relative-name buffer-file-name)
+         "-Wall -Werror" "-g"  "-o"
+         (file-name-sans-extension (file-relative-name buffer-file-name))
+         "&&"
+         (concat "./" (file-name-sans-extension (file-relative-name buffer-file-name)))))
+        compile-multi-config)
+
+(push `(c++-mode
+        ("C++ programming:compile"
+         "g++"
+         (file-relative-name buffer-file-name)
+         "-Wall -Werror" "-g"  "-o"
+         (file-name-sans-extension (file-relative-name buffer-file-name)))
+        ("C++ programming:compile and run"
+         "g++"
+         (file-relative-name buffer-file-name)
+         "-Wall -Werror" "-g"  "-o"
+         (file-name-sans-extension (file-relative-name buffer-file-name))
+         "&&"
+         (concat "./" (file-name-sans-extension (file-relative-name buffer-file-name)))))
         compile-multi-config)
 
 (push `(c++-mode
