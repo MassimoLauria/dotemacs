@@ -1243,7 +1243,6 @@ with timestamped filename.
      #+END_SRC
 
 
-
 ** Compiling and building
 
 The ~compile~ and ~recompile~ commands are useful starting points.
@@ -1295,7 +1294,10 @@ this setup.
   (defun mxl/compile-multi-recompile ()
   (interactive)
   (if (and compile-command
-           (equal compilation-directory (funcall compile-multi-default-directory)))
+           (equal compilation-directory
+                  (or (funcall compile-multi-default-directory)  ;; in a project
+                      default-directory                          ;; not in a project
+                      )))
       (recompile)
     (compile-multi)))
 
@@ -1320,7 +1322,6 @@ in projects which do not contain ~.latexmkrc~.
         compile-multi-config)
 #+END_SRC
 
-
      
 ** Fixing Errors
 
@@ -1330,12 +1331,12 @@ in projects which do not contain ~.latexmkrc~.
    The function keys  from =F9= to =F12= are  reserved for development
    needs, and the functionality strongly  depends on the current mode.
    In particular I would like
-   - =F9= compile;
+   - =F9= compile/recompile;
    - =F10= debug/interact;
    - =F11= previous error;
    - =F12= next error.
-   And I use =M-F11= and =M-F12= to  toggle the list errors. To do the
-   latter we need to implement specific functions.
+   And I use =M-F11= and =M-F12= to toggle the compilation windows.
+   To do the latter we need to implement specific functions.
 
    First we fix some general keybindings.
 
@@ -1344,59 +1345,44 @@ in projects which do not contain ~.latexmkrc~.
 (global-set-key [f12] 'next-error)
 #+END_SRC
 
-In order to  toggle the visibility of  the error list I  have to write
-specific  code. This  is annoying  and  moreover does  not cover  many
-cases. Since  LaTeX error management  is a bit  special, I have  to do
+In order to toggle the visibility of the compilation buffer I have to
+write specific code. This is annoying and moreover does not cover many
+cases. Since LaTeX error management is a bit special, I have to do
 a specific setup for that.
 
 #+BEGIN_SRC emacs-lisp
-
-(setq flycheck-navigation-minimum-level 'warning)
-(setq flycheck-error-list-minimum-level 'warning)
-
-(defun mxl/toggle-flycheck-errors (&optional buffer-or-name)
-  "Toggle the visibility or the Flycheck error list.
-
-The error list is the buffer that contains the errors which can
-be navigated by `next-error' and `previous-error'. The function
-visualizes the error
-"
+(defun toggle-compilation-window ()
+  "Show/Hide the window containing the '*compilation*' buffer."
   (interactive)
-  (let ((window (get-buffer-window "*Flycheck errors*")))
-  (if window (progn
-               (delete-window window)
-               (eldoc-mode 1)
-               (flycheck-mode -1))
-    (eldoc-mode -1)
-    (flycheck-mode 1)
-    (flycheck-list-errors)
-    (setq next-error-last-buffer (get-buffer "*Flycheck errors*"))
-    )))
-
-
-(defun mxl/toggle-flymake-errors()
-  "Toggle the visibility or the Flycheck error list.
-
-The error list is the buffer that contains the errors which can
-be navigated by `flymake-next-error' and `flymake-previous-error'. The function
-visualizes the error
-"
-  (interactive)
-  (let ((buffer (get-buffer (flymake--diagnostics-buffer-name))))
-    (if (and buffer (get-buffer-window buffer))
+  (when-let ((buffer next-error-last-buffer))
+    (if (get-buffer-window buffer 'visible)
         (delete-windows-on buffer)
-      (flymake-show-diagnostics-buffer))))
+      (display-buffer buffer))))
+
+(global-set-key (kbd "M-<f11>") #'toggle-compilation-window)
+(global-set-key (kbd "M-<f12>") #'toggle-compilation-window)
 #+END_SRC
 
-   Most programming languages are supported by =flycheck=, a tool that
-   automatically   checks  the   buffer  for   error  while   writing.
-   It =flycheck= activates in the  buffers to the supported languages,
-   assuming  all   needed  tools   for  that  language   are  present.
-   Use   =flycheck-verify-setup=    to   investigate    the   checkers
-   enabled/disabled/available  in  a  buffer.  I don't  like  all  the
-   annotations that flycheck leaves on the buffer. It makes everything
-   more confused, therefore I activate flycheck only when I proctively
-   show the list of errors explicitly.
+
+Most programming languages are supported by =flycheck=, a tool that
+automatically checks the buffer for error while writing. It =flycheck=
+activates in the buffers to the supported languages, assuming all
+needed tools for that language are present.
+Use =flycheck-verify-setup= to investigate the checkers
+enabled/disabled/available in a buffer.
+
+I used to care about having errors/warning/ and stuff highlighted
+while I write. But I believe that's a bit annoying and distracting.
+Now I tentatively allow highlight of actual errors during typing.
+Therefore I have a minimal setup of ~flycheck~. Furthermore I forbid
+such tools to hijack =F11= and =F12=.
+  
+#+BEGIN_SRC emacs-lisp
+
+(setq flycheck-navigation-minimum-level 'error)
+(setq flycheck-error-list-minimum-level 'error)
+
+#+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
@@ -1407,27 +1393,9 @@ visualizes the error
         flycheck-indication-mode nil
         flycheck-idle-change-delay 0.5)
   :config
-  (defalias 'flycheck-mode-line-status-text 'flycheck-mode-line-status-text-slim)
-  :bind
-  (("<f11>" . previous-error)
-   ("<f12>" . next-error)
-   ("M-<f11>" . mxl/toggle-flycheck-errors)
-   ("M-<f12>" . mxl/toggle-flycheck-errors)
-   ))
+  (defalias 'flycheck-mode-line-status-text 'flycheck-mode-line-status-text-slim))
 
 (setq flycheck-global-modes '(not org-mode)) ; Use eglot/flymake
-#+END_SRC
-
-For   some  language   I  use   [[https://github.com/joaotavora/eglot][Eglot]],  which   integrates  =flymake=.
-Therefore I set some similar keybindings for it.
-
-#+BEGIN_SRC emacs-lisp
-(use-package flymake
-  :bind (:map flymake-mode-map
-              ("<f11>"   .  flymake-goto-prev-error)
-              ("<f12>"   .  flymake-goto-next-error)
-              ("M-<f11>" .  mxl/toggle-flymake-errors)
-              ("M-<f12>" .  mxl/toggle-flymake-errors)))
 #+END_SRC
 
 
@@ -1622,35 +1590,42 @@ format regions or function definitions.
   (setq c-block-comment-prefix "")
   :bind (:map c-mode-map
          ("RET"     .  newline-and-indent)
-         ("M-SPC"   .  ff-find-related-file)
          :map c++-mode-map
-         ("RET"     .  newline-and-indent)
-         ("M-SPC"   .  ff-find-related-file))
+         ("RET"     .  newline-and-indent))
   :hook ((c-mode    . eglot-ensure)
          (c++-mode  . eglot-ensure)
          (c-mode    . mxl/cc-mode-setup)
          (c++-mode  . mxl/cc-mode-setup)))
 #+END_SRC
 
-This  is  a simple  function  to  be  used  when writing  single  file
-C/C++ code.
+One annoyance I had when I started using more complex programming
+environments than Turbo C/C++ was that, sure we need a project file,
+or a Makefile, and so on... but sometimes I just want to write
+a single program and compile it and run it.
 
 #+BEGIN_SRC emacs-lisp
-(defun mxl/simplec-compileandrun()
-  "Compile and run the current C/C++ file"
-  (interactive)
-  (save-buffer)
-  (let* ((ext (file-name-extension (buffer-file-name)))
-         (src (file-name-nondirectory (buffer-file-name)))
-         (exe (file-name-sans-extension src))
-         (flg "-ggdb"))
-    (shell-command (pcase ext
-               ("c"   (concat "gcc " flg " " src " -o " exe " && ./" exe))
-               ("cc"  (concat "g++ " flg " " src " -o " exe " && ./" exe))
-               ("cpp" (concat "g++ " flg " " src " -o " exe " && ./" exe))
-               ("cxx" (concat "g++ " flg " " src " -o " exe " && ./" exe))
-               ))))
+(push `(c-mode
+        ("C programming:compile"
+         "gcc" (buffer-file-name) "-Wall -Werror" "-g"  "-o"
+         (file-name-sans-extension (buffer-file-name)))
+        ("C programming:compile and run"
+         "gcc" (buffer-file-name) "-Wall -Werror" "-g"  "-o"
+         (file-name-sans-extension (buffer-file-name)) "&&"
+         (file-name-sans-extension (buffer-file-name))))
+        compile-multi-config)
+
+(push `(c++-mode
+        ("C++ programming:compile"
+         "g++" (buffer-file-name) "-Wall -Werror" "-g"  "-o"
+         (file-name-sans-extension (buffer-file-name)))
+        ("C++ programming:compile and run"
+         "g++" (buffer-file-name) "-Wall -Werror" "-g"  "-o"
+         (file-name-sans-extension (buffer-file-name)) "&&"
+         (file-name-sans-extension (buffer-file-name))))
+        compile-multi-config)
 #+END_SRC
+
+
 
 ** Emacs Lisp
 
@@ -1725,31 +1700,6 @@ minimal setup ready.
 (add-hook 'before-save-hook 'copyright-update)   ; update copyright if present
 (add-hook 'before-save-hook 'time-stamp)         ; insert timestamp
 #+END_SRC
-
-** Set compile command
-
-It is possible to set the compile  command for a file via a file local
-variable on top.
-
-#+begin_example
-/* -*- mode: C++; compile-command: "g++ -s -O3 code07.cc -o code07; ./code07" -*- */
-
-// Get the data
-#include <iostream>
-#include <sstream>
-#include <fstream>
-.....
-.....
-#+end_example
-
-In order not to make Emacs  complain, we declate compile-command to be
-a safe variable.
-
-#+BEGIN_SRC emacs-lisp
-(put 'compile-command 'safe-local-variable #'stringp)
-#+END_SRC
-
-
 
 * Math packages
 
