@@ -1971,7 +1971,7 @@ use ~cape~ to add some extensions to it.
   ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)   ;; file paths
   (add-to-list 'completion-at-point-functions #'cape-emoji)  ;; emoji
-  (add-to-list 'completion-at-point-functions #'cape-tex)    ;; Unicode chars from latex commands
+  ;; (add-to-list 'completion-at-point-functions #'cape-tex)    ;; Unicode chars from latex commands
   )
 #+END_SRC
 
