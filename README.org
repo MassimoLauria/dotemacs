@@ -1645,6 +1645,30 @@ a single program and compile it and run it.
         compile-multi-config)
 #+END_SRC
 
+** Go programming
+
+I don't know much about go programming, but it could be useful to
+setup ~compile-multi~ for it.
+
+#+BEGIN_SRC emacs-lisp
+(push `((file-exists-p "go.mod")
+        ("Go project:run   "  "go run ./...")
+        ("Go project:format"  "gofmt ./...")
+        ("Go project:build "  "go build ./...")
+        ("Go project:lint  "  "golint ./...")
+        ("Go project:vet   "  "go vet ./..."))
+        compile-multi-config)
+
+(push `(go-mode
+        ("Go file:run"    "go run"   (file-relative-name (buffer-file-name)))
+        ("Go file:format" "gofmt"    (file-relative-name (buffer-file-name)))
+        ("Go file:build"  "go build" (file-relative-name (buffer-file-name)))
+        ("Go file:lint"   "golint"   (file-relative-name (buffer-file-name)))
+        ("Go file:vet"    "go vet"   (file-relative-name (buffer-file-name))))
+      compile-multi-config)
+
+#+END_SRC
+
 
 
 ** Emacs Lisp
