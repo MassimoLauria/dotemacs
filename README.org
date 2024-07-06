@@ -1320,6 +1320,45 @@ in projects which do not contain ~.latexmkrc~.
         ("LatexMK:clean" . "latexmk -C")
         ("LatexMK:view externally"  . "latexmk -pvc"))
         compile-multi-config)
+
+(push `(latex-mode
+        ("Latex:lint with lacheck" "lacheck" (concat (TeX-master-file) ".tex")))
+        compile-multi-config)
+
+#+END_SRC
+
+*** Automatic loading of Makefile target
+
+Useful compile/build commands are the ones built into makefiles.
+I have asked chat-gpt to write me a function that parses Makefiles (I
+don't know much emacs-lisp). This example was inspired by
+[[https://github.com/mohkale/compile-multi]] tutorial.
+
+#+BEGIN_SRC emacs-lisp
+(defun mxl/parse-makefile-for-targets (makefile)
+  "Parse the MAKEFILE and return a list of valid build targets.
+
+Written by chat-gpt"
+  (interactive "fMakefile: ")
+  (let ((targets '()))
+    (with-temp-buffer
+      (insert-file-contents makefile)
+      (goto-char (point-min))
+      (while (re-search-forward "^\\([a-zA-Z0-9_\\-]+\\)\\s-*:[^=]" nil t)
+        (let ((target (match-string 1)))
+          ;; Ensure it's not a special target or a variable
+          (unless (string-match-p "^\\." target)
+            (push target targets))))
+      (reverse targets))))
+
+(defun mxl/extract-compile-rules-from-makefile ()
+    (mapcar 
+     #'(lambda (target) (cons (concat "Make:" target) (concat "make " target)))
+     (mxl/parse-makefile-for-targets "Makefile")))
+
+(push `((file-exists-p "Makefile")
+        ,#'mxl/extract-compile-rules-from-makefile)
+      compile-multi-config)
 #+END_SRC
 
      
