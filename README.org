@@ -1262,8 +1262,8 @@ good thing but works for some of my course projects.
   :demand t
   :init
   (setq projectile-current-project-on-switch t)
-  (add-to-list 'projectile-project-root-files-bottom-up "Makefile")
   :config
+  (add-to-list 'projectile-project-root-files-bottom-up "Makefile")
   (projectile-mode))
 #+END_SRC
 
