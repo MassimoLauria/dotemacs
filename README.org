@@ -1249,7 +1249,12 @@ The ~compile~ and ~recompile~ commands are useful starting points.
 The main issue I have with those is that they are not launched from
 the top level project directory. I run compilation commands using
 ~compile-multi~ and among other things, this package allows me to
-do that. Hence we first do the least possible setup for ~projectile~.
+do that.
+
+Hence we first do the least possible setup for ~projectile~. A remark:
+I prefer to use build using the innermost Makefile from the current
+directory, in case there are many. This is not necessarily a universal
+good thing but works for some of my course projects.
 
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
@@ -1257,6 +1262,7 @@ do that. Hence we first do the least possible setup for ~projectile~.
   :demand t
   :init
   (setq projectile-current-project-on-switch t)
+  (add-to-list 'projectile-project-root-files-bottom-up "Makefile")
   :config
   (projectile-mode))
 #+END_SRC
@@ -1306,7 +1312,6 @@ this setup.
           ("Fallback:Edit command" . ,#'mxl/compile-multi-read))
         compile-multi-config))
 
-
 #+END_SRC
 
 Here we have an example on how to add compile actions. If the project
@@ -1324,7 +1329,20 @@ in projects which do not contain ~.latexmkrc~.
 (push `(latex-mode
         ("Latex:lint with lacheck" "lacheck" (concat (TeX-master-file) ".tex")))
         compile-multi-config)
+#+END_SRC
 
+To "build" org files there is the ~org-export-dispatch~ command. I can
+bind it directly to F9 but I want to experiment the integration with
+~compile-multi~. Maybe it will just be one more key to press most of
+the time, but it is useful when the org file is inside some project
+that has more build options, that would be unavailable when
+~org-export-dispatch~ is bound to F9.
+
+#+BEGIN_SRC emacs-lisp
+(push `(org-mode
+        ("Org:export (choose)" . ,#'org-export-dispatch)
+        ("Org:export (last)"   . ,#'(lambda () (org-export-dispatch t))))
+        compile-multi-config)
 #+END_SRC
 
 *** Automatic loading of Makefile target
