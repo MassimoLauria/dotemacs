@@ -1264,6 +1264,7 @@ good thing but works for some of my course projects.
   (setq projectile-current-project-on-switch t)
   :config
   (add-to-list 'projectile-project-root-files-bottom-up "Makefile")
+  (add-to-list 'projectile-project-root-files-bottom-up ".latexmkrc")
   (projectile-mode))
 #+END_SRC
 
@@ -1323,7 +1324,7 @@ in projects which do not contain ~.latexmkrc~.
 (push `((file-exists-p ".latexmkrc")
         ("LatexMK:compile document" . "latexmk")
         ("LatexMK:clean" . "latexmk -C")
-        ("LatexMK:view externally"  . "latexmk -pvc"))
+        ("LatexMK:view externally"  . "latexmk -pv"))
         compile-multi-config)
 
 (push `(latex-mode
