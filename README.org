@@ -1251,6 +1251,8 @@ the top level project directory. I run compilation commands using
 ~compile-multi~ and among other things, this package allows me to
 do that.
 
+*** Projectile, used just to find project roots
+
 Hence we first do the least possible setup for ~projectile~. A remark:
 I prefer to use build using the innermost Makefile from the current
 directory, in case there are many. This is not necessarily a universal
@@ -1267,6 +1269,8 @@ good thing but works for some of my course projects.
   (add-to-list 'projectile-project-root-files-bottom-up ".latexmkrc")
   (projectile-mode))
 #+END_SRC
+
+*** Compile-multi is the build commands entry point
 
 With that I can do the basic setup of my compilation process.
 
@@ -1315,7 +1319,9 @@ this setup.
 
 #+END_SRC
 
-Here we have an example on how to add compile actions. If the project
+*** Build LaTeX documents
+
+Here we have an example on how to add compile actions for LaTeX. If the project
 for a latex document has a ~.latexmkrc~ file, then we can use
 ~latexmk~ to produce that document. These actions won't be available
 in projects which do not contain ~.latexmkrc~.
@@ -1348,7 +1354,7 @@ that has more build options, that would be unavailable when
         compile-multi-config)
 #+END_SRC
 
-*** Automatic loading of Makefile target
+*** Building using Make 
 
 Useful compile/build commands are the ones built into makefiles.
 I have asked chat-gpt to write me a function that parses Makefiles (I
@@ -1382,6 +1388,22 @@ Written by chat-gpt"
       compile-multi-config)
 #+END_SRC
 
+*** Building via shell scripts
+
+Sometimes the simplest and most convenient way to build a project is
+just to run a shell script. This setup makes it possible to run the shell
+scripts that are in the root folder.
+
+#+BEGIN_SRC emacs-lisp
+(defun mxl/extract-compile-shell ()
+    (mapcar 
+     #'(lambda (target) (cons (concat "Shell script:" target) target))
+     (directory-files "./" nil "\\.sh$")))
+
+(push `(t
+        ,#'mxl/extract-compile-shell)
+      compile-multi-config)
+#+END_SRC
 
 ** Fixing Errors
 
@@ -1457,7 +1479,6 @@ such tools to hijack =F11= and =F12=.
 
 (setq flycheck-global-modes '(not org-mode)) ; Use eglot/flymake
 #+END_SRC
-
 
 ** Inferior shell
 
