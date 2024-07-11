@@ -1321,15 +1321,16 @@ for a latex document has a ~.latexmkrc~ file, then we can use
 in projects which do not contain ~.latexmkrc~.
 
 #+BEGIN_SRC emacs-lisp
+(push `(latex-mode
+        ("LaTeX:Lint with LaCheck" "lacheck" (concat (TeX-master-file) ".tex"))
+        ("LaTeX:Lint with ChkTeX"  "chktex -v6"  (concat (TeX-master-file) ".tex"))
+        ("LaTeX:AUCTex Command" . ,#'TeX-command-master))
+        compile-multi-config)
+
 (push `((file-exists-p ".latexmkrc")
         ("LatexMK:compile document" . "latexmk")
         ("LatexMK:clean" . "latexmk -C")
         ("LatexMK:view externally"  . "latexmk -pv"))
-        compile-multi-config)
-
-(push `(latex-mode
-        ("Latex:LaCheck" "lacheck" (concat (TeX-master-file) ".tex"))
-        ("Latex:ChkTeX"  "chktex -v6"  (concat (TeX-master-file) ".tex")))
         compile-multi-config)
 #+END_SRC
 

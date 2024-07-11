@@ -1,18 +1,7 @@
 ;;;
-;;; LaTex support (AucTeX) ***
+;;; LaTex configuration (AucTeX) ***
 ;;;
 ;;;-----------------------------------------------------------------
-
-;;
-;; Many great features require AucTeX 11.88.
-;;
-;; previous version of auctex would not support, e.g., forward/inverse
-;; search with Evince, do not have a proper support of compilation
-;; error management, ...
-;;
-;; Older versions of this file had workarounds. Now I decided to clean
-;; up the LaTeX since updating auctex with elpa is very easy.
-;;
 
 ;; Multifile support, completition, style, reverse search support, ...
 (setq TeX-auto-save t)
@@ -23,22 +12,34 @@
 (setq TeX-electric-sub-and-superscript t)
 (setq TeX-electric-math nil)
 (setq reftex-plug-into-AUCTeX t)
+(setq reftex-use-external-file-finders t)  ;; make RefTeX uses `kpsewhich'
 (setq bib-cite-use-reftex-view-crossref t)
 (setq TeX-view-evince-keep-focus t)
 (setq TeX-file-line-error t)
 (setq TeX-command-extra-options "-shell-escape")
 (setq LaTeX-item-indent 0)
-(add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
 
-;; View command fixes
-;;
-;; 1 - use `displayline' command under MacOSX (from Skim.app)
-;; 2 - do not ask for confirmation with the View command.
-;;
-(defun init-latex--viewer-setup ()
-  "Set the \"View\" function saner defaults"
+;; Setup latex settings after loading AUCTeX
+(defun mxl/setup-AUCTeX ()
 
-  ;; No question asked when viewing documents
+  ;; environments for code/monospaced text
+  (add-to-list 'LaTeX-verbatim-environments "comment")
+  (add-to-list 'LaTeX-verbatim-environments "lstlisting")
+  (add-to-list 'LaTeX-verbatim-environments "minted")
+
+  ;; no dot remap next/previous-error
+  (define-key TeX-mode-map [remap next-error] nil)
+  (define-key TeX-mode-map [remap previous-error] nil)
+
+  ;; F10 to view the document
+  (define-key TeX-mode-map (kbd "<f10>") 'TeX-view)
+
+  ;; Label creation/selection via reftex
+  (define-key TeX-mode-map (kbd "C-c l") 'reftex-label)
+  (define-key TeX-mode-map (kbd "C-c r") 'reftex-reference)
+
+
+  ;; View documents with no questions
   (add-to-list 'TeX-command-list '("View" "%V"
                                    TeX-run-discard-or-function nil t
                                    :help "Run Viewer"))
@@ -46,105 +47,26 @@
   ;; View PDFs within emacs using `pdf-tools' package
   (add-to-list 'TeX-view-program-selection '(output-pdf "PDF Tools"))
 
-  ;; On MacOSX we could use Skim PDF viewer. Actually I don't because
-  ;; lately the rendering quality is horrible, and I'd rather use
-  ;; PDF-tools as in Linux.
-  (when (eq system-type 'darwin)
-    (add-to-list 'TeX-view-program-list
-                 '("displayline"
-                   "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o %b"))))
+  t)
+
+(eval-after-load "latex" '(mxl/setup-AUCTeX))
 
 
-
-
-
-(eval-after-load "tex" '(init-latex--viewer-setup))
-
-
-;; Basic LaTeX-mode-hook setup
-(add-hook 'TeX-mode-hook 'TeX-PDF-mode)
-(add-hook 'TeX-mode-hook 'flycheck-mode)
-(add-hook 'TeX-mode-hook 'turn-on-reftex)
-(add-hook 'TeX-mode-hook 'turn-on-flyspell)
-(add-hook 'TeX-mode-hook 'TeX-source-specials-mode)
-(add-hook 'TeX-mode-hook 'projectile-mode)
-
-;; All TeX made with a single keystroke (BibTeX must run at least once).
-(require-maybe 'TeX-texify)
-
-;; Various improvements to the mode
-(add-hook 'LaTeX-mode-hook
-          (lambda
-            () (progn
-                       (make-local-variable 'compilation-exit-message-function)
-                       (setq compilation-exit-message-function 'nil)
-                       (add-to-list 'LaTeX-verbatim-environments "comment")
-                       (add-to-list 'LaTeX-verbatim-environments "lstlisting")
-                       )))
-
-
-;; Keyboard shortcut
-(defun mxl-toggle-tex-errors ()
-  "Hide/Show the latex error window"
-  (interactive)
-  (let* ((oldwin (get-buffer-window (current-buffer))))
-    (if (get-buffer TeX-error-overview-buffer-name)
-        (mxl-toggle-error-window TeX-error-overview-buffer-name)
-      (TeX-error-overview)
-      (message (concat "Opening error list: " TeX-error-overview-buffer-name))
-      (select-window oldwin))))
-
-(add-hook 'TeX-mode-hook
-          (lambda ()
-             (define-key TeX-mode-map (kbd "<f9>")  'init-latex--make)
-             (define-key TeX-mode-map (kbd "<f10>") 'TeX-pin-region)
-             (define-key TeX-mode-map (kbd "<f11>") 'TeX-previous-error)
-             (define-key TeX-mode-map (kbd "<f12>") 'TeX-next-error)
-             (define-key TeX-mode-map (kbd "M-<f11>") 'mxl-toggle-tex-errors)
-             (define-key TeX-mode-map (kbd "M-<f12>") 'mxl-toggle-tex-errors)
-             ))
-
-
-(defun init-latex--make ()
-  "Produce the document, by trying several build commands"
-  (interactive)
-  (cond
-
-   (TeX-command-region-begin            ; region pinned
-    (TeX-command-region nil))
-
-   ((fboundp 'TeX-texify)          ; TeX-texify loaded
-    (call-interactively 'TeX-texify))
-
-   (t                                   ; default
-    (call-interactively 'TeX-command-master))))
-
-;; To help collaboration, in LaTeX file sometimes I need to use soft
-;; word wrapping. I keep a low value of fill-column so that I can do
-;; hard wrapping regardless but auto-fill must be off.
-(defun mxl-latex-wrapping()
-  "Setup of text editing in LaTeX."
-  (interactive)
+(defun mxl/setup-LaTeX-mode ()
+  ;; To help collaboration, in LaTeX file sometimes I need to use soft
+  ;; word wrapping. I keep a low value of fill-column so that I can do
+  ;; hard wrapping regardless but auto-fill must be off.
   (setq fill-column 70)
   (setq default-justification 'left)
   (auto-fill-mode -1))
 
-(add-hook 'LaTeX-mode-hook 'mxl-latex-wrapping)
-
-
-;; RefTeX setup has to use `kpsewhich' to find stuff, so that it
-;; respects TEXINPUTS, BIBINPUTS and BSTINPUTS settings.
-(setq reftex-use-external-file-finders t)
-
-
-(add-hook 'reftex-mode-hook
-          (lambda ()
-            (diminish 'reftex-mode)
-            (local-set-key (kbd "C-c l") 'reftex-label)       ;; Label creation
-            (local-set-key (kbd "C-c r") 'reftex-reference)   ;; Label selection
-            (local-set-key (kbd "M-,") 'reftex-view-crossref) ;; View crossref
-            (local-set-key (kbd "M-.") 'delete-other-windows-vertically)))
-
+;; Basic LaTeX-mode-hook setup
+(add-hook 'TeX-mode-hook 'TeX-PDF-mode)
+(add-hook 'TeX-mode-hook 'turn-on-reftex)
+(add-hook 'TeX-mode-hook 'turn-on-flyspell)
+(add-hook 'TeX-mode-hook 'TeX-source-specials-mode)
+(add-hook 'LaTeX-mode-hook   'mxl/setup-LaTeX-mode)
+(add-hook 'LaTeX-mode-hook 'mxl/guess-TeX-master-file)
 
 ;; Hints for automatic reference creation
 (setq reftex-label-alist
@@ -181,40 +103,15 @@
 
 
 
-;; (defun init-latex--flymake-setup ()
-;;   "Setup flymake for latex using one of the checker available on the system.
-;; It either tries \"lacheck\" or \"chktex\"."
-;;   (interactive)
-;;   (cond ((executable-find "lacheck")
-;;          (defun flymake-get-tex-args (file-name)
-;;            (list "lacheck" (list file-name))))
-;;         ((executable-find "chktex")
-;;          (defun flymake-get-tex-args (file-name)
-;;            (list "chktex" (list "-q" "-v0" file-name))))
-;;         (t nil)))
-
-;; (eval-after-load "flymake" '(init-latex--flymake-setup))
-
-
-;; (defun my-flymake-show-help ()
-;;    (when (get-char-property (point) 'flymake-overlay)
-;;      (let ((help (get-char-property (point) 'help-echo)))
-;;        (if help (message "%s" help)))))
-
-;; (add-hook 'post-command-hook 'my-flymake-show-help)
-
-
-
-;; Guess master file
-(add-hook
- 'LaTeX-mode-hook
- (lambda () (setq TeX-master (or (mxl/TeX-master-from-latexmkrc)
-                                 (mxl/TeX-master-is-maintex)
-                                 (mxl/TeX-master-from-docroot)
-                                 (mxl/TeX-master-from-open-buffers)
-                                 t))
-   (if (not (eq TeX-master t))
-       (message "TeX master document: %s" TeX-master))))
+(defun mxl/guess-TeX-master-file ()
+  "Try to guess and set the TeX master file"
+  (setq TeX-master (or (mxl/TeX-master-from-latexmkrc)
+                       (mxl/TeX-master-is-maintex)
+                       (mxl/TeX-master-from-docroot)
+                       (mxl/TeX-master-from-open-buffers)
+                       t))
+  (if (not (eq TeX-master t))
+      (message "TeX master document: %s" TeX-master)))
 
 (defun mxl/current-TeX-docroot ()
   "Try to guess the base directory of a TeX project
