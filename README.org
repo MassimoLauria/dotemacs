@@ -1384,6 +1384,7 @@ Written by chat-gpt"
      (mxl/parse-makefile-for-targets "Makefile")))
 
 (push `((file-exists-p "Makefile")
+        ("Make:make" . "make")
         ,#'mxl/extract-compile-rules-from-makefile)
       compile-multi-config)
 #+END_SRC
