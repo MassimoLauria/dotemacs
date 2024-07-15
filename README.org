@@ -1406,7 +1406,7 @@ scripts that are in the root folder.
       compile-multi-config)
 #+END_SRC
 
-** Fixing Errors
+*** Fixing Errors
 
    We all know most of development time is spend looking for error and
    fixing them.  Here we up set  the basic function that  Emacs has to
@@ -1418,34 +1418,62 @@ scripts that are in the root folder.
    - =F10= debug/interact;
    - =F11= previous error;
    - =F12= next error.
-   And I use =M-F11= and =M-F12= to toggle the compilation windows.
-   To do the latter we need to implement specific functions.
 
-   First we fix some general keybindings.
-
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
 (global-set-key [f11] 'previous-error)
 (global-set-key [f12] 'next-error)
 #+END_SRC
 
-In order to toggle the visibility of the compilation buffer I have to
-write specific code. This is annoying and moreover does not cover many
-cases. Since LaTeX error management is a bit special, I have to do
-a specific setup for that.
+*** Behavior of the compilation windows
+
+My default behavior is that the compilation window stays visible if
+there are errors, but will disappear if there are no errors reported
+by the compilation process. It should be noticed that unfortunately
+some lint tools exit with zero even in presence of warnings or errors.
 
 #+BEGIN_SRC emacs-lisp
-(defun toggle-compilation-window ()
+(defvar mxl/compilation-window-stays-visible nil
+  "Whether the compilation windows should stay visible after
+a successful compilation.")
+
+(defun mxl/compilation-exit-autoclose (status code msg)
+  ;; If M-x compile exists with a 0
+  (if (and (eq status 'exit)
+           (zerop code)  ;; check errors
+           (not mxl/compilation-window-stays-visible)) 
+      (progn ;; bury and delete compilation windows
+        (let ((cmpl-buffername (buffer-name)))
+          (bury-buffer cmpl-buffername)
+          (delete-window (get-buffer-window (get-buffer cmpl-buffername)))))
+    (setq mxl/compilation-window-stays-visible t))
+  ;; Always return the anticipated result of compilation-exit-message-function
+  (cons msg code))
+
+;; Specify my function (maybe I should have done a lambda function)
+(setq compilation-exit-message-function 'mxl/compilation-exit-autoclose)
+#+END_SRC
+
+Sometimes I want to see the compilation window anyway, and for that
+I use =M-F11= and =M-F12= to show it and make it stay visible
+across compilations.
+
+#+BEGIN_SRC emacs-lisp
+(defun mxl/toggle-compilation-window ()
   "Show/Hide the window containing the '*compilation*' buffer."
   (interactive)
   (when-let ((buffer next-error-last-buffer))
     (if (get-buffer-window buffer 'visible)
-        (delete-windows-on buffer)
-      (display-buffer buffer))))
+        (progn
+          (setq mxl/compilation-window-stays-visible nil)
+          (delete-windows-on buffer))
+      (display-buffer buffer)
+      (setq mxl/compilation-window-stays-visible t))))
 
-(global-set-key (kbd "M-<f11>") #'toggle-compilation-window)
-(global-set-key (kbd "M-<f12>") #'toggle-compilation-window)
+(global-set-key (kbd "M-<f11>") #'mxl/toggle-compilation-window)
+(global-set-key (kbd "M-<f12>") #'mxl/toggle-compilation-window)
 #+END_SRC
 
+** Flycheck
 
 Most programming languages are supported by =flycheck=, a tool that
 automatically checks the buffer for error while writing. It =flycheck=
@@ -1461,10 +1489,8 @@ Therefore I have a minimal setup of ~flycheck~. Furthermore I forbid
 such tools to hijack =F11= and =F12=.
   
 #+BEGIN_SRC emacs-lisp
-
 (setq flycheck-navigation-minimum-level 'error)
 (setq flycheck-error-list-minimum-level 'error)
-
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
