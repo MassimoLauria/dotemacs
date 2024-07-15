@@ -112,10 +112,9 @@
       '((daily today)
         (800 1200 1600 2000 2400)
         "    "
-        "----------------"))
+        "·································"))
 (setq org-agenda-current-time-string "——————————————⌚⌚⌚—————————————")
 (setq org-agenda-search-headline-for-time nil)
-
 
 ;; These tags categorizes a whole big thing, and I don't want all
 ;; subitems to pop up in the corresponding agenda view.
@@ -127,18 +126,15 @@
 
 (setq org-agenda-custom-commands
       '(("n" "My agenda setting"
-         ((agenda "" ((org-agenda-overriding-header "           AGENDA OF THE DAY / DEADLINES in 3 months\n")
+         ((agenda "" ((org-agenda-overriding-header "           NEXT FEW DAYS / DEADLINES in 3 months\n")
                       ;; limits the agenda display to a single day)
-                      (org-agenda-span 1)
+                      ;;(org-agenda-span 1)
+                      (org-agenda-span 10)
+                      (org-agenda-start-on-weekday nil)
+                      (org-agenda-show-all-dates nil)
+                      (org-agenda-start-day nil)
                       (org-deadline-warning-days 90)        ;; [1]
                       ))
-          (agenda "" ;; Birthdays in this week
-                  ((org-agenda-overriding-header "           ANNIVERSARIES IN 7 DAYS\n")
-                   (org-agenda-span 7)
-                   (org-agenda-show-all-dates nil)
-                   (org-agenda-start-on-weekday nil)
-                   (org-agenda-time-grid nil)
-                   (org-agenda-entry-types '(:sexp))))
           (todo "NEXT|CALL|REVIEW"
                    ((org-agenda-overriding-header "           NEXT THING TO DO\n")
                     (org-agenda-skip-function '(org-agenda-skip-entry-if
@@ -159,8 +155,6 @@
                     (org-agenda-sorting-strategy '(priority-down))
                     ))
           ))))
-
-
 
 ;; Set a key for the agenda view
 (defun my-org-agenda-show (&optional arg)
