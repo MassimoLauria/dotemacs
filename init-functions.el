@@ -181,10 +181,22 @@ Unfortunately on for some reason the keyboard settings get lost. This command wi
 ;;----- Fix compile modes ------------------------------------------------
 
 ;; Helper for compilation. Close the compilation window if
-;; there was no error at all.
+;; there was no error at all. Unless we lock it open.
+
+(defvar mxl/auto-close-compilation-window 'noerror
+  "Whether the compilation windows should close after compilation.
+
+Set it to nil to forbid closing. Set to t to force it. Set to
+`noerror' to close it only if there are no error.
+")
+
 (defun compilation-exit-autoclose (status code msg)
   ;; If M-x compile exists with a 0
-  (when (and (eq status 'exit) (zerop code))
+  (when (or (eq mxl/auto-close-compilation-window t)
+            (and (eq status 'exit) (zerop code)
+                 (eq mxl/auto-close-compilation-window 'noerror)
+                 ) ;; check errors
+         )
     (let ((cmpl-buffername (buffer-name)))
       ;; then bury the *compilation* buffer, so that C-x b doesn't go there
       (bury-buffer cmpl-buffername)
