@@ -617,7 +617,8 @@ Package ~consult~ allows to  have different categories of completions.
 It also shows  file preview but honestly I don't  like that. It builds
 on top of ~vertico~ and has a lot of tools like ~consult-ripgrep~.
 
-I use it to search in files and to switch buffer.
+I use it to search in files and to switch buffer. I load an extra
+package to add all files in the current project to buffer switcher.
 
 #+BEGIN_SRC emacs-lisp
 (use-package consult
@@ -641,12 +642,28 @@ I use it to search in files and to switch buffer.
       :preview-key ' any)  ;; immediate preview just for these tools
   )
 
-;; add projectile among in the switch buffer
-(use-package consult-projectile
-  :after projectile
+
+(use-package consult-project-extra
+  :after consult
   :config
-  (add-to-list 'consult-buffer-sources
-               'consult-projectile--source-projectile-file 'append))
+
+  (defvar consult-project-el-files
+    `(:name      "Project Files (via project.el)"
+                 :category  file
+                 :face      consult-file
+                 :history   file-name-history
+                 :action    ,#'consult-project-extra--find-with-concat-root
+                 :enabled   ,#'project-current
+                 :items
+                 ,(lambda () (consult-project-extra--project-files (project-root (project-current))))))
+  (add-to-list 'consult-buffer-sources 'consult-project-el-files 'append))
+
+;; add projectile among in the switch buffer
+;; (use-package consult-projectile
+;;   :after projectile
+;;   :config
+;;   (add-to-list 'consult-buffer-sources
+;;                'consult-projectile--source-projectile-file 'append))
 #+END_SRC
  
 ** Additional action with embark, as it was in helm
