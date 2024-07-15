@@ -29,7 +29,7 @@
                            marginalia
                            orderless
                            consult
-                           consult-projectile
+                           consult-project-extra
                            consult-yasnippet
                            consult-recoll
                            ;; completion
@@ -81,7 +81,6 @@
                            pcache
                            pinboard
                            pkg-info
-                           projectile
                            pyenv-mode
                            ;; pyenv-mode-auto
                            python-pytest

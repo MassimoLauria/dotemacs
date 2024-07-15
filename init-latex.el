@@ -116,10 +116,10 @@
 (defun mxl/current-TeX-docroot ()
   "Try to guess the base directory of a TeX project
 
-First tries the project root, if defined by `projectile',
+First tries the project root, if defined by `project',
 otherwise use the directory containing the current file."
-  (or (and (boundp 'projectile-project-root)
-           (projectile-project-root))
+  (or (and (project-current nil)
+           (project-root (project-current nil)))
       (file-name-directory buffer-file-name)))
 
 (defun mxl/TeX-master-is-maintex ()

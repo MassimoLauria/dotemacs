@@ -657,13 +657,6 @@ package to add all files in the current project to buffer switcher.
                  :items
                  ,(lambda () (consult-project-extra--project-files (project-root (project-current))))))
   (add-to-list 'consult-buffer-sources 'consult-project-el-files 'append))
-
-;; add projectile among in the switch buffer
-;; (use-package consult-projectile
-;;   :after projectile
-;;   :config
-;;   (add-to-list 'consult-buffer-sources
-;;                'consult-projectile--source-projectile-file 'append))
 #+END_SRC
  
 ** Additional action with embark, as it was in helm
@@ -1268,23 +1261,20 @@ the top level project directory. I run compilation commands using
 ~compile-multi~ and among other things, this package allows me to
 do that.
 
-*** Projectile, used just to find project roots
+*** Project.el, used just to find project roots
 
-Hence we first do the least possible setup for ~projectile~. A remark:
+Hence we first do the least possible setup for ~project~. A remark:
 I prefer to use build using the innermost Makefile from the current
 directory, in case there are many. This is not necessarily a universal
 good thing but works for some of my course projects.
 
 #+BEGIN_SRC emacs-lisp
-(use-package projectile
-  :commands (projectile-mode)
-  :demand t
+(use-package project
   :init
-  (setq projectile-current-project-on-switch t)
+  (setq project-vc-merge-submodules nil)
   :config
-  (add-to-list 'projectile-project-root-files-bottom-up "Makefile")
-  (add-to-list 'projectile-project-root-files-bottom-up ".latexmkrc")
-  (projectile-mode))
+  (add-to-list 'project-vc-extra-root-markers "Makefile")
+  (add-to-list 'project-vc-extra-root-markers ".latexmkrc"))
 #+END_SRC
 
 *** Compile-multi is the build commands entry point
@@ -1305,6 +1295,17 @@ this setup.
 
 #+BEGIN_SRC emacs-lisp
 
+(defun mxl/compile-default-directory ()
+  "Find the directory from which to run compilation commands
+
+Uses project.el to find project root and if none, uses the
+current directory.
+"
+  (let ((prj (project-current nil)))
+    (if prj (project-root prj)
+      default-directory)))
+
+
 (use-package compile-multi
   :commands compile-multi
   :bind
@@ -1312,7 +1313,7 @@ this setup.
    ("M-<f9>" . 'compile-multi))
   :init
   (setq compile-multi-config nil)
-  (setq compile-multi-default-directory #'projectile-project-root)
+  (setq compile-multi-default-directory #'mxl/compile-default-directory)
 
   (defun mxl/compile-multi-read ()
     (interactive)
