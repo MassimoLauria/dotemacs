@@ -19,6 +19,7 @@
                            org-contrib
                            org-contacts
                            eglot
+                           compile-multi
                            magit
                            auctex
                            pdf-tools
