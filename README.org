@@ -1321,14 +1321,12 @@ current directory.
     (recompile))
 
   (defun mxl/compile-multi-recompile ()
-  (interactive)
-  (if (and compile-command
-           (equal compilation-directory
-                  (or (funcall compile-multi-default-directory)  ;; in a project
-                      default-directory                          ;; not in a project
-                      )))
-      (recompile)
-    (compile-multi)))
+    (interactive)
+    (if (and compile-command
+             (equal compilation-directory
+                    (funcall compile-multi-default-directory)))
+        (recompile)
+      (compile-multi)))
 
   :config
   (push `(t
