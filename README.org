@@ -1263,10 +1263,10 @@ do that.
 
 *** Project.el, used just to find project roots
 
-Hence we first do the least possible setup for ~project~. A remark:
-I prefer to use build using the innermost Makefile from the current
-directory, in case there are many. This is not necessarily a universal
-good thing but works for some of my course projects.
+We do the least possible setup for ~project~. A remark:  I prefer to
+use build using the innermost Makefile from the current directory, in
+case there are many. This is not necessarily a universal good thing
+but works for some of me.
 
 #+BEGIN_SRC emacs-lisp
 (use-package project
@@ -1301,10 +1301,9 @@ this setup.
 Uses project.el to find project root and if none, uses the
 current directory.
 "
-  (let ((prj (project-current nil)))
-    (if prj (project-root prj)
-      default-directory)))
-
+  (or (and (project-current nil)
+           (project-root (project-current nil)))
+      default-directory))
 
 (use-package compile-multi
   :commands compile-multi
