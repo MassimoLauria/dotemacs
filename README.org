@@ -771,26 +771,22 @@ the minibuffer as ~helm~ does. Apparently this recipe works.
 
 #+END_SRC
 
-   The language  for spell and  grammar check is  the last one  in the
-   ring  =mxl-preferred-languages=,  so  that  we  switch  the  chosen
-   language by rotating  the ring. This is the code  for cycling among
-   the preferred languages. At each rotation the settings for both the
-   spell checker and the grammar checker are updated.
+This is the code  for chosing the preferred languages.
 
 #+BEGIN_SRC emacs-lisp
 (defun mxl-language-cycle ()
   "Switch between spell checking languages, in the current buffer."
   (interactive)
-  (let* ((lang-ring mxl-preferred-languages)
-         (lang (ring-ref lang-ring -1)))
-        (ring-insert lang-ring lang)
-        (ispell-change-dictionary lang)
-        (setq langtool-default-language
-              (cond
-               ((string-equal lang "italiano") "it")
-               ((string-equal lang "english")  "en")
-               ((string-equal lang "british")  "en-GB")
-               (t "")))))
+  (let* ((lang (ido-completing-read "Pick the language: "
+                                    '("english" "british" "italiano"))))
+    (ispell-change-dictionary lang)
+    (setq langtool-default-language
+          (cond
+           ((string-equal lang "italiano") "it")
+           ((string-equal lang "english")  "en")
+           ((string-equal lang "british")  "en-GB")
+           (t "")))
+    ))
 #+END_SRC
 
     Grammar check with Langtool is  reasonably easy to setup. The only
@@ -848,7 +844,7 @@ open, the command will just close it.
       )))
 #+END_SRC
 
-** Lookingd up stuff in dictionaries
+** Looking stuff up from dictionaries
 
 I have few dictionaries of various  quality set to be used with ~sdcv~
 command line utility. There is an emacs package for it but it is quite
@@ -896,7 +892,7 @@ I use do write a little helper for dictionary search, set to a key.
 #+BEGIN_SRC emacs-lisp
 (setq sentence-end-double-space nil)   ;; no double space after period.
 
-(add-hook 'fill-nobreak-predicate 'fill-single-char-nobreak-p) ;; never break at single chat words 
+(add-hook 'fill-nobreak-predicate 'fill-single-char-nobreak-p) ;; never break at single char words 
 (add-hook 'fill-nobreak-predicate 'fill-single-word-nobreak-p) ;; never leave a single word on a row
 #+END_SRC
 
@@ -2312,7 +2308,7 @@ jump back to it.
 #+END_SRC
 
 
-** Regexp search/replace
+** Regexp search/replace and builder
 
    Calling =replace= and =query-replace= on regexp(s) is quite tricky.
    It is difficult to understand  what the matched text is, especially
@@ -2328,7 +2324,7 @@ jump back to it.
   ))
 #+END_SRC
 
-** Setup regexp builder
+This is the default setup of regexp builder.
 
 #+BEGIN_SRC emacs-lisp
 (use-package re-builder
