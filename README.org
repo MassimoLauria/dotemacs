@@ -1310,11 +1310,6 @@ current directory.
   (setq compile-multi-config nil)
   (setq compile-multi-default-directory #'mxl/compile-default-directory)
 
-  (defun mxl/compile-multi-read ()
-    (interactive)
-    (setq compile-command (compilation-read-command compile-command))
-    (recompile))
-
   (defun mxl/compile-multi-recompile ()
     (interactive)
     (if (and compile-command
@@ -1325,7 +1320,8 @@ current directory.
 
   :config
   (push `(t
-          ("Fallback:Edit command" . ,#'mxl/compile-multi-read))
+          ("Fallback:Edit command" . ,#'(lambda ()
+                                          (call-interactively 'compile))))
         compile-multi-config))
 
 #+END_SRC
