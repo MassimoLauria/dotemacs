@@ -11,8 +11,16 @@
 
 ;;;------------ File locations ---------------------------------------
 (setq org-directory "~/personal/agenda/")
+(setq org-agenda-files
+      (mapcar (lambda (x) (concat org-directory x))
+              '("agenda.org"   ;; deadlines / appointments /events
+                "notebook.org"     ;; notebook / ideas personal
+                "compscience.org"  ;; research /workflow
+                "ricorrenze.org"   ;; anniversaries / holidays
+                )))
+
 (setq org-default-notes-file (concat org-directory "agenda.org"))      ;; default capture file
-(setq org-default-journal-file (concat org-directory "journal.org"))
+(setq org-default-journal-file nil)  ;; No journal
 
 (setq org-archive-location (concat org-directory
                                    "ZZ_archived.org"                   ;; archive file
@@ -20,12 +28,9 @@
                                    "* Archived from original file %s"  ;; archive header
                                    ))
 
-(when (not (boundp 'org-agenda-files))
-  (setq org-agenda-files (list
-                        "~/personal/agenda/agenda.org"    ;; deadlines / appointments /events
-                        "~/personal/agenda/notebook.org"  ;; notebook / ideas / projects
-                        "~/personal/agenda/journal.org"   ;; daily events and notes
-                        )))
+(add-to-list 'org-agenda-files "~/lavori/latex/bibnotes.org" t) ;; papers in bibtex
+
+
 
 ;; Refile targets
 (setq org-refile-targets

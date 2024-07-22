@@ -135,15 +135,25 @@ Ignore if the path does not exists."
 
 
 
-** Private configuration
+** Some personal information
 
-   Part of my setup  is not for the public eye and  is not included in
-   the repository.
+Some basic personal information. I used to keep these in a separate
+file but I believe it does not achieve any further privacy.
 
 #+BEGIN_SRC emacs-lisp
-(let ((private "~/personal/conf/emacs.el"))
-  (when (file-readable-p private)
-    (load-file private)))
+;; ;; My personal stuff, that I don't want to share.
+(setq user-full-name "Massimo Lauria")
+(setq user-mail-address "massimo.lauria@uniroma1.it")
+(setq user-organisation "Università degli Studi di Roma \"La Sapienza\"")
+(setq user-mail-signature "\
+Massimo Lauria
+http://www.massimolauria.net
+
+Sapienza University of Rome
+Dipartimento di Scienze Statistiche
+Piazzale Aldo Moro, 5
+00185 Roma, Italy
+")
 #+END_SRC
 
 
@@ -726,10 +736,14 @@ the minibuffer as ~helm~ does. Apparently this recipe works.
    my  dictionaries   for  hunspell  in  a   non  standard  directory.
    Hunspell  look  them  in  the  directories  in  the  =DICPATH=  env
    variable. Be careful to have  dictionaries for all three languages,
-   otherwise the setup will fail.
+   otherwise the setup will fail. Here's I set up the path.
 
 #+BEGIN_SRC emacs-lisp :tangle no
-(setenv "DICPATH" (concat (getenv "HOME") "..."))
+;; I have hunspell dictionaries installed in my personal folder.
+(let ((dicpath-pers (concat (getenv "HOME")
+                            "/personal/dictionaries/hunspell")))
+  (when (file-directory-p dicpath-pers)
+    (setenv "DICPATH" dicpath-pers)))
 #+END_SRC
 
    *Flyspell* highlights typos and strikes out words that are repeated
@@ -757,7 +771,7 @@ the minibuffer as ~helm~ does. Apparently this recipe works.
   (flyspell-incorrect ((t (:underline (:color "magenta" :style wave)))))
   :init
   (setq ispell-program-name (executable-find "hunspell"))
-  (setq ispell-dictionary (ring-ref mxl-preferred-languages -1))  ;; last language by default
+  (setq ispell-dictionary "english")  ;; last language by default
   (if (not ispell-program-name)
       (message "Spell checking disabled: impossible to find correctly installed 'Hunspell'."))
   :config 
