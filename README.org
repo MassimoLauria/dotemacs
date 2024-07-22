@@ -1565,14 +1565,24 @@ across compilations.
 (environment-add-path (concat (getenv "HOME") "/.pyenv/bin"))
 #+END_SRC
 
-We  set  the key  F9  to  launch the  tests  for  the python  program.
-In particular we use  =python-pytest-dispatch=, which shows a complete
-interface similar  to Magit,  and allows  various options  for testing
-(i.e. test a single file/module).
+Setup of compile commands for python. In particular syntax checks via
+~Flake8~ or ~pylint~, and ~pytest~ commands.
 
 #+BEGIN_SRC emacs-lisp
-(use-package python-pytest
-  :commands python-pytest-dispatch)
+(push `(python-mode
+        ;; pytest
+        ("Python:pytest (all tests)"         . "pytest")
+        ("Python:pytest (last failed)"       . "pytest --lf")
+        ("Python:pytest (last failed first)" . "pytest --ff")
+        ("Python:pytest (single file)" "pytest --doctest-modules" (file-relative-name buffer-file-name))
+        ;; Syntax/Lint checks
+        ("Python:basic syntax check"
+         "python" "-m" "py_compile"  (file-relative-name buffer-file-name))
+        ("Python:Lint with pylint"
+         "pylint"                    (file-relative-name buffer-file-name))
+        ("Python:Lint with flake8"
+         "flake8" "--color" "never"  (file-relative-name buffer-file-name)))
+        compile-multi-config)
 #+END_SRC
 
 Using the  key F10 I can  toggle the prompt shell  buffer connected to
@@ -1608,9 +1618,6 @@ format regions or function definitions.
               ("M-q"     .  mxl/yapfify-region-or-defun)
               ("C-M-q"   .  yapfify-buffer)
               ("<f10>"   .  python-shell-switch-to-shell)
-              ("<f9>"    .  python-pytest-repeat)
-              ("<f10>"   .  python-shell-switch-to-shell)
-              ("M-<f9>"  .  python-pytest-dispatch)
               ("M-<f10>" .  run-python)
               ;; Force the execution of the main block
               ("C-c C-c" .  (lambda () (interactive) (python-shell-send-buffer t)))
@@ -1619,11 +1626,8 @@ format regions or function definitions.
 #+END_SRC
 
 
-  I  have  not reached  a  definitive  configuration regarding  syntax
-  checking. I used to run [[https://www.pylint.org/][Pylint]]  or [[https://flake8.pycqa.org/en/latest/][Flake8]] from by [[https://www.flycheck.org/][Flycheck]], an emacs
-  package  which highlight  code errors.  Now I  use [[https://github.com/joaotavora/eglot][Eglot]]  which runs
-  =flymake= by default, and provides =eglot-format= with calls [[https://github.com/google/yapf][Yapf]] to
-  enforce  code  formatting. I  would  like  to run  it  automatically
+   Now I use [[https://github.com/joaotavora/eglot][Eglot]] which provides =eglot-format= with calls [[https://github.com/google/yapf][Yapf]] to
+  enforce code formatting. I would like to run it automatically
   before saving.
 
 
