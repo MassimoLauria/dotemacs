@@ -1488,39 +1488,6 @@ across compilations.
 (global-set-key (kbd "M-<f12>") #'mxl/toggle-compilation-window)
 #+END_SRC
 
-** Flycheck
-
-Most programming languages are supported by =flycheck=, a tool that
-automatically checks the buffer for error while writing. It =flycheck=
-activates in the buffers to the supported languages, assuming all
-needed tools for that language are present.
-Use =flycheck-verify-setup= to investigate the checkers
-enabled/disabled/available in a buffer.
-
-I used to care about having errors/warning/ and stuff highlighted
-while I write. But I believe that's a bit annoying and distracting.
-Now I tentatively allow highlight of actual errors during typing.
-Therefore I have a minimal setup of ~flycheck~. Furthermore I forbid
-such tools to hijack =F11= and =F12=.
-  
-#+BEGIN_SRC emacs-lisp
-(setq flycheck-navigation-minimum-level 'error)
-(setq flycheck-error-list-minimum-level 'error)
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(use-package flycheck
-  :init
-  (setq-default flycheck-disabled-checkers '(tex-chktex))
-  (setq flycheck-display-errors-function #'flycheck-display-error-messages
-        flycheck-highlighting-mode 'symbols
-        flycheck-indication-mode nil
-        flycheck-idle-change-delay 0.5)
-  :config
-  (defalias 'flycheck-mode-line-status-text 'flycheck-mode-line-status-text-slim))
-
-(setq flycheck-global-modes '(not org-mode)) ; Use eglot/flymake
-#+END_SRC
 
 ** Inferior shell
 
@@ -1539,18 +1506,14 @@ such tools to hijack =F11= and =F12=.
    to  use a  language  server that  implements  LSP (Language  Server
    Protocol). I am currenly using  [[https://github.com/joaotavora/eglot][Eglot]] which should provide, and set
    up on its own, several features as
-   - completion using =company-mode=
+   - completion using =corfu=
    - integrated help using =eldoc=
    - jump to/from definitions using =xref= (try =M-,= =M-.= keybindings)
    - code snippets (if =yasnippet= is enabled in advance)
-   - code checking using =flymake= (I will disable it in favor of =flycheck=)
+   - code checking using =flymake=
    - other features...
 
 #+BEGIN_SRC emacs-lisp
-
-(defun mxl/swap-syntaxchecker()
-  (flymake-mode -1)
-  (flycheck-mode 1))
 
 (defun mxl/eglot-format-region-or-defun ()
   (interactive)
@@ -1559,21 +1522,10 @@ such tools to hijack =F11= and =F12=.
         (mark-defun))
     (call-interactively 'eglot-format)))
 
-
 (use-package eglot
   :config
   (add-to-list 'eglot-stay-out-of 'flymake)
   (diminish 'eldoc-mode))
-#+END_SRC
-
-
-   [[https://github.com/joaotavora/eglot][Eglot]] detects the root of a project using =project-find-dir=, which
-   by  default  considers  a  Git  submodule as  part  of  a  project.
-   I usually  work in a different  way, and I consider  Git submodules
-   are standalone.
-
-#+BEGIN_SRC emacs-lisp
-(setq project-vc-merge-submodules nil)
 #+END_SRC
 
    With  this function  we  activate the  automatic formatting  before

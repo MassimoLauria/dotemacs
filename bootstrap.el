@@ -51,7 +51,6 @@
                            epl
                            esup
                            f
-                           flycheck
                            flyspell
                            forge
                            git-commit
