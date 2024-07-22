@@ -703,20 +703,14 @@ the minibuffer as ~helm~ does. Apparently this recipe works.
    British  spelling  rather  than   American  one  (which  I  favor),
    therefore I keep them both.
 
-#+BEGIN_SRC emacs-lisp
-(require 'ring)
-(setq mxl-preferred-languages
-      (ring-convert-sequence-to-ring '("british" "italiano" "english")))
-#+END_SRC
-
    The entry points of my setup are three functionalities
    - Syntax/Grammar check, activated with =mxl-language-check=
-   - Cycle between languages with =mxl-language-cycle=
+   - Switch between languages with =mxl-language-cycle=
    - Fix interactively the typos
 
 #+BEGIN_SRC emacs-lisp
 (global-set-key [f2]  'mxl-language-check)
-(global-set-key (kbd "M-<f2>") 'mxl-language-cycle)
+(global-set-key (kbd "M-<f2>") 'mxl-language-switch)
 (global-set-key (kbd "M-s") 'flyspell-correct-at-point)
 #+END_SRC
 
@@ -774,10 +768,10 @@ the minibuffer as ~helm~ does. Apparently this recipe works.
 This is the code  for chosing the preferred languages.
 
 #+BEGIN_SRC emacs-lisp
-(defun mxl-language-cycle ()
+(defun mxl-language-switch ()
   "Switch between spell checking languages, in the current buffer."
   (interactive)
-  (let* ((lang (ido-completing-read "Pick the language: "
+  (let* ((lang (completing-read "Pick the language: "
                                     '("english" "british" "italiano"))))
     (ispell-change-dictionary lang)
     (setq langtool-default-language
