@@ -715,7 +715,7 @@ the minibuffer as ~helm~ does. Apparently this recipe works.
 
    The entry points of my setup are three functionalities
    - Syntax/Grammar check, activated with =mxl-language-check=
-   - Switch between languages with =mxl-language-cycle=
+   - Switch between languages with =mxl-language-switch=
    - Fix interactively the typos
 
 #+BEGIN_SRC emacs-lisp
