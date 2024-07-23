@@ -1343,6 +1343,14 @@ in projects which do not contain ~.latexmkrc~.
 
 #+BEGIN_SRC emacs-lisp
 (push `(latex-mode
+        ("LaTeX:Run latex" "pdflatex"
+         TeX-command-extra-options
+         "-file-line-error"
+         "-interaction=nonstopmode"
+         "--synctex=1"
+         (concat (TeX-master-file) ".tex"))
+        ("LaTeX:Run bibtex" "bibtex"
+         (concat (TeX-master-file)))
         ("LaTeX:Lint with LaCheck" "lacheck" (concat (TeX-master-file) ".tex"))
         ("LaTeX:Lint with ChkTeX"  "chktex -v6"  (concat (TeX-master-file) ".tex"))
         ("LaTeX:AUCTex Command" . ,#'TeX-command-master))
