@@ -127,17 +127,6 @@
  '(save-interprogram-paste-before-kill t)
  '(save-place-file "~/.emacs.d/places")
  '(save-place-mode t nil (saveplace))
- '(semantic-decoration-styles
-   '(("semantic-decoration-on-includes")
-     ("semantic-decoration-on-protected-members" . t)
-     ("semantic-decoration-on-private-members" . t)
-     ("semantic-tag-boundary" . t)))
- '(semantic-default-submodes
-   '(global-semantic-decoration-mode global-semantic-idle-scheduler-mode global-semanticdb-minor-mode global-semantic-idle-summary-mode))
- '(semantic-idle-scheduler-idle-time 0.4)
- '(semantic-idle-summary-function 'semantic-format-tag-summarize-with-file)
- '(semantic-mode nil)
- '(semantic-stickyfunc-show-only-functions-p t)
  '(show-paren-mode t)
  '(show-smartparens-global-mode nil)
  '(smartparens-global-mode t)
