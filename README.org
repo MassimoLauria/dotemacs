@@ -1422,7 +1422,7 @@ scripts that are in the root folder.
 (defun mxl/extract-compile-shell ()
     (mapcar 
      #'(lambda (target) (cons (concat "Shell script:" target) target))
-     (directory-files "./" nil "\\.sh$")))
+     (seq-filter 'file-regular-p (directory-files "./" nil "\\.sh$"))))
 
 (push `(t
         ,#'mxl/extract-compile-shell)
