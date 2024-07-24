@@ -5,9 +5,10 @@
 ;;;-----------------------------------------------------------------
 
 
-;; Start in home
-(setq default-directory "~/")
-(setq command-line-default-directory "~/")
+;; Move to home directory if started as a server
+(when (daemonp)
+  (setq default-directory "~/")
+  (setq command-line-default-directory "~/"))
 
 ;; Meta usage in MacOSX requires some thought
 (if (boundp 'ns-right-alternate-modifier)

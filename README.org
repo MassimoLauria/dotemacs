@@ -528,11 +528,19 @@ something like ~olivetti-mode~.
 
 ** Landing page
 
-The startup  page is  usually the ~*scratch*~  buffer which  is rarely
-what I need. I'd rather start with som,e =*Untitled*= text file.
+The file specified on the command line argument should be the first to
+be presented to the user, of course. But, as it is often the case,
+Emacs is launched without arguments and the startup buffer is usually
+~*scratch*~, which is rarely what I need. I'd rather start with some
+=*Untitled*= text file.
  
 #+BEGIN_SRC emacs-lisp
-(setq initial-buffer-choice #'new-untitled-file)
+(setq initial-buffer-choice
+  (lambda ()
+    (if (buffer-file-name)   ;; if an actula file is already open,
+        (current-buffer)     ;; leave it as it is.
+      (new-untitled-file))))
+
 
 (defun new-untitled-file ()
   "Create/Return an anonymous text buffer"
