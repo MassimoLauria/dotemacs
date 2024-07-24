@@ -8,19 +8,19 @@
 
 ;;;-------------------------------------------------------------------
 
-(defun get-buffer-major-mode (buffer-or-string)
-  "Returns the major mode associated with a buffer."
-  (save-excursion
-     (set-buffer buffer-or-string)
-     major-mode))
+;; (defun get-buffer-major-mode (buffer-or-string)
+;;   "Returns the major mode associated with a buffer."
+;;   (save-excursion
+;;      (set-buffer buffer-or-string)
+;;      major-mode))
 
-(defmacro require-maybe (feature &optional file)
-  "Try to require FEATURE, but don't signal an error if `require' fails."
-  `(require ,feature ,file 'noerror))
+;; (defmacro require-maybe (feature &optional file)
+;;   "Try to require FEATURE, but don't signal an error if `require' fails."
+;;   `(require ,feature ,file 'noerror))
 
-(defmacro when-available (func foo)
-  "Do something if FUNCTION is available."
-  `(when (fboundp ,func) ,foo))
+;; (defmacro when-available (func foo)
+;;   "Do something if FUNCTION is available."
+;;   `(when (fboundp ,func) ,foo))
 
 (defun root-file-reopen ()
   "Visit the file corresponding to the active buffer using root privileges."
@@ -35,19 +35,19 @@
   )
 
 
-(defun comment-region-maybe ()
-  "Comment a region or uncomment it, if it is already
-commented. If the command is called several times in a row the
-commentation is toggled. If there is no active region, then just
-insert the character used to activate the command.
-It will not work properly if it is not bound to a key.
-"
-  (interactive)
-  (if (or (region-active-p) (eq last-command 'comment-region-maybe))
-      (call-interactively 'comment-or-uncomment-region)
-    (progn
-      (setq this-command 'self-insert-command)
-      (call-interactively 'self-insert-command) ) ) )
+;; (defun comment-region-maybe ()
+;;   "Comment a region or uncomment it, if it is already
+;; commented. If the command is called several times in a row the
+;; commentation is toggled. If there is no active region, then just
+;; insert the character used to activate the command.
+;; It will not work properly if it is not bound to a key.
+;; "
+;;   (interactive)
+;;   (if (or (region-active-p) (eq last-command 'comment-region-maybe))
+;;       (call-interactively 'comment-or-uncomment-region)
+;;     (progn
+;;       (setq this-command 'self-insert-command)
+;;       (call-interactively 'self-insert-command) ) ) )
 
 ;;------ Useful functions --------------------------------------------------------------------
 
@@ -139,7 +139,7 @@ It will not work properly if it is not bound to a key.
   (interactive)
   (let ((password-gen "pwgen")
         (password-length 12)
-        (password-options "-cs"))
+        (password-options "-csy"))
     (insert
      (string-remove-suffix "\n"
                            (shell-command-to-string
@@ -167,16 +167,16 @@ It will not work properly if it is not bound to a key.
     (reftex-citation)))
 
 
-(defun uskey ()
-  "Refresh the keyboard settings.
+;; (defun uskey ()
+;;   "Refresh the keyboard settings.
 
-Unfortunately on for some reason the keyboard settings get lost. This command will refresh them from inside EMACS, so that I don't have to open a terminal for that."
-  (interactive)
-  (shell-command "setxkbmap -options" nil nil)
-  (shell-command "python ~/config/xsession/xkb_capsunlock.py" nil nil)
-  (shell-command "setxkbmap -config ~/config/xsession/setxkbmap.pcus" nil nil))
+;; Unfortunately on for some reason the keyboard settings get lost. This command will refresh them from inside EMACS, so that I don't have to open a terminal for that."
+;;   (interactive)
+;;   (shell-command "setxkbmap -options" nil nil)
+;;   (shell-command "python ~/config/xsession/xkb_capsunlock.py" nil nil)
+;;   (shell-command "setxkbmap -config ~/config/xsession/setxkbmap.pcus" nil nil))
 
-(defalias 'USKEY 'uskey)
+;; (defalias 'USKEY 'uskey)
 
 
 ;; Keeps windows in order by dedicating them (make them sticky)

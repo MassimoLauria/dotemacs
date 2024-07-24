@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2023, 2024  Massimo Lauria
-;; Time-stamp: "2024-07-24, 08:31 (CEST) Massimo Lauria"
+;; Time-stamp: "2024-07-24, 08:41 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -22,9 +22,8 @@
 ;;; Commentary:
 
 ;;
-;;  This is the entry point of my main configuration. It requires
-;;  Emacs 24.  In case Emacs is older, this file should not be loaded
-;;  and the fallback `init-minimal.el' should.
+;;  This is the entry point of my main configuration. For older Emacs
+;;  the fallback `init-minimal.el' is loaded.
 
 ;;; Code:
 
