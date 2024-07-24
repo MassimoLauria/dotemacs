@@ -1267,11 +1267,9 @@ with timestamped filename.
 
 ** Compiling and building
 
-The ~compile~ and ~recompile~ commands are useful starting points.
-The main issue I have with those is that they are not launched from
-the top level project directory. I run compilation commands using
-~compile-multi~ and among other things, this package allows me to
-do that.
+The ~compile~, ~project-compile~ and ~recompile~ commands are useful
+starting points. I run compilation commands using ~compile-multi~ that
+allows me to setup nice build commands.
 
 *** Project.el, used just to find project roots
 
@@ -1376,6 +1374,8 @@ in projects which do not contain ~.latexmkrc~.
         ("LatexMK:view externally"  . "latexmk -pv"))
         compile-multi-config)
 #+END_SRC
+
+*** Export Org documents to LaTeX
 
 To "build" org files there is the ~org-export-dispatch~ command.
 I could bind the command directly to F9 but I want to experiment the
