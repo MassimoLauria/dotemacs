@@ -164,7 +164,7 @@
 ;; Load `org-mode' config file.
 ;; Load README.org only if newer than README.el. This code avoid
 ;; loading `org-mode' for `org-babel-load-file'
-(defun mxl-maybe-load-org-config (fname)
+(defun mxl/maybe-load-org-config (fname)
   "Config file `FNAME' is loaded, via `org-babel-load-file'.
 
 Load the `org-mode' file only if it is newer than the corresponding

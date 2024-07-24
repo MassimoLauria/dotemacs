@@ -228,7 +228,7 @@ is already narrowed."
     ))
 
 
-(defun mxl-eshell-prompt ()
+(defun mxl/eshell-prompt ()
   (concat
    "\n"
    (with-face "(" :foreground "white" :weight 'bold)
@@ -261,7 +261,7 @@ is already narrowed."
        (with-face "#" :foreground "red")
      "$")
    " "))
-(setq eshell-prompt-function 'mxl-eshell-prompt)
+(setq eshell-prompt-function 'mxl/eshell-prompt)
 (setq eshell-prompt-regexp    "^[^#$\n]*[#$] ")
 (defun git-prompt-branch-name ()
     "Get current git branch name"

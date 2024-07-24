@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2023, 2024  Massimo Lauria
-;; Time-stamp: "2024-05-15, 17:05 (CEST) Massimo Lauria"
+;; Time-stamp: "2024-07-24, 08:31 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -59,7 +59,7 @@
 
 
 ;; Load README.org or, if newer, README.el.
-(mxl-maybe-load-org-config (concat base-config-path "README.org"))
+(mxl/maybe-load-org-config (concat base-config-path "README.org"))
 
 ;;; Module(s) initialization -------------------------------------------
 (require 'iso-transl)

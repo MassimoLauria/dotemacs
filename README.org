@@ -714,13 +714,13 @@ the minibuffer as ~helm~ does. Apparently this recipe works.
    therefore I keep them both.
 
    The entry points of my setup are three functionalities
-   - Syntax/Grammar check, activated with =mxl-language-check=
-   - Switch between languages with =mxl-language-switch=
+   - Syntax/Grammar check, activated with =mxl/language-check=
+   - Switch between languages with =mxl/language-switch=
    - Fix interactively the typos
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key [f2]  'mxl-language-check)
-(global-set-key (kbd "M-<f2>") 'mxl-language-switch)
+(global-set-key [f2]  'mxl/language-check)
+(global-set-key (kbd "M-<f2>") 'mxl/language-switch)
 (global-set-key (kbd "M-s") 'flyspell-correct-at-point)
 #+END_SRC
 
@@ -782,7 +782,7 @@ the minibuffer as ~helm~ does. Apparently this recipe works.
 This is the code  for chosing the preferred languages.
 
 #+BEGIN_SRC emacs-lisp
-(defun mxl-language-switch ()
+(defun mxl/language-switch ()
   "Switch between spell checking languages, in the current buffer."
   (interactive)
   (let* ((lang (completing-read "Pick the language: "
@@ -819,14 +819,14 @@ This is the code  for chosing the preferred languages.
 	:commands (langtool-check langtool-check-buffer langtool-switch-default-language)))
 #+END_SRC
 
-    The  last component  is  a  single function  =mxl-language-check=.
+    The  last component  is  a  single function  =mxl/language-check=.
     Allows to
     - pick between syntax and grammar check in the current language;
     - stop grammar check if one is running;
 #+BEGIN_SRC emacs-lisp
 
 ;; Spell/Grammar check command
-(defun mxl-language-check ()
+(defun mxl/language-check ()
   "Launch either spell check or grammar check
 
 Offer a choice between spell checking the buffer, or grammar
@@ -920,7 +920,7 @@ at least  on pure  text files,  i.e., ones  that are  not meant  to be
 interpreted as code or special markup.
 
 #+BEGIN_SRC emacs-lisp
-(defun mxl-text-mode-setup ()
+(defun mxl/text-mode-setup ()
   "Setup for text-mode files
 
 This applies to pure text mode files and not to modes derived
@@ -930,7 +930,7 @@ from `text-mode'."
     (setq fill-column 70)
     (setq default-justification 'full)))
 
-(add-hook 'text-mode-hook 'mxl-text-mode-setup)
+(add-hook 'text-mode-hook 'mxl/text-mode-setup)
 #+END_SRC
 
    For  text  files  like  org-mode  files  it  is  better  to  enable
@@ -1225,7 +1225,7 @@ with timestamped filename.
    - WARNING (YELLOW)
 
 #+BEGIN_SRC emacs-lisp
-(setq mxl-annotation-prog-modes
+(setq mxl/annotation-prog-modes
       '(python-mode
         c++-mode
         c-mode
@@ -1248,7 +1248,7 @@ with timestamped filename.
 	       ("\\<\\(ALERT\\)" 1 'font-lock-alert-face t)
 	       ("\\<\\(WARNING\\)" 1 'font-lock-alert-face t)
 	       ("\\<\\(CITE\\)" 1 'font-lock-cite-face t))))
-	  mxl-annotation-prog-modes)
+	  mxl/annotation-prog-modes)
 
 (modify-face 'font-lock-fixme-face "Red" nil nil t nil nil nil nil)
 (modify-face 'font-lock-note-face "Light Green" nil nil t nil nil nil nil)
@@ -1911,7 +1911,7 @@ to use the same key to quit it, having a toogle key.
   (setq-default pdf-view-display-size 'fit-page)
   ;; Highlights do not open the annotation window when created
   (setq pdf-annot-activate-created-annotations nil)
-  (defun mxl-pdf-annot-add-text-annotation ()
+  (defun mxl/pdf-annot-add-text-annotation ()
     "Add text annotation but forces activation which is off
 by default."
     (interactive)
@@ -1960,12 +1960,12 @@ by default."
   (define-key pdf-view-mode-map (kbd "g") 'pdf-outline)
 
   ;; Open in external apps
-  (defun mxl-pdf-open-in-xournal()
+  (defun mxl/pdf-open-in-xournal()
     "Open the current PDF in Xournal, for editing"
     (interactive)
     (start-process "open-pdf-in-xournal" nil "xournalpp" (buffer-file-name)))
   
-  (defun mxl-pdf-open-in-default-viewer()
+  (defun mxl/pdf-open-in-default-viewer()
     "Open the current PDF in default viewer"
     (interactive)
     (let ((viewer
@@ -1975,20 +1975,20 @@ by default."
            (t "xdg-open"))))
       (start-process "open-pdf-in-viewer" nil viewer (buffer-file-name))))
   
-  (define-key pdf-view-mode-map (kbd "X") 'mxl-pdf-open-in-xournal)
-  (define-key pdf-view-mode-map (kbd "O") 'mxl-pdf-open-in-default-viewer)
+  (define-key pdf-view-mode-map (kbd "X") 'mxl/pdf-open-in-xournal)
+  (define-key pdf-view-mode-map (kbd "O") 'mxl/pdf-open-in-default-viewer)
 
   ;; Margin removal
-  (defun mxl-pdf-view-toggle-crop()
+  (defun mxl/pdf-view-toggle-crop()
     "Crop/Uncrop according to the bounding box"
     (interactive)
     (if (pdf-view-current-slice)
         (pdf-view-reset-slice)
       (pdf-view-set-slice-from-bounding-box)))
-  (define-key pdf-view-mode-map (kbd "c") 'mxl-pdf-view-toggle-crop)
+  (define-key pdf-view-mode-map (kbd "c") 'mxl/pdf-view-toggle-crop)
   ;; keyboard shortcuts for annotations
   (define-key pdf-view-mode-map (kbd "h") 'pdf-annot-add-highlight-markup-annotation)
-  (define-key pdf-view-mode-map (kbd "t") 'mxl-pdf-annot-add-text-annotation)
+  (define-key pdf-view-mode-map (kbd "t") 'mxl/pdf-annot-add-text-annotation)
   (define-key pdf-view-mode-map (kbd "L") 'pdf-annot-list-annotations)
   (define-key pdf-view-mode-map (kbd "D") 'pdf-annot-delete))
 
@@ -2093,7 +2093,7 @@ use ~cape~ to add some extensions to it.
    anyway).
 
 #+BEGIN_SRC emacs-lisp
-(setq mxl-local-snippet-dir (concat base-config-path "snippets/"))
+(setq mxl/local-snippet-dir (concat base-config-path "snippets/"))
 #+END_SRC
 
    Basic setup of Yasnippet.
@@ -2112,7 +2112,7 @@ use ~cape~ to add some extensions to it.
   (yas-global-mode 1)
 
   :config
-  (setq yas-snippet-dirs (list mxl-local-snippet-dir))
+  (setq yas-snippet-dirs (list mxl/local-snippet-dir))
   (setq yas-indent-line 'fixed)
   (progn
     (yas-reload-all)))
@@ -2181,19 +2181,19 @@ do the same thing and therefore fight with each other. I use
    backups and autosaves in a specific folder.
 
 #+BEGIN_SRC emacs-lisp
-(defvar mxl-autosave-dir "~/.emacs.d/autosaves/")
-(defvar mxl-backup-dir   "~/.emacs.d/backups/")
-(make-directory mxl-autosave-dir t)
-(make-directory mxl-backup-dir t)
+(defvar mxl/autosave-dir "~/.emacs.d/autosaves/")
+(defvar mxl/backup-dir   "~/.emacs.d/backups/")
+(make-directory mxl/autosave-dir t)
+(make-directory mxl/backup-dir t)
 #+END_SRC
 
 
    First I setup the autosave feature
 
 #+BEGIN_SRC emacs-lisp
-(setq tramp-auto-save-directory mxl-autosave-dir)
+(setq tramp-auto-save-directory mxl/autosave-dir)
 (setq auto-save-file-name-transforms
-      `((".*" ,mxl-autosave-dir t)))
+      `((".*" ,mxl/autosave-dir t)))
 #+END_SRC
 
    then I setup the backup features, where copies of old versions are
@@ -2211,7 +2211,7 @@ do the same thing and therefore fight with each other. I use
 (setq backup-by-copying-when-linked t)
 
 (setq backup-directory-alist
-      `(("." . ,mxl-backup-dir)                ;; location for local files
+      `(("." . ,mxl/backup-dir)                ;; location for local files
         (,tramp-file-name-regexp .  nil)))     ;; disable for remote files
 
 #+END_SRC

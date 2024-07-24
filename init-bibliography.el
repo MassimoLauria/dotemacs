@@ -6,19 +6,19 @@
 
 
 ;; Main bibliography file
-(defconst mxl-main-bibtex-file "~/lavori/latex/bibliografia.bib"
+(defconst mxl/main-bibtex-file "~/lavori/latex/bibliografia.bib"
   "My main bibliography file.")
 
-(defconst mxl-default-pdf-download-dir
+(defconst mxl/default-pdf-download-dir
   (if (eq system-type "darwin") "~/Downloads/" "~/queue/")
   "Where I download my papers.")
 
 
 
 ;; For reftex
-(setq reftex-default-bibliography (list mxl-main-bibtex-file))
+(setq reftex-default-bibliography (list mxl/main-bibtex-file))
 
-(setq bibtex-completion-bibliography mxl-main-bibtex-file
+(setq bibtex-completion-bibliography mxl/main-bibtex-file
       bibtex-completion-library-path "~/cloud/Papers/"
       bibtex-completion-notes-path "~/lavori/latex/bibnotes.org"
       bibtex-completion-pdf-field "file")
@@ -32,7 +32,7 @@
   :init
   (setq biblio-arxiv-bibtex-header "misc") ;; default "@Online" is non standard
   (setq biblio-cleanup-bibtex-function 'bibtex-clean-entry)
-  (setq biblio-download-directory mxl-default-pdf-download-dir))
+  (setq biblio-download-directory mxl/default-pdf-download-dir))
 
 ;;
 ;; Setup the key generation for bibtex files
@@ -181,7 +181,7 @@ Optional argument NODELIM see `bibtex-make-field'."
 
 
 ;; Code produced by chatGPT
-(defun mxl-remove-latex-accents (latex-string)
+(defun mxl/remove-latex-accents (latex-string)
   "Remove LaTeX accent commands from the given string."
   (let ((accents-alist
          '(("\\`{\\([aeiouyAEIOUY]\\)}" . "\\1")    ; grave
@@ -209,12 +209,12 @@ Optional argument NODELIM see `bibtex-make-field'."
       (setq latex-string (replace-regexp-in-string (car accents-pair) (cdr accents-pair) latex-string)))
     latex-string))
 
-(defun mxl-remove-brackets-braces (string)
+(defun mxl/remove-brackets-braces (string)
   "Remove parenthesis, brackets, and braces from the given string."
   (replace-regexp-in-string "[]{}[]" "" string))
 
 (defun mybibtex-normalize-string (string)
-  (mxl-remove-latex-accents (mxl-remove-brackets-braces string)))
+  (mxl/remove-latex-accents (mxl/remove-brackets-braces string)))
 
 
 (defun mybibtex-clean-pages-dashes ()
@@ -232,7 +232,7 @@ Optional argument NODELIM see `bibtex-make-field'."
   2. There are not alternative actions when the target filename already exists.
 "
   (interactive
-   (list (read-file-name "Select paper to attach: " mxl-default-pdf-download-dir)))
+   (list (read-file-name "Select paper to attach: " mxl/default-pdf-download-dir)))
   (bibtex-beginning-of-entry)
   (let* ((entry (bibtex-parse-entry t))
          (newname (bibtex-generate-filename))
@@ -280,7 +280,7 @@ Optional argument NODELIM see `bibtex-make-field'."
       (error "Can not read %s" uri))))
 
 ; got from `bibtex-completion-get-key-bibtex'
-(defun mxl-bibtex-mode-get-key ()
+(defun mxl/bibtex-mode-get-key ()
   "Return the key of the BibTeX entry at point, nil otherwise.
 This function can be used by `bibtex-completion-key-at-point' to
 find the key of the BibTeX entry at point in a BibTeX-mode
@@ -294,16 +294,16 @@ buffer."
 (defun mybibtex-dnd-setup ()
   (setq-local dnd-protocol-alist '(("^file:" . mybibtex-dnd-add-file-linux))))
 
-(defun mxl-bibtex-mode-open ()
+(defun mxl/bibtex-mode-open ()
   "Opens the PDF, the URL or the DOI mentioned in the bibtex entry"
   (interactive)
-  (or (citar-open-files (list (mxl-bibtex-mode-get-key)))
-      (citar-open-links (list (mxl-bibtex-mode-get-key)))))
+  (or (citar-open-files (list (mxl/bibtex-mode-get-key)))
+      (citar-open-links (list (mxl/bibtex-mode-get-key)))))
 
 (use-package bibtex
   :bind (:map bibtex-mode-map
               ("M-q" . bibtex-fill-entry)
-              ("C-c C-o" . mxl-bibtex-mode-open)
+              ("C-c C-o" . mxl/bibtex-mode-open)
               ("C-c C-a" . mybibtex-add-file-to-library)
               ("C-c C-s" . biblio-lookup)
               ("<drag-n-drop>" . mybibtex-dnd-add-file-mac))
