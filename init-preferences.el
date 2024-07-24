@@ -95,7 +95,9 @@
   (beacon-blink-when-focused t)
   (beacon-dont-blink-commands '(next-line
                                 previous-line
-                                forward-line))
+                                forward-line
+                                next-error
+                                previous-error))
 
   :config
   ;; Avoid beacon during isearch
