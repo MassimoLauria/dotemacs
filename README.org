@@ -1351,7 +1351,13 @@ in projects which do not contain ~.latexmkrc~.
 
 #+BEGIN_SRC emacs-lisp
 (push `(latex-mode
-        ("LaTeX:Run latex" "pdflatex"
+        ("LaTeX:Run pdflatex" "pdflatex"
+         TeX-command-extra-options
+         "-file-line-error"
+         "-interaction=nonstopmode"
+         "--synctex=1"
+         (concat (TeX-master-file) ".tex"))
+        ("LaTeX:Run xelatex" "xelatex"
          TeX-command-extra-options
          "-file-line-error"
          "-interaction=nonstopmode"
@@ -1371,15 +1377,19 @@ in projects which do not contain ~.latexmkrc~.
         compile-multi-config)
 #+END_SRC
 
-To "build" org files there is the ~org-export-dispatch~ command. I can
-bind it directly to F9 but I want to experiment the integration with
-~compile-multi~. Maybe it will just be one more key to press most of
-the time, but it is useful when the org file is inside some project
-that has more build options, that would be unavailable when
-~org-export-dispatch~ is bound to F9.
+To "build" org files there is the ~org-export-dispatch~ command.
+I could bind the command directly to F9 but I want to experiment the
+integration with ~compile-multi~. Maybe it will just be one more key
+to press most of the time, but it is useful when the org file is
+inside some project that has more build options. Those options would
+be unavailable when ~org-export-dispatch~ is bound to F9.
+Nevertheless I use org export mostly to build PDFs via latex and
+beamer, therefore I setup direct actions for those as well.
 
 #+BEGIN_SRC emacs-lisp
 (push `(org-mode
+        ("Org:PDF via latex"   . ,#'(lambda () (org-open-file (org-latex-export-to-pdf nil))))
+        ("Org:PDF via beamer"  . ,#'(lambda () (org-open-file (org-beamer-export-to-pdf nil))))
         ("Org:export (choose)" . ,#'org-export-dispatch)
         ("Org:export (last)"   . ,#'(lambda () (org-export-dispatch t))))
         compile-multi-config)
