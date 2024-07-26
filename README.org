@@ -1269,7 +1269,13 @@ with timestamped filename.
 
 The ~compile~, ~project-compile~ and ~recompile~ commands are useful
 starting points. I run compilation commands using ~compile-multi~ that
-allows me to setup nice build commands.
+allows me to setup nice build commands. The compilation buffer does
+not like ansi color sequences by default. We fix that.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+#+END_SRC
+
 
 *** Project.el, used just to find project roots
 
@@ -1607,7 +1613,9 @@ Setup of compile commands for python. In particular syntax checks via
         ("Python:Lint with pylint"
          "pylint"                    (file-relative-name buffer-file-name))
         ("Python:Lint with flake8"
-         "flake8" "--color" "never"  (file-relative-name buffer-file-name)))
+         "flake8"                    (file-relative-name buffer-file-name))
+        ("Python:Lint with ruff"
+         "ruff check"                (file-relative-name buffer-file-name)))
         compile-multi-config)
 #+END_SRC
 
