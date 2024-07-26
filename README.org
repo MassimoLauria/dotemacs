@@ -1273,7 +1273,13 @@ allows me to setup nice build commands. The compilation buffer does
 not like ansi color sequences by default. We fix that.
 
 #+BEGIN_SRC emacs-lisp
-(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+(use-package compile
+  :config
+  (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+  ;; error regexp for pyright
+  (add-to-list 'compilation-error-regexp-alist-alist
+               '(pyright "^[[:blank:]]+\\(.+\\):\\([0-9]+\\):\\([0-9]+\\).*$" 1 2 3))
+  (add-to-list 'compilation-error-regexp-alist 'pyright))
 #+END_SRC
 
 
@@ -1615,7 +1621,9 @@ Setup of compile commands for python. In particular syntax checks via
         ("Python:Lint with flake8"
          "flake8"                    (file-relative-name buffer-file-name))
         ("Python:Lint with ruff"
-         "ruff check"                (file-relative-name buffer-file-name)))
+         "ruff check"                (file-relative-name buffer-file-name))
+        ("Python:Lint with pyright"
+         "pyright"                    (file-relative-name buffer-file-name)))
         compile-multi-config)
 #+END_SRC
 
