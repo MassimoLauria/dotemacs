@@ -8,11 +8,10 @@
 
 EMACS=emacs
 EMACSCLIENT=emacsclient
-EMACSAPP=Emacs.app
 
 ifeq ($(shell uname -s),Darwin)
-EMACS=/Applications/${EMACSAPP}/Contents/MacOS/Emacs
-EMACSCLIENT=/Applications/${EMACSAPP}/Contents/MacOS/bin/emacsclient
+EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
+EMACSCLIENT=/usr/local/bin/emacsclient
 endif
 
 VERSION:=$(shell ${EMACS} -Q --version|head -1|cut -d' ' -f3 )
