@@ -616,7 +616,9 @@ See https://emacs.stackexchange.com/questions/21171/company-mode-completion-for-
   :pin gnu
   :mode ("\\.org\\'" . org-mode)
   :bind (([f5] . org-capture)
-         ([f6] . my-org-agenda-show))
+         ([f6] . my-org-agenda-show)
+         ([f7] . mxl/contacts)
+         ([f8] . mxl/search-agenda))
   :custom
   (org-capture-bookmark . nil)
   :config
@@ -627,18 +629,24 @@ See https://emacs.stackexchange.com/questions/21171/company-mode-completion-for-
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
-(global-set-key (kbd "<f8>")
-                (lambda ()
-                  (interactive)
-                  (consult-ripgrep "~/personal/agenda/")))
-
-
 
 (use-package org-contacts
   :commands (org-contacts org-contacts-anniversaries)
   :init
   ;; addresses
   (setq org-contacts-files '("~/personal/agenda/contacts.org")))
+
+(defun mxl/contacts ()
+  "Search and select a personal contact"
+  (interactive)
+  (find-file "~/personal/agenda/contacts.org")
+  (consult-org-heading))
+
+(defun mxl/search-agenda ()
+  "Search (i.e. ripgrep) stuff in my agenda files"
+  (interactive)
+  (consult-ripgrep "~/personal/agenda/"))
+
 
 (provide 'init-org-mode)
 ;; Local Variables:
