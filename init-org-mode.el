@@ -639,8 +639,12 @@ See https://emacs.stackexchange.com/questions/21171/company-mode-completion-for-
 (defun mxl/contacts ()
   "Search and select a personal contact"
   (interactive)
-  (find-file "~/personal/agenda/contacts.org")
-  (consult-org-heading))
+  (let ((starting-point (current-buffer)))
+  (condition-case
+      err
+      (progn (find-file "~/personal/agenda/contacts.org")
+             (consult-org-heading))
+    (t (switch-to-buffer starting-point)))))
 
 (defun mxl/search-agenda ()
   "Search (i.e. ripgrep) stuff in my agenda files"
