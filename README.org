@@ -1548,7 +1548,7 @@ across compilations.
    - integrated help using =eldoc=
    - jump to/from definitions using =xref= (try =M-,= =M-.= keybindings)
    - code snippets (if =yasnippet= is enabled in advance)
-   - code checking using =flymake=
+   - code checking using =flymake= (that I disable)
    - other features...
 
 #+BEGIN_SRC emacs-lisp
@@ -1564,14 +1564,6 @@ across compilations.
   :config
   (add-to-list 'eglot-stay-out-of 'flymake)
   (diminish 'eldoc-mode))
-#+END_SRC
-
-   With  this function  we  activate the  automatic formatting  before
-   file saving. Not very quick for large files.
-
-#+BEGIN_SRC emacs-lisp
-(defun mxl/eglot-format-buffer-on-save ()
-  (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
 #+END_SRC
 
    We configure basic keybindings for the modes that use =eglot=
