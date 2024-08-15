@@ -52,6 +52,7 @@
                            esup
                            f
                            flyspell
+                           flyspell-correct
                            forge
                            git-commit
                            gnus-alias
