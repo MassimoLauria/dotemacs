@@ -112,9 +112,7 @@
                            yapfify
                            ;; themes
                            poet-theme
-                           modus-themes
-                           solarized-theme
-                           zenburn-theme))
+                           modus-themes))
 ;; -------------------------------------------------------------------
 
 ;; Security setting for connection
