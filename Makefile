@@ -1,7 +1,7 @@
 # Copyright (C) 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024 by Massimo Lauria <lauria.massimo@gmail.com>
 #
 # Created   : "2015-05-10, Sunday 19:08 (CEST) Massimo Lauria"
-# Time-stamp: "2024-06-07, 21:23 (CEST) Massimo Lauria"
+# Time-stamp: "2024-08-16, 10:05 (CEST) Massimo Lauria"
 #
 
 ## Emacs binary
@@ -24,9 +24,9 @@ INITFULL=$(abspath init-start.el)
 INITMINI=$(abspath init-minimal.el)
 
 
-FONTPATH=~/.fonts
+FONTDEST=~/.fonts/emacs
 ifeq ($(shell uname -s),Darwin)
-FONTPATH=~/Library/Fonts
+FONTDEST=~/Library/Fonts/emacs
 endif
 
 
@@ -45,8 +45,8 @@ setup:
 	@mkdir -p ~/.emacs.d
 	@rm -f ~/.emacs.d/init.el
 	@ln -s ${INIT} ~/.emacs.d
-	${MAKE} install-pkgs
 	${MAKE} install-fonts
+	${MAKE} install-pkgs
 	@echo "Done."
 
 minisetup:
@@ -81,26 +81,28 @@ setup-pkgs:
 	@echo ${PDFTOOLPATH}
 	${PDFTOOLPATH}/build/server/autobuild -i ${PDFTOOLPATH}
 
-install-fonts:
+install-fonts: ${FONTDEST}
+
+${FONTDEST}:
 	@echo "Install fonts"
-	@rm -fr ${FONTPATH}/emacs
-	@mkdir -p ${FONTPATH}/emacs
-	unzip fonts/fira-code-5.2.zip          -d ${FONTPATH}/emacs
-	unzip fonts/dejavu-fonts-2.37.zip      -d ${FONTPATH}/emacs
-	unzip fonts/nerdfonts-symbols-only.zip -d ${FONTPATH}/emacs
-	cp ./fonts/NotoColorEmoji.ttf           ${FONTPATH}/emacs
-	-fc-cache -f -v
+	@rm -fr ${FONTDEST}
+	@mkdir -p ${FONTDEST}
+	unzip fonts/fira-code-5.2.zip          -d ${FONTDEST}
+	unzip fonts/dejavu-fonts-2.37.zip      -d ${FONTDEST}
+	unzip fonts/nerdfonts-symbols-only.zip -d ${FONTDEST}
+	cp ./fonts/NotoColorEmoji.ttf           ${FONTDEST}
+	-fc-cache -r ${FONTDEST}
 
 
 # --------- Measure setup quality -----------------------
-test:
+test: ${FONTDEST}
 	@echo "Test whether the configuration loads correctly."
 	@${EMACS} -q --eval '(condition-case err (progn (load "${INIT}") (kill-emacs 0)) (error (kill-emacs 1)))' \
 	&& (echo "No error on load"; exit 0) \
 	|| (echo "Test failed: errors on load. $$?"; exit 1)
 
 # -------- Daemon ---------------------------------
-start:
+start: ${FONTDEST}
 	@${MAKE} --no-print-directory  stop
 	@[ -f ${HOME}/.emacs.d/init.el ] || ${MAKE} setup
 	@echo "Starting emacs server"
