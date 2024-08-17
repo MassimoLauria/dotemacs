@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2023, 2024  Massimo Lauria
-;; Time-stamp: "2024-07-24, 08:41 (CEST) Massimo Lauria"
+;; Time-stamp: "2024-08-17, 08:44 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -45,9 +45,15 @@
 (add-hook 'after-init-hook (lambda ()
                              (setq debug-on-error nil)))
 
+;; Performance tuning
 (setq gc-cons-threshold (* 128 1024 1024))
 (add-hook 'emacs-startup-hook
           (lambda () (setq gc-cons-threshold (* 20 1024 1024))))
+
+(setq bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa t)
+
+
 
 ;;; Setup Emacs environment --------------------------------------------
 (defvar base-config-path "~/config/emacs/"
