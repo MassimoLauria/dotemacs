@@ -1,0 +1,105 @@
+#+title: Embark changelog
+
+* Version 1.1 (2024-04-18)
+- The =embark-consult= package contains a new exporter for
+  =consult-location= targets (produced by several =consult= commands such
+  as =consult-line=), which exports to a grep mode buffer. Users wishing
+  to use the new grep mode exporter can use the following
+  configuration:
+  #+begin_src emacs-lisp
+    (setf (alist-get 'consult-location embark-exporters-alist)
+          #'embark-consult-export-location-grep)
+  #+end_src
+  The main reason for adding the new exporter is that users of the
+  =wgrep= package will be able to make use of a feature that =wgrep= has
+  and the built-in =occur-edit-mode= lacks: when editing search results
+  you can add new lines to a result location. There are also some
+  disadvantages of grep mode compared to occur mode (which is why the
+  previously existing occur mode exporter continues to be the
+  default): (1) =wgrep= is a third party package while =occur-edit-mode=
+  is built-in; (2) occur mode buffers can list lines in any kind of
+  buffer, but grep mode and =wgrep= are meant for lines of files
+  exclusively.
+* Version 1.0 (2023-12-08)
+- You can now use around action hooks with multitarget actions (that
+  you couldn't previously was an oversight).
+- Users of the =embark-consult= package can now use consult async search
+  commands such as =consult-grep= as multitarget actions (through
+  =embark-act-all=) to search a list of files. For example, you can use
+  =consult-find= to search among file /names/ and once you have the
+  relevant files in the minibuffer, you can use =embark-act-all= to
+  search for some text in those files. When acting on buffers consult
+  async search commands will search the associated file if there is
+  one, or else the =default-directory= of the buffer.
+- =embark-bindings= and similar commands now show definition of keyboard
+  macros.
+- =embark-org= now recognizes Org links in non-org buffers.
+- Now pressing RET in an =embark-collect= on a selection made by
+  using =embark-select= in a normal buffer will take you to the location
+  each target was collected from.
+- Some functions renamed for greater consistency (these functions are
+  unlikely to be referred to in user's configuration):
+  - =embark-target-completion-at-point= → =embark-target-completion-list-candidate=
+  - =embark-target-top-minibuffer-completion= → =embark-target-top-minibuffer-candidate=
+  - =embark-completions-buffer-candidates= → =embark-completion-list-candidates=
+* Version 0.23 (2023-09-19)
+- Added a mode line indicator showing the number of selected targets in
+  the current buffer (contributed by @minad, thanks!)
+- Now =embark-select= can also be called as a top-level command, from
+  outside =embark-act=. When called that way, it will select the first
+  target at point.
+- =embark-org= now has support for acting on references to org headings
+  in other buffers, by jumping to the heading first and then running
+  the action. One source of references to org headings in other
+  buffers are agenda views: each agenda item is such a reference. But
+  this feature also supports some great third party commands which
+  produce references to org headings, such as =org-ql-find= from the
+  =org-ql= package or =consult-org-heading= from =consult=.
+- Renamed =embark-isearch= to =embark-isearch-forward= and added
+  =embark-isearch-backward=.
+- =embark-become= now removes any invisible text from the minibuffer
+  input on the grounds that users probably expect the target command
+  to receive exactly the input they can see.
+- The meaning of the prefix argument in =embark-bindings= has flipped:
+  now by default global key bindings are excluded and you can use =C-u=
+  to include them.
+- If any candidate in an embark-collect buffer contains a newline,
+  then candidates will be separated by horizontal lines. This is handy
+  for the kill-ring, which you can browse by calling =embark-collect=
+  from =yank-pop=.
+* Version 0.22.1 (2023-04-20)
+** New feature: selections
+Now users can select several targets to make an ad hoc collection. The
+commands =embark-act-all=, =embark-export= and =embark-collect= will act on
+the selection if it is non-empty. To select or deselect a target use
+the =embark-select= action (bound to =SPC= in =embark-general-map=). If you
+have some targets selected, then using =embark-select= through
+=embark-act-all= will deselect them.
+
+Before this change the Embark Collect buffers had their own
+implementation of selections which has been removed. This is how to
+translate the old bindings to the new feature (which is available in
+all buffers, not just Embark Collect buffers!):
+
+| Task               | Old binding | New binding   |
+|--------------------+-------------+---------------|
+| Mark a candidate   | m           | a SPC         |
+| Unmark a candidate | u           | a SPC         |
+| Unmark all         | U           | A SPC         |
+| Mark all [1]       | t           | A SPC         |
+| Toggle all marks   | t           | not available |
+
+[1] Marking all candidates (with either the old =t= or the new =A SPC=)
+requires that there are no marked candidates to begin with.
+
+In order to make room for the binding of =embark-select= to
+=SPC=, some other key bindings were moved:
+
+- =mark= in =embark-general-map= was moved to =C-SPC=.
+- =outline-mark-subtree= in =embark-heading-map= was moved to =C-SPC=.
+- =whitespace-cleanup-region= in =embark-region-map= was moved to =F=.
+
+* Version 0.21.1 (2020-01-30)
+- Finally started this changelog on 2023-04-20. Known issues with the
+  changelog: it started very late, the first entry is not very
+  informative.
