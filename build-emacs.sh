@@ -11,7 +11,7 @@ CC=gcc-12
 
 # Package install under Debian/Ubuntu
 # sudo apt build-dep emacs
-# sudo apt install libgccjit0 libgccjit-10-dev libjansson-dev
+# sudo apt install libgccjit0 libgccjit-XX-dev libjansson-dev
 
 #
 SRCDIR=${PREFIX}/src/emacs
