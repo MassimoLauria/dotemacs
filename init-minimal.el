@@ -20,20 +20,8 @@
 ;; Basic
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
-(setq debug-on-error t)
 (defalias 'yes-or-no-p 'y-or-n-p) ; y/n instead of yes/no
 (setq confirm-kill-emacs nil)     ; exit without questions
-
-
-;; Emacs packages
-(setq package-user-dir "~/.emacs.d/elpa/minimal/")
-(setq package-archives  '(("gnu"   . "https://elpa.gnu.org/packages/")
-                          ("melpa" . "https://melpa.org/packages/")
-                          ("org"   . "https://orgmode.org/elpa/")
-                          ))
-(when (require 'package nil t)
-  (package-initialize))
-
 
 ;; Usability setup
 (when (fboundp 'cua-mode)           (cua-mode            t))
@@ -67,7 +55,11 @@
     ;; Moving between buffers
     (define-key map (kbd "M-m")   'other-window)
     ;; Quicker actions
-    (define-key map (kbd "C-x k")   'kill-this-buffer)
+    (define-key map (kbd "C-x k") 'kill-this-buffer)
+    ;; Compilation
+    (define-key map (kbd "<f9>") 'compile)
+    (define-key map (kbd "<f11>")  'previous-error)
+    (define-key map (kbd "<f12>")  'next-error)
     map)
   "Keymap for minimo-keyboard-mode.")
 
@@ -105,11 +97,6 @@
   (define-key input-decode-map "\e[1;7B" [C-M-down])
   (define-key input-decode-map "\e[1;7C" [C-M-right])
   (define-key input-decode-map "\e[1;7D" [C-M-left]))
-
-;; Color theme
-(condition-case msg
-    (load-theme 'modus-vivendi t)
-    (error (format "%s" msg) ))
 
 
 ;;; Enabled/Disabled commands
