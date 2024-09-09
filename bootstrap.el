@@ -22,6 +22,7 @@
                            compile-multi
                            magit
                            auctex
+                           biblio
                            pdf-tools
                            doom-modeline
                            ;; minibuffer completion
