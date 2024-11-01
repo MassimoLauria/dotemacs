@@ -1021,6 +1021,8 @@ is more focused.
    :init
    (setq citar-library-paths '("~/cloud/Papers/")) ;; used outside citar
    :custom
+   (citar-latex-prompt-for-cite-style nil)         ;; use default 'cite' command
+   (citar-latex-prompt-for-extra-arguments nil)    ;; do not bother me
    (citar-bibliography '("~/lavori/latex/bibliografia.bib"))
    (citar-file-variable "file") 
    :config
