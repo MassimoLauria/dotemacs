@@ -1020,10 +1020,15 @@ is more focused.
    :commands (citar-open citar-open-files citar-open-links)
    :init
    (setq citar-library-paths '("~/cloud/Papers/")) ;; used outside citar
+   (setq citar-notes-paths   '("~/cloud/Papers/")) ;; notes next to papers
    :custom
-   (citar-latex-prompt-for-cite-style nil)         ;; use default 'cite' command
-   (citar-latex-prompt-for-extra-arguments nil)    ;; do not bother me
+   ;; setup for citar-inset-citation
+   (citar-latex-default-cite-command "cite")
+   (citar-latex-prompt-for-cite-style nil)
+   (citar-latex-prompt-for-extra-arguments nil)
+   ;; main bibliography
    (citar-bibliography '("~/lavori/latex/bibliografia.bib"))
+   ;; find pdf and org notes for papers
    (citar-file-variable "file") 
    :config
    (citar-embark-mode))
@@ -1039,13 +1044,12 @@ is more focused.
           (define-key map (kbd "f") #'citar-open-files)
           (define-key map (kbd "l") #'citar-open-links)
           (define-key map (kbd "e") #'citar-open-entry)
-          (define-key map (kbd "t") #'citar-insert-reference)
+          (define-key map (kbd "n") #'citar-open-notes)
+          (define-key map (kbd "o") #'citar-open)
+          (define-key map (kbd "r") #'citar-insert-reference)
           (define-key map (kbd "M-q") #'abort-recursive-edit)
           map)))
 #+END_SRC
-
-#+RESULTS:
-: t
 
 *** Appearance of the bibliography selector
 
@@ -1060,7 +1064,7 @@ Setup  the look  and  icons  for the  bibliography  selection. We  use
             :face 'nerd-icons-green
             :v-adjust -0.1)
    :function #'citar-has-files
-   :padding "  " ; need this because the default padding is too low for these icons
+   :padding " " ; need this because the default padding is too low for these icons
    :tag "has:files"))
 
 (defvar citar-indicator-links-icons
@@ -1070,12 +1074,25 @@ Setup  the look  and  icons  for the  bibliography  selection. We  use
             :face 'nerd-icons-orange
             :v-adjust 0.01)
    :function #'citar-has-links
-   :padding "  "
+   :padding " "
    :tag "has:links"))
+
+(defvar citar-indicator-notes-icons
+  (citar-indicator-create
+   :symbol (nerd-icons-faicon
+            "nf-fa-file_text"
+            :face 'nerd-icons-blue
+            :v-adjust -0.1)
+   :function #'citar-has-notes
+   :padding " "
+   :tag "has:notes"))
+
 
 (setq citar-indicators
   (list citar-indicator-files-icons
-        citar-indicator-links-icons))
+        citar-indicator-links-icons
+        citar-indicator-notes-icons
+        ))
 
 #+END_SRC
 
