@@ -1137,6 +1137,24 @@ with timestamped filename.
     (save-buffer)))
 #+END_SRC
 
+
+** Email via Thunderbird
+
+Using some [[https://github.com/Frederick888/external-editor-revived][extension]] is it possible to write email using emacsclient
+inside thunderbird. My setup uses the /custom/ editor choice which is setup as
+
+: emacsclient -c -F '((name . "floatemacs") (width . 100) (height . 40))' "/path/to/eml"
+
+A new frame for emacsclient opens up. The frame has instance
+=floatemacs=, so that my =i3= configuration makes it floating and puts
+it at the center of the screen. (See my =i3= configuration file)
+
+Thunderbird uses =eml= files for email, hence I need to set them up
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.eml\\'" . message-mode))
+#+END_SRC
+
 * Programming
 
 
