@@ -45,6 +45,12 @@ At least they are considered useful for the author.
   :group 'mxl-keyboard
   )
 
+
+(defun mxl-kill-this-buffer ()
+  (interactive)
+  (kill-buffer (current-buffer)))
+
+
 (defvar mxl-keyboard-mode-map
   (let ((map (make-sparse-keymap)))
     ;; Movements in Text without leaving homerow.
@@ -78,7 +84,7 @@ At least they are considered useful for the author.
     (define-key map (kbd "M-w")  'kill-whole-line)
 
 
-    (define-key map (kbd "C-x k")   'kill-this-buffer)
+    (define-key map (kbd "C-x k")   'mxl-kill-this-buffer)
     ;; Default text navigation (usually shadowed by other modes)
     (define-key map (kbd "M-.") 'xref-find-definitions)
     (define-key map (kbd "M-,") 'xref-pop-marker-stack)
