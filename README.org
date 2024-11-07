@@ -157,6 +157,16 @@ Piazzale Aldo Moro, 5
 #+END_SRC
 
 
+* Basic
+
+Basic editing setup. For example start scrolling few lines from top of
+bottom.
+
+#+BEGIN_SRC emacs-lisp
+(setq scroll-margin 8)
+#+END_SRC
+
+
 * Localization/Internationalization
 
 #+BEGIN_SRC emacs-lisp
