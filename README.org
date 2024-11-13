@@ -157,13 +157,22 @@ Piazzale Aldo Moro, 5
 #+END_SRC
 
 
-* Basic
+* Basic preferences
 
-Basic editing setup. For example start scrolling few lines from top of
-bottom.
+Initial screen. No welcome messages nor initial buffer content.
 
 #+BEGIN_SRC emacs-lisp
-(setq scroll-margin 8)
+(setq inhibit-startup-message t)
+(setq initial-scratch-message nil)
+#+END_SRC
+
+
+** Scrolling
+
+#+BEGIN_SRC emacs-lisp
+(setq scroll-preserve-screen-position 1)   ;; do not move the cursor relative position
+(setq scroll-conservatively 1000)
+(setq scroll-margin 4)                     ;; start scrolling few lines before border
 #+END_SRC
 
 

@@ -18,8 +18,6 @@
   (setq ns-alternate-modifier 'nil))
 
 
-(setq inhibit-startup-message t)
-(setq initial-scratch-message nil)
 
 ;; Cursor
 (setq x-stretch-cursor t)
@@ -73,10 +71,8 @@
 ;; Go to the first error
 (setq compilation-auto-jump-to-first-error nil)
 
-;; Scroll preferences
-(setq scroll-preserve-screen-position 1)
-(setq scroll-margin 0)
-(setq scroll-conservatively 1000)
+;; resize by pixel
+(setq frame-resize-pixelwise t)
 
 ;; Recenter sequence
 (setq recenter-positions '(top middle bottom))
