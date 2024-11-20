@@ -1040,6 +1040,7 @@ is more focused.
    :init
    (setq citar-library-paths '("~/cloud/Papers/")) ;; used outside citar
    (setq citar-notes-paths   '("~/cloud/Papers/")) ;; notes next to papers
+   (setq citar-file-variable "file")
    :custom
    ;; setup for citar-inset-citation
    (citar-latex-default-cite-command "cite")
@@ -1048,7 +1049,7 @@ is more focused.
    ;; main bibliography
    (citar-bibliography '("~/lavori/latex/bibliografia.bib"))
    ;; find pdf and org notes for papers
-   (citar-file-variable "file") 
+   (citar-file-variable "file")
    :config
    (citar-embark-mode))
 
