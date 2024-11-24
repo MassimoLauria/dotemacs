@@ -1025,9 +1025,25 @@ Woolf say? "A Room of One's Own".
 
 ** Bibliography
 
-I have quite  a setup in ~init-bibliography~, but I  am trying to move
+I have quite a setup in ~init-bibliography~, but I am trying to move
 it to this file. A key passage is to go from ~helm-bibtex~ to ~citar~.
 First let's tell ~citar~ where is the bibtex database and the files.
+
+To begin with I setup RefTeX. Sometimes it is useful to force a full
+rescan of the document for labels and bib entries, but usually
+I prefer to enable the partial scans for a faster experience in multi
+file latex documents.
+
+#+BEGIN_SRC emacs-lisp
+(setq reftex-default-bibliography '("~/lavori/latex/bibliografia.bib"))
+(setq reftex-enable-partial-scans t)   ;; finds local bibtex files faster
+
+(defun mxl/reftex-full-rescan ()
+  "Force a reftex full rescan"
+  (interactive)
+  (let ((reftex-enable-partial-scans nil))
+    (reftex-access-scan-info t)))
+#+END_SRC
 
 We also setup  some default action to use with  ~embark~. My selection
 of actions does not inherit the default ~embark~ actions and therefore
@@ -1036,8 +1052,9 @@ is more focused.
 #+BEGIN_SRC emacs-lisp
 (use-package citar
    :bind ("C-c b" . citar-open)
-   :commands (citar-open citar-open-files citar-open-links)
+   :commands (citar-open citar-open-files citar-open-links citar-open-entry citar-open-note)
    :init
+   (setq citar-bibliography  '("~/lavori/latex/bibliografia.bib"))
    (setq citar-library-paths '("~/cloud/Papers/")) ;; used outside citar
    (setq citar-notes-paths   '("~/cloud/Papers/")) ;; notes next to papers
    (setq citar-file-variable "file")
@@ -1046,8 +1063,6 @@ is more focused.
    (citar-latex-default-cite-command "cite")
    (citar-latex-prompt-for-cite-style nil)
    (citar-latex-prompt-for-extra-arguments nil)
-   ;; main bibliography
-   (citar-bibliography '("~/lavori/latex/bibliografia.bib"))
    ;; find pdf and org notes for papers
    (citar-file-variable "file")
    :config

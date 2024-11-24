@@ -5,23 +5,9 @@
 ;;;-----------------------------------------------------------------
 
 
-;; Main bibliography file
-(defconst mxl/main-bibtex-file "~/lavori/latex/bibliografia.bib"
-  "My main bibliography file.")
-
 (defconst mxl/default-pdf-download-dir
   (if (eq system-type "darwin") "~/Downloads/" "~/queue/")
   "Where I download my papers.")
-
-
-
-;; For reftex
-(setq reftex-default-bibliography (list mxl/main-bibtex-file))
-
-(setq bibtex-completion-bibliography mxl/main-bibtex-file
-      bibtex-completion-library-path "~/cloud/Papers/"
-      bibtex-completion-notes-path "~/lavori/latex/bibnotes.org"
-      bibtex-completion-pdf-field "file")
 
 
 ;; Bib entries are imported via biblio.el
