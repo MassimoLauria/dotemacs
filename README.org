@@ -1837,7 +1837,7 @@ setup ~compile-multi~ for it.
 
 (push `(go-mode
         ("Go file:run"    "go run"   (file-relative-name (buffer-file-name)))
-        ("Go file:format" "gofmt"    (file-relative-name (buffer-file-name)))
+        ("Go file:format" "gofmt -w" (file-relative-name (buffer-file-name)))
         ("Go file:build"  "go build" (file-relative-name (buffer-file-name)))
         ("Go file:lint"   "golint"   (file-relative-name (buffer-file-name)))
         ("Go file:vet"    "go vet"   (file-relative-name (buffer-file-name))))
