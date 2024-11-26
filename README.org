@@ -1636,6 +1636,8 @@ across compilations.
   :config
   (add-to-list 'eglot-stay-out-of 'flymake)
   (diminish 'eldoc-mode))
+
+(setq eldoc-echo-area-use-multiline-p nil) ;; keep echo area small
 #+END_SRC
 
    We configure basic keybindings for the modes that use =eglot=
