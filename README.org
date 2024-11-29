@@ -1346,6 +1346,9 @@ not like ansi color sequences by default. We fix that.
 
 #+BEGIN_SRC emacs-lisp
 (use-package compile
+  :init
+  (setq compilation-auto-jump-to-first-error t)
+  (setq compilation-max-output-line-length nil)
   :config
   (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
   ;; error regexp for pyright
