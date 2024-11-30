@@ -141,7 +141,7 @@ Some basic personal information. I used to keep these in a separate
 file but I believe it does not achieve any further privacy.
 
 #+BEGIN_SRC emacs-lisp
-;; ;; My personal stuff, that I don't want to share.
+;; My personal info. All this stuff is public
 (setq user-full-name "Massimo Lauria")
 (setq user-mail-address "massimo.lauria@uniroma1.it")
 (setq user-organisation "Università degli Studi di Roma \"La Sapienza\"")
@@ -156,6 +156,11 @@ Piazzale Aldo Moro, 5
 ")
 #+END_SRC
 
+Other personal informations are in an encrypted authinfo file.
+
+#+BEGIN_SRC emacs-lisp
+(setq auth-sources (list "~/personal/keys/authinfo.gpg"))
+#+END_SRC
 
 * Basic preferences
 
@@ -2393,4 +2398,22 @@ This is the default setup of regexp builder.
   :init
   (setq reb-re-syntax 'string)
   )
+#+END_SRC
+
+** LLM prompts inside emacs
+
+The great package ~chatgpt-shell~ allows to use AI assistants within
+emacs. The package has tons of features, but for now let's just focus
+on setting things up. API keys at in the =authinfo= file. The keys are
+only retrieved when I launch the shell, since I need to put the
+passphrase the first time, and I do not want Emacs to wait for that at startup.
+
+#+BEGIN_SRC emacs-lisp
+(use-package chatgpt-shell
+  :commands (chatgpt-shell)
+  :config
+  (setq chatgpt-shell-openai-key
+        (auth-info-password (car (auth-source-search :host "api.openai.com"))))
+  (setq chatgpt-shell-anthropic-key
+        (auth-info-password (car (auth-source-search :host "api.anthropic.com")))))
 #+END_SRC
