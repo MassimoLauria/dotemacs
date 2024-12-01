@@ -1651,6 +1651,21 @@ across compilations.
 
    We configure basic keybindings for the modes that use =eglot=
 
+** Go
+
+Just started with Go programming. A basic setup is in place.
+
+#+BEGIN_SRC emacs-lisp
+(use-package go
+  :init
+  (setq gofmt-show-errors nil)     ;; do not show gofmt errors during save
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  :hook ((go-mode . eglot-ensure))
+  )
+
+#+END_SRC
+
+
 ** Python
 
    Python is the  programming language I am using  the most, nowadays.
