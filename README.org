@@ -521,7 +521,6 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
   (setq doom-modeline-buffer-state-icon t)
   (setq doom-modeline-enable-word-count t)
   (setq doom-modeline-buffer-encoding t)
-  (setq doom-modeline-env-enable-python nil)
   (setq doom-modeline-bar-width 6)
   (doom-modeline-mode 1))
 #+END_SRC
