@@ -1,0 +1,74 @@
+# -*- mode: snippet -*-
+# name: Advent of Code template
+# key: * nokey
+# --
+// Advent of Code `(format-time-string "%Y day %d" (current-time))`
+//
+// Massimo Lauria
+
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"os"
+	"strings"
+    "strconv"
+)
+
+var ToInt=strconv.Atoi
+
+const example_data = \`\`
+
+func read_input_file(filename string) string {
+	data, err := ioutil.ReadFile(filename)
+	if err != nil {
+		fmt.Println("File", filename, "not found")
+		os.Exit(1)
+	}
+	return string(data)
+}
+
+func process_text(data string) int {
+	lines := strings.Split(string(data),"\n")
+	n := len(lines)
+	if len(lines[n-1])==0 {
+		lines = lines[:n-1]
+        n--
+	}
+	return n
+}
+
+
+func get_all_strings(filename string) []string {
+	data, err := ioutil.ReadFile(filename)
+	if err != nil {
+		fmt.Println("File",filename,"not found")
+		os.Exit(1)
+	}
+	strings := strings.Split(string(data),"\n")
+	n := len(strings)
+	if len(strings[n-1])==0 {
+		return strings[:n-1]
+	} else {
+		return strings
+	}
+}
+
+func main() {
+	data := read_input_file("`(format-time-string "input%d.txt" (current-time))`")
+	example := process_text(example_data)
+	values  := process_text(data)
+	fmt.Println("Part1 - example  ", part1(example))
+	fmt.Println("Part1 - solution ", part1(values))
+	fmt.Println("Part2 - example"  , part2(example))
+	fmt.Println("Part2 - solution ", part2(values))
+}
+
+func part1(value int) int {
+	return value
+}
+
+func part2(value int ) int {
+	return value
+}

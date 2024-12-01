@@ -1376,6 +1376,7 @@ but works for some of me.
   (setq project-vc-merge-submodules nil)
   :config
   (add-to-list 'project-vc-extra-root-markers "Makefile")
+  (add-to-list 'project-vc-extra-root-markers "go.mod")
   (add-to-list 'project-vc-extra-root-markers ".latexmkrc"))
 #+END_SRC
 
