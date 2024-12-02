@@ -40,21 +40,6 @@ func process_text(data string) int {
 }
 
 
-func get_all_strings(filename string) []string {
-	data, err := ioutil.ReadFile(filename)
-	if err != nil {
-		fmt.Println("File",filename,"not found")
-		os.Exit(1)
-	}
-	strings := strings.Split(string(data),"\n")
-	n := len(strings)
-	if len(strings[n-1])==0 {
-		return strings[:n-1]
-	} else {
-		return strings
-	}
-}
-
 func main() {
 	data := read_input_file("`(format-time-string "input%d.txt" (current-time))`")
 	example := process_text(example_data)
