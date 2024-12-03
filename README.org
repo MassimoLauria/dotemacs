@@ -660,6 +660,9 @@ on top of ~vertico~ and has a lot of tools like ~consult-ripgrep~.
 
 I use it to search in files and to switch buffer. I load an extra
 package to add all files in the current project to buffer switcher.
+If the project root is by any change my home dir the file list is too
+large and emacs hangs (it happens when I accidentally move a Makefile
+or something in my root, temporarily).
 
 #+BEGIN_SRC emacs-lisp
 (use-package consult
@@ -683,7 +686,6 @@ package to add all files in the current project to buffer switcher.
       :preview-key ' any)  ;; immediate preview just for these tools
   )
 
-
 (use-package consult-project-extra
   :after consult
   :config
@@ -696,10 +698,16 @@ package to add all files in the current project to buffer switcher.
                  :action    ,#'consult-project-extra--find-with-concat-root
                  :enabled   ,#'project-current
                  :items
-                 ,(lambda () (consult-project-extra--project-files (project-root (project-current))))))
+                 ,(lambda ()
+                    (if (string= (project-root (project-current)) "~/")
+                        nil
+                      (consult-project-extra--project-files
+                       (project-root (project-current)))))))
+  
   (add-to-list 'consult-buffer-sources 'consult-project-el-files 'append))
 #+END_SRC
- 
+
+
 ** Additional action with embark, as it was in helm
 
 I find convenient to have the choice of minibuffer action displayed in
