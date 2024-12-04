@@ -23,7 +23,7 @@ const example_data = \`\`
 func read_input_file(filename string) string {
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
-		fmt.Println("File", filename, "not found")
+		fmt.Fprintf(os.Stderr,"File %s not found\n", filename)
 		os.Exit(1)
 	}
 	return string(data)
