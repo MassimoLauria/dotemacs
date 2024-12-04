@@ -1660,16 +1660,23 @@ across compilations.
 
 ** Go
 
-Just started with Go programming. A basic setup is in place.
+Just started with Go programming. A basic setup is in place. I enforce
+reformatting on save, I disable automatic re-indentation on character
+~:~, since it annoys me while typing variable initializations like
+
+: x := 10
 
 #+BEGIN_SRC emacs-lisp
 (use-package go
   :init
   (setq gofmt-show-errors nil)     ;; do not show gofmt errors during save
-  (add-hook 'before-save-hook 'gofmt-before-save)
-  :hook ((go-mode . eglot-ensure))
-  )
 
+  (defun setup-go-mode ()
+    (add-hook 'before-save-hook 'gofmt-before-save)
+    (setq electric-indent-chars (remove ?: electric-indent-chars)))
+
+  :hook ((go-mode . eglot-ensure)
+         (go-mode . setup-go-mode)))
 #+END_SRC
 
 
