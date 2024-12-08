@@ -18,9 +18,9 @@ import (
 
 var ToInt=strconv.Atoi
 
-const example_data = \`\`
+const exampleData = \`\`
 
-func read_input_file(filename string) string {
+func readInputFile(filename string) string {
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
 		fmt.Fprintf(os.Stderr,"File %s not found\n", filename)
@@ -29,7 +29,7 @@ func read_input_file(filename string) string {
 	return string(data)
 }
 
-func process_text(data string) int {
+func processText(data string) int {
 	lines := strings.Split(string(data),"\n")
 	n := len(lines)
 	if len(lines[n-1])==0 {
@@ -41,9 +41,9 @@ func process_text(data string) int {
 
 
 func main() {
-	data := read_input_file("`(format-time-string "input%d.txt" (current-time))`")
-	example := process_text(example_data)
-	values  := process_text(data)
+	data := readInputFile("`(format-time-string "input%d.txt" (current-time))`")
+	example := processText(example_data)
+	values  := processText(data)
 	fmt.Println("Part1 - example  ", part1(example))
 	fmt.Println("Part1 - solution ", part1(values))
 	fmt.Println("Part2 - example"  , part2(example))
