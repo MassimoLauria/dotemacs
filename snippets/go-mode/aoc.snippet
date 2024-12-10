@@ -42,7 +42,7 @@ func processText(data string) int {
 
 func main() {
 	data := readInputFile("`(format-time-string "input%d.txt" (current-time))`")
-	example := processText(example_data)
+	example := processText(exampleData)
 	values  := processText(data)
 	fmt.Println("Part1 - example  ", part1(example))
 	fmt.Println("Part1 - solution ", part1(values))
