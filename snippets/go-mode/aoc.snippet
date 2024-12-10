@@ -13,27 +13,34 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+    "time"
 )
 
 const example = \`\`
+
+func main() {
+	example := processText([]byte(example))
+	clock := time.Now()
+	data, err := ioutil.ReadFile("`(format-time-string "input%d.txt" (current-time))`")
+	if err != nil {
+		log.Fatal(err)
+	}
+	challenge := processText(data)
+	fmt.Printf("Load time                                     - %s\n", time.Since(clock))
+	clock = time.Now()
+	fmt.Printf("Part1 - example   : %-25d - %s\n", part1(example), time.Since(clock))
+	clock = time.Now()
+	fmt.Printf("Part1 - challenge : %-25d - %s\n", part1(challenge), time.Since(clock))
+	clock = time.Now()
+	fmt.Printf("Part2 - example   : %-25d - %s\n", part2(example), time.Since(clock))
+	clock = time.Now()
+	fmt.Printf("Part2 - challenge : %-25d - %s\n", part2(challenge), time.Since(clock))
+}
 
 func processText(data []byte) int {
 	data = bytes.TrimSpace(data)
 	lines := bytes.Split(data, []byte("\n"))
     return len(lines)
-}
-
-func main() {
-	data, err := ioutil.ReadFile("`(format-time-string "input%d.txt" (current-time))`")
-	if err != nil {
-		log.Fatal(err)
-	}
-	example := processText([]byte(example))
-	challenge := processText(data)
-	fmt.Println("Part1(E):", part1(example))
-	fmt.Println("Part1(C):", part1(challenge))
-	fmt.Println("Part2(E):", part2(example))
-	fmt.Println("Part2(C):", part2(challenge))
 }
 
 func part1(value int) int {
