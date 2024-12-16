@@ -357,9 +357,14 @@ to editing.
   )
 #+END_SRC
 
+Latitude and Longitude are useful for ~lunar-phases~ and
+~sunrise-sunset~ commands.
 
-
-
+#+BEGIN_SRC emacs-lisp
+(setq calendar-latitude 41.9)   
+(setq calendar-longitude 12.5)
+(setq calendar-location-name "Rome, Italy")
+#+END_SRC
 
 * Appearance
 ** Fonts
