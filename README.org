@@ -311,6 +311,18 @@ to editing.
 (setq holiday-bahai-holidays nil)
 (setq holiday-hebrew-holidays nil)
 (setq holiday-islamic-holidays nil)
+
+;; Novelty holidays
+(setq holiday-other-holidays
+      '((holiday-fixed  3 14 "π day")
+        (holiday-fixed  3 25 "Towel day - Don't panic!")
+        (holiday-fixed  6 28 "τ day")
+        (holiday-fixed  7 22 "π approximation day")
+        (holiday-fixed  9  1 "Bell Riots")
+        (holiday-fixed 12 13 "ACAB day")
+        ))
+
+
 #+END_SRC
 
    In  Italy the  weekly  calendar  starts from  Monday,  hence I  set
