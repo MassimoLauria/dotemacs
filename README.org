@@ -1416,9 +1416,15 @@ With that I can do the basic setup of my compilation process.
 #+END_SRC
 
 Now we setup ~compile-multi~ to always launch compilations from the
-project root. We also setup a default action that asks the compile
-command explicitly, and we adapt the ~recompile~ command to work with
-this setup.
+project root. Furthermore, we adapt the ~recompile~ command to work
+with this setup.
+
+We also setup a fallback action that asks the compile command
+explicitly, and another one that clear project information for
+a directory. The latter is useful when ~project.el~ detects some
+project structure and then the structure changes, for example because
+a new =Makefile= is created in a subdirectory. Emacs stubbornly holds
+on to the old information, hence an option is clean the cache.
 
 #+BEGIN_SRC emacs-lisp
 
@@ -1452,7 +1458,9 @@ current directory.
   :config
   (push `(t
           ("Fallback:Edit command" . ,#'(lambda ()
-                                          (call-interactively 'compile))))
+                                          (call-interactively 'compile)))
+          ("Fallback:project.el reset" . ,#'(lambda ()
+                                              (vc-file-clearprops default-directory))))
         compile-multi-config))
 
 #+END_SRC
