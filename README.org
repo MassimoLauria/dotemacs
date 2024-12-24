@@ -1821,7 +1821,8 @@ format regions or function definitions.
 
 (use-package pyenv-mode-auto
  :hook (find-file . pyenv-mode-auto-hook)
- :config (pyenv-mode))
+ ;;:config (pyenv-mode)
+ )
 #+END_SRC
 
 ** C and C++
