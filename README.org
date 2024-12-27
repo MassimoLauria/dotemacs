@@ -1737,21 +1737,28 @@ Setup of compile commands for python. In particular syntax checks via
 
 #+BEGIN_SRC emacs-lisp
 (push `(python-mode
+        ;; Basic
+        ("Python:Run program"               
+         "python"  (file-relative-name buffer-file-name))
+        ("Python:Send to interpreter (with main)" .              
+         ,(lambda () (interactive) (python-shell-send-buffer t)))
+        ("Python:Send to interpreter (w/o main)" .              
+         ,(lambda () (interactive) (python-shell-send-buffer)))
         ;; pytest
-        ("Python:pytest (all tests)"         . "pytest")
-        ("Python:pytest (last failed)"       . "pytest --lf")
-        ("Python:pytest (last failed first)" . "pytest --ff")
-        ("Python:pytest (single file)" "pytest --doctest-modules" (file-relative-name buffer-file-name))
+        ("Pytest:pytest (all tests)"         . "pytest")
+        ("Pytest:pytest (last failed)"       . "pytest --lf")
+        ("Pytest:pytest (last failed first)" . "pytest --ff")
+        ("Pytest:pytest (single file)" "pytest --doctest-modules" (file-relative-name buffer-file-name))
         ;; Syntax/Lint checks
-        ("Python:basic syntax check"
+        ("Lint:basic syntax check"
          "python" "-m" "py_compile"  (file-relative-name buffer-file-name))
-        ("Python:Lint with pylint"
+        ("Lint:with pylint"
          "pylint"                    (file-relative-name buffer-file-name))
-        ("Python:Lint with flake8"
+        ("Lint:with flake8"
          "flake8"                    (file-relative-name buffer-file-name))
-        ("Python:Lint with ruff"
+        ("Lint:with ruff"
          "ruff check"                (file-relative-name buffer-file-name))
-        ("Python:Lint with pyright"
+        ("Lint:with pyright"
          "pyright"                    (file-relative-name buffer-file-name)))
         compile-multi-config)
 #+END_SRC
@@ -1788,10 +1795,10 @@ format regions or function definitions.
   :bind (:map python-mode-map
               ("M-q"     .  mxl/yapfify-region-or-defun)
               ("C-M-q"   .  yapfify-buffer)
-              ("<f10>"   .  python-shell-switch-to-shell)
-              ("M-<f10>" .  run-python)
+              ("<f10>" .  run-python)
               ;; Force the execution of the main block
-              ("C-c C-c" .  (lambda () (interactive) (python-shell-send-buffer t)))
+              ("C-c C-c" .  (lambda () (interactive)
+                              (python-shell-send-buffer t)))
          :map inferior-python-mode-map
               ("<f10>" . delete-window)))
 #+END_SRC
