@@ -1455,13 +1455,26 @@ current directory.
         (recompile)
       (compile-multi)))
 
+(defun mxl/project-recompute ()
+  "Reset the project infos, so that an new project structure is visible"
+  (interactive)
+  (message (concat "Current dir :" default-directory))
+  (message (concat "Current file:" buffer-file-name))
+  (let ((default-directory (file-name-directory buffer-file-name)))
+    (message (concat "Old project:" (project-root (project-current))))
+    (vc-file-clearprops default-directory)
+    (vc-file-clearprops buffer-file-name)
+    (message (concat "New project:" (project-root (project-current))))))
+  
   :config
   (push `(t
           ("Fallback:Edit command" . ,#'(lambda ()
                                           (call-interactively 'compile)))
           ("Fallback:project.el reset" . ,#'(lambda ()
-                                              (vc-file-clearprops default-directory))))
+                                              (call-interactively 'mxl/project-recompute))))
+                                           
         compile-multi-config))
+
 
 #+END_SRC
 
