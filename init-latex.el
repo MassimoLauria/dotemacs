@@ -176,6 +176,9 @@ I copied this function from somewhere on the web.
                       (setq candidate file))))))))
     candidate))
 
+
+(add-to-list 'auto-mode-alist '("latexmkrc" . conf-unix-mode))
+
 (provide 'init-latex)
 ;; Local Variables:
 ;; mode: emacs-lisp
