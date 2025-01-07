@@ -475,13 +475,14 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
     (setq modus-themes-common-palette-overrides
       '((border-mode-line-active unspecified)     ;; borderless mode-line (1)
         (border-mode-line-inactive unspecified)   ;; borderless mode-line (2)
+        (fringe bg-main)
 	    (fg-region unspecified)))                 ;; syntax visible in region
 
     ;; change defaults in modus vivendi specifically
     (setq modus-vivendi-palette-overrides
       '((bg-region bg-cyan-subtle)                ;; region color
         (bg-mode-line-active bg-cyan-subtle)
-	    (fg-heading-1 keyword)))                  ;; org-heading
+        (fg-heading-1 keyword)))                  ;; org-heading
 
     ;; change defaults in modus operandi specifically
     (setq modus-operandi-palette-overrides
