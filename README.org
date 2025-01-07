@@ -1416,45 +1416,49 @@ With that I can do the basic setup of my compilation process.
                                        ;; `compile' explicitly.
 #+END_SRC
 
-Now we setup ~compile-multi~ to always launch compilations from the
-project root. Furthermore, we adapt the ~recompile~ command to work
-with this setup.
-
-We also setup a fallback action that asks the compile command
-explicitly, and another one that clear project information for
-a directory. The latter is useful when ~project.el~ detects some
-project structure and then the structure changes, for example because
-a new =Makefile= is created in a subdirectory. Emacs stubbornly holds
-on to the old information, hence an option is clean the cache.
+The package ~compile-multi~ uses the variable
+~compile-multi-default-directory~ to decide where to start the
+compilation process. We setup two choices
+   - the project root, if inside a project, with the current dir as a fallback;
+   - always the current dir.
 
 #+BEGIN_SRC emacs-lisp
+(defun mxl/compile-in-project-root-or-cwd ()
+  "make compile-multi run compilation in the project root
 
-(defun mxl/compile-default-directory ()
-  "Find the directory from which to run compilation commands
+Uses project.el to find project root and if none, the project
+root is the current directory."
+  (interactive)
+  (setq compile-multi-default-directory #'(lambda ()
+                                            (or (and (project-current nil)
+                                                     (project-root (project-current nil)))
+                                                default-directory))))
 
-Uses project.el to find project root and if none, uses the
-current directory.
-"
-  (or (and (project-current nil)
-           (project-root (project-current nil)))
-      default-directory))
+(defun mxl/compile-in-cwd ()
+  "make compile-multi run compilation in current dir"
+  (interactive)
+  (setq compile-multi-default-directory #'(lambda ()
+                                            default-directory)))
+#+END_SRC
+   
 
-(use-package compile-multi
-  :commands compile-multi
-  :bind
-  (("<f9>" .   'mxl/compile-multi-recompile)
-   ("M-<f9>" . 'compile-multi))
-  :init
-  (setq compile-multi-config nil)
-  (setq compile-multi-default-directory #'mxl/compile-default-directory)
+Now we setup ~compile-multi~ and furthermore, we adapt the ~recompile~
+command to work with this setup. We also setup a fallback action that
+asks the compile command explicitly, and another one that clear
+project information for a directory. The latter is useful when
+~project.el~ detects some project structure and then the structure
+changes, for example because a new =Makefile= is created in
+a subdirectory. Emacs stubbornly holds on to the old information,
+hence an option is clean the cache.
 
-  (defun mxl/compile-multi-recompile ()
-    (interactive)
-    (if (and compile-command
-             (equal compilation-directory
-                    (funcall compile-multi-default-directory)))
-        (recompile)
-      (compile-multi)))
+#+BEGIN_SRC emacs-lisp
+(defun mxl/compile-multi-recompile ()
+  (interactive)
+  (if (and compile-command
+           (equal compilation-directory
+                  (funcall compile-multi-default-directory)))
+      (recompile)
+    (compile-multi)))
 
 (defun mxl/project-recompute ()
   "Reset the project infos, so that an new project structure is visible"
@@ -1466,8 +1470,20 @@ current directory.
     (vc-file-clearprops default-directory)
     (vc-file-clearprops buffer-file-name)
     (message (concat "New project:" (project-root (project-current))))))
-  
+#+END_SRC
+
+
+#+BEGIN_SRC emacs-lisp
+(use-package compile-multi
+  :commands compile-multi
+  :bind
+  (("<f9>" .   'mxl/compile-multi-recompile)
+   ("M-<f9>" . 'compile-multi))
+  :init
+  (setq compile-multi-config nil)
+
   :config
+  (mxl/compile-in-project-root-or-cwd)
   (push `(t
           ("Fallback:Edit command" . ,#'(lambda ()
                                           (call-interactively 'compile)))
@@ -1475,8 +1491,6 @@ current directory.
                                               (call-interactively 'mxl/project-recompute))))
                                            
         compile-multi-config))
-
-
 #+END_SRC
 
 *** Build LaTeX documents
@@ -1718,6 +1732,26 @@ reformatting on save, I disable automatic re-indentation on character
          (go-mode . setup-go-mode)))
 #+END_SRC
 
+It could be useful to setup ~compile-multi~ for it.
+
+#+BEGIN_SRC emacs-lisp
+(push `((file-exists-p "go.mod")
+        ("Go project:run   "  "go run ./...")
+        ("Go project:format"  "gofmt ./...")
+        ("Go project:build "  "go build ./...")
+        ("Go project:lint  "  "golint ./...")
+        ("Go project:vet   "  "go vet ./..."))
+        compile-multi-config)
+
+(push `(go-mode
+        ("Go file:run"    "go run"   (file-relative-name (buffer-file-name)))
+        ("Go file:format" "gofmt -w" (file-relative-name (buffer-file-name)))
+        ("Go file:build"  "go build" (file-relative-name (buffer-file-name)))
+        ("Go file:lint"   "golint"   (file-relative-name (buffer-file-name)))
+        ("Go file:vet"    "go vet"   (file-relative-name (buffer-file-name))))
+      compile-multi-config)
+
+#+END_SRC
 
 ** Python
 
@@ -1907,32 +1941,6 @@ a single program and compile it and run it.
         compile-multi-config)
 
 #+END_SRC
-
-** Go programming
-
-I don't know much about go programming, but it could be useful to
-setup ~compile-multi~ for it.
-
-#+BEGIN_SRC emacs-lisp
-(push `((file-exists-p "go.mod")
-        ("Go project:run   "  "go run ./...")
-        ("Go project:format"  "gofmt ./...")
-        ("Go project:build "  "go build ./...")
-        ("Go project:lint  "  "golint ./...")
-        ("Go project:vet   "  "go vet ./..."))
-        compile-multi-config)
-
-(push `(go-mode
-        ("Go file:run"    "go run"   (file-relative-name (buffer-file-name)))
-        ("Go file:format" "gofmt -w" (file-relative-name (buffer-file-name)))
-        ("Go file:build"  "go build" (file-relative-name (buffer-file-name)))
-        ("Go file:lint"   "golint"   (file-relative-name (buffer-file-name)))
-        ("Go file:vet"    "go vet"   (file-relative-name (buffer-file-name))))
-      compile-multi-config)
-
-#+END_SRC
-
-
 
 ** Emacs Lisp
 
