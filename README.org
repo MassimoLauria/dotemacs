@@ -1377,8 +1377,12 @@ not like ansi color sequences by default. We fix that.
 #+BEGIN_SRC emacs-lisp
 (use-package compile
   :init
+  (setq compile-command nil)             ;; no default command
+  (setq compilation-ask-about-save nil)  ;; save by default
+  (setq compilation-read-command t)      ;; ask when using `compile' explicitly.
   (setq compilation-auto-jump-to-first-error t)
   (setq compilation-max-output-line-length nil)
+
   :config
   (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
   ;; error regexp for pyright
@@ -1406,15 +1410,6 @@ but works for some of me.
 #+END_SRC
 
 *** Compile-multi is the build commands entry point
-
-With that I can do the basic setup of my compilation process.
-
-#+BEGIN_SRC emacs-lisp 
-(setq compile-command nil)             ;; no default command
-(setq compilation-ask-about-save nil)
-(setq compilation-read-command t)      ;; ask the command when using
-                                       ;; `compile' explicitly.
-#+END_SRC
 
 The package ~compile-multi~ uses the variable
 ~compile-multi-default-directory~ to decide where to start the
