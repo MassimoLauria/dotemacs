@@ -1088,6 +1088,7 @@ is more focused.
    (setq citar-library-paths '("~/cloud/Papers/")) ;; used outside citar
    (setq citar-notes-paths   '("~/cloud/Papers/")) ;; notes next to papers
    (setq citar-file-variable "file")
+   (setq citar-open-resources '(:files :links)) ;; never create or open notes
    :custom
    ;; setup for citar-inset-citation
    (citar-latex-default-cite-command "cite")
