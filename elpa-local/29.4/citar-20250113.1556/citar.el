@@ -6,7 +6,8 @@
 ;; Maintainer: Bruce D'Arcus <https://github.com/bdarcus>
 ;; Created: February 27, 2021
 ;; SPDX-License-Identifier: GPL-3.0-or-later
-;; Version: 1.4.0
+;; Package-Version: 20250113.1556
+;; Package-Revision: ce5e9644ed02
 ;; Homepage: https://github.com/emacs-citar/citar
 ;; Package-Requires: ((emacs "27.1") (parsebib "4.2") (org "9.5") (citeproc "0.9"))
 
@@ -90,6 +91,11 @@ buffer.")
   "A list of files paths for related PDFs, etc."
   :group 'citar
   :type '(repeat directory))
+
+(defcustom citar-library-paths-recursive nil
+  "Whether library paths should be searched recursively."
+  :group 'citar
+  :type 'boolean)
 
 (defcustom citar-library-file-extensions nil
   "List of file extensions to filter for related files.
@@ -1347,9 +1353,10 @@ it.
 
 SOURCE-PLIST must be as specified in the documentation of
 `citar-add-file-sources'."
-  (let* ((directory (if (cdr citar-library-paths)
-                        (completing-read "Directory: " citar-library-paths)
-                      (car citar-library-paths)))
+  (let* ((dirs (citar-file--library-dirs))
+         (directory (if (cdr dirs)
+                        (completing-read "Directory: " dirs)
+                      (car dirs)))
          (extension (or (plist-get source-plist :extension)
                         (read-string "File extension: ")))
          (destfile (expand-file-name citekey directory))
