@@ -157,9 +157,20 @@ Piazzale Aldo Moro, 5
 #+END_SRC
 
 Other personal informations are in an encrypted authinfo file.
+These are needed sometimes to access services but not for all
+protocols. I do not need them to access files with ~sudo~ or ~ssh~.
 
 #+BEGIN_SRC emacs-lisp
 (setq auth-sources (list "~/personal/keys/authinfo.gpg"))
+
+(connection-local-set-profile-variables
+  'remote-without-auth-sources
+  '((auth-sources . nil)))
+
+;; No authinfo for sudo
+(connection-local-set-profiles
+ '(:application tramp :protocol "sudo")
+ 'remote-without-auth-sources)
 #+END_SRC
 
 * Basic preferences
