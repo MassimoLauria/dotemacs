@@ -750,6 +750,46 @@ the minibuffer as ~helm~ does. Apparently this recipe works.
     (embark-act arg)))
 #+END_SRC
 
+
+** Run shell commands on buffer
+
+Emacs has ~shell-command-on-region~ associated to =M-\=, that runs
+a command using the current region as input and either puts the output
+in another buffer or (using prefix argument =C-u=) overwrite
+the region.
+
+Here I had a similar command that, when the region is not highlighted
+(more precisely when the mark is not active) runs the command on the
+whole buffer.
+
+This new ~shell-command-on-buffer-dwin~ is mapped on key =M-\= which is
+usually associated to something I do not use, and is close and easier
+to press than =M-|=.
+
+#+BEGIN_SRC emacs-lisp
+(defun shell-command-on-buffer-dwim ()
+  "Run a shell command on the current selection/buffer
+
+Runs a shell command on the current selection, when mark is
+active, or on the whole buffer otherwise. The output is shows in
+the same way as in `shell-command' or `shell-command-on-region'.
+It is written on a buffer and if it is small is also shown in
+the minibuffer.
+
+Run with prefix `C-u' in order to have the output overwrite
+the input instead."
+  (interactive)
+  (shell-command-on-region
+   (if mark-active (region-beginning) (point-min))
+   (if mark-active (region-end) (point-max))
+   (read-shell-command "Shell command on buffer: ")
+   nil
+   (not (equal current-prefix-arg nil))))
+
+(global-set-key (kbd "M-\\") 'shell-command-on-buffer-dwim)
+#+END_SRC
+
+
 * Prose and Technical Writing
 
   I   use  Emacs   to  write   technical  papers   about  math,   code
