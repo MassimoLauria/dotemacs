@@ -72,24 +72,24 @@
 ;; Hints for automatic reference creation
 (setq reftex-label-alist
       '(
-        ("definition" ?d "def:"  "~\\ref{%s}" nil ("definition" "def.") -3)
+        ("definition" ?i "def:"  "~\\ref{%s}" nil ("definition" "def.") -3)
 
-        ("theorem"    ?h "thm:"  "~\\ref{%s}" t   ("th." "theorem") -3)
-        ("lemma"      ?l "lmm:"  "~\\ref{%s}" t   ("lemma") -3)
-        ("corollary"  ?c "cor:"  "~\\ref{%s}" nil ("corollary"  "cor.") -3)
+        ("theorem"    ?i "thm:"  "~\\ref{%s}" t   ("th." "theorem") -3)
+        ("lemma"      ?i "lmm:"  "~\\ref{%s}" t   ("lemma") -3)
+        ("corollary"  ?i "cor:"  "~\\ref{%s}" nil ("corollary"  "cor.") -3)
 
-        ("fact"        ?F "fact:"  "~\\ref{%s}" nil ("fact") -3)
-        ("claim"       ?C "clm:"   "~\\ref{%s}" nil ("claim") -3)
-        ("proposition" ?S "stm:"   "~\\ref{%s}" nil ("proposition" "prop.") -3)
+        ("fact"        ?i "fact:"  "~\\ref{%s}" nil ("fact") -3)
+        ("claim"       ?i "clm:"   "~\\ref{%s}" nil ("claim") -3)
+        ("proposition" ?i "stm:"   "~\\ref{%s}" nil ("proposition" "prop.") -3)
 
-        ("remark"      ?S "stm:"  "~\\ref{%s}" nil ("remark") -3)
-        ("property"    ?S "stm:"  "~\\ref{%s}" nil ("property") -3)
+        ("remark"      ?i "stm:"  "~\\ref{%s}" nil ("remark") -3)
+        ("property"    ?i "stm:"  "~\\ref{%s}" nil ("property") -3)
 
-        ("example"    ?g "eg:"   "~\\ref{%s}" nil ("example"  "ex." "e.g.") -3)
-        ("exercise"   ?x "ex:"   "~\\ref{%s}" nil ("exercise") -3)
+        ("example"    ?i "eg:"   "~\\ref{%s}" nil ("example"  "ex." "e.g.") -3)
+        ("exercise"   ?i "ex:"   "~\\ref{%s}" nil ("exercise") -3)
 
-        ("open.problem" ?o "open:"   "~\\ref{%s}" nil ("problem") -3)
-        ("problem"      ?p "prob:"   "~\\ref{%s}" nil ("problem") -3)
+        ("open.problem" ?i "open:"   "~\\ref{%s}" nil ("problem") -3)
+        ("problem"      ?i "prob:"   "~\\ref{%s}" nil ("problem") -3)
 
         ("equation" ?e "eq:"   "~\\eqref{%s}" nil ("equation" "Eqn." "Eq.") -3)
 
