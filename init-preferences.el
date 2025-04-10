@@ -48,9 +48,7 @@
 (line-number-mode 1)
 (column-number-mode 1)
 
-;; Speedbar
-(setq speedbar-mode-hook '(lambda () (text-scale-decrease 1)))
-
+(setq dnd-indicate-insertion-point t)
 
 ;; don't let the cursor go into minibuffer prompt
 (setq minibuffer-prompt-properties

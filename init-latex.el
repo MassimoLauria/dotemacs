@@ -66,6 +66,7 @@
 (add-hook 'TeX-mode-hook 'turn-on-flyspell)
 (add-hook 'TeX-mode-hook 'TeX-source-specials-mode)
 (add-hook 'LaTeX-mode-hook   'mxl/setup-LaTeX-mode)
+(add-hook 'LaTeX-mode-hook   'mxl/dnd-LaTeX-setup)
 (add-hook 'LaTeX-mode-hook 'mxl/guess-TeX-master-file)
 
 ;; Hints for automatic reference creation
@@ -178,6 +179,32 @@ I copied this function from somewhere on the web.
 
 
 (add-to-list 'auto-mode-alist '("latexmkrc" . conf-unix-mode))
+
+
+;; Drag and drop
+(defun mxl/dnd-includegraphics (uri action)
+  "Handle drag-and-drop by inserting \\includegraphics.
+
+This should only be enabled in latex buffers, for PDF and PNG
+files. Return nil if not handled to allow other handlers to
+process the drop."
+  (let ((file (dnd-get-local-file-name uri t)))
+    (let* ((buffer-dir (if buffer-file-name
+                           (file-name-directory buffer-file-name)
+                         default-directory))
+           (rel-path (file-relative-name file buffer-dir)))
+      ;; Insert \includegraphics command
+      (insert (format "\\includegraphics[width=\\textwidth]{%s}\n"
+                      rel-path))
+      ;; Return 'private to indicate we handled the drop
+      'private)))
+
+
+(defun mxl/dnd-LaTeX-setup ()
+  (setq-local dnd-protocol-alist dnd-protocol-alist)
+  (add-to-list 'dnd-protocol-alist '("^file:.*\\.pdf$" . mxl/dnd-includegraphics))
+  (add-to-list 'dnd-protocol-alist '("^file:.*\\.png$" . mxl/dnd-includegraphics)))
+
 
 (provide 'init-latex)
 ;; Local Variables:
