@@ -1465,27 +1465,30 @@ but works for some of me.
 
 The package ~compile-multi~ uses the variable
 ~compile-multi-default-directory~ to decide where to start the
-compilation process. We setup two choices
-   - the project root, if inside a project, with the current dir as a fallback;
-   - always the current dir.
+compilation process. The choice sequence is as follow:
+   1. a manually pinned directory, if chosen;
+   2. the current project root, if inside a project;
+   3. the current directory, as a fallback.
 
 #+BEGIN_SRC emacs-lisp
-(defun mxl/compile-in-project-root-or-cwd ()
-  "make compile-multi run compilation in the project root
+(defvar mxl/pinned-compilation-directory nil
+  "If not nil, complie-multi will always launch compilation commands from here.")
 
-Uses project.el to find project root and if none, the project
-root is the current directory."
-  (interactive)
-  (setq compile-multi-default-directory #'(lambda ()
-                                            (or (and (project-current nil)
-                                                     (project-root (project-current nil)))
-                                                default-directory))))
+(setq compile-multi-default-directory #'(lambda ()
+                                          (or mxl/pinned-compilation-directory
+                                              (and (project-current nil)
+                                                   (project-root (project-current nil)))
+                                              default-directory)))
 
-(defun mxl/compile-in-cwd ()
-  "make compile-multi run compilation in current dir"
+(defun mxl/pin-compilation-directory ()
+  "Pin compilation-directory to current workding dir, or unpin it"
   (interactive)
-  (setq compile-multi-default-directory #'(lambda ()
-                                            default-directory)))
+  (if mxl/pinned-compilation-directory
+      (setq mxl/pinned-compilation-directory nil)
+    (setq mxl/pinned-compilation-directory default-directory))
+  (if mxl/pinned-compilation-directory
+      (message "Compilation directory pinned to %s" mxl/pinned-compilation-directory)
+      (message "Compilation directory UNPINNED")))
 #+END_SRC
    
 
