@@ -1751,22 +1751,14 @@ across compilations.
    script. Hence I setup a blacklist for =eglot= activation.
    
 #+BEGIN_SRC emacs-lisp
-
-(defvar mxl/eglot-blacklist-paths (list "~/")
-  "Never activate eglot if the project root is in any of these folders")
-
-(defun mxl/eglot-ensure-blacklist ()
-  "Activate eglot only if the path is not in
-`mxl/eglot-blacklist-paths'"
+(defun mxl/eglot-ensure-not-home ()
+  "Activate eglot only if not in $HOME"
   (interactive)
-  (let ((all-different t))
-    (dolist (element mxl/eglot-blacklist-paths all-different)
-      (when (and (stringp element) (string= (expand-file-name default-directory)
-                                            (expand-file-name element)))
-        (setq all-different nil)))
-    (if all-different
-      (eglot-ensure)
-      (message "Eglot blacklisted in %s" default-directory))))
+  (if (string=
+       (expand-file-name default-directory)
+       (expand-file-name "~/"))
+      (message "Eglot forbidden in ~/")
+    (eglot-ensure)))
 
 (defun mxl/eglot-format-region-or-defun ()
   (interactive)
@@ -1802,7 +1794,7 @@ reformatting on save, I disable automatic re-indentation on character
     (add-hook 'before-save-hook 'gofmt-before-save)
     (setq electric-indent-chars (remove ?: electric-indent-chars)))
 
-  :hook ((go-mode . mxl/eglot-ensure-blacklist)
+  :hook ((go-mode . mxl/eglot-ensure-not-home)
          (go-mode . setup-go-mode)))
 #+END_SRC
 
@@ -1913,7 +1905,7 @@ format regions or function definitions.
   :init
   (setq python-indent-guess-indent-offset nil
         python-indent-offset 4)
-  :hook ((python-mode . mxl/eglot-ensure-blacklist))
+  :hook ((python-mode . mxl/eglot-ensure-not-home))
   :bind (:map python-mode-map
               ("M-q"     .  mxl/yapfify-region-or-defun)
               ("C-M-q"   .  yapfify-buffer)
