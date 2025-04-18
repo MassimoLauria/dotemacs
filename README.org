@@ -1475,7 +1475,7 @@ compilation process. The choice sequence is as follow:
 
 #+BEGIN_SRC emacs-lisp
 (defvar mxl/pinned-compilation-directory nil
-  "If not nil, complie-multi will always launch compilation commands from here.")
+  "If not nil, compile-multi will run commands from this directory.")
 
 (setq compile-multi-default-directory #'(lambda ()
                                           (or mxl/pinned-compilation-directory
