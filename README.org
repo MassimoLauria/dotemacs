@@ -1742,7 +1742,28 @@ across compilations.
    - code checking using =flymake= (that I disable)
    - other features...
 
+   Beware: some LSP asks for eglot and project to list all files in
+   the current folder. This is a serious issue when I am editing
+   a file for example in the home directory, probably for a throwaway
+   script. Hence I setup a blacklist for =eglot= activation.
+   
 #+BEGIN_SRC emacs-lisp
+
+(defvar mxl/eglot-blacklist-paths (list "~/")
+  "Never activate eglot if the project root is in any of these folders")
+
+(defun mxl/eglot-ensure-blacklist ()
+  "Activate eglot only if the path is not in
+`mxl/eglot-blacklist-paths'"
+  (interactive)
+  (let ((all-different t))
+    (dolist (element mxl/eglot-blacklist-paths all-different)
+      (when (and (stringp element) (string= (expand-file-name default-directory)
+                                            (expand-file-name element)))
+        (setq all-different nil)))
+    (if all-different
+      (eglot-ensure)
+      (message "Eglot blacklisted in %s" default-directory))))
 
 (defun mxl/eglot-format-region-or-defun ()
   (interactive)
@@ -1778,7 +1799,7 @@ reformatting on save, I disable automatic re-indentation on character
     (add-hook 'before-save-hook 'gofmt-before-save)
     (setq electric-indent-chars (remove ?: electric-indent-chars)))
 
-  :hook ((go-mode . eglot-ensure)
+  :hook ((go-mode . mxl/eglot-ensure-blacklist)
          (go-mode . setup-go-mode)))
 #+END_SRC
 
@@ -1889,7 +1910,7 @@ format regions or function definitions.
   :init
   (setq python-indent-guess-indent-offset nil
         python-indent-offset 4)
-  :hook ((python-mode . eglot-ensure))
+  :hook ((python-mode . mxl/eglot-ensure-blacklist))
   :bind (:map python-mode-map
               ("M-q"     .  mxl/yapfify-region-or-defun)
               ("C-M-q"   .  yapfify-buffer)
