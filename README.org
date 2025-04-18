@@ -651,6 +651,9 @@ allows some kind of fuzzy matching.
   :custom 
   (vertico-count 10)    ; Number of candidates to display
   (vertico-resize nil)
+  (vertico-preselect 'first)  ; preselect first item in list
+                              ; just remove stuff to select the directory
+                              ; just go up to select the file name literally
   :init
   (require 'orderless)  ; should be loaded before
   :config
