@@ -1536,7 +1536,6 @@ hence an option is clean the cache.
   (setq compile-multi-config nil)
 
   :config
-  (mxl/compile-in-project-root-or-cwd)
   (push `(t
           ("Fallback:Edit command" . ,#'(lambda ()
                                           (call-interactively 'compile)))
