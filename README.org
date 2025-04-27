@@ -1769,7 +1769,9 @@ across compilations.
 (use-package eglot
   :config
   (add-to-list 'eglot-stay-out-of 'flymake)
-  (diminish 'eldoc-mode))
+  (diminish 'eldoc-mode)
+  ;; no hints in my code
+  (add-to-list 'eglot-ignored-server-capabilities ':inlayHintProvider))
 
 (setq eldoc-echo-area-use-multiline-p nil) ;; keep echo area small
 #+END_SRC
