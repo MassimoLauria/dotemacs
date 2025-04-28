@@ -75,7 +75,7 @@
 
 (defun eshell/ripgrep (pattern)
   "Use Emacs consult-ripgrep  instead of calling external rg"
-  (consult-ripgrep pattern))
+  (consult-ripgrep default-directory pattern))
 
 (defalias 'eshell/rg 'eshell/ripgrep)
 
@@ -121,23 +121,13 @@
 (defun mxl/eshell-prompt ()
   (concat
    "\n"
-   (let ((branch (git-prompt-branch-name)))
-     (if branch
-         (concat
-          (with-face "[±" :foreground "white" :weight 'bold)
-          (with-face (git-prompt-branch-name)
-                     :foreground "light green" :weight 'bold)
-          (with-face "]" :foreground "white" :weight 'bold)
-          (with-face "──" :foreground "#44f" :weight 'bold)
-          )
-       ))
    (with-face "(" :foreground "white" :weight 'bold)
    (with-face (concat (abbreviate-file-name (eshell/pwd)) "")
               :foreground "#44f"
               :weight 'bold)
    (with-face ")" :foreground "white" :weight 'bold)
    "\n"
-   (with-face (format-time-string "%H:%M" (current-time))
+   (with-face (format-time-string " %H:%M" (current-time))
               :foreground (if (= eshell-last-command-status 0) "green" "red")
               :weight 'bold)
    (with-face (if (= (user-uid) 0)
@@ -148,16 +138,10 @@
    " "))
 
 (setq eshell-prompt-function 'mxl/eshell-prompt)
-(setq eshell-prompt-regexp    "^[^#$\n]*[#$➤] ")
-(defun git-prompt-branch-name ()
-    "Get current git branch name"
-    (let ((args '("symbolic-ref" "HEAD" "--short")))
-      (with-temp-buffer
-        (apply #'process-file "git" nil (list t nil) nil args)
-        (unless (bobp)
-          (goto-char (point-min))
-          (buffer-substring-no-properties (point) (line-end-position))))))
+(add-to-list 'eshell-visual-commands "bat")
+(add-to-list 'eshell-visual-commands "gping")
 
+(setq eshell-prompt-regexp    "^[^#$\n]*[#$➤] ")
 (setq comint-prompt-read-only t)
 
 (provide 'init-eshell)
