@@ -1964,6 +1964,7 @@ format regions or function definitions.
   :config
   (setq c-basic-offset 4)
   (setq c-block-comment-prefix "")
+  (setq comment-style 'multi-line)
   :bind (:map c-mode-map
          ("RET"     .  newline-and-indent)
          :map c++-mode-map
