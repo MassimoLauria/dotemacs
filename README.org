@@ -1537,11 +1537,14 @@ hence an option is clean the cache.
 
   :config
   (push `(t
-          ("Fallback:Edit command" . ,#'(lambda ()
-                                          (call-interactively 'compile)))
-          ("Fallback:project.el reset" . ,#'(lambda ()
-                                              (call-interactively 'mxl/project-recompute))))
+          ("Others:Edit command" . ,#'(lambda ()
+                                        (call-interactively 'compile)))
+          ("Others:project.el reset" . ,#'(lambda ()
+                                            (call-interactively 'mxl/project-recompute))))
                                            
+        compile-multi-config)
+  (push `((local-variable-p 'compile-command)
+          ("Others:Buffer Local Command"  compile-command))
         compile-multi-config))
 #+END_SRC
 
