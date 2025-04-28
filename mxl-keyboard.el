@@ -1,6 +1,6 @@
 ;;; mxl-keyboard.el --- Keybindings specific for the author habits -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010-2021, 2024  Massimo Lauria
+;; Copyright (C) 2010-2021, 2024, 2025  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: convenience
@@ -136,9 +136,6 @@ modified according to the useage pattern of the author."
     (setq
      ;; comint
      mxl-keyboard-comint (member major-mode mxl-keyboard-comint-modes)
-     ;; eshell
-     mxl-keyboard-eshell (and mxl-keyboard-eshell-active
-                                  (eq major-mode 'eshell-mode))
      )))
 
 
@@ -181,41 +178,6 @@ modified according to the useage pattern of the author."
 (add-to-list 'minor-mode-map-alist
              (cons 'mxl-keyboard-comint mxl-keyboard-comint-mode-map))
 
-
-;; ---- `eshell-mode'  ----------------------------------------------------
-
-(make-variable-buffer-local 'mxl-keyboard-eshell)
-(set-default 'mxl-keyboard-eshell     nil)
-
-(defvar mxl-keyboard-eshell-mode-map
-  (let ((map (make-sparse-keymap)))
-    ;; History searching
-    (define-key map (kbd "M-i") 'eshell-previous-input)
-    (define-key map (kbd "M-k") 'eshell-next-input)
-    (define-key map (kbd "<up>") 'eshell-previous-input)
-    (define-key map (kbd "<down>") 'eshell-next-input)
-    (define-key map (kbd "<prior>") 'eshell-previous-matching-input-from-input)
-    (define-key map (kbd "<next>")  'eshell-next-matching-input-from-input)
-    ;; Line ends
-    (define-key map (kbd "M-g") 'eshell-bol)
-    (define-key map (kbd "M-h") 'move-end-of-line)
-    (define-key map (kbd "<home>") 'eshell-bol)
-    (define-key map (kbd "<end>")  'move-end-of-line)
-
-    ;; Paragraphs
-    (define-key map (kbd "M-b") 'eshell-previous-prompt)     ;; Fight with canonical binding
-    (define-key map (kbd "M-n") 'eshell-next-prompt)
-
-    ;; Deletion keys
-    (define-key map (kbd "M-w")  'eshell-kill-input)
-
-    (define-key map (kbd "<M-return>")  'bury-buffer)
-
-    map)
-  "Keymap for mxl-keyboard-mode (for Eshell mode).")
-
-(add-to-list 'minor-mode-map-alist
-             (cons 'mxl-keyboard-eshell mxl-keyboard-eshell-mode-map))
 
 
 

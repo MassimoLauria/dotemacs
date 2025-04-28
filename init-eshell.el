@@ -26,10 +26,32 @@
 
 (global-set-key (kbd "<M-return>") 'eshell)
 
-(defun eshell-my-setup ()
-  (define-key eshell-mode-map (kbd "<M-return>") 'bury-buffer))
+(defun mxl/eshell-setup ()
+  (compilation-shell-minor-mode 1)
+  (define-key eshell-mode-map (kbd "<M-return>") 'bury-buffer)
+  ;; History searching
+  (define-key eshell-mode-map (kbd "M-i") 'eshell-previous-input)
+  (define-key eshell-mode-map (kbd "M-k") 'eshell-next-input)
+  (define-key eshell-mode-map (kbd "<up>") 'eshell-previous-input)
+  (define-key eshell-mode-map (kbd "<down>") 'eshell-next-input)
+  (define-key eshell-mode-map (kbd "<prior>") 'eshell-previous-matching-input-from-input)
+  (define-key eshell-mode-map (kbd "<next>")  'eshell-next-matching-input-from-input)
+  ;; Line ends
+  (define-key eshell-mode-map (kbd "M-g") 'eshell-bol)
+  (define-key eshell-mode-map (kbd "M-h") 'move-end-of-line)
+  (define-key eshell-mode-map (kbd "<home>") 'eshell-bol)
+  (define-key eshell-mode-map (kbd "<end>")  'move-end-of-line)
 
-(add-hook 'eshell-mode-hook 'eshell-my-setup)
+  ;; Paragraphs
+  (define-key eshell-mode-map (kbd "M-b") 'eshell-previous-prompt)     ;; Fight with canonical binding
+  (define-key eshell-mode-map (kbd "M-n") 'eshell-next-prompt)
+
+  ;; Deletion keys
+  (define-key eshell-mode-map (kbd "M-w")  'eshell-kill-input)
+
+  (define-key eshell-mode-map (kbd "<M-return>")  'bury-buffer))
+
+(add-hook 'eshell-mode-hook 'mxl/eshell-setup)
 
 ;;; Commands
 
@@ -64,22 +86,15 @@
           (goto-line line))
       (find-file (pop args)))))
 
-
-
-
 (eval-after-load "magit"
   '(defun eshell/git (&rest args)
      "Invoke `magit-status' on the folder."
      (call-interactively 'magit-status)))
 
 
-(defun eshell/ripgrep (pattern)
+(defun eshell/rg (pattern)
   "Use Emacs consult-ripgrep  instead of calling external rg"
   (consult-ripgrep default-directory pattern))
-
-(defalias 'eshell/rg 'eshell/ripgrep)
-
-
 
 (defun eshell-view-file (file)
   "A version of `view-file' which properly respects the eshell prompt."
@@ -113,35 +128,8 @@
 (defalias 'eshell/more 'eshell/less)
 (defalias 'eshell/most 'eshell/less)
 
-
-;; Eshell prompt
-(defun with-face (str &rest face-plist)
-  (propertize str 'face face-plist))
-
-(defun mxl/eshell-prompt ()
-  (concat
-   "\n"
-   (with-face "(" :foreground "white" :weight 'bold)
-   (with-face (concat (abbreviate-file-name (eshell/pwd)) "")
-              :foreground "#44f"
-              :weight 'bold)
-   (with-face ")" :foreground "white" :weight 'bold)
-   "\n"
-   (with-face (format-time-string " %H:%M" (current-time))
-              :foreground (if (= eshell-last-command-status 0) "green" "red")
-              :weight 'bold)
-   (with-face (if (= (user-uid) 0)
-                  "#"     ; root prompt
-                "➤")     ; user
-              :foreground (if (= eshell-last-command-status 0) "white" "red")
-              :weight 'bold)
-   " "))
-
-(setq eshell-prompt-function 'mxl/eshell-prompt)
 (add-to-list 'eshell-visual-commands "bat")
 (add-to-list 'eshell-visual-commands "gping")
-
-(setq eshell-prompt-regexp    "^[^#$\n]*[#$➤] ")
 (setq comint-prompt-read-only t)
 
 (provide 'init-eshell)
