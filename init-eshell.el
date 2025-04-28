@@ -28,6 +28,10 @@
 
 (defun mxl/eshell-setup ()
   (compilation-shell-minor-mode 1)
+
+  (add-to-list 'eshell-visual-commands "bat")
+  (add-to-list 'eshell-visual-commands "gping")
+
   (define-key eshell-mode-map (kbd "<M-return>") 'bury-buffer)
   ;; History searching
   (define-key eshell-mode-map (kbd "M-i") 'eshell-previous-input)
@@ -127,9 +131,6 @@
 
 (defalias 'eshell/more 'eshell/less)
 (defalias 'eshell/most 'eshell/less)
-
-(add-to-list 'eshell-visual-commands "bat")
-(add-to-list 'eshell-visual-commands "gping")
 (setq comint-prompt-read-only t)
 
 (provide 'init-eshell)
