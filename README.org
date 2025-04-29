@@ -1483,15 +1483,16 @@ compilation process. The choice sequence is as follow:
                                                    (project-root (project-current nil)))
                                               default-directory)))
 
-(defun mxl/pin-compilation-directory ()
-  "Pin compilation-directory to current workding dir, or unpin it"
+(defun mxl/pin-compilation-directory (&optional dir)
+  "Pin compilation-directory to the given `dir', or the current
+workding dir, or unpin it"
   (interactive)
   (if mxl/pinned-compilation-directory
       (setq mxl/pinned-compilation-directory nil)
-    (setq mxl/pinned-compilation-directory default-directory))
+    (setq mxl/pinned-compilation-directory (or dir default-directory)))
   (if mxl/pinned-compilation-directory
-      (message "Compilation directory pinned to %s" mxl/pinned-compilation-directory)
-      (message "Compilation directory UNPINNED")))
+      (message "PIN compile directory: %s" mxl/pinned-compilation-directory)
+      (message "UNPIN compile directory")))
 #+END_SRC
    
 
@@ -1539,9 +1540,10 @@ hence an option is clean the cache.
   (push `(t
           ("Others:Edit command" . ,#'(lambda ()
                                         (call-interactively 'compile)))
+          ("Others:Pin/Unpin compile directory" . ,#'(lambda ()
+                                        (mxl/pin-compilation-directory (and buffer-file-name (file-name-directory buffer-file-name)))))
           ("Others:project.el reset" . ,#'(lambda ()
                                             (call-interactively 'mxl/project-recompute))))
-                                           
         compile-multi-config)
   (push `((local-variable-p 'compile-command)
           ("Others:Buffer Local Command"  compile-command))
