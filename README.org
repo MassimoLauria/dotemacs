@@ -793,6 +793,86 @@ the input instead."
 #+END_SRC
 
 
+** Shell and terminal inside emacs
+
+No need to setup a powerful terminal inside Emacs. In just run
+a proper terminal emulator. Nevertheless eshell is sometime useful.
+We start with the basic setup of ~eshell~, and some keybiding.
+
+#+BEGIN_SRC emacs-lisp
+(use-package eshell
+  :commands eshell
+  :bind (("<M-return>" . eshell))
+  :config
+  (add-hook 'eshell-mode-hook 'compilation-shell-minor-mode))
+
+;; Keymaps are defined in a subpackage
+(use-package esh-mode
+  :bind (:map eshell-mode-map
+         ("<M-return>" . bury-buffer)
+         ;; History searching
+         ("M-i"     . eshell-previous-input)
+         ("M-k"     . eshell-next-input)
+         ("<up>"    . eshell-previous-input)
+         ("<down>"  . eshell-next-input)
+         ("<prior>" . eshell-previous-matching-input-from-input)
+         ("<next>"  . eshell-next-matching-input-from-input)
+         ;; Line ends
+         ("M-g"     . eshell-bol)
+         ("M-h"     . move-end-of-line)
+         ("<home>"  . eshell-bol)
+         ("<end>"   . move-end-of-line)
+         ;; Paragraphs
+         ("M-b"     . eshell-previous-prompt)     ;; Fight with canonical binding
+         ("M-n"     . eshell-next-prompt)
+         ;; Deletion keys
+         ("M-w"     . eshell-kill-input)))
+#+END_SRC
+
+The minor mode ~compilation-shell-minor-mode~ allows to use
+~next-error/prev-errors~ on the eshell buffer, maybe after running
+~grep~, ~gcc~, or similar.
+
+Now I setup some useful commands that just redirect to the corresponding
+emacs function. E.g. if I run ~git~ in ~eshell~ then
+~magit-status~ runs.
+
+#+BEGIN_SRC emacs-lisp
+(defun eshell/emacs (&rest args)
+  "Invoke `find-file' on the file.
+    \"ec +42 foo\" also goes to line 42 in the buffer."
+  (if args
+    (if (string-match "\\`\\+\\([0-9]+\\)\\'" (car args))
+        (let* ((line (string-to-number (match-string 1 (pop args))))
+               (file (pop args)))
+          (find-file file)
+          (goto-line line))
+      (find-file (pop args))))
+  ;; no args - mimic starting emacs by burying th eshell buffer
+  (bury-buffer))
+
+(defalias 'eshell/ff 'eshell/emacs)
+(defalias 'eshell/ec 'eshell/emacs)
+
+(defun eshell/d (&rest args)
+  (if args
+      (dired args)
+    (dired ".")))
+
+(defun eshell/git (&rest args)
+  "Invoke `magit-status' on the folder."
+  (let* ((subcommand (and args (pop args))))
+        (cond ((string= subcommand "log") (magit-log))
+              ((string= subcommand "diff") (magit-diff))
+              ((string= subcommand "blame") (magit-blame))
+              (t (magit-status)))))
+
+(defun eshell/rg (pattern)
+  "Use Emacs consult-ripgrep  instead of calling external rg"
+  (consult-ripgrep default-directory pattern))
+#+END_SRC
+
+
 * Prose and Technical Writing
 
   I   use  Emacs   to  write   technical  papers   about  math,   code
@@ -2137,7 +2217,6 @@ minimal setup ready.
 
 (defalias 'run-mathematica 'run-wolfram)
 #+END_SRC
-
 
 
 * Reading Material
