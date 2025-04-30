@@ -401,6 +401,11 @@ for `reftex-default-bibliography'."
          ("<C-S-left>". nil)
          ("<C-S-right>". nil)
          ;;
+         ("C-c   o" . org-open-at-point)
+         ("C-c C-o" . org-open-at-point)
+         ("C-c s" . org-store-link)
+         ("C-c i" . org-insert-link)
+         ;;
          :map org-src-mode-map
          ("C-'" . org-edit-src-exit))
   :custom

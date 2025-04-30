@@ -1,6 +1,6 @@
 ;;; init-hyperlink.el --- Keybindings for inserting/opening/saving links in various modes
 
-;; Copyright (C) 2011, 2012, 2013, 2018, 2019, 2024  Massimo Lauria
+;; Copyright (C) 2011, 2012, 2013, 2018, 2019, 2024, 2025  Massimo Lauria
 
 ;; Author: Massimo Lauria <lauria.massimo@gmail.com>
 ;; Keywords: convenience
@@ -63,20 +63,6 @@ Works in Microsoft Windows, Mac OS X, Linux.")
 (add-hook 'prog-mode-hook 'goto-address-prog-mode)
 (add-hook 'text-mode-hook 'goto-address-mode)
 
-;; Setup for `org-mode'
-(add-hook 'org-mode-hook
-          (lambda ()
-            ;; Remove old binding
-            (define-key org-mode-map (kbd "C-c C-o") nil)
-            (define-key org-mode-map
-              massimo-keyboard-open-link-key1 'org-open-at-point)
-            (define-key org-mode-map
-              massimo-keyboard-open-link-key2 'org-open-at-point)
-            (define-key org-mode-map
-              massimo-keyboard-insert-link-key 'org-insert-link)
-            (define-key org-mode-map
-              massimo-keyboard-store-link-key 'org-store-link)
-            ))
 
 ;; Setup for `dired-mode'
 (add-hook 'dired-mode-hook
