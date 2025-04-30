@@ -2437,10 +2437,6 @@ use ~cape~ to add some extensions to it.
    collection of  snippets (some copied  and edited from  that package
    anyway).
 
-#+BEGIN_SRC emacs-lisp
-(setq mxl/local-snippet-dir (concat base-config-path "snippets/"))
-#+END_SRC
-
    Basic setup of Yasnippet.
 
 #+BEGIN_SRC emacs-lisp
@@ -2457,7 +2453,7 @@ use ~cape~ to add some extensions to it.
   (yas-global-mode 1)
 
   :config
-  (setq yas-snippet-dirs (list mxl/local-snippet-dir))
+  (setq yas-snippet-dirs (list (concat base-config-path "snippets/")))
   (setq yas-indent-line 'fixed)
   (progn
     (yas-reload-all)))
