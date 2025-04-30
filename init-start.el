@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
-;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2023, 2024  Massimo Lauria
-;; Time-stamp: "2025-04-29, 11:58 (CEST) Massimo Lauria"
+;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2023, 2024, 2025  Massimo Lauria
+;; Time-stamp: "2025-04-30, 19:52 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -92,7 +92,6 @@
 ;; Applications
 (require 'init-magit)
 (require 'init-org-mode)   ; Organizer
-(require 'init-websearch)  ; Search the Web
 
 ;; Other stuff
 (require 'init-unsorted-elisp)  ; various setups -- check for speed

@@ -289,6 +289,7 @@ buffer."
 (use-package bibtex
   :bind (:map bibtex-mode-map
               ("M-q" . bibtex-fill-entry)
+              ("C-o" . mxl/bibtex-mode-open)
               ("C-c C-o" . mxl/bibtex-mode-open)
               ("C-c C-a" . mybibtex-add-file-to-library)
               ("C-c C-s" . biblio-lookup)
