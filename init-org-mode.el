@@ -12,24 +12,18 @@
 ;;;------------ File locations ---------------------------------------
 (setq org-directory "~/personal/agenda/")
 (setq org-agenda-files
-      (mapcar (lambda (x) (concat org-directory x))
-              '("agenda.org"   ;; deadlines / appointments /events
-                "notebook.org"     ;; notebook / ideas personal
-                "compscience.org"  ;; research /workflow
-                "ricorrenze.org"   ;; anniversaries / holidays
-                )))
-
-(setq org-default-notes-file (concat org-directory "agenda.org"))      ;; default capture file
+              '("~/personal/agenda/agenda.org"       ;; deadlines / appointments /events
+                "~/personal/agenda/notebook.org"     ;; notebook / ideas personal
+                "~/personal/agenda/compscience.org"  ;; research /workflow
+                "~/personal/agenda/ricorrenze.org"   ;; anniversaries / holidays
+                ))
+(setq org-default-notes-file "~/personal/agenda/agenda.org")
 (setq org-default-journal-file nil)  ;; No journal
 
-(setq org-archive-location (concat org-directory
-                                   "ZZ_archived.org"                   ;; archive file
-                                   "::"
-                                   "* Archived from original file %s"  ;; archive header
-                                   ))
+(setq org-archive-location (concat "~/personal/agenda/ZZ_archived.org"    ;; file
+                                   "::* Archived from original file %s")) ;; header
 
 (add-to-list 'org-agenda-files "~/lavori/latex/bibnotes.org" t) ;; papers in bibtex
-
 
 
 ;; Refile targets
@@ -110,7 +104,8 @@
  org-hide-leading-stars t
  org-highlight-latex-and-related '(latex script entities)
  org-highlight-latex-fragments-and-specials t
- )
+ org-fontify-quote-and-verse-block t
+ org-fontify-whole-block-delimiter-line t)
 
 ;;;---------------- Agenda setup --------------------------------------
 (setq org-agenda-time-grid
@@ -172,196 +167,29 @@ It shows the full view of my custom agenda."
 (defun init-org-mode--setup ()
   "Setup for org-mode"
   (interactive)
-  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-
 
   ;; org-babel and export
   (init-org-mode--babel-setup)
   (init-org-mode--latex-export-setup)
 
-  ;; Fix color theme
-  (init-org-mode-faces)
-
   ;; Org-mode communicating with external applications.
   (require 'org-protocol nil t)
 
   ;; Setup keyboard
-  (add-hook 'org-mode-hook    'org-mode/setup-keys/gb)
-  (add-hook 'orgtbl-mode-hook 'orgtbl-mode/setup-keys/gb)
   (add-hook 'org-agenda-mode-hook  'org-agenda-mode-setup-local-keys)
   (define-key calendar-mode-map (kbd "RET") 'th-calendar-open-agenda)
-
-  ;; I use compile-multi instead
-  ;; (define-key org-mode-map (kbd "M-<f9>") 'org-export-dispatch)
-  ;; (define-key org-mode-map (kbd "<f9>")  (lambda () (interactive) (org-export-dispatch t)))
-
-  ;; org-capture
-  (add-hook 'org-capture-mode-hook
-            (lambda ()(select-frame-set-input-focus (selected-frame))))
 
   ;; citation
   (add-hook 'org-mode-hook 'org-mode/setup-citations)
 
   ;; Latex fragments scaling
   (add-hook 'text-scale-mode-hook 'update-org-latex-fragments)
+)
 
-  ;; Getting out of org-src editing
-  (define-key org-src-mode-map (kbd "C-'") 'org-edit-src-exit)
-
-  )
-
-
-;; Setup of different org-mode auxiliary layout.
-(defun org-mode/setup-keys/clean-default ()
-  "Remove the auxiliary keys which fight with other modes."
-
-  ;; Disable the defaults to support CUA-mode.
-  (local-unset-key (kbd "<S-up>")    )
-  (local-unset-key (kbd "<S-down>")  )
-  (local-unset-key (kbd "<S-left>")  )
-  (local-unset-key (kbd "<S-right>") )
-  (local-unset-key (kbd "<C-S-up>")    )
-  (local-unset-key (kbd "<C-S-down>")  )
-  (local-unset-key (kbd "<C-S-left>")  )
-  (local-unset-key (kbd "<C-S-right>") )
-  )
-
-
-(defun org-mode/setup-keys/gb ()
-  "Setup auxiliary org-mode keys for GB keyboard layout.  They are
-structured as a reverse L centered on charachter `#' on the right
-part of the keyboard.
-
-         ]
-     ; ' #
-
-I could not use a reverse T layout because C-[ is low level
-translated to an escape sequence.
-"
-
-  (interactive)
-
-  (org-mode/setup-keys/clean-default)
-
-  ;; X window
-  (local-set-key (kbd "C-]") 'org-shiftup    )
-  (local-set-key (kbd "C-#") 'org-shiftdown  )
-  (local-set-key (kbd "C-;") 'org-shiftleft  )
-  (local-set-key (kbd "C-'") 'org-shiftright )
-
-  (local-set-key (kbd "M-]") 'org-metaup    )
-  (local-set-key (kbd "M-#") 'org-metadown  )
-  (local-set-key (kbd "M-;") 'org-metaleft  )
-  (local-set-key (kbd "M-'") 'org-metaright )
-
-  (local-set-key (kbd "C-M-]") 'org-shiftmetaup    )
-  (local-set-key (kbd "C-M-#") 'org-shiftmetadown  )
-  (local-set-key (kbd "C-M-;") 'org-shiftmetaleft  )
-  (local-set-key (kbd "C-M-'") 'org-shiftmetaright )
-
-  ;; FIXME: org-shiftdown does not work in XTerm
-  )
-
-
-
-(defun org-mode/setup-keys/it()
-  "Setup auxiliary org-mode keys for IT keyboard layout. They are
-structured as a reverse T centered on charachter `à' on the right
-part of the keyboard.
-
-       è
-     ò à ù
-"
-  (interactive)
-
-  (org-mode/setup-keys/clean-default)
-
-  ;; X window
-  (local-set-key (kbd "C-è") 'org-shiftup    )
-  (local-set-key (kbd "C-à") 'org-shiftdown  )
-  (local-set-key (kbd "C-ò") 'org-shiftleft  )
-  (local-set-key (kbd "C-ù") 'org-shiftright )
-
-  (local-set-key (kbd "M-è") 'org-metaup    )
-  (local-set-key (kbd "M-à") 'org-metadown  )
-  (local-set-key (kbd "M-ò") 'org-metaleft  )
-  (local-set-key (kbd "M-ù") 'org-metaright )
-
-  (local-set-key (kbd "C-M-]") 'org-shiftmetaup    )
-  (local-set-key (kbd "C-M-#") 'org-shiftmetadown  )
-  (local-set-key (kbd "C-M-;") 'org-shiftmetaleft  )
-  (local-set-key (kbd "C-M-'") 'org-shiftmetaright )
-
-  ;; Xterm fix
-  (local-set-key "\e[27;5;232~" 'org-shiftup)
-  (local-set-key "\e[27;5;224~" 'org-shiftdown)
-  (local-set-key "\e[27;5;242~" 'org-shiftleft)
-  (local-set-key "\e[27;5;249~" 'org-shiftright)
-  )
-
-
-(defun orgtbl-mode/setup-keys/it ()
-  "Define orgtbl-mode keys for IT keyboard layout"
-  (interactive)
-  ;; Org Table movements
-  (define-key orgtbl-mode-map (kbd "M-ò") 'org-table-move-column-left)
-  (define-key orgtbl-mode-map (kbd "M-ù") 'org-table-move-column-right)
-  (define-key orgtbl-mode-map (kbd "M-è") 'org-table-move-row-up)
-  (define-key orgtbl-mode-map (kbd "M-à") 'org-table-move-row-down)
-
-  (define-key orgtbl-mode-map (kbd "C-M-ò") 'org-table-delete-column)
-  (define-key orgtbl-mode-map (kbd "C-M-ù") 'org-table-insert-column)
-  (define-key orgtbl-mode-map (kbd "C-M-è") 'org-table-kill-row)
-  (define-key orgtbl-mode-map (kbd "C-M-à") 'org-table-insert-row)
-  )
-
-
-(defun orgtbl-mode/setup-keys/gb ()
-  "Define orgtbl-mode keys for GB keyboard layout"
-  (interactive)
-  ;; Org Table movements
-  (define-key orgtbl-mode-map (kbd "M-;") 'org-table-move-column-left)
-  (define-key orgtbl-mode-map (kbd "M-'") 'org-table-move-column-right)
-  (define-key orgtbl-mode-map (kbd "M-]") 'org-table-move-row-up)
-  (define-key orgtbl-mode-map (kbd "M-#") 'org-table-move-row-down)
-
-  (define-key orgtbl-mode-map (kbd "C-M-;") 'org-table-delete-column)
-  (define-key orgtbl-mode-map (kbd "C-M-'") 'org-table-insert-column)
-  (define-key orgtbl-mode-map (kbd "C-M-]") 'org-table-kill-row)
-  (define-key orgtbl-mode-map (kbd "C-M-#") 'org-table-insert-row)
-  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Org Capture template configuration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; support functions
-
-(defun org-capture-URL-data ()
-  "Define the structure of a capture note for an external link"
-  (let ((title (plist-get org-store-link-plist :description))
-        (link  (plist-get org-store-link-plist :link))
-        (time  (format-time-string "[%Y-%m-%d %a]" (current-time)))
-        (text  (plist-get org-store-link-plist :initial))
-        output)
-    (with-temp-buffer
-      (insert (concat
-               "* REVIEW “" title "”\n"
-               "  "  time "\n\n"
-               "  %?\n\n"))
-      (insert
-       (if (= (length text) 0)
-           (concat "  --- Link: [[" link "][" title "]]"
-                   "\n\n  ")
-         (concat       "#+BEGIN_QUOTE\n"
-                       text
-                       "\n#+END_QUOTE\n\n"
-                       "--- Source: [[" link "][" title "]]"
-                       )))
-      (set-fill-column 70)
-      (fill-paragraph 'full)
-      (setq output (buffer-string)))
-    output))
 
 (setq org-capture-templates
       `(
@@ -426,15 +254,6 @@ part of the keyboard.
   )
 
 
-;; Remove annoying auto-completion sources
-(defun org-mode/setup-auto-complete ()
-  "Set the `ac-sources', in particular remove some annoying ones."
-  (interactive)
-  (dolist (badSource
-           '(ac-source-files-in-current-dir ac-source-filename)
-           ac-sources)
-    (setq ac-sources (remove badSource ac-sources))))
-
 ;; Patch up org-mode support for bibtex
 
 (defun my-org-bibtex-open (path)
@@ -492,36 +311,6 @@ for `reftex-default-bibliography'."
   (org-toggle-latex-fragment '(16)))
 
 
-(defun init-org-mode-faces ()
-  "Setup preferred colors for org mode"
-  ;; Set the color
-  ;;(require 'color)
-
-  ;; Fontify Quote and Verse
-  ;; do not use org-block for verse
-  ;; use italic for verse
-  (setq org-fontify-quote-and-verse-block t)
-  ;; (set-face-attribute 'org-verse nil
-  ;;                     :slant 'italic
-  ;;                     :inherit t)
-
-  ;; Darken the background color for code blocks
-  ;; Not very useful for a black background theme
-  ;; (let ((darkbg (color-darken-name
-  ;;                (face-attribute 'default :background) 15)))
-  ;;   (set-face-attribute 'org-block nil :background darkbg :extend t))
-
-  ;; Code blocks delimiters are oblique and with different color
-  (setq org-fontify-whole-block-delimiter-line t)
-  ;; (set-face-attribute 'org-block-begin-line nil
-  ;;                     :slant 'italic
-  ;;                     :foreground "#7F9F7F"
-  ;;                     :background "#4F4F4F")
-  ;; (set-face-attribute 'org-block-end-line nil
-  ;;                     :slant 'italic
-  ;;                     :foreground "#7F9F7F"
-  ;;                     :background "#4F4F4F")
-  )
 
 
 ;; Setup for PDF/Latex exports
@@ -591,24 +380,6 @@ for `reftex-default-bibliography'."
 
 
 
-(defun company-org-keywords (command &optional arg &rest ignored)
-  "Company-mode backend for #+KEYWORDS
-
-See https://emacs.stackexchange.com/questions/21171/company-mode-completion-for-org-keywords"
-  (interactive (list 'interactive))
-  (cl-case command
-    (interactive (company-begin-backend 'org-keyword-backend))
-    (prefix (and (eq major-mode 'org-mode)
-                 (cons (company-grab-line "^#\\+\\(\\w*\\)" 1)
-                       t)))
-    (candidates (mapcar #'upcase
-                        (cl-remove-if-not
-                         (lambda (c) (string-prefix-p arg c))
-                         (pcomplete-completions))))
-    (ignore-case t)
-    (duplicates t)))
-
-
 ;;;------------------------- Load -----------------------------------
 (use-package org-contrib :pin nongnu)
 
@@ -618,11 +389,25 @@ See https://emacs.stackexchange.com/questions/21171/company-mode-completion-for-
   :bind (([f5] . org-capture)
          ([f6] . my-org-agenda-show)
          ([f7] . mxl/contacts)
-         ([f8] . mxl/search-agenda))
+         ([f8] . mxl/search-agenda)
+         :map org-mode-map
+         ;; Avoid fights with cua-mode
+         ("<S-up>". nil)
+         ("<S-down>". nil)
+         ("<S-left>". nil)
+         ("<S-right>". nil)
+         ("<C-S-up>". nil)
+         ("<C-S-down>". nil)
+         ("<C-S-left>". nil)
+         ("<C-S-right>". nil)
+         ;;
+         :map org-src-mode-map
+         ("C-'" . org-edit-src-exit))
   :custom
-  (org-capture-bookmark . nil)
+  (org-bookmark-names-plist . nil)
   :config
-  (init-org-mode--setup))
+  (init-org-mode--setup)
+  )
 
 
 (use-package org-bullets
