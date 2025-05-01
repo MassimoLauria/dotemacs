@@ -1358,7 +1358,7 @@ Thunderbird uses =eml= files for email, hence I need to set them up
 * Programming
 
 
-** Tab vs Space
+** Tab, Indentation and Comments
 
    Of course I use 4 spaces for indentation
 
@@ -1366,8 +1366,25 @@ Thunderbird uses =eml= files for email, hence I need to set them up
 (setq-default indent-tabs-mode nil) ;; Expand tabs as spaces
 (setq-default tab-width 4)
 (setq default-tab-width 4)
+(use-package prog-mode
+  :bind ("RET". default-indent-new-line)) ;; add indentation and
+                                          ;; comment prefix on Return
 #+END_SRC
 
+I like C style comments in the following form. Possibly filled with
+a smaller line length.
+
+#+BEGIN_EXAMPLE
+/*
+ * Comments have this style, at least in C/C++
+ * Possibly filled at 70 columns
+ */
+#+END_EXAMPLE
+
+#+BEGIN_SRC emacs-lisp
+(setq comment-style 'extra-line)
+(setq comment-fill-column 70)
+#+END_SRC
 
 ** Trailing whitespaces
 
@@ -2040,21 +2057,21 @@ format regions or function definitions.
 #+BEGIN_SRC emacs-lisp
 (defun mxl/cc-mode-setup ()
   "Setup for C/C++ modes"
+  (auto-fill-mode)
   (set-fill-column 78))
 
 (use-package cc-mode
   :config
   (setq c-basic-offset 4)
-  (setq c-block-comment-prefix "")
-  (setq comment-style 'multi-line)
-  :bind (:map c-mode-map
-         ("RET"     .  newline-and-indent)
-         :map c++-mode-map
-         ("RET"     .  newline-and-indent))
+  ;; :bind (:map c-mode-map
+  ;;        ("RET"     .  default-newline-and-indent)
+  ;;        :map c++-mode-map
+  ;;        ("RET"     .  default-newline-and-indent))
   :hook ((c-mode    . eglot-ensure)
          (c++-mode  . eglot-ensure)
          (c-mode    . mxl/cc-mode-setup)
-         (c++-mode  . mxl/cc-mode-setup)))
+         (c++-mode  . mxl/cc-mode-setup)
+         ))
 #+END_SRC
 
 One annoyance I had when I started using more complex programming
