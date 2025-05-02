@@ -156,27 +156,14 @@
                     ))
           ))))
 
-;; Set a key for the agenda view
-(defun my-org-agenda-show (&optional arg)
-  "Show my custom agenda.
-
-It shows the full view of my custom agenda."
-  (interactive "P")
-  (org-agenda arg "n"))
-
 (defun init-org-mode--setup ()
   "Setup for org-mode"
   (interactive)
 
   ;; org-babel and export
   (init-org-mode--babel-setup)
-  (init-org-mode--latex-export-setup)
-
-  ;; Org-mode communicating with external applications.
-  (require 'org-protocol nil t)
 
   ;; Setup keyboard
-  (add-hook 'org-agenda-mode-hook  'org-agenda-mode-setup-local-keys)
   (define-key calendar-mode-map (kbd "RET") 'th-calendar-open-agenda)
 
   ;; citation
@@ -205,13 +192,6 @@ It shows the full view of my custom agenda."
 
 
 
-;; Aquamacs misses some org-agenda keybindings!
-(defun org-agenda-mode-setup-local-keys()
-  "Define/>Undefine of orgtbl-mode keys"
-  ;; Org Agenda Left/Right movements
-  (define-key org-agenda-mode-map (kbd "<left>") 'org-agenda-earlier)
-  (define-key org-agenda-mode-map (kbd "<right>") 'org-agenda-later)
-)
 
 (defun th-calendar-open-agenda () ;; by tassilo horn
   (interactive)
@@ -313,14 +293,9 @@ for `reftex-default-bibliography'."
 
 
 
-;; Setup for PDF/Latex exports
-(defun init-org-mode--latex-export-setup ()
-  "Setup minted package for code listing
-
-   Better than default because it manages UTF-8 characters but
-   requires pygments installed and -shell-escape option in the
-   pdflatex call"
-  (require 'ox-latex)
+;; Setup minted package for code listing in latex exports
+(use-package ox-latex
+  :config
   (add-to-list 'org-latex-packages-alist '("" "minted"))
   (setq org-latex-listings 'minted)
   (setq org-latex-compiler "xelatex")
@@ -329,33 +304,6 @@ for `reftex-default-bibliography'."
           "%bib %b"
           "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
           "%latex -shell-escape -interaction nonstopmode -output-directory %o %f")))
-
-;; Org babel setup
-(defun org-babel-python-strip-session-chars ()
-  "Remove >>> and ... from a Python session output."
-  (when (and (string=
-              "python"
-              (org-element-property :language (org-element-at-point)))
-             (string-match
-              ":session"
-              (org-element-property :parameters (org-element-at-point))))
-
-    (save-excursion
-      (when (org-babel-where-is-src-block-result)
-        (goto-char (org-babel-where-is-src-block-result))
-        (end-of-line 1)
-        ;(while (looking-at "[\n\r\t\f ]") (forward-char 1))
-        (while (re-search-forward
-                "\\(>>> \\|\\.\\.\\. \\|: $\\|: >>>$\\)"
-                (org-element-property :end (org-element-at-point))
-                t)
-          (replace-match "")
-          ;; this enables us to get rid of blank lines and blank : >>>
-          (beginning-of-line)
-          (when (looking-at "^$")
-            (kill-line)))))))
-
-
 
 (defun init-org-mode--babel-setup ()
   "Org-babel configuration. Code in org-mode files!"
@@ -375,8 +323,7 @@ for `reftex-default-bibliography'."
      (ditaa . t)
      ))
 
-  (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
-  (add-hook 'org-babel-after-execute-hook 'org-babel-python-strip-session-chars))
+  (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images))
 
 
 
@@ -387,7 +334,7 @@ for `reftex-default-bibliography'."
   :pin gnu
   :mode ("\\.org\\'" . org-mode)
   :bind (([f5] . org-capture)
-         ([f6] . my-org-agenda-show)
+         ([f6] . (lambda() (interactive) (org-agenda nil "n")))
          ([f7] . mxl/contacts)
          ([f8] . mxl/search-agenda)
          :map org-mode-map
@@ -407,17 +354,20 @@ for `reftex-default-bibliography'."
          ("C-c i" . org-insert-link)
          ;;
          :map org-src-mode-map
-         ("C-'" . org-edit-src-exit))
+         ("C-'" . org-edit-src-exit)
+         :map org-agenda-mode-map
+         ("<left>"  . org-agenda-earlier)
+         ("<right>" . org-agenda-later)
+         )
+
   :custom
   (org-bookmark-names-plist . nil)
   :config
   (init-org-mode--setup)
   )
 
-
 (use-package org-bullets
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+  :hook org-mode)
 
 
 (use-package org-contacts
