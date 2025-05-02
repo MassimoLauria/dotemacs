@@ -1520,7 +1520,7 @@ a smaller line length.
 (modify-face 'font-lock-alert-face "Yellow" nil nil t nil nil nil nil)
      #+END_SRC
 
-
+     
 ** Compiling and building
 
 The ~compile~, ~project-compile~ and ~recompile~ commands are useful
@@ -1644,8 +1644,8 @@ hence an option is clean the cache.
           ("Others:project.el reset" . ,#'(lambda ()
                                             (call-interactively 'mxl/project-recompute))))
         compile-multi-config)
-  (push `((local-variable-p 'compile-command)
-          ("Others:Buffer Local Command"  compile-command))
+  (push `((and (local-variable-p 'compile-command) compile-command)
+          ("Others:Buffer Local Command" compile-command))
         compile-multi-config))
 #+END_SRC
 

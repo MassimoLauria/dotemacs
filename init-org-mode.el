@@ -166,9 +166,6 @@
   ;; Setup keyboard
   (define-key calendar-mode-map (kbd "RET") 'th-calendar-open-agenda)
 
-  ;; citation
-  (add-hook 'org-mode-hook 'org-mode/setup-citations)
-
   ;; Latex fragments scaling
   (add-hook 'text-scale-mode-hook 'update-org-latex-fragments)
 )
@@ -233,55 +230,6 @@
   ;;    (org-agenda-goto-calendar)))
   )
 
-
-;; Patch up org-mode support for bibtex
-
-(defun my-org-bibtex-open (path)
-  "Visit the bibliography entry on PATH.
-
-If the bibtex entry does not specify a bibtex file in its path,
-then the first file in `reftex-default-bibliography' is used."
-  (let* ((search (when (string-match "::\\(.+\\)\\'" path)
-                   (match-string 1 path)))
-         (path (substring path 0 (match-beginning 0))))
-    (message (concat "This is path: " path))
-    (org-open-file
-     (cond ((not path) (car reftex-default-bibliography))
-           ((= (length path) 0) (car reftex-default-bibliography))
-           (t path))
-     t nil search)))
-
-(defun my-org-bibtex-export-handler (path desc format)
-  "Converts a bibtex org-mode link into a full LaTeX citation.
-
-Apapted from the blog \"WebLog Pro Olivier Berger\""
-  (message "my-org-bibtex-export-handler is called : path = %s, desc = %s, format = %s" path desc format)
-  (let* ((search (when (string-match "::#?\\(.+\\)\\'" path)
-                   (match-string 1 path)))
-         (path (substring path 0 (match-beginning 0))))
-    (cond ((eq format 'latex)
-           (if (or (not desc)
-                   (equal 0 (search "bibtex:" desc)))
-               (format "\\cite{%s}" search)
-             (format "\\cite[%s]{%s}" desc search)))
-          (t
-           (if (or (not desc)
-                   (equal 0 (search "bibtex:" desc)))
-               (format "[%s]" search)
-             (format "(%s)" desc search)))
-          )))
-
-(defvar my-org-mode-cite-format "[[bibtex:::%l][%2a, %y]]"
-  "This is the format of BibTeX entries in org-mode files.")
-
-(defun org-mode/setup-citations ()
-  "Setup bibtex links with support for LaTeX export and
-for `reftex-default-bibliography'."
-  (interactive)
-  (turn-on-reftex)
-  (set (make-local-variable 'reftex-cite-punctuation) '(", " " & " " et al."))
-  (set (make-local-variable 'reftex-cite-format) my-org-mode-cite-format)
-  (org-add-link-type "bibtex" 'my-org-bibtex-open 'my-org-bibtex-export-handler))
 
 
 (defun update-org-latex-fragments ()

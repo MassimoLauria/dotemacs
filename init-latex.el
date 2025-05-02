@@ -106,7 +106,8 @@
 
 (defun mxl/guess-TeX-master-file ()
   "Try to guess and set the TeX master file"
-  (setq TeX-master (or (mxl/TeX-master-from-latexmkrc)
+  (setq TeX-master (or (not buffer-file-name)
+                       (mxl/TeX-master-from-latexmkrc)
                        (mxl/TeX-master-is-maintex)
                        (mxl/TeX-master-from-docroot)
                        (mxl/TeX-master-from-open-buffers)
