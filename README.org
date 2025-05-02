@@ -2,7 +2,7 @@
 #+author: Massimo Lauria <massimo.lauria@uniroma1.it>
 #+STARTUP: collapsed
 
-This is the Emacs config of Massimo Lauria (C) 2009-2024.
+This is the Emacs config of Massimo Lauria (C) 2009-2025.
 
 This configuration  is under massive  and continue change,  and things
 break every day. I just put it  online so you can cut & paste whatever
@@ -560,11 +560,13 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
   (setq doom-modeline-major-mode-icon t)
   (setq doom-modeline-buffer-state-icon t)
   (setq doom-modeline-enable-word-count t)
-  (setq doom-modeline-buffer-encoding t)
+  (setq doom-modeline-buffer-encoding 'nondefault)
   (setq doom-modeline-bar-width 6)
  
   (setq doom-modeline-total-line-number t
         doom-modeline-percent-position nil
+        doom-modeline-column-zero-based nil
+        
         size-indication-mode t)
   (doom-modeline-mode 1))
 #+END_SRC
