@@ -31,26 +31,6 @@
 At least they are considered useful for the author.
 ")
 
-(defcustom mxl-keyboard-comint-modes '(shell-mode comint-mode inferior-octave-mode inferior-emacs-lisp-mode)
-  "`comint' keybidnings from mxl activated in these modes."
-  :tag "Comint derived modes where mxl keymap is active"
-  :type 'sexp
-  :group 'mxl-keyboard
-  )
-
-(defcustom mxl-keyboard-eshell-active t
-  "Activate mxl keybindings for Eshell."
-  :tag "Activate mxl keybidings for Eshell"
-  :type 'boolean
-  :group 'mxl-keyboard
-  )
-
-
-(defun mxl-kill-this-buffer ()
-  (interactive)
-  (kill-buffer (current-buffer)))
-
-
 (defvar mxl-keyboard-mode-map
   (let ((map (make-sparse-keymap)))
     ;; Movements in Text without leaving homerow.
@@ -84,7 +64,7 @@ At least they are considered useful for the author.
     (define-key map (kbd "M-w")  'kill-whole-line)
 
 
-    (define-key map (kbd "C-x k")   'mxl-kill-this-buffer)
+    (define-key map (kbd "C-x k") 'kill-this-buffer)
     ;; Default text navigation (usually shadowed by other modes)
     (define-key map (kbd "M-.") 'xref-find-definitions)
     (define-key map (kbd "M-,") 'xref-pop-marker-stack)
@@ -93,11 +73,11 @@ At least they are considered useful for the author.
     (define-key map (kbd "C-'") 'narrow-or-widen-dwim)
     (define-key map (kbd "C-;") 'iedit-mode)
 
-    ;; Zoom in/out
-    (define-key map (kbd "C--") 'text-scale-decrease)
-    (define-key map (kbd "C-=") 'text-scale-increase)
-    (define-key map (kbd "C-+") 'text-scale-adjust)
-    (define-key map (kbd "C-0") 'text-scale-adjust)
+    ;; Zoom in/out buffer fonts
+    (define-key map (kbd "C--") 'global-text-scale-adjust)
+    (define-key map (kbd "C-=") 'global-text-scale-adjust)
+    (define-key map (kbd "C-+") 'global-text-scale-adjust)
+    (define-key map (kbd "C-0") 'global-text-scale-adjust)
 
     map)
   "Keymap for mxl-keyboard-mode.")
@@ -117,32 +97,26 @@ At least they are considered useful for the author.
 
 (define-minor-mode mxl-keyboard-mode
   "Toggle mxl-keyboard mode.
+
 With no argument, this command toggles the mode.
 Non-null prefix argument turns on the mode.
-Null prefix argument turns off the mode.
-
-When Massimo-Keyboard mode is enabled, several keybindings are
-modified according to the useage pattern of the author."
+Null prefix argument turns off the mode."
   :init-value nil
   :lighter " mxl" ; Modeline string
   :group   'mxl-keyboard
 
   ;; suppress auxiliary keymaps
-  (setq
-   mxl-keyboard-comint   nil
-   mxl-keyboard-eshell   nil
-   )
-  (when mxl-keyboard-mode
-    (setq
-     ;; comint
-     mxl-keyboard-comint (member major-mode mxl-keyboard-comint-modes)
-     )))
+  (setq mxl-keyboard-comint
+        (and mxl-keyboard-mode
+             (member major-mode
+                     '(shell-mode
+                       comint-mode
+                       inferior-octave-mode
+                       inferior-emacs-lisp-mode)))))
 
 
-;;; Auxiliary keymaps which extend `mxl-keyboard-mode-map', in
-;;; order to specify keybindings for specific modes
 
-;; ---- `comint-mode'  ----------------------------------------------------
+;; ---- `comint-mode'  keybidings ----------------------------------------------------------------
 
 (make-variable-buffer-local 'mxl-keyboard-comint)
 (set-default 'mxl-keyboard-comint     nil)
