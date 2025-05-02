@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2023, 2024, 2025  Massimo Lauria
-;; Time-stamp: "2025-05-02, 12:03 (CEST) Massimo Lauria"
+;; Time-stamp: "2025-05-02, 23:23 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -79,10 +79,6 @@
 ;; Editor behaviour customization
 (require 'init-terminal-fix)      ; Fix some keys combinations in terminals
 (require 'init-clipboard)         ; Clipboard managing
-
-;; Keyboard settings
-(require 'init-hyperlink)         ; keys for opening links
-
 
 ;; Writing science
 (require 'init-latex)        ; AucTeX

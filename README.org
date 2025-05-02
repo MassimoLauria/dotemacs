@@ -182,15 +182,26 @@ Initial screen. No welcome messages nor initial buffer content.
 (setq initial-scratch-message nil)
 #+END_SRC
 
+Mouse emacs functionality works in terminals.
+
+#+BEGIN_SRC emacs-lisp
+(xterm-mouse-mode t)  ;; works in other terminals too!
+#+END_SRC
+
 
 ** Scrolling
+
+Pixel precision scrolling in a text editor weirds me out...
 
 #+BEGIN_SRC emacs-lisp
 (setq scroll-preserve-screen-position 1)   ;; do not move the cursor relative position
 (setq scroll-conservatively 1000)
 (setq scroll-margin 4)                     ;; start scrolling few lines before border
-#+END_SRC
 
+;; Mouse wheel scrool the  text.
+(global-set-key [mouse-4] 'scroll-down)
+(global-set-key [mouse-5] 'scroll-up)
+#+END_SRC
 
 * Localization/Internationalization
 
@@ -874,6 +885,21 @@ emacs function. E.g. if I run ~git~ in ~eshell~ then
   (consult-ripgrep default-directory pattern))
 #+END_SRC
 
+
+
+
+** File manager Dired
+
+Setup some keybiding to open files.
+
+#+BEGIN_SRC emacs-lisp
+(use-package dired
+  :bind (:map dired-mode-map
+         ("C-c o"   . browse-url-of-dired-file)
+         ("C-c C-o" . browse-url-of-dired-file)
+         ("C-c C-w" . wdired-change-to-wdired-mode)
+         ))
+#+END_SRC
 
 * Prose and Technical Writing
 

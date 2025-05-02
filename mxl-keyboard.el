@@ -63,11 +63,18 @@ At least they are considered useful for the author.
     (define-key map (kbd "M-f")  'delete-char)
     (define-key map (kbd "M-w")  'kill-whole-line)
 
-
     (define-key map (kbd "C-x k") 'kill-this-buffer)
+
     ;; Default text navigation (usually shadowed by other modes)
     (define-key map (kbd "M-.") 'xref-find-definitions)
     (define-key map (kbd "M-,") 'xref-pop-marker-stack)
+
+    ;; Links
+    (define-key map (kbd "C-o"  ) 'browse-url-at-point)
+    (define-key map (kbd "C-c o") 'browse-url-at-point)
+    (define-key map (kbd "C-c s") 'org-store-link)
+    (define-key map (kbd "C-c i") 'org-insert-link)
+
 
     ;; Edit power features
     (define-key map (kbd "C-'") 'narrow-or-widen-dwim)
