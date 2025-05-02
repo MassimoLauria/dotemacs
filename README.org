@@ -628,6 +628,68 @@ Emacs is launched without arguments and the startup buffer is usually
 Emacs definitely can  improve in term of usability. Here  we setup few
 packages  in  order  to  make  it  more  polished  and  nice  to  use.
 
+** Windows navigation and positioning
+
+Emacs opens windows, and puts buffer in said windows, in a way that is
+a bit chaotic. I have some tools to manage the chaos. First I jump
+around windows using ~ace-window~ via ~M-m~ key. In this way I can
+move between windows in a single gesture.
+
+#+BEGIN_SRC emacs-lisp
+(use-package ace-window
+  :bind ("M-m" . ace-window)
+  :config (setq
+           aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
+           aw-scope 'frame
+           aw-background t
+           )
+  :custom-face
+  ;; I don't like the annoying large size of the font. Ok it is more
+  ;; readable but it moves around all the content.
+  (aw-leading-char-face ((t (:height 1.0)))))
+#+END_SRC
+
+Now I have some function to force positioning of windows.
+When a window for a buffer is created, its position can be enforce.
+For example at the bottom on the current window (by splitting it), or
+even at the bottom of the whole frame. I also had a way to force on
+the right of the frame but I never used it. To extend this just read
+the help of ~display-buffer-alist~.
+ 
+#+BEGIN_SRC emacs-lisp
+(defun force-window-at-bottom-of-frame (regexp)
+  (add-to-list 'display-buffer-alist
+               `(,regexp
+                 (display-buffer-reuse-window
+                  display-buffer-at-bottom)
+                 (reusable-frames . visible)
+                 (side            . bottom)
+                 (window-height   . 0.4))))
+
+(defun force-window-at-bottom-of-window (regexp)
+  (add-to-list 'display-buffer-alist
+               `(,regexp
+                 (display-buffer-reuse-window
+                  display-buffer-below-selected)
+                 (reusable-frames . visible)
+                 (side            . bottom)
+                 (window-height   . 0.4))))
+#+END_SRC
+
+These are some buffer that are sent to the bottom.
+
+#+BEGIN_SRC emacs-lisp
+(force-window-at-bottom-of-window (rx bos "*compilation*"))
+(force-window-at-bottom-of-window (rx bos "*Flycheck errors*" eos))  ;; <---- symbolic regexp
+(force-window-at-bottom-of-window (rx bos "*Flycheck error messages*" eos))
+(force-window-at-bottom-of-frame (rx bos "*Help*" eos))
+(force-window-at-bottom-of-frame (rx bos "*helpful"))
+(force-window-at-bottom-of-frame (rx bos "*Apropos*" eos))
+(force-window-at-bottom-of-frame (rx bos "*Metahelp*" eos))
+(force-window-at-bottom-of-window (rx bos "*Tex errors*" eos))
+(force-window-at-bottom-of-window (rx bos "*Tex Help*" eos))
+#+END_SRC
+
 ** Minubuffer completion
 
 The  completion framework  used to  be based  on ~Helm~  but now  I am

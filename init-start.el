@@ -1,7 +1,7 @@
 ;;; init-start.el --- Main configuration file -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2023, 2024, 2025  Massimo Lauria
-;; Time-stamp: "2025-05-02, 23:44 (CEST) Massimo Lauria"
+;; Time-stamp: "2025-05-03, 00:06 (CEST) Massimo Lauria"
 
 ;; Author: Massimo Lauria
 ;; Keywords: convenience
@@ -74,7 +74,6 @@
 
 ;; Work environment customization
 (require 'init-preferences)       ; Basic editor preferences
-(require 'init-windows)           ; windows layout
 
 ;; Editor behaviour customization
 (require 'init-clipboard)         ; Clipboard managing
