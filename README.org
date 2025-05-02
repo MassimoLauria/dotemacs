@@ -785,7 +785,9 @@ the input instead."
   (shell-command-on-region
    (if mark-active (region-beginning) (point-min))
    (if mark-active (region-end) (point-max))
-   (read-shell-command "Shell command on buffer: ")
+   (if mark-active
+       (read-shell-command "Run command on region: ")
+     (read-shell-command "Run command on buffer: "))     
    nil
    (not (equal current-prefix-arg nil))))
 

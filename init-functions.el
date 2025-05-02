@@ -3,25 +3,6 @@
 ;;;
 ;;;------------------------------------------------------------------
 
-
-
-
-;;;-------------------------------------------------------------------
-
-;; (defun get-buffer-major-mode (buffer-or-string)
-;;   "Returns the major mode associated with a buffer."
-;;   (save-excursion
-;;      (set-buffer buffer-or-string)
-;;      major-mode))
-
-;; (defmacro require-maybe (feature &optional file)
-;;   "Try to require FEATURE, but don't signal an error if `require' fails."
-;;   `(require ,feature ,file 'noerror))
-
-;; (defmacro when-available (func foo)
-;;   "Do something if FUNCTION is available."
-;;   `(when (fboundp ,func) ,foo))
-
 (defun root-file-reopen ()
   "Visit the file corresponding to the active buffer using root privileges."
   (interactive)
@@ -33,36 +14,6 @@
     (goto-char pos)
     )
   )
-
-
-;; (defun comment-region-maybe ()
-;;   "Comment a region or uncomment it, if it is already
-;; commented. If the command is called several times in a row the
-;; commentation is toggled. If there is no active region, then just
-;; insert the character used to activate the command.
-;; It will not work properly if it is not bound to a key.
-;; "
-;;   (interactive)
-;;   (if (or (region-active-p) (eq last-command 'comment-region-maybe))
-;;       (call-interactively 'comment-or-uncomment-region)
-;;     (progn
-;;       (setq this-command 'self-insert-command)
-;;       (call-interactively 'self-insert-command) ) ) )
-
-;;------ Useful functions --------------------------------------------------------------------
-
-
-(defun wc (&optional start end)
-  "Prints number of lines, words and characters in region or whole buffer."
-  (interactive)
-  (let ((n 0)
-        (start (if mark-active (region-beginning) (point-min)))
-        (end (if mark-active (region-end) (point-max))))
-    (save-excursion
-      (goto-char start)
-      (while (< (point) end) (if (forward-word 1) (setq n (1+ n)))))
-    (message "%3d lines, %3d words, %3d chars" (count-lines start end) n (- end start))))
-
 
 ;;;------ Text processing -------------------------------------------
 
@@ -148,16 +99,6 @@
                                     password-options
                                     password-length))))))
 
-
-;; Fake fullscreen
-(defun toggle-fullscreen ()
-  "Toggle full screen"
-  (interactive)
-  (set-frame-parameter
-     nil 'fullscreen
-     (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
-
-
 ;;----- RefTeX -----------------------------------------------------------
 (defun text-citation-from-reftex ()
   "Insert RefTeX citation as explicit text form."
@@ -165,18 +106,6 @@
   (let ((reftex-cite-format "%a\n%t\n%j%b (%y)")
         (reftex-cite-punctuation '(", " " and " " et al.")))
     (reftex-citation)))
-
-
-;; (defun uskey ()
-;;   "Refresh the keyboard settings.
-
-;; Unfortunately on for some reason the keyboard settings get lost. This command will refresh them from inside EMACS, so that I don't have to open a terminal for that."
-;;   (interactive)
-;;   (shell-command "setxkbmap -options" nil nil)
-;;   (shell-command "python ~/config/xsession/xkb_capsunlock.py" nil nil)
-;;   (shell-command "setxkbmap -config ~/config/xsession/setxkbmap.pcus" nil nil))
-
-;; (defalias 'USKEY 'uskey)
 
 
 ;; Keeps windows in order by dedicating them (make them sticky)
@@ -206,18 +135,6 @@
     '((lambda ()
         (modify-syntax-entry ?\" ".")))
     "Generic mode for Vim configuration files.")
-
-(defun url-unhex-region (start end)
-  "Remove the URL encoding from a region of text."
-  (interactive "r")
-  (when mark-active
-    (insert (url-unhex-string (delete-and-extract-region start end)))))
-
-(defun url-hexify-region (start end)
-  "Remove the URL encoding from a region of text."
-  (interactive "r")
-  (when mark-active
-    (insert (url-hexify-string (delete-and-extract-region start end)))))
 
 (provide 'init-functions)
 ;; Local Variables:
