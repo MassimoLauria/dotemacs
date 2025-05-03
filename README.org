@@ -858,18 +858,19 @@ the same way as in `shell-command' or `shell-command-on-region'.
 It is written on a buffer and if it is small is also shown in
 the minibuffer.
 
-Run with prefix `C-u' in order to have the output overwrite
-the input instead."
+With prefix `C-u', instead, it overwrites the input text."
   (interactive)
-  (shell-command-on-region
-   (if mark-active (region-beginning) (point-min))
-   (if mark-active (region-end) (point-max))
-   (if mark-active
-       (read-shell-command "Run command on region: ")
-     (read-shell-command "Run command on buffer: "))     
-   nil
-   (not (equal current-prefix-arg nil))))
-
+  (let* ((overwrite (not (equal current-prefix-arg nil)))
+         (msgstr (if overwrite
+                     (format "Run program [overwrite %s]: "
+                             (if mark-active "region" "buffer"))
+                   "Run program: ")))
+    (shell-command-on-region
+     (if mark-active (region-beginning) (point-min))
+     (if mark-active (region-end) (point-max))
+     (read-shell-command msgstr)
+     nil overwrite)))
+ 
 (global-set-key (kbd "M-\\") 'shell-command-on-buffer-dwim)
 #+END_SRC
 
