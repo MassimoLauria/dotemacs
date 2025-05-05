@@ -1479,7 +1479,7 @@ a smaller line length.
 #+END_EXAMPLE
 
 #+BEGIN_SRC emacs-lisp
-(setq comment-style 'extra-line)
+(setq comment-style 'multi-line)
 (setq comment-fill-column 70)
 #+END_SRC
 
