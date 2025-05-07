@@ -782,9 +782,10 @@ or something in my root, temporarily).
          ("M-SPC"   . consult-buffer)
          ("C-f"     . mxl/consult-find-file)
          ("M-y"     . consult-yank-from-kill-ring)
-         ("M-0 M-0" . consult-register)
          :map vertico-map
-         ("M-SPC" . abort-recursive-edit))
+         ("M-SPC" . abort-recursive-edit)
+         :map minibuffer-local-map
+         ("C-r" . consult-history))
   :custom
   (consult-preview-key 'nil) ; no preview
   :config
@@ -795,8 +796,8 @@ or something in my root, temporarily).
   (consult-customize
       consult-goto-line
       consult-line
-      :preview-key ' any)  ;; immediate preview just for these tools
-  )
+      :preview-key ' any))  ;; immediate preview just for these tools
+  
 
 (use-package consult-project-extra
   :after consult
@@ -2702,7 +2703,7 @@ jump back to it.
 
 #+BEGIN_SRC emacs-lisp
 (global-unset-key (kbd "M-0"))  ; I need it as a prefix key for next keybinds.
-
+(global-set-key (kbd "M-0 M-0") 'consult-register)
 (dotimes (i 9)
   (let ((num (+ 1 i))
         (str (number-to-string (+ 1 i))))
