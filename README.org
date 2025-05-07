@@ -782,6 +782,7 @@ or something in my root, temporarily).
          ("M-SPC"   . consult-buffer)
          ("C-f"     . mxl/consult-find-file)
          ("M-y"     . consult-yank-from-kill-ring)
+         ("M-0 M-0" . consult-register)
          :map vertico-map
          ("M-SPC" . abort-recursive-edit))
   :custom
