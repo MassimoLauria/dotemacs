@@ -82,8 +82,6 @@
                            package-build
                            pcache
                            pkg-info
-                           pyenv-mode
-                           ;; pyenv-mode-auto
                            pip-requirements
                            pythonic
                            rainbow-delimiters
