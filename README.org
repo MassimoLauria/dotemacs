@@ -2077,12 +2077,6 @@ Setup of compile commands for python. In particular syntax checks via
         compile-multi-config)
 #+END_SRC
 
-Using the  key F10 I can  toggle the prompt shell  buffer connected to
-this python buffer.
-
-By default  =C-c C-c=  uses =python-shell-send-buffer= which  does not
-execute the content  of main by default. I usually  need it, therefore
-I remap the key.
 
 To format code  I use =yapfify=. I use this  custom function to either
 format regions or function definitions.
@@ -2098,6 +2092,12 @@ format regions or function definitions.
       (call-interactively 'yapfify-region))))
 #+END_SRC
 
+Using the  key F10 I can  toggle the prompt shell  buffer connected to
+this python buffer.
+
+By default  =C-c C-c=  uses =python-shell-send-buffer= which  does not
+execute the content  of main by default. I usually  need it, therefore
+I remap the key.
 
 
 #+BEGIN_SRC emacs-lisp
