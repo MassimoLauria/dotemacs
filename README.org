@@ -188,6 +188,14 @@ Mouse emacs functionality works in terminals.
 (xterm-mouse-mode t)  ;; works in other terminals too!
 #+END_SRC
 
+Disable the menu bar and also the menu keybindings that are just in
+the way.
+
+#+BEGIN_SRC emacs-lisp
+(menu-bar-mode -1)
+(global-unset-key [f10])
+(global-unset-key (kbd "M-`"))
+#+END_SRC
 
 ** Scrolling
 
