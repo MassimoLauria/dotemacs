@@ -570,7 +570,8 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
   (setq doom-modeline-enable-word-count t)
   (setq doom-modeline-buffer-encoding 'nondefault)
   (setq doom-modeline-bar-width 6)
- 
+
+  (setq doom-modeline-position-column-line-format '("%03c %04l"))
   (setq doom-modeline-total-line-number t
         doom-modeline-percent-position nil
         doom-modeline-column-zero-based nil
