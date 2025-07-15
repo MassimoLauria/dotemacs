@@ -1384,21 +1384,10 @@ Setup  the look  and  icons  for the  bibliography  selection. We  use
    :padding " "
    :tag "has:links"))
 
-(defvar citar-indicator-notes-icons
-  (citar-indicator-create
-   :symbol (nerd-icons-faicon
-            "nf-fa-file_text"
-            :face 'nerd-icons-blue
-            :v-adjust -0.1)
-   :function #'citar-has-notes
-   :padding " "
-   :tag "has:notes"))
-
 
 (setq citar-indicators
   (list citar-indicator-files-icons
         citar-indicator-links-icons
-        citar-indicator-notes-icons
         ))
 
 #+END_SRC
