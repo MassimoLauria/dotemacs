@@ -422,7 +422,12 @@ math symbols. I use =nerd-fonts= for icons and symbols.
 (set-face-attribute 'default nil
                     :family default-font
                     :width 'normal
-                    :height 180)
+                    :height 240)
+
+(set-face-attribute 'fixed-pitch nil
+                    :family default-font
+                    :width 'normal
+                    :height 240)
 
 (use-package nerd-icons
   :commands (nerd-icons-faicon nerd-icons-octicons)
