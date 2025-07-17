@@ -120,10 +120,7 @@
 
 ;; Careful!! The option "%p" makes the emacs to hang when folding
 ;; headers in org-mode
-(setq frame-title-format '( " "
-			    "%[%b%]"
-			    " [%*]"
-			    "  <" invocation-name "@" (:eval (system-name)) ">%@"))
+(setq frame-title-format '(" " "%[%b%]" " [%*]"))
 
 ;; Tramp connection caching causes pain.  When characteristics on the
 ;; system change, it may cause double password request.
