@@ -20,11 +20,11 @@
 
 
 ;; Cursor
-(setq x-stretch-cursor t)
-(blink-cursor-mode nil)
-(setq cua-normal-cursor-color 'bar
-      cua-overwrite-cursor-color 'hollow
+(setq x-stretch-cursor nil)
+
+(setq cua-normal-cursor-color 'box
       cua-read-only-cursor-color 'hbar
+      cua-overwrite-cursor-color 'hollow
       cua-enable-cursor-indications t
       cua-enable-modeline-indications t)
 
@@ -35,7 +35,7 @@
 (setq use-file-dialog nil)
 (setq use-dialog-box  nil)
 (setq help-at-pt-display-when-idle t)
-(setq help-at-pt-timer-delay 0.2)
+(setq help-at-pt-timer-delay 0.5)
 (help-at-pt-set-timer)
 
 (setq search-highlight t)
@@ -74,29 +74,6 @@
 
 ;; Recenter sequence
 (setq recenter-positions '(top middle bottom))
-
-(use-package beacon ; flashes the cursor's line when you scroll
-  :diminish ""
-  :custom
-  (beacon-size 70)
-  (beacon-blink-duration 0.1)  ;; fade duration
-  (beacon-blink-delay 0.2)     ;; time before fading
-  (beacon-blink-when-point-moves-horizontally nil)
-  (beacon-blink-when-point-moves-vertically 5)
-  (beacon-blink-when-buffer-changes t)
-  (beacon-blink-when-window-scrolls t)
-  (beacon-blink-when-window-changes t)
-  (beacon-blink-when-focused t)
-  (beacon-dont-blink-commands '(next-line
-                                previous-line
-                                forward-line
-                                next-error
-                                previous-error))
-
-  :config
-  ;; Avoid beacon during isearch
-  (add-hook 'beacon-dont-blink-predicates #'(lambda () (bound-and-true-p isearch-mode)))
-  (beacon-mode 1))
 
 
 (use-package which-key
