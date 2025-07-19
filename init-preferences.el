@@ -21,6 +21,7 @@
 
 ;; Cursor
 (setq x-stretch-cursor nil)
+(blink-cursor-mode 0)       ; emacs default is on but I want it off
 
 (setq cua-normal-cursor-color 'box
       cua-read-only-cursor-color 'hbar
