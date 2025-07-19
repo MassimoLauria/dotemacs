@@ -40,7 +40,6 @@
                            ;; others
                            ace-window
                            async
-                           beacon
                            bind-key
                            calibredb
                            cmake-mode
