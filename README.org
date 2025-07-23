@@ -418,16 +418,19 @@ math symbols. I use =nerd-fonts= for icons and symbols.
 #+BEGIN_SRC emacs-lisp
 (setq default-font "DejaVu Sans Mono")
 (setq symbol-font "DejaVu Sans Mono")
+(setq default-font-height
+      (if (eq system-type "darwin") 240 180))  ;; My macbook has a small screen
+
 
 (set-face-attribute 'default nil
                     :family default-font
                     :width 'normal
-                    :height 240)
+                    :height default-font-height)
 
 (set-face-attribute 'fixed-pitch nil
                     :family default-font
                     :width 'normal
-                    :height 240)
+                    :height default-font-height)
 
 (use-package nerd-icons
   :commands (nerd-icons-faicon nerd-icons-octicons)
