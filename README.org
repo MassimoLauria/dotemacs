@@ -419,7 +419,10 @@ math symbols. I use =nerd-fonts= for icons and symbols.
 (setq default-font "DejaVu Sans Mono")
 (setq symbol-font "DejaVu Sans Mono")
 (setq default-font-height
-      (if (eq system-type "darwin") 240 180))  ;; My macbook has a small screen
+      (cond
+        ((string= system-name "lauriatx") 240) ;; My laptops have smaller screens
+        ((string= system-type "darwin"  ) 240)
+        (t 180)))
 
 
 (set-face-attribute 'default nil
