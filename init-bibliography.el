@@ -6,7 +6,7 @@
 
 
 (defconst mxl/default-pdf-download-dir
-  (if (eq system-type "darwin") "~/Downloads/" "~/queue/")
+  (if (string= system-type "darwin") "~/Downloads/" "~/queue/")
   "Where I download my papers.")
 
 
