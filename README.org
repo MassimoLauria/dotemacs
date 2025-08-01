@@ -2345,7 +2345,6 @@ to use the same key to quit it, having a toogle key.
   (pdf-loader-install t)
   (add-hook 'pdf-view-mode-hook (lambda ()
                                   (auto-revert-mode 1)
-                                  (beacon-mode -1)
                                   ))
   (setq pdf-view-use-scaling t)
   (setq revert-without-query '(".pdf"))
