@@ -1008,6 +1008,22 @@ Setup some keybiding to open files.
   - [[http://www.danielallington.net/2016/09/the-latex-fetish/][The LaTeX fetish (Or: Don’t write in LaTeX! It’s just for typesetting)]]
   - [[https://irreal.org/blog/?p=5054][Using Emacs for Prose]]
 
+** Shameful spelling mistakes
+
+I often do the same spelling mistake over and over and of course
+=abbrev-mode= helps here automatically fixing those.
+
+#+BEGIN_SRC emacs-lisp
+(use-package abbrev
+  :defer 1
+  :custom
+  (abbrev-file-name (expand-file-name "abbrev_defs" base-config-path))
+  (abbrev-mode 1)
+  :config
+  (if (file-exists-p abbrev-file-name)
+      (quietly-read-abbrev-file)))
+#+END_SRC
+  
 ** Syntax and Grammar Check
 
    Too few  people on Emacs have  a decent setup for  syntax checking,
