@@ -33,18 +33,6 @@ part of the main config inside this =README.org= file.
 (add-to-list 'load-path 3rdparties-packages-path)
 #+END_SRC
 
-  The best way to  read Info files is in emacs.  The client merges all
-  info /dir/  files in  a single index.  Therefore among  other things
-  I  make  the  index  to  show  my  local  info  documents  as  well.
-  For example  my copy  of "Structure  and Interpretation  of Computer
-  Programs".
-
-#+BEGIN_SRC emacs-lisp
-(if (not (boundp 'Info-directory-list))
-    (setq Info-directory-list nil))
-(add-to-list 'Info-directory-list (concat base-config-path "/info"))
-#+END_SRC
-
 ** Adjust =PATH= environment variables
 
    When Emacs is  lauched as an app  (on MacOSX) or from  a gui command
