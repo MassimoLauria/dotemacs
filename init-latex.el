@@ -10,7 +10,8 @@
 (setq TeX-save-query nil)
 (setq TeX-display-help t)
 (setq TeX-electric-sub-and-superscript t)
-(setq TeX-electric-math nil)
+(setq TeX-electric-math nil)               ;; math-delimiters takes care of it
+(setq LaTeX-electric-left-right-brace t)   ;; long pairs like \left{...\right}
 (setq reftex-plug-into-AUCTeX t)
 (setq reftex-use-external-file-finders t)  ;; make RefTeX uses `kpsewhich'
 (setq bib-cite-use-reftex-view-crossref t)

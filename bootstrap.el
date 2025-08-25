@@ -91,7 +91,6 @@
                            sdcv
                            seq
                            shut-up
-                           smartparens
                            ssh-config-mode
                            try
                            undo-tree
