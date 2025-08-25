@@ -138,11 +138,6 @@
 (use-package which-func
   :commands (which-func-mode))
 
-;; Powershell facilities
-(autoload 'powershell-mode "powershell-mode" "A editing mode for Microsoft PowerShell." t)
-(add-to-list 'auto-mode-alist '("\\.ps1\\'" . powershell-mode)) ; PowerShell script
-(autoload 'powershell "powershell" "Start a interactive shell of PowerShell." t)
-
 
 (defun kill-fascists ()
   "This elisp code kills fascists"
