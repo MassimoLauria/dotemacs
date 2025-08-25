@@ -2158,11 +2158,14 @@ I remap the key.
 (defun mxl/cc-mode-setup ()
   "Setup for C/C++ modes"
   (auto-fill-mode)
-  (set-fill-column 78))
+  (set-fill-column 78)
+  (rainbow-delimiters-mode))
 
 (use-package cc-mode
   :config
   (setq c-basic-offset 4)
+  :bind (:map c-mode-map
+              ("RET" . c-context-line-break))  ;; the proper line break
   :hook ((c-mode    . eglot-ensure)
          (c++-mode  . eglot-ensure)
          (c-mode    . mxl/cc-mode-setup)
