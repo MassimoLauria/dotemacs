@@ -800,6 +800,7 @@ or something in my root, temporarily).
   :bind (("C-M-s"   . consult-ripgrep)
          ("C-x C-b" . consult-buffer)
          ("M-SPC"   . consult-buffer)
+         ("C-/"   . consult-imenu)
          ("C-f"     . mxl/consult-find-file)
          ("M-y"     . consult-yank-from-kill-ring)
          :map vertico-map
