@@ -564,9 +564,11 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
   :ensure t
   :init
   (setq doom-modeline-icon t)
-  (setq doom-modeline-major-mode-icon t)
+  (setq doom-modeline-major-mode-icon nil)  ;; useless
+  (setq doom-modeline-vcs-icon t)
+  (setq doom-modeline-lsp-icon t)
   (setq doom-modeline-buffer-state-icon t)
-  (setq doom-modeline-enable-word-count t)
+  (setq doom-modeline-enable-word-count nil)
   (setq doom-modeline-buffer-encoding 'nondefault)
   (setq doom-modeline-bar-width 6)
 
@@ -574,8 +576,7 @@ command ~C-u C-x =~ gives them all: font, style, font-lock, char code.
   (setq doom-modeline-total-line-number t
         doom-modeline-percent-position nil
         doom-modeline-column-zero-based nil
-        
-        size-indication-mode t)
+        size-indication-mode nil)
   (doom-modeline-mode 1))
 #+END_SRC
 
