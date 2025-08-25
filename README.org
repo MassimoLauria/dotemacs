@@ -2159,6 +2159,7 @@ I remap the key.
   "Setup for C/C++ modes"
   (auto-fill-mode)
   (set-fill-column 78)
+  (setq comment-fill-column 70)
   (rainbow-delimiters-mode))
 
 (use-package cc-mode

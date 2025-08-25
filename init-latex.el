@@ -59,6 +59,7 @@
   ;; hard wrapping regardless but auto-fill must be off.
   (setq fill-column 70)
   (setq default-justification 'left)
+  (electric-pair-local-mode 0)    ;; fights a bit with \left{...\right}
   (auto-fill-mode -1))
 
 ;; Basic LaTeX-mode-hook setup
