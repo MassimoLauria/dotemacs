@@ -587,7 +587,8 @@ something like ~olivetti-mode~.
 (defun mxl/toggle-mode-line ()
   "Hide/show mode-line in the current buffer"
   (interactive)
-  (if (local-variable-p 'mode-line-format)
+  (if (and (local-variable-p 'mode-line-format)
+           (not mode-line-format))
       (kill-local-variable 'mode-line-format)
     (setq-local mode-line-format nil))
   (force-mode-line-update))
@@ -600,9 +601,18 @@ something like ~olivetti-mode~.
 (defun mxl/show-mode-line ()
   "Hide mode-line in the current buffer"
   (interactive)
-  (if (local-variable-p 'mode-line-format)
-      (kill-local-variable 'mode-line-format)))
+  (kill-local-variable 'mode-line-format))
 #+END_SRC
+
+Indeed with ~olivetti-mode~ it would be a good idea to hide
+the modeline.
+
+#+BEGIN_SRC emacs-lisp
+(use-package olivetti
+  :hook ((olivetti-mode-on  .  mxl/hide-mode-line)
+         (olivetti-mode-off  . mxl/show-mode-line)))
+#+END_SRC
+
 
 ** Landing page
 
